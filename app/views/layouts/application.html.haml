@@ -1,0 +1,23 @@
+!!! 5
+%html
+%head
+  %title North Slope Science Catalog
+  = stylesheet_link_tag 'screen.css', :media => 'screen, projection'
+  = stylesheet_link_tag 'print.css', :media => 'print'
+  /[if IE]
+    = stylesheet_link_tag 'ie.css', :media => 'screen, projection'
+
+  = css_link_tag(:extjs)
+
+  = javascript_include_tag('OpenLayers-2.10/OpenLayers.js')
+  = js_include_tag(:extjs)
+  = javascript_include_tag('proj4js/lib/proj4js.js', 'proj4js/lib/projCode/aea.js', 'proj4js/lib/defs/EPSG3338.js', :cache => 'cache/proj4.js')
+  = load_js(:application, :openlayers)
+
+%body
+  #header
+    = render 'layouts/header'
+  #content
+    = yield
+  #footer
+    = render 'layouts/footer'
