@@ -1,6 +1,9 @@
 .bundle
+*.swp
 db/*.sqlite3
 log/*.log
 tmp/
 .idea/
 config/database.yml
+db/sphinx
+public/javascripts/cached
