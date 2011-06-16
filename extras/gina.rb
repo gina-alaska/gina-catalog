@@ -19,7 +19,7 @@ module GINA
   }
 
   module Helpers
-    def load_js(app, *opts)
+    def include_app_js(app, *opts)
       base = ['gina/event_manager.js', 'gina/base_controller.js']
       jsfiles = []
       Dir.chdir('public/javascripts') {
@@ -32,7 +32,7 @@ module GINA
         jsfiles << Dir.glob('app/**/*.js')
       }
 
-      javascript_include_tag jsfiles.uniq, :cache => "cached/#{app.to_s}.js"
+      javascript_include_tag jsfiles.uniq, :cache => (Rails.env == 'production' ? 'cached/application' : false)
     end
   end
 end
