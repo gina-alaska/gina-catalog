@@ -1,0 +1,51 @@
+.asset
+  - unless @asset.published?
+    .not-published
+      %h2 This asset is pending review by the system moderators.
+      %p After a moderator has reviewed the asset, it will become available for public viewing.
+
+  - if @asset.published? or @asset.owner == current_user or current_user.is_an_admin?
+    %h2= @asset.title
+
+    - unless @asset.description.nil?
+      .description!= RDiscount.new(@asset.description.text.to_s).to_html
+
+    .general_info
+      %ul
+        - unless @asset.start_date.nil?
+          %li
+            %label Start Date:
+            = @asset.start_date.strftime('%Y-%m-%d')
+        - unless @asset.end_date.nil?
+          %li
+            %label End Date:
+            = @asset.end_date.strftime('%Y-%m-%d')
+        %li
+          %label Source Agency:
+          = @asset.source_agency.try(:name)
+        %li
+          %label Funding Agency:
+          = @asset.funding_agency.try(:name)
+        %li
+          %label Tags:
+          = @asset.tags.collect(&:text).join(', ')
+
+    -#  = asset_links(@asset)
+    -#  = download_link(@asset)
+
+    - unless @asset.gcmd_themes.empty?
+      .keywords
+        %label GCMD Keywords:
+        
+      - @asset.gcmd_themes.each do |theme|
+        %li= theme.path
+
+    - unless @asset.files.empty?
+      .asset-revision
+        %label Files:
+      .asset-revision-name
+        %ul
+        - @asset.files.each do |file|
+          %li= "#{file.filename} - #{number_to_human_size(file.size)}"
+
+    -#  = preview_asset_files(@asset)

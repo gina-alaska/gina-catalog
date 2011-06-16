@@ -1,6 +1,7 @@
 Ext.ux.User = function(config) {
   config = config || {};
 
+  this.data = false;
   this.initialConfig = config;
   Ext.apply(this, config);
 
@@ -29,11 +30,13 @@ Ext.extend(Ext.ux.User, Ext.util.Observable, {
    */
   initComponent: Ext.emptyFn,
 
+  loading: false,
   url: false,
   method: 'GET',
   
   load: function() {
     if(this.url) {
+      this.loading = true;
       Ext.ux.Ajax.request({
         url: this.url,
         method: this.method,
@@ -50,16 +53,18 @@ Ext.extend(Ext.ux.User, Ext.util.Observable, {
     if(results.user !== false && results.user !== null) {
       this.data = results.user || [];
       this.is_an_admin = this.data["admin?"];
-      this.fireEvent('load', this);
     } else {
       this.clear();
     }
+    this.fireEvent('load', this);
+    this.loading = false;
   },
 
   clear: function() {
     this.data = false;
     this.is_an_admin = false;
     this.fireEvent('clear', this);
+    this.loading = false;
   },
   
   "logged_in": function() {

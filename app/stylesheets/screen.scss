@@ -3,27 +3,74 @@
  * Import this file using the following HTML or equivalent:
  * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
 
-@import "compass/reset";
+//@import "compass/reset";
+@import "extjs/notify";
+@import "extjs/center_layout";
+@import "partials/splash";
+@import "partials/previews";
+@import "partials/search_results";
 
 body {
   font-family: "trebuchet ms", Verdana, Tahoma, Arial, Helvetica, san-serif;
 }
 
+#loading {
+  padding: 5px;
+}
+
 #header {
-  height: 60px;
-  padding: 10px 0 0 0;
+  height: 80px;
+  padding: 5px 0 0 0;
   color: #fff;
   background-color: #187b99;
   font-weight: bold;
   font-size: 14px;
 
   #logo img {
-    height: 50px;
+    height: 75px;
     float: left;
     margin: 0 15px 0 5px;
   }
 
   h1 {
+    margin-top: 15px;
     font-size: 30px;
   }
+}
+
+div.main-toolbar {
+  background: #187b99;
+}
+
+.main-menu {
+  .welcome-panel .x-panel-body {
+    background: none;
+    height: 40px;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 5px;
+  }
+
+  .x-btn-group-bwrap {
+    background-color: #D0DEF0;
+  }
+
+  .x-btn-mc {
+    text-align: left;
+  }
+
+  button.x-btn-text {
+    font-size: 14px;
+    font-weight: bold;
+    min-width: 90px;
+    text-align: left;
+
+  }
+}
+
+
+
+.large-buttons .x-btn-text {
+  font-size: 16px;
+  line-height: 16px;
 }

@@ -1,7 +1,8 @@
 require 'digest/sha1'
 
 class User < ActiveRecord::Base
-  has_and_belongs_to_many :roles
+  has_many :user_roles
+  has_many :roles, :through => :user_roles
 
   include Authentication
   include Authentication::ByCookieToken

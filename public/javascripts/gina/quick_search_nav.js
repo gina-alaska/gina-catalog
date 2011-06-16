@@ -50,7 +50,8 @@ Ext.ux.QuickSearchNav = Ext.extend(Ext.form.TwinTriggerField, {
     if(update_url || update_url === null || update_url === undefined) {
       var request = App.nav.getRequest();
       request.params.q = this.getRawValue();
-      App.nav.quickLoad(request.controller, this.action, request.params);
+      request.action = this.action;
+      App.nav.loadRequest(request);
     }
 
     this.hasSearch = true;

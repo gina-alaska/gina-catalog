@@ -1,5 +1,7 @@
 Ext.ux.BaseController = Ext.extend(Ext.ux.EventManager, {
   constructor: function() {
+    this.panels = new Ext.util.MixedCollection();
+    
     Ext.ux.BaseController.superclass.constructor.apply(this, arguments);
     Ext.util.Observable.capture(this, this.onLoad, this);
   },
@@ -21,31 +23,49 @@ Ext.ux.BaseController = Ext.extend(Ext.ux.EventManager, {
     this.manager.nav.load(hash)
   },
 
-  render: function(panel, replace) {
-    var content = this.manager.view('content');
+  usingCardLayout: function() {
+    if(this.manager.view('content').getLayout().setActiveItem) {
+      return true;
+    } else {
+      return false;
+    }
+  },
 
-    if(replace === null || replace === undefined) {
-      if(content.getLayout().setActiveItem) {
-        replace = false;
+  findPanel: function(panel, params) {
+    if(typeof panel == 'string') {
+      if(this.panels.get(panel)) {
+        return this.panels.get(panel);
       } else {
-        replace = true;
+        return this.manager.view(panel, params);
+      }
+    } else {
+      return panel;
+    }
+  },
+
+  render: function(panel, params) {
+    var content = this.manager.view('content'),
+        requestedPanel=this.findPanel(panel, params);
+
+    if(!this.usingCardLayout()) { content.removeAll(); }
+
+    if(requestedPanel.rendered) {
+      this.activePanel = requestedPanel;
+    } else {
+      this.activePanel = content.add(requestedPanel);
+      content.doLayout();
+      
+      if(typeof panel == 'string') {
+        this.panels.add(panel, this.activePanel);
+      } else {
+        this.panels.add(this.activePanel.getId(), this.activePanel);
+        if(console && console.log) {
+          console.log('Please update your code to add panels by name, adding panel objects is deprecated');
+        }
       }
     }
-    if(replace) { content.removeAll(); }
 
-    if(typeof panel == 'string') {
-      panel = this.manager.view(panel);
-    }
-
-    if(panel.rendered) {
-      this.activePanel = content.add(panel);
-    } else {
-      this.activePanel = content.add(panel);
-    }
-
-    content.doLayout();
     this.activate(this.activePanel);
-
     return this.activePanel;
   },
 

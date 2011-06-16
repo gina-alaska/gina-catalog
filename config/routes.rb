@@ -1,7 +1,20 @@
 Catalog::Application.routes.draw do
+  resources :projects
+
+  resources :assets
+
+  resources :catalog do
+    collection do
+      post :search
+      get :search
+    end
+  end
+  
   resource :session
 
-  
+  resource :users do
+    get :preferences
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -50,9 +63,10 @@ Catalog::Application.routes.draw do
   #     resources :products
   #   end
 
-
+  match '/preferences(.:format)' => 'users#preferences'
   match '/login' => 'sessions#new'
   match '/logout' => 'sessions#destroy'
+  match '/data(.:format)' => 'catalog#search'
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
   root :to => "welcome#index"

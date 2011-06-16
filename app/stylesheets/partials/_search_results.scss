@@ -1,0 +1,50 @@
+.asset_wrap {
+  border-bottom: 1px solid #DDD;
+  margin: 0 5px 0 5px;
+  padding: 5px 5px 5px 5px;
+  font-size: 12px;
+
+  label {
+    font-weight: bold;
+  }
+
+  &.x-view-over {
+    background-color: #BBDDFF;
+  }
+
+  &.x-view-selected {
+    background-color: #AABBFF;
+  }
+
+  .title {
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: bold;
+  }
+
+  .description {
+    margin-left: 5px;
+    margin-bottom: 5px;
+  }
+
+  .detail {
+    min-width: 80px;
+    float: left;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+
+  .type {
+  }
+  .source {
+  }
+  .status {
+  }
+  .start {
+  }
+  .end {
+  }
+
+}

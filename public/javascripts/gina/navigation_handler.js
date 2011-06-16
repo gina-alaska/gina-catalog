@@ -213,21 +213,16 @@ Ext.extend(Ext.ux.NavigationHandler, Ext.util.Observable, {
       parts = [request.hash, ''];
     }
     var controller_and_action = parts[0].split('/');
+    
     request.host = top.location.host;
     request.subdomains = request.host.split('.');
-    request.controller = controller_and_action.shift();
-    request.action = controller_and_action.shift();
-    request.params = parts[1].split('&');
+    request.controller = controller_and_action.shift() || this.defaultPage;
+    request.action = controller_and_action.shift() || 'index';
+    request.id = controller_and_action.shift();
+    request.params = Ext.urlDecode(parts[1]);//.split('&');
 
-    if (request.params.length > 0) {
-      var params = {};
-      for (var ii = 0; ii < request.params.length; ii++) {
-        var item = request.params[ii].split(this.paramSeparator);
-        params[item.shift()] = item.join(this.paramSeparator);
-      }
-      request.params = params;
-    } else {
-      request.params = {};
+    if (request.id) {
+      request.params.id = request.id;
     }
     return request;
   },

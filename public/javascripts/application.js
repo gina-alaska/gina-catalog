@@ -35,6 +35,7 @@ var App = function() {
       this.nav = new Ext.ux.NavigationHandler({
         manager: this,
         defaultPage: 'home',
+        autoStart: false,
         //appRootUrl: /^[\/]{0,1}$/,
         
         pages: {
@@ -42,6 +43,31 @@ var App = function() {
             title: 'Home',
             handler: this.controller('home').navigation,
             icon: '/images/icons/medium/home.png'
+          },
+          catalog: {
+            title: 'Catalog',
+            handler: this.controller('catalog').navigation,
+            icon: '/images/icons/medium/bookmark.png'
+          },
+          news: {
+            title: 'News',
+            icon: '/images/icons/medium/chat-.png'
+          },
+          nssi: {
+            title: 'NSSI',
+            icon: '/images/icons/medium/globe.png'
+          },
+          realtime: {
+            title: 'Realtime Data',
+            icon: '/images/icons/medium/computer.png'
+          },
+          contact: {
+            title: 'Contact Us',
+            icon: '/images/icons/medium/email.png'
+          },
+          help: {
+            title: 'Help',
+            icon: '/images/icons/medium/male-user.png'
           },
           signup: {
             title: 'Signup',
@@ -64,6 +90,40 @@ var App = function() {
         }
       });
 
+
+      this.navToolbar = new Ext.ButtonGroup({
+        border: false,
+        columns: 3,
+        height: 85,
+        cls: 'main-menu',
+        defaults: { scale: 'large', iconAlign: 'left', width: '100%', enableToggle: true, toggleGroup: 'pages' },
+        items: [
+          this.nav.toolbarItems(['catalog', 'news', 'nssi', 'realtime', 'contact', 'help'])
+        ]
+      });
+      
+      this.loginToolbar = new Ext.ButtonGroup({
+        border: false,
+        columns: 1,
+        height: 85,
+        cls: 'main-menu',
+        defaults: { scale: 'large', iconAlign: 'left', width: '100%', enableToggle: true, toggleGroup: 'pages' },
+        items: [
+          this.nav.toolbarItems(['signup', 'login'])
+        ]
+      });
+
+      this.topToolbar = new Ext.Toolbar({
+        cls: 'main-toolbar',
+        height: 90,
+        items: [{
+          border: false,
+          xtype: 'panel',
+          width: 550,
+          contentEl: 'header'
+        }, '->', this.navToolbar, this.loginToolbar]
+      });
+
       this.views.add('content', new Ext.Panel({
         itemId: 'content',
         region: 'center',
@@ -73,18 +133,8 @@ var App = function() {
         layout: 'card',
         defaults: { border: false },
         activeItem: 0,
+        tbar: this.topToolbar,
         items: [{ contentEl: 'content' }]
-      }));
-
-      this.views.add('header', new Ext.Panel({
-        itemId: 'header',
-        region: 'north',
-        border: false,
-        contentEl: 'header',
-        bbar: {
-          defaults: { scale: 'large', iconAlign: 'left', minWidth: 60, enableToggle: true, toggleGroup: 'pages' },
-          items: [this.nav.toolbarItems(['signup', 'login'])]
-        }
       }));
 
       this.current_user = new Ext.ux.User({
@@ -94,16 +144,20 @@ var App = function() {
           scope: this,
           load: function() {
             var head = this.view('header'),
-                bbar = head.getBottomToolbar(),
+                bbar = this.loginToolbar,
                 request = this.nav.getRequest(),
                 items;
 
-            if(this.current_user.is_an_admin) {
-              items = this.nav.toolbarItems(['tiles', 'radiometry', 'users', 'logout']);
-            } else if(this.current_user.get('authorized?')) {
-              items = this.nav.toolbarItems(['tiles', 'radiometry', 'logout']);
+            if(this.current_user.logged_in()) {
+              items = this.nav.toolbarItems([{
+                xtype: 'panel',
+                height: 37,
+                border: false,
+                cls: 'welcome-panel',
+                html: 'Welcome back<br />' + this.current_user.get('fullname')
+              }, 'logout']);
             } else {
-              items = this.nav.toolbarItems(['logout']);
+              items = this.nav.toolbarItems(['signup', 'login']);
             }
 
             bbar.removeAll();
@@ -112,7 +166,7 @@ var App = function() {
           },
           clear: function() {
             var head = this.views.get('header'),
-                bbar = head.getBottomToolbar(),
+                bbar = this.loginToolbar,
                 items = this.nav.toolbarItems(['signup', 'login']);
             
             bbar.removeAll();
@@ -127,19 +181,10 @@ var App = function() {
         border: false,
         frame: false,
         deferredRender: false,
-        items: [
-          this.view('header'),
-          this.view('content')
-        ]
+        items: [ this.view('content') ]
       });
-    },
 
-    selectControllerButton:function(controller) {
-      var head = this.view('header'),
-          bbar = head.getBottomToolbar(),
-          index = bbar.items.findIndex('text', controller);
-
-      bbar.items.get(index).toggle(true);
+      this.current_user.on('load', function() { this.nav.start(); }, this, { single: true })
     }
   });
 

@@ -8,8 +8,7 @@ Ext.ux.StoreHandlers = {
     }
     console.log(arguments);
     if(response.status == 403) {
-      //
-      if (options.listeners && options.listeners.forbidden) {
+      if (request.listeners && request.listeners.forbidden) {
         var status = options.listeners.forbidden.call(options.listeners.scope || this, response, options, json)
       }
       if(status !== false && json.flash) {

@@ -5,21 +5,66 @@ Ext.ux.GinaMaps = function() {
     layers: [],
 
     configs: {
+      bdl: {
+        name: 'Best Data Layer',
+        type: 'tiles',
+        baseUrl: 'http://swmha.gina.alaska.edu/tilesrv/bdl/tile/',
+        wrapDateLine: true,
+        transitionEffect: 'resize'
+      },
+      charts: {
+        name: 'NOAA Charts',
+        type: 'tiles',
+        baseUrl: 'http://swmha.gina.alaska.edu/tilesrv/charts/tile/',
+        wrapDateLine: true
+      },
+      topo: {
+        name: 'Topographic DRG',
+        type: 'tiles',
+        baseUrl: 'http://swmha.gina.alaska.edu/tilesrv/drg/tile/',
+        wrapDateLine: true
+      },
+      shaded_relief: {
+        name: 'Shaded Relief',
+        type: 'tiles',
+        baseUrl: 'http://swmha.gina.alaska.edu/tilesrv/shaded_relief_ned/tile/',
+        wrapDateLine: true
+      },
+      landsat_pan: {
+        name: 'Landsat Pan',
+        type: 'tiles',
+        baseUrl: 'http://swmha.gina.alaska.edu/tilesrv/landsat_pan/tile/',
+        wrapDateLine: true
+      },
       bdl_aa: {
         name: 'Best Data Layer',
         type: 'tiles',
         baseUrl: 'http://swmha.gina.alaska.edu/tilesrv/bdl_esri_test/tile/',
         wrapDateLine: false
       },
-      sdmi_soy_aa: {
-        name: 'Soy WMS',
+      sdmi_soy_rgb_aa: {
+        name: 'RGB WMS',
         type: 'wms',
-        baseUrl: 'http://wms.soy.gina.alaska.edu/map/test_ortho_rgb',
+        baseUrl: 'http://wms.soy.gina.alaska.edu/map/ortho',
         params: {
-          layers: "SPOT5.SDMI.TEST,SPOT5.SDMI.PILOT",
+          layers: "ORTHO.RGB-overview,ORTHO.RGB",
           transparent: true
         },
         options: {
+          wrapDateLine: false,
+          isBaseLayer: false
+        }
+      },
+      sdmi_soy_cir_aa: {
+        name: 'CIR WMS',
+        type: 'wms',
+        baseUrl: 'http://wms.soy.gina.alaska.edu/map/ortho',
+        params: {
+          layers: "ORTHO_CIR-overview,ORTHO.CIR",
+          transparent: true
+        },
+        options: {
+          visibility: false,
           wrapDateLine: false,
           isBaseLayer: false
         }
@@ -70,8 +115,27 @@ Ext.ux.GinaMaps = function() {
 
     init: function(map) {
       this.map = map;
-      this.map.addLayer(this.imageMapType('bdl_aa'));
-      this.map.addLayer(this.wmsMapType('sdmi_soy_aa'));
+    },
+
+    loadLayers: function(category) {
+      switch(category) {
+        case 'aa':
+          this.addLayer('bdl_aa');
+          this.addLayer('sdmi_soy_aa');
+          break;
+        case 'bdl':
+          this.addLayer('bdl_aa');
+          break;
+      }
+    },
+
+    addLayer: function(name) {
+      var type = this.configs[name].type;
+      if(type == 'tiles') {
+        this.map.addLayer(this.imageMapType(name));
+      } else if(type == 'wms') {
+        this.map.addLayer(this.wmsMapType(name));
+      }
     },
 
     showLabels: function() {

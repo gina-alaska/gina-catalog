@@ -24,7 +24,12 @@ Ext.ux.EventManager = function(config) {
   });
 
   this.loadRequest = function(event, opts, request) {
+    if(this.beforeFilter && this.beforeFilter.call(this, opts, request) === false) {
+      return false;
+    }
     if(this[event]) { this[event].call(this, opts, request); }
+    if(this.afterFilter) { this.afterFilter.call(this, opts, request); }
+
     this.fireEvent('load', event, opts, request);
   }.createDelegate(this);
 
