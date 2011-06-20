@@ -161,6 +161,27 @@
   margin-right: 5px;
 }
 
+/* line 52, ../../app/stylesheets/partials/_search_results.scss */
+.search.x-small-editor.x-toolbar .xtb-text {
+  font-size: 18px;
+}
+/* line 56, ../../app/stylesheets/partials/_search_results.scss */
+.search.x-small-editor input.x-form-text {
+  line-height: normal;
+  height: 25px !important;
+  font: normal 16px tahoma, arial, helvetica, sans-serif;
+  font-weight: normal;
+}
+/* line 62, ../../app/stylesheets/partials/_search_results.scss */
+.search.x-small-editor img.x-form-trigger {
+  height: 30px;
+  background-color: #DCDCDC;
+}
+/* line 66, ../../app/stylesheets/partials/_search_results.scss */
+.search.x-small-editor .x-btn-large button {
+  font: normal 16px tahoma, arial, helvetica, sans-serif;
+}
+
 /* line 13, ../../app/stylesheets/screen.scss */
 body {
   font-family: "trebuchet ms", Verdana, Tahoma, Arial, Helvetica, san-serif;
@@ -197,7 +218,12 @@ div.main-toolbar {
   background: #187b99;
 }
 
-/* line 46, ../../app/stylesheets/screen.scss */
+/* line 45, ../../app/stylesheets/screen.scss */
+.default {
+  color: #555;
+}
+
+/* line 50, ../../app/stylesheets/screen.scss */
 .main-menu .welcome-panel .x-panel-body {
   background: none;
   height: 40px;
@@ -205,15 +231,15 @@ div.main-toolbar {
   font-weight: bold;
   padding: 5px;
 }
-/* line 54, ../../app/stylesheets/screen.scss */
+/* line 58, ../../app/stylesheets/screen.scss */
 .main-menu .x-btn-group-bwrap {
   background-color: #D0DEF0;
 }
-/* line 58, ../../app/stylesheets/screen.scss */
+/* line 62, ../../app/stylesheets/screen.scss */
 .main-menu .x-btn-mc {
   text-align: left;
 }
-/* line 62, ../../app/stylesheets/screen.scss */
+/* line 66, ../../app/stylesheets/screen.scss */
 .main-menu button.x-btn-text {
   font-size: 14px;
   font-weight: bold;
@@ -221,7 +247,7 @@ div.main-toolbar {
   text-align: left;
 }
 
-/* line 73, ../../app/stylesheets/screen.scss */
+/* line 77, ../../app/stylesheets/screen.scss */
 .large-buttons .x-btn-text {
   font-size: 16px;
   line-height: 16px;
