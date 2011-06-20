@@ -123,7 +123,7 @@ var App = function() {
         items: [{
           border: false,
           xtype: 'panel',
-          width: 550,
+          width: 610,
           contentEl: 'header'
         }, '->', this.navToolbar, this.loginToolbar]
       });
