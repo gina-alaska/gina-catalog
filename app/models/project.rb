@@ -90,11 +90,14 @@ class Project < ActiveRecord::Base
   validates_length_of :title, :maximum => 255
   validates_inclusion_of :status, :in => STATUSES
   
-  scope :published, lambda { |current_user| {
-    :conditions => ['published_at <= ? or owner_id = ?', Time.now.utc, current_user.id] 
-  } }
-
-  scope :unpublished, :conditions => 'published_at is null'
+  scope :published, lambda {
+    where('published_at <= ?', Time.now.utc)
+  }
+  scope :unpublished, where('published_at is null')
+  scope :archived, lambda {
+    where('archived_at <= ?', Time.now.utc)
+  }
+  scope :not_archived, where('archived_at IS NULL')
 
   def archive
     self.archived_at = Time.now
@@ -295,7 +298,6 @@ class Project < ActiveRecord::Base
       :id => "#{self.id}-#{self.klass}",
       :type => self.klass,
       :title => self.title,
-#      :tags => self.tags.list,
       :description => self.truncated_synopsis,
       :start_date_year => self.start_date.try(:year),
       :end_date_year => self.end_date.try(:year),
