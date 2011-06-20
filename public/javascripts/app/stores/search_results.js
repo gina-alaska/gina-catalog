@@ -8,7 +8,7 @@ App.stores.add('search_results', {
   }),
   baseParams: { start: 0, limit: 100 },
   root: 'results',
-  remoteSort: true,
+  remoteSort: false,
   totalProperty: 'total',
   autoLoad: false,
   listeners: {
