@@ -19,10 +19,10 @@ class CatalogController < ApplicationController
 #      results = sphinx_search(params[:q], params[:sort], params[:dir], params[:start], params[:limit])
 #    end
 #    results = Project.search('', :per_page => 3000)
-    @results = Project.includes(:locations, :synopsis, :source_agency).limit(params[:limit] || 3000)
+    @results = Project.not_archived.published.includes(:locations, :synopsis, :source_agency).limit(params[:limit] || 3000).order('title ASC')
 
     respond_to do |format|
-      format.json { render :json => { :total => @results.count, :results => @results } }
+      format.json { render :json => { :results => @results, :total => @results.count  } }
       format.js
     end
   end
