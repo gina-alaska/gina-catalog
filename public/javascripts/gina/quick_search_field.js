@@ -4,6 +4,8 @@ Ext.ux.QuickSearchField = Ext.extend(Ext.form.TwinTriggerField, {
       this.store = Ext.StoreMgr.get(this.store);
     }
 
+    this.addEvents('before_filter', 'after_filter');
+
     Ext.ux.QuickSearchField.superclass.initComponent.call(this);
 
     this.on('specialkey', function(f, e){
@@ -26,16 +28,22 @@ Ext.ux.QuickSearchField = Ext.extend(Ext.form.TwinTriggerField, {
 
   onTrigger1Click : function(){
     if(this.hasSearch){
-      this.el.dom.value = '';
-      var o = {start: 0};
-
-      this.store.clearFilter();
-      this.triggers[0].hide();
-      this.hasSearch = false;
+      this.fireEvent('before_filter', this);
+      this.clearSearch.defer(1000, this);
     }
   },
 
-  onTrigger2Click : function(){
+  clearSearch: function() {
+    this.el.dom.value = '';
+    var o = {start: 0};
+
+    this.store.clearFilter();
+    this.triggers[0].hide();
+    this.hasSearch = false;
+    this.fireEvent('after_filter', this);
+  },
+
+  doSearch: function() {
     var search_string = this.getRawValue();
     if(search_string.length < 1){
       this.onTrigger1Click();
@@ -57,7 +65,7 @@ Ext.ux.QuickSearchField = Ext.extend(Ext.form.TwinTriggerField, {
 
       for (var ii=0; ii < search_items.length; ii++) {
         if(this.matchAll === true) { found = false; }
-        
+
         search.compile(search_items[ii], 'i');
 
         if(this.fields == 'all') {
@@ -77,6 +85,12 @@ Ext.ux.QuickSearchField = Ext.extend(Ext.form.TwinTriggerField, {
 
     this.hasSearch = true;
     this.triggers[0].show();
+    this.fireEvent('after_filter', this);
+  },
+
+  onTrigger2Click : function(){
+    this.fireEvent('before_filter', this);
+    this.doSearch.defer(1000, this);
   }
 });
 Ext.reg('quick_search_field', Ext.ux.QuickSearchField);
