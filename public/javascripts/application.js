@@ -147,8 +147,7 @@ var App = function() {
         listeners: {
           scope: this,
           load: function() {
-            var head = this.view('header'),
-                bbar = this.loginToolbar,
+            var bbar = this.loginToolbar,
                 request = this.nav.getRequest(),
                 items;
 
@@ -169,8 +168,7 @@ var App = function() {
             bbar.doLayout();
           },
           clear: function() {
-            var head = this.views.get('header'),
-                bbar = this.loginToolbar,
+            var bbar = this.loginToolbar,
                 items = this.nav.toolbarItems(['signup', 'login']);
             
             bbar.removeAll();
