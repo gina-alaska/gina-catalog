@@ -59,7 +59,7 @@ var App = function() {
           },
           realtime: {
             title: 'Realtime Data',
-            icon: '/images/icons/medium/computer.png'
+            icon: '/images/icons/medium/satellite.png'
           },
           contact: {
             title: 'Contact Us',
