@@ -90,6 +90,10 @@ var App = function() {
         }
       });
 
+      this.loadMask = new Ext.LoadMask(Ext.getBody(), {
+        msg: 'Please wait...',
+        store: App.store('search_results')
+      });
 
       this.navToolbar = new Ext.ButtonGroup({
         border: false,
