@@ -46,5 +46,25 @@
   }
   .end {
   }
-
 }
+
+.search.x-small-editor {
+  &.x-toolbar .xtb-text {
+    font-size: 18px;
+  }
+  
+  input.x-form-text {
+    line-height: normal;
+    height: 25px !important;
+    font: normal 16px tahoma, arial, helvetica, sans-serif;
+    font-weight: normal;
+  }
+  img.x-form-trigger {
+    height: 30px;
+    background-color: #DCDCDC;
+  }
+  .x-btn-large button {
+    font: normal 16px tahoma, arial, helvetica, sans-serif;
+  }
+}
+

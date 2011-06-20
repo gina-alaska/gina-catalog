@@ -1,5 +1,18 @@
 App.views.add('catalog-list', function(config) {
+  var menu = new Ext.ux.ContextMenu({
+    "forceSelection": true,
+    "menus": {
+      "default": [{
+        "text": "View",
+        handler: function(menu, e) {
+          App.nav.load('catalog/show/' + e.ctxRecords[0].get('id'))
+        }
+      }]
+    }
+  });
+
   var _panel = {
+    itemId: 'results',
     xtype: 'dataview',
     autoScroll: true,
     overClass: 'x-view-over',
@@ -7,6 +20,7 @@ App.views.add('catalog-list', function(config) {
     itemSelector: 'div.asset_wrap',
     loadingText: 'Loading assets...',
     singleSelect: true,
+    plugins: [menu],
     tpl: new Ext.XTemplate(
       '<tpl for=".">',
         '<div class="asset_wrap" id="asset_{id}">',
@@ -35,6 +49,15 @@ App.views.add('catalog-list', function(config) {
         /* fullCatalogDataSet gets created by the fullpage load of /data.js */
         panel.getStore().loadData.defer(300, panel.getStore(), [App.fullCatalogDataset])
         //panel.getStore().load.defer(200, panel.getStore());
+
+        panel.on('selectionchange', function(dv) {
+          var selected = this.getSelectedRecords();
+          if(selected.length > 0) {
+            this.ownerCt.ownerCt.get('map').showSelectedFeature(selected[0].get('id'));
+          } else {
+            this.ownerCt.ownerCt.get('map').showAllFeatures();
+          }
+        }, panel, { buffer: 200 });
       }
     }
   };

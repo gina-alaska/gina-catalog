@@ -30,7 +30,7 @@ App.views.add('catalog-map', function(config) {
           if(feature !== null) {
             var fid = r.get('fid');
             if(!fid) { fid = []; }
-            
+
             fid.push(feature.id);
             r.set('fid', fid);
 
@@ -38,70 +38,115 @@ App.views.add('catalog-map', function(config) {
           }
         }, this);
       }, this);
-      this.showAllFeatures();
-
+      //this.showAllFeatures();
+      this.control('select_item').activate();
     },
 
-    showSelectedFeatures: function(ids) {
+    showSelectedFeature: function(id, pbar) {
       var projects = [];
       var data = [];
 
       this.projects_layer.removeAllFeatures();
       this.data_layer.removeAllFeatures();
+
       this.project_cluster_strategy.deactivate();
       this.data_cluster_strategy.deactivate();
+      this.control('select_item').deactivate();
 
-      if(ids) {
-        this.search_features.each(function(f) {
-          if(ids.indexOf(f.id) >= 0) { projects.push(f); }
-        }, this);
-        this.projects_layer.addFeatures(projects);
-        this.data_layer.addFeatures(data);
+      var r = App.store('search_results').getById(id);
 
-        var bounds = this.projects_layer.getDataExtent();
-        if(bounds) {
-          bounds.extend(this.data_layer.getDataExtent());
-        } else {
-          bounds = this.data_layer.getDataExtent();
+      Ext.ux.each(r.get('locations'), {
+        exclusive: true,
+        scope: this,
+        progress: pbar,
+        handler: function(loc) {
+          var feature = this.search_features.get(loc.id);
+          if(feature === undefined) {
+            feature = this.buildSearchFeature(loc.wkt, r);
+            this.search_features.add(loc.id, feature);
+          }
+          if(feature !== null) { projects.push(feature); }
+        },
+        onComplete: function() {
+          if(projects.length > 0 || data.length > 0) {
+            this.projects_layer.addFeatures(projects);
+            this.data_layer.addFeatures(data);
+
+            var bounds = this.projects_layer.getDataExtent();
+            if(bounds) {
+              bounds.extend(this.data_layer.getDataExtent());
+            } else {
+              bounds = this.data_layer.getDataExtent();
+            }
+            this.fit(bounds, 4);
+          }
         }
-        this.fit(bounds, 10);
-      }
+      });
     },
 
-    showAllFeatures: function() {
-      var projects = [];
-      var data = [];
-      
+    taskrunner: new Ext.util.TaskRunner(0.00000000001),
+
+    showAllFeatures: function(pbar) {
+      var total = App.store('search_results').getCount(),
+          current = 0,
+          percent = 0,
+          lastPercent = 0,
+          projects = [],
+          data = [];
+
       this.projects_layer.removeAllFeatures();
       this.data_layer.removeAllFeatures();
 
       this.project_cluster_strategy.activate();
       this.data_cluster_strategy.activate();
 
-      if(this.search_features.length == 0) {
-        return false;
+      this.control('select_item').activate();
+
+
+      App.store('search_results').each(function(r) {
+        Ext.each(r.get('locations'), function(loc) {
+          var feature = this.search_features.get(loc.id);
+          if(feature === undefined) {
+            feature = this.buildSearchFeature(loc.wkt, r);
+            this.search_features.add(loc.id, feature);
+          }
+          if(feature !== null) {
+            projects.push(feature);
+          }
+        }, this);
+      }, this);
+
+      if(projects.length > 0 || data.length > 0) {
+        this.projects_layer.addFeatures(projects);
+        this.data_layer.addFeatures(data);
       }
-
-      this.search_features.each(function(f) {
-        projects.push(f);
-      });
-
-      this.projects_layer.addFeatures(projects);
-      this.data_layer.addFeatures(data);
-
-      var bounds = this.projects_layer.getDataExtent();
-      if(bounds) {
-        bounds.extend(this.data_layer.getDataExtent());
-      } else {
-        bounds = this.data_layer.getDataExtent();
-      }
-      this.fit(bounds, 4);
+      if(pbar) { pbar.hide(); }
     },
     
     listeners: {
       ready: function(map) {
         map.project_cluster_strategy = new OpenLayers.Strategy.Cluster({ distance: 30 });
         map.search_features = new Ext.util.MixedCollection();
+
+        var styleFunctions = {
+          context: {
+            count: function(feature) {
+              if(feature.attributes.title) {
+                return '';
+              } else {
+                return feature.attributes.count;
+              }
+            },
+            radius: function(feature) {
+              if(feature.attributes.count === undefined) {
+                return 8;
+              } else {
+                return Math.min(Math.floor(feature.attributes.count / 10), 10) + 10;
+              }
+            }
+          }
+        };
+
         map.projects_layer = new OpenLayers.Layer.Vector('Projects', {
           strategies: [ map.project_cluster_strategy ],
           styleMap: new OpenLayers.StyleMap({
@@ -114,21 +159,13 @@ App.views.add('catalog-map', function(config) {
               strokeColor: '#0000FF',
               strokeWidth: 2,
               strokeOpacity: 1
-            }, {
-              context: {
-                count: function(feature) {
-                  return feature.attributes.count;
-                },
-                radius: function(feature) {
-                  if(feature.attributes.count === undefined) {
-                    return 8;
-                  } else {
-                    return Math.min(Math.floor(feature.attributes.count / 10), 10) + 10;
-                  }
-                }
-              }
+            }, styleFunctions),
+            "select": new OpenLayers.StyleMap({
+              fillColor: "#F00",
+              strokeColor: '#F00'
             })
-          })
+          }),
+          rendererOptions: { zIndexing: true }
         });
         map.addLayer(map.projects_layer);
 
@@ -145,36 +182,52 @@ App.views.add('catalog-map', function(config) {
               strokeColor: '#cc6633',
               strokeWidth: 2,
               strokeOpacity: 1
-            }, {
-              context: {
-                count: function(feature) {
-                  return feature.attributes.count;
-                },
-                radius: function(feature) {
-                  if(feature.attributes.count === undefined) {
-                    return 8;
-                  } else {
-                    return Math.min(Math.floor(feature.attributes.count / 10), 10) + 10;
-                  }
-                }
-              }
+            }, styleFunctions),
+            "select": new OpenLayers.StyleMap({
+              fillColor: "#F00",
+              strokeColor: '#F00'
             })
-          })
+          }),
+          rendererOptions: { zIndexing: true }
         });
         map.addLayer(map.data_layer);
 
-//        var grid = map.ownerCt.get('grid');
-//        if(grid) {
-//          grid.getSelectionModel().on('selectionchange', function(sm) {
-//            var record = sm.getSelected();
-//            if(record) {
-//              this.showSelectedFeatures(record.get('fid'));
-//            } else {
-//              this.showAllFeatures();
-//            }
-//          }, map);
-//        }
-        App.store('search_results').on('load', this.loadSearchResults, map);
+        map.controls.add('select_item', new OpenLayers.Control.SelectFeature(map.projects_layer, {
+          clickout: true,
+          onSelect: function(feature) {
+            var pbar = Ext.Msg.show({
+              title: 'Please wait...',
+              msg: 'Selecting records that include this location',
+              minWidth: 300,
+              wait: true,
+              modal: false
+            });
+
+            var filterFunc = function(record, id) {
+              var found = Ext.each(feature.cluster, function(item) {
+                if(record.get('id') == item.attributes.id) { return false; }
+              }, this);
+
+              if(found >= 0) { return true; }
+            };
+
+            App.store('search_results').filterBy.defer(100, App.store('search_results'), [filterFunc, this]);
+          }.createDelegate(map)
+        }));
+        map.control('select_item').activate();
+
+        App.store('search_results').on('datachanged', function(store) {
+          //this.loadSearchResults(store);
+          var pbar = Ext.Msg.show({
+            title: 'Please wait...',
+            msg: 'Loading records...',
+            minWidth: 300,
+            wait: true,
+            modal: false
+          });
+
+          this.showAllFeatures.defer(300, map, [pbar])
+        }, map);
       }
     }    
   };
