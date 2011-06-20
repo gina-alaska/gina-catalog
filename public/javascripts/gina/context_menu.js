@@ -54,11 +54,13 @@ Ext.ux.ContextMenu = function(config) {
 
   this.addEvents('beforeshow');
 
-  this.defaultMenu = config.defaultMenu || 'default';
-  this.menus = [];
-  this.actions = config.actions || {};
-  
-  for(var ii in config.menus) {
+  Ext.apply(this, config, {
+    defaultMenu: 'default',
+    menus: [],
+    actions: {}
+  });
+
+  for(var ii in this.menus) {
     this.menus[ii] = new Ext.menu.Menu({
       items: config.menus[ii]
     });
@@ -96,6 +98,8 @@ Ext.ux.ContextMenu = function(config) {
   /**
    * Callback function to handle context menu clicks for gridpanels
    *
+   * @param grid
+   * @param index
    * @param e
    */
   this.showContextMenu = function(grid, index, e) {
@@ -106,6 +110,29 @@ Ext.ux.ContextMenu = function(config) {
     if (this.fireEvent('beforeshow', this, 'grid', record) !== false) {
       e.ctxRecord = record;
       e.ctxPanel = grid;
+      this.activeMenu.showAt(e.getXY());
+      e.stopEvent();
+    }
+  };
+
+  /**
+   * Callback function to handle context menu clicks for dataviews
+   *
+   * @param DataView
+   * @param Number index
+   * @param node
+   * @param Event e
+   */
+  this.showDataviewContextMenu = function(dv, index, node, e) {
+    var records = dv.getSelectedRecords();
+    if(this.fireEvent('beforeshow', this, 'dataview', records) !== false) {
+      if(records.indexOf(dv.getRecord(node)) < 0 && this.forceSelection) {
+        dv.select(index);
+        records = dv.getSelectedRecords();
+      }
+
+      e.ctxRecords = records;
+      e.ctxPanel = dv;
       this.activeMenu.showAt(e.getXY());
       e.stopEvent();
     }
@@ -124,6 +151,8 @@ Ext.ux.ContextMenu = function(config) {
       panel.on('contextmenu', this.showTreeContextMenu, this)
     } else if(panel.isXType('grid')) {
       panel.on('rowcontextmenu', this.showContextMenu, this)
+    } else if(panel.isXType('dataview')) {
+      panel.on('contextmenu', this.showDataviewContextMenu, this);
     }
   };
 };
