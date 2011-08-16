@@ -1,196 +1,179 @@
-// Place your application-specific JavaScript functions and classes here
-// This file is automatically included by javascript_include_tag :defaults
-var App = function() {
-  var _self = {};
+//// Place your application-specific JavaScript functions and classes here
+//// This file is automatically included by javascript_include_tag :defaults
 
-  _self.controllers = new Ext.util.MixedCollection();
-  _self.controllers.on('add', function(index, obj, key) {
-    var klass = Ext.extend(Ext.ux.BaseController, obj);
-    this.controllers.replace(key, new klass({ manager: this }));
-  }, _self);
+Ext.Loader.setConfig({
+  enabled: true,
+  paths: {
+    'Ext': '/javascripts',
+    'App': '/javascripts/app',
+    'Ext.OpenLayers': '/javascripts/openlayers'
+  }
+});
+//
+//Ext.require(['Ext.gina.Ajax', 'Ext.gina.NavigationHandler', 'Ext.gina.DefaultText', 'Ext.gina.Notify']);
+//Ext.require(['Ext.OpenLayers.Layers', 'Ext.OpenLayers.Panel', 'App.model.CurrentUser', 'App.controller.*']);
 
-  _self.stores = new Ext.util.MixedCollection();
-  _self.stores.on('add', function(index, obj, key) {
-    this.stores.replace(key, Ext.create(obj, 'jsonstore'));
-  }, _self);
+Ext.define('App', {
+  singleton: true,
+  init: function(sys) {
+    this.sys = sys;
+    
+    this.nav = Ext.create('Ext.gina.NavigationHandler', {
+      manager: this,
+      defaultPage: 'home',
+      autoStart: false,
+      appRootUrl: /^[\/]{0,1}$/,
 
-  _self.views = new Ext.util.MixedCollection(true);
-
-  _self.models = new Ext.util.MixedCollection(true);
-  _self.models.on('add', function(index, obj, key) {
-    this.models.replace(key, Ext.data.Record.create(obj));
-  }, _self);
-
-  Ext.apply(_self, {
-    model: function(key) { return this.models.get(key); },
-    controller: function(key) { return this.controllers.get(key); },
-    view: function(key, params) {
-      var v = this.views.get(key);
-      return (typeof v == 'function' ? v.apply(_self, params) : v);
-    },
-    store: function(key) { return this.stores.get(key); },
-
-    init: function() {
-      Ext.QuickTips.init();
-      this.nav = new Ext.ux.NavigationHandler({
-        manager: this,
-        defaultPage: 'home',
-        autoStart: false,
-        //appRootUrl: /^[\/]{0,1}$/,
-        
-        pages: {
-          home: {
-            title: 'Home',
-            handler: this.controller('home').navigation,
-            icon: '/images/icons/medium/home.png'
-          },
-          catalog: {
-            title: 'Catalog',
-            handler: this.controller('catalog').navigation,
-            icon: '/images/icons/medium/bookmark.png'
-          },
-          news: {
-            title: 'News',
-            icon: '/images/icons/medium/chat-.png'
-          },
-          nssi: {
-            title: 'NSSI',
-            icon: '/images/icons/medium/globe.png'
-          },
-          realtime: {
-            title: 'Realtime Data',
-            icon: '/images/icons/medium/satellite.png'
-          },
-          contact: {
-            title: 'Contact Us',
-            icon: '/images/icons/medium/email.png'
-          },
-          help: {
-            title: 'Help',
-            icon: '/images/icons/medium/male-user.png'
-          },
-          signup: {
-            title: 'Signup',
-            url: 'http://id.gina.alaska.edu/#signup',
-            mode: 'redirect',
-            icon: '/images/icons/medium/agent.png'
-          },
-          login: {
-            title: 'Login',
-            url: '/login',
-            icon: '/images/icons/medium/lock.png',
-            mode: 'redirect'
-          },
-          logout: {
-            title: 'Logout',
-            url: '/logout',
-            icon: '/images/icons/medium/lock.png',
-            mode: 'redirect'
-          }
+      pages: {
+        catalog: {
+          title: 'Catalog',
+          icon: '/images/icons/medium/bookmark.png'
+        },
+        news: {
+          title: 'News',
+          url: 'http://nssi-wagn.gina.alaska.edu/News/Articles',
+          mode: 'window',
+          icon: '/images/icons/medium/chat-.png'
+        },
+        nssi: {
+          title: 'NSSI',
+          url: 'http://www.northslope.org',
+          mode: 'window',
+          icon: '/images/icons/medium/globe.png'
+        },
+        realtime: {
+          title: 'Realtime Data',
+          url: 'http://realtime.hub.gina.alaska.edu',
+          mode: 'window',
+          icon: '/images/icons/medium/satellite.png'
+        },
+        contact: {
+          title: 'Contact Us',
+          icon: '/images/icons/medium/email.png'
+        },
+        help: {
+          title: 'Help',
+          icon: '/images/icons/medium/male-user.png'
+        },
+        signup: {
+          title: 'Signup',
+          url: 'http://id.gina.alaska.edu/#signup',
+          mode: 'redirect',
+          icon: '/images/icons/medium/agent.png'
+        },
+        login: {
+          title: 'Login',
+          url: '/login',
+          icon: '/images/icons/medium/lock.png',
+          mode: 'redirect'
+        },
+        logout: {
+          title: 'Logout',
+          url: '/logout',
+          icon: '/images/icons/medium/lock.png',
+          mode: 'redirect'
         }
-      });
+      }
+    });
 
-      this.loadMask = new Ext.LoadMask(Ext.getBody(), {
-        msg: 'Please wait...',
-        store: App.store('search_results')
-      });
+    this.navToolbar = Ext.create('Ext.ButtonGroup', {
+      border: false,
+      columns: 3,
+      height: 85,
+      cls: 'main-menu',
+      defaults: { scale: 'large', iconAlign: 'left', width: '100%', enableToggle: true, toggleGroup: 'pages' },
+      items: [
+        this.nav.toolbarItems(['catalog', 'news', 'nssi', 'realtime', 'contact', 'help'])
+      ]
+    });
 
-      this.navToolbar = new Ext.ButtonGroup({
+    this.loginToolbar = Ext.create('Ext.ButtonGroup', {
+      border: false,
+      columns: 1,
+      height: 85,
+      cls: 'login-menu',
+      buttonAlign: 'center',
+      pack: 'center',
+      defaults: { scale: 'large', iconAlign: 'left', width: '100%', enableToggle: true, toggleGroup: 'pages' },
+      items: [
+        this.nav.toolbarItems(['signup', 'login'])
+      ]
+    });
+
+    this.header = Ext.create('Ext.toolbar.Toolbar', {
+      cls: 'main-toolbar',
+      items: [{
+        width: 650,
         border: false,
-        columns: 3,
-        height: 85,
-        cls: 'main-menu',
-        defaults: { scale: 'large', iconAlign: 'left', width: '100%', enableToggle: true, toggleGroup: 'pages' },
-        items: [
-          this.nav.toolbarItems(['catalog', 'news', 'nssi', 'realtime', 'contact', 'help'])
-        ]
-      });
-      
-      this.loginToolbar = new Ext.ButtonGroup({
+        contentEl: 'header',
+        xtype: 'panel'
+      }, '->', this.navToolbar, this.loginToolbar]
+    });
+
+    this.current_user = Ext.create('Ext.gina.CurrentUser');
+    this.current_user.on('logged_in', function() {
+      var bbar = this.loginToolbar,
+          items;
+
+      items = this.nav.toolbarItems([{
+        xtype: 'panel',
+        height: 37,
+        width: 150,
         border: false,
-        columns: 1,
-        height: 85,
-        cls: 'main-menu',
-        defaults: { scale: 'large', iconAlign: 'left', width: '100%', enableToggle: true, toggleGroup: 'pages' },
-        items: [
-          this.nav.toolbarItems(['signup', 'login'])
-        ]
-      });
+        cls: 'welcome-panel',
+        html: 'Welcome back<br />' + this.current_user.get('fullname')
+      }, 'logout']);
 
-      this.topToolbar = new Ext.Toolbar({
-        cls: 'main-toolbar',
-        height: 90,
-        items: [{
-          border: false,
-          xtype: 'panel',
-          width: 610,
-          contentEl: 'header'
-        }, '->', this.navToolbar, this.loginToolbar]
-      });
+      bbar.removeAll();
+      bbar.add(items);
+    }, this);
+  },
 
-      this.views.add('content', new Ext.Panel({
-        itemId: 'content',
+  showLoading: function(msg) {
+    return Ext.Msg.show({
+      title: 'Please wait...',
+      msg: msg || 'Loading...',
+      minWidth: 300,
+      wait: true,
+      modal: false
+    });
+  },
+  hideLoading: function() { return Ext.Msg.hide(); }
+});
+
+Ext.application({
+  name: 'App',
+  appFolder: '/javascripts/app',
+  controllers: ['Catalog', 'Asset', 'Help', 'Contact'],
+  launch: function() {
+    Ext.util.History.init();
+    App.init(this);
+    
+    App.viewport = Ext.create('Ext.container.Viewport', {
+      layout: 'border',
+      defaults: { border: false },
+      items: [{
+        id: 'center',
         region: 'center',
-        margins: '0 0 0 0',
         border: false,
-        frame: false,
+        tbar: App.header,
         layout: 'card',
-        defaults: { border: false },
-        activeItem: 0,
-        tbar: this.topToolbar,
-        items: [{ contentEl: 'content' }]
-      }));
-
-      this.current_user = new Ext.ux.User({
-        url: '/preferences.json',
-        method: 'GET',
-        listeners: {
-          scope: this,
-          load: function() {
-            var bbar = this.loginToolbar,
-                request = this.nav.getRequest(),
-                items;
-
-            if(this.current_user.logged_in()) {
-              items = this.nav.toolbarItems([{
-                xtype: 'panel',
-                height: 37,
-                border: false,
-                cls: 'welcome-panel',
-                html: 'Welcome back<br />' + this.current_user.get('fullname')
-              }, 'logout']);
-            } else {
-              items = this.nav.toolbarItems(['signup', 'login']);
-            }
-
-            bbar.removeAll();
-            bbar.add(items);
-            bbar.doLayout();
-          },
-          clear: function() {
-            var bbar = this.loginToolbar,
-                items = this.nav.toolbarItems(['signup', 'login']);
-            
-            bbar.removeAll();
-            bbar.add(items);
-            bbar.doLayout();
-          }
-        }
-      });
-
-      this.viewport = new Ext.Viewport({
-        layout: 'border',
-        border: false,
-        frame: false,
         deferredRender: false,
-        items: [ this.view('content') ]
-      });
+        items: [{
+          html: 'Loading...'
+        }]
+      }, {
+        region: 'south',
+        contentEl: 'footer'
+      }]
+    });
 
-      this.current_user.on('load', function() { this.nav.start(); }, this, { single: true })
+    if(top.location.pathname == '/') {
+      var catalog = this.getController('Catalog');
+      catalog.show();
+    } else {
+      var asset = this.getController('Asset');
+      asset.show();
     }
-  });
-
-  return _self;
-}();
-
-Ext.onReady(App.init, App);
+  }
+});
