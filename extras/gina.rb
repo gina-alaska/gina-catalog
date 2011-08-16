@@ -4,15 +4,15 @@ module GINA
   LIBS = {
     :extjs => {
       :versions => {
-        :default => '3.3.1',
-        :beta => '4.0-beta2'
+        :default => '4.0.2a',
+        :beta => '4.0.2a'
       },
       :development => {
-        :js => ['ext-{version}/adapter/ext/ext-base-debug.js', 'ext-{version}/ext-all-debug.js'],
+        :js => ['ext-{version}/ext-all-debug.js'],
         :css => ['ext-{version}/resources/css/ext-all.css']
       },
       :production => {
-        :js => ['ext-{version}/adapter/ext/ext-base.js', 'ext-{version}/ext-all.js'],
+        :js => ['ext-{version}/ext-all.js'],
         :css => ['ext-{version}/resources/css/ext-all.css']
       }
     }
@@ -20,11 +20,9 @@ module GINA
 
   module Helpers
     def include_app_js(app, *opts)
-      base = ['gina/event_manager.js', 'gina/base_controller.js']
       jsfiles = []
       Dir.chdir('public/javascripts') {
-        jsfiles << base
-        jsfiles << (Dir.glob('gina/*.js') - base)
+        jsfiles << Dir.glob('gina/*.js')
         jsfiles << Dir.glob('google/*.js') if opts.include? :google
         jsfiles << Dir.glob('openlayers/*.js') if opts.include? :openlayers
         jsfiles << Dir.glob('extjs/*.js')
