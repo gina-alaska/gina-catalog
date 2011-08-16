@@ -17,7 +17,7 @@ gem 'rack-openid', '>=0.2.1', :require => 'rack/openid'
 gem 'thinking-sphinx', '2.0.3'
 gem 'ts-delayed-delta', '1.1.2', :require => 'thinking_sphinx/deltas/delayed_delta'
 gem 'rdiscount', '1.6.8'
-#, '1.3.1'
+gem 'grit', '2.4.1'
 
 # Use unicorn as the web server
 # gem 'unicorn'
