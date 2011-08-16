@@ -1,7 +1,7 @@
-class Link < ActiveRecord::Base
+class OldLink < ActiveRecord::Base
   CATEGORIES = ['Website', 'Report', 'Shape File', 'WMS', 'WCS', 'WFS', 'KML', 'Layer', 'Metadata']
 
-  belongs_to :asset, :polymorphic => true
+  belongs_to :linkable, :polymorphic => true
 
   validates_length_of :display_text, :in => 3..255
   validates_length_of :url, :in => 11..255

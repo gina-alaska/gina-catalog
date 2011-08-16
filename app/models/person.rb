@@ -61,4 +61,12 @@ class Person < ActiveRecord::Base
 
     pn.save!
   end
+
+  def as_json(*opts)
+    {
+      :id => self.id,
+      :full_name => self.full_name,
+      :email => self.email
+    }
+  end
 end

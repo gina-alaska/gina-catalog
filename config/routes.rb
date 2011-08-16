@@ -9,6 +9,8 @@ NSCatalog::Application.routes.draw do
       post :search
       get :search
     end
+
+    resources :locations
   end
   
   resource :session

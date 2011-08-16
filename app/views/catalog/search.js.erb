@@ -1,6 +1,3 @@
-<% cache('all_available_items') do -%>
-var fullCatalogDataSet;
-Ext.onReady(function() {
-  this.fullCatalogDataset = { total: <%= @results.count -%>, results: <%= raw @results.to_json -%> };
-}, App);
+<% cache('all_available_items_js') do -%>
+App.fullCatalogDataset = { total: <%= @results.count -%>, results: <%= raw @results.to_json -%> };
 <% end -%>

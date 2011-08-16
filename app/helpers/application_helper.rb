@@ -6,7 +6,9 @@ module ApplicationHelper
   end
   def jsflashes
     '<script type="text/javascript">' +
-      flash.map { |type, content| "Ext.ux.Notify.show(\"#{type}\", \"#{content}\");"  }.join(' ') +
+      'Ext.onReady(function() { ' +
+      flash.map { |type, content| "Ext.gina.Notify.show(\"#{type}\", \"#{content}\");"  }.join(' ') +
+      '});' +
     '</script>'
   end
 end

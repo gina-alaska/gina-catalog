@@ -1,5 +1,5 @@
-class Location < ActiveRecord::Base
-  belongs_to :asset, :polymorphic => true
+class OldLocation < ActiveRecord::Base
+  belongs_to :locatable, :polymorphic => true
 
   def geom_coords
     geom.try(:text_representation)

@@ -1,15 +1,13 @@
 class CatalogController < ApplicationController
+  caches_action :show, :layout => true, :if => lambda { |c| c.request.xhr? }
+  caches_action :show, :layout => false, :unless => lambda { |c| c.request.xhr? }
+  caches_action :search
+
   def show
-    id, type = params[:id].split('-')
+    @item = Catalog.includes(:locations, :source_agency, :agencies, :data_source, :links, :tags)
+    @item = @item.includes({ :people => [ :addresses, :phone_numbers ] }).find_by_id(params[:id])
 
-    case type
-      when 'Data'
-        @item = Asset.find_by_id(id)
-      when 'Project'
-        @item = Project.find_by_id(id)
-    end
-
-    redirect_to @item
+    render :layout => false
   end
 
   def search
@@ -19,10 +17,12 @@ class CatalogController < ApplicationController
 #      results = sphinx_search(params[:q], params[:sort], params[:dir], params[:start], params[:limit])
 #    end
 #    results = Project.search('', :per_page => 3000)
-    @results = Project.not_archived.published.includes(:locations, :synopsis, :source_agency).limit(params[:limit] || 3000).order('title ASC')
+    @results = Catalog.not_archived.published
+    @results = @results.includes(:locations, :source_agency, :people, :agencies, :tags)
+    @results = @results.limit(params[:limit] || 3000).order('title ASC')
 
     respond_to do |format|
-      format.json { render :json => { :results => @results, :total => @results.count  } }
+      format.json
       format.js
     end
   end

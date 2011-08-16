@@ -1,0 +1,3 @@
+%li.link.tabbed
+  %label= "#{link.category}:"
+  = link_to (link.display_text.empty? ? link.url : link.display_text), link.url, :target => :_blank

@@ -1,0 +1,88 @@
+<div class="project-summary">
+  <% if @project.published? or @project.owner == current_user or current_user.is_an_admin? -%>
+  <% NSSIHelpers::Template.new(@project) do |t| %>
+    <%= t.text :title %>
+    <%= t.spacer %>
+    <% t.child :synopsis do |s| %>
+      <%= RDiscount.new(s.data.text.to_s).to_html %>
+    <% end %>
+    <%= t.text :status %>
+    <%= t.spacer %>
+    <%= t.text :year_funded %>
+    <%= t.date :start_date %>
+    <%= t.date :end_date %>
+    <%= t.spacer %>
+    <%= t.label 'Primary Contact' %>
+    <% t.child :primary_contact do |contact| %>
+      <div style="padding-left: 1em;">
+        <u><%= h contact.data.full_name %></u>
+        <%= contact.text :email  %>
+        <% contact.collection :phone_numbers do |pn| %>
+          <%= pn.text :digits, :label => pn.data.name.humanize %>
+        <% end %>
+        <% contact.collection :addresses do |address| %>
+          <%= address.label 'Address' %>
+          <div style="padding-left: 1em;">
+          <%= address.data.line1 %><br />
+          <%= address.data.line2 %><br />
+          <%= address.data.city %>, <%= address.data.state %> <%= address.data.zipcode %><br />
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+    <%= t.label 'Other Contacts' %>
+    <% t.collection :people do |contact| %>
+      <% next if contact.data == @project.primary_contact %>
+      <div style="padding-left: 1em;">
+        <u><%= h contact.data.full_name %></u>
+        <div style="padding-left: 1em;">
+        <%= contact.text :email  %>
+        <% contact.collection :phone_numbers do |pn| %>
+        <%= pn.text :digits, :label => "#{pn.data.name.humanize} Phone #" %>
+        <% end %>
+        <% contact.collection :addresses do |address| %>
+          <%= address.label 'Address' %>
+          <div style="padding-left: 1em;">
+          <%= address.data.line1 %><br />
+          <%= address.data.line2 %><br />
+          <%= address.data.city %>, <%= address.data.state %> <%= address.data.zipcode %>
+          </div>
+        <% end %>
+        </div>
+      </div>
+    <% end %>
+    <%= t.spacer %>
+    <% t.child :source_agency do |agency| %>
+      <%= agency.text :name, :label => 'Source Agency' %> 
+    <% end %>
+    <% t.child :funding_agency do |agency| %>
+      <%= agency.text :name, :label => 'Funding Agency' %>
+    <% end %>
+    <%= t.collection :agencies, :name %>
+    <%= t.collection :locations, :name %>
+    <%= t.collection :gcmd_themes, :name, :join => ', ' %>
+    <%= t.collection :tags, :text, :join => ', ' %>
+    <%= t.label 'Links' -%>
+    <ul style="padding-left: 1em;">
+      <% t.collection :links do |l| -%>
+      <li><%= l.link :url, :label => l.data.category -%></li>
+      <% end -%>
+    </ul>
+    <%= t.label 'Notes' -%>
+    <% t.child :note do |note| -%>
+      <div style="padding-left: 1em;">
+      <%= note.data.text.gsub("\n", "<br />") %>
+      </div>
+    <% end -%>
+    <%= t.spacer %>
+    <%= t.link :project_url, :label => 'Project Website' %>
+    <%= t.label 'Project Information Source' %>
+    <ul style="padding-left: 1em;">
+      <% t.child :data_source do |ds| %>
+      <li><%= ds.text :name, :label => "Organization" %></li>
+      <% end %>
+      <li><%= t.link :source_url, :label => 'Website' %></li>
+    </ul>
+  <% end %>
+  <% end %>
+</div>

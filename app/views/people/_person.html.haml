@@ -1,0 +1,16 @@
+.contact.tabbed
+  .full_name= person.full_name
+  - unless person.email.nil? or person.email.empty?
+    .email
+      %label Email:
+      = person.email
+  - person.phone_numbers.each do |pn|
+    .digits
+      %label= "#{pn.name.humanize}:"
+      = pn.digits
+  - person.addresses do |address|
+    .address
+      %label Address
+      .line1= address.line1
+      .line2= address.line2
+      .line3= "#{address.city}, #{address.state} #{address.zipcode}"
