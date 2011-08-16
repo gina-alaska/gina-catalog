@@ -1,7 +1,8 @@
-Catalog::Application.routes.draw do
+NSCatalog::Application.routes.draw do
   resources :projects
-
   resources :assets
+  resources :agencies
+  resources :people
 
   resources :catalog do
     collection do

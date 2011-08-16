@@ -4,7 +4,7 @@
 require File.expand_path('../config/application', __FILE__)
 require 'rake'
 
-Catalog::Application.load_tasks
+NSCatalog::Application.load_tasks
 
 begin 
   require 'thinking_sphinx/tasks'
