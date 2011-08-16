@@ -4,11 +4,14 @@
  * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
 
 //@import "compass/reset";
-@import "extjs/notify";
-@import "extjs/center_layout";
+@import "partials/notify";
+/*@import "extjs/center_layout";*/
 @import "partials/splash";
 @import "partials/previews";
 @import "partials/search_results";
+@import "partials/catalog";
+@import "partials/projects";
+@import "partials/icons";
 
 body {
   font-family: "trebuchet ms", Verdana, Tahoma, Arial, Helvetica, san-serif;
@@ -22,18 +25,18 @@ body {
   height: 80px;
   padding: 5px 0 0 0;
   color: #fff;
-  background-color: #187b99;
+  background: #187b99;
   font-weight: bold;
   font-size: 14px;
 
   #logo img {
-    height: 75px;
+    height: 70px;
     float: left;
     margin: 0 15px 0 5px;
   }
 
   h1 {
-    margin-top: 15px;
+    margin-top: 8px;
     font-size: 30px;
   }
 }
@@ -47,34 +50,62 @@ div.main-toolbar {
 }
 
 .main-menu {
+  .x-btn {
+    width: 100%;
+  }
+
+  button .x-btn-inner {
+    font-size: 14px;
+    font-weight: bold;
+    min-width: 90px;
+    text-align: left;
+  }
+}
+
+.login-menu {
   .welcome-panel .x-panel-body {
     background: none;
     height: 40px;
     font-size: 14px;
     font-weight: bold;
     padding: 5px;
+    text-align:center;
   }
 
-  .x-btn-group-bwrap {
-    background-color: #D0DEF0;
+  .x-btn {
+    width: 100%;
+    text-align: center;
   }
 
-  .x-btn-mc {
-    text-align: left;
-  }
-
-  button.x-btn-text {
+  button .x-btn-inner {
     font-size: 14px;
     font-weight: bold;
     min-width: 90px;
     text-align: left;
-
   }
 }
-
-
 
 .large-buttons .x-btn-text {
   font-size: 16px;
   line-height: 16px;
+}
+
+.x-toolbar-item {
+  .x-form-item {
+    margin-right: 5px;
+    margin-bottom: 0;
+    display: inline;
+    float: left;
+  }
+  .x-btn {
+    margin-right: 5px;
+  }
+
+  .x-form-item label {
+  }
+}
+
+.loading-indicator {
+  background: url('/images/loading.gif') no-repeat;
+  padding: 0 20px;
 }

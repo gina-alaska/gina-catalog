@@ -1,18 +1,14 @@
 .asset_wrap {
-  border-bottom: 1px solid #DDD;
-  margin: 0 5px 0 5px;
+  //border-bottom: 1px solid #DDD;
+  margin: 0;
   padding: 5px 5px 5px 5px;
   font-size: 12px;
 
-  label {
-    font-weight: bold;
-  }
-
-  &.x-view-over {
+  &.x-item-over {
     background-color: #BBDDFF;
   }
 
-  &.x-view-selected {
+  &.x-item-selected {
     background-color: #AABBFF;
   }
 
@@ -25,15 +21,13 @@
   }
 
   .description {
-    margin-left: 5px;
+    margin-left: 10px;
     margin-bottom: 5px;
   }
 
-  .detail {
-    min-width: 80px;
-    float: left;
-    margin-left: 5px;
-    margin-right: 5px;
+  .detail label {
+    font-weight: bold;
+    margin-left: 10px;
   }
 
   .type {
@@ -48,23 +42,80 @@
   }
 }
 
-.search.x-small-editor {
+.quicksearch {
   &.x-toolbar .xtb-text {
     font-size: 18px;
+  }
+
+  .default input {
+    color: #555;
+  }
+
+  div.x-form-item {
+    margin-bottom: 0;
   }
   
   input.x-form-text {
     line-height: normal;
-    height: 25px !important;
-    font: normal 16px tahoma, arial, helvetica, sans-serif;
+    height: 32px !important;
+    font: normal 18px tahoma, arial, helvetica, sans-serif;
     font-weight: normal;
   }
+
   img.x-form-trigger {
-    height: 30px;
+    height: 25px;
     background-color: #DCDCDC;
   }
+  
   .x-btn-large button {
     font: normal 16px tahoma, arial, helvetica, sans-serif;
+  }
+}
+
+.filterlist {
+  font-size: 14px;
+  
+  .filter_wrap {
+    position: relative;
+    display:block;
+    min-height: 32px;
+    clear: both;
+
+    .desc {
+      padding: 5px;
+      margin-right: 32px;
+    }
+
+    .remove {
+      height: 100%;
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+
+    .remove a {
+      display:block;
+      margin: auto;
+      width: 32px;
+      height: 100%;
+      background: url(/images/icons/medium/x.png) center center no-repeat;
+    }
+
+    .remove img {
+      display:inline;
+      height: 32px;
+      margin: auto;
+      position: relative;
+      vertical-align: middle;
+    }
+
+    &.x-item-over {
+      background-color: #BBDDFF;
+    }
+
+    &.x-item-selected {
+      background-color: #AABBFF;
+    }
   }
 }
 
