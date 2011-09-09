@@ -35,6 +35,15 @@ Ext.define('App.view.catalog.map', {
 
   setupLayers: function() {
 //    this.getMap().addLayer(this.gina.getLayer('landownership'));
+//    var geojson = new OpenLayers.Format.GeoJSON();
+//    var alaska = geojson.read(SearchRegions.alaska)[0];
+//    var nsb = geojson.read(SearchRegions.nsb)[0];
+//    alaska.geometry.transform(this.getMap().displayProjection, this.getMap().getProjectionObject());
+//    nsb.geometry.transform(this.getMap().displayProjection, this.getMap().getProjectionObject());
+//
+//    this.regions = new OpenLayers.Layer.Vector('Regions', {});
+//    this.regions.addFeatures([alaska]);
+//    this.addLayer(this.regions);
 
     this.featureCache = Ext.create('Ext.util.MixedCollection');
     
@@ -61,7 +70,7 @@ Ext.define('App.view.catalog.map', {
       }
     };
 
-    this.project_cluster_strategy = new OpenLayers.Strategy.Cluster({ distance: 40 });
+    this.project_cluster_strategy = new OpenLayers.Strategy.Cluster({ distance: 40, threshold: 2 });
     this.projects = new OpenLayers.Layer.Vector('Projects', {
       strategies: [ this.project_cluster_strategy ],
       styleMap: new OpenLayers.StyleMap({
