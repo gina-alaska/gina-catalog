@@ -8,3 +8,6 @@ config/database.yml
 db/sphinx
 public/javascripts/cached
 *.git
+public/javascripts/extjs3/
+public/javascripts/oldapp/
+vendor/nssi-prod
