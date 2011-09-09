@@ -11,4 +11,14 @@ module ApplicationHelper
       '});' +
     '</script>'
   end
+
+  def search_regions
+    regions = {}
+
+    Dir.glob(File.join(Rails.root, 'public/regions/*.geojson')) do |f|
+      regions[File.basename(f, '.geojson')] = JSON.parse(File.read(f))
+    end
+
+    regions
+  end
 end
