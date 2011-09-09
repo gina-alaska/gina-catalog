@@ -49,7 +49,7 @@ Ext.define('App.controller.Catalog', {
       id: 'results-map',
       flex: 1,
       region: 'center',
-      projection: 'polar',
+      projection: 'EPSG:3572',
       border: true,
       margins: '3 0 3 0',
       store: this.getStore('SearchResults'),

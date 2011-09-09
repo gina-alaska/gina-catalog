@@ -9,31 +9,41 @@ Ext.define('Ext.OpenLayers.Layers', {
       type: 'tiles',
       baseUrl: 'http://swmha.gina.alaska.edu/tilesrv/bdl/tile/',
       wrapDateLine: true,
-      transitionEffect: 'resize'
+      transitionEffect: 'resize',
+      isBaseLayer: true
+
     },
     charts: {
       name: 'NOAA Charts',
       type: 'tiles',
       baseUrl: 'http://swmha.gina.alaska.edu/tilesrv/charts/tile/',
-      wrapDateLine: true
+      wrapDateLine: true,
+      isBaseLayer: true
+
     },
     topo: {
       name: 'Topographic DRG',
       type: 'tiles',
       baseUrl: 'http://swmha.gina.alaska.edu/tilesrv/drg/tile/',
-      wrapDateLine: true
+      wrapDateLine: true,
+      isBaseLayer: true
+
     },
     shaded_relief: {
       name: 'Shaded Relief',
       type: 'tiles',
       baseUrl: 'http://swmha.gina.alaska.edu/tilesrv/shaded_relief_ned/tile/',
-      wrapDateLine: true
+      wrapDateLine: true,
+      isBaseLayer: true
+
     },
     landsat_pan: {
       name: 'Landsat Pan',
       type: 'tiles',
       baseUrl: 'http://swmha.gina.alaska.edu/tilesrv/landsat_pan/tile/',
-      wrapDateLine: true
+      wrapDateLine: true,
+      isBaseLayer: true
+
     },
     landownership: {
       name: 'Land Ownerships',
@@ -45,20 +55,63 @@ Ext.define('Ext.OpenLayers.Layers', {
       },
       options: {
         wrapDateLine: true,
-        isBaseLayer: false
+        isBaseLayer: false,
+        opacity: 0.5
       }
     },
     bdl_aa: {
       name: 'Best Data Layer',
       type: 'tiles',
       baseUrl: 'http://swmha.gina.alaska.edu/tilesrv/bdl_esri_test/tile/',
-      wrapDateLine: false
+      wrapDateLine: false,
+      isBaseLayer: true
+
     },
-    bdl_polar: {
+    bdl_3572: {
       name: 'Best Data Layer (EPSG:3572)',
       type: 'tiles',
-      baseUrl: 'http://tiles.proto.gina.alaska.edu/test/tilesrv/bdl_polar/tile/'
+      baseUrl: 'http://tiles.proto.gina.alaska.edu/test/tilesrv/bdl_3572/tile/'
     },
+    "armap_relief_3572": {
+      type: 'arc93rest',
+      name: 'ARMAP - Relief Map',
+      url: 'http://arcticdata.utep.edu/ArcGIS/rest/services/ARMAP_ETOPO1ColorShadedRelief_35N_EPSG3572/MapServer/export'
+    },
+    "armap_cities_3572": {
+      name: 'ARMAP - Cities',
+      type: 'arc93rest',
+      url: "http://arcticdata.utep.edu/ArcGIS/rest/services/ARMAP_WorldCities_35N_EPSG3572/MapServer/export",
+      params: {
+        transparent: true
+      },
+      options: {
+        isBaseLayer: false
+      }
+    },
+    osm_base: {
+      name: 'Open Street Maps - TEST',
+      type: 'tiles',
+      baseUrl: 'http://tiles.proto.gina.alaska.edu/test/tilesrv/osm/tile/',
+      wrapDateLine: false,
+      isBaseLayer: true
+
+    },
+    osm_google_overlay: {
+      name: 'Open Street Maps - GOverlay TEST',
+      type: 'tiles',
+      baseUrl: 'http://tiles.proto.gina.alaska.edu/test/tilesrv/osm-google-ol/tile/',
+      wrapDateLine: false,
+      isBaseLayer: false
+    },
+    osm_overlay: {
+      name: 'Open Street Maps - TEST',
+      type: 'tiles',
+      baseUrl: 'http://tiles.proto.gina.alaska.edu/test/tilesrv/osm-ol/tile/',
+      wrapDateLine: false,
+      isBaseLayer: false
+    },
+
+
     bdl_polar_wms: {
       name: 'Best Data Layer (EPSG:3572)',
       type: 'wms',
@@ -121,11 +174,28 @@ Ext.define('Ext.OpenLayers.Layers', {
     return url + path;
   },
 
+  customTileType: function(name) {
+    return new OpenLayers.Layer.TMS(this.layer_configs[name].name, this.layer_configs[name].baseUrl, {
+      'type': 'jpeg',
+      'getURL': this.layer_configs[name].getUrl,
+      'wrapDateLine': this.layer_configs[name].wrapDateLine
+    });
+  },
+
+  arcGISRestType: function(name) {
+    return new OpenLayers.Layer.ArcGIS93Rest(
+      this.layer_configs[name].name,
+      this.layer_configs[name].url,
+      this.layer_configs[name].params,
+      this.layer_configs[name].options);
+  },
+
   imageMapType: function(name) {
     return new OpenLayers.Layer.TMS(this.layer_configs[name].name, this.layer_configs[name].baseUrl, {
       'type': 'jpeg',
       'getURL': this.getUrl,
-      'wrapDateLine': this.layer_configs[name].wrapDateLine
+      'wrapDateLine': this.layer_configs[name].wrapDateLine,
+      'isBaseLayer': this.layer_configs[name].isBaseLayer
     });
   },
 
@@ -157,6 +227,10 @@ Ext.define('Ext.OpenLayers.Layers', {
       return this.imageMapType(name);
     } else if(type == 'wms') {
       return this.wmsMapType(name);
+    } else if(type == 'custom_tiles') {
+      return this.customTileType(name);
+    } else if(type == 'arc93rest') {
+      return this.arcGISRestType(name);
     }
   },
 
