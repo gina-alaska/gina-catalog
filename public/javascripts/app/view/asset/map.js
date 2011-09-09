@@ -4,7 +4,7 @@ Ext.define('App.view.asset.map', {
 
   tbar: false,
   fbar: false,
-  projection: 'google',
+  projection: 'EPSG:3338',
   enableGraticule: false,
 
   initComponent: function() {
