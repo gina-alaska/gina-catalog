@@ -1,7 +1,7 @@
 Ext.define('App.controller.Catalog', {
   extend: 'Ext.app.Controller',
 
-  views: ['catalog.index', 'catalog.list', 'catalog.map', 'catalog.show', 'catalog.sidebar'],
+  views: ['catalog.index', 'catalog.list', 'catalog.map', 'catalog.show', 'catalog.sidebar', 'catalog.splash'],
   
   stores: ['SearchResults', 'Filters'],
   models: ['SearchResult', 'Filter'],
@@ -82,8 +82,7 @@ Ext.define('App.controller.Catalog', {
     this.getStore('SearchResults').on('datachanged',
       this.pages.sidebar.onDataChanged, this.pages.sidebar);
 
-    var sb = this.pages.sidebar,
-        map = this.pages.map;
+    var sb = this.pages.sidebar;
     
     this.pages.index = panel.add({
       layout: 'border',

@@ -171,6 +171,8 @@ Ext.application({
     if(top.location.pathname == '/') {
       var catalog = this.getController('Catalog');
       catalog.show();
+//      var splash = Ext.create(this.getController('Catalog').getView('catalog.splash'));
+//      splash.show();
     } else {
       var asset = this.getController('Asset');
       asset.show();
