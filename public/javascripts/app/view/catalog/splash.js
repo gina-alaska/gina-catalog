@@ -4,38 +4,43 @@ Ext.define('App.view.catalog.splash', {
   width: 725,
   height: 525,
 
-	layout: { type: 'vbox', align: 'stretch' },
-	
-	modal: true,
+  layout: { type: 'vbox',align: 'stretch' },
+
+  modal: true,
   closable: false,
-	preventHeader: true,
+  preventHeader: true,
 
   items: [{
     dock: 'top',
-		border: false,
-		xtype: 'panel',
-		height: 80,
+    border: false,
+    xtype: 'panel',
+    height: 80,
     contentEl: 'splash-header'
-  },	{
+  },{
     autoScroll: true,
     flex: 1,
-		border: false,
+    border: false,
     contentEl: 'splash-content'
-  }, {
-		xtype: 'panel',
-		border: false,
-		layout: { type: 'hbox', pack: 'center' },
-		defaults: { scale: 'large', width: 200, margin: '0 3 0 3' },
-		items: [
-			{ xtype: 'button', text: 'Guest', handler: function(button) { button.up('window').close(); } },
-			{ xtype: 'button', text: 'Login', handler: function(button) { button.up('window').close(); } }
-		]
-	},	{
-		dock: 'bottom',
-		xtype: 'panel',
-		border: false,
-		layout: 'fit',
-		height: 100,
+  },{
+    xtype: 'panel',
+    border: false,
+    layout: { type: 'hbox',pack: 'center' },
+    defaults: { scale: 'large',width: 200, margin: '0 3 0 3' },
+    items: [{
+      xtype: 'button',
+      text: 'Guest',
+      handler: function(button) { button.up('window').close(); }
+    },{
+      xtype: 'button',
+      text: 'Login',
+      handler: function(button) { button.up('window').close(); }
+    }]
+  },{
+    dock: 'bottom',
+    xtype: 'panel',
+    border: false,
+    layout: 'fit',
+    height: 100,
     contentEl: 'splash-footer'
   }]
 });
