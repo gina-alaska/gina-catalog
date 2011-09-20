@@ -5,16 +5,11 @@ Ext.define('App.view.catalog.splash', {
   height: 525,
 
 	layout: { type: 'vbox', align: 'stretch' },
-	// layout: 'fit',
 	
 	modal: true,
-  // plain: true,
   closable: false,
 	preventHeader: true,
-	// bodyBorder: false,
 
-  // defaults: { border: false, cls: 'transparent-bg' },
-  // cls: 'transparent-bg',
   items: [{
     dock: 'top',
 		border: false,
@@ -42,6 +37,5 @@ Ext.define('App.view.catalog.splash', {
 		layout: 'fit',
 		height: 100,
     contentEl: 'splash-footer'
-  }],
-	// items: [{ html: 'test', border: false, bodyBorder: false }]
+  }]
 });
