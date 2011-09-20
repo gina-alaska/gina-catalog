@@ -191,9 +191,9 @@ Ext.define('Ext.OpenLayers.Layers', {
   },
 
   imageMapType: function(name) {
-    return new OpenLayers.Layer.TMS(this.layer_configs[name].name, this.layer_configs[name].baseUrl, {
+    return new OpenLayers.Layer.XYZ(this.layer_configs[name].name, this.layer_configs[name].baseUrl + "${x}/${y}/${z}", {
       'type': 'jpeg',
-      'getURL': this.getUrl,
+      transitionEffect: 'resize',
       'wrapDateLine': this.layer_configs[name].wrapDateLine,
       'isBaseLayer': this.layer_configs[name].isBaseLayer
     });
