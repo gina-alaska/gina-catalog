@@ -144,7 +144,7 @@ Ext.define('App', {
 Ext.application({
   name: 'App',
   appFolder: '/javascripts/app',
-  controllers: ['Catalog', 'Asset', 'Help', 'Contact'],
+  controllers: ['Catalog', 'Asset', 'Help', 'Contact', 'Video'],
   launch: function() {
     Ext.util.History.init();
     App.init(this);
@@ -173,6 +173,9 @@ Ext.application({
       catalog.show();
      	var splash = Ext.create(this.getController('Catalog').getView('catalog.splash'));
      	splash.show();
+    } else if(top.location.pathname.match(/^\/videos/) ) {
+      var video = this.getController('Video');
+      video.show();
     } else {
       var asset = this.getController('Asset');
       asset.show();

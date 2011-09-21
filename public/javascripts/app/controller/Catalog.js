@@ -222,7 +222,9 @@ Ext.define('App.controller.Catalog', {
   },
 
   show: function() {
+    this.getStore('SearchResults').load();
     this.getStore('SearchResults').clearCachedFilter('name', 'hideall');
+
     var panel = this.pages.index.up('panel');
     panel.getLayout().setActiveItem(this.pages.index);
   },

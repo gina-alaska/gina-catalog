@@ -16,7 +16,7 @@ Ext.define('App.store.SearchResults', {
   },
   pageSize: 3000,
   remoteSort: false,
-  autoLoad: true,
+  autoLoad: false,
   listeners: {
 //    exception: Ext.ux.StoreHandlers.failure
   },

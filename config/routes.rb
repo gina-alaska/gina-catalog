@@ -1,4 +1,6 @@
 NSCatalog::Application.routes.draw do
+  resources :videos
+
   resources :projects
   resources :assets
   resources :agencies
