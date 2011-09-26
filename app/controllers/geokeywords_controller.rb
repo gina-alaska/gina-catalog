@@ -1,0 +1,2 @@
+class GeokeywordsController < ApplicationController
+end

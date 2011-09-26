@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110728221902) do
+ActiveRecord::Schema.define(:version => 20110926191312) do
 
   create_table "abstracts", :force => true do |t|
     t.column "project_id", :string
@@ -124,6 +124,11 @@ ActiveRecord::Schema.define(:version => 20110728221902) do
     t.column "catalog_id", :integer
   end
 
+  create_table "catalogs_geokeywords", :id => false, :force => true do |t|
+    t.column "catalog_id", :integer
+    t.column "geokeyword_id", :integer
+  end
+
   create_table "content_types", :force => true do |t|
     t.column "name", :string, :limit => 40
     t.column "long_name", :string
@@ -194,6 +199,13 @@ ActiveRecord::Schema.define(:version => 20110728221902) do
   create_table "gcmd_themes_projects", :id => false, :force => true do |t|
     t.column "gcmd_theme_id", :integer
     t.column "project_id", :integer
+  end
+
+  create_table "geokeywords", :force => true do |t|
+    t.column "name", :string
+    t.column "created_at", :datetime
+    t.column "updated_at", :datetime
+    t.column "geom", :point, :srid => 4326
   end
 
   create_table "geolocations", :force => true do |t|

@@ -1,4 +1,6 @@
 NSCatalog::Application.routes.draw do
+  resources :geokeywords
+
   resources :videos
 
   resources :projects
