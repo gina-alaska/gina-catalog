@@ -31,7 +31,7 @@ Ext.define('App', {
         },
         news: {
           title: 'News',
-          url: 'http://nssi-wagn.gina.alaska.edu/News/Articles',
+          url: '/cms/news',
           mode: 'window',
           icon: '/images/icons/medium/chat-.png'
         },
@@ -53,6 +53,8 @@ Ext.define('App', {
         },
         help: {
           title: 'Help',
+          url: '/cms/help',
+          mode: 'window',
           icon: '/images/icons/medium/male-user.png'
         },
         signup: {
@@ -144,7 +146,7 @@ Ext.define('App', {
 Ext.application({
   name: 'App',
   appFolder: '/javascripts/app',
-  controllers: ['Catalog', 'Asset', 'Help', 'Contact', 'Video'],
+  controllers: ['Catalog', 'Asset', 'Contact', 'Video'],
   launch: function() {
     Ext.util.History.init();
     App.init(this);
