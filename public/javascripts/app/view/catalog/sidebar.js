@@ -59,7 +59,7 @@ Ext.define('App.view.catalog.sidebar', {
       }
     }
 
-    this.directionMenu = function(name) {
+    this.directionMenu = function() {
       return [{
         text: 'Ascending',
         group: 'direction', xtype: 'menucheckitem',
@@ -95,12 +95,12 @@ Ext.define('App.view.catalog.sidebar', {
         group: 'sort', xtype: 'menucheckitem',
         menu: this.directionMenu()
       },{
-        text: 'Start',
+        text: 'Start Date',
         dataIndex: 'start_date_year',
         group: 'sort', xtype: 'menucheckitem',
         menu: this.directionMenu()
       },{
-        text: 'End',
+        text: 'End Date',
         dataIndex: 'end_date_year',
         group: 'sort', xtype: 'menucheckitem',
         menu: this.directionMenu()
