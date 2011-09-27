@@ -46,7 +46,13 @@ Ext.define('App.view.catalog.sidebar', {
         var handler = this.getSortHandler(),
             parent = menu.parentMenu.parentItem,
             field = parent.dataIndex,
-            dir = menu.text.toUpperCase();
+            dir = menu.text;
+
+        if(dir == 'Ascending') {
+          dir = 'ASC';
+        } else {
+          dir = 'DESC';
+        }
 
         parent.setChecked(true);
         handler(field, dir);
@@ -55,12 +61,12 @@ Ext.define('App.view.catalog.sidebar', {
 
     this.directionMenu = function(name) {
       return [{
-        text: 'Asc',
+        text: 'Ascending',
         group: 'direction', xtype: 'menucheckitem',
         scope: this,
         checkHandler: this.checkHandler
       }, {
-        text: 'Desc',
+        text: 'Descending',
         group: 'direction', xtype: 'menucheckitem',
         scope: this,
         checkHandler: this.checkHandler
