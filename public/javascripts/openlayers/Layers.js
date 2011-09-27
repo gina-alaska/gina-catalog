@@ -47,17 +47,12 @@ Ext.define('Ext.OpenLayers.Layers', {
     },
     landownership: {
       name: 'Land Ownerships',
-      type: 'wms',
-      baseUrl: 'http://wms.proto.gina.alaska.edu/wms/land_ownership',
-      params: {
-        layers: 'states_poly,states_line',
-        transparent: true
-      },
-      options: {
-        wrapDateLine: true,
-        isBaseLayer: false,
-        opacity: 0.5
-      }
+      type: 'tiles',
+      baseUrl: 'http://tiles.proto.gina.alaska.edu/test/tilesrv/glo_3572/tile/',
+      wrapDateLine: false,
+      isBaseLayer: false,
+      opacity: 0.75,
+      hidden: true
     },
     bdl_aa: {
       name: 'Best Data Layer',
@@ -65,7 +60,6 @@ Ext.define('Ext.OpenLayers.Layers', {
       baseUrl: 'http://swmha.gina.alaska.edu/tilesrv/bdl_esri_test/tile/',
       wrapDateLine: false,
       isBaseLayer: true
-
     },
     bdl_3572: {
       name: 'Best Data Layer (EPSG:3572)',
@@ -88,29 +82,23 @@ Ext.define('Ext.OpenLayers.Layers', {
         isBaseLayer: false
       }
     },
-    osm_base: {
-      name: 'Open Street Maps - TEST',
+    "osm_overlay_3572": {
+      name: 'Open Street Maps',
       type: 'tiles',
-      baseUrl: 'http://tiles.proto.gina.alaska.edu/test/tilesrv/osm/tile/',
+      baseUrl: 'http://tiles.proto.gina.alaska.edu/test/tilesrv/osm-google-ol-3572/tile/',
       wrapDateLine: false,
-      isBaseLayer: true
-
+      isBaseLayer: false,
+      opacity: 0.75
     },
-    osm_google_overlay: {
-      name: 'Open Street Maps - GOverlay TEST',
+
+    "osm_overlay_3338": {
+      name: 'Open Street Maps',
       type: 'tiles',
       baseUrl: 'http://tiles.proto.gina.alaska.edu/test/tilesrv/osm-google-ol/tile/',
       wrapDateLine: false,
-      isBaseLayer: false
+      isBaseLayer: false,
+      opacity: 0.75
     },
-    osm_overlay: {
-      name: 'Open Street Maps - TEST',
-      type: 'tiles',
-      baseUrl: 'http://tiles.proto.gina.alaska.edu/test/tilesrv/osm-ol/tile/',
-      wrapDateLine: false,
-      isBaseLayer: false
-    },
-
 
     bdl_polar_wms: {
       name: 'Best Data Layer (EPSG:3572)',
@@ -195,7 +183,9 @@ Ext.define('Ext.OpenLayers.Layers', {
       'type': 'jpeg',
       transitionEffect: 'resize',
       'wrapDateLine': this.layer_configs[name].wrapDateLine,
-      'isBaseLayer': this.layer_configs[name].isBaseLayer
+      'isBaseLayer': this.layer_configs[name].isBaseLayer,
+      'opacity': this.layer_configs[name].opacity,
+      'visibility': (this.layer_configs[name].hidden ? false : true)
     });
   },
 

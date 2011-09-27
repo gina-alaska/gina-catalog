@@ -70,7 +70,7 @@ Ext.define('App.view.catalog.map', {
       }
     };
 
-    this.project_cluster_strategy = new OpenLayers.Strategy.Cluster({ distance: 40, threshold: 2 });
+    this.project_cluster_strategy = new OpenLayers.Strategy.Cluster({ distance: 40 });
     this.projects = new OpenLayers.Layer.Vector('Projects', {
       strategies: [ this.project_cluster_strategy ],
       styleMap: new OpenLayers.StyleMap({
@@ -80,7 +80,7 @@ Ext.define('App.view.catalog.map', {
           pointRadius: "${radius}",
 //          pointRadius: 4,
           fillColor: "#94fbff",
-          fillOpacity: 0.5,
+          fillOpacity: 0.3,
           strokeColor: '#0000FF',
           strokeWidth: 2,
           strokeOpacity: 1
@@ -103,7 +103,7 @@ Ext.define('App.view.catalog.map', {
           fontWeight: 'bold',
           pointRadius: "${radius}",
           fillColor: "#ffcc66",
-          fillOpacity: 0.5,
+          fillOpacity: 0.3,
           strokeColor: '#cc6633',
           strokeWidth: 2,
           strokeOpacity: 1
@@ -130,7 +130,7 @@ Ext.define('App.view.catalog.map', {
     if(wkt !== null) {
       var geom = new OpenLayers.Geometry.fromWKT(wkt);
       var point = geom;
-      var point = geom.getCentroid();
+//      var point = geom.getCentroid();
       point.transform(this.getMap().displayProjection, this.getMap().getProjectionObject());
       return new OpenLayers.Feature.Vector(point, r.data);
     }

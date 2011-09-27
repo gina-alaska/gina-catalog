@@ -40,7 +40,7 @@ Ext.define('Ext.OpenLayers.Panel', {
     'EPSG:3572': {
       defaultCenter: new OpenLayers.LonLat(-147.849, 64.856),
       defaultZoom: 3,
-      defaultLayers: ['bdl_3572', 'armap_relief_3572'], //,'armap_cities_3572'
+      defaultLayers: ['bdl_3572', 'landownership','osm_overlay_3572'], //,'armap_cities_3572'
       maxExtent: new OpenLayers.Bounds(-12742200.0, -7295308.34278405, 7295308.34278405, 12742200.0),
       zoomLevels: 18,
       maxResolution: (20037508.34278405 / 256.0),
@@ -51,7 +51,7 @@ Ext.define('Ext.OpenLayers.Panel', {
     'EPSG:3338': {
       defaultCenter: new OpenLayers.LonLat(-147.849, 64.856),
       defaultZoom: 2,
-      defaultLayers: ['bdl_aa', 'osm_base', 'osm_google_overlay'],
+      defaultLayers: ['bdl_aa', 'osm_overlay_3338'],
       maxExtent: new OpenLayers.Bounds(-3500000, -3500000, 3500000, 3500000),
       zoomLevels: 18,
       maxResolution: (3500000 * 2.0 / 256.0),
