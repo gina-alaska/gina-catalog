@@ -142,6 +142,11 @@ Ext.define('App.controller.Catalog', {
         });
         win.show();
         break;
+      case 'region':
+        this.showFilterPbar();
+        var config = this.stringFilterConfig(field, value, "Region: " + value);
+        Ext.defer(store.addStringFilter, 100, store, [config]);
+        break;
       case 'contact':
         var win = Ext.widget('personselector', {
           listeners: {
@@ -212,10 +217,13 @@ Ext.define('App.controller.Catalog', {
     return { year: value };
   },
 
-  stringFilterConfig: function(field, value) {
+  stringFilterConfig: function(field, value, description) {
+    if(!description) {
+      description = field.capitalize() + ' = "' + value + '"';
+    }
     return {
       name: field,
-      description: field.capitalize() + ' = "' + value + '"',
+      description: description,
       string: value,
       fields: [field]
     };

@@ -18,6 +18,10 @@ class Location < ActiveRecord::Base
     self.geom.srid = 4326
   end
 
+  def self.intersects(geom)
+    where("ST_Intersects(geom, GeomFromEWKT(?))", geom.as_hex_ewkb)
+  end
+
   def to_json(*args)
     super(:only => [:id, :name, :region, :subregion, :created_at, :updated_at], :methods => [:wkt])
   end

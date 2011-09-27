@@ -229,9 +229,17 @@ Ext.define('App.view.catalog.sidebar', {
       scale: 'medium',
       iconCls: 'region-icon',
       menu: [{
-        text: 'Alaska'
+        text: 'Alaska',
+        scope: this,
+        handler: function() {
+          this.fireEvent('filter', this, 'region', 'geokeywords', 'Alaska');
+        }
       }, {
-        text: 'Northslope'
+        text: 'Northslope',
+        scope: this,
+        handler: function() {
+          this.fireEvent('filter', this, 'region', 'geokeywords', 'Northslope');
+        }
       }]
     })
 

@@ -9,6 +9,7 @@ class Catalog < ActiveRecord::Base
   belongs_to :source_agency, :class_name => 'Agency'
   belongs_to :funding_agency, :class_name => 'Agency'
   has_and_belongs_to_many :agencies, :join_table => 'catalog_agencies'
+  has_and_belongs_to_many :geokeywords
 
   has_and_belongs_to_many :tags, :join_table => 'catalog_tags', :order => 'highlight ASC, text ASC' do
     def list
@@ -131,6 +132,7 @@ Title: #{self.title}
       :start_date_year => self.start_date.try(:year),
       :end_date_year => self.end_date.try(:year),
       :status => self.status,
+      :geokeywords => self.geokeywords.collect(&:name),
       :source_agency_acronym => self.source_agency.try(:acronym),
       :source_agency_id => self.source_agency.try(:id),
       :agency_ids => self.agency_ids,
