@@ -51,7 +51,16 @@ Ext.define('Ext.OpenLayers.Layers', {
       baseUrl: 'http://tiles.proto.gina.alaska.edu/test/tilesrv/glo_3572/tile/',
       wrapDateLine: false,
       isBaseLayer: false,
-      opacity: 0.75,
+      opacity: 0.40,
+      hidden: true
+    },
+    cavm_veg_3572: {
+      name: 'CAVM Vegetation',
+      type: 'tiles',
+      baseUrl: 'http://tiles.proto.gina.alaska.edu/test/tilesrv/cavm_veg_3572/tile/',
+      wrapDateLine: false,
+      isBaseLayer: false,
+      opacity: 0.60,
       hidden: true
     },
     bdl_aa: {
