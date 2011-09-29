@@ -1,23 +1,23 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.10'
+gem 'rails', '3.1.0'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 #gem 'sqlite3'
-gem 'nofxx-georuby', '1.9.2'
-gem 'pg', '0.9.0'
+gem 'nofxx-georuby', '>= 1.9.2'
+gem 'pg', '>= 0.9.0'
 gem 'postgis_adapter', :git => 'git://github.com/nofxx/postgis_adapter.git'
 gem "compass", ">= 0.10.6"
-gem "haml", "= 3.1.1"
+gem "haml", ">= 3.1.1"
 gem 'progressbar'
 gem 'ruby-openid'
-gem 'rack-openid', '>=0.2.1', :require => 'rack/openid'
-gem 'thinking-sphinx', '2.0.3'
-gem 'ts-delayed-delta', '1.1.2', :require => 'thinking_sphinx/deltas/delayed_delta'
-gem 'rdiscount', '1.6.8'
-gem 'grit', '2.4.1'
+gem 'rack-openid', '>= 0.2.1', :require => 'rack/openid'
+#gem 'thinking-sphinx', '=>2.0.3'
+#gem 'ts-delayed-delta', '=>1.1.2', :require => 'thinking_sphinx/deltas/delayed_delta'
+gem 'rdiscount', '>= 1.6.8'
+gem 'grit', '>= 2.4.1'
 
 # Use unicorn as the web server
 # gem 'unicorn'
