@@ -150,7 +150,11 @@ Ext.application({
   launch: function() {
     Ext.util.History.init();
     App.init(this);
-    
+    App.current_user.on('logged_out', function() {
+      var splash = Ext.create(this.getController('Catalog').getView('catalog.splash'));
+     	splash.show();
+    }, this);
+
     App.viewport = Ext.create('Ext.container.Viewport', {
       layout: 'border',
       defaults: { border: false },
@@ -173,8 +177,6 @@ Ext.application({
     if(top.location.pathname == '/') {
       var catalog = this.getController('Catalog');
       catalog.show();
-     	var splash = Ext.create(this.getController('Catalog').getView('catalog.splash'));
-     	splash.show();
     } else if(top.location.pathname.match(/^\/videos/) ) {
       var video = this.getController('Video');
       video.show();
