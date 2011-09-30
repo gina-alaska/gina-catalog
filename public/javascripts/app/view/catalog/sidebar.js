@@ -80,7 +80,7 @@ Ext.define('App.view.catalog.sidebar', {
         group: 'sort', xtype: 'menucheckitem',
         menu: this.directionMenu()
       },{
-        text: 'Type',
+        text: 'Project/Data',
         dataIndex: 'type',
         group: 'sort', xtype: 'menucheckitem',
         menu: this.directionMenu()
@@ -201,7 +201,7 @@ Ext.define('App.view.catalog.sidebar', {
           }
         }]
       }, {
-        text: 'Type',
+        text: 'Project/Data',
         iconCls: 'type-icon',
         menu: [{
           text: 'Project',
