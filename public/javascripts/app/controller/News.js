@@ -1,7 +1,7 @@
-Ext.define('App.controller.Help', {
+Ext.define('App.controller.News', {
   extend: 'Ext.app.Controller',
 
-  views: ['help.index'],
+  views: ['news.index'],
   stores: [],
   models: [],
 
@@ -10,10 +10,10 @@ Ext.define('App.controller.Help', {
       'viewport > #center': {
         render: this.start
       },
-      'viewport > #center button[text="Help"]': {
-        click: this.showHelp
+      'viewport > #center button[text="News"]': {
+        click: this.show
       },
-      'viewport > #center helpindex': {
+      'viewport > #center newsindex': {
         show: App.hideLoading
       }
     });
@@ -21,12 +21,12 @@ Ext.define('App.controller.Help', {
 
   start: function(panel) {
     this.pages = {};
-    this.pages.index = panel.add({ xtype: 'helpindex', border: false });
+    this.pages.index = panel.add({ xtype: 'newsindex', border: false });
   },
 
-  showHelp: function() {
+  show: function() {
     App.showLoading();
-    
+
     var panel = this.pages.index.up('panel');
     panel.getLayout().setActiveItem(this.pages.index);
   }

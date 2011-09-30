@@ -6,5 +6,5 @@ Ext.define('App.view.help.index', {
     type: 'hbox',
     align: 'stretch'
   },
-  html: 'testing'
+  html: '<iframe src="/cms/help" class="fulliframe">You browser does not support iframes</iframe>'
 });

@@ -31,8 +31,6 @@ Ext.define('App', {
         },
         news: {
           title: 'News',
-          url: '/cms/news',
-          mode: 'window',
           icon: '/images/icons/medium/chat-.png'
         },
         nssi: {
@@ -53,8 +51,6 @@ Ext.define('App', {
         },
         help: {
           title: 'Help',
-          url: '/cms/help',
-          mode: 'window',
           icon: '/images/icons/medium/male-user.png'
         },
         signup: {
@@ -146,7 +142,7 @@ Ext.define('App', {
 Ext.application({
   name: 'App',
   appFolder: '/javascripts/app',
-  controllers: ['Catalog', 'Asset', 'Contact', 'Video'],
+  controllers: ['Catalog', 'Asset', 'Help', 'News', 'Contact', 'Video'],
   launch: function() {
     Ext.util.History.init();
     App.init(this);

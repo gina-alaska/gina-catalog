@@ -235,6 +235,13 @@
   background-color: #AABBFF;
 }
 
+/* line 1, ../../app/stylesheets/partials/_catalog.scss */
+.fulliframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
 /* line 1, ../../app/stylesheets/partials/_projects.scss */
 .project {
   padding: 3px;
