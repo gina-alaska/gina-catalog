@@ -1,10 +1,11 @@
 NSCatalog::Application.routes.draw do
+  resources :feedback
   resources :geokeywords
 
   resources :videos
 
   resources :projects
-  resources :assets
+#  resources :assets
   resources :agencies
   resources :people
 

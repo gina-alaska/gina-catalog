@@ -1,0 +1,186 @@
+//= require_tree ./gina
+//= require_tree ./openlayers
+//= require_self
+//= require_tree ./app/model
+//= require_tree ./app/store
+//= require_tree ./app/view
+//= require_tree ./app/controller
+
+//Ext.Loader.setConfig({
+//  enabled: false,
+//  paths: {
+//    'Ext': '/assets',
+//    'App': '/assets/app',
+//    'Ext.OpenLayers': '/assets/openlayers'
+//  }
+//});
+
+Ext.define('App', {
+  singleton: true,
+  init: function(sys) {
+    this.sys = sys;
+    
+    this.nav = Ext.create('Ext.gina.NavigationHandler', {
+      manager: this,
+      defaultPage: 'home',
+      autoStart: false,
+      appRootUrl: /^[\/]{0,1}$/,
+
+      pages: {
+        catalog: {
+          title: 'Catalog',
+          icon: '<%= image_path 'icons/medium/bookmark.png' %>'
+        },
+        news: {
+          title: 'News',
+          icon: '<%= image_path 'icons/medium/chat-.png' %>'
+        },
+        nssi: {
+          title: 'NSSI',
+          url: 'http://www.northslope.org',
+          mode: 'window',
+          icon: '<%= image_path 'icons/medium/globe.png' %>'
+        },
+        realtime: {
+          title: 'Realtime Data',
+          url: 'http://realtime.hub.gina.alaska.edu',
+          mode: 'window',
+          icon: '<%= image_path 'icons/medium/satellite.png' %>'
+        },
+        contact: {
+          title: 'Contact Us',
+          icon: '<%= image_path 'icons/medium/email.png' %>'
+        },
+        help: {
+          title: 'Help',
+          icon: '<%= image_path 'icons/medium/male-user.png' %>'
+        },
+        signup: {
+          title: 'Signup',
+          url: 'http://id.gina.alaska.edu/#signup',
+          mode: 'redirect',
+          icon: '<%= image_path 'icons/medium/agent.png' %>'
+        },
+        login: {
+          title: 'Login',
+          url: '/login',
+          icon: '<%= image_path 'icons/medium/lock.png' %>',
+          mode: 'redirect'
+        },
+        logout: {
+          title: 'Logout',
+          url: '/logout',
+          icon: '<%= image_path 'icons/medium/lock.png' %>',
+          mode: 'redirect'
+        }
+      }
+    });
+
+    this.navToolbar = Ext.create('Ext.ButtonGroup', {
+      border: false,
+      columns: 3,
+      height: 85,
+      cls: 'main-menu',
+      defaults: { scale: 'large', iconAlign: 'left', width: '100%', enableToggle: true, toggleGroup: 'pages' },
+      items: [
+        this.nav.toolbarItems(['catalog', 'news', 'nssi', 'realtime', 'contact', 'help'])
+      ]
+    });
+
+    this.loginToolbar = Ext.create('Ext.ButtonGroup', {
+      border: false,
+      columns: 1,
+      height: 85,
+      cls: 'login-menu',
+      buttonAlign: 'center',
+      pack: 'center',
+      defaults: { scale: 'large', iconAlign: 'left', width: '100%', enableToggle: true, toggleGroup: 'pages' },
+      items: [
+        this.nav.toolbarItems(['signup', 'login'])
+      ]
+    });
+
+    this.header = Ext.create('Ext.toolbar.Toolbar', {
+      cls: 'main-toolbar',
+      items: [{
+        width: 650,
+        border: false,
+        contentEl: 'header',
+        xtype: 'panel'
+      }, '->', this.navToolbar, this.loginToolbar]
+    });
+
+    this.current_user = Ext.create('Ext.gina.CurrentUser');
+    this.current_user.on('logged_in', function() {
+      var bbar = this.loginToolbar,
+          items;
+
+      items = this.nav.toolbarItems([{
+        xtype: 'panel',
+        height: 37,
+        width: 150,
+        border: false,
+        cls: 'welcome-panel',
+        html: 'Welcome back<br />' + this.current_user.get('fullname')
+      }, 'logout']);
+
+      bbar.removeAll();
+      bbar.add(items);
+    }, this);
+  },
+
+  showLoading: function(msg) {
+    return Ext.Msg.show({
+      title: 'Please wait...',
+      msg: msg || 'Loading...',
+      minWidth: 300,
+      wait: true,
+      modal: false
+    });
+  },
+  hideLoading: function() { return Ext.Msg.hide(); }
+});
+
+Ext.application({
+  name: 'App',
+  appFolder: '/assets/app',
+  controllers: ['Catalog', 'Asset', 'Help', 'News', 'Feedback', 'Video'],
+  launch: function() {
+    Ext.util.History.init();
+    App.init(this);
+    App.current_user.on('logged_out', function() {
+      var splash = Ext.create(this.getController('Catalog').getView('catalog.splash'));
+     	splash.show();
+    }, this);
+
+    App.viewport = Ext.create('Ext.container.Viewport', {
+      layout: 'border',
+      defaults: { border: false },
+      items: [{
+        id: 'center',
+        region: 'center',
+        border: false,
+        tbar: App.header,
+        layout: 'card',
+        deferredRender: false,
+        items: [{
+          html: 'Loading...'
+        }]
+      }, {
+        region: 'south',
+        contentEl: 'footer'
+      }]
+    });
+
+    if(top.location.pathname == '/') {
+      var catalog = this.getController('Catalog');
+      catalog.show();
+    } else if(top.location.pathname.match(/^\/videos/) ) {
+      var video = this.getController('Video');
+      video.show();
+    } else {
+      var asset = this.getController('Asset');
+      asset.show();
+    }
+  }
+});

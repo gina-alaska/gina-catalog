@@ -4,7 +4,7 @@ class CatalogController < ApplicationController
   caches_action :search
 
   def show
-    @item = Catalog.includes(:locations, :source_agency, :agencies, :data_source, :links, :tags)
+    @item = Catalog.includes(:locations, :source_agency, :agencies, :data_source, :links, :tags, :geokeywords)
     @item = @item.includes({ :people => [ :addresses, :phone_numbers ] }).find_by_id(params[:id])
 
     render :layout => false
@@ -18,7 +18,7 @@ class CatalogController < ApplicationController
 #    end
 #    results = Project.search('', :per_page => 3000)
     @results = Catalog.not_archived.published
-    @results = @results.includes(:locations, :source_agency, :people, :agencies, :tags)
+    @results = @results.includes(:locations, :source_agency, :people, :agencies, :tags, :geokeywords)
     @results = @results.limit(params[:limit] || 3000).order('title ASC')
 
     respond_to do |format|

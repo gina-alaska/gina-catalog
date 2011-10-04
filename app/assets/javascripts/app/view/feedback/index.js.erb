@@ -1,0 +1,54 @@
+Ext.define('App.view.feedback.index', {
+  extend: 'Ext.panel.Panel',
+  alias: 'widget.feedbackindex',
+  layout: {
+    type: 'vbox',
+    align: 'center',
+    pack: 'middle'
+  },
+  items: [{
+    xtype: 'panel',
+    border: false,
+    width: 650,
+    cls: 'info',
+    html: 'We appreciate your input, please provide a phone number or email so that we can respond to your comments'
+  },{
+    url: '<%= Rails.application.routes.url_helpers.feedback_index_path %>',
+    xtype: 'form',
+    width: 600,
+    border: false,
+    defaults: { 'anchor': '100%' },
+    items: [{
+      xtype: 'textfield',
+      fieldLabel: 'Name',
+      name: 'comment[name]',
+      allowBlank: false
+    }, {
+      xtype: 'textfield',
+      fieldLabel: 'Email',
+      name: 'comment[email]',
+      allowBlank: false
+    }, {
+      xtype: 'textareafield',
+      fieldLabel: 'Message',
+      name: 'comment[message]',
+      height: 200,
+      allowBlank: false
+    }]
+  }, {
+    xtype: 'panel',
+    width: 600,
+    height: 32,
+    border: false,
+    layout: {
+      type: 'hbox',
+      align: 'stretch'
+    },
+    items: [{
+      xtype: 'button',
+      flex: 1,
+      text: 'Submit',
+      scale: 'large'
+    }]
+  }]
+});

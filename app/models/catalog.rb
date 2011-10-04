@@ -13,11 +13,11 @@ class Catalog < ActiveRecord::Base
 
   has_and_belongs_to_many :tags, :join_table => 'catalog_tags', :order => 'highlight ASC, text ASC' do
     def list
-      proxy_owner.tags.collection.join(', ')
+      proxy_association.owner.tags.collection.join(', ')
     end
 
     def collection
-      proxy_owner.tags.collect(&:text).compact
+      proxy_association.owner.tags.collect(&:text).compact
     end
   end
 

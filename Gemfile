@@ -9,8 +9,8 @@ gem 'rails', '3.1.0'
 gem 'nofxx-georuby', '>= 1.9.2'
 gem 'pg', '>= 0.9.0'
 gem 'postgis_adapter', :git => 'git://github.com/nofxx/postgis_adapter.git'
-gem "compass", ">= 0.10.6"
-gem "haml", ">= 3.1.1"
+#gem "compass", ">= 0.10.6"
+gem "haml"
 gem 'progressbar'
 gem 'ruby-openid'
 gem 'rack-openid', '>= 0.2.1', :require => 'rack/openid'
@@ -34,6 +34,12 @@ gem 'grit', '>= 2.4.1'
 # gem 'nokogiri'
 # gem 'sqlite3-ruby', :require => 'sqlite3'
 # gem 'aws-s3', :require => 'aws/s3'
+
+group :assets do
+  gem 'sass-rails', "~> 3.1.0"
+  gem 'coffee-rails', '~> 3.1.0'
+  gem 'uglifier'
+end
 
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators

@@ -15,7 +15,7 @@ class Agency < ActiveRecord::Base
   has_many :project_agencies, :dependent => :destroy
   has_many :projects, :through => :project_agencies
   
-  named_scope :active, :conditions => { :active => true }, :order => 'name asc'
+  scope :active, :conditions => { :active => true }, :order => 'name asc'
   
   validates_presence_of     :name
   validates_uniqueness_of   :name
