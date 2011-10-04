@@ -1,0 +1,22 @@
+!!! 5
+
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}
+    :css
+      label { font-weight: bold; }
+  %body
+    %h1 NSSI Catalog Feedback Submission
+    %p
+      %label Submitted:
+      = Time.now
+    %p
+      %label From:
+      = @comment[:name]
+    %p
+      %label Email:
+      = @comment[:email]
+    %p
+      %label Message:
+      %br
+      = @comment[:message]
