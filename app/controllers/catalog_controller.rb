@@ -1,7 +1,7 @@
 class CatalogController < ApplicationController
   caches_action :show, :layout => true, :if => lambda { |c| c.request.xhr? }
   caches_action :show, :layout => false, :unless => lambda { |c| c.request.xhr? }
-  caches_action :search
+  #caches_action :search
 
   def show
     @item = Catalog.includes(:locations, :source_agency, :agencies, :data_source, :links, :tags, :geokeywords)
@@ -19,11 +19,18 @@ class CatalogController < ApplicationController
 #    results = Project.search('', :per_page => 3000)
     @results = Catalog.not_archived.published
     @results = @results.includes(:locations, :source_agency, :people, :agencies, :tags, :geokeywords)
+    @results = @results.where(:id => params[:ids]) unless params[:ids].nil?
     @results = @results.limit(params[:limit] || 3000).order('title ASC')
 
     respond_to do |format|
       format.json
       format.js
+      format.html do
+        render :layout => 'pdf'
+      end
+      format.pdf do
+        render :pdf => 'nssi_catalog_search.pdf', :layout => 'pdf.html'
+      end
     end
   end
 
