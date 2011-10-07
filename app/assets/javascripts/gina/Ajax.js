@@ -33,8 +33,8 @@ Ext.define('Ext.gina.Ajax', {
 
     Ext.applyIf(config, {
       method: 'GET',
-      success: Ext.ux.Ajax.success,
-      failure: Ext.ux.Ajax.failure
+      success: this.success,
+      failure: this.failure
     });
 
     if (config.mask) {

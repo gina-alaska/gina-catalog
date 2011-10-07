@@ -13,7 +13,7 @@ Ext.define('App.view.catalog.sidebar', {
   },
 
   initComponent: function() {
-    this.addEvents('open', 'showall', 'drawaoi', 'filter');
+    this.addEvents('open', 'showall', 'drawaoi', 'filter', 'export');
 
     this.resultCount = Ext.widget('button', {
       text: '0'
@@ -227,7 +227,11 @@ Ext.define('App.view.catalog.sidebar', {
     this.actions.exportsearch = Ext.create('Ext.Action', {
       scale: 'medium',
       text: 'Export',
-      iconCls: 'download-icon'
+      iconCls: 'download-icon',
+      scope: this,
+      handler: function() {
+        this.fireEvent('export', this);
+      }
     });
 
     this.actions.regions = Ext.create('Ext.Action', {

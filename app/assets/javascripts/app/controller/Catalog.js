@@ -27,7 +27,8 @@ Ext.define('App.controller.Catalog', {
       'viewport > #center catalogsidebar': {
         showall: this.showAllRecords,
         drawaoi: function() { this.pages.map.aoiHandler(true); },
-        filter: this.filterHandler
+        filter: this.filterHandler,
+        export: this.onExport
       },
       /* Map events */
       'viewport > #center #results-map': {
@@ -100,6 +101,63 @@ Ext.define('App.controller.Catalog', {
       }],
       items: [this.pages.map, this.pages.sidebar]
     });
+  },
+
+  onExport: function() {
+    var store = this.getStore('SearchResults');
+    var fields = [];
+    var index = 0;
+    var limit = 200;
+
+    if (store.getCount() > limit) {
+      Ext.MessageBox.alert(
+        'Notice',
+        'Cannot export more than ' + limit + ' results, please narrow your search.'
+      );
+      return false;
+    }
+
+    store.each(function(i) {
+      fields.push({
+        xtype: 'hiddenfield', name: 'ids[]', value: i.get('id')
+      });
+    }, this);
+
+    var win = Ext.create('Ext.window.Window', {
+      width: 500,
+      height: 45,
+      layout: {
+        type: 'vbox',
+        align: 'stretch'
+      },
+      items: [{
+        flex: 1,
+        border: false,
+        bodyStyle: 'text-align: center; font-size: 2em; padding: 15px;',
+        html: '<h1>Exporting results to PDF, please wait...</h1>'
+      },{
+        border: false,
+        xtype: 'form',
+        standardSubmit: true,
+        url: '/catalog/search.pdf',
+        method: 'POST',
+        target: '_blank',
+        items: fields
+      }]
+    });
+    win.show();
+    win.down('form').submit({
+      "params": { "limit": limit }
+    });
+
+//    Ext.gina.Ajax.request({
+//      url: '/catalog/search.pdf',
+//      method: 'POST',
+//      params: {
+//        "ids": ids,
+//        limit: 100
+//      }
+//    });
   },
 
   filterHandler: function(panel, type, field, value) {
