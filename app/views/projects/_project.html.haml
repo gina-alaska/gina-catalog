@@ -7,7 +7,9 @@
   .spacer
 
 - if project.published? or project.owner == current_user or current_user.is_an_admin?
-  .description.tabbed= raw RDiscount.new(project.description).to_html
+  .description.tabbed
+    :markdown
+      #{project.try(:description)}
   .spacer
 
   .status.tabbed
