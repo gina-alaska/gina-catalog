@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.1.0'
+gem 'rails', '3.1.1'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -12,7 +12,7 @@ gem 'postgis_adapter', :git => 'git://github.com/nofxx/postgis_adapter.git'
 #gem "compass", ">= 0.10.6"
 gem "haml"
 gem 'progressbar'
-gem 'ruby-openid'
+gem 'ruby-openid', :git => 'https://github.com/jmthomas/ruby-openid.git'
 gem 'rack-openid', '>= 0.2.1', :require => 'rack/openid'
 #gem 'thinking-sphinx', '=>2.0.3'
 #gem 'ts-delayed-delta', '=>1.1.2', :require => 'thinking_sphinx/deltas/delayed_delta'
