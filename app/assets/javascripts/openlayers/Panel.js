@@ -332,6 +332,8 @@ Ext.define('Ext.OpenLayers.Panel', {
       this.map.events.register('mousemove', this, this.onMouseMove);
     }
 
+    this.controls.add('attribution', new OpenLayers.Control.Attribution({seperator: ','}));
+
     /* Give the map some time to finish loading */
     Ext.defer(this.fireEvent, 300, this, ['ready', this]);
   },
