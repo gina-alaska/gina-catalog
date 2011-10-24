@@ -20,14 +20,14 @@ Ext.define('App.controller.News', {
   },
 
   start: function(panel) {
-    this.pages = {};
-    this.pages.index = panel.add({ xtype: 'newsindex', border: false });
+    this.pages = { parent: panel };
   },
 
   show: function() {
     App.showLoading();
 
-    var panel = this.pages.index.up('panel');
-    panel.getLayout().setActiveItem(this.pages.index);
+    this.pages.index = this.pages.parent.add({ xtype: 'newsindex', border: false });
+    // var panel = this.pages.index.up('panel');
+    this.pages.parent.getLayout().setActiveItem(this.pages.index);
   }
 });

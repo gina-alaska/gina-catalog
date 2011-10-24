@@ -20,14 +20,13 @@ Ext.define('App.controller.Help', {
   },
 
   start: function(panel) {
-    this.pages = {};
-    this.pages.index = panel.add({ xtype: 'helpindex', border: false });
+    this.pages = { parent: panel };
   },
 
   showHelp: function() {
     App.showLoading();
     
-    var panel = this.pages.index.up('panel');
-    panel.getLayout().setActiveItem(this.pages.index);
+    this.pages.index = this.pages.parent.add({ xtype: 'helpindex', border: false });
+    this.pages.parent.getLayout().setActiveItem(this.pages.index);
   }
 });
