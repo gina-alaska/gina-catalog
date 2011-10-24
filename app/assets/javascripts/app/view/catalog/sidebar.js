@@ -230,6 +230,7 @@ Ext.define('App.view.catalog.sidebar', {
       iconCls: 'download-icon',
       scope: this,
       handler: function() {
+        // console.log('exporting');
         this.fireEvent('export', this);
       }
     });
