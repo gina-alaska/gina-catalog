@@ -90,7 +90,10 @@ Ext.define('Ext.OpenLayers.Layers', {
       type: 'arc93rest',
       name: 'ARMAP - Relief Map',
       url: 'http://arcticdata.utep.edu/ArcGIS/rest/services/ARMAP_ETOPO1ColorShadedRelief_35N_EPSG3572/MapServer/export',
-      options: {}
+      options: {
+        attribution: '<a href="http://armap.org">Arctic Research Mapping Application</a>',
+        isBaseLayer: true
+      }
     },
     "armap_cities_3572": {
       name: 'ARMAP - Cities',
@@ -100,6 +103,7 @@ Ext.define('Ext.OpenLayers.Layers', {
         transparent: true
       },
       options: {
+        attribution: '<a href="http://armap.org">Arctic Research Mapping Application</a>',
         isBaseLayer: false
       }
     },
@@ -111,7 +115,7 @@ Ext.define('Ext.OpenLayers.Layers', {
         wrapDateLine: false,
         isBaseLayer: false,
         opacity: 0.75,
-        attribution: 'Map data (c) OpenStreetMap contributors, CC-BY-SA'
+        attribution: '(c) <a href="http://www.openstreetmaps.org/">OpenStreetMap</a> contributors, CC-BY-SA'
       }
     },
 
@@ -123,7 +127,7 @@ Ext.define('Ext.OpenLayers.Layers', {
         wrapDateLine: false,
         isBaseLayer: false,
         opacity: 0.75,
-        attribution: 'Map data (c) OpenStreetMap contributors, CC-BY-SA'
+        attribution: '(c) <a href="http://www.openstreetmaps.org/">OpenStreetMap</a> contributors, CC-BY-SA'
       }
     },
 
