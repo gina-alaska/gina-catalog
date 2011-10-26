@@ -102,7 +102,7 @@ Ext.define('App.controller.Catalog', {
       items: [this.pages.map, this.pages.sidebar]
     });
   },
-
+  
   onExport: function() {
     var store = this.getStore('SearchResults');
     var fields = [];
@@ -301,7 +301,6 @@ Ext.define('App.controller.Catalog', {
 
   onAoiAdd: function(map, feature, e) {
     this.showFilterPbar();
-    
     var store = this.getStore('SearchResults');
     map.fit(feature.geometry.getBounds());
     Ext.defer(store.aoiFilter, 100, store, [feature.geometry, map]);
@@ -310,6 +309,12 @@ Ext.define('App.controller.Catalog', {
   onMapReady: function(map) {
     map.store = Ext.data.StoreManager.get('SearchResults');
     map.setup();
+    
+    map.tools = new OpenLayers.Control.Panel({
+      defaultControl: map.dragPanControl
+    });
+    map.tools.addControls([map.control('aoi'), map.zoomOutBoxControl, map.zoomInBoxControl, map.dragPanControl]);
+    map.controls.add('toolbar', map.tools);
 
     map.store.on('datachanged', function() {
       this.showFilterPbar('Adding locations to the map');

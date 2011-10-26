@@ -16,3 +16,69 @@
   color: #000;
   background-color: transparentize(#FFF, 0.75);
 }
+
+.olControlPanel {
+  right: 20px;
+  top: 0;
+  
+  div {
+    display: block;
+    float: right;
+    width: 28px;
+    height: 28px;
+    margin: 5px;
+    background-color:#fff;
+  }
+  
+  
+  .olControlSelectFeatureItemActive {
+    @include border-radius(2px);
+    background: url(/images/geo/pointer-info.png) no-repeat 2px 2px;
+    background-color: transparentize(#00F, 0.5);
+  }
+  .olControlSelectFeatureItemInactive {
+    @include border-radius(2px);
+    background: url(/images/geo/pointer-info.png) no-repeat 2px 2px;
+    background-color: transparentize(#FFF, 0.25);
+  }
+  .olControlDrawFeatureItemActive {
+    @include border-radius(2px);
+    background: url(icons/geo/shape_square_red.png) center no-repeat;
+    background-color: transparentize(#00F, 0.25);
+  }
+  .olControlDrawFeatureItemInactive {
+    @include border-radius(2px);
+    background: url(icons/geo/shape_square_red.png) center no-repeat;
+    background-color: transparentize(#FFF, 0.25);
+  }
+  .olControlDragPanItemActive {
+    @include border-radius(2px);
+    background: url(icons/geo/pan.png) center no-repeat;
+    background-color: transparentize(#00F, 0.25);
+  }
+  .olControlDragPanItemInactive {
+    @include border-radius(2px);
+    background: url(icons/geo/pan.png) center no-repeat;
+    background-color: transparentize(#FFF, 0.25);
+  }
+  .zoomInBoxItemInactive {
+    @include border-radius(2px);
+    background: url(icons/geo/magnifier_zoom_in.png) center no-repeat;
+    background-color: transparentize(#FFF, 0.25);
+  }
+  .zoomInBoxItemActive {
+    @include border-radius(2px);
+    background: url(icons/geo/magnifier_zoom_in.png) center no-repeat;
+    background-color: transparentize(#00F, 0.25);
+  }
+  .zoomOutBoxItemInactive {
+    @include border-radius(2px);
+    background: url(icons/geo/magnifier_zoom_out.png) center no-repeat;
+    background-color: transparentize(#FFF, 0.25);
+  }
+  .zoomOutBoxItemActive {
+    @include border-radius(2px);
+    background: url(icons/geo/magnifier_zoom_out.png) center no-repeat;
+    background-color: transparentize(#00F, 0.25);
+  }
+}

@@ -1,0 +1,513 @@
+/*
+ *= require_self
+ */
+/* line 1, ../../app/assets/stylesheets/_notify.css.scss */
+#notify-div {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  width: 300px;
+  z-index: 20000;
+}
+/* line 8, ../../app/assets/stylesheets/_notify.css.scss */
+#notify-div .notify {
+  border-radius: 8px;
+  -moz-border-radius: 8px;
+  background: #F6F6F6;
+  border: 2px solid #ccc;
+  margin-top: 2px;
+  padding: 10px 15px;
+  color: #555;
+}
+/* line 17, ../../app/assets/stylesheets/_notify.css.scss */
+#notify-div .notify p {
+  font-size: 16px;
+  color: #000;
+  text-align: center;
+  margin: 0;
+}
+/* line 24, ../../app/assets/stylesheets/_notify.css.scss */
+#notify-div .notify p.dismiss {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+/* line 1, ../../app/assets/stylesheets/_splash.css.scss */
+#splash-header {
+  background-color: #187B99;
+  height: 75px;
+}
+
+/* line 6, ../../app/assets/stylesheets/_splash.css.scss */
+#splash-header .text {
+  font-weight: bold;
+  font-size: 35px;
+  color: white;
+  float: left;
+  vertical-align: top;
+  margin: 15px 0 0 10px;
+  text-align: left;
+}
+
+/* line 16, ../../app/assets/stylesheets/_splash.css.scss */
+#splash-header .image {
+  float: left;
+  display: inline-block;
+  background: #fff;
+  padding: 5px;
+}
+
+/* line 23, ../../app/assets/stylesheets/_splash.css.scss */
+#splash-content {
+  clear: both;
+  padding: 0;
+  font-size: 16px;
+  text-align: center;
+  z-index: 2;
+}
+
+/* line 31, ../../app/assets/stylesheets/_splash.css.scss */
+#splash-content .buttons {
+  margin-top: 25px;
+}
+
+/* line 35, ../../app/assets/stylesheets/_splash.css.scss */
+#splash-footer .disclaimer {
+  margin-top: 25px;
+  padding: 5px;
+  text-align: center;
+  font-size: 16px;
+}
+
+/* line 42, ../../app/assets/stylesheets/_splash.css.scss */
+#splash-footer .poweredby {
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+/* line 47, ../../app/assets/stylesheets/_splash.css.scss */
+#splash-content h2 {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* line 54, ../../app/assets/stylesheets/_splash.css.scss */
+#splash-content h1 {
+  font-size: 30px;
+  text-decoration: underline;
+  text-align: center;
+  margin-bottom: 10px;
+  margin-top: 5px;
+}
+
+/* line 65, ../../app/assets/stylesheets/_splash.css.scss */
+#splash-window .x-btn-large .x-btn-text {
+  font-size: 25px;
+  padding: 0 30px;
+}
+
+/* line 70, ../../app/assets/stylesheets/_splash.css.scss */
+.transparent-bg .x-panel-body {
+  background: transparent !important;
+}
+
+/* line 1, ../../app/assets/stylesheets/_previews.css.scss */
+.item_preview_instructions {
+  text-align: center;
+  padding: 15px;
+  font-weight: bold;
+}
+/* line 6, ../../app/assets/stylesheets/_previews.css.scss */
+.item_preview_instructions div {
+  margin-bottom: 10px;
+}
+
+/* line 1, ../../app/assets/stylesheets/_search_results.css.scss */
+.asset_wrap {
+  margin: 0;
+  padding: 5px 5px 5px 5px;
+  font-size: 12px;
+}
+/* line 7, ../../app/assets/stylesheets/_search_results.css.scss */
+.asset_wrap.x-item-over {
+  background-color: #BBDDFF;
+}
+/* line 11, ../../app/assets/stylesheets/_search_results.css.scss */
+.asset_wrap.x-item-selected {
+  background-color: #AABBFF;
+}
+/* line 15, ../../app/assets/stylesheets/_search_results.css.scss */
+.asset_wrap .title {
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: bold;
+}
+/* line 23, ../../app/assets/stylesheets/_search_results.css.scss */
+.asset_wrap .description {
+  margin-left: 10px;
+  margin-bottom: 5px;
+}
+/* line 28, ../../app/assets/stylesheets/_search_results.css.scss */
+.asset_wrap .detail label {
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+/* line 46, ../../app/assets/stylesheets/_search_results.css.scss */
+.quicksearch.x-toolbar .xtb-text {
+  font-size: 18px;
+}
+/* line 50, ../../app/assets/stylesheets/_search_results.css.scss */
+.quicksearch .default input {
+  color: #555;
+}
+/* line 54, ../../app/assets/stylesheets/_search_results.css.scss */
+.quicksearch div.x-form-item {
+  margin-bottom: 0;
+}
+/* line 58, ../../app/assets/stylesheets/_search_results.css.scss */
+.quicksearch input.x-form-text {
+  line-height: normal;
+  height: 32px !important;
+  font: normal 18px tahoma, arial, helvetica, sans-serif;
+  font-weight: normal;
+}
+/* line 65, ../../app/assets/stylesheets/_search_results.css.scss */
+.quicksearch img.x-form-trigger {
+  height: 25px;
+  background-color: #DCDCDC;
+}
+/* line 70, ../../app/assets/stylesheets/_search_results.css.scss */
+.quicksearch .x-btn-large button {
+  font: normal 16px tahoma, arial, helvetica, sans-serif;
+}
+
+/* line 75, ../../app/assets/stylesheets/_search_results.css.scss */
+.filterlist {
+  font-size: 14px;
+}
+/* line 78, ../../app/assets/stylesheets/_search_results.css.scss */
+.filterlist .filter_wrap {
+  position: relative;
+  display: block;
+  min-height: 32px;
+  clear: both;
+}
+/* line 84, ../../app/assets/stylesheets/_search_results.css.scss */
+.filterlist .filter_wrap .desc {
+  padding: 5px;
+  margin-right: 32px;
+}
+/* line 89, ../../app/assets/stylesheets/_search_results.css.scss */
+.filterlist .filter_wrap .remove {
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+/* line 96, ../../app/assets/stylesheets/_search_results.css.scss */
+.filterlist .filter_wrap .remove a {
+  display: block;
+  margin: auto;
+  width: 32px;
+  height: 100%;
+  background: url(icons/medium/x.png) center center no-repeat;
+}
+/* line 104, ../../app/assets/stylesheets/_search_results.css.scss */
+.filterlist .filter_wrap .remove img {
+  display: inline;
+  height: 32px;
+  margin: auto;
+  position: relative;
+  vertical-align: middle;
+}
+/* line 112, ../../app/assets/stylesheets/_search_results.css.scss */
+.filterlist .filter_wrap.x-item-over {
+  background-color: #BBDDFF;
+}
+/* line 116, ../../app/assets/stylesheets/_search_results.css.scss */
+.filterlist .filter_wrap.x-item-selected {
+  background-color: #AABBFF;
+}
+
+/* line 1, ../../app/assets/stylesheets/_catalog.css.scss */
+.fulliframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* line 7, ../../app/assets/stylesheets/_catalog.css.scss */
+.info .x-panel-body {
+  font-size: 20px;
+  text-align: center;
+}
+
+/* line 12, ../../app/assets/stylesheets/_catalog.css.scss */
+.olControlAttribution {
+  bottom: 0em;
+  right: 0em;
+  padding: 3px;
+  color: #000;
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+/* line 20, ../../app/assets/stylesheets/_catalog.css.scss */
+.olControlPanel {
+  right: 20px;
+  top: 0;
+}
+/* line 24, ../../app/assets/stylesheets/_catalog.css.scss */
+.olControlPanel div {
+  display: block;
+  float: right;
+  width: 28px;
+  height: 28px;
+  margin: 5px;
+  background-color: #fff;
+}
+/* line 34, ../../app/assets/stylesheets/_catalog.css.scss */
+.olControlPanel .olControlSelectFeatureItemActive {
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  -o-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -khtml-border-radius: 2px;
+  border-radius: 2px;
+  background: url(/images/geo/pointer-info.png) no-repeat 2px 2px;
+  background-color: rgba(0, 0, 255, 0.5);
+}
+/* line 39, ../../app/assets/stylesheets/_catalog.css.scss */
+.olControlPanel .olControlSelectFeatureItemInactive {
+  background: url(/images/geo/pointer-info.png) no-repeat 2px 2px;
+  background-color: rgba(255, 255, 255, 0.75);
+}
+/* line 44, ../../app/assets/stylesheets/_catalog.css.scss */
+.olControlPanel .olControlDrawFeatureItemActive {
+  background: url(icons/geo/shape_square_red.png) center no-repeat;
+  background-color: rgba(0, 0, 255, 0.75);
+}
+/* line 49, ../../app/assets/stylesheets/_catalog.css.scss */
+.olControlPanel .olControlDrawFeatureItemInactive {
+  background: url(icons/geo/shape_square_red.png) center no-repeat;
+  background-color: rgba(255, 255, 255, 0.75);
+}
+/* line 54, ../../app/assets/stylesheets/_catalog.css.scss */
+.olControlPanel .olControlDragPanItemActive {
+  background: url(icons/geo/pan.png) center no-repeat;
+  background-color: rgba(0, 0, 255, 0.75);
+}
+/* line 59, ../../app/assets/stylesheets/_catalog.css.scss */
+.olControlPanel .olControlDragPanItemInactive {
+  background: url(icons/geo/pan.png) center no-repeat;
+  background-color: rgba(255, 255, 255, 0.75);
+}
+/* line 64, ../../app/assets/stylesheets/_catalog.css.scss */
+.olControlPanel .zoomInBoxItemInactive {
+  background: url(icons/geo/magnifier_zoom_in.png) center no-repeat;
+  background-color: rgba(255, 255, 255, 0.75);
+}
+/* line 68, ../../app/assets/stylesheets/_catalog.css.scss */
+.olControlPanel .zoomInBoxItemActive {
+  background: url(icons/geo/magnifier_zoom_in.png) center no-repeat;
+  background-color: rgba(0, 0, 255, 0.75);
+}
+/* line 72, ../../app/assets/stylesheets/_catalog.css.scss */
+.olControlPanel .zoomOutBoxItemInactive {
+  background: url(icons/geo/magnifier_zoom_out.png) center no-repeat;
+  background-color: rgba(255, 255, 255, 0.75);
+}
+/* line 76, ../../app/assets/stylesheets/_catalog.css.scss */
+.olControlPanel .zoomOutBoxItemActive {
+  background: url(icons/geo/magnifier_zoom_out.png) center no-repeat;
+  background-color: rgba(0, 0, 255, 0.75);
+}
+
+/* line 1, ../../app/assets/stylesheets/_projects.css.scss */
+.project {
+  padding: 3px;
+}
+/* line 4, ../../app/assets/stylesheets/_projects.css.scss */
+.project label {
+  font-weight: bold;
+}
+/* line 8, ../../app/assets/stylesheets/_projects.css.scss */
+.project .title {
+  font-size: 18px;
+  font-weight: bold;
+  text-decoration: underline;
+}
+/* line 14, ../../app/assets/stylesheets/_projects.css.scss */
+.project .tabbed {
+  margin-left: 10px;
+}
+/* line 18, ../../app/assets/stylesheets/_projects.css.scss */
+.project .spacer {
+  height: 10px;
+}
+
+/* Map related */
+/* line 2, ../../app/assets/stylesheets/_icons.css.scss */
+.layers-icon {
+  background: url(icons/geo/layers.png) center no-repeat;
+}
+
+/* line 5, ../../app/assets/stylesheets/_icons.css.scss */
+.zoom-in-icon {
+  background: url(icons/geo/magnifier_zoom_in.png) center no-repeat;
+}
+
+/* line 8, ../../app/assets/stylesheets/_icons.css.scss */
+.zoom-out-icon {
+  background: url(icons/geo/magnifier_zoom_out.png) center no-repeat;
+}
+
+/* line 11, ../../app/assets/stylesheets/_icons.css.scss */
+.pan-icon {
+  background: url(icons/geo/pan.png) center no-repeat;
+}
+
+/* line 14, ../../app/assets/stylesheets/_icons.css.scss */
+.aoi-icon {
+  background: url(icons/geo/shape_square_red.png) center no-repeat;
+}
+
+/* line 17, ../../app/assets/stylesheets/_icons.css.scss */
+.region-icon {
+  background: url(icons/geo/map.png) center no-repeat;
+}
+
+/* Catalog item related */
+/* line 22, ../../app/assets/stylesheets/_icons.css.scss */
+.viewall-icon {
+  background: url(icons/small/application_view_list.png) center no-repeat;
+}
+
+/* line 26, ../../app/assets/stylesheets/_icons.css.scss */
+.open-icon {
+  background: url(icons/small/report_go.png) center no-repeat;
+}
+
+/* line 29, ../../app/assets/stylesheets/_icons.css.scss */
+.sort-icon {
+  background: url(icons/small/table_sort.png) center no-repeat;
+}
+
+/* line 33, ../../app/assets/stylesheets/_icons.css.scss */
+.download-icon {
+  background: url(icons/small/download.png) center no-repeat;
+}
+
+/* Search related */
+/* line 38, ../../app/assets/stylesheets/_icons.css.scss */
+.cancel-icon {
+  background: url(icons/medium/x.png) center no-repeat;
+}
+
+/* line 42, ../../app/assets/stylesheets/_icons.css.scss */
+.search-icon {
+  background: url(icons/medium/search.png) center no-repeat;
+}
+
+/* line 14, ../../app/assets/stylesheets/application.css.scss */
+body {
+  font-family: "trebuchet ms", Verdana, Tahoma, Arial, Helvetica, san-serif;
+}
+
+/* line 18, ../../app/assets/stylesheets/application.css.scss */
+#loading {
+  padding: 5px;
+}
+
+/* line 22, ../../app/assets/stylesheets/application.css.scss */
+#header {
+  height: 80px;
+  padding: 5px 0 0 0;
+  color: #fff;
+  background: #187b99;
+  font-weight: bold;
+  font-size: 14px;
+}
+/* line 30, ../../app/assets/stylesheets/application.css.scss */
+#header #logo img {
+  height: 70px;
+  float: left;
+  margin: 0 15px 0 5px;
+}
+/* line 36, ../../app/assets/stylesheets/application.css.scss */
+#header h1 {
+  margin-top: 8px;
+  font-size: 30px;
+}
+
+/* line 42, ../../app/assets/stylesheets/application.css.scss */
+div.main-toolbar {
+  background: #187b99;
+}
+
+/* line 46, ../../app/assets/stylesheets/application.css.scss */
+.default {
+  color: #555;
+}
+
+/* line 51, ../../app/assets/stylesheets/application.css.scss */
+.main-menu .x-btn {
+  width: 100%;
+}
+/* line 55, ../../app/assets/stylesheets/application.css.scss */
+.main-menu button .x-btn-inner {
+  font-size: 14px;
+  font-weight: bold;
+  min-width: 90px;
+  text-align: left;
+}
+
+/* line 64, ../../app/assets/stylesheets/application.css.scss */
+.login-menu .welcome-panel .x-panel-body {
+  background: none;
+  height: 40px;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 5px;
+  text-align: center;
+}
+/* line 73, ../../app/assets/stylesheets/application.css.scss */
+.login-menu .x-btn {
+  width: 100%;
+  text-align: center;
+}
+/* line 78, ../../app/assets/stylesheets/application.css.scss */
+.login-menu button .x-btn-inner {
+  font-size: 14px;
+  font-weight: bold;
+  min-width: 90px;
+  text-align: left;
+}
+
+/* line 86, ../../app/assets/stylesheets/application.css.scss */
+.large-buttons .x-btn-text {
+  font-size: 16px;
+  line-height: 16px;
+}
+
+/* line 92, ../../app/assets/stylesheets/application.css.scss */
+.x-toolbar-item .x-form-item {
+  margin-right: 5px;
+  margin-bottom: 0;
+  display: inline;
+  float: left;
+}
+/* line 98, ../../app/assets/stylesheets/application.css.scss */
+.x-toolbar-item .x-btn {
+  margin-right: 5px;
+}
+
+/* line 106, ../../app/assets/stylesheets/application.css.scss */
+.loading-indicator {
+  background: url("loading.gif") no-repeat;
+  padding: 0 20px;
+}

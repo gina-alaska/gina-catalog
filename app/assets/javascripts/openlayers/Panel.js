@@ -102,9 +102,7 @@ Ext.define('Ext.OpenLayers.Panel', {
     this.callParent(arguments);
 
     this.initToolbars();
-    this.initMapTools();
-    this.addMapTools();
-
+        
     this.on('afterrender', this.initMap, this);
     this.on('resize', this.resizeMap, this);
     this.on('ready', function() { this.isReady = true; }, this);
@@ -158,107 +156,10 @@ Ext.define('Ext.OpenLayers.Panel', {
       );
       this.addDocked(this.bottomToolbar);
     }
-
-    if(this.tbar !== false ) {
-      this.topToolbar = Ext.create('Ext.toolbar.Toolbar', {
-        dock: 'right'
-      });
-      this.addDocked(this.topToolbar);
-    }
-  },
-
-  getTopToolbar: function() {
-    return this.topToolbar;
   },
 
   getBottomToolbar: function() {
     return this.bottomToolbar;
-  },
-
-  addMapTools: function() {
-    if(this.mapToolbar) {
-      for(var group in this.mapToolbar) {
-        this.addMapTool(group, this.mapToolbar[group]);
-      }
-    }
-  },
-
-  addMapTool: function(title, tools) {
-    if(this.getTopToolbar()) {
-      if(tools instanceof Ext.container.ButtonGroup) {
-        this.getTopToolbar().add(tools);
-      } else {
-        var actions = [];
-        Ext.each(tools, function(name) {
-          actions.push(this.mapTools[name]);
-        }, this);
-        this.getTopToolbar().add(actions);
-//        }));
-      }
-    }
-  },
-
-  initMapTools: function() {
-    this.mapToolsGroupID = this.getId() + '-maptools';
-    Ext.applyIf(this.mapTools, {
-      layers: new Ext.Action({
-        iconAlign: 'top',
-        text: 'Layers',
-        tooltip: 'Layers: Select visible map layers',
-        iconCls: 'layers-icon',
-        menu: this.layersMenu
-      }),
-      zoomIn: new Ext.Action({
-        iconAlign: 'top',
-        text: 'Zoom In',
-        iconCls: 'zoom-in-icon',
-        scope: this,
-        tooltip: 'Zoom In: Click/Drag the the mouse on the map to zoom in',
-        enableToggle: true, toggleGroup: this.mapToolsGroupID,
-        scope: this,
-        toggleHandler: function(button, state) {
-          if(state) {
-            this.zoomInBoxControl.activate();
-          } else {
-            this.zoomInBoxControl.deactivate();
-          }
-        }
-      }),
-      zoomOut: new Ext.Action({
-        iconAlign: 'top',
-        text: 'Zoom Out',
-        iconCls: 'zoom-out-icon',
-        scope: this,
-        tooltip: 'Zoom Out: Click/Drag the the mouse on the map to zoom out',
-        enableToggle: true, toggleGroup: this.mapToolsGroupID,
-        scope: this,
-        toggleHandler: function(button, state) {
-          if(state) {
-            this.zoomOutBoxControl.activate();
-          } else {
-            this.zoomOutBoxControl.deactivate();
-          }
-        }
-      }),
-      pan: new Ext.Action({
-        iconAlign: 'top',
-        text: 'Pan/Select',
-        pressed: true,
-        enableToggle: true, toggleGroup: this.mapToolsGroupID,
-        tooltip: 'Pan Map: Click and drag on the map to pan',
-        iconCls: 'pan-icon'
-      }),
-      aoi: new Ext.Action({
-        iconAlign: 'top',
-        text: 'AOI',
-        iconCls: 'aoi-icon',
-        scope: this,
-        tooltip: 'AOI: Click to draw a polygon used to select records.  Double click last point to close the polygon',
-        enableToggle: true, toggleGroup: this.mapToolsGroupID,
-        scope: this,
-        toggleHandler: function(button, state) { this.aoiHandler(state); }
-      })
-    });
   },
 
   aoiHandler: function(state) {
@@ -289,13 +190,23 @@ Ext.define('Ext.OpenLayers.Panel', {
       obj.deactivate();
       this.getMap().removeControl(obj);
     }, this);
+    
+    this.controls.add('layers', new OpenLayers.Control.LayerSwitcher());
 
     this.dragPanControl = new OpenLayers.Control.DragPan({
+      title: 'Pan Map: Click and drag on the map to pan',
       documentDrag: true,
       enableKinetic: true
     });
-    this.zoomInBoxControl = new OpenLayers.Control.ZoomBox();
-    this.zoomOutBoxControl = new OpenLayers.Control.ZoomBox({ out: true });
+    this.zoomInBoxControl = new OpenLayers.Control.ZoomBox({
+      title: 'Zoom In: Click/Drag the the mouse on the map to zoom in',
+      displayClass: 'zoomInBox'
+    });
+    this.zoomOutBoxControl = new OpenLayers.Control.ZoomBox({ 
+      out: true,
+      title: 'Zoom Out: Click/Drag the the mouse on the map to zoom out',
+      displayClass: 'zoomOutBox'
+    });
 
     this.map.addControls([this.dragPanControl, this.zoomInBoxControl, this.zoomOutBoxControl]);
     this.dragPanControl.activate();
@@ -317,15 +228,28 @@ Ext.define('Ext.OpenLayers.Panel', {
     }
 
     this.selectionLayer = new OpenLayers.Layer.Vector('Selection', {
-      displayInLayerSwitcher: false
+      displayInLayerSwitcher: false,
+      eventListeners: {
+        beforefeaturesadded: function() {
+          this.removeAllFeatures();
+        }
+      }
     });
     this.addLayer(this.selectionLayer);
     
     this.controls.add('aoi', new OpenLayers.Control.DrawFeature(
       this.selectionLayer,
-      OpenLayers.Handler.Polygon
+      OpenLayers.Handler.RegularPolygon, {
+        title: 'AOI: Click and drag the mouse to define your area of interest',
+        handlerOptions: {
+          irregular: true
+        },
+        eventListeners: {
+          featureadded: Ext.bind(this.onAoiAdd, this)
+        }
+      }
     ));
-    this.control('aoi').events.register('featureadded', this, this.onAoiAdd)
+    // this.control('aoi').events.register('featureadded', this, this.onAoiAdd)
 
     if(this.getBottomToolbar()) {
       this.map.events.register('moveend', this, this.onMapMove);
@@ -341,8 +265,10 @@ Ext.define('Ext.OpenLayers.Panel', {
   loadingCount: 0,
 
   onAoiAdd: function(e) {
+    this.dragPanControl.activate();
+    this.control('aoi').deactivate();
     this.fireEvent('aoiadded', this, e.feature, e);
-    this.mapTools.pan.each(function(button) { button.toggle(true); });
+    // this.mapTools.pan.each(function(button) { button.toggle(true); });
   },
 
   setupLayerMenu: function() {
