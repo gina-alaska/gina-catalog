@@ -17,6 +17,13 @@
   background-color: transparentize(#FFF, 0.75);
 }
 
+.baseLayersDiv {
+  white-space: nowrap;
+}
+.dataLayersDiv {
+  white-space: nowrap;
+}
+
 .olControlPanel {
   right: 20px;
   top: 0;
