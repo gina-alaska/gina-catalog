@@ -191,7 +191,9 @@ Ext.define('Ext.OpenLayers.Panel', {
       this.getMap().removeControl(obj);
     }, this);
     
-    this.controls.add('layers', new OpenLayers.Control.LayerSwitcher());
+    this.controls.add('layers', new OpenLayers.Control.LayerSwitcher({
+      title: 'Layers: Click here to expand the layers list'
+    }));
 
     this.dragPanControl = new OpenLayers.Control.DragPan({
       title: 'Pan Map: Click and drag on the map to pan',
