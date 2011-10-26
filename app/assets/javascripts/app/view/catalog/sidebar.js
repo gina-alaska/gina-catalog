@@ -18,6 +18,13 @@ Ext.define('App.view.catalog.sidebar', {
     this.resultCount = Ext.widget('button', {
       text: '0'
     });
+    this.projectCount = Ext.widget('button', {
+      text: '0'
+    });
+    this.assetCount = Ext.widget('button', {
+      text: '0'
+    });
+    
 
     this.items = [{
       title: 'Search Results',
@@ -26,7 +33,7 @@ Ext.define('App.view.catalog.sidebar', {
       dockedItems: [{
         xtype: 'toolbar',
         dock: 'bottom',
-        items: ['->', 'Results: ', this.resultCount]
+        items: ['->', 'Projects:', this.projectCount, 'Data:', this.assetCount, 'Results:', this.resultCount]
       }],
       items: {
         xtype: 'resultslist'
@@ -262,6 +269,33 @@ Ext.define('App.view.catalog.sidebar', {
 
   onDataChanged: function(store) {
     this.resultCount.setText(store.getCount());
+    Ext.defer(this.getRecordCounts, 100, this, [store]);
+  },
+  
+  getRecordCounts: function(store){
+    var projects = 0,
+        assets = 0,
+        titles = [];
+    
+    store.each(function(i) {
+      switch(i.get('type')) {
+        case 'Project':
+          if(titles.indexOf(i.get('title')) < 0) {
+            projects += 1;
+            titles.push(i.get('title'));
+          }
+          break;
+        case 'Asset':
+          if(titles.indexOf(i.get('title')) < 0) {
+            assets += 1;
+            titles.push(i.get('title'));
+          }
+          break;          
+      }
+    }, this);
+    
+    this.projectCount.setText(projects || '0');
+    this.assetCount.setText(assets || '0');
   },
 
   onSelectionChange: function(sm, selections, opts) {
