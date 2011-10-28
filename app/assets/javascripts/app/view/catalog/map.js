@@ -132,12 +132,12 @@ Ext.define('App.view.catalog.map', {
       var point = geom;
 //      var point = geom.getCentroid();
       point.transform(this.getMap().displayProjection, this.getMap().getProjectionObject());
-      return new OpenLayers.Feature.Vector(point, r.data);
+      return new OpenLayers.Feature.Vector(point, { id: r.data.id, title: r.data.title });
     }
     return null;
   },
 
-  showSelectedFeature: function(id, pbar) {
+  showSelectedFeature: function(id) {
     var projects = [];
     var data = [];
 
@@ -226,4 +226,4 @@ Ext.define('App.view.catalog.map', {
     }
     if(Ext.Msg.isVisible()) { Ext.Msg.hide(); }
   }
-})
+});
