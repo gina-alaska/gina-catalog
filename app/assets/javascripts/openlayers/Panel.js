@@ -378,11 +378,7 @@ Ext.define('Ext.OpenLayers.Panel', {
     var bbar = this.getBottomToolbar();
 
     if(bbar) {
-      // var pixel = new OpenLayers.Pixel(e.layerX, e.layerY);
       var el = bbar.getComponent('mouse_location');
-      
-      // console.log(e);
-      
       this.mouse = this.getMap().getLonLatFromPixel(this.getMap().events.getMousePosition(e));
 
       if(this.getMap().displayProjection) {
