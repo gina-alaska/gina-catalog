@@ -387,10 +387,10 @@ Ext.define('Ext.OpenLayers.Panel', {
         point.transform(this.getMap().getProjectionObject(), this.getMap().displayProjection);
       }
 
-      lat = Ext.util.Format.number(point.lat, '0.000');
-      lng = Ext.util.Format.number(point.lon, '0.000');
+      // lat = Ext.util.Format.number(point.lat, '0.000');
+      // lng = Ext.util.Format.number(point.lon, '0.000');
 
-      el.update(el.tpl.apply({ "lat": lat, "lng": lng }));
+      el.update(el.tpl.apply({ "lat": point.lat, "lng": point.lng }));
     }
 
     this.fireEvent('mousemove', this, e);
