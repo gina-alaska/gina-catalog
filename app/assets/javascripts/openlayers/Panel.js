@@ -139,23 +139,27 @@ Ext.define('Ext.OpenLayers.Panel', {
             }
           }]
         }),
-        this.loadIndicator, '&nbsp;',
-        '->',
-        Ext.create('Ext.toolbar.Item', {
-          itemId: 'center_location',
-          cls: 'map-indicator',
-          width: 150,
-          tpl: new Ext.Template('<div style="">Center: ({lat},{lng})</div>'),
-          html: 'Center: ()'
-        }), '-',
-        Ext.create('Ext.toolbar.Item', {
-          itemId: 'mouse_location',
-          cls: 'map-indicator',
-          width: 150,
-          tpl: new Ext.Template('<div style="">Mouse: ({lat},{lng})</div>'),
-          html: 'Mouse: ()'
-        })
+        this.loadIndicator, '&nbsp;'
       );
+      if (!Ext.isIE) { 
+        this.bottomToolbar.add(
+          '->',
+          Ext.create('Ext.toolbar.Item', {
+            itemId: 'center_location',
+            cls: 'map-indicator',
+            width: 150,
+            tpl: new Ext.Template('<div style="">Center: ({lat},{lng})</div>'),
+            html: 'Center: ()'
+          }), '-',
+          Ext.create('Ext.toolbar.Item', {
+            itemId: 'mouse_location',
+            cls: 'map-indicator',
+            width: 150,
+            tpl: new Ext.Template('<div style="">Mouse: ({lat},{lng})</div>'),
+            html: 'Mouse: ()'
+          })
+        );
+      }
       this.addDocked(this.bottomToolbar);
     }
   },
@@ -200,7 +204,7 @@ Ext.define('Ext.OpenLayers.Panel', {
     this.dragPanControl = new OpenLayers.Control.DragPan({
       title: 'Pan Map: Click and drag on the map to pan',
       documentDrag: true,
-      enableKinetic: true
+      enableKinetic: (Ext.isIE ? false : true)
     });
     this.zoomInBoxControl = new OpenLayers.Control.ZoomBox({
       title: 'Zoom In: Click/Drag the the mouse on the map to zoom in',
@@ -255,7 +259,7 @@ Ext.define('Ext.OpenLayers.Panel', {
     ));
     // this.control('aoi').events.register('featureadded', this, this.onAoiAdd)
 
-    if(this.getBottomToolbar()) {
+    if(this.getBottomToolbar() && !Ext.isIE) {
       this.map.events.register('moveend', this, this.onMapMove);
       this.map.events.register('mousemove', this, this.onMouseMove);
     }
