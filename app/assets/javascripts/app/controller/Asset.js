@@ -28,7 +28,7 @@ Ext.define('App.controller.Asset', {
       },
       'assetwindow button[action="openfull"]': {
         click: function(button) {
-          this.fullOpen(button.up('window').record);
+          this.fullOpen(button.up('window').getRecord());
           button.up('window').close();
         }
       }

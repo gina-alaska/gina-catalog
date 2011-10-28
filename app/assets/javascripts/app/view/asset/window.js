@@ -6,9 +6,18 @@ Ext.define('App.view.asset.window', {
   height: 500,
   
   layout: 'fit',
+  
+  config: {
+    record: null
+  },
+  
+  constructor: function(config) {
+    this.initConfig(config);
+    this.callParent();
+  },
 
   initComponent: function() {
-    this.title = this.record.get('title');
+    this.title = this.getRecord().get('title');
 
 //    this.items = [{
 //      border: false,
@@ -41,7 +50,7 @@ Ext.define('App.view.asset.window', {
       border: false,
       autoScroll: true,
       loader: {
-        url: '/catalog/' + this.record.get('id'),
+        url: '/catalog/' + this.getRecord().get('id'),
         renderer: 'html',
         autoLoad: true
       }

@@ -75,16 +75,14 @@ Ext.define('App', {
         }
       }
     });
-
+    
     this.navToolbar = Ext.create('Ext.ButtonGroup', {
       border: false,
       columns: 3,
       height: 85,
       cls: 'main-menu',
       defaults: { scale: 'large', iconAlign: 'left', width: '100%', enableToggle: true, toggleGroup: 'pages' },
-      items: [
-        this.nav.toolbarItems(['catalog', 'news', 'help', 'realtime', 'contact', 'nssi'])
-      ]
+      items: this.nav.toolbarItems(['catalog', 'news', 'help', 'realtime', 'contact', 'nssi'])
     });
 
     this.loginToolbar = Ext.create('Ext.ButtonGroup', {
@@ -95,12 +93,11 @@ Ext.define('App', {
       buttonAlign: 'center',
       pack: 'center',
       defaults: { scale: 'large', iconAlign: 'left', width: '100%', enableToggle: true, toggleGroup: 'pages' },
-      items: [
-        this.nav.toolbarItems(['signup', 'login'])
-      ]
+      items: this.nav.toolbarItems(['signup', 'login'])
     });
-
+    
     this.header = Ext.create('Ext.toolbar.Toolbar', {
+      dock: 'top',
       cls: 'main-toolbar',
       items: [{
         width: 650,
@@ -160,9 +157,9 @@ Ext.application({
         id: 'center',
         region: 'center',
         border: false,
-        tbar: App.header,
         layout: 'card',
         deferredRender: false,
+        dockedItems: [App.header],
         items: [{
           html: 'Loading...'
         }]

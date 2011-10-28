@@ -78,7 +78,9 @@ Ext.define('Ext.OpenLayers.Panel', {
     return this.controls.get(key);
   },
 
-  constructor: function() {
+  constructor: function(config) {
+    this.initConfig(config);
+    
     this.controls = new Ext.util.MixedCollection(true);
     this.layersMenu = new Ext.menu.Menu();
     this.callParent(arguments);
@@ -87,7 +89,7 @@ Ext.define('Ext.OpenLayers.Panel', {
   /**
    * private
    */
-  initComponent: function() {
+  initComponent: function() {    
     this.addEvents('ready', 'mapmove', 'mousemove', 'aoiadded');
 
     this.loadIndicator = new Ext.toolbar.Item({
@@ -176,7 +178,7 @@ Ext.define('Ext.OpenLayers.Panel', {
    */
   initMap: function() {
     this.map = new OpenLayers.Map(this.body.dom, this.mapConfig);
-    this.setupLayerMenu();
+    // this.setupLayerMenu();
     this.addGinaLayers();
 
     var center = this.mapConfig.defaultCenter.clone();
@@ -192,7 +194,7 @@ Ext.define('Ext.OpenLayers.Panel', {
     }, this);
     
     this.controls.add('layers', new OpenLayers.Control.LayerSwitcher({
-      title: 'Layers: Click here to expand the layers list'
+      title: 'Layers: Click here to expand the layer selection list'
     }));
 
     this.dragPanControl = new OpenLayers.Control.DragPan({
@@ -331,8 +333,8 @@ Ext.define('Ext.OpenLayers.Panel', {
       }
     }, this);
 
-    this.layersMenu.removeAll();
-    this.layersMenu.add('<b>Base Layer</b>', base, '-', '<b>Overlays</b>', overlay);
+    // this.layersMenu.removeAll();
+    // this.layersMenu.add('<b>Base Layer</b>', base, '-', '<b>Overlays</b>', overlay);
   },
 
   updateLayerMenu: function() {
@@ -421,7 +423,16 @@ Ext.define('Ext.OpenLayers.Panel', {
   },
 
   getActiveBaseLayer: function() {
-    return this.activeBaseLayer;
+    var layers = this.getMap().getLayersBy('visibility', true);
+    var base;
+    
+    Ext.each(layers, function(layer) {
+      if(layer.isBaseLayer) {
+        base = layer;
+        return false;
+      }
+    }, this);
+    return base;
   },
 
   showLayer: function(layer) {

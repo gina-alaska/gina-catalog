@@ -2,10 +2,6 @@ Ext.define('Ext.gina.QuickSearch', {
   extend: 'Ext.container.ButtonGroup',
   alias: 'widget.quicksearch',
 
-  fields: 'all',
-  matchAll: true,
-  maskEl: false,
-  store: null,
   cls: 'quicksearch',
 
   config: {
@@ -13,6 +9,12 @@ Ext.define('Ext.gina.QuickSearch', {
     maskEl: false,
     matchAll: true,
     fields: 'all'
+  },
+  
+  constructor: function(config) {
+    this.initConfig(config);
+    
+    this.callParent();
   },
 
   initComponent: function() {
@@ -24,7 +26,7 @@ Ext.define('Ext.gina.QuickSearch', {
       itemId: 'q',
       plugins: [defaultSearch],
       xtype: 'textfield',
-      store: this.store,
+      store: this.getStore(),
       listeners: {
         scope: this,
         specialkey: function(field, e) {

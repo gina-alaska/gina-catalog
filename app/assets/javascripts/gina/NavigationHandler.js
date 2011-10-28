@@ -1,18 +1,18 @@
 Ext.define('Ext.gina.NavigationHandler', {
   extend: 'Ext.Component',
 
+  /**
+   * @cfg {Hash} page actions
+   * A hash of page actions base from the loaded configuration
+   */
+  actions: {},
+  
   config: {
     /**
      * @cfg {Hash} pages
      * A hash of page configurations to load custom navigation links
      */
     pages: {},
-
-    /**
-     * @cfg {Hash} page actions
-     * A hash of page actions base from the loaded configuration
-     */
-    actions: {},
 
     /**
      * @cfg {Boolean} autoStart
@@ -41,6 +41,11 @@ Ext.define('Ext.gina.NavigationHandler', {
      * String used to seperate the key from the value in params
      **/
     paramSeparator: '='
+  },
+  
+  constructor: function(config){
+    this.initConfig(config);
+    this.callParent();
   },
 
   initComponent: function() {
@@ -79,7 +84,7 @@ Ext.define('Ext.gina.NavigationHandler', {
       iframe.location.hash = top.location.hash.replace(/^#[\/]{0,1}/,'');
     }
 
-    if (this.autoStart) {
+    if (this.getAutoStart()) {
       if (!Ext.isReady) {
         Ext.onReady(this.start, this);
       } else {
@@ -99,7 +104,7 @@ Ext.define('Ext.gina.NavigationHandler', {
    * Start monitoring the location.hash for changes
    */
   start: function() {
-    this.monitor = setInterval(Ext.bind(this.monitorHandler, this), this.monitorDelay);
+    this.monitor = setInterval(Ext.bind(this.monitorHandler, this), this.getMonitorDelay());
     this.fireEvent('start', this);
   },
 
@@ -190,7 +195,7 @@ Ext.define('Ext.gina.NavigationHandler', {
       if(key) {
         if(hash !== '') { hash +=  '&'; }
         else { hash = '?' }
-        hash += key + this.paramSeparator + params[key];
+        hash += key + this.getParamSeparator() + params[key];
       }
     }
     return '#' + controller + '/' + action + hash;
