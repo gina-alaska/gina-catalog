@@ -397,7 +397,7 @@ Ext.define('Ext.OpenLayers.Panel', {
   },
 
   onMapMove: function(e) {
-    if(e.type == 'moveend'){
+    if(e.type == 'moveend') {
       var bbar = this.getBottomToolbar();
       this.center = this.getMap().getCenter();
       if(this.getMap().displayProjection) {
@@ -407,7 +407,7 @@ Ext.define('Ext.OpenLayers.Panel', {
       if(bbar) {
         var lat = Ext.util.Format.number(this.center.lat, '0.000'),
             lng = Ext.util.Format.number(this.center.lon, '0.000'),
-            el = bbar.getComponent('cneter_location');
+            el = bbar.getComponent('center_location');
         el.update(el.tpl.apply({ "lat": lat, "lng": lng }));
       }
 
