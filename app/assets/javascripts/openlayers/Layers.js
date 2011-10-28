@@ -213,7 +213,6 @@ Ext.define('Ext.OpenLayers.Layers', {
     var opts = {};
     Ext.apply(opts, this.layer_configs[name].options, {
       type: 'jpeg',
-      transitionEffect: 'resize',
       wrapDateLine: false,
       visibility: true
     });
