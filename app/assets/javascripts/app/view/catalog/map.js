@@ -70,9 +70,9 @@ Ext.define('App.view.catalog.map', {
       }
     };
 
-    // this.project_cluster_strategy = new OpenLayers.Strategy.Cluster({ distance: 40 });
+    this.project_cluster_strategy = new OpenLayers.Strategy.Cluster({ distance: 40 });
     this.projects = new OpenLayers.Layer.Vector('Projects', {
-      // strategies: [ this.project_cluster_strategy ],
+      strategies: [ this.project_cluster_strategy ],
       styleMap: new OpenLayers.StyleMap({
         "default": new OpenLayers.Style({
           // label: "${count}",
@@ -94,9 +94,9 @@ Ext.define('App.view.catalog.map', {
     });
     this.addLayer(this.projects);
 
-    // this.data_cluster_strategy = new OpenLayers.Strategy.Cluster({ distance: 40 });
+    this.data_cluster_strategy = new OpenLayers.Strategy.Cluster({ distance: 40 });
     this.data = new OpenLayers.Layer.Vector('Data', {
-      // strategies: [ this.data_cluster_strategy ],
+      strategies: [ this.data_cluster_strategy ],
       styleMap: new OpenLayers.StyleMap({
         "default": new OpenLayers.Style({
           // label: "${count}",
@@ -152,8 +152,8 @@ Ext.define('App.view.catalog.map', {
     this.projects.removeAllFeatures();
     this.data.removeAllFeatures();
 
-    // this.project_cluster_strategy.deactivate();
-    // this.data_cluster_strategy.deactivate();
+    this.project_cluster_strategy.deactivate();
+    this.data_cluster_strategy.deactivate();
 //    this.control('select_item').deactivate();
 
     var index = this.store.find('id', id),
@@ -194,8 +194,8 @@ Ext.define('App.view.catalog.map', {
     this.projects.removeAllFeatures();
     this.data.removeAllFeatures();
 
-    // this.project_cluster_strategy.activate();
-    // this.data_cluster_strategy.activate();
+    this.project_cluster_strategy.activate();
+    this.data_cluster_strategy.activate();
 
     this.control('select_item').activate();
 
