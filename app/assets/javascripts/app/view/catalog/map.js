@@ -16,7 +16,7 @@ Ext.define('App.view.catalog.map', {
 
   setupControls: function() {
     this.controls.add('select_item', new OpenLayers.Control.SelectFeature(
-      this.projects,
+      [this.projects,this.data],
       {
         clickout: true,
         onSelect: Ext.bind(this.onFeatureClick, this)
@@ -45,7 +45,7 @@ Ext.define('App.view.catalog.map', {
 //    this.regions.addFeatures([alaska]);
 //    this.addLayer(this.regions);
 
-    this.featureCache = Ext.create('Ext.util.MixedCollection');
+    // this.featureCache = Ext.create('Ext.util.MixedCollection');
     
     var styleFunctions = {
       context: {
@@ -158,7 +158,7 @@ Ext.define('App.view.catalog.map', {
 
     var index = this.store.find('id', id),
         r = this.store.getAt(index),
-        features = this.featureCache.getByKey(id);
+        features = r.get('features');
 
     if(features === undefined) {
       features = [];
@@ -166,7 +166,7 @@ Ext.define('App.view.catalog.map', {
         var f = this.buildSearchFeature(loc.wkt, r);
         if(f !== null) { features.push(f); }
       }, this);
-      if(features.length > 0) { this.featureCache.add(id, features); }
+      if(features.length > 0) { r.set('features', features); }
     }
 
     if(r.get('type') == 'Project') {
@@ -201,14 +201,15 @@ Ext.define('App.view.catalog.map', {
 
     this.store.each(function(r) {
       var rec = r;
-      var features = this.featureCache.getByKey(rec.get('id'));
-      if(features === undefined) {
+      var features = r.get('features');
+      
+      if(features === undefined || features === '') {
         features = [];
-        Ext.each(rec.get('locations'), function(loc) {
-          var f = this.buildSearchFeature(loc.wkt, rec);
+        Ext.each(r.get('locations'), function(loc) {
+          var f = this.buildSearchFeature(loc.wkt, r);
           if(f !== null) { features.push(f); }
         }, this);
-        if(features.length > 0) { this.featureCache.add(rec.get('id'), features); }
+        if(features.length > 0) { r.set('features', features); }
       }
 
       if(features.length > 0) {
