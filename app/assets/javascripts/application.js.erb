@@ -29,48 +29,48 @@ Ext.define('App', {
       pages: {
         catalog: {
           title: 'Catalog',
-          icon: '<%= image_path 'icons/medium/bookmark.png' %>'
+          icon: "<%= image_path 'icons/medium/bookmark.png' %>"
         },
         news: {
           title: 'News',
-          icon: '<%= image_path 'icons/medium/chat-.png' %>'
+          icon: "<%= image_path 'icons/medium/chat-.png' %>"
         },
         nssi: {
           title: 'NSSI',
           url: 'http://www.northslope.org',
           mode: 'window',
-          icon: '<%= image_path 'icons/medium/globe.png' %>'
+          icon: "<%= image_path 'icons/medium/globe.png' %>"
         },
         realtime: {
           title: 'Realtime Data',
           url: 'http://realtime.hub.gina.alaska.edu',
           mode: 'window',
-          icon: '<%= image_path 'icons/medium/satellite.png' %>'
+          icon: "<%= image_path 'icons/medium/satellite.png' %>"
         },
         contact: {
           title: 'Contact Us',
-          icon: '<%= image_path 'icons/medium/email.png' %>'
+          icon: "<%= image_path 'icons/medium/email.png' %>"
         },
         help: {
           title: 'Help',
-          icon: '<%= image_path 'icons/medium/male-user.png' %>'
+          icon: "<%= image_path 'icons/medium/male-user.png' %>"
         },
         signup: {
           title: 'Signup',
           url: 'http://id.gina.alaska.edu/#signup',
           mode: 'redirect',
-          icon: '<%= image_path 'icons/medium/agent.png' %>'
+          icon: "<%= image_path 'icons/medium/agent.png' %>"
         },
         login: {
           title: 'Login',
           url: '/login',
-          icon: '<%= image_path 'icons/medium/lock.png' %>',
+          icon: "<%= image_path 'icons/medium/lock.png' %>",
           mode: 'redirect'
         },
         logout: {
           title: 'Logout',
           url: '/logout',
-          icon: '<%= image_path 'icons/medium/lock.png' %>',
+          icon: "<%= image_path 'icons/medium/lock.png' %>",
           mode: 'redirect'
         }
       }
@@ -147,7 +147,7 @@ Ext.application({
     App.init(this);
     App.current_user.on('logged_out', function() {
       var splash = Ext.create(this.getController('Catalog').getView('catalog.splash'));
-     	splash.show();
+      splash.show();
     }, this);
 
     App.viewport = Ext.create('Ext.container.Viewport', {

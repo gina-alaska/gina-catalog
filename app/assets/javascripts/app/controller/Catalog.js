@@ -25,10 +25,10 @@ Ext.define('App.controller.Catalog', {
       },
       /* Sidebar events */
       'viewport > #center catalogsidebar': {
-        showall: this.showAllRecords,
-        drawaoi: function() { this.pages.map.aoiHandler(true); },
-        filter: this.filterHandler,
-        export: this.onExport
+        "showall": this.showAllRecords,
+        "drawaoi": function() { this.pages.map.aoiHandler(true); },
+        "filter": this.filterHandler,
+        "export": this.onExport
       },
       /* Map events */
       'viewport > #center #results-map': {
@@ -40,7 +40,7 @@ Ext.define('App.controller.Catalog', {
       'viewport > #center assetdetails': {
         back: this.show
       }
-    })
+    });
   },
 
   start: function(panel) {
@@ -125,7 +125,7 @@ Ext.define('App.controller.Catalog', {
 
     var win = Ext.create('Ext.window.Window', {
       width: 500,
-      height: 45,
+      height: 200,
       layout: {
         type: 'vbox',
         align: 'stretch'
@@ -145,23 +145,15 @@ Ext.define('App.controller.Catalog', {
         items: fields
       }]
     });
+    
     win.show();
     win.down('form').submit({
       "params": { "limit": limit }
     });
-
-//    Ext.gina.Ajax.request({
-//      url: '/catalog/search.pdf',
-//      method: 'POST',
-//      params: {
-//        "ids": ids,
-//        limit: 100
-//      }
-//    });
   },
 
   filterHandler: function(panel, type, field, value) {
-    var config,
+    var config, win,
         store = this.getStore('SearchResults');
 
     switch(type) {
@@ -171,7 +163,7 @@ Ext.define('App.controller.Catalog', {
         Ext.defer(store.addStringFilter, 100, store, [config]);
         break;
       case 'agency':
-        var win = Ext.widget('agencyselector', {
+        win = Ext.widget('agencyselector', {
           listeners: {
             scope: this,
             selected: function(win, records) {
@@ -186,7 +178,7 @@ Ext.define('App.controller.Catalog', {
         win.show();
         break;
       case 'source':
-        var win = Ext.widget('agencyselector', {
+        win = Ext.widget('agencyselector', {
           listeners: {
             scope: this,
             selected: function(win, records) {
@@ -202,11 +194,11 @@ Ext.define('App.controller.Catalog', {
         break;
       case 'region':
         this.showFilterPbar();
-        var config = this.stringFilterConfig(field, value, "Region: " + value);
+        config = this.stringFilterConfig(field, value, "Region: " + value);
         Ext.defer(store.addStringFilter, 100, store, [config]);
         break;
       case 'contact':
-        var win = Ext.widget('personselector', {
+        win = Ext.widget('personselector', {
           listeners: {
             scope: this,
             selected: function(win, records) {
@@ -249,7 +241,7 @@ Ext.define('App.controller.Catalog', {
       fields: ['primary_contact_id', 'person_ids'],
       value: item.get('id'),
       append: true
-    }
+    };
   },
 
   sourceFilterConfig: function(agency) {
@@ -258,7 +250,7 @@ Ext.define('App.controller.Catalog', {
       description: 'Source: "' + agency.get('name') + ' (' + agency.get('acronym') + ')' + '"',
       fields: ['source_agency_id'],
       value: agency.get('id')
-    }
+    };
   },
 
   agencyFilterConfig: function(agency) {
@@ -268,7 +260,7 @@ Ext.define('App.controller.Catalog', {
       fields: ['agency_ids', 'source_agency_id'],
       value: agency.get('id'),
       append: true
-    }
+    };
   },
 
   yearFilterConfig: function(value) {

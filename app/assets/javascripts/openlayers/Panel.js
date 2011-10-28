@@ -285,8 +285,12 @@ Ext.define('Ext.OpenLayers.Panel', {
   },
 
   addLayerMonitor: function(e) {
-    e.layer.events.register('loadstart', this, Ext.bind(this.monitorLayer, this, [e.layer, 'start']))
-    e.layer.events.register('loadend', this, Ext.bind(this.monitorLayer, this, [e.layer, 'end']))
+    e.layer.events.register('loadstart', this, 
+      Ext.bind(this.monitorLayer, this, [e.layer, 'start'])
+    );
+    e.layer.events.register('loadend', this, 
+      Ext.bind(this.monitorLayer, this, [e.layer, 'end'])
+    );
   },
 
   monitorLayer: function(layer, type) {
@@ -383,10 +387,10 @@ Ext.define('Ext.OpenLayers.Panel', {
         lonLat.transform(this.getMap().getProjectionObject(), this.getMap().displayProjection);
       }
 
-      lat = Ext.util.Format.number(lonLat.lat, '0.000'),
-      lng = Ext.util.Format.number(lonLat.lon, '0.000'),
+      lat = Ext.util.Format.number(lonLat.lat, '0.000');
+      lng = Ext.util.Format.number(lonLat.lon, '0.000');
 
-      el.update(el.tpl.apply({ "lat": lat, "lng": lng }))
+      el.update(el.tpl.apply({ "lat": lat, "lng": lng }));
     }
 
     this.fireEvent('mousemove', this, e);
@@ -403,7 +407,7 @@ Ext.define('Ext.OpenLayers.Panel', {
       if(bbar) {
         var lat = Ext.util.Format.number(this.center.lat, '0.000'),
             lng = Ext.util.Format.number(this.center.lon, '0.000'),
-            el = bbar.getComponent('center_location');
+            el = bbar.getComponent('cneter_location');
         el.update(el.tpl.apply({ "lat": lat, "lng": lng }));
       }
 

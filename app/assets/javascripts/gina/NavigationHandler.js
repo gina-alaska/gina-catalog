@@ -6,6 +6,12 @@ Ext.define('Ext.gina.NavigationHandler', {
    * A hash of page actions base from the loaded configuration
    */
   actions: {},
+
+  /* //protected
+   * Monitor for the location hash changes
+   */
+  monitor: null,
+  
   
   config: {
     /**
@@ -19,16 +25,6 @@ Ext.define('Ext.gina.NavigationHandler', {
      * Autostart the monitor the changes to the location hash
      */
     autoStart: true,
-
-    /* //protected
-     * Function to be implemented by NavigationHandler subclasses, it is empty by default.
-     */
-    initComponent: Ext.emptyFn,
-
-    /* //protected
-     * Monitor for the location hash changes
-     */
-    monitor: null,
 
     /*
      * @cfg {Integer}

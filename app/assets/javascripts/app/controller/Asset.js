@@ -107,7 +107,7 @@ Ext.define('App.controller.Asset', {
       scope: this,
       callback: function(records, op, success) {
         if(success) {
-          this.pages.details.down('assetmap').loadLocations(records)
+          this.pages.details.down('assetmap').loadLocations(records);
         }
       }
     });
