@@ -280,7 +280,7 @@ Ext.define('App.controller.Catalog', {
   },
 
   show: function() {
-    this.getStore('SearchResults').load({ limit: (Ext.isIE ? 300 : 3000) });
+    this.getStore('SearchResults').load({ limit: (Ext.isIE ? 3000 : 3000) });
     this.getStore('SearchResults').clearCachedFilter('name', 'hideall');
 
     var panel = this.pages.index.up('panel');
