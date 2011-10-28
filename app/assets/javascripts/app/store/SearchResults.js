@@ -14,6 +14,7 @@ Ext.define('App.store.SearchResults', {
       root: 'results'
     }
   },
+  
   pageSize: 3000,
   remoteSort: false,
   autoLoad: false,
