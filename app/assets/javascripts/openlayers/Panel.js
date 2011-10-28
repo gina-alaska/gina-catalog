@@ -381,16 +381,16 @@ Ext.define('Ext.OpenLayers.Panel', {
       var lon, lat, pixel = new OpenLayers.Pixel(e.layerX, e.layerY),
           el = bbar.getComponent('mouse_location');
 
-      var point = this.getMap().getLonLatFromPixel(pixel);
+      this.mouse = this.getMap().getLonLatFromPixel(pixel);
 
       if(this.getMap().displayProjection) {
-        point.transform(this.getMap().getProjectionObject(), this.getMap().displayProjection);
+        this.mouse.transform(this.getMap().getProjectionObject(), this.getMap().displayProjection);
       }
 
-      // lat = Ext.util.Format.number(point.lat, '0.000');
-      // lng = Ext.util.Format.number(point.lon, '0.000');
+      lat = Ext.util.Format.number(this.mouse.lat, '0.000');
+      lng = Ext.util.Format.number(this.mouse.lon, '0.000');
 
-      el.update(el.tpl.apply({ "lat": point.lat, "lng": point.lng }));
+      el.update(el.tpl.apply({ "lat": lat, "lng": lng }));
     }
 
     this.fireEvent('mousemove', this, e);
