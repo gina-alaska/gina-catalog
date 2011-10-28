@@ -64,7 +64,7 @@ Ext.define('App.view.catalog.sidebar', {
         parent.setChecked(true);
         handler(field, dir);
       }
-    }
+    };
 
     this.directionMenu = function() {
       return [{
@@ -127,7 +127,7 @@ Ext.define('App.view.catalog.sidebar', {
           this.fireEvent('open', selected[0]);
         } else {
           //Notify that there is nothing selected
-          Ext.gina.Notify.show('Notice', 'No record was selected')
+          Ext.gina.Notify.show('Notice', 'No record was selected');
         }
       }
     });
@@ -157,21 +157,21 @@ Ext.define('App.view.catalog.sidebar', {
         iconCls: 'agency-icon',
         scope: this,
         handler: function() {
-          this.fireEvent('filter', this, 'agency')
+          this.fireEvent('filter', this, 'agency');
         }
       }, {
         text: 'Contact',
         iconCls: 'contact-icon',
         scope: this,
         handler: function() {
-          this.fireEvent('filter', this, 'contact')
+          this.fireEvent('filter', this, 'contact');
         }
       }, {
         text: 'Source',
         iconCls: 'source-icon',
         scope: this,
         handler: function() {
-          this.fireEvent('filter', this, 'source')
+          this.fireEvent('filter', this, 'source');
         }
       }, {
         text: 'Status',
@@ -180,31 +180,31 @@ Ext.define('App.view.catalog.sidebar', {
           text: 'Ongoing',
           scope: this,
           handler: function() {
-            this.fireEvent('filter', this, 'string', 'status', 'ongoing')
+            this.fireEvent('filter', this, 'string', 'status', 'ongoing');
           }
         }, {
           text: 'Complete',
           scope: this,
           handler: function() {
-            this.fireEvent('filter', this, 'string', 'status', 'complete')
+            this.fireEvent('filter', this, 'string', 'status', 'complete');
           }
         }, {
           text: 'Unknown',
           scope: this,
           handler: function() {
-            this.fireEvent('filter', this, 'string', 'status', 'unknown')
+            this.fireEvent('filter', this, 'string', 'status', 'unknown');
           }
         }, {
           text: 'Local',
           scope: this,
           handler: function() {
-            this.fireEvent('filter', this, 'string', 'status', 'local')
+            this.fireEvent('filter', this, 'string', 'status', 'local');
           }
         }, {
           text: 'Remote',
           scope: this,
           handler: function() {
-            this.fireEvent('filter', this, 'string', 'status', 'remote')
+            this.fireEvent('filter', this, 'string', 'status', 'remote');
           }
         }]
       }, {
@@ -214,13 +214,13 @@ Ext.define('App.view.catalog.sidebar', {
           text: 'Project',
           scope: this,
           handler: function() {
-            this.fireEvent('filter', this, 'string', 'type', 'Project')
+            this.fireEvent('filter', this, 'string', 'type', 'Project');
           }
         }, {
           text: 'Data',
           scope: this,
           handler: function() {
-            this.fireEvent('filter', this, 'string', 'type', 'Asset')
+            this.fireEvent('filter', this, 'string', 'type', 'Asset');
           }
         }]
       }, {
@@ -259,7 +259,7 @@ Ext.define('App.view.catalog.sidebar', {
           this.fireEvent('filter', this, 'region', 'geokeywords', 'Northslope');
         }
       }]
-    })
+    });
 
     this.callParent();
 
@@ -269,7 +269,7 @@ Ext.define('App.view.catalog.sidebar', {
 
   onDataChanged: function(store) {
     this.resultCount.setText(store.getCount());
-    Ext.defer(this.getRecordCounts, 100, this, [store]);
+    // Ext.defer(this.getRecordCounts, 100, this, [store]);
   },
   
   getRecordCounts: function(store){
@@ -302,7 +302,7 @@ Ext.define('App.view.catalog.sidebar', {
     if(selections.length > 0) {
       this.actions.open.enable();
 
-      var dom = sm.view.getNode(selections[0])
+      var dom = sm.view.getNode(selections[0]);
       var el = Ext.get(dom);
       el.scrollIntoView(this.body);
     } else {
