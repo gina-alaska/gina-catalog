@@ -75,8 +75,8 @@ Ext.define('App.view.catalog.map', {
       strategies: [ this.project_cluster_strategy ],
       styleMap: new OpenLayers.StyleMap({
         "default": new OpenLayers.Style({
-          label: "${count}",
-          fontWeight: 'bold',
+          // label: "${count}",
+          // fontWeight: 'bold',
           pointRadius: "${radius}",
 //          pointRadius: 4,
           fillColor: "#94fbff",
@@ -99,8 +99,8 @@ Ext.define('App.view.catalog.map', {
       strategies: [ this.data_cluster_strategy ],
       styleMap: new OpenLayers.StyleMap({
         "default": new OpenLayers.Style({
-          label: "${count}",
-          fontWeight: 'bold',
+          // label: "${count}",
+          // fontWeight: 'bold',
           pointRadius: "${radius}",
           fillColor: "#ffcc66",
           fillOpacity: 0.3,
