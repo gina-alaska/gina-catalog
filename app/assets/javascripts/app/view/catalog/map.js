@@ -174,26 +174,14 @@ Ext.define('App.view.catalog.map', {
         r = this.store.getAt(index),
         features = r.get('features');
 
-    if(features === undefined) {
-      features = [];
-      Ext.each(r.get('locations'), function(loc) {
-        var f = this.buildSearchFeature(loc.wkt, r);
-        if(f !== null) { features.push(f); }
-      }, this);
-      if(features.length > 0) { r.set('features', features); }
-    }
-
-    if(r.get('type') == 'Project') {
-      this.projects.addFeatures(features);
-    } else {
-      this.data.addFeatures(features);
-    }
-
     if(features.length > 0) {
-      var bounds = this.projects.getDataExtent();
-      if(bounds) {
-        bounds.extend(this.data.getDataExtent());
+      var bounds;
+      
+      if(r.get('type') == 'Project') {
+        this.projects.addFeatures(features);
+        bounds = this.projects.getDataExtent();
       } else {
+        this.data.addFeatures(features);
         bounds = this.data.getDataExtent();
       }
       this.fit(bounds, 4);
