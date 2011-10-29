@@ -6,12 +6,26 @@ Ext.define('App.view.catalog.map', {
 
   initComponent: function() {
     this.addEvents('featureclick', 'clusterclick', 'aoiadded');
+    
+    this.store.on('load', this.buildAllFeatures, this);
+    
     this.callParent();
   },
 
   setup: function() {
     this.setupLayers();
     this.setupControls();
+  },
+  
+  buildAllFeatures: function(store) {
+    store.each(function(r) {
+      var features = [];
+      Ext.each(r.get('locations'), function(loc) {
+        var f = this.buildSearchFeature(loc.wkt, r);
+        if(f !== null) { features.push(f);}
+      }, this);
+      r.set('features', features);
+    }, this);
   },
 
   setupControls: function() {
@@ -199,15 +213,6 @@ Ext.define('App.view.catalog.map', {
     this.store.each(function(r) {
       var features = r.get('features');
       
-      if(features === undefined || features === '') {
-        features = [];
-        Ext.each(r.get('locations'), function(loc) {
-          var f = this.buildSearchFeature(loc.wkt, r);
-          if(f !== null) { features.push(f);}
-        }, this);
-        if(features.length > 0) { r.set('features', features); }
-      }
-
       if(features.length > 0) {
         if(r.get('type') == 'Project') {
           projects = projects.concat(features);
