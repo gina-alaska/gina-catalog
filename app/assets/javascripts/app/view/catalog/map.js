@@ -70,7 +70,7 @@ Ext.define('App.view.catalog.map', {
       }
     };
 
-    this.project_cluster_strategy = new OpenLayers.Strategy.Cluster({ distance: (Ext.isIE ? 100: 60) });
+    this.project_cluster_strategy = new OpenLayers.Strategy.Cluster({ distance: (Ext.isIE ? 80: 60) });
     this.projects = new OpenLayers.Layer.Vector('Projects', {
       strategies: [ this.project_cluster_strategy ],
       styleMap: new OpenLayers.StyleMap({
@@ -94,7 +94,7 @@ Ext.define('App.view.catalog.map', {
     });
     this.addLayer(this.projects);
 
-    this.data_cluster_strategy = new OpenLayers.Strategy.Cluster({ distance: (Ext.isIE ? 100: 60) });
+    this.data_cluster_strategy = new OpenLayers.Strategy.Cluster({ distance: (Ext.isIE ? 80: 60) });
     this.data = new OpenLayers.Layer.Vector('Data', {
       strategies: [ this.data_cluster_strategy ],
       styleMap: new OpenLayers.StyleMap({
@@ -129,8 +129,8 @@ Ext.define('App.view.catalog.map', {
   buildSearchFeature: function(wkt, r) {
     if(wkt !== null) {
       var geom = new OpenLayers.Geometry.fromWKT(wkt);
-      // var point = geom;
-      var point = geom.getCentroid();
+      var point = geom;
+      // var point = geom.getCentroid();
       point.transform(this.getMap().displayProjection, this.getMap().getProjectionObject());
       return new OpenLayers.Feature.Vector(point, { id: r.data.id, title: r.data.title });
     }
@@ -191,29 +191,25 @@ Ext.define('App.view.catalog.map', {
     var projects = [],
         data = [];
 
-    this.projects.removeAllFeatures();
-    this.data.removeAllFeatures();
-
     this.project_cluster_strategy.activate();
     this.data_cluster_strategy.activate();
 
     this.control('select_item').activate();
 
     this.store.each(function(r) {
-      var rec = r;
       var features = r.get('features');
       
       if(features === undefined || features === '') {
         features = [];
         Ext.each(r.get('locations'), function(loc) {
           var f = this.buildSearchFeature(loc.wkt, r);
-          if(f !== null) { features.push(f); }
+          if(f !== null) { features.push(f);}
         }, this);
         if(features.length > 0) { r.set('features', features); }
       }
 
       if(features.length > 0) {
-        if(rec.get('type') == 'Project') {
+        if(r.get('type') == 'Project') {
           projects = projects.concat(features);
         } else {
           data = data.concat(features);
@@ -221,10 +217,11 @@ Ext.define('App.view.catalog.map', {
       }
     }, this);
 
-    if(projects.length > 0 || data.length > 0) {
-      this.projects.addFeatures(projects);
-      this.data.addFeatures(data);
-    }
+    this.projects.removeAllFeatures();
+    this.data.removeAllFeatures();
+    if(projects.length > 0) {this.projects.addFeatures(projects);}
+    if(data.length > 0) {this.data.addFeatures(data);}
+    
     if(Ext.Msg.isVisible()) { Ext.Msg.hide(); }
   }
 });
