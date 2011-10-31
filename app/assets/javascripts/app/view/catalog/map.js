@@ -7,7 +7,7 @@ Ext.define('App.view.catalog.map', {
   initComponent: function() {
     this.addEvents('featureclick', 'clusterclick', 'aoiadded');
     
-    // this.store.on('load', this.buildAllFeatures, this);
+    this.store.on('load', this.buildAllFeatures, this);
     
     this.callParent();
   },
@@ -24,7 +24,7 @@ Ext.define('App.view.catalog.map', {
         var f = this.buildSearchFeature(loc.wkt, r);
         if(f !== null) { features.push(f);}
       }, this);
-      r.set('features', features);
+      // r.set('features', features);
     }, this);
   },
 
