@@ -298,7 +298,6 @@ Ext.define('Ext.OpenLayers.Panel', {
   },
 
   monitorLayer: function(layer, type) {
-    console.log(this.loadingCount);
     if(type == 'start') {
       this.loadingCount += 1;
     } else {
