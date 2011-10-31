@@ -23,6 +23,7 @@ Ext.define('App.view.catalog.map', {
       Ext.each(r.get('locations'), function(loc) {
         var f = this.buildSearchFeature(loc.wkt, r);
         if(f !== null) { features.push(f);}
+        return false; //Test to see if we produce less works better
       }, this);
       r.set('features', features);
     }, this);
@@ -147,7 +148,7 @@ Ext.define('App.view.catalog.map', {
       var geom = new OpenLayers.Geometry.fromWKT(wkt);
       var point = geom;
       // var point = geom.getCentroid();
-      // point.transform(this.getMap().displayProjection, this.getMap().getProjectionObject());
+      point.transform(this.getMap().displayProjection, this.getMap().getProjectionObject());
       return new OpenLayers.Feature.Vector(point, { id: r.data.id, title: r.data.title });
     }
     return null;
