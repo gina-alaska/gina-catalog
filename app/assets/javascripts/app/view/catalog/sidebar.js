@@ -33,7 +33,7 @@ Ext.define('App.view.catalog.sidebar', {
       dockedItems: [{
         xtype: 'toolbar',
         dock: 'bottom',
-        items: ['->', 'Projects:', this.projectCount, '-', 'Data:', this.assetCount, '-', 'Results:', this.resultCount]
+        items: ['->', 'Projects:', this.projectCount, 'Data:', this.assetCount, 'Results:', this.resultCount]
       }],
       items: {
         xtype: 'resultslist'
