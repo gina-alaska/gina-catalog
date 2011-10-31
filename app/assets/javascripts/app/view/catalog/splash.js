@@ -37,7 +37,7 @@ Ext.define('App.view.catalog.splash', {
     items: [{
       xtype: 'button',
       cls: 'enter-button',
-      text: 'Enter the Catalog',
+      text: 'Explore Catalog',
       handler: function(button) { button.up('window').close(); }
     }]
   },{
