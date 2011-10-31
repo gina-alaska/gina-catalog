@@ -41,56 +41,70 @@
     margin: 5px;
     background-color:#fff;
   }
-  
+
+  $tool-bg-color-inactive: #FFF;
+  $tool-bg-color-active: #FF0;
+  $tool-bg-opacity-active: 0.25;
+  $tool-bg-opacity-inactive: 0.25;
   
   .olControlSelectFeatureItemActive {
     @include border-radius(2px);
     background: url(/images/geo/pointer-info.png) no-repeat 2px 2px;
-    background-color: transparentize(#FF0, 0.5);
+    background-color: $tool-bg-color-active;
+    background-color: transparentize($tool-bg-color-active, $tool-bg-opacity-active);
   }
   .olControlSelectFeatureItemInactive {
     @include border-radius(2px);
     background: url(/images/geo/pointer-info.png) no-repeat 2px 2px;
-    background-color: transparentize(#FFF, 0.25);
+    background-color: $tool-bg-color-inactive;
+    background-color: transparentize($tool-bg-color-inactive, $tool-bg-opacity-inactive);
   }
   .olControlDrawFeatureItemActive {
     @include border-radius(2px);
     background: url(icons/geo/shape_square_red.png) center no-repeat;
-    background-color: transparentize(#FF0, 0.25);
+    background-color: $tool-bg-color-active;
+    background-color: transparentize($tool-bg-color-active, $tool-bg-opacity-active);
   }
   .olControlDrawFeatureItemInactive {
     @include border-radius(2px);
     background: url(icons/geo/shape_square_red.png) center no-repeat;
-    background-color: transparentize(#FFF, 0.25);
+    background-color: $tool-bg-color-inactive;
+    background-color: transparentize($tool-bg-color-inactive, $tool-bg-opacity-inactive);
   }
   .olControlDragPanItemActive {
     @include border-radius(2px);
     background: url(icons/geo/pan.png) center no-repeat;
-    background-color: transparentize(#FF0, 0.25);
+    background-color: $tool-bg-color-active;
+    background-color: transparentize($tool-bg-color-active, $tool-bg-opacity-active);
   }
   .olControlDragPanItemInactive {
     @include border-radius(2px);
     background: url(icons/geo/pan.png) center no-repeat;
-    background-color: transparentize(#FFF, 0.25);
+    background-color: $tool-bg-color-inactive;
+    background-color: transparentize($tool-bg-color-inactive, $tool-bg-opacity-inactive);
   }
   .zoomInBoxItemInactive {
     @include border-radius(2px);
     background: url(icons/geo/magnifier_zoom_in.png) center no-repeat;
-    background-color: transparentize(#FFF, 0.25);
+    background-color: $tool-bg-color-inactive;
+    background-color: transparentize($tool-bg-color-inactive, $tool-bg-opacity-inactive);
   }
   .zoomInBoxItemActive {
     @include border-radius(2px);
     background: url(icons/geo/magnifier_zoom_in.png) center no-repeat;
-    background-color: transparentize(#FF0, 0.25);
+    background-color: $tool-bg-color-active;
+    background-color: transparentize($tool-bg-color-active, $tool-bg-opacity-active);
   }
   .zoomOutBoxItemInactive {
     @include border-radius(2px);
     background: url(icons/geo/magnifier_zoom_out.png) center no-repeat;
-    background-color: transparentize(#FFF, 0.25);
+    background-color: $tool-bg-color-inactive;
+    background-color: transparentize($tool-bg-color-inactive, $tool-bg-opacity-inactive);
   }
   .zoomOutBoxItemActive {
     @include border-radius(2px);
     background: url(icons/geo/magnifier_zoom_out.png) center no-repeat;
-    background-color: transparentize(#FF0, 0.25);
+    background-color: $tool-bg-color-active;
+    background-color: transparentize($tool-bg-color-active, $tool-bg-opacity-active);
   }
 }
