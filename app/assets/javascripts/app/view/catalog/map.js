@@ -84,7 +84,7 @@ Ext.define('App.view.catalog.map', {
       }
     };
 
-    this.project_cluster_strategy = new OpenLayers.Strategy.Cluster({ distance: (Ext.isIE ? 80: 30) });
+    this.project_cluster_strategy = new OpenLayers.Strategy.Cluster({ distance: (Ext.isIE ? 80: 40) });
     this.projects = new OpenLayers.Layer.Vector('Projects', {
       strategies: [ this.project_cluster_strategy ],
       styleMap: new OpenLayers.StyleMap({
@@ -109,7 +109,7 @@ Ext.define('App.view.catalog.map', {
     });
     this.addLayer(this.projects);
 
-    this.data_cluster_strategy = new OpenLayers.Strategy.Cluster({ distance: (Ext.isIE ? 80: 30) });
+    this.data_cluster_strategy = new OpenLayers.Strategy.Cluster({ distance: (Ext.isIE ? 80: 40) });
     this.data = new OpenLayers.Layer.Vector('Data', {
       strategies: [ this.data_cluster_strategy ],
       styleMap: new OpenLayers.StyleMap({
@@ -193,7 +193,8 @@ Ext.define('App.view.catalog.map', {
 
   showAllFeatures: function(pbar) {
     var projects = [],
-        data = [];
+        data = [],
+        total = 0;
 
     this.project_cluster_strategy.activate();
     this.data_cluster_strategy.activate();
@@ -204,6 +205,10 @@ Ext.define('App.view.catalog.map', {
       var features = r.get('features');
       
       if(features.length > 0) {
+        /* IE cannot handle very many points so limit how many we show at once */
+        if(Ext.isIE && total > 500) { return true; }
+        total += features.length;
+        
         if(r.get('type') == 'Project') {
           projects = projects.concat(features);
         } else {
