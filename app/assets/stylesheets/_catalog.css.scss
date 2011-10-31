@@ -10,10 +10,12 @@
 }
 
 .olControlAttribution {
+  position: relative;
   bottom: 0em;
   right: 0em;
   padding: 3px;
   color: #000;
+  background-color: #FFF;
   background-color: transparentize(#FFF, 0.75);
 }
 
