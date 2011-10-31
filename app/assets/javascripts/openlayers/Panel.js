@@ -92,7 +92,7 @@ Ext.define('Ext.OpenLayers.Panel', {
   initComponent: function() {    
     this.addEvents('ready', 'mapmove', 'mousemove', 'aoiadded');
 
-    this.loadIndicator = new Ext.toolbar.Item({
+    this.loadIndicator = Ext.create('Ext.toolbar.Item', {
       height: 16,
       html: '<div style="padding-top: 2px;">Loading....</div>',
       cls: 'loading-indicator'
@@ -183,6 +183,7 @@ Ext.define('Ext.OpenLayers.Panel', {
   initMap: function() {
     this.map = new OpenLayers.Map(this.body.dom, this.mapConfig);
     // this.setupLayerMenu();
+    this.getMap().events.register('addlayer', this, this.addLayerMonitor);
     this.addGinaLayers();
 
     var center = this.mapConfig.defaultCenter.clone();
@@ -284,7 +285,6 @@ Ext.define('Ext.OpenLayers.Panel', {
     this.getMap().events.register('changebaselayer', this, this.updateLayerMenu);
     this.getMap().events.register('changelayer', this, this.updateLayerMenu);
     this.getMap().events.register('removelayer', this, this.buildLayerMenu);
-    this.getMap().events.register('addlayer', this, this.addLayerMonitor);
     this.buildLayerMenu();
   },
 
@@ -298,6 +298,7 @@ Ext.define('Ext.OpenLayers.Panel', {
   },
 
   monitorLayer: function(layer, type) {
+    console.log(this.loadingCount);
     if(type == 'start') {
       this.loadingCount += 1;
     } else {
