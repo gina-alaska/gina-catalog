@@ -18,15 +18,29 @@ Ext.define('App.view.catalog.map', {
   },
   
   buildAllFeatures: function(store) {
-    store.each(function(r) {
-      var features = [];
-      Ext.each(r.get('locations'), function(loc) {
-        var f = this.buildSearchFeature(loc.wkt, r);
-        if(f !== null) { features.push(f);}
-      }, this);
-      // r.set('features', features);
-    }, this);
+    // store.each(this.buildFeatures, this);
   },
+  
+  buildFeatures: function(r) {
+    var features = [];
+    Ext.each(r.get('locations'), function(loc) {
+      var f = this.buildVectorFeature(loc.wkt, r);
+      if(f !== null) { features.push(f);}
+    }, this);
+    
+    return features;
+  },
+  
+  buildVectorFeature: function(wkt, r) {
+    if(wkt !== null) {
+      var geom = new OpenLayers.Geometry.fromWKT(wkt);
+      var point = geom;
+      // var point = geom.getCentroid();
+      point.transform(this.getMap().displayProjection, this.getMap().getProjectionObject());
+      return new OpenLayers.Feature.Vector(point, { id: r.data.id, title: r.data.title });
+    }
+    return null;
+  },  
 
   setupControls: function() {
     this.controls.add('select_item', new OpenLayers.Control.SelectFeature(
@@ -142,17 +156,6 @@ Ext.define('App.view.catalog.map', {
     }
   },
 
-  buildSearchFeature: function(wkt, r) {
-    if(wkt !== null) {
-      var geom = new OpenLayers.Geometry.fromWKT(wkt);
-      var point = geom;
-      // var point = geom.getCentroid();
-      point.transform(this.getMap().displayProjection, this.getMap().getProjectionObject());
-      return new OpenLayers.Feature.Vector(point, { id: r.data.id, title: r.data.title });
-    }
-    return null;
-  },
-
   showSelectedFeature: function(id) {
     var projects = [];
     var data = [];
@@ -202,7 +205,7 @@ Ext.define('App.view.catalog.map', {
     this.control('select_item').activate();
 
     this.store.each(function(r) {
-      var features = r.get('features');
+      var features = this.buildFeatures(r); //r.get('features');
       
       if(features.length > 0) {
         if(r.get('type') == 'Project') {
