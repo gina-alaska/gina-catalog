@@ -18,21 +18,11 @@ Ext.define('App.view.catalog.map', {
   },
   
   buildAllFeatures: function(store) {
-    this.allProjects = [];
-    this.allData = [];
-    
     store.each(function(r) {
       var features = [];
       Ext.each(r.get('locations'), function(loc) {
         var f = this.buildSearchFeature(loc.wkt, r);
-        if(f !== null) { 
-          features.push(f);
-          if(r.get('type') == 'Project') {
-            this.allProjects.push(f);
-          } else {
-            this.allData.push(f);
-          }
-        }
+        if(f !== null) { features.push(f);}
       }, this);
       r.set('features', features);
     }, this);
@@ -157,7 +147,7 @@ Ext.define('App.view.catalog.map', {
       var geom = new OpenLayers.Geometry.fromWKT(wkt);
       var point = geom;
       // var point = geom.getCentroid();
-      point.transform(this.getMap().displayProjection, this.getMap().getProjectionObject());
+      // point.transform(this.getMap().displayProjection, this.getMap().getProjectionObject());
       return new OpenLayers.Feature.Vector(point, { id: r.data.id, title: r.data.title });
     }
     return null;
@@ -215,22 +205,18 @@ Ext.define('App.view.catalog.map', {
       var features = r.get('features');
       
       if(features.length > 0) {
-         // IE cannot handle very many points so limit how many we show at once 
-        // if(Ext.isIE && total > 500) { return false; }
-        total += features.length;
-        
-        // if(r.get('type') == 'Project') {
-        //           projects = projects.concat(features);
-        //         } else {
-        //           data = data.concat(features);
-        //         }
+        if(r.get('type') == 'Project') {
+          projects = projects.concat(features);
+        } else {
+          data = data.concat(features);
+        }
       }
     }, this);
 
     this.projects.removeAllFeatures();
     this.data.removeAllFeatures();
-    if(total > 0) {this.projects.addFeatures(this.allProjects);}
-    if(total > 0) {this.data.addFeatures(this.allData);}
+    if(projects.length > 0) {this.projects.addFeatures(projects);}
+    if(data.length > 0) {this.data.addFeatures(data);}
     
     if(Ext.Msg.isVisible()) { Ext.Msg.hide(); }
   }
