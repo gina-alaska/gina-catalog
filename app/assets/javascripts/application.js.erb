@@ -145,10 +145,11 @@ Ext.application({
   launch: function() {
     Ext.util.History.init();
     App.init(this);
-    App.current_user.on('logged_out', function() {
+    // App.current_user.on('logged_out', function() {
       var splash = Ext.create(this.getController('Catalog').getView('catalog.splash'));
       splash.show();
-    }, this);
+      this.getController('Catalog').getStore('SearchResults').on('load', splash.pageReady, splash, { single: true });
+    // }, this);
 
     App.viewport = Ext.create('Ext.container.Viewport', {
       layout: 'border',
