@@ -33,7 +33,7 @@ Ext.define('App.view.catalog.sidebar', {
       dockedItems: [{
         xtype: 'toolbar',
         dock: 'bottom',
-        items: ['->', 'Projects:', this.projectCount, 'Data:', this.assetCount, 'Results:', this.resultCount]
+        items: ['->', 'Projects:', this.projectCount, '-', 'Data:', this.assetCount, '-', 'Results:', this.resultCount]
       }],
       items: {
         xtype: 'resultslist'
@@ -269,7 +269,7 @@ Ext.define('App.view.catalog.sidebar', {
 
   onDataChanged: function(store) {
     this.resultCount.setText(store.getCount());
-    // Ext.defer(this.getRecordCounts, 100, this, [store]);
+    Ext.defer(this.getRecordCounts, 100, this, [store]);
   },
   
   getRecordCounts: function(store){
