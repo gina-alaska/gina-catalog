@@ -206,7 +206,7 @@ Ext.define('App.view.catalog.map', {
       
       if(features.length > 0) {
         /* IE cannot handle very many points so limit how many we show at once */
-        if(Ext.isIE && total > 500) { return true; }
+        if(Ext.isIE && total > 500) { return false; }
         total += features.length;
         
         if(r.get('type') == 'Project') {
