@@ -78,7 +78,7 @@ Ext.define('App.view.catalog.map', {
           if(feature.attributes.count === undefined) {
             return 5;
           } else {
-            return Math.min(Math.floor(feature.attributes.count / 15), 10) + 10;
+            return Math.min(Math.floor(feature.attributes.count / 10), 8) + 10;
           }
         }
       }
@@ -89,13 +89,13 @@ Ext.define('App.view.catalog.map', {
       strategies: [ this.project_cluster_strategy ],
       styleMap: new OpenLayers.StyleMap({
         "default": new OpenLayers.Style({
-          // label: "${count}",
+          label: Ext.isIE ? false : "${count}",
           // fontWeight: 'bold',
           pointRadius: "${radius}",
 //          pointRadius: 4,
-          externalGraphic: '/assets/icons/geo/flag_red.png',
           fillColor: "#94fbff",
-          // fillOpacity: 0.3,
+          fillOpacity: 0.3,
+          graphicName: 'circle',
           strokeColor: '#0000FF',
           strokeWidth: 2,
           strokeOpacity: 1
@@ -114,12 +114,12 @@ Ext.define('App.view.catalog.map', {
       strategies: [ this.data_cluster_strategy ],
       styleMap: new OpenLayers.StyleMap({
         "default": new OpenLayers.Style({
-          // label: "${count}",
+          label: Ext.isIE ? false : "${count}",
           // fontWeight: 'bold',
-          externalGraphic: '/assets/icons/geo/flag_red.png',
+          graphicName: 'circle',
           pointRadius: "${radius}",
           fillColor: "#ffcc66",
-          // fillOpacity: 0.3,
+          fillOpacity: 0.3,
           strokeColor: '#cc6633',
           strokeWidth: 2,
           strokeOpacity: 1
