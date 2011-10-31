@@ -16,7 +16,8 @@ Ext.define('App.view.catalog.sidebar', {
     this.addEvents('open', 'showall', 'drawaoi', 'filter', 'export');
 
     this.resultCount = Ext.widget('button', {
-      text: '0'
+      text: '0',
+      minWidth: 40
     });
     
     
@@ -25,10 +26,12 @@ Ext.define('App.view.catalog.sidebar', {
       tb = ['->', 'Results:', this.resultCount];
     } else {
       this.projectCount = Ext.widget('button', {
-        text: '0'
+        text: '0',
+        minWidth: 40
       });
       this.assetCount = Ext.widget('button', {
-        text: '0'
+        text: '0',
+        minWidth: 40
       });
       tb = ['->', 'Projects:', this.projectCount, 'Data:', this.assetCount, 'Results:', this.resultCount];
     }
