@@ -49,9 +49,18 @@ Ext.define('App.view.catalog.splash', {
     contentEl: 'splash-footer'
   }],
   
-  pageReady: function() {
-    this.getComponent('loading').hide();
-    // this.getComponent('button-message').show();
-    this.getComponent('buttons').show();
+  recordsLoaded: function() {
+    this.loaded = true;
+  },
+  
+  featuresRendered: function() {
+    if(this.loaded) { this.showButtons(); }
+  },
+  
+  showButtons: function() {
+    if(this.isVisible()) {
+      this.getComponent('loading').hide();
+      this.getComponent('buttons').show();
+    }
   }
 });

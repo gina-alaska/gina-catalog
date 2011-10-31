@@ -7,6 +7,8 @@ Ext.define('App.controller.Catalog', {
   models: ['SearchResult', 'Filter'],
 
   init: function() {
+    this.addEvents('featuresrendered');
+    
     this.control({
       /* Main viewport events */
       'viewport > #center': {
@@ -34,7 +36,8 @@ Ext.define('App.controller.Catalog', {
       'viewport > #center #results-map': {
         ready: this.onMapReady,
         clusterclick: this.onClusterClick,
-        aoiadded: this.onAoiAdd
+        aoiadded: this.onAoiAdd,
+        featuresrendered: function(map) { this.fireEvent('featuresrendered', map); }
       },
       /* Asset show events */
       'viewport > #center assetdetails': {
@@ -280,7 +283,7 @@ Ext.define('App.controller.Catalog', {
   },
 
   show: function() {
-    this.getStore('SearchResults').load({ limit: (Ext.isIE ? 3000 : 3000) });
+    this.getStore('SearchResults').load();
     this.getStore('SearchResults').clearCachedFilter('name', 'hideall');
 
     var panel = this.pages.index.up('panel');

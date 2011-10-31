@@ -5,7 +5,7 @@ Ext.define('App.view.catalog.map', {
   enableGraticule: false,
 
   initComponent: function() {
-    this.addEvents('featureclick', 'clusterclick', 'aoiadded');
+    this.addEvents('featureclick', 'clusterclick', 'aoiadded', 'featuresrendered');
     
     this.store.on('load', this.buildAllFeatures, this);
     
@@ -222,5 +222,6 @@ Ext.define('App.view.catalog.map', {
     if(data.length > 0) {this.data.addFeatures(data);}
     
     if(Ext.Msg.isVisible()) { Ext.Msg.hide(); }
+    this.fireEvent('featuresrendered', this);
   }
 });
