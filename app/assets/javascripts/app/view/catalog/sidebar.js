@@ -18,13 +18,20 @@ Ext.define('App.view.catalog.sidebar', {
     this.resultCount = Ext.widget('button', {
       text: '0'
     });
-    this.projectCount = Ext.widget('button', {
-      text: '0'
-    });
-    this.assetCount = Ext.widget('button', {
-      text: '0'
-    });
     
+    
+    var tb;
+    if(Ext.isIE) {
+      tb = ['->', 'Results:', this.resultCount];
+    } else {
+      this.projectCount = Ext.widget('button', {
+        text: '0'
+      });
+      this.assetCount = Ext.widget('button', {
+        text: '0'
+      });
+      tb = ['->', 'Projects:', this.projectCount, 'Data:', this.assetCount, 'Results:', this.resultCount];
+    }
 
     this.items = [{
       title: 'Search Results',
@@ -33,7 +40,7 @@ Ext.define('App.view.catalog.sidebar', {
       dockedItems: [{
         xtype: 'toolbar',
         dock: 'bottom',
-        items: ['->', 'Projects:', this.projectCount, 'Data:', this.assetCount, 'Results:', this.resultCount]
+        items: tb
       }],
       items: {
         xtype: 'resultslist'
@@ -273,6 +280,9 @@ Ext.define('App.view.catalog.sidebar', {
   },
   
   getRecordCounts: function(store){
+    /* This is disabled in IE */
+    if(Ext.isIE) { return false; }
+    
     var projects = 0,
         assets = 0,
         titles = [];

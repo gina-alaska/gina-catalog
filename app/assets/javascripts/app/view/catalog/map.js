@@ -98,7 +98,7 @@ Ext.define('App.view.catalog.map', {
       }
     };
 
-    this.project_cluster_strategy = new OpenLayers.Strategy.Cluster({ distance: (Ext.isIE ? 80: 40) });
+    this.project_cluster_strategy = new OpenLayers.Strategy.Cluster({ distance: (Ext.isIE ? 60: 40) });
     this.projects = new OpenLayers.Layer.Vector('Projects', {
       strategies: [ this.project_cluster_strategy ],
       styleMap: new OpenLayers.StyleMap({
@@ -123,7 +123,7 @@ Ext.define('App.view.catalog.map', {
     });
     this.addLayer(this.projects);
 
-    this.data_cluster_strategy = new OpenLayers.Strategy.Cluster({ distance: (Ext.isIE ? 80: 40) });
+    this.data_cluster_strategy = new OpenLayers.Strategy.Cluster({ distance: (Ext.isIE ? 60: 40) });
     this.data = new OpenLayers.Layer.Vector('Data', {
       strategies: [ this.data_cluster_strategy ],
       styleMap: new OpenLayers.StyleMap({
