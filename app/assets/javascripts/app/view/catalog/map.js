@@ -84,7 +84,7 @@ Ext.define('App.view.catalog.map', {
       }
     };
 
-    this.project_cluster_strategy = new OpenLayers.Strategy.Cluster({ distance: (Ext.isIE ? 80: 60) });
+    this.project_cluster_strategy = new OpenLayers.Strategy.Cluster({ distance: (Ext.isIE ? 80: 30) });
     this.projects = new OpenLayers.Layer.Vector('Projects', {
       strategies: [ this.project_cluster_strategy ],
       styleMap: new OpenLayers.StyleMap({
@@ -93,8 +93,9 @@ Ext.define('App.view.catalog.map', {
           // fontWeight: 'bold',
           pointRadius: "${radius}",
 //          pointRadius: 4,
+          externalGraphic: '/assets/icons/geo/flag_red.png',
           fillColor: "#94fbff",
-          fillOpacity: 0.3,
+          // fillOpacity: 0.3,
           strokeColor: '#0000FF',
           strokeWidth: 2,
           strokeOpacity: 1
@@ -108,16 +109,17 @@ Ext.define('App.view.catalog.map', {
     });
     this.addLayer(this.projects);
 
-    this.data_cluster_strategy = new OpenLayers.Strategy.Cluster({ distance: (Ext.isIE ? 80: 60) });
+    this.data_cluster_strategy = new OpenLayers.Strategy.Cluster({ distance: (Ext.isIE ? 80: 30) });
     this.data = new OpenLayers.Layer.Vector('Data', {
       strategies: [ this.data_cluster_strategy ],
       styleMap: new OpenLayers.StyleMap({
         "default": new OpenLayers.Style({
           // label: "${count}",
           // fontWeight: 'bold',
+          externalGraphic: '/assets/icons/geo/flag_red.png',
           pointRadius: "${radius}",
           fillColor: "#ffcc66",
-          fillOpacity: 0.3,
+          // fillOpacity: 0.3,
           strokeColor: '#cc6633',
           strokeWidth: 2,
           strokeOpacity: 1
