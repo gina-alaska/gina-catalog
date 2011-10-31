@@ -177,7 +177,7 @@ Ext.define('App.view.catalog.map', {
 
     var index = this.store.find('id', id),
         r = this.store.getAt(index),
-        features = r.get('features');
+        features = this.buildFeatures(r); //r.get('features');
 
     if(features.length > 0) {
       var bounds;
