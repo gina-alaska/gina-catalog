@@ -262,7 +262,7 @@ Ext.define('Ext.OpenLayers.Panel', {
 
     if(this.getBottomToolbar() && !Ext.isIE) {
       this.map.events.register('moveend', this, this.onMapMove);
-      this.map.events.register('mousemove', this, this.onMouseMove);
+      this.map.events.register('mousemove', this, this.onMouseMove, { buffer: 300 });
     }
 
     this.controls.add('attribution', new OpenLayers.Control.Attribution({seperator: ','}));
