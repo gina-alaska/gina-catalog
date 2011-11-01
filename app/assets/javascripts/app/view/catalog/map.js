@@ -17,10 +17,6 @@ Ext.define('App.view.catalog.map', {
     this.setupControls();
   },
   
-  buildAllFeatures: function(store) {
-    // store.each(this.buildFeatures, this);
-  },
-  
   buildFeatures: function(r) {
     var features = [];
     Ext.each(r.get('locations'), function(loc) {
