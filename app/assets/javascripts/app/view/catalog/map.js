@@ -90,6 +90,10 @@ Ext.define('App.view.catalog.map', {
         }
       }
     };
+    
+    // this.soslayer = new OpenLayers.Layer.SOS('Test', 'http://hermes.gina.alaska.edu/map/sostest');
+    // this.addLayer(this.soslayer);
+    // var sos = new OpenLayers.SOSClient({map: this.getMap(), url: 'http://hermes.gina.alaska.edu/map/sostest'});
 
     this.project_cluster_strategy = new OpenLayers.Strategy.Cluster({ distance: (Ext.isIE ? 80: 40) });
     this.projects = new OpenLayers.Layer.Vector('Projects', {
