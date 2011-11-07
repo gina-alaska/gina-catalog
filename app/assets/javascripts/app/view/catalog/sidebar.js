@@ -11,6 +11,11 @@ Ext.define('App.view.catalog.sidebar', {
     type: 'vbox',
     align: 'stretch'
   },
+  
+  constructor: function(config){
+    this.initConfig(config);
+    this.callParent(arguments);
+  },
 
   initComponent: function() {
     this.addEvents('open', 'showall', 'drawaoi', 'filter', 'export');
@@ -64,12 +69,8 @@ Ext.define('App.view.catalog.sidebar', {
             parent = menu.parentMenu.parentItem,
             field = parent.dataIndex,
             dir = menu.text;
-
-        if(dir == 'Ascending') {
-          dir = 'ASC';
-        } else {
-          dir = 'DESC';
-        }
+        
+        dir = (dir == 'Ascending' ? 'ASC' : 'DESC');
 
         parent.setChecked(true);
         handler(field, dir);
@@ -247,7 +248,6 @@ Ext.define('App.view.catalog.sidebar', {
       iconCls: 'download-icon',
       scope: this,
       handler: function() {
-        // console.log('exporting');
         this.fireEvent('export', this);
       }
     });
