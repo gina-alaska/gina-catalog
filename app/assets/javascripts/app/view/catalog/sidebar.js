@@ -143,7 +143,7 @@ Ext.define('App.view.catalog.sidebar', {
     });
 
     this.actions.showall = Ext.create('Ext.Action', {
-      scale: 'medium', text: 'Show All',
+      scale: 'medium', text: 'Clear Filters',
       iconCls: 'viewall-icon',
       scope: this,
       handler: function() {
