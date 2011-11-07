@@ -6,9 +6,6 @@ Ext.define('App.view.catalog.map', {
 
   initComponent: function() {
     this.addEvents('featureclick', 'clusterclick', 'aoiadded', 'featuresrendered');
-    
-    this.store.on('load', this.buildAllFeatures, this);
-    
     this.callParent();
   },
 
