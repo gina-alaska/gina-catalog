@@ -20,7 +20,13 @@
 }
 
 .olControlLayerSwitcher {
+  font-size: 12px;
   width: 250px;
+  top: 50px;
+  
+  .maximizeDiv {
+    top: 5px;
+  }
   
   .baseLayersDiv {
     white-space: nowrap;
