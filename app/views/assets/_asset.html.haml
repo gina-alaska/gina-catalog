@@ -7,7 +7,10 @@
   %h2= asset.title
 
   - unless asset.description.nil?
-    .description!= RDiscount.new(asset.description.text.to_s).to_html
+    .description.tabbed
+      :markdown
+        #{asset.try(:description)}
+    .spacer
 
   .general_info
     %ul
@@ -32,19 +35,19 @@
   -#  = asset_links(asset)
   -#  = download_link(asset)
 
-  - unless asset.gcmd_themes.empty?
-    .keywords
-      %label GCMD Keywords:
+  / - unless asset.gcmd_themes.empty?
+  /   .keywords
+  /     %label GCMD Keywords:
+  / 
+  /   - asset.gcmd_themes.each do |theme|
+  /     %li= theme.path
 
-    - asset.gcmd_themes.each do |theme|
-      %li= theme.path
-
-  - unless asset.files.empty?
-    .asset-revision
-      %label Files:
-    .asset-revision-name
-      %ul
-      - asset.files.each do |file|
-        %li= "#{file.filename} - #{number_to_human_size(file.size)}"
+  / - unless asset.files.empty?
+  /   .asset-revision
+  /     %label Files:
+  /   .asset-revision-name
+  /     %ul
+  /     - asset.files.each do |file|
+  /       %li= "#{file.filename} - #{number_to_human_size(file.size)}"
 
   -#  = preview_asset_files(asset)
