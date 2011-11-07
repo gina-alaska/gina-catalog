@@ -283,7 +283,11 @@ Ext.define('App.controller.Catalog', {
   },
 
   show: function() {
-    this.getStore('SearchResults').load();
+    /* Only load if it hasn't been loaded already */
+    if(!this.getStore('SearchResults').getTotalCount()) {
+      this.getStore('SearchResults').load();      
+    }
+      
     this.getStore('SearchResults').clearCachedFilter('name', 'hideall');
 
     var panel = this.pages.index.up('panel');
