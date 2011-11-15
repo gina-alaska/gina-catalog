@@ -68,16 +68,20 @@ Ext.define('App.view.filter.date', {
       this.dockedItems = [{
         xtype: 'toolbar',
         dock: 'bottom',
+        ui: 'footer',
         items: ['->', {
           text: 'Cancel',
           scope: this,
+          scale: 'medium',
           handler: function() { this.close(); }
         }, {
           text: 'Submit',
           scope: this,
+          scale: 'medium',
           handler: function(){
             var values = this.down('form').getForm().getValues();
             this.fireEvent('submit', this, this.getField(), this.getFieldName(), values);
+            this.close();
           }
         }]
       }];
