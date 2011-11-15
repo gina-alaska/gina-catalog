@@ -15,10 +15,10 @@ Ext.define('Ext.gina.SelectorWindow', {
       this.store = Ext.create(this.store);
     }
     this.store.load();
-
+    
     var qs = Ext.widget('quicksearch', {
       dock: 'top',
-      width: (this.width - 10),
+      width: 490,
       store: this.store
     });
 
@@ -43,7 +43,7 @@ Ext.define('Ext.gina.SelectorWindow', {
       xtype: 'grid',
       store: this.store,
       border: false,
-      forceFit: true,
+      // forceFit: true,
       autoExpandColumn: this.autoExpandColumn,
       columns: this.columns,
       listeners: {
@@ -60,6 +60,6 @@ Ext.define('Ext.gina.SelectorWindow', {
         grid = win.down('gridpanel'),
         selected = grid.getSelectionModel().getSelection();
 
-    win.fireEvent('selected', win, selected)
+    win.fireEvent('selected', win, selected);
   }
-})
+});

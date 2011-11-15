@@ -22,13 +22,14 @@ Ext.define('Ext.gina.data.Store', {
       filterFn: Ext.bind(fn, scope)
     });
     
-    this.cachedFilterBy('filterBy', 'Filtered by function', filter)
+    this.cachedFilterBy('filterBy', 'Filtered by function', filter);
   },
 
   clearCachedFilter: function(field, value) {
     var index = this.filterStore.find(field, value);
     var r = this.filterStore.getAt(index);
-    if(r) { var name = r.get('name'); }
+    var name = '';
+    if(r) { name = r.get('name'); }
     
     this.filterStore.removeAt(index);
 
@@ -51,7 +52,7 @@ Ext.define('Ext.gina.data.Store', {
         r.set('desc', desc);
         r.set('filter', filter);
       } else {
-        this.filterStore.add({ id: this.getNextFilterId(), "name": name, "desc": desc, "filter": filter })
+        this.filterStore.add({ id: this.getNextFilterId(), "name": name, "desc": desc, "filter": filter });
       }
     } else {
       this.clearCachedFilter('name', name);
@@ -84,7 +85,7 @@ Ext.define('Ext.gina.data.Store', {
       var found = false;
       
       if(config.fields == 'all') {
-        for (field in record.data) {
+        for (var field in record.data) {
           if(Ext.isArray(record.get(field)) && record.get(field).indexOf(config.value) >= 0){
             return true;
           } else if(record.get(field) == config.value) {
@@ -143,7 +144,8 @@ Ext.define('Ext.gina.data.Store', {
     var search_items = filterConfig.string.replace(/\s+/,' ').split(' ').uniq();
 
     var fn = Ext.bind(function(record, id){
-      found = false;
+      var field;
+      var found = false;
 
       for (var ii=0; ii < search_items.length; ii++) {
         found = false;

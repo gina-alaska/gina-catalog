@@ -28,10 +28,10 @@ Ext.define('Ext.gina.filter.Manager', {
     });
 
     var activeFilters = this.filters.collect('filter');
-    console.log(activeFilters);
+    // console.log(activeFilters);
     //this.store.clearFilter();
     this.store.filter(activeFilters);
-    console.log(this.store.data);
+    // console.log(this.store.data);
   },
 
   clearFilter: function() {
@@ -64,7 +64,7 @@ Ext.define('Ext.gina.filter.Manager', {
       found = false;
 
       search.compile(search_items[ii], 'i');
-      for (field in record.data) {
+      for (var field in record.data) {
         found = found || search.test(record.get(field));
       }
 
@@ -73,4 +73,4 @@ Ext.define('Ext.gina.filter.Manager', {
 
     return found;
   }
-})
+});
