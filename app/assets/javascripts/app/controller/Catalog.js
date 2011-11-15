@@ -21,22 +21,12 @@ Ext.define('App.controller.Catalog', {
       'viewport > #center catalogsidebar resultslist': {
         selectionchange: this.onRecordSelect
       },
-      /* Search filter events */
-      'viewport > #center catalogsidebar filterlist': {
-        itemclick: this.onFilterClick
-      },
-      /* Sidebar events */
       'viewport > #center catalogsidebar': {
-        "showall": this.showAllRecords,
-        "drawaoi": function() { this.pages.map.aoiHandler(true); },
-        "filter": this.filterHandler,
         "export": this.onExport
       },
       /* Map events */
       'viewport > #center #results-map': {
         ready: this.onMapReady,
-        clusterclick: this.onClusterClick,
-        aoiadded: this.onAoiAdd,
         featuresrendered: function(map) { this.fireEvent('featuresrendered', map); }
       },
       /* Asset show events */
@@ -155,133 +145,6 @@ Ext.define('App.controller.Catalog', {
     });
   },
 
-  filterHandler: function(panel, type, field, value) {
-    var config, win,
-        store = this.getStore('SearchResults');
-
-    switch(type) {
-      case 'string':
-        this.showFilterPbar();
-        config = this.stringFilterConfig(field, value);
-        Ext.defer(store.addStringFilter, 100, store, [config]);
-        break;
-      case 'agency':
-        win = Ext.widget('agencyselector', {
-          listeners: {
-            scope: this,
-            selected: function(win, records) {
-              var config = this.agencyFilterConfig(records[0]),
-                  store = this.getStore('SearchResults');
-
-              this.showFilterPbar();
-              Ext.defer(store.addAssociatedIdFilter, 100, store, [config]);
-            }
-          }
-        });
-        win.show();
-        break;
-      case 'source':
-        win = Ext.widget('agencyselector', {
-          listeners: {
-            scope: this,
-            selected: function(win, records) {
-              var config = this.sourceFilterConfig(records[0]),
-                  store = this.getStore('SearchResults');
-
-              this.showFilterPbar();
-              Ext.defer(store.addAssociatedIdFilter, 100, store, [config]);
-            }
-          }
-        });
-        win.show();
-        break;
-      case 'region':
-        this.showFilterPbar();
-        config = this.stringFilterConfig(field, value, "Region: " + value);
-        Ext.defer(store.addStringFilter, 100, store, [config]);
-        break;
-      case 'contact':
-        win = Ext.widget('personselector', {
-          listeners: {
-            scope: this,
-            selected: function(win, records) {
-              var config = this.contactFilterConfig(records[0]),
-                  store = this.getStore('SearchResults');
-
-              this.showFilterPbar();
-              Ext.defer(store.addAssociatedIdFilter, 100, store, [config]);
-            }
-          }
-        });
-        win.show();
-        break;
-      case 'year':
-        Ext.Msg.prompt('Filter by year', 'Please enter a year:', function(btn, year) {
-          if(btn == 'ok') {
-            this.showFilterPbar();
-            config = this.yearFilterConfig(year);
-            Ext.defer(store.addYearFilter, 100, store, [config]);
-          }
-        }, this);
-        break;
-    }
-  },
-
-  showFilterPbar: function(msg) {
-    return Ext.Msg.show({
-      title: 'Please wait...',
-      msg: msg || 'Filtering records',
-      minWidth: 300,
-      wait: true,
-      modal: false
-    });
-  },
-
-  contactFilterConfig: function(item) {
-    return {
-      name: 'contact',
-      description: 'Contact: "' + item.get('full_name') + '"',
-      fields: ['primary_contact_id', 'person_ids'],
-      value: item.get('id'),
-      append: true
-    };
-  },
-
-  sourceFilterConfig: function(agency) {
-    return {
-      name: 'source',
-      description: 'Source: "' + agency.get('name') + ' (' + agency.get('acronym') + ')' + '"',
-      fields: ['source_agency_id'],
-      value: agency.get('id')
-    };
-  },
-
-  agencyFilterConfig: function(agency) {
-    return {
-      name: 'agency',
-      description: 'Agency: "' + agency.get('name') + ' (' + agency.get('acronym') + ')' + '"',
-      fields: ['agency_ids', 'source_agency_id'],
-      value: agency.get('id'),
-      append: true
-    };
-  },
-
-  yearFilterConfig: function(value) {
-    return { year: value };
-  },
-
-  stringFilterConfig: function(field, value, description) {
-    if(!description) {
-      description = field.capitalize() + ' = "' + value + '"';
-    }
-    return {
-      name: field,
-      description: description,
-      string: value,
-      fields: [field]
-    };
-  },
-
   show: function() {
     /* Only load if it hasn't been loaded already */
     if(!this.getStore('SearchResults').getTotalCount()) {
@@ -292,17 +155,6 @@ Ext.define('App.controller.Catalog', {
 
     var panel = this.pages.index.up('panel');
     panel.getLayout().setActiveItem(this.pages.index);
-  },
-
-  showAllRecords: function() {
-    this.getStore('SearchResults').clearAllCachedFilters();
-  },
-
-  onAoiAdd: function(map, feature, e) {
-    this.showFilterPbar();
-    var store = this.getStore('SearchResults');
-    map.fit(feature.geometry.getBounds());
-    Ext.defer(store.aoiFilter, 100, store, [feature.geometry, map]);
   },
 
   onMapReady: function(map) {
@@ -332,46 +184,14 @@ Ext.define('App.controller.Catalog', {
     }
     this.lastSelected = r;
   },
-
-  onFilterClick: function(view, record, node, index, e, opts) {
-    var target = Ext.fly(e.target);
-    if (target && target.getAttribute('action') == 'remove') {
-      this.getStore('SearchResults').clearCachedFilter('id', target.getAttribute('id'));
-    }
-  },
-
-  onFeatureClick: function(map, feature) {
-    var store = this.getStore('SearchResults');
-    var index = store.find('id', feature.attributes.id);
-    var r = store.getAt(index);
-//    this.openWindow(r);
-  },
-
-  /* Old cluster click handler */
-  onClusterClick: function(map, feature) {
-    this.showFilterPbar('Selecting records that include this location');
-
-    var ids = {};
-    Ext.each(feature.cluster, function(item) {
-      ids[item.attributes.id] = item.attributes.title;
+  
+  showFilterPbar: function(msg) {
+    return Ext.Msg.show({
+      title: 'Please wait...',
+      msg: msg || 'Filtering records',
+      minWidth: 300,
+      wait: true,
+      modal: false
     });
-
-    var fn = function(record, id) {
-      var me = this;
-      var foundItems = [];
-      var skippedItems = [];
-
-      return me[record.get('id')] ? true : false;
-    };
-
-    var filter = new Ext.util.Filter({
-      filterFn: Ext.bind(fn, ids)
-    });
-
-    //Delay this to allow some time for the browser to render the progress bar
-    Ext.defer(
-      this.getStore('SearchResults').cachedFilterBy, 100, this.getStore('SearchResults'),
-      ['geographic', "Selected map feature", filter]
-    );
   }
 });

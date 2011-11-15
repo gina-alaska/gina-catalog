@@ -23,6 +23,7 @@ Ext.define('App.view.catalog.filterlist', {
   singleSelect: true,
   allowDeselect: true,
   emptyText: 'No filters',
+  layout: 'fit',
 
   initComponent: function() {
     this.store = Ext.data.StoreManager.lookup('SearchResults').filterStore;

@@ -109,17 +109,19 @@ Ext.define('Ext.gina.data.Store', {
 
   addYearFilter: function(config) {
     var fn = Ext.bind(function(record, id) {
-      var found = Ext.isNumber(record.get('start_date_year')) || Ext.isNumber(record.get('end_date_year'));
-      if(Ext.isNumber(record.get('start_date_year'))) {
-        found = found && (record.get('start_date_year') <= config.year)
+      var value = record.get(config.field);      
+      var found = Ext.isNumber(value);
+      
+      if(config.type == 'after') {
+        found = found && (value >= config.year);
+      } else {
+        found = found && (value <= config.year);
       }
-      if(Ext.isNumber(record.get('end_date_year'))) {
-        found = found && (record.get('end_date_year') >= config.year)
-      }
+      
       return found;
     }, this);
     
-    this.addFilterFn('year', 'Year: ' + config.year, fn);
+    this.addFilterFn('year', config.description, fn, config.append);
   },
 
   addStringFilter: function(filterConfig) {

@@ -235,10 +235,15 @@ Ext.define('App.view.catalog.sidebar', {
           }
         }]
       }, {
-        text: 'Year',
+        text: 'Starting Year',
         iconCls: 'date-icon',
         scope: this,
-        handler: function() { this.fireEvent('filter', this, 'year'); }
+        handler: function() { this.fireEvent('filter', this, 'date', 'start_date'); }
+      }, {
+        text: 'Ending Year',
+        iconCls: 'date-icon',
+        scope: this,
+        handler: function() { this.fireEvent('filter', this, 'date', 'end_date'); }
       }]
     });
 
