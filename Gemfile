@@ -6,9 +6,9 @@ gem 'rails', '3.1.1'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 #gem 'sqlite3'
-gem 'nofxx-georuby', '>= 1.9.2'
-gem 'pg', '>= 0.9.0'
-gem 'postgis_adapter', :git => 'git://github.com/nofxx/postgis_adapter.git'
+gem 'pg'
+gem 'nofxx-georuby'
+gem 'postgis_adapter', '0.7.9' #, :git => 'git://github.com/nofxx/postgis_adapter.git'
 gem "haml"
 gem 'progressbar'
 gem 'ruby-openid', :git => 'git://github.com/jmthomas/ruby-openid.git'
@@ -18,6 +18,7 @@ gem 'wkhtmltopdf'
 gem 'wicked_pdf'
 gem 'compass', '~> 0.12.alpha.0'
 gem 'rdiscount'
+gem 'therubyracer'
 
 # Use unicorn as the web server
 # gem 'unicorn'
