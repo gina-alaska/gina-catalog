@@ -57,10 +57,6 @@ class RepoProxy
     index.commit(msg, @repo.commits)
   end
   
-  def archive(treeish, prefix)
-    @repo.archive_tar_gz(treeish, prefix)
-  end
-  
   def clone_path
     File.join(NSCatalog::Application.config.repos_tmp, repo_name)
   end
