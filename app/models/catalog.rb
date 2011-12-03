@@ -38,6 +38,10 @@ class Catalog < ActiveRecord::Base
     @repo ||= RepoProxy.new(self, :class_name => 'RepoFile')
     @repo
   end
+  
+  def repo_exists?
+    RepoProxy.exists?(self)
+  end
 
   def repohex
     if read_attribute(:repohex).nil?
@@ -53,8 +57,6 @@ class Catalog < ActiveRecord::Base
 
   def readme_template
     <<-EOF
-Test template for README
-
 Title: #{self.title}
     EOF
   end

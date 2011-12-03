@@ -1,13 +1,18 @@
 class CatalogController < ApplicationController
-  caches_action :show, :layout => true, :if => lambda { |c| c.request.xhr? }
-  caches_action :show, :layout => false, :unless => lambda { |c| c.request.xhr? }
+  # caches_action :show, :layout => true, :if => lambda { |c| c.request.xhr? }
+  # caches_action :show, :layout => false, :unless => lambda { |c| c.request.xhr? }
   #caches_action :search
 
   def show
     @item = Catalog.includes(:locations, :source_agency, :agencies, :data_source, :links, :tags, :geokeywords)
     @item = @item.includes({ :people => [ :addresses, :phone_numbers ] }).find_by_id(params[:id])
 
-    render :layout => false
+    respond_to do |format|
+      format.html { render :layout => false }
+      format.tar_gz do
+        render :content_type => "application/octet-stream", :layout => false, :text => @item.repo.archive('master', "#{@item.id}/")
+      end
+    end
   end
 
   def search
