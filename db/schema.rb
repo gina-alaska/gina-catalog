@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -211,8 +212,8 @@ ActiveRecord::Schema.define(:version => 20110926191312) do
   create_table "geolocations", :force => true do |t|
     t.column "created_at", :datetime
     t.column "updated_at", :datetime
-    t.column "point", :point, :srid => 4326
-    t.column "llgeom", :multi_polygon, :srid => 4326
+    t.column "point", :geometry, :srid => nil
+    t.column "llgeom", :geometry, :srid => nil
   end
 
   create_table "granule_files", :force => true do |t|
@@ -234,7 +235,7 @@ ActiveRecord::Schema.define(:version => 20110926191312) do
     t.column "content_type_id", :integer
     t.column "created_at", :datetime
     t.column "updated_at", :datetime
-    t.column "llgeom", :multi_polygon, :srid => 4326
+    t.column "llgeom", :geometry, :srid => nil
     t.column "dataset_title", :string, :limit => 100
     t.column "abstract", :string
     t.column "purpose", :string
@@ -245,7 +246,7 @@ ActiveRecord::Schema.define(:version => 20110926191312) do
     t.column "iso_theme_id", :integer
     t.column "language", :string, :limit => 25
     t.column "character_set", :string, :limit => 25
-    t.column "llgeom_raw", :multi_polygon, :srid => 4326
+    t.column "llgeom_raw", :geometry, :srid => nil
     t.column "progress", :string, :default => "INPROCESS"
   end
 

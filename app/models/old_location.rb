@@ -1,4 +1,6 @@
 class OldLocation < ActiveRecord::Base
+  acts_as_geom :geom => :geometry
+
   belongs_to :locatable, :polymorphic => true
 
   def geom_coords

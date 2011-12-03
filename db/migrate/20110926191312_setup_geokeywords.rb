@@ -1,7 +1,10 @@
 class SetupGeokeywords < ActiveRecord::Migration
   def self.up
     akregion = Region.find_by_name('alaska')
-    alaska = Geokeyword.create(:name => 'Alaska', :geom => akregion.geom.envelope.center)
+    alaska = Geokeyword.new(:name => 'Alaska')
+    alaska.geom = akregion.geom.envelope.center
+    alaska.save!
+
     Location.intersects(akregion.geom).each do |l|
       asset = l.asset
       asset.geokeywords << alaska unless asset.geokeywords.exists? alaska
@@ -9,7 +12,10 @@ class SetupGeokeywords < ActiveRecord::Migration
     end
 
     nsbregion = Region.find_by_name('nsb')
-    northslope = Geokeyword.create(:name => 'Northslope Borough', :geom => nsbregion.geom.envelope.center)
+    northslope = Geokeyword.new(:name => 'Northslope Borough')
+    northslope.geom = nsbregion.geom.envelope.center
+    northslope.save!
+
     Location.intersects(nsbregion.geom).each do |l|
       asset = l.asset
       asset.geokeywords << northslope unless asset.geokeywords.exists? northslope

@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.1.1'
+gem 'rails', '3.1.2'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -8,7 +8,10 @@ gem 'rails', '3.1.1'
 #gem 'sqlite3'
 gem 'pg'
 gem 'nofxx-georuby'
-gem 'postgis_adapter', '0.7.9' #, :git => 'git://github.com/nofxx/postgis_adapter.git'
+#broke in rails 3.1
+gem 'postgis_adapter', :git => 'http://github.com/gina-alaska/postgis_adapter.git'
+
+#gem 'spatial_adapter', :git => 'https://github.com/juniorz/spatial_adapter.git'
 gem "haml"
 gem 'progressbar'
 gem 'ruby-openid', :git => 'git://github.com/jmthomas/ruby-openid.git'

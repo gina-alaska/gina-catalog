@@ -24,12 +24,13 @@ class MigrateDataToNewCatalog < ActiveRecord::Migration
       a.tags = op.tags
 
       OldLocation.where(:locatable_id => op.id, :locatable_type => 'Asset').each do |loc|
-        a.locations.create({
+        l = Location.new({
           :name => loc.name,
           :region => loc.region,
           :subregion => loc.subregion,
           :geom => loc.geom
         })
+        a.locations << l
       end
 
       OldLink.where(:linkable_id => op.id, :linkable_type => 'Asset').each do |link|
@@ -76,12 +77,13 @@ class MigrateDataToNewCatalog < ActiveRecord::Migration
       p.tags = op.tags
 
       OldLocation.where(:locatable_id => op.id, :locatable_type => 'Project').each do |loc|
-        p.locations.create({
+        l = Location.new({
           :name => loc.name,
           :region => loc.region,
           :subregion => loc.subregion,
           :geom => loc.geom
         })
+        p.locations << l
       end
 
       OldLink.where(:linkable_id => op.id, :linkable_type => 'Project').each do |link|

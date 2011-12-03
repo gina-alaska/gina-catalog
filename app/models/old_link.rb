@@ -1,5 +1,6 @@
 class OldLink < ActiveRecord::Base
   CATEGORIES = ['Website', 'Report', 'Shape File', 'WMS', 'WCS', 'WFS', 'KML', 'Layer', 'Metadata']
+  set_primary_key :id
 
   belongs_to :linkable, :polymorphic => true
 

@@ -1,5 +1,6 @@
 class OldAsset < ActiveRecord::Base
   STATUSES = %w(Remote Local)
+  set_primary_key :id
 
   has_many :files, :class_name => 'AssetFile'
   #has_and_belongs_to_many :gcmd_themes
@@ -37,36 +38,6 @@ class OldAsset < ActiveRecord::Base
   #validates_presence_of :license_id
 
   after_create :setup_path
-
-  define_index do
-    indexes title,  :type => :string, :sortable => true
-    indexes status, :sortable => true
-
-    indexes gcmd_themes(:name),  :as => :gcmd_themes, :sortable => true
-    indexes gcmd_themes.path,  :as => :gcmd_theme_paths, :sortable => true
-    indexes tags.text,         :as => :tags, :sortable => true
-    indexes [source_agency(:name), source_agency.acronym], :as => :source_agency, :sortable => true
-    indexes source_agency.acronym, :as => :source_agency_acronym, :sortable => true
-    indexes [owner.first_name, owner.last_name], :as => :owner
-    indexes [locations(:name), locations.region, locations.subregion], :as => :locations
-    indexes description.text, :as => :description
-
-    has :title, :type => :string
-    has :archived_at
-    has "archived_at is not null", :as => :archived, :type => :boolean
-    has license.downloadable,  :as => :downloadable
-    has gcmd_themes(:id), :as => :gcmd_theme_ids
-    has source_agency(:id), :as => :source_agency_id
-    has funding_agency(:id), :as => :funding_agency_id
-    has :start_date, :end_date, :created_at, :updated_at, :owner_id
-    has "date_part('year', start_date)", :as => :start_date_year, :type => :integer
-    has "date_part('year', end_date)", :as => :end_date_year, :type => :integer
-
-    set_property :delta => :delayed
-  end
-  sphinx_scope(:sort_by) do |field, mode|
-    {:order => field, :sort_mode => mode}
-  end
 
   def archive
     self.archived_at = Time.now
