@@ -16,6 +16,10 @@ class RepoProxy
     create_repo unless repo_exists?
     @repo ||= Grit::Repo.new(repo_path)
   end
+  
+  def empty?
+    files.count <= 1
+  end
 
   def files
     RepoFilelist.new(repo).tree
@@ -51,6 +55,10 @@ class RepoProxy
     index.read_tree(@repo.tree.id)
     index.add(file, contents)
     index.commit(msg, @repo.commits)
+  end
+  
+  def archive(treeish, prefix)
+    @repo.archive_tar_gz(treeish, prefix)
   end
   
   def clone_path

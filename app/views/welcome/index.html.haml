@@ -3,8 +3,9 @@
   .image= image_tag 'nssi-logo2.png', :alt=>"NSSI LOGO"
   .text North Slope Science Catalog
 #splash-content.x-hidden
-  %h1 NSSI DEMONSTRATION SITE
-  %h2 This site works best using Firefox, Chrome, IE9+  or Opera
+  - if Rails.env == 'development'
+    %h1 NSSI DEMONSTRATION SITE
+  %h2 This site works best using Firefox, Chrome, IE9+  or Opera, <a href="/cms/help/browser-requirements" target="_blank">more information here</a>
   
   %h1 Discover Projects and Data Products
   %h2
