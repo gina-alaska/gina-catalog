@@ -37,6 +37,10 @@ class RepoProxy
     File.directory? repo_path
   end
 
+  def archive(treeish, prefix = nil)
+    @repo.archive_tar_gz(treeish, prefix)
+  end
+
   def create_repo
     @repo = Grit::Repo.init_bare_or_open(repo_path)
     create_file('README', parent.send(@relation[:readme_template]), 'Creating README file')
