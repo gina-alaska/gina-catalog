@@ -46,7 +46,11 @@ class RepoProxy
   end
 
   def archive(treeish, prefix = nil)
-    @repo.archive_tar_gz(treeish, prefix)
+    old_max = Grit::Git.git_max_size
+    Grit::Git.git_max_size = 100.megabytes
+    Grit::Git.git_timeout = 3000
+
+    return repo.archive_tar_gz(treeish, prefix)
   end
 
   def create_repo
