@@ -44,13 +44,24 @@ class RepoProxy
   def repo_exists?
     File.directory? repo_path
   end
-
-  def archive(treeish, prefix = nil)
+  
+  def prep_for_archive
     old_max = Grit::Git.git_max_size
     Grit::Git.git_max_size = 100.megabytes
     Grit::Git.git_timeout = 3000
+  end
 
+  def archive_tar_gz(treeish, prefix = nil)
+    prep_for_archive
     return repo.archive_tar_gz(treeish, prefix)
+  end
+  
+  def archive_zip(treeish, prefix = nil)
+    prep_for_archive
+    options = {}
+    options[:format] = 'zip'
+    options[:prefix] = prefix unless prefix.nil?
+    return @repo.git.archive({ :format => 'zip', :prefix => prefix }, treeish)
   end
 
   def create_repo
