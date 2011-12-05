@@ -16,6 +16,10 @@ class RepoProxy
     create_repo unless repo_exists?
     @repo ||= Grit::Repo.new(repo_path)
   end
+
+  def repo
+    @repo
+  end
   
   def empty?
     files.count <= 1
