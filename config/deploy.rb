@@ -33,7 +33,7 @@ namespace :deploy do
   end
 
   task :link_configs do
-    run "ln -nfs #{deploy_to}/#{shared_dir}/system/database.yml #{release_path}/config/database.yml"
+    run "ln -nfs #{deploy_to}/#{shared_dir}/config/database.yml #{release_path}/config/database.yml"
   end
   task :precompile_assets do
     run "cd #{release_path}; RAILS_ENV=production rake assets:precompile"
