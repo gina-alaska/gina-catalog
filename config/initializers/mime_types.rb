@@ -4,3 +4,4 @@
 # Mime::Type.register "text/richtext", :rtf
 # Mime::Type.register_alias "text/html", :iphone
 Mime::Type.register "application/octet-stream", :tar_gz, [], ["tar.gz"]
+Mime::Type.register "application/octet-stream", :zip, [], ["zip"]

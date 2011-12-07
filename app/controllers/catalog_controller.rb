@@ -10,7 +10,12 @@ class CatalogController < ApplicationController
     respond_to do |format|
       format.html { render :layout => false }
       format.tar_gz do
-        render :content_type => "application/octet-stream", :layout => false, :text => @item.repo.archive('master', "#{@item.id}/")
+        render :content_type => "application/octet-stream", :layout => false, 
+          :text => @item.repo.archive_tar_gz('master', "#{@item.id}/")
+      end
+      format.zip do
+        render :content_type => "application/octet-stream", :layout => false, 
+          :text => @item.repo.archive_zip('master', "#{@item.id}/")
       end
     end
   end

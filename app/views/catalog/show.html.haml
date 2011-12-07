@@ -78,7 +78,7 @@
     - unless @item.repo.empty?
       .tabbed
         %label Download Link:
-        = link_to catalog_url(@item, :format => 'tar.gz'), catalog_url(@item, :format => 'tar.gz'), :target => :_blank
+        = link_to catalog_url(@item, :format => 'zip'), catalog_url(@item, :format => 'zip'), :target => :_blank
         .spacer
 
     - unless @item.links.nil? or  @item.links.empty?
