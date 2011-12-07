@@ -34,6 +34,7 @@ namespace :deploy do
 
   task :link_configs do
     run "ln -nfs #{deploy_to}/#{shared_dir}/config/database.yml #{release_path}/config/database.yml"
+    run "ln -nfs /san/pod/nssi_silo/git #{release_path}/repos"
     run "ln -nfs /san/pod/nssi_silo/cms/system #{release_path}/vendor/cms/public/system"
   end
   task :precompile_assets do
