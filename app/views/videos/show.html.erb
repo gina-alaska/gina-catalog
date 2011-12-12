@@ -33,7 +33,7 @@
           <param name="allowScriptAccess" value="always"/>
           <param name="allowFullScreen" value="true"/>
           <param name="scale" value="showall"/>
-          <param name="flashVars" value="autostart=false#&thumb=<%= File.join(@video.path, 'FirstFrame.png' -%>&thumbscale=45&color=0x000000,0x000000"/>
+          <param name="flashVars" value="autostart=false#&thumb=<%= File.join(@video.path, 'FirstFrame.png') -%>&thumbscale=45&color=0x000000,0x000000"/>
           <embed name="csSWF" src="<%= File.join(@video.path, @video.filename) -%>" width="640" height="497" bgcolor="#1a1a1a" quality="best" allowScriptAccess="always" allowFullScreen="true" scale="showall" flashVars="autostart=false&thumb=<%= File.join(@video.path, 'FirstFrame.png') -%>&thumbscale=45&color=0x000000,0x000000" pluginspage="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash"></embed>
       </object>
   </div>
