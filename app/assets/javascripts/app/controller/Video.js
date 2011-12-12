@@ -27,7 +27,7 @@ Ext.define('App.controller.Video', {
       xtype: 'panel', 
       loader: {
         autoLoad: true,
-        url: '/videos/quickstart'
+        url: '/videos/quickstart2x'
       }, 
       border: false
     });
