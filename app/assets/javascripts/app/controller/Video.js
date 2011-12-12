@@ -9,6 +9,9 @@ Ext.define('App.controller.Video', {
     this.control({
       'viewport > #center': {
         render: this.setup
+      },
+      'catalog_splash button[action="quickstart"]': {
+        click: this.show
       }
     });
   },
@@ -19,7 +22,14 @@ Ext.define('App.controller.Video', {
   },
   
   show: function() {
-    this.pages.index.add({xtype: 'panel', contentEl: 'video', border: false});
     this.pages.index.up('panel').getLayout().setActiveItem(this.pages.index);
+    this.pages.index.add({
+      xtype: 'panel', 
+      loader: {
+        autoLoad: true,
+        url: '/videos/quickstart'
+      }, 
+      border: false
+    });
   }
 });

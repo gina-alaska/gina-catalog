@@ -33,8 +33,14 @@ Ext.define('App.view.catalog.splash', {
     xtype: 'panel',
     border: false,
     layout: { type: 'hbox',pack: 'center' },
-    defaults: { scale: 'large',width: 200, margin: '0 3 0 3' },
+    defaults: { scale: 'large',width: 250, margin: '0 3 0 3' },
     items: [{
+      xtype: 'button',
+      cls: 'enter-button',
+      text: 'Watch Quickstart Video',
+      action: 'quickstart',
+      handler: function(button) { button.up('window').close(); }
+    }, {
       xtype: 'button',
       cls: 'enter-button',
       text: 'Explore Catalog',

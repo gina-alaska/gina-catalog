@@ -11,7 +11,7 @@ class VideosController < ApplicationController
     # end
     
     if !@video.nil? and @video.exists?
-      respond_with(@video)
+      render :layout => false
     else
       render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false
     end
