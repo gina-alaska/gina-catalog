@@ -1,9 +1,9 @@
 class Video < ActiveRecord::Base
-  def fullpath
-    File.join(path, filename)
+  def fspath
+    File.join(Rails.root, 'public', path, filename)
   end
   
   def exists?
-    File.exists? fullpath
+    File.exists? File.join(fspath)
   end
 end
