@@ -34,6 +34,16 @@ class Catalog < ActiveRecord::Base
   before_create :set_data_source
   before_create :repohex
 
+  #Adding solr indexing
+  searchable do
+    text :title,:description
+    string :status, :type, :uuid
+    integer :owner_id, :primary_contact_id, :license_id, :data_source_id, :source_agency_id, :funding_agency_id
+    time :archived_at, :published_at, :start_date, :end_date, :created_at, :updated_at
+
+    
+  end
+
   def repo
     @repo ||= RepoProxy.new(self, :class_name => 'RepoFile')
     @repo

@@ -22,7 +22,7 @@ gem 'wicked_pdf'
 gem 'compass', '~> 0.12.alpha.0'
 gem 'rdiscount'
 gem 'ancestry', '~> 1.2.4'
-
+gem 'sunspot_rails'
 # Use unicorn as the web server
 # gem 'unicorn'
 
