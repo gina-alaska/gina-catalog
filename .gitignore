@@ -14,3 +14,5 @@ public/javascripts/oldapp/
 vendor/nssi-prod
 vendor/cms/public/system
 repos_tmp
+solr
+!solr/conf

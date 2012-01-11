@@ -49,6 +49,11 @@ group :production do
   gem 'therubyracer'
 end
 
+group :development do
+  gem 'sunspot_solr'
+  gem 'progress_bar'
+end
+
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
 # and rake tasks are available in development mode:
