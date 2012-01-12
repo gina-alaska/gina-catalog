@@ -16,3 +16,4 @@ vendor/cms/public/system
 repos_tmp
 solr
 !solr/conf
+log/solr*
