@@ -1,6 +1,8 @@
 Ext.define('App.controller.Catalog', {
   extend: 'Ext.app.Controller',
 
+  stores: ['Catalog'],
+
   init: function() {
     this.control({
       /* Main viewport events */
@@ -13,9 +15,12 @@ Ext.define('App.controller.Catalog', {
   show: function() {
     var panel = this.catalogPanel.up('panel');
     panel.getLayout().setActiveItem(this.catalogPanel);
+    
+    this.getStore('Catalog').load();
   },
   
   start: function(panel) {
+    
     this.catalogPanel = panel.add({
       layout: 'border',
       defaults: { border: false },
@@ -27,7 +32,8 @@ Ext.define('App.controller.Catalog', {
         region: 'west',
         width: 300,
         split: true,
-        xtype: 'catalog_sidebar'
+        xtype: 'catalog_sidebar',
+        store: this.getStore('Catalog')
       }, {
         region: 'center',
         xtype: 'panel',
