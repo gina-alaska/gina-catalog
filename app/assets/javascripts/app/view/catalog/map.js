@@ -1,5 +1,5 @@
 Ext.define('App.view.catalog.map', {
-  alias: 'catalog.map',
+  alias: 'widget.catalogmap',
   extend: 'Ext.OpenLayers.Panel',
 
   enableGraticule: false,

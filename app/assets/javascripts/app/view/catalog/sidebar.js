@@ -1,6 +1,6 @@
 Ext.define('App.view.catalog.sidebar', {
   extend: 'Ext.panel.Panel',
-  alias: 'widget.catalogsidebar',
+  alias: 'widget.catalog_sidebar',
 
   autoScroll: true,
   config: {
