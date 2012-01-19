@@ -1,5 +1,5 @@
 Ext.define('App.store.SearchResults', {
-  extend: 'Ext.gina.data.Store',
+  extend: 'Ext.data.Store',
   
   storeId: 'SearchResults',
   model: 'App.model.SearchResult',
@@ -17,6 +17,7 @@ Ext.define('App.store.SearchResults', {
   
   pageSize: 3000,
   remoteSort: false,
+  remoteFilter: true,
   autoLoad: false,
   listeners: {
 //    exception: Ext.ux.StoreHandlers.failure

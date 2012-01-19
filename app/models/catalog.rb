@@ -139,10 +139,12 @@ Title: #{self.title}
   def as_json(opts = {})
     {
       :id => self.id,
+      :archived_at => self.archived_at,
       :type => self.type,
       :title => self.title,
       :tags => self.tags.collection,
       :description => self.short_description,
+=begin
       :start_date_year => self.start_date.try(:year),
       :end_date_year => self.end_date.try(:year),
       :status => self.status,
@@ -155,7 +157,9 @@ Title: #{self.title}
       :created_at => self.created_at,
       :updated_at => self.updated_at,
       :published_at => self.published_at,
+=end
       :locations => self.locations
+
     }
   end
 

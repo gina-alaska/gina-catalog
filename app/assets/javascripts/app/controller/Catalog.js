@@ -151,7 +151,7 @@ Ext.define('App.controller.Catalog', {
       this.getStore('SearchResults').load();      
     }
       
-    this.getStore('SearchResults').clearCachedFilter('name', 'hideall');
+   // this.getStore('SearchResults').clearCachedFilter('name', 'hideall');
 
     var panel = this.pages.index.up('panel');
     panel.getLayout().setActiveItem(this.pages.index);

@@ -44,7 +44,6 @@ Ext.define('App.controller.Filter', {
   filterHandler: function(panel, type, field, value) {
     var config, win,
         store = this.getStore('SearchResults');
-
     switch(type) {
       case 'string':
         this.showFilterPbar();

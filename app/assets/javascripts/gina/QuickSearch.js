@@ -104,10 +104,11 @@ Ext.define('Ext.gina.QuickSearch', {
     var search_items = search_string.replace(/\s+/,' ').split(' ').uniq();
 
     //Always clear the last filter before doing a new filter
-    this.getStore().filterByString(search_string);
+    //this.getStore().filterByString(search_string);
+    this.getStore().filter("fulltext", search_string);
 
     if(this.getMaskEl()) {
       Ext.get(this.getMaskEl()).unmask();
     }
   }
-})
+});
