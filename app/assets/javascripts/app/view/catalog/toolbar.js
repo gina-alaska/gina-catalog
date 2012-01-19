@@ -13,8 +13,10 @@ Ext.define('App.view.catalog.toolbar', {
           xtype: 'buttongroup',
           defaults: { scale: 'medium' },
           items: [{
+            name: 'q',
+            cls: 'quicksearch',
             xtype: 'textfield',
-            width: 300
+            width: 400
           }, {
             xtype: 'button',
             iconCls: 'cancel-icon'
@@ -191,5 +193,17 @@ Ext.define('App.view.catalog.toolbar', {
         scope: this,
         checkHandler: this.checkHandler
       }];
+    },
+    
+    checkHandler: function(menu, checked) {
+      if(checked) {
+        var parent = menu.parentMenu.parentItem,
+            field = parent.dataIndex,
+            dir = menu.text;
+        
+        dir = (dir == 'Ascending' ? 'ASC' : 'DESC');
+
+        parent.setChecked(true);
+      }
     }
 });
