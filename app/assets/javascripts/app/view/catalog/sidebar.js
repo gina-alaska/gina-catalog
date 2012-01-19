@@ -3,9 +3,7 @@ Ext.define('App.view.catalog.sidebar', {
   alias: 'widget.catalog_sidebar',
 
   autoScroll: true,
-  config: {
-    sortHandler: Ext.emptyFn
-  },
+  config: { sortHandler: Ext.emptyFn },
 
   layout: {
     type: 'vbox',
@@ -64,26 +62,9 @@ Ext.define('App.view.catalog.sidebar', {
       }
     }];
 
-    this.checkHandler = function(menu, checked) {
-      if(checked) {
-        var handler = this.getSortHandler(),
-            parent = menu.parentMenu.parentItem,
-            field = parent.dataIndex,
-            dir = menu.text;
-        
-        dir = (dir == 'Ascending' ? 'ASC' : 'DESC');
-
-        parent.setChecked(true);
-        handler(field, dir);
-      }
-    };
-
     this.callParent();
       
     this.store.on('datachanged', this.onDataChanged, this);
-
-    // this.down('dataview').on('itemdblclick', this.onItemDblClick, this);
-    // this.down('dataview').on('selectionchange', this.onSelectionChange, this);
   },
 
   onDataChanged: function(store) {
