@@ -1,7 +1,6 @@
 Ext.define('App.view.catalog.list', {
   extend: 'Ext.view.View',
-  alias: 'widget.resultslist',
-  store: 'SearchResults',
+  alias: 'widget.catalog_list',
   title: 'Search Results',
 
   tpl: new Ext.XTemplate(
@@ -43,8 +42,8 @@ Ext.define('App.view.catalog.list', {
   overItemCls: 'x-item-over',
   itemSelector: 'div.asset_wrap',
   loadMask: true,
-  loadingText: 'Loading assets...',
+  loadingText: 'Loading records...',
   singleSelect: true,
   allowDeselect: true,
-  emptyText: 'No assets were found'
+  emptyText: 'No records were found'
 });
