@@ -19,6 +19,10 @@ Ext.define('App.controller.Catalog', {
     this.catalogPanel = panel.add({
       layout: 'border',
       defaults: { border: false },
+      dockedItems: [{
+        xtype: 'catalog_toolbar',
+        dock: 'top'
+      }],
       items: [{
         region: 'west',
         width: 300,
