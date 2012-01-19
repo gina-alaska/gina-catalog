@@ -1,17 +1,12 @@
 Ext.define('App.view.asset.map', {
-  extend: 'Ext.OpenLayers.Panel',
-  alias: 'widget.assetmap',
+  extend: 'Ext.OpenLayers.Basic',
+  alias: 'widget.asset_map',
 
   tbar: false,
   fbar: false,
   projection: 'EPSG:3338',
-  enableGraticule: false,
-
-  initComponent: function() {
-    this.callParent();
-    this.on('ready', this.setupLayers, this);
-  },
-
+  enableGraticule: false
+/*
   setupLayers: function() {
     this.locations = new OpenLayers.Layer.Vector('Locations');
     this.addLayer(this.locations);
@@ -36,4 +31,5 @@ Ext.define('App.view.asset.map', {
 
     this.getEl().unmask();
   }
+  */
 });

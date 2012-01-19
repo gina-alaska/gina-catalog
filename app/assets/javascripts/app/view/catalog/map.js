@@ -1,14 +1,18 @@
 Ext.define('App.view.catalog.map', {
-  alias: 'widget.catalogmap',
-  extend: 'Ext.OpenLayers.Panel',
+  alias: 'widget.catalog_map',
+  extend: 'Ext.OpenLayers.Basic',
 
-  enableGraticule: false,
+  config: {
+    projection: "EPSG:3572",
+    defaultZoom: 4
+  },
 
   initComponent: function() {
     this.addEvents('featureclick', 'clusterclick', 'aoiadded', 'featuresrendered');
-    this.callParent();
-  },
 
+    this.callParent();
+  }
+/*
   setup: function() {
     this.setupLayers();
     this.setupControls();
@@ -221,4 +225,5 @@ Ext.define('App.view.catalog.map', {
     if(Ext.Msg.isVisible()) { Ext.Msg.hide(); }
     this.fireEvent('featuresrendered', this);
   }
+  */
 });

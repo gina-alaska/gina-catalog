@@ -1,6 +1,10 @@
 Ext.define('App.controller.Catalog', {
   extend: 'Ext.app.Controller',
 
+  views:  [ 'catalog.*'],
+  stores: ['SearchResults', 'Filters'],
+  models: ['SearchResult', 'Filter'],
+
   init: function() {
     this.control({
       /* Main viewport events */
@@ -16,6 +20,8 @@ Ext.define('App.controller.Catalog', {
   },
   
   start: function(panel) {
+    
+
     this.catalogPanel = panel.add({
       layout: 'border',
       defaults: { border: false },
@@ -26,8 +32,7 @@ Ext.define('App.controller.Catalog', {
         xtype: 'catalog_sidebar'
       }, {
         region: 'center',
-        xtype: 'panel',
-        html: 'map goes here'
+        xtype: 'catalog_map'
       }]
     });
   }

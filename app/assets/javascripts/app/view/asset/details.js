@@ -40,7 +40,7 @@ Ext.define('App.view.asset.details', {
         region: 'north',
         height: 400,
         split: true,
-        xtype: 'assetmap'
+        //xtype: 'asset_map'
       }, {
         region: 'center',
         html: 'Other content goes here'
