@@ -32,10 +32,6 @@ class Project < Catalog
 #    has "(published_at IS NOT NULL)", :as => 'published', :type => :boolean
 #    set_property :delta => :delayed
 #  end
-#
-#  sphinx_scope(:sort_by) do |field, mode|
-#    {:order => field, :sort_mode => mode}
-#  end
   
   #validates_presence_of :title
   #validates_presence_of :owner

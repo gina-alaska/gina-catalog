@@ -58,9 +58,6 @@ class Asset < Catalog
   #
   #  set_property :delta => :delayed
   #end
-  #sphinx_scope(:sort_by) do |field, mode|
-  #  {:order => field, :sort_mode => mode}
-  #end
 
   def archive
     self.archived_at = Time.now
