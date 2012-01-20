@@ -59,14 +59,18 @@ Ext.define('Ext.gina.SelectorWindow', {
         grid = win.down('gridpanel'),
         selected = grid.getSelectionModel().getSelection();
     
-    var ids = [];
+    var ids = [], descriptions = [];
+    var tpl = new Ext.Template(this.description);
+    
     Ext.each(selected, function(item) {
+      descriptions.push(tpl.apply([item.get('name')]));
       ids.push( item.get('id'));
     },this);
     
     win.callback.call(win.scope, {
       query: 'string',
-      field: 'agency_ids',
+      field: this.field,
+      description: descriptions,
       value: ids
     });
 

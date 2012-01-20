@@ -45,21 +45,24 @@ Ext.define('App.view.catalog.toolbar', {
               action: 'filter',
               xtype: 'menucheckitem',
               query: 'agencyselector',
-              field: 'agency_ids'
+              field: 'agency_ids',
+              description: 'Agency: {0}'
             }, {
               text: 'Contact',
               iconCls: 'contact-icon',
               action: 'filter',
               xtype: 'menucheckitem',
               query: 'contactselector',
-              field: 'contact_ids'
+              field: 'contact_ids',
+              description: 'Contact: {0}'
             }, {
               text: 'Source',
               iconCls: 'source-icon',
               field: 'source',
               xtype: 'menucheckitem',
               query: 'string',
-              action: 'filter'
+              action: 'filter',
+              description: 'Source Agency: {0}'
             }, {
               text: 'Status',
               iconCls: 'status-icon',
@@ -71,6 +74,7 @@ Ext.define('App.view.catalog.toolbar', {
                 action: 'filter',
                 value: 'ongoing',
                 group: 'status', xtype: 'menucheckitem',
+                description: 'Status: Ongoing',
                 scope: this,
                 checkHandler: this.checkHandler
               }, {
@@ -80,6 +84,7 @@ Ext.define('App.view.catalog.toolbar', {
                 action: 'filter',
                 value: 'complete',
                 group: 'status', xtype: 'menucheckitem',
+                description: 'Status: Complete',
                 scope: this,
                 checkHandler: this.checkHandler
               }, {
@@ -89,6 +94,7 @@ Ext.define('App.view.catalog.toolbar', {
                 action: 'filter',
                 value: 'unknown',
                 group: 'status', xtype: 'menucheckitem',
+                description: 'Status: Unknown',
                 scope: this,
                 checkHandler: this.checkHandler
               }, {
@@ -98,6 +104,7 @@ Ext.define('App.view.catalog.toolbar', {
                 action: 'filter',
                 value: 'local',
                 group: 'status', xtype: 'menucheckitem',
+                description: 'Status: Local',
                 scope: this,
                 checkHandler: this.checkHandler
               }, {
@@ -107,6 +114,7 @@ Ext.define('App.view.catalog.toolbar', {
                 action: 'filter',
                 value: 'remote',
                 group: 'status', xtype: 'menucheckitem',
+                description: 'Status: Remote',
                 scope: this,
                 checkHandler: this.checkHandler
               }]

@@ -26,7 +26,7 @@ Ext.define('App.view.catalog.filterlist', {
   layout: 'fit',
 
   initComponent: function() {
-    this.store = Ext.data.StoreManager.lookup('SearchResults').filterStore;
+    this.store = Ext.data.StoreManager.lookup('Filters');
     this.callParent(arguments);
   }
 });

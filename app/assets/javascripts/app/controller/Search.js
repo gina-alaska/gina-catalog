@@ -1,7 +1,7 @@
 Ext.define('App.controller.Search', {
   extend: 'Ext.app.Controller',
 
-  stores: [ 'Catalog' ],
+  stores: [ 'Catalog', 'Filters' ],
 
   init: function() {
     this.control({
@@ -22,10 +22,9 @@ Ext.define('App.controller.Search', {
     this.searchParams = new Ext.util.MixedCollection();
   },
 
-
   doSearch: function() {
     var searchField = Ext.ComponentQuery.query('catalog_toolbar textfield[name="q"]')[0];
-    this.updateSearchParams('q', searchField.getValue());
+    this.updateSearchParams('q', searchField.getValue(), 'Text: ' +  searchField.getValue());
 
     var rawParams = this.getSearchParams();
     var params = {};
@@ -34,7 +33,7 @@ Ext.define('App.controller.Search', {
       if(Ext.isArray(rawParams[name])) {
         n += "[]";
       }
-      params[n] = rawParams[name];
+      params[n] = rawParams[name].value;
     }
 
     this.getStore('Catalog').load({
@@ -50,16 +49,17 @@ Ext.define('App.controller.Search', {
     if(!params) {
       params = {}
     }
+    console.log(params);
     return params;
   },
 
-  updateSearchParams: function(key, value) {
+  updateSearchParams: function(key, value, desc) {
     var params = this.getSearchParams();
     if(value == "") {
         delete params[key]
     }
-    else if(params[key] != value) {
-      params[key] = value;
+    else if(!params[key] || params[key].value != value) {
+      params[key] = { value: value, description: desc };
       this.activeSearchId += 1;
       this.searchParams.add(this.activeSearchId, params);
     }
@@ -70,13 +70,15 @@ Ext.define('App.controller.Search', {
     switch(item.query) {
       case 'string':
         console.log("STRING!");
-        this.updateSearchParams(item.field,item.value);
+        this.updateSearchParams(item.field,item.value,item.description);
         this.doSearch();
         break;
       case 'agencyselector':
         console.log(item);
         var win = Ext.create("App.view.agency.selector",{
           scope: this,
+          field: item.field,
+          description: item.description,
           callback: this.doFilter
         });
         win.show();
@@ -84,6 +86,8 @@ Ext.define('App.controller.Search', {
       case 'contactselector':
         var win = Ext.create("App.view.person.selector", {
           scope: this,
+          field: item.field,
+          description: item.description,
           callback: this.doFilter
         });
         win.show();
@@ -93,5 +97,5 @@ Ext.define('App.controller.Search', {
         console.log("Default");
         break;
     }
-  }
+  } 
 });
