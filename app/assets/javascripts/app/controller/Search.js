@@ -5,13 +5,17 @@ Ext.define('App.controller.Search', {
 
   init: function() {
     this.control({
-     'catalog_toolbar button[action="search"]': {
+      'catalog_toolbar textfield[name="q"]': {
+        specialkey: function(field, e) {
+          if(e.getKey() === e.ENTER) { this.doSearch(); }
+        }
+      },
+      'catalog_toolbar button[action="search"]': {
         click: this.doSearch
       },
-     'catalog_toolbar menuitem[action="filter"]': {
+      'catalog_toolbar menuitem[action="filter"]': {
         click: this.doFilter
-     }
-
+      }
     });
 
     this.activeSearchId = 0;
