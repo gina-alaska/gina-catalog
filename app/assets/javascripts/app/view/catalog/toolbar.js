@@ -19,10 +19,12 @@ Ext.define('App.view.catalog.toolbar', {
             width: 400
           }, {
             xtype: 'button',
-            iconCls: 'cancel-icon'
+            iconCls: 'cancel-icon',
+            action: 'clear'
           }, {
             xtype: 'button',
-            iconCls: 'search-icon'
+            iconCls: 'search-icon',
+            action: 'search'
           }]          
         }, {
           xtype: 'buttongroup',
