@@ -32,20 +32,17 @@ class CatalogController < ApplicationController
 #    @results = @results.where(:id => params[:ids]) unless params[:ids].nil?
 #    @results = @results.limit(params[:limit] || 3000).order('title ASC')
 
-    if(params[:filter].nil? or params[:filter].empty? )
+    if(params[:q].nil? or params[:q].empty? )
       @results = Catalog.not_archived.published
       @results = @results.includes(:locations, :source_agency, :people, :agencies, :tags, :geokeywords)
       @results = @results.where(:id => params[:ids]) unless params[:ids].nil?
       @results = @results.limit(params[:limit] || 3000).order('title ASC')
     else
-      filters = JSON.parse( params[:filter] )
-      filters = Hash[filters.map{|item| [item["property"],item["value"]]}].symbolize_keys!
-      
       @search = Catalog.search( :include => [:tags] ) do
         #data_accessor_for(Catalog).include=[:tags]
-        fulltext filters[:fulltext]
-        with :status, filters[:status] if filters[:status]
-        with :archived_at, nil unless filters[:archived]
+        fulltext params[:q]
+        with :status, params[:status] if params[:status]
+        with :archived_at, nil unless params[:archived]
         paginate per_page:(params[:limit] || 3000), page:(params[:page] || 1)
       end
 
