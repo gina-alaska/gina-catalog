@@ -32,17 +32,19 @@ class CatalogController < ApplicationController
 #    @results = @results.where(:id => params[:ids]) unless params[:ids].nil?
 #    @results = @results.limit(params[:limit] || 3000).order('title ASC')
 
-    if(params[:q].nil? or params[:q].empty? )
+    if(params[:search].nil? or params[:search].empty? )
       @results = Catalog.not_archived.published
       @results = @results.includes(:locations, :source_agency, :people, :agencies, :tags, :geokeywords)
       @results = @results.where(:id => params[:ids]) unless params[:ids].nil?
       @results = @results.limit(params[:limit] || 3000).order('title ASC')
+      @results = []
     else
+      search = params[:search]
       @search = Catalog.search( :include => [:tags] ) do
         #data_accessor_for(Catalog).include=[:tags]
-        fulltext params[:q]
-        with :status, params[:status] if params[:status]
-        with :archived_at, nil unless params[:archived]
+        fulltext search[:q]
+        with :status, search[:status] if search[:status]
+        with :archived_at, nil unless search[:archived]
         paginate per_page:(params[:limit] || 3000), page:(params[:page] || 1)
       end
 

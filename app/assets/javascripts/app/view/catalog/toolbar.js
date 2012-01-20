@@ -42,61 +42,78 @@ Ext.define('App.view.catalog.toolbar', {
             menu: [{
               text: 'Agency',
               iconCls: 'agency-icon',
-              scope: this,
-              handler: function() {
-                this.fireEvent('filter', this, 'agency');
-              }
+              action: 'filter',
+              xtype: 'menucheckitem',
+              query: 'agencyselector',
+              field: 'agency_ids'
             }, {
               text: 'Contact',
               iconCls: 'contact-icon',
-              scope: this,
-              handler: function() {
-                this.fireEvent('filter', this, 'contact');
-              }
+              action: 'filter',
+              xtype: 'menucheckitem',
+              query: 'contactselector',
+              field: 'contact_ids'
             }, {
               text: 'Source',
               iconCls: 'source-icon',
-              scope: this,
-              handler: function() {
-                this.fireEvent('filter', this, 'source');
-              }
+              field: 'source',
+              xtype: 'menucheckitem',
+              query: 'string',
+              action: 'filter'
             }, {
               text: 'Status',
               iconCls: 'status-icon',
+              xtype: 'menucheckitem',
               menu: [{
                 text: 'Ongoing',
+                field: 'status',
+                query: 'string',
+                action: 'filter',
+                value: 'ongoing',
+                group: 'status', xtype: 'menucheckitem',
                 scope: this,
-                handler: function() {
-                  this.fireEvent('filter', this, 'string', 'status', 'ongoing');
-                }
+                checkHandler: this.checkHandler
               }, {
                 text: 'Complete',
+                field: 'status',
+                query: 'string',
+                action: 'filter',
+                value: 'complete',
+                group: 'status', xtype: 'menucheckitem',
                 scope: this,
-                handler: function() {
-                  this.fireEvent('filter', this, 'string', 'status', 'complete');
-                }
+                checkHandler: this.checkHandler
               }, {
                 text: 'Unknown',
+                field: 'status',
+                query: 'string',
+                action: 'filter',
+                value: 'unknown',
+                group: 'status', xtype: 'menucheckitem',
                 scope: this,
-                handler: function() {
-                  this.fireEvent('filter', this, 'string', 'status', 'unknown');
-                }
+                checkHandler: this.checkHandler
               }, {
                 text: 'Local',
+                field: 'status',
+                query: 'string',
+                action: 'filter',
+                value: 'local',
+                group: 'status', xtype: 'menucheckitem',
                 scope: this,
-                handler: function() {
-                  this.fireEvent('filter', this, 'string', 'status', 'local');
-                }
+                checkHandler: this.checkHandler
               }, {
                 text: 'Remote',
+                field: 'status',
+                query: 'string',
+                action: 'filter',
+                value: 'remote',
+                group: 'status', xtype: 'menucheckitem',
                 scope: this,
-                handler: function() {
-                  this.fireEvent('filter', this, 'string', 'status', 'remote');
-                }
+                checkHandler: this.checkHandler
               }]
             }, {
               text: 'Project/Data',
               iconCls: 'type-icon',
+              xtype: 'menucheckitem',
               menu: [{
                 text: 'Project',
                 scope: this,
@@ -113,16 +130,19 @@ Ext.define('App.view.catalog.toolbar', {
             }, {
               text: 'Starting Year',
               iconCls: 'date-icon',
+              xtype: 'menucheckitem',
               scope: this,
               handler: function() { this.fireEvent('filter', this, 'date', 'start_date'); }
             }, {
               text: 'Ending Year',
               iconCls: 'date-icon',
+              xtype: 'menucheckitem',
               scope: this,
               handler: function() { this.fireEvent('filter', this, 'date', 'end_date'); }
             }, {
               text: 'Region',
               iconCls: 'region-icon',
+              xtype: 'menucheckitem',
               menu: [{
                 text: 'Alaska',
                 scope: this,
