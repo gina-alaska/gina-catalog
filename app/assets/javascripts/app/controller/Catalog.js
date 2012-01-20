@@ -17,7 +17,7 @@ Ext.define('App.controller.Catalog', {
     var panel = this.catalogPanel.up('panel');
     panel.getLayout().setActiveItem(this.catalogPanel);
     
-    this.getStore('Catalog').on('beforeload', this.updateFilters, this);
+    // this.getStore('Catalog').on('beforeload', this.updateFilters, this);
     this.getStore('Catalog').load();
   },
   
@@ -41,17 +41,5 @@ Ext.define('App.controller.Catalog', {
         xtype: 'catalog_map'
       }]
     });
-  },
-  
-  updateFilters: function() {
-    var params = this.getController('Search').getSearchParams();
-    var filters = this.getStore('Filters');
-    filters.removeAll();
-    for(var key in params) {
-      if(key.length > 0) {
-        filters.add({ name: key, value: params[key].value, desc: params[key].description  })        
-      }
-    }
-    
   }
 });

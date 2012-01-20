@@ -15,17 +15,31 @@ Ext.define('App.controller.Search', {
       },
       'catalog_toolbar menuitem[action="filter"]': {
         click: this.doFilter
-      }
+      },
+      
+      /* Search filter events */
+      'viewport > #center catalog_sidebar filterlist': {
+        itemclick: this.onFilterClick
+      },
     });
 
     this.activeSearchId = 0;
     this.searchParams = new Ext.util.MixedCollection();
   },
+  
+  onFilterClick: function(view, record, node, index, e, opts) {
+    var target = Ext.fly(e.target);
+    if (target && target.getAttribute('action') == 'remove') {
+      this.clearSearchParams(record.get('field'), record.get('value'));
+      this.doSearch();
+    }
+  },
 
   doSearch: function() {
     var searchField = Ext.ComponentQuery.query('catalog_toolbar textfield[name="q"]')[0];
+    this.clearSearchParams('q');
     this.updateSearchParams('q', searchField.getValue(), 'Text: ' +  searchField.getValue());
-
+    
     var rawParams = this.getSearchParams();
     var params = {};
     for(var name in rawParams) {
@@ -33,7 +47,7 @@ Ext.define('App.controller.Search', {
       if(Ext.isArray(rawParams[name])) {
         n += "[]";
       }
-      params[n] = rawParams[name].value;
+      params[n] = rawParams[name];
     }
 
     this.getStore('Catalog').load({
@@ -42,26 +56,52 @@ Ext.define('App.controller.Search', {
   },
 
   getSearchParams: function(id) {
-    if(!id) {
-      id = this.activeSearchId;
-    }
-    var params = this.searchParams.get(id);
-    if(!params) {
-      params = {}
-    }
-    console.log(params);
+    var filters = this.getStore('Filters');
+  
+    params={};
+    filters.each(function(f) {
+      if(params[f.get('field')]) {
+        //Do we have an array of values?
+        if(Ext.isArray(params[f.get('field')])) {
+          //Yes, Push new value onto the array
+          params[f.get('field')].push(f.get('value'));
+        } else {
+          //No, make it an array with the two values
+          params[f.get('field')] = [params[f.field], f.get('value')];
+        }
+      } else {
+        //Put the value into the params
+        params[f.get('field')] = f.get('value');
+      }
+    }, this);
+
     return params;
   },
+  
+  clearSearchParams: function(field, value) {
+    var filters = this.getStore('Filters');
+    var index = this.findSearchParam(field, value);
+    if(index >= 0) { filters.removeAt(index) }
+  },
+  
+  findSearchParam: function(field, value) {
+    var filters = this.getStore('Filters');
+    
+    return filters.findBy(function(item) {
+      return item.get('field') == field && (value === undefined || item.get('value') == value)
+    }, this);
+  },
 
-  updateSearchParams: function(key, value, desc) {
-    var params = this.getSearchParams();
-    if(value == "") {
-        delete params[key]
-    }
-    else if(!params[key] || params[key].value != value) {
-      params[key] = { value: value, description: desc };
-      this.activeSearchId += 1;
-      this.searchParams.add(this.activeSearchId, params);
+  updateSearchParams: function(field, value, desc) {
+    var filters = this.getStore('Filters');
+    
+    // Don't add blank values
+    if(value == "") { return false; }
+    
+    var index = this.findSearchParam(field, value);
+    if(index < 0) {
+      // Value doesn't exist in the filters yet
+      filters.add({ field: field, value: value, desc: desc });
     }
   },
   
@@ -69,12 +109,10 @@ Ext.define('App.controller.Search', {
   doFilter: function(item) {
     switch(item.query) {
       case 'string':
-        console.log("STRING!");
         this.updateSearchParams(item.field,item.value,item.description);
         this.doSearch();
         break;
       case 'agencyselector':
-        console.log(item);
         var win = Ext.create("App.view.agency.selector",{
           scope: this,
           field: item.field,
