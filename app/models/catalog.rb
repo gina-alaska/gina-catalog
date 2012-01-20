@@ -41,6 +41,8 @@ class Catalog < ActiveRecord::Base
     integer :owner_id, :primary_contact_id, :license_id, :data_source_id, :source_agency_id, :funding_agency_id
     time :archived_at, :published_at, :start_date, :end_date, :created_at, :updated_at
 
+    integer :agency_ids, :references => Agency, :multiple => true
+    
     text :tags do
         tags.map(&:text)
     end

@@ -15,7 +15,6 @@ Ext.define('Ext.gina.SelectorWindow', {
       this.store = Ext.create(this.store);
     }
     this.store.load();
-    
     var qs = Ext.widget('quicksearch', {
       dock: 'top',
       width: 490,
@@ -59,7 +58,19 @@ Ext.define('Ext.gina.SelectorWindow', {
     var win = item.up('window'),
         grid = win.down('gridpanel'),
         selected = grid.getSelectionModel().getSelection();
+    
+    var ids = [];
+    Ext.each(selected, function(item) {
+      ids.push( item.get('id'));
+    },this);
+    
+    win.callback.call(win.scope, {
+      query: 'string',
+      field: 'agency_ids',
+      value: ids
+    });
 
-    win.fireEvent('selected', win, selected);
+    win.close();
+    //win.fireEvent('selected', win, selected);
   }
 });

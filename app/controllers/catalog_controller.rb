@@ -45,6 +45,7 @@ class CatalogController < ApplicationController
         fulltext search[:q]
         with :status, search[:status] if search[:status]
         with :archived_at, nil unless search[:archived]
+        with :agency_ids, search[:agency_ids] if search[:agency_ids]
         paginate per_page:(params[:limit] || 3000), page:(params[:page] || 1)
       end
 
