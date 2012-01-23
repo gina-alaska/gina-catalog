@@ -10,7 +10,115 @@ Ext.define('App.view.catalog.map', {
   initComponent: function() {
     this.addEvents('featureclick', 'clusterclick', 'aoiadded', 'featuresrendered');
 
+    this.vLayers = new Ext.util.MixedCollection(true);
+    this.vLayers.on('add', this.onLayerAdd, this);
+
     this.callParent();
+    
+    this.on('ready', this.customizeMap, this);
+  },
+  
+  customizeMap: function() {
+    this.getMap().addControl(new OpenLayers.Control.LayerSwitcher());    
+    
+    this.vLayers.add('Project', {
+      isBaseLayer: false,
+      styleMap: new OpenLayers.StyleMap({
+        "default": new OpenLayers.Style({
+          // label: Ext.isIE ? false : "${count}",
+          // pointRadius: "${radius}",
+          pointRadius: 5,
+          fillColor: "#94fbff",
+          fillOpacity: 0.1,
+          graphicName: 'circle',
+          strokeColor: '#0000FF',
+          strokeWidth: 2,
+          strokeOpacity: 1
+        }),
+        "select": new OpenLayers.Style({
+          fillColor: "#F00",
+          strokeColor: '#F00'
+        })
+      }),
+      rendererOptions: { zIndexing: true }
+    });
+    this.vLayers.add('Data', {
+      isBaseLayer: false,
+      styleMap: new OpenLayers.StyleMap({
+        "default": new OpenLayers.Style({
+          // label: Ext.isIE ? false : "${count}",
+          graphicName: 'circle',
+          // pointRadius: "${radius}",
+          pointRadius: 5,
+          fillColor: "#ffcc66",
+          fillOpacity: 0.1,
+          strokeColor: '#cc6633',
+          strokeWidth: 2,
+          strokeOpacity: 1
+        }),
+        "select": new OpenLayers.StyleMap({
+          fillColor: "#F00",
+          strokeColor: '#F00'
+        })
+      }),
+      rendererOptions: { zIndexing: true }
+    });
+  },
+  
+  loadFeaturesFrom: function(store) {
+    this.store = store;
+    this.store.on('datachanged', this.loadFeatures, this);
+  },
+  
+  loadFeatures: function(store) {
+    var project = [], data = [], features;
+    var pLayer = this.vLayers.get('Project');
+    var dLayer = this.vLayers.get('Data');
+    
+    pLayer.removeAllFeatures();
+    dLayer.removeAllFeatures();
+    
+    store.each(function(item) {
+      features = this.buildFeatures(item.get('locations'));
+      
+      if(features.length > 0 && item.get('type') == 'Project') {
+        project = project.concat(features);
+      } else {
+        data = data.concat(features);
+      }
+    }, this);
+    
+    if(project.length > 0) { pLayer.addFeatures(project); }
+    if(data.length > 0) { dLayer.addFeatures(data); }
+  },
+  
+  buildFeatures: function(locations) {
+    var wkt = new OpenLayers.Format.WKT();
+    var fromProj = new OpenLayers.Projection('EPSG:4326');
+    var toProj = this.getMap().getProjectionObject();
+    
+    var features = [];
+    Ext.each(locations, function(l) {
+      //Skip items without a WKT
+      if(l.wkt === null) { return; }
+      var f = wkt.read(l.wkt);
+      
+      //Transform to the map projection from LatLng
+      f.geometry.transform(fromProj, toProj);
+      features.push(f); 
+    }, this);
+    
+    return features;
+  },
+  
+  createVLayer: function(name, config){
+    return new OpenLayers.Layer.Vector(name, config);
+  },
+  
+  onLayerAdd: function(index, obj, key, opts) {
+    var layer = this.createVLayer(key, obj);
+    this.getMap().addLayer(layer);
+    this.vLayers.replace(key, layer);
   }
 /*
   setup: function() {
