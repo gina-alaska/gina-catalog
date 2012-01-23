@@ -40,8 +40,10 @@ class CatalogController < ApplicationController
       @results = []
     else
       search = params[:search]
-      @search = Catalog.search( :include => [:tags] ) do
-        #data_accessor_for(Catalog).include=[:tags]
+      table_includes = [:tags, :locations]
+      @search = Sunspot.search(Project, Asset) do
+        data_accessor_for(Project).include=table_includes
+        data_accessor_for(Asset).include=table_includes
         fulltext search[:q]
         with :status, search[:status] if search[:status]
         with :archived_at, nil unless search[:archived]
