@@ -10,6 +10,8 @@ Ext.define('App.view.catalog.map', {
   initComponent: function() {
     this.addEvents('featureclick', 'clusterclick', 'aoiadded', 'featuresrendered');
 
+    this.addons = new Ext.util.MixedCollection(true);
+    
     this.vLayers = new Ext.util.MixedCollection(true);
     this.vLayers.on('add', this.onLayerAdd, this);
 
@@ -18,23 +20,53 @@ Ext.define('App.view.catalog.map', {
     this.on('ready', this.customizeMap, this);
   },
   
+  styleFunctions: {
+    context: {
+      count: function(feature) {
+        if (feature.attributes.title) { return ''; }
+
+        var uniqueRec = [];
+        Ext.each(feature.cluster, function(item) {
+          if(uniqueRec.indexOf(item.attributes.id) < 0) {
+            uniqueRec.push(item.attributes.id);
+          }
+        }, this);
+        return uniqueRec.length;
+      },
+      radius: function(feature) {
+        if(feature.attributes.count === undefined) {
+          return 5;
+        } else {
+          return Math.min(Math.floor(feature.attributes.count / 10), 8) + 10;
+        }
+      }
+    }
+  },
+  
   customizeMap: function() {
     this.getMap().addControl(new OpenLayers.Control.LayerSwitcher());    
     
+    var pcluster = this.addons.add('project_cluster', new OpenLayers.Strategy.Cluster({ 
+      distance: (Ext.isIE ? 80: 40)
+    }));
+    var dcluster = this.addons.add('data_cluster', new OpenLayers.Strategy.Cluster({ 
+      distance: (Ext.isIE ? 80: 40)
+    }));
+    
     this.vLayers.add('Project', {
       isBaseLayer: false,
+      strategies: [ pcluster ],
       styleMap: new OpenLayers.StyleMap({
         "default": new OpenLayers.Style({
-          // label: Ext.isIE ? false : "${count}",
-          // pointRadius: "${radius}",
-          pointRadius: 5,
+          label: Ext.isIE ? false : "${count}",
+          pointRadius: "${radius}",
           fillColor: "#94fbff",
           fillOpacity: 0.1,
           graphicName: 'circle',
           strokeColor: '#0000FF',
           strokeWidth: 2,
           strokeOpacity: 1
-        }),
+        }, this.styleFunctions),
         "select": new OpenLayers.Style({
           fillColor: "#F00",
           strokeColor: '#F00'
@@ -42,20 +74,21 @@ Ext.define('App.view.catalog.map', {
       }),
       rendererOptions: { zIndexing: true }
     });
+    
     this.vLayers.add('Data', {
       isBaseLayer: false,
+      strategies: [ dcluster ],      
       styleMap: new OpenLayers.StyleMap({
         "default": new OpenLayers.Style({
-          // label: Ext.isIE ? false : "${count}",
+          label: Ext.isIE ? false : "${count}",
           graphicName: 'circle',
-          // pointRadius: "${radius}",
-          pointRadius: 5,
+          pointRadius: "${radius}",
           fillColor: "#ffcc66",
           fillOpacity: 0.1,
           strokeColor: '#cc6633',
           strokeWidth: 2,
           strokeOpacity: 1
-        }),
+        }, this.styleFunctions),
         "select": new OpenLayers.StyleMap({
           fillColor: "#F00",
           strokeColor: '#F00'
@@ -79,7 +112,7 @@ Ext.define('App.view.catalog.map', {
     dLayer.removeAllFeatures();
     
     store.each(function(item) {
-      features = this.buildFeatures(item.get('locations'));
+      features = this.buildFeatures(item.get('id'), item.get('locations'));
       
       if(features.length > 0 && item.get('type') == 'Project') {
         project = project.concat(features);
@@ -92,7 +125,7 @@ Ext.define('App.view.catalog.map', {
     if(data.length > 0) { dLayer.addFeatures(data); }
   },
   
-  buildFeatures: function(locations) {
+  buildFeatures: function(key, locations) {
     var wkt = new OpenLayers.Format.WKT();
     var fromProj = new OpenLayers.Projection('EPSG:4326');
     var toProj = this.getMap().getProjectionObject();
@@ -102,6 +135,7 @@ Ext.define('App.view.catalog.map', {
       //Skip items without a WKT
       if(l.wkt === null) { return; }
       var f = wkt.read(l.wkt);
+      f.attributes.id = key;
       
       //Transform to the map projection from LatLng
       f.geometry.transform(fromProj, toProj);
