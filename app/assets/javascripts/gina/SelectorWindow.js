@@ -60,15 +60,15 @@ Ext.define('Ext.gina.SelectorWindow', {
         selected = grid.getSelectionModel().getSelection();
     
     var ids = [], descriptions = [];
-    var tpl = new Ext.Template(this.description);
+    var tpl = new Ext.XTemplate(this.description);
     
     Ext.each(selected, function(item) {
-      descriptions.push(tpl.apply([item.get('name')]));
+      descriptions.push(tpl.apply(item.data));
       ids.push( item.get('id'));
     },this);
-    
+    console.log("Window", this);
     win.callback.call(win.scope, {
-      query: 'string',
+      filterType: this.filterType || "single",
       field: this.field,
       description: descriptions,
       value: ids

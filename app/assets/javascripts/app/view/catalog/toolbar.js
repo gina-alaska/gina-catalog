@@ -43,108 +43,86 @@ Ext.define('App.view.catalog.toolbar', {
               text: 'Agency',
               iconCls: 'agency-icon',
               action: 'filter',
-              xtype: 'menucheckitem',
-              query: 'agencyselector',
+              filterType: 'agencyselector',
               field: 'agency_ids',
-              description: 'Agency: {0}'
+              description: 'Agency: {name}'
             }, {
               text: 'Contact',
               iconCls: 'contact-icon',
               action: 'filter',
-              xtype: 'menucheckitem',
-              query: 'contactselector',
+              filterType: 'contactselector',
               field: 'contact_ids',
-              description: 'Contact: {0}'
+              description: 'Contact: {full_name}'
             }, {
               text: 'Source',
               iconCls: 'source-icon',
-              field: 'source',
-              xtype: 'menucheckitem',
-              query: 'string',
+              filterType: 'sourceselector',
               action: 'filter',
-              description: 'Source Agency: {0}'
+              field: 'source_agency_ids',
+              description: 'Source Agency: {name}'
             }, {
               text: 'Status',
               iconCls: 'status-icon',
-              xtype: 'menucheckitem',
               menu: [{
                 text: 'Ongoing',
                 field: 'status',
-                query: 'string',
+                filterType: 'single',
                 action: 'filter',
                 value: 'ongoing',
-                group: 'status', xtype: 'menucheckitem',
-                description: 'Status: Ongoing',
-                scope: this,
-                checkHandler: this.checkHandler
+                description: 'Status: Ongoing'
               }, {
                 text: 'Complete',
                 field: 'status',
-                query: 'string',
+                filterType: 'single',
                 action: 'filter',
                 value: 'complete',
-                group: 'status', xtype: 'menucheckitem',
-                description: 'Status: Complete',
-                scope: this,
-                checkHandler: this.checkHandler
+                description: 'Status: Complete'
               }, {
                 text: 'Unknown',
                 field: 'status',
-                query: 'string',
+                filterType: 'single',
                 action: 'filter',
                 value: 'unknown',
-                group: 'status', xtype: 'menucheckitem',
-                description: 'Status: Unknown',
-                scope: this,
-                checkHandler: this.checkHandler
+                description: 'Status: Unknown'
               }, {
                 text: 'Local',
                 field: 'status',
-                query: 'string',
+                filterType: 'single',
                 action: 'filter',
                 value: 'local',
-                group: 'status', xtype: 'menucheckitem',
-                description: 'Status: Local',
-                scope: this,
-                checkHandler: this.checkHandler
+                description: 'Status: Local'
               }, {
                 text: 'Remote',
                 field: 'status',
-                query: 'string',
+                filterType: 'single',
                 action: 'filter',
                 value: 'remote',
-                group: 'status', xtype: 'menucheckitem',
-                description: 'Status: Remote',
-                scope: this,
-                checkHandler: this.checkHandler
+                description: 'Status: Remote'
               }]
             }, {
               text: 'Project/Data',
               iconCls: 'type-icon',
-              xtype: 'menucheckitem',
               menu: [{
                 text: 'Project',
-                scope: this,
-                handler: function() {
-                  this.fireEvent('filter', this, 'string', 'type', 'Project');
-                }
+                field: 'type',
+                value: 'Project',
+                filterType: 'single',
+                description: 'Show Projects Only'
               }, {
                 text: 'Data',
-                scope: this,
-                handler: function() {
-                  this.fireEvent('filter', this, 'string', 'type', 'Asset');
-                }
+                field: 'type',
+                value: 'Asset',
+                filterType: 'single',
+                description: 'Show Data Only'
               }]
             }, {
               text: 'Starting Year',
               iconCls: 'date-icon',
-              xtype: 'menucheckitem',
               scope: this,
               handler: function() { this.fireEvent('filter', this, 'date', 'start_date'); }
             }, {
               text: 'Ending Year',
               iconCls: 'date-icon',
-              xtype: 'menucheckitem',
               scope: this,
               handler: function() { this.fireEvent('filter', this, 'date', 'end_date'); }
             }, {
