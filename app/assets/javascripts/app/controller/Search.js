@@ -107,16 +107,32 @@ Ext.define('App.controller.Search', {
   
 
   doFilter: function(item) {
-    switch(item.query) {
-      case 'string':
-        this.updateSearchParams(item.field,item.value,item.description);
+    switch(item.filterType) {
+      case 'single':
+        this.clearSearchParams( item.field );
+        this.updateSearchParams(item.field, item.value, item.description);
         this.doSearch();
+        break;
+      case 'multiple':
+        this.updateSearchParams(item.field, item.value, item.description);
+        this.doSearch();
+        break;
+      case 'sourceselector':
+        var win = Ext.create("App.view.agency.selector",{
+          scope: this,
+          field: item.field,
+          description: item.description,
+          filterType: 'single',
+          callback: this.doFilter
+        });
+        win.show();
         break;
       case 'agencyselector':
         var win = Ext.create("App.view.agency.selector",{
           scope: this,
           field: item.field,
           description: item.description,
+          filterType: "multiple",
           callback: this.doFilter
         });
         win.show();
@@ -126,10 +142,10 @@ Ext.define('App.controller.Search', {
           scope: this,
           field: item.field,
           description: item.description,
+          filterType: 'single',
           callback: this.doFilter
         });
         win.show();
-        //this.updateSearchParams(item.field, [1,2,3]);
         break;
       default:
         console.log("Default");
