@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.1.2'
+gem 'rails', '3.2.0'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -41,8 +41,8 @@ gem 'sunspot_rails'
 # gem 'aws-s3', :require => 'aws/s3'
 
 group :assets do
-  gem 'sass-rails', "~> 3.1.0"
-  gem 'coffee-rails', '~> 3.1.0'
+  gem 'sass-rails', "~> 3.2.0"
+  gem 'coffee-rails', '~> 3.2.0'
   gem 'uglifier'
 end
 
