@@ -106,25 +106,33 @@ Ext.define('App.view.catalog.toolbar', {
                 text: 'Project',
                 field: 'type',
                 value: 'Project',
+                action: 'filter',
                 filterType: 'single',
                 description: 'Show Projects Only'
               }, {
                 text: 'Data',
                 field: 'type',
                 value: 'Asset',
+                action: 'filter',
                 filterType: 'single',
                 description: 'Show Data Only'
               }]
             }, {
               text: 'Starting Year',
-              iconCls: 'date-icon',
-              scope: this,
-              handler: function() { this.fireEvent('filter', this, 'date', 'start_date'); }
+              field: 'start_date',
+              value: 'Start Date',
+              action: 'filter',
+              filterType: 'dateselector',
+              description: 'Starting Year {type} {year}',
+              iconCls: 'date-icon'
             }, {
               text: 'Ending Year',
-              iconCls: 'date-icon',
-              scope: this,
-              handler: function() { this.fireEvent('filter', this, 'date', 'end_date'); }
+              field: 'end_date',
+              value: 'End Date',
+              action: 'filter',
+              filterType: 'dateselector',
+              description: 'Ending Year {type} {year}',
+              iconCls: 'date-icon'
             }, {
               text: 'Region',
               iconCls: 'region-icon',

@@ -80,7 +80,14 @@ Ext.define('App.view.filter.date', {
           scale: 'medium',
           handler: function(){
             var values = this.down('form').getForm().getValues();
-            this.fireEvent('submit', this, this.getField(), this.getFieldName(), values);
+            var tpl = new Ext.XTemplate(this.description);
+
+            this.callback.call(this.scope, {
+              filterType: this.filterType || "single",
+              field: this.field + "_" + values.type,
+              description: tpl.apply(values),
+              value: values.year
+            });
             this.close();
           }
         }]

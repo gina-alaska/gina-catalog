@@ -147,6 +147,18 @@ Ext.define('App.controller.Search', {
         });
         win.show();
         break;
+      case 'dateselector':
+        var win = Ext.create("App.view.filter.date", {
+          width: 300,
+          height: 100,
+          scope: this,
+          field: item.field,
+          description: item.description,
+          filterType: 'single',
+          callback: this.doFilter
+        });
+        win.show();
+        break;
       default:
         console.log("Default");
         break;
