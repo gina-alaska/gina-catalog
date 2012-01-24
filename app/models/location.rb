@@ -43,4 +43,9 @@ class Location < ActiveRecord::Base
       :wkt => self.geom.try(:as_wkt)
     }
   end
+
+  def center
+    self.geom.envelope.center unless self.geom.nil?
+  end
+  
 end

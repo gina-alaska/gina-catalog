@@ -70,6 +70,15 @@ class Catalog < ActiveRecord::Base
       updated_at.try(:year)
     end
 
+    #Geospatial
+    location :locations, :multiple => true do
+      locations.map { |location|
+        next if location.center.nil?
+        Sunspot::Util::Coordinates.new(location.center.try(:x), location.center.try(:y))
+      }.compact!
+    end
+
+
   end
 
   def repo
