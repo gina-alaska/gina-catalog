@@ -36,16 +36,28 @@ class Catalog < ActiveRecord::Base
 
   #Adding solr indexing
   searchable do
-    text :title,:description
-    string :status, :type, :uuid
-    integer :owner_id, :primary_contact_id, :license_id, :data_source_id, :source_agency_id, :funding_agency_id
-    time :archived_at, :published_at, :start_date, :end_date, :created_at, :updated_at
-
-    integer :agency_ids, :references => Agency, :multiple => true
-    
+    text :title
+    text :description
     text :tags do
         tags.map(&:text)
     end
+    string :status
+    string :type
+    string :uuid
+    integer :owner_id
+    integer :primary_contact_id
+    integer :license_id
+    integer :data_source_id
+    integer :source_agency_id
+    integer :funding_agency_id
+    integer :agency_ids, :references => Agency, :multiple => true
+    time :archived_at
+    time :published_at
+    time :start_date
+    time :end_date
+    time :created_at
+    time :updated_at
+
   end
 
   def repo
