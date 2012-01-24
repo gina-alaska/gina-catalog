@@ -51,12 +51,24 @@ class Catalog < ActiveRecord::Base
     integer :source_agency_id
     integer :funding_agency_id
     integer :agency_ids, :references => Agency, :multiple => true
-    time :archived_at
-    time :published_at
-    time :start_date
-    time :end_date
-    time :created_at
-    time :updated_at
+    integer :archived_at_year do
+      archived_at.try(:year)
+    end
+    integer :published_at_year do
+      published_at.try(:year)
+    end
+    integer :start_date_year do
+      start_date.try(:year)
+    end
+    integer :end_date_year do
+      end_date.try(:year)
+    end
+    integer :created_at_year do
+      created_at.try(:year)
+    end
+    integer :updated_at_year do
+      updated_at.try(:year)
+    end
 
   end
 

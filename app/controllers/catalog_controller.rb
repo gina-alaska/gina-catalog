@@ -47,27 +47,19 @@ class CatalogController < ApplicationController
         data_accessor_for(Asset).include=table_includes
         fulltext search[:q]
         with :status, search[:status] if search[:status]
-        with :archived_at, nil unless search[:archived]
+        with :archived_at_year, nil unless search[:archived]
         with :type, search[:type] if search[:type]
         with :agency_ids, search[:agency_ids] if search[:agency_ids]
         with :source_id, search[:source_id] if search[:source_id]
         with :contact_id, search[:contact_id] if search[:contact_id]
 
-        with(:start_date).greater_than(
-          start_of_year(:start_date_after)
-        ) if search[:start_date_after]
+        with(:start_date_year).greater_than(search[:start_date_after]) if search[:start_date_after]
 
-        with(:start_date).less_than(
-          end_of_year(:start_date_before)
-        ) if search[:start_date_before]
+        with(:start_date_year).less_than(search[:start_date_after]) if search[:start_date_before]
 
-        with(:end_date).greater_than(
-          start_of_year(:end_date_after)
-        ) if search[:end_date_after]
+        with(:end_date_year).greater_than(search[:start_date_after]) if search[:end_date_after]
         
-        with(:end_date).less_than(
-          end_of_year(:end_date_before)
-        ) if search[:end_date_before]
+        with(:end_date_year).less_than(search[:start_date_after]) if search[:end_date_before]
 
         paginate per_page:(params[:limit] || 3000), page:(params[:page] || 1)
       end
@@ -85,15 +77,5 @@ class CatalogController < ApplicationController
         render :pdf => 'nssi_catalog_search.pdf', :layout => 'pdf.html'
       end
     end
-  end
-
-  protected
-
-  def end_of_year field
-    Date.new(params[:search][field].to_i).end_of_year
-  end
-
-  def start_of_year field
-    Date.new(params[:search][field].to_i)
   end
 end
