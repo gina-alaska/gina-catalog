@@ -136,19 +136,20 @@ Ext.define('App.view.catalog.toolbar', {
             }, {
               text: 'Region',
               iconCls: 'region-icon',
-              xtype: 'menucheckitem',
               menu: [{
                 text: 'Alaska',
-                scope: this,
-                handler: function() {
-                  this.fireEvent('filter', this, 'region', 'geokeywords', 'Alaska');
-                }
+                field: 'region',
+                value: "Alaska",
+                action: 'filter',
+                filterType: 'single',
+                description: 'Region Alaska'
               }, {
                 text: 'Northslope',
-                scope: this,
-                handler: function() {
-                  this.fireEvent('filter', this, 'region', 'geokeywords', 'Northslope');
-                }
+                field: 'region',
+                value: "Northslope",
+                action: 'filter',
+                filterType: 'single',
+                description: 'Region Northslope'
               }]
             }]
           }, {

@@ -45,14 +45,15 @@ class CatalogController < ApplicationController
       @search = Sunspot.search(Project, Asset) do
         data_accessor_for(Project).include=table_includes
         data_accessor_for(Asset).include=table_includes
-        fulltext search[:q]
+        #fulltext search[:q]
+        keywords searc
         with :status, search[:status] if search[:status]
         with :archived_at_year, nil unless search[:archived]
         with :type, search[:type] if search[:type]
         with :agency_ids, search[:agency_ids] if search[:agency_ids]
         with :source_id, search[:source_id] if search[:source_id]
         with :contact_id, search[:contact_id] if search[:contact_id]
-
+        with :geokeywords_name, search[:region] if search[:region]
         with(:start_date_year).greater_than(search[:start_date_after]) if search[:start_date_after]
 
         with(:start_date_year).less_than(search[:start_date_after]) if search[:start_date_before]

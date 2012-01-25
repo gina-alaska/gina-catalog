@@ -39,7 +39,19 @@ class Catalog < ActiveRecord::Base
     text :title
     text :description
     text :tags do
-        tags.map(&:text)
+      tags.map(&:text)
+    end
+    text :agency do
+      agencies.map{|a| [a.name, a.acronym]}
+    end
+    text :source_agency do
+      source_agencies.map{|a| [a.name, a.acronym]}
+    end
+    text :funding_agency do
+      funding_agencies.map{|a| [a.name, a.acronym]}
+    end
+    text :geokeywords do
+      geokeywords.map(&:name)
     end
     string :status
     string :type
@@ -69,7 +81,9 @@ class Catalog < ActiveRecord::Base
     integer :updated_at_year do
       updated_at.try(:year)
     end
-
+    string :geokeywords_name, :multiple => true do
+      geokeywords.map(&:name)
+    end
     #Geospatial
     location :locations, :multiple => true do
       locations.map { |location|
