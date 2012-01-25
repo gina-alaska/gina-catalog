@@ -11,9 +11,15 @@ Ext.define('App.view.catalog.map', {
     this.addEvents('featureclick', 'clusterclick', 'aoiadded', 'featuresrendered');
 
     this.addons = new Ext.util.MixedCollection(true);
+    this.addon = function(name) { return this.addons.get(name); };
     
     this.vLayers = new Ext.util.MixedCollection(true);
     this.vLayers.on('add', this.onLayerAdd, this);
+    this.layer = function(name) { return this.vLayers.get(name); };
+    
+    this.controls = new Ext.util.MixedCollection(true);
+    this.controls.on('add', this.onControlAdd, this);
+    this.control = function(name) { return this.controls.get(name); };
 
     this.callParent();
     
@@ -44,7 +50,7 @@ Ext.define('App.view.catalog.map', {
   },
   
   customizeMap: function() {
-    this.getMap().addControl(new OpenLayers.Control.LayerSwitcher());    
+    this.controls.add('layers', new OpenLayers.Control.LayerSwitcher());    
     
     var pcluster = this.addons.add('project_cluster', new OpenLayers.Strategy.Cluster({ 
       distance: (Ext.isIE ? 80: 40)
@@ -61,7 +67,7 @@ Ext.define('App.view.catalog.map', {
           label: Ext.isIE ? false : "${count}",
           pointRadius: "${radius}",
           fillColor: "#94fbff",
-          fillOpacity: 0.1,
+          fillOpacity: 0.2,
           graphicName: 'circle',
           strokeColor: '#0000FF',
           strokeWidth: 2,
@@ -84,7 +90,7 @@ Ext.define('App.view.catalog.map', {
           graphicName: 'circle',
           pointRadius: "${radius}",
           fillColor: "#ffcc66",
-          fillOpacity: 0.1,
+          fillOpacity: 0.2,
           strokeColor: '#cc6633',
           strokeWidth: 2,
           strokeOpacity: 1
@@ -96,6 +102,16 @@ Ext.define('App.view.catalog.map', {
       }),
       rendererOptions: { zIndexing: true }
     });
+    
+    /* User clicks on a polygon for point on the map */
+    this.controls.add('select', new OpenLayers.Control.SelectFeature(
+      [this.layer('Project'), this.layer('Data')],
+      {
+        clickout: true,
+        onSelect: Ext.bind(this.onFeatureClick, this)
+      }
+    ));
+    this.control('select').activate();
   },
   
   loadFeaturesFrom: function(store) {
@@ -105,8 +121,8 @@ Ext.define('App.view.catalog.map', {
   
   loadFeatures: function(store) {
     var project = [], data = [], features;
-    var pLayer = this.vLayers.get('Project');
-    var dLayer = this.vLayers.get('Data');
+    var pLayer = this.layer('Project');
+    var dLayer = this.layer('Data');
     
     pLayer.removeAllFeatures();
     dLayer.removeAllFeatures();
@@ -153,6 +169,18 @@ Ext.define('App.view.catalog.map', {
     var layer = this.createVLayer(key, obj);
     this.getMap().addLayer(layer);
     this.vLayers.replace(key, layer);
+  },
+  
+  onControlAdd: function(index, obj, key, opts) {
+    this.getMap().addControl(obj);
+  },
+  
+  onFeatureClick: function(feature) {
+    if(feature.cluster) {
+      this.fireEvent('clusterclick', this, feature);
+    } else {
+      this.fireEvent('featureclick', this, feature);
+    }
   }
 /*
   setup: function() {

@@ -51,6 +51,7 @@ class CatalogController < ApplicationController
         data_accessor_for(Asset).include=table_includes
         fulltext search[:q]
         with :id, catalog_ids if catalog_ids
+        with :id, search[:ids].uniq if search[:ids]
         with :status, search[:status] if search[:status]
         with :archived_at_year, nil unless search[:archived]
         with :type, search[:type] if search[:type]

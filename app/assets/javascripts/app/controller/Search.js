@@ -18,13 +18,31 @@ Ext.define('App.controller.Search', {
       },
       
       /* Search filter events */
-      'viewport > #center catalog_sidebar filterlist': {
+      'catalog_sidebar filterlist': {
         itemclick: this.onFilterClick
       },
+      
+      'catalog_map': {
+        clusterclick: this.onClusterClick
+      }
     });
 
     this.activeSearchId = 0;
     this.searchParams = new Ext.util.MixedCollection();
+  },
+  
+  onClusterClick: function(map, cluster, opts) {
+    var ids = [];
+    Ext.each(cluster.cluster, function(feature) {
+      ids.push(feature.attributes.id);
+    }, this);    
+    console.log(ids);
+    this.doFilter({
+      filterType: 'single',
+      field: 'ids', 
+      value: ids, 
+      description: 'Selected Feature'
+    });
   },
   
   onFilterClick: function(view, record, node, index, e, opts) {
