@@ -18,6 +18,14 @@ Ext.define('App.controller.Asset', {
           if(Ext.Msg.isVisible()) { Ext.Msg.hide(); }
         }
       },
+      'catalog_list': {
+        itemdblclick: function(view, record) {
+          var win = Ext.create('App.view.asset.window', {
+            record: record
+          });
+          win.show();
+        }
+      },
       'viewport > #center #results-map': {
         featureclick: this.onFeatureClick
       },
