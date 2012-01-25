@@ -56,6 +56,7 @@ class Catalog < ActiveRecord::Base
     string :status
     string :type
     string :uuid
+    integer :id
     integer :owner_id
     integer :primary_contact_id
     integer :license_id
