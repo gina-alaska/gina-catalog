@@ -45,10 +45,10 @@ class Catalog < ActiveRecord::Base
       agencies.map{|a| [a.name, a.acronym]}
     end
     text :source_agency do
-      source_agencies.map{|a| [a.name, a.acronym]}
+      [source_agency.name, source_agency.acronym] unless source_agency.nil?
     end
     text :funding_agency do
-      funding_agencies.map{|a| [a.name, a.acronym]}
+      [funding_agency.name, funding_agency.acronym] unless funding_agency.nil?
     end
     text :geokeywords do
       geokeywords.map(&:name)
