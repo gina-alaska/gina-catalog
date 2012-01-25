@@ -31,7 +31,6 @@ class CatalogController < ApplicationController
 #    @results = @results.includes(:locations, :source_agency, :people, :agencies, :tags, :geokeywords)
 #    @results = @results.where(:id => params[:ids]) unless params[:ids].nil?
 #    @results = @results.limit(params[:limit] || 3000).order('title ASC')
-
     if(params[:search].nil? or params[:search].empty? )
       @results = Catalog.not_archived.published
       @results = @results.includes(:locations, :source_agency, :people, :agencies, :tags, :geokeywords)
@@ -41,12 +40,17 @@ class CatalogController < ApplicationController
     else
       search = params[:search]
       table_includes = [:tags, :locations]
-      
+      if(search[:bbox])
+        bbox = Polygon.from_ewkt(search[:bbox])
+        catalog_ids = Geokeyword.intersects(bbox).pluck(:catalog_id).uniq
+        catalog_ids += Location.intersects(bbox).pluck(:catalog_id).uniq
+        catalog_ids.uniq!
+      end
       @search = Sunspot.search(Project, Asset) do
         data_accessor_for(Project).include=table_includes
         data_accessor_for(Asset).include=table_includes
-        #fulltext search[:q]
-        keywords searc
+        fulltext search[:q]
+        with :id, catalog_ids if catalog_ids
         with :status, search[:status] if search[:status]
         with :archived_at_year, nil unless search[:archived]
         with :type, search[:type] if search[:type]
