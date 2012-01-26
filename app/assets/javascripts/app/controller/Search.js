@@ -36,7 +36,7 @@ Ext.define('App.controller.Search', {
     Ext.each(cluster.cluster, function(feature) {
       ids.push(feature.attributes.id);
     }, this);    
-    console.log(ids);
+    
     this.doFilter({
       filterType: 'single',
       field: 'ids', 
