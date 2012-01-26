@@ -126,6 +126,8 @@ Ext.define('App.view.catalog.map', {
     
     pLayer.removeAllFeatures();
     dLayer.removeAllFeatures();
+    this.addon('project_cluster').clearCache();
+    this.addon('data_cluster').clearCache();
     
     store.each(function(item) {
       features = this.buildFeatures(item.get('id'), item.get('locations'));
@@ -136,7 +138,6 @@ Ext.define('App.view.catalog.map', {
         data = data.concat(features);
       }
     }, this);
-    
     if(project.length > 0) { pLayer.addFeatures(project); }
     if(data.length > 0) { dLayer.addFeatures(data); }
   },
