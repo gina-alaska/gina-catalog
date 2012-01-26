@@ -51,5 +51,8 @@ module NSCatalog
 
     config.repos_path = "#{config.root}/repos"
     config.repos_tmp = "#{config.root}/repos_tmp"
+
+    require 'pdfkit'
+    config.middleware.use PDFKit::Middleware
   end
 end
