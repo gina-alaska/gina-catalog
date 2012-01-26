@@ -10,6 +10,9 @@ Ext.define('App.controller.Search', {
           if(e.getKey() === e.ENTER) { this.doSearch(); }
         }
       },
+      'catalog_toolbar button[action="export"]': {
+        click: function() { this.doSearch('pdf'); }
+      },
       'catalog_toolbar button[action="search"]': {
         click: this.doSearch
       },
@@ -36,7 +39,7 @@ Ext.define('App.controller.Search', {
     Ext.each(cluster.cluster, function(feature) {
       ids.push(feature.attributes.id);
     }, this);    
-    console.log(ids);
+    
     this.doFilter({
       filterType: 'single',
       field: 'ids', 
@@ -53,7 +56,7 @@ Ext.define('App.controller.Search', {
     }
   },
 
-  doSearch: function() {
+  doSearch: function(format) {
     var searchField = Ext.ComponentQuery.query('catalog_toolbar textfield[name="q"]')[0];
     this.clearSearchParams('q');
     this.updateSearchParams('q', searchField.getValue(), 'Text: ' +  searchField.getValue());
@@ -68,9 +71,13 @@ Ext.define('App.controller.Search', {
       params[n] = rawParams[name];
     }
 
-    this.getStore('Catalog').load({
-      params: Ext.Object.toQueryString(params)
-    });
+    if(format && format == 'pdf') {
+      window.open('/data.pdf?'+Ext.Object.toQueryString(params));
+    } else {
+      this.getStore('Catalog').load({
+        params: Ext.Object.toQueryString(params)
+      });      
+    }
   },
 
   getSearchParams: function(id) {

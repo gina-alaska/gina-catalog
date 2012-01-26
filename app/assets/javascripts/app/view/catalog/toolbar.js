@@ -190,6 +190,7 @@ Ext.define('App.view.catalog.toolbar', {
           }, {
             xtype: 'button',
             text: 'Export',
+            action: 'export',
             iconCls: 'download-icon'
           }]
         }]
