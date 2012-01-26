@@ -119,7 +119,7 @@ Ext.define('App.view.catalog.map', {
     this.store.on('datachanged', this.loadFeatures, this);
   },
   
-  loadFeatures: function(store) {
+  loadFeatures: function() {
     var project = [], data = [], features;
     var pLayer = this.layer('Project');
     var dLayer = this.layer('Data');
@@ -127,7 +127,7 @@ Ext.define('App.view.catalog.map', {
     pLayer.removeAllFeatures();
     dLayer.removeAllFeatures();
     
-    store.each(function(item) {
+    this.store.each(function(item) {
       features = this.buildFeatures(item.get('id'), item.get('locations'));
       
       if(features.length > 0 && item.get('type') == 'Project') {
@@ -140,7 +140,23 @@ Ext.define('App.view.catalog.map', {
     if(project.length > 0) { pLayer.addFeatures(project); }
     if(data.length > 0) { dLayer.addFeatures(data); }
   },
-  
+
+  loadRecordFeatures: function(record) {
+    var pLayer = this.layer('Project');
+    var dLayer = this.layer('Data');
+
+    pLayer.removeAllFeatures();
+    dLayer.removeAllFeatures();
+
+    var features = this.buildFeatures(record.get('id'), record.get('locations'));
+
+    if(features.length > 0 && record.get('type') == 'Project') {
+      pLayer.addFeatures(features);
+    } else {
+      dLayer.addFeatures(features);
+    }
+  },
+
   buildFeatures: function(key, locations) {
     var wkt = new OpenLayers.Format.WKT();
     var fromProj = new OpenLayers.Projection('EPSG:4326');
