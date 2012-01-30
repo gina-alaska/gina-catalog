@@ -29,10 +29,7 @@ class Region
     if read_attribute(:geom).nil?
       json = read_region_file
 
-      jsongeom = json['features'].first['geometry']
-      type, coords = jsongeom['type'], jsongeom['coordinates']
-      geomclass = type.constantize
-      write_attribute(:geom, geomclass.from_coordinates(coords))
+      write_attribute(:geom, RGeo::GeoJSON.decode(json, :json_parser => :json).first.geometry)
     end
 
     read_attribute(:geom)

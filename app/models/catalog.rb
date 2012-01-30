@@ -1,6 +1,6 @@
 class Catalog < ActiveRecord::Base
   #The exception to the db name rule, since this is a collection of multiple types of items
-  set_table_name :catalog
+  self.table_name = 'catalog'
 
   belongs_to :owner, :class_name => 'User'
   belongs_to :primary_contact, :class_name => 'Person'
@@ -92,8 +92,16 @@ class Catalog < ActiveRecord::Base
         Sunspot::Util::Coordinates.new(location.center.try(:x), location.center.try(:y))
       }.compact!
     end
-
-
+  end
+  
+  def self.geokeyword_intersects(wkt, srid=4326)
+    wkt = wkt.as_text if wkt.respond_to? :as_text
+    joins(:geokeywords).where("ST_Intersects(geom, ?::geometry)", "SRID=#{srid};#{wkt}")
+  end
+  
+  def self.location_intersects(wkt, srid=4326)
+    wkt = wkt.as_text if wkt.respond_to? :as_text
+    joins(:locations).where("ST_Intersects(geom, ?::geometry)", "SRID=#{srid};#{wkt}")
   end
 
   def repo

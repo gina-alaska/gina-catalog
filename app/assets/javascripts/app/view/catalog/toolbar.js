@@ -146,7 +146,7 @@ Ext.define('App.view.catalog.toolbar', {
               }, {
                 text: 'Northslope',
                 field: 'region',
-                value: "Northslope",
+                value: "Northslope Borough",
                 action: 'filter',
                 filterType: 'single',
                 description: 'Region Northslope'
@@ -189,12 +189,16 @@ Ext.define('App.view.catalog.toolbar', {
             }]
           }, {
             xtype: 'button',
+            text: 'AOI',
+            action: 'aoi'
+          }, {
+            xtype: 'button',
             text: 'Export',
             action: 'export',
             iconCls: 'download-icon'
           }]
         }]
-      })
+      });
 
       this.callParent(arguments);
     }, 

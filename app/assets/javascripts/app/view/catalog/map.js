@@ -12,7 +12,7 @@ Ext.define('App.view.catalog.map', {
 
     this.addons = new Ext.util.MixedCollection(true);
     this.addon = function(name) { return this.addons.get(name); };
-    
+  
     this.vLayers = new Ext.util.MixedCollection(true);
     this.vLayers.on('add', this.onLayerAdd, this);
     this.layer = function(name) { return this.vLayers.get(name); };
@@ -50,7 +50,26 @@ Ext.define('App.view.catalog.map', {
   },
   
   customizeMap: function() {
-    this.controls.add('layers', new OpenLayers.Control.LayerSwitcher());    
+    this.controls.add('layers', new OpenLayers.Control.LayerSwitcher());   
+    
+    this.vLayers.add('selection', {
+      displayInLayerSwitcher: false,
+      eventListeners: {
+        beforefeaturesadded: function() { this.removeAllFeatures(); }
+      }
+    });
+    this.controls.add('aoi', new OpenLayers.Control.DrawFeature(
+      this.layer('selection'),
+      OpenLayers.Handler.RegularPolygon, {
+        title: 'AOI: Click and drag the mouse to define your area of interest',
+        handlerOptions: {
+          irregular: true
+        },
+        eventListeners: { 
+          featureadded: Ext.bind(this.onAOIAdd, this)
+        }
+      }
+    )); 
     
     var pcluster = this.addons.add('project_cluster', new OpenLayers.Strategy.Cluster({ 
       distance: (Ext.isIE ? 80: 40)
@@ -128,6 +147,8 @@ Ext.define('App.view.catalog.map', {
     dLayer.removeAllFeatures();
     this.addon('project_cluster').clearCache();
     this.addon('data_cluster').clearCache();
+    this.addon('project_cluster').activate();
+    this.addon('data_cluster').activate();
     
     this.store.each(function(item) {
       features = this.buildFeatures(item.get('id'), item.get('locations'));
@@ -148,6 +169,11 @@ Ext.define('App.view.catalog.map', {
 
     pLayer.removeAllFeatures();
     dLayer.removeAllFeatures();
+    this.addon('project_cluster').clearCache();
+    this.addon('data_cluster').clearCache();
+    this.addon('project_cluster').deactivate();
+    this.addon('data_cluster').deactivate();
+    
 
     var features = this.buildFeatures(record.get('id'), record.get('locations'));
 
@@ -190,6 +216,10 @@ Ext.define('App.view.catalog.map', {
   
   onControlAdd: function(index, obj, key, opts) {
     this.getMap().addControl(obj);
+  },
+  
+  onAOIAdd: function(e){
+    this.fireEvent('aoiadded', this, e.feature);
   },
   
   onFeatureClick: function(feature) {

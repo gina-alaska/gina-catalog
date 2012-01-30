@@ -26,12 +26,25 @@ Ext.define('App.controller.Search', {
       },
       
       'catalog_map': {
-        clusterclick: this.onClusterClick
+        clusterclick: this.onClusterClick,
+        aoiadded: this.onAOIAdd
       }
     });
 
     this.activeSearchId = 0;
     this.searchParams = new Ext.util.MixedCollection();
+  },
+  
+  onAOIAdd: function(panel, feature){
+    var geom = feature.geometry;
+    geom.transform(panel.getMap().getProjectionObject(), panel.getMap().displayProjection);
+    
+    this.doFilter({
+      filterType: 'single',
+      field: 'bbox',
+      value: geom.toString(),
+      description: 'AOI Selection'
+    });
   },
   
   onClusterClick: function(map, cluster, opts) {
@@ -106,14 +119,14 @@ Ext.define('App.controller.Search', {
   clearSearchParams: function(field, value) {
     var filters = this.getStore('Filters');
     var index = this.findSearchParam(field, value);
-    if(index >= 0) { filters.removeAt(index) }
+    if(index >= 0) { filters.removeAt(index); }
   },
   
   findSearchParam: function(field, value) {
     var filters = this.getStore('Filters');
     
     return filters.findBy(function(item) {
-      return item.get('field') == field && (value === undefined || item.get('value') == value)
+      return item.get('field') == field && (value === undefined || item.get('value') == value);
     }, this);
   },
 
@@ -121,7 +134,7 @@ Ext.define('App.controller.Search', {
     var filters = this.getStore('Filters');
     
     // Don't add blank values
-    if(value == "") { return false; }
+    if(value === "") { return false; }
     
     var index = this.findSearchParam(field, value);
     if(index < 0) {
@@ -132,6 +145,8 @@ Ext.define('App.controller.Search', {
   
 
   doFilter: function(item) {
+    var win;
+    
     switch(item.filterType) {
       case 'single':
         this.clearSearchParams( item.field );
@@ -143,7 +158,7 @@ Ext.define('App.controller.Search', {
         this.doSearch();
         break;
       case 'sourceselector':
-        var win = Ext.create("App.view.agency.selector",{
+        win = Ext.create("App.view.agency.selector",{
           scope: this,
           field: item.field,
           description: item.description,
@@ -153,7 +168,7 @@ Ext.define('App.controller.Search', {
         win.show();
         break;
       case 'agencyselector':
-        var win = Ext.create("App.view.agency.selector",{
+        win = Ext.create("App.view.agency.selector",{
           scope: this,
           field: item.field,
           description: item.description,
@@ -163,7 +178,7 @@ Ext.define('App.controller.Search', {
         win.show();
         break;
       case 'contactselector':
-        var win = Ext.create("App.view.person.selector", {
+        win = Ext.create("App.view.person.selector", {
           scope: this,
           field: item.field,
           description: item.description,
@@ -173,7 +188,7 @@ Ext.define('App.controller.Search', {
         win.show();
         break;
       case 'dateselector':
-        var win = Ext.create("App.view.filter.date", {
+        win = Ext.create("App.view.filter.date", {
           width: 300,
           height: 100,
           scope: this,

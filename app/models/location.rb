@@ -1,27 +1,28 @@
 class Location < ActiveRecord::Base
-  acts_as_geom :geom => :geometry
+  set_rgeo_factory_for_column(:geom, RGeo::Geographic.simple_mercator_factory(:srid => 4326))
 
   belongs_to :asset, :polymorphic => true
 
-  def geom_coords
-    geom.try(:text_representation)
-  end
-
-  def geom_type
-    geom.try(:text_geometry_type)
-  end
+  # def geom_coords
+  #   geom.try(:text_representation)
+  # end
+  # 
+  # def geom_type
+  #   geom.try(:text_geometry_type)
+  # end
 
   def wkt
-    geom.try(:as_wkt)
+    geom.try(:as_text)
   end
 
-  def wkt=(text)
-    self.geom = Geometry.from_ewkt(text) unless text.empty? or text.nil?
-    self.geom.srid = 4326
-  end
+  # def wkt=(text)
+  #   self.geom = Geometry.from_ewkt(text) unless text.empty? or text.nil?
+  #   self.geom.srid = 4326
+  # end
 
-  def self.intersects(geom)
-    where("ST_Intersects(geom, GeomFromEWKT(?))", geom.as_hex_ewkb)
+  def self.intersects(wkt, srid=4326)
+    wkt = wkt.as_text if wkt.respond_to? :as_text
+    where("ST_Intersects(geom, ?::geometry)", "SRID=#{srid};#{wkt}")
   end
 
   def to_json(*args)
@@ -40,12 +41,16 @@ class Location < ActiveRecord::Base
       :name => self.name,
       :region => self.region,
       :subregion => self.subregion,
-      :wkt => self.geom.try(:as_wkt)
+      :wkt => self.wkt
     }
   end
 
   def center
-    self.geom.envelope.center unless self.geom.nil?
+  #   self.geom.envelope.center unless self.geom.nil?
+    if self.geom.is_a? RGeo::Feature::Point
+      self.geom
+    elsif self.geom.is_a? RGeo::Feature::Polygon
+      self.geom.point_on_surface
+    end
   end
-  
 end

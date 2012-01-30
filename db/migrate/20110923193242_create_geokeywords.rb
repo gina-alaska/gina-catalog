@@ -2,7 +2,7 @@ class CreateGeokeywords < ActiveRecord::Migration
   def self.up
     create_table :geokeywords do |t|
       t.string      :name
-      t.point       :geom, :srid => 4326
+      t.geometry     :geom, :srid => 4326
       t.timestamps
     end
     create_table :catalogs_geokeywords, :id => false do |t|

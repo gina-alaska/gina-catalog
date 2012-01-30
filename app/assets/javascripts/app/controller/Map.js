@@ -13,6 +13,9 @@ Ext.define('App.controller.Map', {
       'catalog_map': {
         ready: this.onMapReady
       },
+      'catalog_toolbar button[action="aoi"]': {
+        click: this.drawAOI
+      },
       'catalog_list': {
         selectionchange: function(view, selections) {
           var record = selections[0];
@@ -25,6 +28,10 @@ Ext.define('App.controller.Map', {
         
       }
     });
+  },
+  
+  drawAOI: function(){
+    this.getMapPanel().control('aoi').activate();
   },
   
   onMapReady: function(map) {

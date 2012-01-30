@@ -40,18 +40,21 @@ class CatalogController < ApplicationController
     else
       search = params[:search]
       table_includes = [:tags, :locations]
+      
+      catalog_ids = search[:ids] unless search[:ids].nil? or search[:ids].empty?
+      
       if(search[:bbox])
-        bbox = Polygon.from_ewkt(search[:bbox])
-        catalog_ids = Geokeyword.intersects(bbox).pluck(:catalog_id).uniq
-        catalog_ids += Location.intersects(bbox).pluck(:catalog_id).uniq
+        catalog_ids ||= []
+        # catalog_ids += Catalog.geokeyword_intersects(bbox).pluck('catalog.id').uniq
+        catalog_ids += Catalog.location_intersects(search[:bbox]).select('distinct catalog.id').collect(&:id)
         catalog_ids.uniq!
       end
+      
       @search = Sunspot.search(Project, Asset) do
         data_accessor_for(Project).include=table_includes
         data_accessor_for(Asset).include=table_includes
         fulltext search[:q]
-        with :id, catalog_ids if catalog_ids
-        with :id, search[:ids].uniq if search[:ids]
+        with :id, catalog_ids unless catalog_ids.nil? or catalog_ids.empty?
         with :status, search[:status] if search[:status]
         with :archived_at_year, nil unless search[:archived]
         with :type, search[:type] if search[:type]
@@ -69,7 +72,7 @@ class CatalogController < ApplicationController
 
         paginate per_page:(params[:limit] || 3000), page:(params[:page] || 1)
       end
-
+      
       @results = @search.results
     end
     

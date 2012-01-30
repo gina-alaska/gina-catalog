@@ -1,15 +1,20 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.0'
+gem 'rails', '3.1.2'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 #gem 'sqlite3'
 gem 'pg'
-gem 'nofxx-georuby'
+gem 'rgeo'
+gem 'rgeo-activerecord'
+gem 'activerecord-postgis-adapter'
+gem 'rgeo-geojson'
+
+#gem 'nofxx-georuby'
 #broke in rails 3.1
-gem 'postgis_adapter', :git => 'http://github.com/gina-alaska/postgis_adapter.git'
+#gem 'postgis_adapter', :git => 'http://github.com/gina-alaska/postgis_adapter.git'
 
 #gem 'spatial_adapter', :git => 'https://github.com/juniorz/spatial_adapter.git'
 gem "haml"
@@ -42,9 +47,9 @@ gem 'sunspot_rails'
 # gem 'aws-s3', :require => 'aws/s3'
 
 group :assets do
-  gem 'sass-rails', "~> 3.2.3"
-  gem 'coffee-rails', '~> 3.2.1'
-  gem 'uglifier', '>= 1.0.3'
+  gem 'sass-rails', "~> 3.1.0"
+  gem 'coffee-rails', '~> 3.1.0'
+  gem 'uglifier'
 end
 
 group :production do

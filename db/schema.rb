@@ -14,624 +14,624 @@
 ActiveRecord::Schema.define(:version => 20110926191312) do
 
   create_table "abstracts", :force => true do |t|
-    t.column "project_id", :string
-    t.column "text", :text
-    t.column "created_at", :datetime
-    t.column "updated_at", :datetime
+    t.string   "project_id"
+    t.text     "text"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "addresses", :force => true do |t|
-    t.column "line1", :string
-    t.column "line2", :string
-    t.column "country", :string
-    t.column "state", :string
-    t.column "city", :string
-    t.column "zipcode", :string
-    t.column "person_id", :integer
-    t.column "created_at", :datetime
-    t.column "updated_at", :datetime
+    t.string   "line1"
+    t.string   "line2"
+    t.string   "country"
+    t.string   "state"
+    t.string   "city"
+    t.string   "zipcode"
+    t.integer  "person_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "agencies", :force => true do |t|
-    t.column "name", :string, :limit => 80
-    t.column "category", :string
-    t.column "description", :string
-    t.column "acronym", :string, :limit => 15
-    t.column "created_at", :datetime
-    t.column "updated_at", :datetime
-    t.column "active", :boolean, :default => true
-    t.column "adiwg_code", :string
-    t.column "adiwg_path", :string
+    t.string   "name",        :limit => 80
+    t.string   "category"
+    t.string   "description"
+    t.string   "acronym",     :limit => 15
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "active",                    :default => true
+    t.string   "adiwg_code"
+    t.string   "adiwg_path"
   end
 
   create_table "agency_people", :force => true do |t|
-    t.column "person_id", :integer
-    t.column "agency_id", :integer
-    t.column "created_at", :datetime
-    t.column "updated_at", :datetime
+    t.integer  "person_id"
+    t.integer  "agency_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "asset_descriptions", :force => true do |t|
-    t.column "asset_id", :integer
-    t.column "text", :text
-    t.column "created_at", :datetime
-    t.column "updated_at", :datetime
+    t.integer  "asset_id"
+    t.text     "text"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "asset_files", :force => true do |t|
-    t.column "asset_revision_id", :integer
-    t.column "filename", :string
-    t.column "size", :integer
-    t.column "created_at", :datetime
-    t.column "updated_at", :datetime
-    t.column "mime_type_id", :integer
-    t.column "asset_id", :integer
+    t.integer  "asset_revision_id"
+    t.string   "filename"
+    t.integer  "size"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "mime_type_id"
+    t.integer  "asset_id"
   end
 
   create_table "asset_revisions", :force => true do |t|
-    t.column "asset_id", :integer
-    t.column "name", :string
-    t.column "description", :string
-    t.column "archived_at", :datetime
-    t.column "finalized_at", :datetime
-    t.column "created_at", :datetime
-    t.column "updated_at", :datetime
+    t.integer  "asset_id"
+    t.string   "name"
+    t.string   "description"
+    t.datetime "archived_at"
+    t.datetime "finalized_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "assets_gcmd_themes", :id => false, :force => true do |t|
-    t.column "gcmd_theme_id", :integer
-    t.column "asset_id", :integer
+    t.integer "gcmd_theme_id"
+    t.integer "asset_id"
   end
 
   create_table "assets_tags", :id => false, :force => true do |t|
-    t.column "asset_id", :integer
-    t.column "tag_id", :integer
+    t.integer "asset_id"
+    t.integer "tag_id"
   end
 
   create_table "catalog", :force => true do |t|
-    t.column "title", :string
-    t.column "description", :text
-    t.column "status", :string
-    t.column "type", :string
-    t.column "source_url", :string
-    t.column "uuid", :string
-    t.column "owner_id", :integer
-    t.column "primary_contact_id", :integer
-    t.column "license_id", :integer
-    t.column "data_source_id", :integer
-    t.column "source_agency_id", :integer
-    t.column "funding_agency_id", :integer
-    t.column "archived_at", :datetime
-    t.column "published_at", :datetime
-    t.column "start_date", :datetime
-    t.column "end_date", :datetime
-    t.column "created_at", :datetime
-    t.column "updated_at", :datetime
-    t.column "repohex", :string
+    t.string   "title"
+    t.text     "description"
+    t.string   "status"
+    t.string   "type"
+    t.string   "source_url"
+    t.string   "uuid"
+    t.integer  "owner_id"
+    t.integer  "primary_contact_id"
+    t.integer  "license_id"
+    t.integer  "data_source_id"
+    t.integer  "source_agency_id"
+    t.integer  "funding_agency_id"
+    t.datetime "archived_at"
+    t.datetime "published_at"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "repohex"
   end
 
   create_table "catalog_agencies", :id => false, :force => true do |t|
-    t.column "agency_id", :integer
-    t.column "catalog_id", :integer
+    t.integer "agency_id"
+    t.integer "catalog_id"
   end
 
   create_table "catalog_people", :id => false, :force => true do |t|
-    t.column "person_id", :integer
-    t.column "catalog_id", :integer
+    t.integer "person_id"
+    t.integer "catalog_id"
   end
 
   create_table "catalog_tags", :id => false, :force => true do |t|
-    t.column "tag_id", :integer
-    t.column "catalog_id", :integer
+    t.integer "tag_id"
+    t.integer "catalog_id"
   end
 
   create_table "catalogs_geokeywords", :id => false, :force => true do |t|
-    t.column "catalog_id", :integer
-    t.column "geokeyword_id", :integer
+    t.integer "catalog_id"
+    t.integer "geokeyword_id"
   end
 
   create_table "content_types", :force => true do |t|
-    t.column "name", :string, :limit => 40
-    t.column "long_name", :string
-    t.column "created_at", :datetime
-    t.column "updated_at", :datetime
+    t.string   "name",       :limit => 40
+    t.string   "long_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "data_sources", :force => true do |t|
-    t.column "name", :string
-    t.column "url_template", :string
-    t.column "logo", :string
-    t.column "created_at", :datetime
-    t.column "updated_at", :datetime
+    t.string   "name"
+    t.string   "url_template"
+    t.string   "logo"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "delayed_jobs", :force => true do |t|
-    t.column "priority", :integer, :default => 0
-    t.column "attempts", :integer, :default => 0
-    t.column "handler", :text
-    t.column "last_error", :text
-    t.column "run_at", :datetime
-    t.column "locked_at", :datetime
-    t.column "failed_at", :datetime
-    t.column "locked_by", :string
-    t.column "created_at", :datetime
-    t.column "updated_at", :datetime
+    t.integer  "priority",   :default => 0
+    t.integer  "attempts",   :default => 0
+    t.text     "handler"
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "features", :force => true do |t|
-    t.column "class", :string, :limit => 1
-    t.column "code", :string, :limit => 20
-    t.column "name", :string
-    t.column "description", :string
+    t.string "class",       :limit => 1
+    t.string "code",        :limit => 20
+    t.string "name"
+    t.string "description"
   end
 
   create_table "features_new", :force => true do |t|
-    t.column "class", :string, :limit => 1
-    t.column "code", :string, :limit => 20
-    t.column "name", :string
-    t.column "description", :string
+    t.string "class",       :limit => 1
+    t.string "code",        :limit => 20
+    t.string "name"
+    t.string "description"
   end
 
   create_table "gcmd_science_keywords", :force => true do |t|
-    t.column "topic", :string, :limit => 50
-    t.column "term", :string, :limit => 200
-    t.column "variable_level_1", :string
-    t.column "variable_level_2", :string
-    t.column "variable_level_3", :string
-    t.column "label", :string
-    t.column "created_at", :datetime
-    t.column "updated_at", :datetime
+    t.string   "topic",            :limit => 50
+    t.string   "term",             :limit => 200
+    t.string   "variable_level_1"
+    t.string   "variable_level_2"
+    t.string   "variable_level_3"
+    t.string   "label"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "gcmd_themes", :force => true do |t|
-    t.column "name", :string, :limit => 60
-    t.column "parent_id", :integer
-    t.column "created_at", :datetime
-    t.column "updated_at", :datetime
-    t.column "descendant_granules_count", :integer
-    t.column "path", :string
+    t.string   "name",                      :limit => 60
+    t.integer  "parent_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "descendant_granules_count"
+    t.string   "path"
   end
 
   create_table "gcmd_themes_granules", :id => false, :force => true do |t|
-    t.column "gcmd_theme_id", :integer
-    t.column "granule_id", :integer
+    t.integer "gcmd_theme_id"
+    t.integer "granule_id"
   end
 
   create_table "gcmd_themes_projects", :id => false, :force => true do |t|
-    t.column "gcmd_theme_id", :integer
-    t.column "project_id", :integer
+    t.integer "gcmd_theme_id"
+    t.integer "project_id"
   end
 
   create_table "geokeywords", :force => true do |t|
-    t.column "name", :string
-    t.column "created_at", :datetime
-    t.column "updated_at", :datetime
-    t.column "geom", :point, :srid => 4326
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.spatial  "geom",       :limit => {:srid=>4326, :type=>"geometry"}
   end
 
   create_table "geolocations", :force => true do |t|
-    t.column "created_at", :datetime
-    t.column "updated_at", :datetime
-    t.column "point", :geometry, :srid => nil
-    t.column "llgeom", :geometry, :srid => nil
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.spatial  "point",      :limit => {:no_constraints=>true}
+    t.spatial  "llgeom",     :limit => {:no_constraints=>true}
   end
 
   create_table "granule_files", :force => true do |t|
-    t.column "granule_id", :integer
-    t.column "filename", :string
-    t.column "processed", :boolean, :default => false
-    t.column "metadata", :boolean, :default => false
-    t.column "created_at", :datetime
-    t.column "updated_at", :datetime
+    t.integer  "granule_id"
+    t.string   "filename"
+    t.boolean  "processed",  :default => false
+    t.boolean  "metadata",   :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "granules", :force => true do |t|
-    t.column "name", :string, :limit => 40
-    t.column "iso_guid", :string
-    t.column "gcmd_theme_id", :integer
-    t.column "path", :string
-    t.column "begin_date", :datetime
-    t.column "end_date", :datetime
-    t.column "content_type_id", :integer
-    t.column "created_at", :datetime
-    t.column "updated_at", :datetime
-    t.column "llgeom", :geometry, :srid => nil
-    t.column "dataset_title", :string, :limit => 100
-    t.column "abstract", :string
-    t.column "purpose", :string
-    t.column "supplemental_information", :string
-    t.column "originator", :string, :limit => 100
-    t.column "publisher", :string, :limit => 100
-    t.column "credit", :string, :limit => 100
-    t.column "iso_theme_id", :integer
-    t.column "language", :string, :limit => 25
-    t.column "character_set", :string, :limit => 25
-    t.column "llgeom_raw", :geometry, :srid => nil
-    t.column "progress", :string, :default => "INPROCESS"
+    t.string   "name",                     :limit => 40
+    t.string   "iso_guid"
+    t.integer  "gcmd_theme_id"
+    t.string   "path"
+    t.datetime "begin_date"
+    t.datetime "end_date"
+    t.integer  "content_type_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.spatial  "llgeom",                   :limit => {:no_constraints=>true}
+    t.string   "dataset_title",            :limit => 100
+    t.string   "abstract"
+    t.string   "purpose"
+    t.string   "supplemental_information"
+    t.string   "originator",               :limit => 100
+    t.string   "publisher",                :limit => 100
+    t.string   "credit",                   :limit => 100
+    t.integer  "iso_theme_id"
+    t.string   "language",                 :limit => 25
+    t.string   "character_set",            :limit => 25
+    t.spatial  "llgeom_raw",               :limit => {:no_constraints=>true}
+    t.string   "progress",                                                    :default => "INPROCESS"
   end
 
   create_table "iso_topic_categories", :force => true do |t|
-    t.column "name", :string, :limit => 50
-    t.column "long_name", :string, :limit => 200
-    t.column "iso_theme_code", :string, :limit => 3
-    t.column "created_at", :datetime
-    t.column "updated_at", :datetime
+    t.string   "name",           :limit => 50
+    t.string   "long_name",      :limit => 200
+    t.string   "iso_theme_code", :limit => 3
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "licenses", :force => true do |t|
-    t.column "name", :string
-    t.column "synonym", :string
-    t.column "description", :string
-    t.column "rights_holder_name", :string
-    t.column "downloadable", :boolean
-    t.column "created_at", :datetime
-    t.column "updated_at", :datetime
+    t.string   "name"
+    t.string   "synonym"
+    t.string   "description"
+    t.string   "rights_holder_name"
+    t.boolean  "downloadable"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "links", :force => true do |t|
-    t.column "category", :string
-    t.column "display_text", :string
-    t.column "url", :string
-    t.column "asset_id", :integer
-    t.column "asset_type", :string
-    t.column "created_at", :datetime
-    t.column "updated_at", :datetime
+    t.string   "category"
+    t.string   "display_text"
+    t.string   "url"
+    t.integer  "asset_id"
+    t.string   "asset_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "locations", :force => true do |t|
-    t.column "name", :string
-    t.column "region", :string
-    t.column "subregion", :string
-    t.column "asset_id", :integer
-    t.column "asset_type", :string
-    t.column "created_at", :datetime
-    t.column "updated_at", :datetime
-    t.column "geom", :geometry, :srid => 4326
+    t.string   "name"
+    t.string   "region"
+    t.string   "subregion"
+    t.integer  "asset_id"
+    t.string   "asset_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.spatial  "geom",       :limit => {:srid=>4326, :type=>"geometry"}
   end
 
   create_table "metadata_messages", :force => true do |t|
-    t.column "granule_file_id", :integer
-    t.column "text", :text
-    t.column "created_at", :datetime
-    t.column "updated_at", :datetime
+    t.integer  "granule_file_id"
+    t.text     "text"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "mime_type_extensions", :force => true do |t|
-    t.column "extension", :string
-    t.column "icon", :string
-    t.column "mime_type_id", :integer
-    t.column "created_at", :datetime
-    t.column "updated_at", :datetime
+    t.string   "extension"
+    t.string   "icon"
+    t.integer  "mime_type_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "mime_types", :force => true do |t|
-    t.column "content_type", :string
-    t.column "created_at", :datetime
-    t.column "updated_at", :datetime
+    t.string   "content_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "notes", :force => true do |t|
-    t.column "noted_id", :integer
-    t.column "noted_type", :string
-    t.column "text", :text
-    t.column "created_at", :datetime
-    t.column "updated_at", :datetime
+    t.integer  "noted_id"
+    t.string   "noted_type"
+    t.text     "text"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "old_assets", :force => true do |t|
-    t.column "title", :string
-    t.column "description", :string
-    t.column "data_source_id", :integer
-    t.column "mime_type_id", :integer
-    t.column "start_date", :datetime
-    t.column "end_date", :datetime
-    t.column "created_at", :datetime
-    t.column "updated_at", :datetime
-    t.column "geom", :geometry, :srid => nil
-    t.column "owner_id", :integer
-    t.column "source_agency_id", :integer
-    t.column "delta", :boolean, :default => true, :null => false
-    t.column "primary_contact_id", :integer
-    t.column "published_at", :datetime
-    t.column "license_id", :integer
-    t.column "path", :string
-    t.column "archived_at", :datetime
-    t.column "status", :string
-    t.column "funding_agency_id", :integer
+    t.string   "title"
+    t.string   "description"
+    t.integer  "data_source_id"
+    t.integer  "mime_type_id"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.spatial  "geom",               :limit => {:no_constraints=>true}
+    t.integer  "owner_id"
+    t.integer  "source_agency_id"
+    t.boolean  "delta",                                                 :default => true, :null => false
+    t.integer  "primary_contact_id"
+    t.datetime "published_at"
+    t.integer  "license_id"
+    t.string   "path"
+    t.datetime "archived_at"
+    t.string   "status"
+    t.integer  "funding_agency_id"
   end
 
   create_table "old_links", :force => true do |t|
-    t.column "display_text", :string
-    t.column "category", :string, :null => false
-    t.column "url", :string, :null => false
-    t.column "linkable_id", :integer
-    t.column "linkable_type", :string
-    t.column "created_at", :datetime
-    t.column "updated_at", :datetime
+    t.string   "display_text"
+    t.string   "category",      :null => false
+    t.string   "url",           :null => false
+    t.integer  "linkable_id"
+    t.string   "linkable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "old_locations", :force => true do |t|
-    t.column "name", :string
-    t.column "feature_id", :integer
-    t.column "region", :string
-    t.column "subregion", :string
-    t.column "locatable_id", :integer
-    t.column "locatable_type", :string
-    t.column "created_at", :datetime
-    t.column "updated_at", :datetime
-    t.column "geom", :geometry, :srid => nil
+    t.string   "name"
+    t.integer  "feature_id"
+    t.string   "region"
+    t.string   "subregion"
+    t.integer  "locatable_id"
+    t.string   "locatable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.spatial  "geom",           :limit => {:no_constraints=>true}
   end
 
+  add_index "old_locations", ["geom"], :name => "index_locations_on_geom", :spatial => true
   add_index "old_locations", ["locatable_id", "locatable_type"], :name => "as_locatable"
-  add_index "old_locations", ["geom"], :name => "index_locations_on_geom", :spatial=> true 
 
   create_table "old_notes", :force => true do |t|
-    t.column "project_id", :integer
-    t.column "text", :text
-    t.column "user_id", :integer
-    t.column "created_at", :datetime
-    t.column "updated_at", :datetime
+    t.integer  "project_id"
+    t.text     "text"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "old_projects", :force => true do |t|
-    t.column "title", :string
-    t.column "agency_id", :integer
-    t.column "parent_id", :integer
-    t.column "status_id", :integer
-    t.column "phase_id", :integer
-    t.column "location_id", :integer
-    t.column "report_id", :integer
-    t.column "user_id", :integer
-    t.column "budget", :decimal, :precision => 12, :scale => 2
-    t.column "start_date", :datetime
-    t.column "end_date", :datetime
-    t.column "created_at", :datetime
-    t.column "updated_at", :datetime
-    t.column "source_url", :string
-    t.column "year_funded", :string, :limit => 4
-    t.column "remote_source_id", :string
-    t.column "data_source_id", :integer
-    t.column "published_at", :datetime
-    t.column "published_by", :integer
-    t.column "owner_id", :integer
-    t.column "status", :string
-    t.column "primary_contact_id", :integer
-    t.column "delta", :boolean, :default => true, :null => false
-    t.column "source_agency_id", :integer
-    t.column "description", :text
-    t.column "archived_at", :datetime
-    t.column "funding_agency_id", :integer
-    t.column "uuid", :string
+    t.string   "title"
+    t.integer  "agency_id"
+    t.integer  "parent_id"
+    t.integer  "status_id"
+    t.integer  "phase_id"
+    t.integer  "location_id"
+    t.integer  "report_id"
+    t.integer  "user_id"
+    t.decimal  "budget",                          :precision => 12, :scale => 2
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "source_url"
+    t.string   "year_funded",        :limit => 4
+    t.string   "remote_source_id"
+    t.integer  "data_source_id"
+    t.datetime "published_at"
+    t.integer  "published_by"
+    t.integer  "owner_id"
+    t.string   "status"
+    t.integer  "primary_contact_id"
+    t.boolean  "delta",                                                          :default => true, :null => false
+    t.integer  "source_agency_id"
+    t.text     "description"
+    t.datetime "archived_at"
+    t.integer  "funding_agency_id"
+    t.string   "uuid"
   end
 
-  add_index "old_projects", ["published_at"], :name => "index_projects_on_published_at"
   add_index "old_projects", ["id", "published_at"], :name => "project_published_id_index"
+  add_index "old_projects", ["published_at"], :name => "index_projects_on_published_at"
 
   create_table "open_id_authentication_associations", :force => true do |t|
-    t.column "issued", :integer
-    t.column "lifetime", :integer
-    t.column "handle", :string
-    t.column "assoc_type", :string
-    t.column "server_url", :binary
-    t.column "secret", :binary
+    t.integer "issued"
+    t.integer "lifetime"
+    t.string  "handle"
+    t.string  "assoc_type"
+    t.binary  "server_url"
+    t.binary  "secret"
   end
 
   create_table "open_id_authentication_nonces", :force => true do |t|
-    t.column "timestamp", :integer, :null => false
-    t.column "server_url", :string
-    t.column "salt", :string, :null => false
+    t.integer "timestamp",  :null => false
+    t.string  "server_url"
+    t.string  "salt",       :null => false
   end
 
   create_table "people", :force => true do |t|
-    t.column "salutation", :string
-    t.column "first_name", :string
-    t.column "last_name", :string
-    t.column "suffix", :string
-    t.column "email", :string
-    t.column "url", :string
-    t.column "created_at", :datetime
-    t.column "updated_at", :datetime
+    t.string   "salutation"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "suffix"
+    t.string   "email"
+    t.string   "url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "permissions", :force => true do |t|
-    t.column "name", :string
-    t.column "description", :string
-    t.column "created_at", :datetime
-    t.column "updated_at", :datetime
+    t.string   "name"
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "phone_numbers", :force => true do |t|
-    t.column "person_id", :integer
-    t.column "digits", :string
-    t.column "name", :string, :null => false
-    t.column "created_at", :datetime
-    t.column "updated_at", :datetime
+    t.integer  "person_id"
+    t.string   "digits"
+    t.string   "name",       :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "project_agencies", :force => true do |t|
-    t.column "project_id", :integer
-    t.column "agency_id", :integer
-    t.column "funding", :boolean, :default => false
-    t.column "created_at", :datetime
-    t.column "updated_at", :datetime
+    t.integer  "project_id"
+    t.integer  "agency_id"
+    t.boolean  "funding",    :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "project_contacts", :force => true do |t|
-    t.column "project_id", :integer
-    t.column "person_id", :integer
-    t.column "created_at", :datetime
-    t.column "updated_at", :datetime
+    t.integer  "project_id"
+    t.integer  "person_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "project_geolocations", :force => true do |t|
-    t.column "project_id", :integer
-    t.column "geolocation_id", :integer
-    t.column "created_at", :datetime
-    t.column "updated_at", :datetime
+    t.integer  "project_id"
+    t.integer  "geolocation_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "project_locations", :force => true do |t|
-    t.column "project_id", :integer
-    t.column "location_id", :integer
-    t.column "created_at", :datetime
-    t.column "updated_at", :datetime
+    t.integer  "project_id"
+    t.integer  "location_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "project_themes", :force => true do |t|
-    t.column "project_id", :integer
-    t.column "theme_id", :integer
-    t.column "created_at", :datetime
-    t.column "updated_at", :datetime
+    t.integer  "project_id"
+    t.integer  "theme_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "projects_tags", :id => false, :force => true do |t|
-    t.column "project_id", :integer
-    t.column "tag_id", :integer
+    t.integer "project_id"
+    t.integer "tag_id"
   end
 
   create_table "role_permissions", :force => true do |t|
-    t.column "role_id", :integer
-    t.column "permission_id", :integer
+    t.integer "role_id"
+    t.integer "permission_id"
   end
 
   create_table "roles", :force => true do |t|
-    t.column "name", :string
-    t.column "description", :string
-    t.column "created_at", :datetime
-    t.column "updated_at", :datetime
+    t.string   "name"
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "schema_info", :id => false, :force => true do |t|
-    t.column "version", :integer
+    t.integer "version"
   end
 
   create_table "settings", :force => true do |t|
-    t.column "name", :string
-    t.column "value", :string
-    t.column "created_at", :datetime
-    t.column "updated_at", :datetime
+    t.string   "name"
+    t.string   "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "spreadsheet_projects", :id => false, :force => true do |t|
-    t.column "recno", :integer
-    t.column "Yr 1st Funded", :string, :limit => 75
-    t.column "Funding Source", :string, :limit => 250
-    t.column "funding source acronym", :string, :limit => 75
-    t.column "Point of Contact", :string, :limit => 75
-    t.column "PC Affiliation", :string, :limit => 75
-    t.column "PC Phone", :string, :limit => 75
-    t.column "PC Email", :string, :limit => 75
-    t.column "Other Cooperators", :string, :limit => 250
-    t.column "other cooperators acronym", :string, :limit => 250
-    t.column "Theme", :string, :limit => 250
-    t.column "Other Theme", :string, :limit => 250
-    t.column "Location", :string, :limit => 250
-    t.column "Other Location", :string, :limit => 250
-    t.column "Keyword", :string, :limit => 300
-    t.column "Original Start Date", :string, :limit => 75
-    t.column "start date as date", :string, :limit => 75
-    t.column "End Date/ On-Going", :string, :limit => 75
-    t.column "Title", :string, :limit => 250
-    t.column "Synopsis", :string, :limit => nil
-    t.column "Report Status", :string, :limit => 200
-    t.column "Report Location: Website/Contact", :string, :limit => 300
+    t.integer "recno"
+    t.string  "Yr 1st Funded",                    :limit => 75
+    t.string  "Funding Source",                   :limit => 250
+    t.string  "funding source acronym",           :limit => 75
+    t.string  "Point of Contact",                 :limit => 75
+    t.string  "PC Affiliation",                   :limit => 75
+    t.string  "PC Phone",                         :limit => 75
+    t.string  "PC Email",                         :limit => 75
+    t.string  "Other Cooperators",                :limit => 250
+    t.string  "other cooperators acronym",        :limit => 250
+    t.string  "Theme",                            :limit => 250
+    t.string  "Other Theme",                      :limit => 250
+    t.string  "Location",                         :limit => 250
+    t.string  "Other Location",                   :limit => 250
+    t.string  "Keyword",                          :limit => 300
+    t.string  "Original Start Date",              :limit => 75
+    t.string  "start date as date",               :limit => 75
+    t.string  "End Date/ On-Going",               :limit => 75
+    t.string  "Title",                            :limit => 250
+    t.string  "Synopsis",                         :limit => nil
+    t.string  "Report Status",                    :limit => 200
+    t.string  "Report Location: Website/Contact", :limit => 300
   end
 
   create_table "spreadsheet_projects_bup", :id => false, :force => true do |t|
-    t.column "recno", :integer
-    t.column "Yr 1st Funded", :string, :limit => 75
-    t.column "Funding Source", :string, :limit => 250
-    t.column "funding source acronym", :string, :limit => 75
-    t.column "Point of Contact", :string, :limit => 75
-    t.column "PC Affiliation", :string, :limit => 75
-    t.column "PC Phone", :string, :limit => 75
-    t.column "PC Email", :string, :limit => 75
-    t.column "Other Cooperators", :string, :limit => 250
-    t.column "other cooperators acronym", :string, :limit => 250
-    t.column "Theme", :string, :limit => 250
-    t.column "Other Theme", :string, :limit => 250
-    t.column "Location", :string, :limit => 250
-    t.column "Other Location", :string, :limit => 250
-    t.column "Keyword", :string, :limit => 300
-    t.column "Original Start Date", :string, :limit => 75
-    t.column "start date as date", :string, :limit => 75
-    t.column "End Date/ On-Going", :string, :limit => 75
-    t.column "Title", :string, :limit => 250
-    t.column "Synopsis", :string, :limit => nil
-    t.column "Report Status", :string, :limit => 200
-    t.column "Report Location: Website/Contact", :string, :limit => 300
+    t.integer "recno"
+    t.string  "Yr 1st Funded",                    :limit => 75
+    t.string  "Funding Source",                   :limit => 250
+    t.string  "funding source acronym",           :limit => 75
+    t.string  "Point of Contact",                 :limit => 75
+    t.string  "PC Affiliation",                   :limit => 75
+    t.string  "PC Phone",                         :limit => 75
+    t.string  "PC Email",                         :limit => 75
+    t.string  "Other Cooperators",                :limit => 250
+    t.string  "other cooperators acronym",        :limit => 250
+    t.string  "Theme",                            :limit => 250
+    t.string  "Other Theme",                      :limit => 250
+    t.string  "Location",                         :limit => 250
+    t.string  "Other Location",                   :limit => 250
+    t.string  "Keyword",                          :limit => 300
+    t.string  "Original Start Date",              :limit => 75
+    t.string  "start date as date",               :limit => 75
+    t.string  "End Date/ On-Going",               :limit => 75
+    t.string  "Title",                            :limit => 250
+    t.string  "Synopsis",                         :limit => nil
+    t.string  "Report Status",                    :limit => 200
+    t.string  "Report Location: Website/Contact", :limit => 300
   end
 
   create_table "synopses", :force => true do |t|
-    t.column "project_id", :integer
-    t.column "active", :boolean
-    t.column "text", :text
-    t.column "created_at", :datetime
-    t.column "updated_at", :datetime
+    t.integer  "project_id"
+    t.boolean  "active"
+    t.text     "text"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "tags", :force => true do |t|
-    t.column "text", :string
-    t.column "highlight", :boolean, :default => false
+    t.string  "text"
+    t.boolean "highlight", :default => false
   end
 
   create_table "tasks", :force => true do |t|
-    t.column "target_id", :integer
-    t.column "target_class", :string
-    t.column "command", :string
-    t.column "arguments", :text
-    t.column "performed", :boolean, :default => false
-    t.column "performed_at", :datetime
-    t.column "created_at", :datetime
-    t.column "updated_at", :datetime
+    t.integer  "target_id"
+    t.string   "target_class"
+    t.string   "command"
+    t.text     "arguments"
+    t.boolean  "performed",    :default => false
+    t.datetime "performed_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "tasks", ["performed"], :name => "tasks_index_tasks_on_performed"
 
   create_table "themes", :force => true do |t|
-    t.column "name", :string, :limit => 80
-    t.column "description", :string
-    t.column "created_at", :datetime
-    t.column "updated_at", :datetime
+    t.string   "name",        :limit => 80
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "user_roles", :force => true do |t|
-    t.column "user_id", :integer
-    t.column "role_id", :integer
+    t.integer "user_id"
+    t.integer "role_id"
   end
 
   create_table "users", :force => true do |t|
-    t.column "email", :string
-    t.column "first_name", :string
-    t.column "last_name", :string
-    t.column "created_at", :datetime
-    t.column "updated_at", :datetime
-    t.column "remember_token", :string
-    t.column "remember_token_expires_at", :datetime
-    t.column "identity_url", :string
-    t.column "agency_id", :integer
+    t.string   "email"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "remember_token"
+    t.datetime "remember_token_expires_at"
+    t.string   "identity_url"
+    t.integer  "agency_id"
   end
 
   create_table "videos", :force => true do |t|
-    t.column "name", :string
-    t.column "title", :string
-    t.column "filename", :string
-    t.column "vidtype", :string, :default => "Camtasia Flash"
-    t.column "created_at", :datetime
-    t.column "updated_at", :datetime
-    t.column "path", :string
+    t.string   "name"
+    t.string   "title"
+    t.string   "filename"
+    t.string   "vidtype",    :default => "Camtasia Flash"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "path"
   end
 
   create_table "zones", :force => true do |t|
-    t.column "name", :string
-    t.column "status", :string
-    t.column "created_at", :datetime
-    t.column "updated_at", :datetime
-    t.column "geom", :geometry, :srid => nil
-    t.column "message", :string
-    t.column "sort", :integer
+    t.string   "name"
+    t.string   "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.spatial  "geom",       :limit => {:no_constraints=>true}
+    t.string   "message"
+    t.integer  "sort"
   end
 
-  add_index "zones", ["geom"], :name => "index_zones_on_geom", :spatial=> true 
+  add_index "zones", ["geom"], :name => "index_zones_on_geom", :spatial => true
 
 end
