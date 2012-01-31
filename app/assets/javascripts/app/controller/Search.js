@@ -1,6 +1,11 @@
 Ext.define('App.controller.Search', {
   extend: 'Ext.app.Controller',
 
+  refs: [{
+    ref: 'mapPanel',
+    selector: 'catalog_map'
+  }],
+
   stores: [ 'Catalog', 'Filters' ],
 
   init: function() {
@@ -36,8 +41,12 @@ Ext.define('App.controller.Search', {
   },
   
   onAOIAdd: function(panel, feature){
+    var mp = this.getMapPanel();
+    
     var geom = feature.geometry;
-    geom.transform(panel.getMap().getProjectionObject(), panel.getMap().displayProjection);
+    geom.transform(mp.getMap().getProjectionObject(),mp.getMap().displayProjection);
+    
+    mp.control('aoi').deactivate();
     
     this.doFilter({
       filterType: 'single',

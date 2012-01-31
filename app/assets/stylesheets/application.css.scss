@@ -11,6 +11,10 @@
 @import "_projects.css.scss";
 @import "_icons.css.scss";
 
+.olControlDrawFeatureActive { 
+  cursor: crosshair;
+}
+
 body {
   font-family: "trebuchet ms", Verdana, Tahoma, Arial, Helvetica, san-serif;
 }
