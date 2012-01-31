@@ -151,6 +151,9 @@ Ext.define('App.view.catalog.toolbar', {
                 filterType: 'single',
                 description: 'Region Northslope'
               }]
+            }, {
+              text: 'AOI',
+              action: 'aoi'
             }]
           }, {
             xtype: 'button',
@@ -187,10 +190,6 @@ Ext.define('App.view.catalog.toolbar', {
               group: 'sort', xtype: 'menucheckitem',
               menu: this.directionMenu()
             }]
-          }, {
-            xtype: 'button',
-            text: 'AOI',
-            action: 'aoi'
           }, {
             xtype: 'button',
             text: 'Export',

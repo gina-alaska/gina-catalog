@@ -13,7 +13,7 @@ Ext.define('App.controller.Map', {
       'catalog_map': {
         ready: this.onMapReady
       },
-      'catalog_toolbar button[action="aoi"]': {
+      'catalog_toolbar menuitem[action="aoi"]': {
         click: this.drawAOI
       },
       'catalog_list': {
