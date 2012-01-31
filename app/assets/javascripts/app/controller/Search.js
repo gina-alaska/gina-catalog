@@ -208,9 +208,6 @@ Ext.define('App.controller.Search', {
         });
         win.show();
         break;
-      default:
-        console.log("Default");
-        break;
     }
   } 
 });

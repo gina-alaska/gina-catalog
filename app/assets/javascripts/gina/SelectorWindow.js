@@ -66,7 +66,7 @@ Ext.define('Ext.gina.SelectorWindow', {
       descriptions.push(tpl.apply(item.data));
       ids.push( item.get('id'));
     },this);
-    console.log("Window", this);
+    
     win.callback.call(win.scope, {
       filterType: this.filterType || "single",
       field: this.field,
