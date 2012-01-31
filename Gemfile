@@ -56,8 +56,9 @@ group :production do
   gem 'therubyracer'
 end
 
+gem 'sunspot_solr'
 group :development do
-  gem 'sunspot_solr'
+  #gem 'sunspot_solr'
   gem 'progress_bar'
 end
 
