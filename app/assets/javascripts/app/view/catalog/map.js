@@ -52,14 +52,14 @@ Ext.define('App.view.catalog.map', {
   customizeMap: function() {
     this.controls.add('layers', new OpenLayers.Control.LayerSwitcher());   
     
-    this.vLayers.add('selection', {
+    this.vLayers.add('aoi', {
       displayInLayerSwitcher: false,
       eventListeners: {
         beforefeaturesadded: function() { this.removeAllFeatures(); }
       }
     });
     this.controls.add('aoi', new OpenLayers.Control.DrawFeature(
-      this.layer('selection'),
+      this.layer('aoi'),
       OpenLayers.Handler.RegularPolygon, {
         title: 'AOI: Click and drag the mouse to define your area of interest',
         handlerOptions: {

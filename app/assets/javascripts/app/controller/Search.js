@@ -4,6 +4,9 @@ Ext.define('App.controller.Search', {
   refs: [{
     ref: 'mapPanel',
     selector: 'catalog_map'
+  }, {
+    ref: 'textsearch',
+    selector: 'catalog_toolbar textfield[name="q"]'
   }],
 
   stores: [ 'Catalog', 'Filters' ],
@@ -20,6 +23,12 @@ Ext.define('App.controller.Search', {
       },
       'catalog_toolbar button[action="search"]': {
         click: this.doSearch
+      },
+      'catalog_toolbar button[action="clear_filters"]': {
+        click: this.clearFilters
+      },
+      'catalog_toolbar button[action="clear_text"]': {
+        click: this.clearTextsearch
       },
       'catalog_toolbar menuitem[action="filter"]': {
         click: this.doFilter
@@ -38,6 +47,8 @@ Ext.define('App.controller.Search', {
 
     this.activeSearchId = 0;
     this.searchParams = new Ext.util.MixedCollection();
+    
+    this.getStore('Filters').on('remove', this.onFilterRemoved, this);
   },
   
   onAOIAdd: function(panel, feature){
@@ -86,11 +97,13 @@ Ext.define('App.controller.Search', {
     var rawParams = this.getSearchParams();
     var params = {};
     for(var name in rawParams) {
-      var n = "search[" + name +"]";
-      if(Ext.isArray(rawParams[name])) {
-        n += "[]";
+      if(rawParams[name]) {
+        var n = "search[" + name +"]";
+        if(Ext.isArray(rawParams[name])) {
+          n += "[]";
+        }
+        params[n] = rawParams[name];        
       }
-      params[n] = rawParams[name];
     }
 
     if(format && format == 'pdf') {
@@ -152,6 +165,29 @@ Ext.define('App.controller.Search', {
     }
   },
   
+  onFilterRemoved: function(store, record, index) {
+    switch(record.get('field')) {
+      case 'q':
+        this.clearTextsearch(true);
+        break;
+      case 'bbox':
+        this.getMapPanel().layer('aoi').removeAllFeatures();
+        break;
+    }
+  },
+
+  clearFilters: function() {
+    /* Don't use removeAll, it doesn't fire the remove event */
+    this.getStore('Filters').each(function(item) {
+      this.getStore('Filters').remove(item);
+    }, this);
+    this.doSearch();
+  },
+  
+  clearTextsearch: function(skipSearch) {
+    this.getTextsearch().setValue('');
+    if (skipSearch !== true) { this.doSearch(); }
+  },
 
   doFilter: function(item) {
     var win;

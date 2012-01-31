@@ -20,7 +20,7 @@ Ext.define('App.view.catalog.toolbar', {
           }, {
             xtype: 'button',
             iconCls: 'cancel-icon',
-            action: 'clear'
+            action: 'clear_text'
           }, {
             xtype: 'button',
             iconCls: 'search-icon',
@@ -34,6 +34,7 @@ Ext.define('App.view.catalog.toolbar', {
           items: [{
             xtype: 'button',
             text: 'Clear Filters',
+            action: 'clear_filters',
             iconCls: 'viewall-icon'
           }, {
             xtype: 'button',
