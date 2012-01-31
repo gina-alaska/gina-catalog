@@ -57,6 +57,8 @@ class CatalogController < ApplicationController
           # ocean marine +sea   ~> (ocean AND sea) OR (marine AND sea)
           # ocean +marine +sea  ~> ocean AND marine AND sea
           params[:mm] = "1"
+          params[:ps] = 1
+          params[:pf] = [:title, :description]
         end
 
         data_accessor_for(Project).include=table_includes
