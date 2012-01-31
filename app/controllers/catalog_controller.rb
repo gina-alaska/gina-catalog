@@ -51,6 +51,16 @@ class CatalogController < ApplicationController
       end
       
       @search = Sunspot.search(Project, Asset) do
+        adjust_solr_params do |params|
+          # Force solar to do an 'OR'ish search, at least 1 "optional" word is required in each  
+          # ocean marine sea    ~> ocean OR marine OR sea
+          # ocean marine +sea   ~> (ocean AND sea) OR (marine AND sea)
+          # ocean +marine +sea  ~> ocean AND marine AND sea
+          params[:mm] = "1"
+          params[:ps] = 1
+          params[:pf] = [:title, :description]
+        end
+
         data_accessor_for(Project).include=table_includes
         data_accessor_for(Asset).include=table_includes
         fulltext search[:q]
