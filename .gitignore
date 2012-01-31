@@ -16,3 +16,4 @@ repos_tmp
 solr
 !solr/conf
 log/solr*
+log/sunspot*
