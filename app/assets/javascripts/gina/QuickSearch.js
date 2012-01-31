@@ -8,12 +8,12 @@ Ext.define('Ext.gina.QuickSearch', {
     store: null,
     maskEl: false,
     matchAll: true,
+    width: 500,
     fields: 'all'
   },
   
   constructor: function(config) {
     this.initConfig(config);
-    
     this.callParent();
   },
 
@@ -21,9 +21,11 @@ Ext.define('Ext.gina.QuickSearch', {
     var defaultSearch = Ext.create('Ext.gina.DefaultText', {
       text: 'Enter your search here...'
     });
+    
+    console.log(this, this.getStore());
 
     this.items = [{
-      itemId: 'q',
+      name: 'q',
       plugins: [defaultSearch],
       xtype: 'textfield',
       store: this.getStore(),
@@ -38,13 +40,11 @@ Ext.define('Ext.gina.QuickSearch', {
       width: (this.width ? (this.width - 70) : 500)
     },{
       iconCls: 'cancel-icon',
-      scope: this,
       scale: 'medium',
       scope: this,
       handler: this.clearHandler
     }, {
       iconCls: 'search-icon',
-      scope: this,
       scale: 'medium',
       scope: this,
       handler: this.searchHandler
@@ -54,20 +54,19 @@ Ext.define('Ext.gina.QuickSearch', {
   },
 
   searchHandler: function(item) {
-    var parent = item.ownerCt;
-    var string = parent.getComponent('q').getValue();
-
+    var win = item.up('window');
+    var string = win.down('textfield[name="q"]').getValue();
     if(this.getMaskEl()) {
       Ext.get(this.getMaskEl()).mask('Please wait...', 'x-mask-loading');
     }
-    Ext.defer(this.search, 100, this, [string]);
+    Ext.defer(this.stringSearch, 100, this, [string]);
   },
 
   clearHandler: function(item) {
     if(this.getMaskEl()) {
       Ext.get(this.getMaskEl()).mask('Please wait...', 'x-mask-loading');
     }
-    Ext.defer(this.clear, 100, this, [item])
+    Ext.defer(this.clear, 100, this, [item]);
   },
 
   clear: function(skipFiltering) {
@@ -87,6 +86,40 @@ Ext.define('Ext.gina.QuickSearch', {
       Ext.get(this.getMaskEl()).unmask();
     }
   },
+  
+  stringSearch: function(value) {
+    var fields = 'all';
+    var found = null;
+    var search = new RegExp();
+
+    //Remove multiple spaces
+    var search_items = value.replace(/\s+/,' ').split(' ').uniq();
+
+    var fn = Ext.bind(function(record, id){
+      var field;
+      var found = false;
+
+      for (var ii=0; ii < search_items.length; ii++) {
+        found = false;
+
+        search.compile(search_items[ii], 'i');
+        if(fields == 'all') {
+          for (field in record.data) {
+            found = found || search.test(record.get(field));
+          }
+        } else {
+          for (field in fields) {
+            found = found || search.test(record.get(fields[field]));
+          }
+        }
+
+        if(found === false) { return false; }
+      }
+      return found;
+    }, this);
+
+    this.getStore().filterBy(fn);
+  },
 
   search: function(search_string) {
     if(search_string.length < 1){
@@ -99,6 +132,7 @@ Ext.define('Ext.gina.QuickSearch', {
     var visible = true;
     var found = null;
     var search = new RegExp();
+    var fields = this.fields || 'all';
 
     //Remove multiple spaces
     var search_items = search_string.replace(/\s+/,' ').split(' ').uniq();
