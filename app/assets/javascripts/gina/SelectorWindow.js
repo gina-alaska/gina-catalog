@@ -34,6 +34,7 @@ Ext.define('Ext.gina.SelectorWindow', {
       }, {
         scale: 'medium',
         text: 'Submit',
+        scope: this,
         handler: this.onSubmit
       }]
     }];
@@ -58,23 +59,18 @@ Ext.define('Ext.gina.SelectorWindow', {
     var win = item.up('window'),
         grid = win.down('gridpanel'),
         selected = grid.getSelectionModel().getSelection();
-    
-    var ids = [], descriptions = [];
+        
     var tpl = new Ext.XTemplate(this.description);
-    
-    Ext.each(selected, function(item) {
-      descriptions.push(tpl.apply(item.data));
-      ids.push( item.get('id'));
-    },this);
+    var id = selected[0].get('id');
+    var desc = tpl.apply(selected[0].data);
     
     win.callback.call(win.scope, {
       filterType: this.filterType || "single",
       field: this.field,
-      description: descriptions,
-      value: ids
+      description: desc,
+      value: id
     });
 
     win.close();
-    //win.fireEvent('selected', win, selected);
   }
 });
