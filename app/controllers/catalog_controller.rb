@@ -49,7 +49,10 @@ class CatalogController < ApplicationController
         catalog_ids += Catalog.location_intersects(search[:bbox]).select('distinct catalog.id').collect(&:id)
         catalog_ids.uniq!
       end
-      
+      if search[:order_by]
+        sort, field = search[:order_by].split("-");
+        field ||= :asc
+      end
       @search = Sunspot.search(Project, Asset) do
         adjust_solr_params do |params|
           # Force solar to do an 'OR'ish search, at least 1 "optional" word is required in each  
@@ -81,6 +84,7 @@ class CatalogController < ApplicationController
         with(:end_date_year).less_than(search[:start_date_after]) if search[:end_date_before]
 
         paginate per_page:(params[:limit] || 3000), page:(params[:page] || 1)
+        order_by(sort, field) if search[:order_by]
       end
       
       @results = @search.results
