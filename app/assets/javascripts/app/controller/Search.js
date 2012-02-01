@@ -28,7 +28,7 @@ Ext.define('App.controller.Search', {
         click: this.clearFilters
       },
       'catalog_toolbar button[action="clear_text"]': {
-        click: this.clearTextsearch
+        click: function() { this.clearSearchParam('q'); }
       },
       'catalog_toolbar menuitem[action="filter"]': {
         click: this.doFilter
@@ -84,15 +84,14 @@ Ext.define('App.controller.Search', {
   onFilterClick: function(view, record, node, index, e, opts) {
     var target = Ext.fly(e.target);
     if (target && target.getAttribute('action') == 'remove') {
-      this.clearSearchParams(record.get('field'), record.get('value'));
+      this.clearSearchParam(record.get('field'), record.get('value'));
       this.doSearch();
     }
   },
 
   doSearch: function(format) {
     var searchField = Ext.ComponentQuery.query('catalog_toolbar textfield[name="q"]')[0];
-    this.clearSearchParams('q');
-    this.updateSearchParams('q', searchField.getValue(), 'Text: ' +  searchField.getValue());
+    this.replaceSearchParam('q', searchField.getValue(), 'Text: ' +  searchField.getValue());
     
     var rawParams = this.getSearchParams();
     var params = {};
@@ -138,7 +137,7 @@ Ext.define('App.controller.Search', {
     return params;
   },
   
-  clearSearchParams: function(field, value) {
+  clearSearchParam: function(field, value) {
     var filters = this.getStore('Filters');
     var index = this.findSearchParam(field, value);
     if(index >= 0) { filters.removeAt(index); }
@@ -147,12 +146,13 @@ Ext.define('App.controller.Search', {
   findSearchParam: function(field, value) {
     var filters = this.getStore('Filters');
     
+    console.log(value);
     return filters.findBy(function(item) {
       return item.get('field') == field && (value === undefined || item.get('value') == value);
     }, this);
   },
 
-  updateSearchParams: function(field, value, desc) {
+  addSearchParam: function(field, value, desc) {
     var filters = this.getStore('Filters');
     
     // Don't add blank values
@@ -165,10 +165,28 @@ Ext.define('App.controller.Search', {
     }
   },
   
+  replaceSearchParam: function(field, value, desc) {
+    var filters = this.getStore('Filters');
+    
+    // Don't add blank values
+    if(value === "") { return false; }
+    var index = this.findSearchParam(field);
+    console.log(index);
+    var data = { field: field, value: value, desc: desc };
+    if(index < 0) {
+      // Value doesn't exist in the filters yet
+      filters.add(data);
+    } else {
+      var r = filters.getAt(index);
+      r.data = data;
+      r.commit();
+    }
+  },
+  
   onFilterRemoved: function(store, record, index) {
     switch(record.get('field')) {
       case 'q':
-        this.clearTextsearch(true);
+        this.getTextsearch().setValue('');
         break;
       case 'bbox':
         this.getMapPanel().layer('aoi').removeAllFeatures();
@@ -184,22 +202,17 @@ Ext.define('App.controller.Search', {
     this.doSearch();
   },
   
-  clearTextsearch: function(skipSearch) {
-    this.getTextsearch().setValue('');
-    if (skipSearch !== true) { this.doSearch(); }
-  },
-
   doFilter: function(item) {
     var win;
     
     switch(item.filterType) {
       case 'single':
-        this.clearSearchParams( item.field );
-        this.updateSearchParams(item.field, item.value, item.description);
+        // this.clearSearchParams( item.field );
+        this.replaceSearchParam(item.field, item.value, item.description);
         this.doSearch();
         break;
       case 'multiple':
-        this.updateSearchParams(item.field, item.value, item.description);
+        this.addSearchParam(item.field, item.value, item.description);
         this.doSearch();
         break;
       case 'sourceselector':
