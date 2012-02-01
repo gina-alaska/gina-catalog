@@ -6,7 +6,7 @@ Ext.define('App.view.catalog.splash', {
 
   layout: { type: 'vbox',align: 'stretch' },
 
-  modal: true,
+  modal: false,
   closable: false,
   preventHeader: true,
 
@@ -57,6 +57,7 @@ Ext.define('App.view.catalog.splash', {
   
   recordsLoaded: function() {
     this.loaded = true;
+    if(this.loaded) { this.showButtons(); }
   },
   
   featuresRendered: function() {

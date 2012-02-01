@@ -197,18 +197,16 @@ Title: #{self.title}
   def as_json(opts = {})
     {
       :id => self.id,
-      :archived_at => self.archived_at,
       :type => self.type,
       :title => self.title,
-      :tags => self.tags.collection,
       :description => self.short_description,
+      :status => self.status,
+      :source_agency_acronym => self.source_agency.try(:acronym),
+      :source_agency_id => self.source_agency.try(:id),
 =begin
       :start_date_year => self.start_date.try(:year),
       :end_date_year => self.end_date.try(:year),
-      :status => self.status,
       :geokeywords => self.geokeywords.collect(&:name),
-      :source_agency_acronym => self.source_agency.try(:acronym),
-      :source_agency_id => self.source_agency.try(:id),
       :agency_ids => self.agency_ids,
       :primary_contact_id => self.primary_contact_id,
       :person_ids => self.person_ids,
@@ -217,7 +215,6 @@ Title: #{self.title}
       :published_at => self.published_at,
 =end
       :locations => self.locations
-
     }
   end
 
