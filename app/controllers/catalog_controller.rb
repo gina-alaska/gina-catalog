@@ -21,6 +21,26 @@ class CatalogController < ApplicationController
   end
 
   def search
+    search = params[:search] || []
+    
+    # Handle the filters from the standard extjs data stores
+    if params[:filter]
+      JSON.parse(params[:filter]).each do |f|
+        search[f["property"]] = f["value"]
+      end
+    end
+    
+    # Handle the sorting from the standard extjs data stores
+    if params[:sort]
+      s = JSON.parse(params[:sort]).first 
+      field, direction = s["property"], s["direction"].downcase.to_sym
+      
+      # Custom sort field for title, extjs isn't able to specify one 
+      # in it's config so we have to munge it here
+      field = 'title_sort' if field == 'title'
+    end
+    
+    
 #    if(params[:q].nil? or params[:q].empty?)
 #      results = sphinx_search('', params[:sort], params[:dir], params[:start], params[:limit])
 #    else
@@ -31,14 +51,14 @@ class CatalogController < ApplicationController
 #    @results = @results.includes(:locations, :source_agency, :people, :agencies, :tags, :geokeywords)
 #    @results = @results.where(:id => params[:ids]) unless params[:ids].nil?
 #    @results = @results.limit(params[:limit] || 3000).order('title ASC')
-    if(params[:search].nil? or params[:search].empty? )
+    if(search.nil? or search.empty?)
       @results = Catalog.not_archived.published
       @results = @results.includes(:locations, :source_agency, :people, :agencies, :tags, :geokeywords)
       @results = @results.where(:id => params[:ids]) unless params[:ids].nil?
-      @results = @results.limit(params[:limit] || 3000).order('title ASC')
+      @results = @results.paginate(:page => params[:page], :per_page => params[:limit] || 3000).order('title ASC')
       # @results = []
+      @total = @results.count
     else
-      search = params[:search]
       table_includes = [:tags, :locations]
       
       catalog_ids = search[:ids] unless search[:ids].nil? or search[:ids].empty?
@@ -50,8 +70,8 @@ class CatalogController < ApplicationController
         catalog_ids.uniq!
       end
       if search[:order_by]
-        sort, field = search[:order_by].split("-");
-        field ||= :asc
+        field, direction = search[:order_by].split("-");
+        direction ||= :asc
       end
       @search = Sunspot.search(Project, Asset) do
         adjust_solr_params do |params|
@@ -84,10 +104,11 @@ class CatalogController < ApplicationController
         with(:end_date_year).less_than(search[:start_date_after]) if search[:end_date_before]
 
         paginate per_page:(params[:limit] || 3000), page:(params[:page] || 1)
-        order_by(sort, field) if search[:order_by]
+        order_by(field, direction) if field and direction
       end
       
       @results = @search.results
+      @total = @search.total
     end
     
     respond_to do |format|
