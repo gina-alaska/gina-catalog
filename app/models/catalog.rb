@@ -93,7 +93,7 @@ class Catalog < ActiveRecord::Base
       }.compact!
     end
     string :title_sort do
-      title.downcase.gsub(/^(an?|the)/, '')
+      title.downcase.gsub(/^(\s+|an?|the)/, '').gsub(/["']/, '')
     end
     string :source_agency_acronym do
       source_agency.try(&:acronym)
@@ -216,10 +216,10 @@ Title: #{self.title}
       :agency_ids => self.agency_ids,
       :primary_contact_id => self.primary_contact_id,
       :person_ids => self.person_ids,
-      :created_at => self.created_at,
-      :updated_at => self.updated_at,
       :published_at => self.published_at,
 =end
+      :created_at => self.created_at,
+      :updated_at => self.updated_at,
       :locations => self.locations
     }
   end
