@@ -86,7 +86,7 @@ Ext.define('App.view.catalog.map', {
           label: Ext.isIE ? false : "${count}",
           pointRadius: "${radius}",
           fillColor: "#94fbff",
-          fillOpacity: 0.2,
+          fillOpacity: 0.3,
           graphicName: 'circle',
           strokeColor: '#0000FF',
           strokeWidth: 2,
@@ -109,7 +109,7 @@ Ext.define('App.view.catalog.map', {
           graphicName: 'circle',
           pointRadius: "${radius}",
           fillColor: "#ffcc66",
-          fillOpacity: 0.2,
+          fillOpacity: 0.3,
           strokeColor: '#cc6633',
           strokeWidth: 2,
           strokeOpacity: 1
