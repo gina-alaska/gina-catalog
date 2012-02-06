@@ -94,10 +94,9 @@
     -#  .spacer
 
     .project_info_source.tabbed
-      %label Project Information Source:
-      .organization.tabbed
-        %label Organization:
+      .organization
+        %label Record Information Source:
         = @item.data_source.name
-      .website.tabbed
-        %label Website:
+      .website
+        %label Direct Record Link:
         = link_to @item.source_url, @item.source_url, :target => :_blank
