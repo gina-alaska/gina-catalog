@@ -63,11 +63,6 @@ Ext.define('App.view.asset.window', {
         scale: 'large',
         action: 'close',
         text: 'Close Window'
-      }, '->', {
-        xtype: 'button',
-        scale: 'large',
-        action: 'openfull',
-        text: 'View Full Record >>'
       }]
     }];
 
