@@ -11,6 +11,7 @@ gem 'rgeo'
 gem 'rgeo-activerecord'
 gem 'activerecord-postgis-adapter'
 gem 'rgeo-geojson'
+gem 'will_paginate'
 
 #gem 'nofxx-georuby'
 #broke in rails 3.1
