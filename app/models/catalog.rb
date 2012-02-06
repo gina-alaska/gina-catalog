@@ -92,6 +92,12 @@ class Catalog < ActiveRecord::Base
         Sunspot::Util::Coordinates.new(location.center.try(:x), location.center.try(:y))
       }.compact!
     end
+    string :title_sort do
+      title.downcase.gsub(/^(an?|the)/, '')
+    end
+    string :source_agency_acronym do
+      source_agency.try(&:acronym)
+    end
   end
   
   def self.geokeyword_intersects(wkt, srid=4326)

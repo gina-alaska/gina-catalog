@@ -25,7 +25,7 @@ Ext.define('App.view.catalog.toolbar', {
             xtype: 'button',
             iconCls: 'search-icon',
             action: 'search'
-          }]          
+          }]
         }, {
           xtype: 'buttongroup',
           defaults: {
@@ -162,34 +162,34 @@ Ext.define('App.view.catalog.toolbar', {
             iconCls: 'sort-icon',
             menu: [{
               text: 'Title',
-              dataIndex: 'title',
               group: 'sort', xtype: 'menucheckitem',
-              menu: this.directionMenu()
+              hideOnClick: false,
+              menu: this.directionMenu("title_sort","Sort by title")
             },{
               text: 'Project/Data',
-              dataIndex: 'type',
               group: 'sort', xtype: 'menucheckitem',
-              menu: this.directionMenu()
+              hideOnClick: false,
+              menu: this.directionMenu("type","Sort by project/data")
             },{
               text: 'Source',
-              dataIndex: 'source_agency_acronym',
               group: 'sort', xtype: 'menucheckitem',
-              menu: this.directionMenu()
+              hideOnClick: false,
+              menu: this.directionMenu("source_agency_acronym","Sort by source agency")
             },{
               text: 'Status',
-              dataIndex: 'status',
               group: 'sort', xtype: 'menucheckitem',
-              menu: this.directionMenu()
+              hideOnClick: false,
+              menu: this.directionMenu("status","Sort by status")
             },{
               text: 'Start Date',
-              dataIndex: 'start_date_year',
               group: 'sort', xtype: 'menucheckitem',
-              menu: this.directionMenu()
+              hideOnClick: false,
+              menu: this.directionMenu("start_date_year","Sort by start date")
             },{
               text: 'End Date',
-              dataIndex: 'end_date_year',
               group: 'sort', xtype: 'menucheckitem',
-              menu: this.directionMenu()
+              hideOnClick: false,
+              menu: this.directionMenu("end_date_year","Sort by end date")
             }]
           }, {
             xtype: 'button',
@@ -203,15 +203,25 @@ Ext.define('App.view.catalog.toolbar', {
       this.callParent(arguments);
     }, 
     
-    directionMenu: function() {
+    directionMenu: function( val, description) {
       return [{
         text: 'Ascending',
         group: 'direction', xtype: 'menucheckitem',
+        field: 'order_by',
+        action: 'filter',
+        filterType: 'single',
+        value: val + "-asc",
+        description: description + " ascending",
         scope: this,
         checkHandler: this.checkHandler
       }, {
         text: 'Descending',
         group: 'direction', xtype: 'menucheckitem',
+        field: 'order_by',
+        action: 'filter',
+        filterType: 'single',
+        value: val + "-desc",
+        description: description + " descending",
         scope: this,
         checkHandler: this.checkHandler
       }];
@@ -219,11 +229,7 @@ Ext.define('App.view.catalog.toolbar', {
     
     checkHandler: function(menu, checked) {
       if(checked) {
-        var parent = menu.parentMenu.parentItem,
-            field = parent.dataIndex,
-            dir = menu.text;
-        
-        dir = (dir == 'Ascending' ? 'ASC' : 'DESC');
+        var parent = menu.parentMenu.parentItem;
 
         parent.setChecked(true);
       }
