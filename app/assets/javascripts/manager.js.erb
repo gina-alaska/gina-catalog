@@ -1,0 +1,104 @@
+//= require_self
+//= require ./gina/DefaultText.js
+//= require_tree ./manager/model
+//= require_tree ./manager/store
+//= require_tree ./manager/view
+//= require_tree ./manager/controller
+
+Ext.application({
+  name: 'Manager',
+  appFolder: '/assets/manager',
+  controllers: ['Manager', 'Project'],
+  
+  routes: [{
+    rule: 'project/:id',
+    controller: 'Project',
+    action: 'showRecord'
+  }],
+  
+  buildRoute: function(route){
+    var match = [];
+    Ext.each(route.rule.split('/'), function(item) {
+      match.push(item.match(/^:/) ? '([^\\/]+)' : item);
+    }, this);
+    route.match = new RegExp('^' + match.join('\\/') + '$');
+  },
+  
+  matchRoute: function(token){
+    var match, route;
+    
+    Ext.each(this.routes, function(r) {
+      route = r;
+      match = token.match(route.match);
+      if(match !== null) { return false; }
+    }, this);
+    return match ? this.decodeMatchedRoute(token, route, match) : false;
+  },
+  decodeMatchedRoute: function(token, route, match) {
+    // Get rid of the elements we don't want from the matched rules
+    match.shift();
+        
+    var params = {};
+    Ext.each(route.rule.split('/'), function(item) {
+      var name = item.match(/^:(.*)/);
+      if(name) { params[name[1]] = match.shift(); }
+    }, this);
+    
+    return {
+      uri: token,
+      controller: route.controller,
+      action: route.action,
+      params: params
+    };
+  },
+  
+  dispatch: function(token) {
+    // Don't do anything if there is no token
+    if(!token || token.length <= 0) {
+      return false;
+    }
+    var request = this.matchRoute(token);
+    if(request) {
+      var controller = this.getController(request.controller);
+      var action = controller[request.action];
+      if(action) { action.call(controller, request); }      
+    }
+  },
+  launch: function() {
+    Ext.each(this.routes, function(r) {
+      this.buildRoute(r);
+    }, this);
+    
+    Ext.util.History.init(function() {
+      var token = document.location.hash.replace('#', '');
+      this.dispatch(token);
+    }.bind(this));
+    Ext.util.History.on('change', this.dispatch, this);
+    
+    // var splash = Ext.create(this.getController('Catalog').getView('catalog.splash'));
+    // this.getController('Search').getStore('Catalog').on('load', splash.recordsLoaded, splash, { single: true });
+    // this.getController('Catalog').on('featuresrendered', splash.featuresRendered, splash);
+    //   
+    // splash.show();
+
+
+    Ext.create('Ext.container.Viewport', {
+      layout: 'border',
+      border: false,
+      defaults: { border: false },
+      items: [{
+        region: 'center',
+        border: false,
+        layout: 'card',
+        deferredRender: false,
+        items: [{
+          html: 'Loading...'
+        }]
+      }, {
+        region: 'north',
+        border: false,
+        contentEl: 'header'
+      }]
+    });
+  }
+});
