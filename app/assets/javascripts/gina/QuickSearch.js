@@ -22,8 +22,6 @@ Ext.define('Ext.gina.QuickSearch', {
       text: 'Enter your search here...'
     });
     
-    console.log(this, this.getStore());
-
     this.items = [{
       name: 'q',
       plugins: [defaultSearch],

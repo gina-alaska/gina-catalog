@@ -146,7 +146,6 @@ Ext.define('App.controller.Search', {
   findSearchParam: function(field, value) {
     var filters = this.getStore('Filters');
     
-    console.log(value);
     return filters.findBy(function(item) {
       return item.get('field') == field && (value === undefined || item.get('value') == value);
     }, this);
@@ -171,7 +170,6 @@ Ext.define('App.controller.Search', {
     // Don't add blank values
     if(value === "") { return false; }
     var index = this.findSearchParam(field);
-    console.log(index);
     var data = { field: field, value: value, desc: desc };
     if(index < 0) {
       // Value doesn't exist in the filters yet
