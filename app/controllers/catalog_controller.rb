@@ -51,23 +51,23 @@ class CatalogController < ApplicationController
 #    @results = @results.includes(:locations, :source_agency, :people, :agencies, :tags, :geokeywords)
 #    @results = @results.where(:id => params[:ids]) unless params[:ids].nil?
 #    @results = @results.limit(params[:limit] || 3000).order('title ASC')
+    table_includes = [:tags, :locations, :agencies, :source_agency]
+    
     if(search.nil? or search.empty?)
       @results = Catalog.not_archived.published
-      @results = @results.includes(:locations, :source_agency, :people, :agencies, :tags, :geokeywords)
+      @results = @results.includes(table_includes)
       @results = @results.where(:id => params[:ids]) unless params[:ids].nil?
       @results = @results.paginate(:page => params[:page], :per_page => params[:limit] || 3000).order('title ASC')
       @results = [] if Rails.env == 'development'
       @total = @results.count
-    else
-      table_includes = [:tags, :locations]
-      
+    else  
       catalog_ids = search[:ids] unless search[:ids].nil? or search[:ids].empty?
       
       if(!catalog_ids and search[:bbox])
         # catalog_ids = []
         # catalog_ids += Catalog.geokeyword_intersects(bbox).pluck('catalog.id').uniq
-        catalog_ids = Catalog.location_intersects(search[:bbox]).select('distinct catalog.id').collect(&:id).uniq!
-        # catalog_ids.uniq!
+        catalog_ids = Catalog.location_intersects(search[:bbox]).select('distinct catalog.id').collect(&:id)
+        catalog_ids.uniq!
       end
 
       if search[:order_by]
