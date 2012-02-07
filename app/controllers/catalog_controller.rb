@@ -56,7 +56,7 @@ class CatalogController < ApplicationController
       @results = @results.includes(:locations, :source_agency, :people, :agencies, :tags, :geokeywords)
       @results = @results.where(:id => params[:ids]) unless params[:ids].nil?
       @results = @results.paginate(:page => params[:page], :per_page => params[:limit] || 3000).order('title ASC')
-      # @results = []
+      @results = [] if Rails.env == 'development'
       @total = @results.count
     else
       table_includes = [:tags, :locations]
