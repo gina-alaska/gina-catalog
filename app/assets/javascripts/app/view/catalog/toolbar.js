@@ -16,6 +16,7 @@ Ext.define('App.view.catalog.toolbar', {
             name: 'q',
             cls: 'quicksearch',
             xtype: 'textfield',
+            plugins: [new Ext.gina.DefaultText({text: 'Enter search terms here'})],
             width: 400
           }, {
             xtype: 'button',
