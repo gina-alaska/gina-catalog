@@ -63,11 +63,11 @@ class CatalogController < ApplicationController
       
       catalog_ids = search[:ids] unless search[:ids].nil? or search[:ids].empty?
       
-      if(search[:bbox])
-        catalog_ids ||= []
+      if(!catalog_ids and search[:bbox])
+        # catalog_ids = []
         # catalog_ids += Catalog.geokeyword_intersects(bbox).pluck('catalog.id').uniq
-        catalog_ids += Catalog.location_intersects(search[:bbox]).select('distinct catalog.id').collect(&:id)
-        catalog_ids.uniq!
+        catalog_ids = Catalog.location_intersects(search[:bbox]).select('distinct catalog.id').collect(&:id).uniq!
+        # catalog_ids.uniq!
       end
 
       if search[:order_by]
