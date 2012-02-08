@@ -38,7 +38,11 @@ Ext.define('App.controller.Catalog', {
         store: this.getStore('Catalog')
       }, {
         region: 'center',
-        xtype: 'catalog_map'
+        xtype: 'catalog_map',
+        dockedItems: [{
+          dock: 'bottom',
+          xtype: 'catalog_maptoolbar'
+        }]
       }]
     });
   }

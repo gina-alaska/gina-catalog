@@ -51,28 +51,31 @@ class CatalogController < ApplicationController
 #    @results = @results.includes(:locations, :source_agency, :people, :agencies, :tags, :geokeywords)
 #    @results = @results.where(:id => params[:ids]) unless params[:ids].nil?
 #    @results = @results.limit(params[:limit] || 3000).order('title ASC')
+    
+    table_includes = [:tags, :locations, :agencies, :source_agency]
+    
     if(search.nil? or search.empty?)
       @results = Catalog.not_archived.published
-      @results = @results.includes(:locations, :source_agency, :people, :agencies, :tags, :geokeywords)
+      @results = @results.includes(table_includes)
       @results = @results.where(:id => params[:ids]) unless params[:ids].nil?
       @results = @results.paginate(:page => params[:page], :per_page => params[:limit] || 3000).order('title ASC')
-      # @results = []
+      @results = [] if Rails.env == 'development'
       @total = @results.count
-    else
-      table_includes = [:tags, :locations]
-      
+    else  
       catalog_ids = search[:ids] unless search[:ids].nil? or search[:ids].empty?
       
-      if(search[:bbox])
-        catalog_ids ||= []
+      if(!catalog_ids and search[:bbox])
+        # catalog_ids = []
         # catalog_ids += Catalog.geokeyword_intersects(bbox).pluck('catalog.id').uniq
-        catalog_ids += Catalog.location_intersects(search[:bbox]).select('distinct catalog.id').collect(&:id)
+        catalog_ids = Catalog.location_intersects(search[:bbox]).select('distinct catalog.id').collect(&:id)
         catalog_ids.uniq!
       end
+
       if search[:order_by]
         field, direction = search[:order_by].split("-");
         direction ||= :asc
       end
+
       @search = Sunspot.search(Project, Asset) do
         adjust_solr_params do |params|
           # Force solar to do an 'OR'ish search, at least 1 "optional" word is required in each  
@@ -104,6 +107,7 @@ class CatalogController < ApplicationController
         with(:end_date_year).less_than(search[:start_date_after]) if search[:end_date_before]
 
         paginate per_page:(params[:limit] || 3000), page:(params[:page] || 1)
+        
         order_by(field, direction) if field and direction
       end
       

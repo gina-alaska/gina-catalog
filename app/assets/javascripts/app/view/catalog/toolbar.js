@@ -16,6 +16,7 @@ Ext.define('App.view.catalog.toolbar', {
             name: 'q',
             cls: 'quicksearch',
             xtype: 'textfield',
+            plugins: [new Ext.gina.DefaultText({text: 'Enter search terms here'})],
             width: 400
           }, {
             xtype: 'button',
@@ -69,35 +70,35 @@ Ext.define('App.view.catalog.toolbar', {
                 field: 'status',
                 filterType: 'single',
                 action: 'filter',
-                value: 'ongoing',
+                value: 'Ongoing',
                 description: 'Status: Ongoing'
               }, {
                 text: 'Complete',
                 field: 'status',
                 filterType: 'single',
                 action: 'filter',
-                value: 'complete',
+                value: 'Complete',
                 description: 'Status: Complete'
               }, {
                 text: 'Unknown',
                 field: 'status',
                 filterType: 'single',
                 action: 'filter',
-                value: 'unknown',
+                value: 'Unknown',
                 description: 'Status: Unknown'
               }, {
                 text: 'Local',
                 field: 'status',
                 filterType: 'single',
                 action: 'filter',
-                value: 'local',
+                value: 'Local',
                 description: 'Status: Local'
               }, {
                 text: 'Remote',
                 field: 'status',
                 filterType: 'single',
                 action: 'filter',
-                value: 'remote',
+                value: 'Remote',
                 description: 'Status: Remote'
               }]
             }, {
