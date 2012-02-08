@@ -53,8 +53,10 @@ Ext.define('App.controller.Map', {
     var catalog = this.getStore('Catalog');
     map.loadFeaturesFrom(catalog);
     
-    map.getMap().events.register('moveend', this, this.onMoveEnd);
-    map.getMap().events.register('mousemove', this, this.onMouseMove, { buffer: 300 });
+    if(!Ext.isIE) {
+      map.getMap().events.register('moveend', this, this.onMoveEnd);
+      map.getMap().events.register('mousemove', this, this.onMouseMove, { buffer: 300 });      
+    }
   },
   onMouseMove: function(e) {
     var tb = this.getMapToolbar(),
