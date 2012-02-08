@@ -42,11 +42,11 @@ Ext.define('App.view.catalog.maptoolbar', {
     
     updateMouse: function(point){
       var panel = this.down('panel[itemId="mouse"]');
-      panel.update(panel.tpl.apply(point));
+      if (panel) { panel.update(panel.tpl.apply(point)); }
     },
     
     updateCenter: function(point){
       var panel = this.down('panel[itemId="center"]');
-      panel.update(panel.tpl.apply(point));
+      if(panel) { panel.update(panel.tpl.apply(point)); }
     }
 });
