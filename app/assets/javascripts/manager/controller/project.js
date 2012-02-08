@@ -5,6 +5,9 @@ Ext.define('Manager.controller.Project', {
   refs: [{
     ref: 'search',
     selector: 'projects_toolbar textfield'
+  }, {
+    ref: 'manager',
+    selector: '#manager'
   }],
 
   init: function() {
@@ -26,6 +29,13 @@ Ext.define('Manager.controller.Project', {
   },
   
   showRecord: function(request) {
+    var p = Ext.widget('project_edit', {
+      project_id: request.params.id
+    });
+    
+    if(this.getManager()) {
+      this.getManager().add(p);      
+    }
   },
   
   doSearch: function(){
