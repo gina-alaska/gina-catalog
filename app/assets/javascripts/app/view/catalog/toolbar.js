@@ -60,7 +60,7 @@ Ext.define('App.view.catalog.toolbar', {
               iconCls: 'source-icon',
               filterType: 'sourceselector',
               action: 'filter',
-              field: 'source_agency_ids',
+              field: 'source_agency_id',
               description: 'Source Agency: {name}'
             }, {
               text: 'Status',

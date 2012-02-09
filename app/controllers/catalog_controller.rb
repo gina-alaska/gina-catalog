@@ -94,7 +94,7 @@ class CatalogController < ApplicationController
         with :archived_at_year, nil unless search[:archived]
         with :type, search[:type] if search[:type]
         with :agency_ids, search[:agency_ids] if search[:agency_ids]
-        with :source_id, search[:source_id] if search[:source_id]
+        with :source_agency_id, search[:source_agency_id] if search[:source_agency_id]
         with :contact_id, search[:contact_id] if search[:contact_id]
         with :geokeywords_name, search[:region] if search[:region]
         with(:start_date_year).greater_than(search[:start_date_after]) if search[:start_date_after]
