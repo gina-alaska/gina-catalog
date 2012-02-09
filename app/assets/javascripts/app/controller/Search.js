@@ -205,18 +205,22 @@ Ext.define('App.controller.Search', {
   
   doFilter: function(item) {
     var win;
-    
+    console.log(item);
     switch(item.filterType) {
       case 'single':
         // this.clearSearchParams( item.field );
         this.replaceSearchParam(item.field, item.value, item.description);
-        /* now handled by the apply button */
-        // this.doSearch();
+        /* now handled by the apply button, unless immediateSearch is true */
+        if(item.immediateSearch === true) {
+          this.doSearch();
+        }
         break;
       case 'multiple':
         this.addSearchParam(item.field, item.value, item.description);
-        /* now handled by the apply button */
-        // this.doSearch();
+        /* now handled by the apply button, unless immediateSearch is true */
+        if(item.immediateSearch === true) {
+          this.doSearch();
+        }
         break;
       case 'sourceselector':
         win = Ext.create("App.view.agency.selector",{
