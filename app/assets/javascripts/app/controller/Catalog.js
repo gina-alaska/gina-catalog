@@ -9,7 +9,10 @@ Ext.define('App.controller.Catalog', {
       /* Main viewport events */
       'viewport > #center': {
         render: this.start
-      } 
+      },
+      'viewport > #center button[text="Catalog"]': {
+        click: this.show
+      }
     });
   },
   
