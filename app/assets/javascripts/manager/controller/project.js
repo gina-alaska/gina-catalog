@@ -30,7 +30,7 @@ Ext.define('Manager.controller.Project', {
   
   showRecord: function(request) {
     var p = Ext.widget('project_edit', {
-      project_id: request.params.id
+      recordId: request.params.id
     });
     
     if(this.getManager()) {

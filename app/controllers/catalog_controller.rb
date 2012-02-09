@@ -8,6 +8,7 @@ class CatalogController < ApplicationController
     @item = @item.includes({ :people => [ :addresses, :phone_numbers ] }).find_by_id(params[:id])
 
     respond_to do |format|
+      format.json { render :json => @item.as_json(:format => 'full') }
       format.html { render :layout => false }
       format.tar_gz do
         render :content_type => "application/octet-stream", :layout => false, 

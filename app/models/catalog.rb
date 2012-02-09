@@ -201,6 +201,14 @@ Title: #{self.title}
   end
 
   def as_json(opts = {})
+    if opts and opts[:format] == 'full'
+      full_json
+    else
+      basic_json
+    end
+  end
+  
+  def basic_json
     {
       :id => self.id,
       :type => self.type,
@@ -209,7 +217,21 @@ Title: #{self.title}
       :status => self.status,
       :source_agency_acronym => self.source_agency.try(:acronym),
       :source_agency_id => self.source_agency.try(:id),
-=begin
+      :created_at => self.created_at,
+      :updated_at => self.updated_at,
+      :locations => self.locations
+    }    
+  end
+  
+  def full_json
+    {
+      :id => self.id,
+      :type => self.type,
+      :title => self.title,
+      :description => self.short_description,
+      :status => self.status,
+      :source_agency_acronym => self.source_agency.try(:acronym),
+      :source_agency_id => self.source_agency.try(:id),
       :start_date_year => self.start_date.try(:year),
       :end_date_year => self.end_date.try(:year),
       :geokeywords => self.geokeywords.collect(&:name),
@@ -217,11 +239,10 @@ Title: #{self.title}
       :primary_contact_id => self.primary_contact_id,
       :person_ids => self.person_ids,
       :published_at => self.published_at,
-=end
       :created_at => self.created_at,
       :updated_at => self.updated_at,
       :locations => self.locations
-    }
+    }    
   end
 
   protected

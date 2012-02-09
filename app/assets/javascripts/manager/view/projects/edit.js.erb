@@ -1,0 +1,65 @@
+/**
+ * @class Manager.view.project.Edit
+ * @extends Ext.panel.Panel
+ * Edit Panel for Projects
+ */
+Ext.define('Manager.view.project.Edit', {
+    extend: 'Ext.form.Panel', 
+    alias: 'widget.project_edit',
+
+    config: {
+      recordId: null
+    },
+    
+    titleTpl: new Ext.Template('Edit {id}::{title}'),
+
+    constructor: function(config) {
+      this.initConfig(config);
+      this.callParent(arguments);
+    },
+
+    initComponent: function() {
+      Ext.apply(this, {
+        title: 'Loading...',
+        closable: true,
+        bodyStyle: 'padding: 3px;',
+        fieldDefaults: { anchor: '100%' },
+        items: [{
+          xtype:'textfield',
+          fieldLabel: 'Title',
+          name: 'title'
+        }, {
+          xtype: 'textarea',
+          fieldLabel: 'Description',
+          name: 'description'
+        }, {
+          xtype: 'textfield',
+          fieldLabel: 'Start Year',
+          name: 'start_date_year'
+        }, {
+          xtype: 'textfield',
+          fieldLabel: 'End Year',
+          name: 'end_date_year'
+        }, {
+          xtype: 'combobox',
+          fieldLabel: 'Status',
+          name: 'status',
+          queryMode: 'local',
+          data: <%= Project::STATUSES.as_json %>
+        }]
+      });        
+      
+      this.callParent(arguments);
+      
+      Ext.Ajax.request({
+        url: '/catalog/' + this.getRecordId() + '.json',
+        success: this.onRequestSuccess,
+        scope: this
+      });
+    },
+    onRequestSuccess: function(response){
+      this.record = Ext.JSON.decode(response.responseText);
+      this.setTitle(this.titleTpl.apply(this.record));
+      this.getForm().setValues(this.record);
+    }
+});
