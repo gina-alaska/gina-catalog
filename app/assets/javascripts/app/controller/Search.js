@@ -205,7 +205,7 @@ Ext.define('App.controller.Search', {
   
   doFilter: function(item) {
     var win;
-    console.log(item);
+    
     switch(item.filterType) {
       case 'single':
         // this.clearSearchParams( item.field );
