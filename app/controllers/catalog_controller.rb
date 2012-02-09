@@ -99,11 +99,11 @@ class CatalogController < ApplicationController
         with :geokeywords_name, search[:region] if search[:region]
         with(:start_date_year).greater_than(search[:start_date_after]) if search[:start_date_after]
 
-        with(:start_date_year).less_than(search[:start_date_after]) if search[:start_date_before]
+        with(:start_date_year).less_than(search[:start_date_before]) if search[:start_date_before]
 
-        with(:end_date_year).greater_than(search[:start_date_after]) if search[:end_date_after]
+        with(:end_date_year).greater_than(search[:end_date_after]) if search[:end_date_after]
         
-        with(:end_date_year).less_than(search[:start_date_after]) if search[:end_date_before]
+        with(:end_date_year).less_than(search[:end_date_before]) if search[:end_date_before]
 
         paginate per_page:(params[:limit] || 3000), page:(params[:page] || 1)
         
