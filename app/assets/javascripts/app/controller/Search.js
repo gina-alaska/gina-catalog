@@ -7,6 +7,9 @@ Ext.define('App.controller.Search', {
   }, {
     ref: 'textsearch',
     selector: 'catalog_toolbar textfield[name="q"]'
+  }, {
+    ref: 'applyButton',
+    selector: 'catalog_sidebar button[action="search"]'
   }],
 
   stores: [ 'Catalog', 'Filters' ],
@@ -52,6 +55,11 @@ Ext.define('App.controller.Search', {
     this.searchParams = new Ext.util.MixedCollection();
     
     this.getStore('Filters').on('remove', this.onFilterRemoved, this);
+    this.getStore('Filters').on('add', this.enableApplyButton, this);
+  },
+  
+  enableApplyButton: function(){
+    this.getApplyButton().enable();
   },
   
   onAOIAdd: function(panel, feature){
@@ -66,6 +74,7 @@ Ext.define('App.controller.Search', {
       filterType: 'single',
       field: 'bbox',
       value: geom.toString(),
+      immediateSearch: true,
       description: 'AOI Selection'
     });
   },
@@ -80,6 +89,7 @@ Ext.define('App.controller.Search', {
       filterType: 'single',
       field: 'ids', 
       value: ids, 
+      immediateSearch: true,
       description: 'Selected Feature'
     });
   },
@@ -88,7 +98,7 @@ Ext.define('App.controller.Search', {
     var target = Ext.fly(e.target);
     if (target && target.getAttribute('action') == 'remove') {
       this.clearSearchParam(record.get('field'), record.get('value'));
-      this.doSearch();
+      // this.doSearch();
     }
   },
 
@@ -115,6 +125,8 @@ Ext.define('App.controller.Search', {
         params: Ext.Object.toQueryString(params)
       });      
     }
+    
+    this.getApplyButton().disable();
   },
 
   getSearchParams: function(id) {
@@ -193,6 +205,7 @@ Ext.define('App.controller.Search', {
         this.getMapPanel().layer('aoi').removeAllFeatures();
         break;
     }
+    this.enableApplyButton();
   },
 
   clearFilters: function() {
@@ -200,7 +213,7 @@ Ext.define('App.controller.Search', {
     this.getStore('Filters').each(function(item) {
       this.getStore('Filters').remove(item);
     }, this);
-    this.doSearch();
+    // this.doSearch();
   },
   
   doFilter: function(item) {
