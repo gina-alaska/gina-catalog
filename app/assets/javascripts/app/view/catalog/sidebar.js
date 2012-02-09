@@ -59,7 +59,19 @@ Ext.define('App.view.catalog.sidebar', {
       margins: '3 0 0 0',
       items: {
         xtype: 'filterlist'
-      }
+      },
+      dockedItems: [{
+        xtype: 'toolbar',
+        dock: 'bottom',
+        layout: { type: 'hbox', pack: 'end' },
+        items: [{ 
+          xtype: 'button', 
+          text: 'Apply Search Filters', 
+          icon: '/assets/icons/medium/search.png',
+          action: 'search', 
+          scale: 'large'
+        }]
+      }]
     }];
 
     this.callParent();

@@ -38,6 +38,9 @@ Ext.define('App.controller.Search', {
       'catalog_sidebar filterlist': {
         itemclick: this.onFilterClick
       },
+      'catalog_sidebar button[action="search"]': {
+        click: this.doSearch
+      },
       
       'catalog_map': {
         clusterclick: this.onClusterClick,
@@ -207,11 +210,13 @@ Ext.define('App.controller.Search', {
       case 'single':
         // this.clearSearchParams( item.field );
         this.replaceSearchParam(item.field, item.value, item.description);
-        this.doSearch();
+        /* now handled by the apply button */
+        // this.doSearch();
         break;
       case 'multiple':
         this.addSearchParam(item.field, item.value, item.description);
-        this.doSearch();
+        /* now handled by the apply button */
+        // this.doSearch();
         break;
       case 'sourceselector':
         win = Ext.create("App.view.agency.selector",{
