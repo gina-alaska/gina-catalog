@@ -55,11 +55,18 @@ Ext.define('App.controller.Search', {
     this.searchParams = new Ext.util.MixedCollection();
     
     this.getStore('Filters').on('remove', this.onFilterRemoved, this);
-    this.getStore('Filters').on('add', this.enableApplyButton, this);
+    // this.getStore('Filters').on('add', this.enableApplyButton, this);
   },
   
   enableApplyButton: function(){
+    // this.getApplyButton().addCls('notice');
+    // custom: highlight foreground text to blue for 2 seconds
     this.getApplyButton().enable();
+    this.getApplyButton().getEl().highlight("00ff00", { attr: 'backgroundColor', ease: 'easeInStrong' });
+  },
+  disableApplyButton: function(){
+    // this.getApplyButton().removeCls('notice');
+    this.getApplyButton().disable();
   },
   
   onAOIAdd: function(panel, feature){
@@ -102,7 +109,7 @@ Ext.define('App.controller.Search', {
     }
   },
 
-  doSearch: function(format) {
+  doSearch: function(opts) {
     var searchField = Ext.ComponentQuery.query('catalog_toolbar textfield[name="q"]')[0];
     this.replaceSearchParam('q', searchField.getValue(), 'Text: ' +  searchField.getValue());
     
@@ -118,7 +125,7 @@ Ext.define('App.controller.Search', {
       }
     }
 
-    if(format && format == 'pdf') {
+    if(opts && opts.format && opts.format == 'pdf') {
       window.open('/data.pdf?'+Ext.Object.toQueryString(params));
     } else {
       this.getStore('Catalog').load({
@@ -126,7 +133,7 @@ Ext.define('App.controller.Search', {
       });      
     }
     
-    this.getApplyButton().disable();
+    this.disableApplyButton();
   },
 
   getSearchParams: function(id) {
@@ -225,14 +232,18 @@ Ext.define('App.controller.Search', {
         this.replaceSearchParam(item.field, item.value, item.description);
         /* now handled by the apply button, unless immediateSearch is true */
         if(item.immediateSearch === true) {
-          this.doSearch();
+          this.doSearch(true);
+        } else {
+          this.enableApplyButton();
         }
         break;
       case 'multiple':
         this.addSearchParam(item.field, item.value, item.description);
         /* now handled by the apply button, unless immediateSearch is true */
         if(item.immediateSearch === true) {
-          this.doSearch();
+          this.doSearch(true);
+        } else {
+          this.enableApplyButton();
         }
         break;
       case 'sourceselector':

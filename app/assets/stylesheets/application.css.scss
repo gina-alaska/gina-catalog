@@ -19,6 +19,18 @@ body {
   font-family: "trebuchet ms", Verdana, Tahoma, Arial, Helvetica, san-serif;
 }
 
+.x-btn.apply {
+  .x-btn-inner {
+    font-weight: bold;
+  }
+}
+.x-btn.notice {
+  .x-btn-inner {
+    background-color: #48db6a;
+//    color: red;
+  }
+} 
+
 #loading {
   padding: 5px;
 }
