@@ -22,7 +22,7 @@ Ext.define('App.controller.Search', {
         }
       },
       'catalog_toolbar button[action="export"]': {
-        click: function() { this.doSearch('pdf'); }
+        click: function() { this.doSearch({ format: 'pdf' }); }
       },
       'catalog_toolbar button[action="search"]': {
         click: this.doSearch
