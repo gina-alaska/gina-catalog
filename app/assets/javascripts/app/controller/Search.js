@@ -59,13 +59,13 @@ Ext.define('App.controller.Search', {
   },
   
   enableApplyButton: function(){
-    // this.getApplyButton().addCls('notice');
+    this.getApplyButton().addCls('notice');
     // custom: highlight foreground text to blue for 2 seconds
     this.getApplyButton().enable();
-    this.getApplyButton().getEl().highlight("00ff00", { attr: 'backgroundColor', ease: 'easeInStrong' });
+    this.getApplyButton().getEl().highlight('00ff00');
   },
   disableApplyButton: function(){
-    // this.getApplyButton().removeCls('notice');
+    this.getApplyButton().removeCls('notice');
     this.getApplyButton().disable();
   },
   

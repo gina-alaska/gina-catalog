@@ -21,14 +21,13 @@ body {
 
 .x-btn.apply {
   .x-btn-inner {
+    color: #000000;
     font-weight: bold;
   }
 }
 .x-btn.notice {
-  .x-btn-inner {
-    background-color: #48db6a;
-//    color: red;
-  }
+  background-color: #38eb77;
+  border: 1px solid #0000ff;
 } 
 
 #loading {
