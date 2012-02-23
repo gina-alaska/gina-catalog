@@ -197,7 +197,7 @@ Title: #{self.title}
   def short_description
     return nil if self.description.nil?
     #self.synopsis.text.gsub(/^(.{200}[\w.]*)(.*)/) {$2.empty? ? $1 : $1 + '...'}
-    self.description.slice(0..200)
+    self.description.slice(0..150)
   end
 
   def as_json(opts = {})

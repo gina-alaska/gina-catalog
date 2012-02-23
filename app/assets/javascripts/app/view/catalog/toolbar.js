@@ -60,7 +60,7 @@ Ext.define('App.view.catalog.toolbar', {
               iconCls: 'source-icon',
               filterType: 'sourceselector',
               action: 'filter',
-              field: 'source_agency_ids',
+              field: 'source_agency_id',
               description: 'Source Agency: {name}'
             }, {
               text: 'Status',
@@ -213,6 +213,7 @@ Ext.define('App.view.catalog.toolbar', {
         filterType: 'single',
         value: val + "-asc",
         description: description + " ascending",
+        immediateSearch: true,
         scope: this,
         checkHandler: this.checkHandler
       }, {
@@ -223,6 +224,7 @@ Ext.define('App.view.catalog.toolbar', {
         filterType: 'single',
         value: val + "-desc",
         description: description + " descending",
+        immediateSearch: true,
         scope: this,
         checkHandler: this.checkHandler
       }];

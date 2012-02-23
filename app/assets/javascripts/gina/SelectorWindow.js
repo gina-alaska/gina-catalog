@@ -33,7 +33,7 @@ Ext.define('Ext.gina.SelectorWindow', {
         }
       }, {
         scale: 'medium',
-        text: 'Submit',
+        text: 'Add Filter',
         scope: this,
         handler: this.onSubmit
       }]

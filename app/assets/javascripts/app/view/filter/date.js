@@ -75,7 +75,7 @@ Ext.define('App.view.filter.date', {
           scale: 'medium',
           handler: function() { this.close(); }
         }, {
-          text: 'Submit',
+          text: 'Add Filter',
           scope: this,
           scale: 'medium',
           handler: function(){

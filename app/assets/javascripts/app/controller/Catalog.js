@@ -9,14 +9,17 @@ Ext.define('App.controller.Catalog', {
       /* Main viewport events */
       'viewport > #center': {
         render: this.start
-      } 
+      },
+      'viewport > #center button[text="Catalog"]': {
+        click: this.show
+      }
     });
   },
   
   show: function() {
     var panel = this.catalogPanel.up('panel');
     panel.getLayout().setActiveItem(this.catalogPanel);
-    
+
     // this.getStore('Catalog').on('beforeload', this.updateFilters, this);
     this.getStore('Catalog').load();
   },
@@ -25,6 +28,7 @@ Ext.define('App.controller.Catalog', {
     this.catalogPanel = panel.add({
       id: 'catalog',
       layout: 'border',
+      border: false,
       defaults: { border: false },
       dockedItems: [{
         xtype: 'catalog_toolbar',
@@ -32,7 +36,7 @@ Ext.define('App.controller.Catalog', {
       }],
       items: [{
         region: 'west',
-        width: 300,
+        width: 350,
         split: true,
         xtype: 'catalog_sidebar',
         store: this.getStore('Catalog')

@@ -7,6 +7,9 @@ Ext.define('App.controller.Search', {
   }, {
     ref: 'textsearch',
     selector: 'catalog_toolbar textfield[name="q"]'
+  }, {
+    ref: 'applyButton',
+    selector: 'catalog_sidebar button[action="search"]'
   }],
 
   stores: [ 'Catalog', 'Filters' ],
@@ -19,7 +22,7 @@ Ext.define('App.controller.Search', {
         }
       },
       'catalog_toolbar button[action="export"]': {
-        click: function() { this.doSearch('pdf'); }
+        click: function() { this.doSearch({ format: 'pdf' }); }
       },
       'catalog_toolbar button[action="search"]': {
         click: this.doSearch
@@ -38,6 +41,9 @@ Ext.define('App.controller.Search', {
       'catalog_sidebar filterlist': {
         itemclick: this.onFilterClick
       },
+      'catalog_sidebar button[action="search"]': {
+        click: this.doSearch
+      },
       
       'catalog_map': {
         clusterclick: this.onClusterClick,
@@ -49,6 +55,18 @@ Ext.define('App.controller.Search', {
     this.searchParams = new Ext.util.MixedCollection();
     
     this.getStore('Filters').on('remove', this.onFilterRemoved, this);
+    // this.getStore('Filters').on('add', this.enableApplyButton, this);
+  },
+  
+  enableApplyButton: function(){
+    this.getApplyButton().addCls('notice');
+    // custom: highlight foreground text to blue for 2 seconds
+    this.getApplyButton().enable();
+    this.getApplyButton().getEl().highlight('00ff00');
+  },
+  disableApplyButton: function(){
+    this.getApplyButton().removeCls('notice');
+    this.getApplyButton().disable();
   },
   
   onAOIAdd: function(panel, feature){
@@ -63,6 +81,7 @@ Ext.define('App.controller.Search', {
       filterType: 'single',
       field: 'bbox',
       value: geom.toString(),
+      immediateSearch: true,
       description: 'AOI Selection'
     });
   },
@@ -77,6 +96,7 @@ Ext.define('App.controller.Search', {
       filterType: 'single',
       field: 'ids', 
       value: ids, 
+      immediateSearch: true,
       description: 'Selected Feature'
     });
   },
@@ -85,11 +105,11 @@ Ext.define('App.controller.Search', {
     var target = Ext.fly(e.target);
     if (target && target.getAttribute('action') == 'remove') {
       this.clearSearchParam(record.get('field'), record.get('value'));
-      this.doSearch();
+      // this.doSearch();
     }
   },
 
-  doSearch: function(format) {
+  doSearch: function(opts) {
     var searchField = Ext.ComponentQuery.query('catalog_toolbar textfield[name="q"]')[0];
     this.replaceSearchParam('q', searchField.getValue(), 'Text: ' +  searchField.getValue());
     
@@ -105,13 +125,15 @@ Ext.define('App.controller.Search', {
       }
     }
 
-    if(format && format == 'pdf') {
+    if(opts && opts.format && opts.format == 'pdf') {
       window.open('/data.pdf?'+Ext.Object.toQueryString(params));
     } else {
       this.getStore('Catalog').load({
         params: Ext.Object.toQueryString(params)
       });      
     }
+    
+    this.disableApplyButton();
   },
 
   getSearchParams: function(id) {
@@ -190,6 +212,7 @@ Ext.define('App.controller.Search', {
         this.getMapPanel().layer('aoi').removeAllFeatures();
         break;
     }
+    this.enableApplyButton();
   },
 
   clearFilters: function() {
@@ -197,7 +220,7 @@ Ext.define('App.controller.Search', {
     this.getStore('Filters').each(function(item) {
       this.getStore('Filters').remove(item);
     }, this);
-    this.doSearch();
+    // this.doSearch();
   },
   
   doFilter: function(item) {
@@ -207,11 +230,21 @@ Ext.define('App.controller.Search', {
       case 'single':
         // this.clearSearchParams( item.field );
         this.replaceSearchParam(item.field, item.value, item.description);
-        this.doSearch();
+        /* now handled by the apply button, unless immediateSearch is true */
+        if(item.immediateSearch === true) {
+          this.doSearch(true);
+        } else {
+          this.enableApplyButton();
+        }
         break;
       case 'multiple':
         this.addSearchParam(item.field, item.value, item.description);
-        this.doSearch();
+        /* now handled by the apply button, unless immediateSearch is true */
+        if(item.immediateSearch === true) {
+          this.doSearch(true);
+        } else {
+          this.enableApplyButton();
+        }
         break;
       case 'sourceselector':
         win = Ext.create("App.view.agency.selector",{
