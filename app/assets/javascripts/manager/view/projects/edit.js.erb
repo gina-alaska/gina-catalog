@@ -45,9 +45,11 @@ Ext.define('Manager.view.project.Edit', {
           fieldLabel: 'Status',
           name: 'status',
           queryMode: 'local',
-          data: <%= Project::STATUSES.as_json %>
+          store: 'ProjectStatus',
+          displayField: 'status',
+          valueField: 'status'
         }]
-      });        
+      });       
       
       this.callParent(arguments);
       
