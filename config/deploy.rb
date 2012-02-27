@@ -1,7 +1,7 @@
 require 'bundler/capistrano'
 
 set :application, "nssi"
-set :repository,  "git@gitorious.gina.alaska.edu:nssi/catalog_v2.git"
+set :repository,  "git@github.com:gina-alaska/nssi-catalog.git"
 set :deploy_to, "/www/nssi-prod"
 
 ssh_options[:forward_agent] = true
@@ -30,11 +30,21 @@ namespace :deploy do
   task :stop do ; end
   task :restart, :roles => :app, :except => { :no_release => true } do
     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
+    run "cd #{current_path}; RAILS_ENV=production bundle exec rake sunspot:solr:stop"
+    run "cd #{current_path}; RAILS_ENV=production bundle exec rake sunspot:solr:start"
+  end
+  task :reindex, :roles => :app do
+    run "cd #{current_path}; RAILS_ENV=production bundle exec rake sunspot:reindex"
   end
 
   task :link_configs do
     run "ln -nfs #{deploy_to}/#{shared_dir}/config/database.yml #{release_path}/config/database.yml"
+    run "ln -nfs #{deploy_to}/#{shared_dir}/config/sunspot.yml #{release_path}/config/sunspot.yml"
+    run "ln -nfs #{deploy_to}/#{shared_dir}/solr/pids #{release_path}/solr/pids"
+    run "ln -nfs #{deploy_to}/#{shared_dir}/solr/data #{release_path}/solr/data"
+    run "ln -nfs #{release_path}/tools/wkhtmltopdf-amd64 #{release_path}/tools/wkhtmltopdf"
     run "ln -nfs /san/pod/nssi_silo/git #{release_path}/repos"
+    run "ln -nfs /san/pod/nssi_silo/videos #{release_path}/public/video"
     run "ln -nfs /san/pod/nssi_silo/cms/system #{release_path}/vendor/cms/public/system"
   end
   task :precompile_assets do
@@ -44,3 +54,4 @@ end
 
 after('deploy:update_code', "deploy:link_configs")
 after('deploy:update_code', "deploy:precompile_assets")
+#after('deploy:update_code', "deploy:reindex")
