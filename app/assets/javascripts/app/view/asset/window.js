@@ -4,6 +4,7 @@ Ext.define('App.view.asset.window', {
 
   width: 500,
   height: 500,
+  constrain: true,
   
   layout: 'fit',
   
@@ -54,7 +55,8 @@ Ext.define('App.view.asset.window', {
         renderer: 'html',
         autoLoad: true
       }
-    }]
+    }];
+    
     this.dockedItems = [{
       xtype: 'toolbar',
       dock: 'bottom',

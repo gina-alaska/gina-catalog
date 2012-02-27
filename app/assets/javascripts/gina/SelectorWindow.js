@@ -6,6 +6,7 @@ Ext.define('Ext.gina.SelectorWindow', {
   layout: 'fit',
   width: 500,
   height: 500,
+  constrain: true,
   columns: [],
 
   initComponent: function() {
