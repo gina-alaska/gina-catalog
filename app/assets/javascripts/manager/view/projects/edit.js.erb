@@ -19,6 +19,10 @@ Ext.define('Manager.view.project.Edit', {
     },
 
     initComponent: function() {
+      var source_agencies = Ext.create('Manager.store.Agencies', { autoLoad: true });
+      var agencies = Ext.create('Manager.store.Agencies', { autoLoad: true });
+      agencies.sort('name_with_acronym');
+      
       Ext.apply(this, {
         title: 'Loading...',
         closable: true,
@@ -48,10 +52,35 @@ Ext.define('Manager.view.project.Edit', {
           store: 'ProjectStatus',
           displayField: 'status',
           valueField: 'status'
+        }, {
+          xtype: 'combobox',
+          fieldLabel: 'Source Agency',
+          queryMode: 'remote',
+          triggerAction: 'all',
+          minChars: 3,
+          typeAhead: true,
+          name: 'source_agency_id',
+          store: source_agencies,
+          displayField: 'name_with_acronym',
+          valueField: 'id'
+        }, {
+          xtype: 'combobox',
+          fieldLabel: 'Other Agencies',
+          queryMode: 'local',
+          triggerAction: 'all',
+          editable: false,
+          minChars: 3,
+          name: 'agency_ids',
+          store: agencies,
+          displayField: 'name_with_acronym',
+          multiSelect: true,
+          valueField: 'id'
         }]
       });       
       
       this.callParent(arguments);
+      
+      console.log(this.down('#pagency'));
       
       Ext.Ajax.request({
         url: '/catalog/' + this.getRecordId() + '.json',
