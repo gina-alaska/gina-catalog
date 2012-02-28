@@ -1,6 +1,6 @@
 Ext.define('Manager.controller.Project', {
   extend: 'Ext.app.Controller',
-  stores: ['Projects', 'ProjectStatus', 'Agencies'],
+  stores: ['Projects', 'ProjectStatus', 'Agencies', 'Users', 'Contacts'],
 
   refs: [{
     ref: 'search',

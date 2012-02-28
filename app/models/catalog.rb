@@ -230,8 +230,10 @@ Title: #{self.title}
       :title => self.title,
       :description => self.short_description,
       :status => self.status,
+      :tags => self.tags.join(', '),
+      :links => self.links,
       :source_agency_acronym => self.source_agency.try(:acronym),
-      :source_agency_id => self.source_agency.try(:id),
+      :source_agency_id => self.source_agency_id,
       :start_date_year => self.start_date.try(:year),
       :end_date_year => self.end_date.try(:year),
       :geokeywords => self.geokeywords.collect(&:name),
@@ -241,7 +243,8 @@ Title: #{self.title}
       :published_at => self.published_at,
       :created_at => self.created_at,
       :updated_at => self.updated_at,
-      :locations => self.locations
+      :locations => self.locations,
+      :owner_id => self.owner_id
     }    
   end
 

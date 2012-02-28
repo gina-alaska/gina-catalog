@@ -22,7 +22,7 @@ NSCatalog::Application.routes.draw do
   
   resource :session
 
-  resource :users do
+  resources :users do
     get :preferences
   end
 

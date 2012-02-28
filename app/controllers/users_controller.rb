@@ -1,19 +1,20 @@
 class UsersController < ApplicationController
+  respond_to :json
   def index
-    @users = User.all
-
-    respond_to do |format|
-      format.json {
-        render :json => { :users => @users }
-      }
+    if params[:query].nil? or params[:query].empty?
+      @users = User.all
+    else
+      search = User.search do
+        fulltext params[:query]
+      end
+      
+      @users = search.results
     end
+
+    respond_with({ :users => @users })
   end
 
   def preferences
-    respond_to do |format|
-      format.json {
-        render :json => { :user => current_user }
-      }
-    end
+    respond_with({ :user => current_user })
   end
 end

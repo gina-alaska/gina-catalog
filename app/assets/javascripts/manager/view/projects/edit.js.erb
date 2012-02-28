@@ -20,67 +20,79 @@ Ext.define('Manager.view.project.Edit', {
 
     initComponent: function() {
       var source_agencies = Ext.create('Manager.store.Agencies', { autoLoad: true });
-      var agencies = Ext.create('Manager.store.Agencies', { autoLoad: true });
-      agencies.sort('name_with_acronym');
+      var primary_contacts = Ext.create('Manager.store.Contacts', { autoLoad: true });
+      
+      var links = [];
       
       Ext.apply(this, {
         title: 'Loading...',
+        autoScroll: true,
         closable: true,
-        bodyStyle: 'padding: 3px;',
         fieldDefaults: { anchor: '100%' },
+        defaults: { layout: 'anchor', margin: '3 3 0 3' },
         items: [{
-          xtype:'textfield',
-          fieldLabel: 'Title',
-          name: 'title'
+          itemId: 'general', xtype: 'panel', title: 'General',
+          bodyStyle: 'padding: 3px;',
+          items: [
+            { xtype: 'textfield', fieldLabel: 'Title', name: 'title' }, 
+            { xtype: 'textarea', fieldLabel: 'Description', name: 'description' }, 
+            { xtype: 'textfield', fieldLabel: 'Tags', name: 'tags' }, 
+            { xtype: 'textfield', fieldLabel: 'Geo-Tags', name: 'geokeywords' },
+            { xtype: 'textfield', fieldLabel: 'Start Year', name: 'start_date_year' }, 
+            { xtype: 'textfield', fieldLabel: 'End Year', name: 'end_date_year' }, 
+            {
+              xtype: 'combobox', fieldLabel: 'Status', name: 'status', queryMode: 'local',
+              store: 'ProjectStatus',  displayField: 'status', valueField: 'status'
+            }, {
+              xtype: 'combobox', fieldLabel: 'Owner', queryMode: 'remote', queryDelay: 100,
+              triggerAction: 'all', minChars: 2, typeAhead: true, name: 'owner_id', store: 'Users',
+              displayField: 'fullname_with_email', valueField: 'id'
+            }
+          ]
         }, {
-          xtype: 'textarea',
-          fieldLabel: 'Description',
-          name: 'description'
+          border: false,
+          layout: { type: 'hbox', align: 'stretch' },
+          items: [{
+            xtype: 'panel', flex: 1, margins: '0 3 0 0', 
+            bodyStyle: 'padding: 3px;', layout: 'anchor',
+            itemId: 'agencies', title: 'Agencies', 
+            items: [{
+              xtype: 'combobox', fieldLabel: 'Source Agency', queryMode: 'remote', triggerAction: 'all',
+              minChars: 3, typeAhead: true, name: 'source_agency_id', store: source_agencies,
+              displayField: 'name_with_acronym', valueField: 'id' 
+            }, {
+              xtype: 'combobox', fieldLabel: 'Other Agencies', queryMode: 'local', triggerAction: 'all',
+              editable: false, minChars: 3, name: 'agency_ids', store: 'Agencies', displayField: 'name_with_acronym',
+              multiSelect: true, valueField: 'id'
+            }]
+          }, {
+            xtype: 'panel', flex: 1, bodyStyle: 'padding: 3px;', layout: 'anchor',
+            itemId: 'contacts', title: 'Contacts',
+            items: [{
+              xtype: 'combobox', fieldLabel: 'Primary Contact', queryMode: 'remote', triggerAction: 'all',
+              minChars: 2, typeAhead: true, name: 'primary_contact_id', store: primary_contacts,
+              displayField: 'fullname_with_email', valueField: 'id'
+            }, {
+              xtype: 'combobox', fieldLabel: 'Other Contacts', queryMode: 'local', triggerAction: 'all',
+              name: 'people_ids', multiSelect: true, editable: false, store: 'Contacts',
+              displayField: 'fullname_with_email', valueField: 'id'
+            }]
+          }]
         }, {
-          xtype: 'textfield',
-          fieldLabel: 'Start Year',
-          name: 'start_date_year'
-        }, {
-          xtype: 'textfield',
-          fieldLabel: 'End Year',
-          name: 'end_date_year'
-        }, {
-          xtype: 'combobox',
-          fieldLabel: 'Status',
-          name: 'status',
-          queryMode: 'local',
-          store: 'ProjectStatus',
-          displayField: 'status',
-          valueField: 'status'
-        }, {
-          xtype: 'combobox',
-          fieldLabel: 'Source Agency',
-          queryMode: 'remote',
-          triggerAction: 'all',
-          minChars: 3,
-          typeAhead: true,
-          name: 'source_agency_id',
-          store: source_agencies,
-          displayField: 'name_with_acronym',
-          valueField: 'id'
-        }, {
-          xtype: 'combobox',
-          fieldLabel: 'Other Agencies',
-          queryMode: 'local',
-          triggerAction: 'all',
-          editable: false,
-          minChars: 3,
-          name: 'agency_ids',
-          store: agencies,
-          displayField: 'name_with_acronym',
-          multiSelect: true,
-          valueField: 'id'
+          itemId: 'links', xtype: 'panel', title: 'Links',
+          bodyStyle: 'padding: 3px;',
+          dockedItems: [{
+            xtype:'toolbar',
+            dock: 'top',
+            items: [{ text: 'Add' }]
+          }]
+        },{
+          itemId: 'locations', xtype: 'panel', title: 'Locations',
+          bodyStyle: 'padding: 3px;'
         }]
       });       
       
       this.callParent(arguments);
-      
-      console.log(this.down('#pagency'));
       
       Ext.Ajax.request({
         url: '/catalog/' + this.getRecordId() + '.json',
@@ -88,9 +100,52 @@ Ext.define('Manager.view.project.Edit', {
         scope: this
       });
     },
+
+    buildLocation: function(loc){
+      return {
+        xtype: 'fieldcontainer',
+        layout: { type: 'hbox', defaultMargins: { right: 3 } },
+        fieldDefaults: { labelAlign: 'top' },
+        items: [{
+          xtype: 'textfield', fieldLabel: 'Name', flex: 1,
+          name: 'location_attributes['+ loc.id +'][name]', value: loc.name
+        }, {
+          xtype: 'textfield', fieldLabel: 'Geom', flex: 2,
+          name: 'location_attributes['+ loc.id + '][wkt]', value: loc.wkt
+        }]
+      };        
+    },    
+    
+    buildLink: function(link){
+      return {
+        xtype: 'fieldcontainer',
+        layout: { type: 'hbox', defaultMargins: { right: 3 } },
+        fieldDefaults: { labelAlign: 'top' },
+        items: [{
+          xtype: 'textfield', fieldLabel: 'Category', flex: 1,
+          name: 'link_attributes['+ link.id +'][category]', value: link.category
+        }, {
+          xtype: 'textfield', fieldLabel: 'Text', flex: 1,
+          name: 'link_attributes['+ link.id + '][display_text]', value: link.display_text
+        }, {
+          xtype: 'textfield', fieldLabel: 'URL', flex: 3,
+          name: 'link_attributes['+ link.id + '][url]', value: link.url
+        }]
+      };        
+    },
+    
     onRequestSuccess: function(response){
       this.record = Ext.JSON.decode(response.responseText);
       this.setTitle(this.titleTpl.apply(this.record));
       this.getForm().setValues(this.record);
+      
+      var links = this.down('#links');
+      Ext.each(this.record.links, function(l) {
+        links.add(this.buildLink(l));
+      }, this);
+      var locations = this.down('#locations');
+      Ext.each(this.record.locations, function(l) {
+        locations.add(this.buildLocation(l));
+      }, this);
     }
 });
