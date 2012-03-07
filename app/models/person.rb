@@ -13,6 +13,14 @@ class Person < ActiveRecord::Base
   validates_presence_of   :last_name
 #  validates_associated    :phone_numbers, :addresses
   
+  searchable do
+    text :first_name
+    text :last_name
+    text :email
+  
+    integer :id
+  end  
+  
   def full_name
     [self.last_name, self.first_name].compact.join(', ')
   end
