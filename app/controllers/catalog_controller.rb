@@ -5,14 +5,13 @@ class CatalogController < ApplicationController
 
   def update
     @item = Catalog.where(:id => params[:id]).includes(:agencies, :tags, :geokeywords).first
-    
     @item.update_attributes(catalog)
     
     respond_to do |format|
       format.json { 
         render :json => {
           :success => @item.valid?,
-          :errors => @item.errors,
+          :errors => @item.errors.full_messages,
           :catalog => @item
         }
       }
