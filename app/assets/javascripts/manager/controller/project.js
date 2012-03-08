@@ -56,7 +56,7 @@ Ext.define('Manager.controller.Project', {
                 this.loadRecord(obj.catalog);
                 Ext.Msg.alert('Success!', 'Project information has been updated');
               } else {
-                Ext.Msg.alert('Error', 'Errors were encountered while saving the form');
+                Ext.Msg.alert('Error', '<p>The following errors were encountered while saving the project:</p><br />' + obj.errors.join('<br />'));
               }
             },
             failure: function(response) {
