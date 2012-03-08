@@ -33,10 +33,15 @@ Ext.application({
       border: false,
       defaults: { border: false },
       items: [{
+        itemId: 'content',
         region: 'center',
         border: false,
         layout: 'card',
         deferredRender: false,
+        listeners: {
+          /* TODO: Remove this, for now it is required as a work around for a bug in Ext-4.1.0-beta3 */
+          render: Ext.emptyFn
+        },
         items: [{
           html: 'Loading...'
         }]

@@ -3,6 +3,22 @@ class CatalogController < ApplicationController
   # caches_action :show, :layout => false, :unless => lambda { |c| c.request.xhr? }
   #caches_action :search
 
+  def update
+    @item = Catalog.where(:id => params[:id]).includes(:agencies, :tags, :geokeywords).first
+    
+    @item.update_attributes(catalog)
+    
+    respond_to do |format|
+      format.json { 
+        render :json => {
+          :success => @item.valid?,
+          :errors => @item.errors,
+          :catalog => @item
+        }
+      }
+    end
+  end
+
   def show
     @item = Catalog.includes(:locations, :source_agency, :agencies, :data_source, :links, :tags, :geokeywords)
     @item = @item.includes({ :people => [ :addresses, :phone_numbers ] }).find_by_id(params[:id])
@@ -126,5 +142,18 @@ class CatalogController < ApplicationController
         render :pdf => 'nssi_catalog_search.pdf', :layout => 'pdf.html'
       end
     end
+  end
+  
+  protected
+  
+  def catalog
+    v = params.slice(
+          :title, :description, :agengy_ids, :tags, :source_agency_id, :status,
+          :geokeyword_ids, :link_attributes, :location_attributes,
+          :agency_ids, :person_ids
+    )    
+    v["tags"] = v["tags"].split(/,\s+/)
+    
+    v
   end
 end
