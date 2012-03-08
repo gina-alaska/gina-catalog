@@ -33,6 +33,8 @@ class Catalog < ActiveRecord::Base
 
   before_create :set_data_source
   before_create :repohex
+  
+  accepts_nested_attributes_for :links, :locations
 
   #Adding solr indexing
   searchable do
@@ -93,7 +95,7 @@ class Catalog < ActiveRecord::Base
       }.compact!
     end
     string :title_sort do
-      title.downcase.gsub(/^(an?|the)/, '')
+      title.downcase.gsub(/^(\s+|an?|the)/, '').gsub(/["']/, '')
     end
     string :source_agency_acronym do
       source_agency.try(&:acronym)
@@ -177,7 +179,7 @@ Title: #{self.title}
   # @param {String} tags_string This is a space seperated list of tags
   ##
   def tags=(tags)
-    self.tags.clear unless self.new_record?
+    # self.tags.clear unless self.new_record?
 
     unless tags.nil? or tags.empty?
       tags.each do |t|
@@ -187,6 +189,22 @@ Title: #{self.title}
         tag = Tag.find_or_create_by_text(text)
         self.tags << tag unless self.tags.include? tag
       end
+    end
+  end
+  
+  def geokeywords=(keywords) 
+    # self.geokeywords.clear unless self.new_record?
+    
+    ids = []
+    unless keywords.nil? or keywords.empty?
+      keywords.each do |t|
+        text = t.respond_to?(:text) ? t.text : t
+        
+        next if text.size < 3
+        ids << Geokeyword.where(name: text).first.id
+        
+      end
+      self.geokeyword_ids = ids
     end
   end
 
@@ -201,6 +219,14 @@ Title: #{self.title}
   end
 
   def as_json(opts = {})
+    if opts and opts[:format] == 'full'
+      full_json
+    else
+      basic_json
+    end
+  end
+  
+  def basic_json
     {
       :id => self.id,
       :type => self.type,
@@ -209,19 +235,36 @@ Title: #{self.title}
       :status => self.status,
       :source_agency_acronym => self.source_agency.try(:acronym),
       :source_agency_id => self.source_agency.try(:id),
-=begin
-      :start_date_year => self.start_date.try(:year),
-      :end_date_year => self.end_date.try(:year),
+      :created_at => self.created_at,
+      :updated_at => self.updated_at,
+      :locations => self.locations
+    }    
+  end
+  
+  def full_json
+    {
+      :id => self.id,
+      :type => self.type,
+      :title => self.title,
+      :description => self.short_description,
+      :status => self.status,
+      :tags => self.tags.join(', '),
+      :links => self.links,
+      :source_agency_acronym => self.source_agency.try(:acronym),
+      :source_agency_id => self.source_agency_id,
+      :start_date => self.start_date,
+      :end_date => self.end_date,
       :geokeywords => self.geokeywords.collect(&:name),
+      :geokeyword_ids => self.geokeyword_ids,
       :agency_ids => self.agency_ids,
       :primary_contact_id => self.primary_contact_id,
       :person_ids => self.person_ids,
+      :published_at => self.published_at,
       :created_at => self.created_at,
       :updated_at => self.updated_at,
-      :published_at => self.published_at,
-=end
-      :locations => self.locations
-    }
+      :locations => self.locations,
+      :owner_id => self.owner_id
+    }    
   end
 
   protected

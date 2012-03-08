@@ -1,37 +1,5 @@
 class Project < Catalog
   STATUSES = %w(Complete Ongoing Unknown Funded)
-
-#  define_index do
-#    indexes title, :type => :string, :sortable => true
-#    indexes status, :sortable => true
-#
-#    indexes gcmd_themes(:name),  :as => :gcmd_themes, :sortable => true
-#    indexes gcmd_themes(:path),  :as => :gcmd_theme_paths, :sortable => true
-#    indexes synopsis.text, :as => :synopsis
-#    indexes [agencies(:name), agencies.acronym], :as => :agencies
-#    indexes [locations(:name), locations.region, locations.subregion], :as => :locations
-#    indexes [primary_contact.first_name, primary_contact.last_name], :as => :primary_contact
-#    indexes [people.first_name, people.last_name], :as => :contacts
-#    indexes [owner.first_name, owner.last_name], :as => :owner, :sortable => true
-#    indexes tags.text, :as => :tags
-#    indexes [source_agency.name, source_agency.acronym], :as => :source_agency, :sortable => true
-#    indexes source_agency.acronym, :as => :source_agency_acronym, :sortable => true
-#    indexes note.text, :as => :note, :sortable => true
-#
-#    has :title, :type => :string
-#    has :archived_at
-#    has "archived_at is not null", :as => :archived, :type => :boolean
-#    has :start_date, :end_date, :created_at, :updated_at, :published_at, :owner_id
-#    has "date_part('year', start_date)", :as => :start_date_year, :type => :integer
-#    has "date_part('year', end_date)", :as => :end_date_year, :type => :integer
-#
-#    has gcmd_themes(:id), :as => :gcmd_theme_ids
-#    has source_agency(:id), :as => :source_agency_id
-#    has funding_agency(:id), :as => :funding_agency_id
-#    has agencies(:id), :as => :agency_ids
-#    has "(published_at IS NOT NULL)", :as => 'published', :type => :boolean
-#    set_property :delta => :delayed
-#  end
   
   #validates_presence_of :title
   #validates_presence_of :owner

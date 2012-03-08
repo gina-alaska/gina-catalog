@@ -19,7 +19,14 @@ class User < ActiveRecord::Base
   scope :real, lambda {
     where('email != ?', 'guest@gina.alaska.edu')
   }
-
+  
+  searchable do
+    text :first_name
+    text :last_name
+    text :email
+    
+    integer :id
+  end
 
   # HACK HACK HACK -- how to do attr_accessible from here?
   # prevents a user from submitting a crafted form that bypasses activation
@@ -92,17 +99,6 @@ class User < ActiveRecord::Base
     else
       super
     end
-  end
-
-  def to_json(options = {})
-    options[:only] ||= []
-    options[:only] += [:id, :first_name, :last_name, :email, :identity_url]
-
-    options[:include] = { :note => { :only => [:id, :text] } }
-
-    options[:methods] ||= []
-    options[:methods] << :admin?
-    super(options)
   end
 
   def as_json(options = {})

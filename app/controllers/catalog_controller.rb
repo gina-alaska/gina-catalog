@@ -3,12 +3,28 @@ class CatalogController < ApplicationController
   # caches_action :show, :layout => false, :unless => lambda { |c| c.request.xhr? }
   #caches_action :search
 
+  def update
+    @item = Catalog.where(:id => params[:id]).includes(:agencies, :tags, :geokeywords).first
+    @item.update_attributes(catalog)
+    
+    respond_to do |format|
+      format.json { 
+        render :json => {
+          :success => @item.valid?,
+          :errors => @item.errors.full_messages,
+          :catalog => @item
+        }
+      }
+    end
+  end
+
   def show
     @item = Catalog.includes(:locations, :source_agency, :agencies, :data_source, :links, :tags, :geokeywords)
     @item = @item.includes({ :people => [ :addresses, :phone_numbers ] }).find_by_id(params[:id])
 
     respond_to do |format|
       format.html { render :layout => false }
+      format.json { render :json => @item.as_json(:format => 'full') }
       format.tar_gz do
         render :content_type => "application/octet-stream", :layout => false, 
           :text => @item.repo.archive_tar_gz('master', "#{@item.id}/")
@@ -51,6 +67,7 @@ class CatalogController < ApplicationController
 #    @results = @results.includes(:locations, :source_agency, :people, :agencies, :tags, :geokeywords)
 #    @results = @results.where(:id => params[:ids]) unless params[:ids].nil?
 #    @results = @results.limit(params[:limit] || 3000).order('title ASC')
+    
     table_includes = [:tags, :locations, :agencies, :source_agency]
     
     if(search.nil? or search.empty?)
@@ -124,5 +141,18 @@ class CatalogController < ApplicationController
         render :pdf => 'nssi_catalog_search.pdf', :layout => 'pdf.html'
       end
     end
+  end
+  
+  protected
+  
+  def catalog
+    v = params.slice(
+          :title, :description, :agengy_ids, :tags, :source_agency_id, :status,
+          :geokeyword_ids, :links_attributes, :locations_attributes,
+          :agency_ids, :person_ids
+    )    
+    v["tags"] = v["tags"].split(/,\s+/)
+    
+    v
   end
 end

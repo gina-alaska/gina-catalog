@@ -14,6 +14,10 @@ class Location < ActiveRecord::Base
   def wkt
     geom.try(:as_text)
   end
+  
+  def wkt=(v)
+    self.geom = v 
+  end
 
   # def wkt=(text)
   #   self.geom = Geometry.from_ewkt(text) unless text.empty? or text.nil?

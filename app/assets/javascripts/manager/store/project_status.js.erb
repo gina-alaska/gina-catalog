@@ -1,0 +1,5 @@
+Ext.define('Manager.store.ProjectStatus', {
+  extend: 'Ext.data.Store',
+  fields: ['status'],
+  data: <%= Project::STATUSES.collect { |i| {:status => i} }.to_json %>
+});

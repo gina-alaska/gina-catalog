@@ -18,3 +18,5 @@ solr
 log/solr*
 log/sunspot*
 tools/wkhtmltopdf
+
+nssi-catalog-export*.xml

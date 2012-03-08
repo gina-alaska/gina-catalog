@@ -26,7 +26,16 @@ class Agency < ActiveRecord::Base
   validates_length_of       :acronym, :maximum => 80
   
   validates_length_of       :description, :maximum => 255, :allow_nil => true
-  validates_inclusion_of    :category, :in => CATEGORIES, :message => " please select one of follow: #{Agency::CATEGORIES.join(', ')}"
+  validates_inclusion_of    :category, :in => CATEGORIES, :message => " please select one of following: #{Agency::CATEGORIES.join(', ')}"
+  
+  searchable do
+    text :name
+    text :acronym
+    text :description
+    text :category
+    
+    integer :id
+  end
   
   def category=(value)
     value = CATEGORIES[value] if value.is_a? Symbol
