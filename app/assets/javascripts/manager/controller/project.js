@@ -25,6 +25,11 @@ Ext.define('Manager.controller.Project', {
           if(e.getKey() === e.ENTER) { this.doSearch(); }
         }
       },
+      'button[action="add_link"]': {
+        click: function(button) {
+          button.up('form').addLink({});
+        }
+      },
       'button[action="save"]': {
         click: function(button) {
           Ext.Msg.wait('Saving project information', 'Please Wait...');
