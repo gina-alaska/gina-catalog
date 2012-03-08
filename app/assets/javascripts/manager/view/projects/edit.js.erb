@@ -19,6 +19,9 @@ Ext.define('Manager.view.project.Edit', {
     },
 
     initComponent: function() {
+      this.link_count = 0;
+      this.location_count = 0;
+      
       var source_agencies = Ext.create('Manager.store.Agencies', { autoLoad: true });
       var primary_contacts = Ext.create('Manager.store.Contacts', { autoLoad: true });
       
@@ -29,12 +32,13 @@ Ext.define('Manager.view.project.Edit', {
         autoScroll: true,
         closable: true,
         border: true,
-        fieldDefaults: { anchor: '100%' },
+        fieldDefaults: { anchor: '100%', labelAlign: 'top' },
         defaults: { layout: 'anchor', margin: '3 3 0 3' },
         dockedItems: [{
           xtype: 'toolbar',
           dock: 'bottom',
           ui: 'footer',
+          cls: 'edit',
           defaults: { scale: 'large', minWidth: 100 },
           items: ['->', {
             text: 'Cancel'
@@ -49,21 +53,46 @@ Ext.define('Manager.view.project.Edit', {
           items: [
             { xtype: 'textfield', fieldLabel: 'Title', name: 'title' }, 
             { xtype: 'textarea', fieldLabel: 'Description', name: 'description' }, 
+            {
+              layout: 'column',
+              border: false,
+              items: [{
+                border: false,
+                columnWidth: 0.25,
+                layout: 'anchor',
+                items: [{ xtype: 'datefield', fieldLabel: 'Start Date', name: 'start_date', anchor: '100%' }]
+              }, {
+                border: false,
+                layout: 'anchor',
+                columnWidth: 0.25,
+                margin: '0 0 0 3',
+                items: [{ xtype: 'datefield', fieldLabel: 'End Date', name: 'end_date', anchor: '100%' }]
+              }, {
+                border: false,
+                layout: 'anchor',
+                columnWidth: 0.25,
+                margin: '0 0 0 3',
+                items: [{
+                  xtype: 'combobox', fieldLabel: 'Status', name: 'status', queryMode: 'local',
+                  store: 'ProjectStatus',  displayField: 'status', valueField: 'status'
+                }]
+              }, {
+                border: false,
+                layout: 'anchor',
+                columnWidth: 0.25,
+                margin: '0 0 0 3',
+                items: [{
+                  xtype: 'combobox', fieldLabel: 'Owner', queryMode: 'remote', queryDelay: 100,
+                  triggerAction: 'all', minChars: 2, typeAhead: true, name: 'owner_id', store: 'Users',
+                  displayField: 'fullname_with_email', valueField: 'id'
+                }]
+              }]
+            },
             { xtype: 'textfield', fieldLabel: 'Tags', name: 'tags' }, 
             {
               xtype: 'combobox', fieldLabel: 'Geo-Tags', queryMode: 'local', triggerAction: 'all',
               name: 'geokeyword_ids', multiSelect: true, editable: false, store: 'Geokeywords',
               displayField: 'name', valueField: 'id'
-            },
-            { xtype: 'textfield', fieldLabel: 'Start Date', name: 'start_date' }, 
-            { xtype: 'textfield', fieldLabel: 'End Date', name: 'end_date' }, 
-            {
-              xtype: 'combobox', fieldLabel: 'Status', name: 'status', queryMode: 'local',
-              store: 'ProjectStatus',  displayField: 'status', valueField: 'status'
-            }, {
-              xtype: 'combobox', fieldLabel: 'Owner', queryMode: 'remote', queryDelay: 100,
-              triggerAction: 'all', minChars: 2, typeAhead: true, name: 'owner_id', store: 'Users',
-              displayField: 'fullname_with_email', valueField: 'id'
             }
           ]
         }, {
@@ -101,11 +130,18 @@ Ext.define('Manager.view.project.Edit', {
           dockedItems: [{
             xtype:'toolbar',
             dock: 'top',
-            items: [{ text: 'Add' }]
+            defaults: { scale: 'large' },
+            items: [{ text: '<b>New Link</b>', action: 'add_link' }]
           }]
         },{
           itemId: 'locations', xtype: 'panel', title: 'Locations',
-          bodyStyle: 'padding: 3px;'
+          bodyStyle: 'padding: 3px;',
+          dockedItems: [{
+            xtype:'toolbar',
+            dock: 'top',
+            defaults: { scale: 'large' },
+            items: [{ text: '<b>New Location</b>', action: 'add_location' }]
+          }]
         }]
       });       
       
@@ -119,40 +155,58 @@ Ext.define('Manager.view.project.Edit', {
     },
 
     buildLocation: function(loc){
-      return {
+      Ext.applyIf(loc, {
+        id: '',
+        name: '',
+        wkt: ''
+      });
+      
+      var loc_markup = {
         xtype: 'fieldcontainer',
         layout: { type: 'hbox', defaultMargins: { right: 3 } },
         fieldDefaults: { labelAlign: 'top' },
         items: [{
-          xtype: 'hiddenfield', name: 'locations_attributes['+loc.id+'][id]', value: loc.id
+          xtype: 'hiddenfield', name: 'locations_attributes['+this.location_count+'][id]', value: loc.id
         }, {
-          xtype: 'textfield', fieldLabel: 'Name', flex: 1,
-          name: 'locations_attributes['+ loc.id +'][name]', value: loc.name
+          xtype: 'textfield', fieldLabel: 'Label', flex: 1,
+          name: 'locations_attributes['+ this.location_count +'][name]', value: loc.name
         }, {
-          xtype: 'textfield', fieldLabel: 'Geom', flex: 2,
-          name: 'locations_attributes['+ loc.id + '][wkt]', value: loc.wkt
+          xtype: 'textfield', fieldLabel: 'Geom', flex: 3,
+          name: 'locations_attributes['+ this.location_count + '][wkt]', value: loc.wkt
         }]
       };        
+      this.location_count += 1;
+      
+      return loc_markup;
     },    
     
     buildLink: function(link){
-      return {
+      Ext.applyIf(link, {
+        id: '',
+        category: '',
+        display_text: '',
+        url: ''
+      });
+      
+      var link_markup = {
         xtype: 'fieldcontainer',
         layout: { type: 'hbox', defaultMargins: { right: 3 } },
         fieldDefaults: { labelAlign: 'top' },
         items: [{
-          xtype: 'hiddenfield', name: 'links_attributes['+link.id+'][id]', value: link.id
+          xtype: 'hiddenfield', name: 'links_attributes['+this.link_count+'][id]', value: link.id
         }, {
           xtype: 'textfield', fieldLabel: 'Category', flex: 1,
-          name: 'links_attributes['+ link.id +'][category]', value: link.category
+          name: 'links_attributes['+ this.link_count +'][category]', value: link.category
         }, {
-          xtype: 'textfield', fieldLabel: 'Text', flex: 1,
-          name: 'links_attributes['+ link.id + '][display_text]', value: link.display_text
+          xtype: 'textfield', fieldLabel: 'Text', flex: 2,
+          name: 'links_attributes['+ this.link_count + '][display_text]', value: link.display_text
         }, {
-          xtype: 'textfield', fieldLabel: 'URL', flex: 3,
-          name: 'links_attributes['+ link.id + '][url]', value: link.url
+          xtype: 'textfield', fieldLabel: 'URL', flex: 10,
+          name: 'links_attributes['+ this.link_count + '][url]', value: link.url
         }]
-      };        
+      };   
+      this.link_count += 1;
+      return link_markup;     
     },
     
     onRequestSuccess: function(response){
@@ -164,13 +218,15 @@ Ext.define('Manager.view.project.Edit', {
       this.setTitle(this.titleTpl.apply(this.record));
       this.getForm().setValues(this.record);
       
-      var links = this.down('#links');
-      Ext.each(this.record.links, function(l) {
-        links.add(this.buildLink(l));
-      }, this);
-      var locations = this.down('#locations');
-      Ext.each(this.record.locations, function(l) {
-        locations.add(this.buildLocation(l));
-      }, this);
+      Ext.each(this.record.links, this.addLink, this);
+      
+      Ext.each(this.record.locations, this.addLocation, this);
+    },
+    
+    addLink: function(link){
+      this.down('#links').add(this.buildLink(link));      
+    },
+    addLocation: function(loc){
+      this.down('#locations').add(this.buildLocation(loc));      
     }
 });
