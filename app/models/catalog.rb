@@ -34,7 +34,7 @@ class Catalog < ActiveRecord::Base
   before_create :set_data_source
   before_create :repohex
   
-  accepts_nested_attributes_for :links
+  accepts_nested_attributes_for :links, :locations
 
   #Adding solr indexing
   searchable do
