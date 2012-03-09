@@ -56,6 +56,12 @@ class Catalog < ActiveRecord::Base
     text :geokeywords do
       geokeywords.map(&:name)
     end
+    text :iso_topics do
+      iso_topics.map(&:name)
+    end
+    text :iso_topics_long do
+      iso_topics.map(&:long_name)
+    end
     string :status
     string :type
     string :uuid
@@ -67,6 +73,10 @@ class Catalog < ActiveRecord::Base
     integer :source_agency_id
     integer :funding_agency_id
     integer :agency_ids, :references => Agency, :multiple => true
+    integer :iso_topic_ids, :multiple => true
+    
+    boolean :long_term_monitoring
+    
     integer :archived_at_year do
       archived_at.try(:year)
     end
