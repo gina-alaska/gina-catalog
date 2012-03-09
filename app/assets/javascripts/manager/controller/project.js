@@ -1,6 +1,6 @@
 Ext.define('Manager.controller.Project', {
   extend: 'Ext.app.Controller',
-  stores: ['Projects', 'ProjectStatus', 'Agencies', 'Users', 'Contacts', 'Geokeywords'],
+  stores: ['Projects', 'ProjectStatus', 'Agencies', 'Users', 'Contacts', 'Geokeywords', 'IsoTopics'],
 
   refs: [{
     ref: 'search',
@@ -45,7 +45,7 @@ Ext.define('Manager.controller.Project', {
           }
           
           /* Workaround for issue with exit and multi-selects */
-          Ext.each(['geokeyword_ids', 'agency_ids', 'person_ids'], function(item) {
+          Ext.each(['geokeyword_ids', 'agency_ids', 'person_ids', 'iso_topic_ids'], function(item) {
             values[item + '[]'] = values[item];
             delete values[item];            
           }, this);

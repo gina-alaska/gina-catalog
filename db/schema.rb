@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110926191312) do
+ActiveRecord::Schema.define(:version => 20120309013456) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -130,6 +130,13 @@ ActiveRecord::Schema.define(:version => 20110926191312) do
     t.integer "geokeyword_id"
   end
 
+  create_table "catalogs_iso_topics", :id => false, :force => true do |t|
+    t.integer  "catalog_id"
+    t.integer  "iso_topic_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "content_types", :force => true do |t|
     t.string   "name",       :limit => 40
     t.string   "long_name"
@@ -206,14 +213,14 @@ ActiveRecord::Schema.define(:version => 20110926191312) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.spatial  "geom",       :limit => {:srid=>4326, :type=>"geometry"}
+    t.spatial  "geom",       :limit => {:srid=>4326, :type=>"point"}
   end
 
   create_table "geolocations", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.spatial  "point",      :limit => {:no_constraints=>true}
-    t.spatial  "llgeom",     :limit => {:no_constraints=>true}
+    t.spatial  "point",      :limit => {:srid=>4326, :type=>"point"}
+    t.spatial  "llgeom",     :limit => {:srid=>4326, :type=>"multi_polygon"}
   end
 
   create_table "granule_files", :force => true do |t|
@@ -235,7 +242,7 @@ ActiveRecord::Schema.define(:version => 20110926191312) do
     t.integer  "content_type_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.spatial  "llgeom",                   :limit => {:no_constraints=>true}
+    t.spatial  "llgeom",                   :limit => {:srid=>4326, :type=>"multi_polygon"}
     t.string   "dataset_title",            :limit => 100
     t.string   "abstract"
     t.string   "purpose"
@@ -246,8 +253,8 @@ ActiveRecord::Schema.define(:version => 20110926191312) do
     t.integer  "iso_theme_id"
     t.string   "language",                 :limit => 25
     t.string   "character_set",            :limit => 25
-    t.spatial  "llgeom_raw",               :limit => {:no_constraints=>true}
-    t.string   "progress",                                                    :default => "INPROCESS"
+    t.spatial  "llgeom_raw",               :limit => {:srid=>4326, :type=>"multi_polygon"}
+    t.string   "progress",                                                                  :default => "INPROCESS"
   end
 
   create_table "iso_topic_categories", :force => true do |t|
@@ -510,56 +517,6 @@ ActiveRecord::Schema.define(:version => 20110926191312) do
     t.string   "value"
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "spreadsheet_projects", :id => false, :force => true do |t|
-    t.integer "recno"
-    t.string  "Yr 1st Funded",                    :limit => 75
-    t.string  "Funding Source",                   :limit => 250
-    t.string  "funding source acronym",           :limit => 75
-    t.string  "Point of Contact",                 :limit => 75
-    t.string  "PC Affiliation",                   :limit => 75
-    t.string  "PC Phone",                         :limit => 75
-    t.string  "PC Email",                         :limit => 75
-    t.string  "Other Cooperators",                :limit => 250
-    t.string  "other cooperators acronym",        :limit => 250
-    t.string  "Theme",                            :limit => 250
-    t.string  "Other Theme",                      :limit => 250
-    t.string  "Location",                         :limit => 250
-    t.string  "Other Location",                   :limit => 250
-    t.string  "Keyword",                          :limit => 300
-    t.string  "Original Start Date",              :limit => 75
-    t.string  "start date as date",               :limit => 75
-    t.string  "End Date/ On-Going",               :limit => 75
-    t.string  "Title",                            :limit => 250
-    t.string  "Synopsis",                         :limit => nil
-    t.string  "Report Status",                    :limit => 200
-    t.string  "Report Location: Website/Contact", :limit => 300
-  end
-
-  create_table "spreadsheet_projects_bup", :id => false, :force => true do |t|
-    t.integer "recno"
-    t.string  "Yr 1st Funded",                    :limit => 75
-    t.string  "Funding Source",                   :limit => 250
-    t.string  "funding source acronym",           :limit => 75
-    t.string  "Point of Contact",                 :limit => 75
-    t.string  "PC Affiliation",                   :limit => 75
-    t.string  "PC Phone",                         :limit => 75
-    t.string  "PC Email",                         :limit => 75
-    t.string  "Other Cooperators",                :limit => 250
-    t.string  "other cooperators acronym",        :limit => 250
-    t.string  "Theme",                            :limit => 250
-    t.string  "Other Theme",                      :limit => 250
-    t.string  "Location",                         :limit => 250
-    t.string  "Other Location",                   :limit => 250
-    t.string  "Keyword",                          :limit => 300
-    t.string  "Original Start Date",              :limit => 75
-    t.string  "start date as date",               :limit => 75
-    t.string  "End Date/ On-Going",               :limit => 75
-    t.string  "Title",                            :limit => 250
-    t.string  "Synopsis",                         :limit => nil
-    t.string  "Report Status",                    :limit => 200
-    t.string  "Report Location: Website/Contact", :limit => 300
   end
 
   create_table "synopses", :force => true do |t|

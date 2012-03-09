@@ -10,6 +10,7 @@ class Catalog < ActiveRecord::Base
   belongs_to :funding_agency, :class_name => 'Agency'
   has_and_belongs_to_many :agencies, :join_table => 'catalog_agencies'
   has_and_belongs_to_many :geokeywords
+  has_and_belongs_to_many :iso_topics
 
   has_and_belongs_to_many :tags, :join_table => 'catalog_tags', :order => 'highlight ASC, text ASC' do
     def list
@@ -259,6 +260,7 @@ Title: #{self.title}
       :agency_ids => self.agency_ids,
       :primary_contact_id => self.primary_contact_id,
       :person_ids => self.person_ids,
+      :iso_topic_ids => self.iso_topic_ids,
       :published_at => self.published_at,
       :created_at => self.created_at,
       :updated_at => self.updated_at,

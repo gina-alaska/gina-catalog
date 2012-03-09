@@ -93,6 +93,10 @@ Ext.define('Manager.view.project.Edit', {
               xtype: 'combobox', fieldLabel: 'Geo-Tags', queryMode: 'local', triggerAction: 'all',
               name: 'geokeyword_ids', multiSelect: true, editable: false, store: 'Geokeywords',
               displayField: 'name', valueField: 'id'
+            }, {
+              xtype: 'combobox', fieldLabel: 'ISO Topic Category', queryMode: 'local', triggerAction: 'all',
+              name: 'iso_topic_ids', multiSelect: true, editable: false, store: 'IsoTopics',
+              displayField: 'name', valueField: 'id'
             }
           ]
         }, {

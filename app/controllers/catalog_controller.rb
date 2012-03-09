@@ -149,7 +149,7 @@ class CatalogController < ApplicationController
     v = params.slice(
           :title, :description, :agengy_ids, :tags, :source_agency_id, :status,
           :geokeyword_ids, :links_attributes, :locations_attributes,
-          :agency_ids, :person_ids
+          :agency_ids, :person_ids, :iso_topic_ids
     )    
     v["tags"] = v["tags"].split(/,\s+/)
     

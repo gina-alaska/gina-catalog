@@ -1,4 +1,6 @@
 NSCatalog::Application.routes.draw do
+  resources :iso_topics
+
   resources :feedback
   resources :geokeywords
 
