@@ -5,16 +5,25 @@ class CatalogController < ApplicationController
 
   def update
     @item = Catalog.where(:id => params[:id]).includes(:agencies, :tags, :geokeywords).first
-    @item.update_attributes(catalog)
     
-    respond_to do |format|
-      format.json { 
-        render :json => {
-          :success => @item.valid?,
-          :errors => @item.errors.full_messages,
-          :catalog => @item
+    if @item.update_attributes(catalog)    
+      respond_to do |format|
+        format.json { 
+          render :json => {
+            :success => true,
+            :catalog => @item
+          }
         }
-      }
+      end
+    else
+      respond_to do |format|
+        format.json { 
+          render :json => {
+            :success => false,
+            :errors => @item.errors.full_messages
+          }
+        }
+      end      
     end
   end
 
@@ -149,7 +158,7 @@ class CatalogController < ApplicationController
     v = params.slice(
           :title, :description, :agengy_ids, :tags, :source_agency_id, :status,
           :geokeyword_ids, :links_attributes, :locations_attributes,
-          :agency_ids, :person_ids, :iso_topic_ids
+          :agency_ids, :person_ids, :iso_topic_ids, :start_date, :end_date, :long_term_monitoring
     )    
     v["tags"] = v["tags"].split(/,\s+/)
     
