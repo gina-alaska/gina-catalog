@@ -39,7 +39,7 @@ class Catalog < ActiveRecord::Base
 
   #Adding solr indexing
   searchable do
-    text :title
+    text :title, { :boost => 2.0 }
     text :description
     text :tags do
       tags.map(&:text)
@@ -98,6 +98,11 @@ class Catalog < ActiveRecord::Base
     string :geokeywords_name, :multiple => true do
       geokeywords.map(&:name)
     end
+    
+    time :published_at
+    time :updated_at
+    time :created_at
+    
     #Geospatial
     location :locations, :multiple => true do
       locations.map { |location|
