@@ -10,6 +10,10 @@ Ext.define('Manager.view.projects.Toolbar', {
     
     initComponent: function() {
       this.items = [{
+        xtype: 'button',
+        text: 'New Project',
+        action: 'new'
+      },'->', {
         xtype: 'textfield',
         width: 300,
         plugins: [new Ext.gina.DefaultText({ text: 'Enter search here' })]

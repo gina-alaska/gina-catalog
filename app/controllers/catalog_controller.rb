@@ -2,6 +2,34 @@ class CatalogController < ApplicationController
   # caches_action :show, :layout => true, :if => lambda { |c| c.request.xhr? }
   # caches_action :show, :layout => false, :unless => lambda { |c| c.request.xhr? }
   #caches_action :search
+  
+  def create
+    if(params[:type].downcase == 'project') 
+      @item = Project.new(catalog)
+    else
+      @item = Asset.new(catalog)
+    end
+    
+    if @item.save
+      respond_to do |format|
+        format.json {
+          render :json => {
+            :success => true,
+            :catalog => @item
+          }
+        }
+      end
+    else
+      respond_to do |format|
+        format.json {
+          render :json => {
+            :success => false,
+            :errors => @item.errors.full_messages
+          }
+        }
+      end
+    end
+  end
 
   def update
     @item = Catalog.where(:id => params[:id]).includes(:agencies, :tags, :geokeywords).first
@@ -158,7 +186,7 @@ class CatalogController < ApplicationController
     v = params.slice(
           :title, :description, :agengy_ids, :tags, :source_agency_id, :status,
           :geokeyword_ids, :links_attributes, :locations_attributes,
-          :agency_ids, :person_ids, :iso_topic_ids, :start_date, :end_date, :long_term_monitoring
+          :agency_ids, :person_ids, :iso_topic_ids, :start_date, :end_date, :long_term_monitoring, 
     )    
     v["tags"] = v["tags"].split(/,\s+/)
     

@@ -1,11 +1,11 @@
 /**
- * @class Manager.view.project.Edit
+ * @class Manager.view.project.Form
  * @extends Ext.panel.Panel
  * Edit Panel for Projects
  */
-Ext.define('Manager.view.project.Edit', {
+Ext.define('Manager.view.project.Form', {
     extend: 'Ext.form.Panel', 
-    alias: 'widget.project_edit',
+    alias: 'widget.project_form',
 
     config: {
       recordId: null
@@ -51,63 +51,46 @@ Ext.define('Manager.view.project.Edit', {
           itemId: 'general', xtype: 'panel', title: 'General',
           bodyStyle: 'padding: 3px;',
           items: [
+            { xtype: 'hiddenfield', name: 'type', value: 'Project' },
             { xtype: 'textfield', fieldLabel: 'Title', name: 'title' }, 
             { xtype: 'textarea', fieldLabel: 'Description', name: 'description' }, 
             {
-              layout: 'column',
+              layout: 'hbox',
+              defaults: { flex: 1 },
               border: false,
-              items: [{
-                border: false,
-                columnWidth: 0.33,
-                layout: 'anchor',
-                items: [
-                  { xtype: 'datefield', fieldLabel: 'Start Date', name: 'start_date', anchor: '100%' },
-                  {
-                    xtype: 'combobox', fieldLabel: 'Status', name: 'status', queryMode: 'local',
-                    store: 'ProjectStatus',  displayField: 'status', valueField: 'status'
-                  }
-                ]
-              }, {
-                border: false,
-                layout: 'anchor',
-                columnWidth: 0.33,
-                margin: '0 0 0 3',
-                items: [
-                  { xtype: 'datefield', fieldLabel: 'End Date', name: 'end_date', anchor: '100%' },
-                  { 
-                    xtype: 'fieldcontainer',
-                    fieldLabel: 'Long Term Monitoring',
-                    defaultType: 'radiofield',
-                    defaults: { flex: 1},
-                    layout: 'hbox',
-                    items: [{
-                      boxLabel: 'Yes',
-                      name: 'long_term_monitoring',
-                      inputValue: true
-                    },{
-                      boxLabel: 'No',
-                      name: 'long_term_monitoring',
-                      inputValue: false,
-                      checked: true
-                    }]
-                  }
-                ]
-              }, {
-                border: false,
-                layout: 'anchor',
-                columnWidth: 0.34,
-                margin: '0 0 0 3',
-                items: [{
+              items: [
+                { xtype: 'datefield', fieldLabel: 'Start Date', name: 'start_date', anchor: '100%' },
+                { xtype: 'datefield', fieldLabel: 'End Date', name: 'end_date', anchor: '100%', margin: '0 0 0 3' },
+                {
                   xtype: 'combobox', fieldLabel: 'Owner', queryMode: 'remote', queryDelay: 100,
                   triggerAction: 'all', minChars: 2, typeAhead: true, name: 'owner_id', store: 'Users',
-                  displayField: 'fullname_with_email', valueField: 'id'
-                }]
-              }, {
-                border: false,
-                layout: 'anchor',
-                columnWidth: 0.25,
+                  displayField: 'fullname_with_email', valueField: 'id', margin: '0 0 0 3'
+                }
+              ]
+            }, {
+              border: false,
+              layout: 'hbox',
+              defaults: { flex: 1 },
+              items: [{
+                xtype: 'combobox', fieldLabel: 'Status', name: 'status', queryMode: 'local',
+                store: 'ProjectStatus',  displayField: 'status', valueField: 'status'
+              }, { 
+                xtype: 'fieldcontainer',
+                fieldLabel: 'Long Term Monitoring',
+                defaultType: 'radiofield',
+                defaults: { flex: 1},
+                layout: 'hbox',
                 margin: '0 0 0 3',
-                items: []
+                items: [{
+                  boxLabel: 'Yes',
+                  name: 'long_term_monitoring',
+                  inputValue: true
+                },{
+                  boxLabel: 'No',
+                  name: 'long_term_monitoring',
+                  inputValue: false,
+                  checked: true
+                }]
               }]
             },
             { xtype: 'textfield', fieldLabel: 'Tags', name: 'tags' }, 
@@ -173,11 +156,15 @@ Ext.define('Manager.view.project.Edit', {
       
       this.callParent(arguments);
       
-      Ext.Ajax.request({
-        url: '/catalog/' + this.getRecordId() + '.json',
-        success: this.onRequestSuccess,
-        scope: this
-      });
+      if(this.getRecordId()) {
+        Ext.Ajax.request({
+          url: '/catalog/' + this.getRecordId() + '.json',
+          success: this.onRequestSuccess,
+          scope: this
+        });        
+      } else {
+        this.setTitle('New Project');
+      }
     },
 
     buildLocation: function(loc){

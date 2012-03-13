@@ -31,55 +31,69 @@ Ext.define('Manager.controller.Project', {
         }
       },
       'button[action="save"]': {
-        click: function(button) {
-          Ext.Msg.wait('Saving project information', 'Please Wait...');
-          var form = button.up('form'),
-              values = form.getValues();
-          
-          var url = '/catalog';
-          if (form.record.id) {
-            url += '/' + form.record.id;
-            method = 'PUT';
-          } else {
-            method = 'POST';
-          }
-          
-          /* Workaround for issue with exit and multi-selects */
-          Ext.each(['geokeyword_ids', 'agency_ids', 'person_ids', 'iso_topic_ids'], function(item) {
-            values[item + '[]'] = values[item];
-            delete values[item];            
-          }, this);
-          
-          Ext.Ajax.request({
-            url: url,
-            method: method,
-            params: values,
-            scope: form,
-            success: function(response) {
-              var obj = Ext.decode(response.responseText);
-              if(obj.success) {
-                this.loadRecord(obj.catalog);
-                Ext.Msg.alert('Success!', 'Project information has been updated');
-              } else {
-                Ext.Msg.alert('Error', '<p>The following errors were encountered while saving the project:</p><br />' + obj.errors.join('<br />'));
-              }
-            },
-            failure: function(response) {
-              Ext.Msg.alert('Error', 'A server error was encountered while trying to save the project');
-            }
-          });
+        click: function(button) { this.saveRecord(button.up('form')); }
+      },
+      'button[action="new"]': {
+        click: function(button) { this.newRecord(); }
+      } 
+    });
+  },
+  
+  newRecord: function(){
+    var p = Ext.widget('project_form');
+    
+    if(this.getManager()) {
+      this.getManager().add(p);      
+      this.getManager().getLayout().setActiveItem(p);
+    }
+  },
+  
+  saveRecord: function(form){
+    Ext.Msg.wait('Saving project information', 'Please Wait...');
+    var values = form.getValues();
+    
+    var url = '/catalog';
+    if (form.record && form.record.id) {
+      url += '/' + form.record.id;
+      method = 'PUT';
+    } else {
+      method = 'POST';
+    }
+    
+    /* Workaround for issue with exit and multi-selects */
+    Ext.each(['geokeyword_ids', 'agency_ids', 'person_ids', 'iso_topic_ids'], function(item) {
+      values[item + '[]'] = values[item];
+      delete values[item];            
+    }, this);
+    
+    Ext.Ajax.request({
+      url: url,
+      method: method,
+      params: values,
+      scope: form,
+      success: function(response) {
+        var obj = Ext.decode(response.responseText);
+        if(obj.success) {
+          this.loadRecordData(obj.catalog);
+          Ext.Msg.alert('Success!', 'Project information has been updated');
+        } else {
+          Ext.Msg.alert('Error', '<p>The following errors were encountered while saving the project:</p><br />' + obj.errors.join('<br />'));
         }
+      },
+      failure: function(response) {
+        Ext.Msg.alert('Error', 'A server error was encountered while trying to save the project');
       }
     });
   },
   
   showRecord: function(request) {
-    var p = Ext.widget('project_edit', {
+    var p = Ext.widget('project_form', {
       recordId: request.params.id
     });
     
     if(this.getManager()) {
       this.getManager().add(p);      
+      this.getManager().getLayout().setActiveItem(p);
     }
   },
   
