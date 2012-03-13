@@ -1,6 +1,6 @@
 Ext.define('Manager.controller.Manager', {
   extend: 'Ext.app.Controller',
-  stores: ['Projects'],
+  stores: ['Projects', 'Assets'],
   
   init: function() {
     this.control({
@@ -25,7 +25,10 @@ Ext.define('Manager.controller.Manager', {
         deferredRender: false,
         store: this.getStore("Projects")
       }, {
-        title: 'Data'
+        title: 'Data',
+        xtype: 'assets_grid',
+        deferredRender: false,
+        store: this.getStore("Assets")
       }, {
         title: 'Contacts'
       }, {

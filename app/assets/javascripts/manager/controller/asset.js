@@ -1,10 +1,10 @@
-Ext.define('Manager.controller.Project', {
+Ext.define('Manager.controller.Asset', {
   extend: 'Ext.app.Controller',
-  stores: ['Projects', 'ProjectStatus', 'Agencies', 'Users', 'Contacts', 'Geokeywords', 'IsoTopics'],
+  stores: ['Assets', 'AssetStatus', 'Agencies', 'Users', 'Contacts', 'Geokeywords', 'IsoTopics'],
 
   refs: [{
     ref: 'search',
-    selector: 'projects_toolbar textfield'
+    selector: 'assets_toolbar textfield'
   }, {
     ref: 'manager',
     selector: '#manager'
@@ -12,15 +12,15 @@ Ext.define('Manager.controller.Project', {
 
   init: function() {
     this.control({
-      'projects_grid': {
+      'assets_grid': {
         itemdblclick: function(grid, record) { 
-          Ext.util.History.add('project/'+record.get('id')); 
+          Ext.util.History.add('asset/'+record.get('id')); 
         }
       },
-      'projects_toolbar button[action="search"]': {
+      'assets_toolbar button[action="search"]': {
         click: this.doSearch
       },
-      'projects_toolbar textfield': {
+      'assets_toolbar textfield': {
         specialkey: function(field, e) {
           if(e.getKey() === e.ENTER) { this.doSearch(); }
         }
@@ -40,7 +40,7 @@ Ext.define('Manager.controller.Project', {
   },
   
   newRecord: function(){
-    var p = Ext.widget('projects_form');
+    var p = Ext.widget('assets_form');
     
     if(this.getManager()) {
       this.getManager().add(p);      
@@ -49,7 +49,7 @@ Ext.define('Manager.controller.Project', {
   },
   
   saveRecord: function(form){
-    Ext.Msg.wait('Saving project information', 'Please Wait...');
+    Ext.Msg.wait('Saving asset information', 'Please Wait...');
     var values = form.getValues();
     
     var url = '/catalog';
@@ -75,19 +75,19 @@ Ext.define('Manager.controller.Project', {
         var obj = Ext.decode(response.responseText);
         if(obj.success) {
           this.loadRecordData(obj.catalog);
-          Ext.Msg.alert('Success!', 'Project information has been updated');
+          Ext.Msg.alert('Success!', 'Asset information has been updated');
         } else {
-          Ext.Msg.alert('Error', '<p>The following errors were encountered while saving the project:</p><br />' + obj.errors.join('<br />'));
+          Ext.Msg.alert('Error', '<p>The following errors were encountered while saving the asset:</p><br />' + obj.errors.join('<br />'));
         }
       },
       failure: function(response) {
-        Ext.Msg.alert('Error', 'A server error was encountered while trying to save the project');
+        Ext.Msg.alert('Error', 'A server error was encountered while trying to save the asset');
       }
     });
   },
   
   showRecord: function(request) {
-    var p = Ext.widget('projects_form', {
+    var p = Ext.widget('assets_form', {
       recordId: request.params.id
     });
     
@@ -99,10 +99,7 @@ Ext.define('Manager.controller.Project', {
   
   doSearch: function(){
     var q = this.getSearch().getValue();
-    this.getStore('Projects').filters.clear();
-    this.getStore('Projects').filter([{ property: 'q', value: q }]);
-    // this.getStore('Projects').loadPage(1, {
-    //   params: { 'search[q]': q }
-    // });
+    this.getStore('Assets').filters.clear();
+    this.getStore('Assets').filter([{ property: 'q', value: q }]);
   }
 });

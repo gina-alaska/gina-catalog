@@ -8,11 +8,15 @@
 Ext.application({
   name: 'Manager',
   appFolder: '/assets/manager',
-  controllers: ['Manager', 'Project'],
+  controllers: ['Manager', 'Project', 'Asset'],
   
   routes: [{
     rule: 'project/:id',
     controller: 'Project',
+    action: 'showRecord'
+  },{
+    rule: 'asset/:id',
+    controller: 'Asset',
     action: 'showRecord'
   }],
   

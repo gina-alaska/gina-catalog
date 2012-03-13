@@ -1,11 +1,11 @@
 /**
- * @class Manager.view.project.Form
+ * @class Manager.view.assets.Form
  * @extends Ext.panel.Panel
  * Edit Panel for Projects
  */
-Ext.define('Manager.view.projects.Form', {
+Ext.define('Manager.view.assets.Form', {
     extend: 'Ext.form.Panel', 
-    alias: 'widget.projects_form',
+    alias: 'widget.assets_form',
 
     config: {
       recordId: null
@@ -51,7 +51,7 @@ Ext.define('Manager.view.projects.Form', {
           itemId: 'general', xtype: 'panel', title: 'General',
           bodyStyle: 'padding: 3px;',
           items: [
-            { xtype: 'hiddenfield', name: 'type', value: 'Project' },
+            { xtype: 'hiddenfield', name: 'type', value: 'Asset' },
             { xtype: 'textfield', fieldLabel: 'Title', name: 'title' }, 
             { xtype: 'textarea', fieldLabel: 'Description', name: 'description' }, 
             {

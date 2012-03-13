@@ -1,0 +1,5 @@
+Ext.define('Manager.store.AssetStatus', {
+  extend: 'Ext.data.Store',
+  fields: ['status'],
+  data: <%= Asset::STATUSES.collect { |i| {:status => i} }.to_json %>
+});
