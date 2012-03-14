@@ -1,0 +1,5 @@
+Ext.define('Manager.store.LinkCategories', {
+  extend: 'Ext.data.Store',
+  fields: ['category'],
+  data: <%= Link::CATEGORIES.collect { |i| {:category => i} }.to_json %>
+});
