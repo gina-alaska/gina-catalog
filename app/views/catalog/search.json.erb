@@ -1,1 +1,1 @@
-{ total: <%= @total -%>, results: <%= raw @results.to_json -%> }
+{ total: <%= @total -%>, results: <%= raw @results.as_json(:format => 'basic').to_json -%> }

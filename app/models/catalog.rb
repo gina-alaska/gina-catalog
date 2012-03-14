@@ -235,10 +235,10 @@ Title: #{self.title}
   end
 
   def as_json(opts = {})
-    if opts and opts[:format] == 'full'
-      full_json
-    else
+    if opts and opts[:format] == 'basic'
       basic_json
+    else
+      full_json
     end
   end
   
