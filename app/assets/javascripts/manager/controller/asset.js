@@ -25,15 +25,15 @@ Ext.define('Manager.controller.Asset', {
           if(e.getKey() === e.ENTER) { this.doSearch(); }
         }
       },
-      'button[action="add_link"]': {
+      'assets_form button[action="add_link"]': {
         click: function(button) {
           button.up('form').addLink({});
         }
       },
-      'button[action="save"]': {
+      'assets_form button[action="save"]': {
         click: function(button) { this.saveRecord(button.up('form')); }
       },
-      'button[action="new"]': {
+      'assets_form button[action="new"]': {
         click: function(button) { this.newRecord(); }
       } 
     });

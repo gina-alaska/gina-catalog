@@ -1,6 +1,6 @@
 Ext.define('Manager.controller.Project', {
   extend: 'Ext.app.Controller',
-  stores: ['Projects', 'ProjectStatus', 'Agencies', 'Users', 'Contacts', 'Geokeywords', 'IsoTopics'],
+  stores: ['Projects', 'ProjectStatus', 'Agencies', 'Users', 'Contacts', 'Geokeywords', 'IsoTopics', 'LinkCategories'],
 
   refs: [{
     ref: 'search',
@@ -14,7 +14,8 @@ Ext.define('Manager.controller.Project', {
     this.control({
       'projects_grid': {
         itemdblclick: function(grid, record) { 
-          Ext.util.History.add('project/'+record.get('id')); 
+          Ext.util.History.add('project/'+record.get('id'));
+          this.showRecord({ id: record.get('id') }); 
         }
       },
       'projects_toolbar button[action="search"]': {
@@ -25,15 +26,15 @@ Ext.define('Manager.controller.Project', {
           if(e.getKey() === e.ENTER) { this.doSearch(); }
         }
       },
-      'button[action="add_link"]': {
+      'projects_form button[action="add_link"]': {
         click: function(button) {
           button.up('form').addLink({});
         }
       },
-      'button[action="save"]': {
+      'projects_form button[action="save"]': {
         click: function(button) { this.saveRecord(button.up('form')); }
       },
-      'button[action="new"]': {
+      'projects_form button[action="new"]': {
         click: function(button) { this.newRecord(); }
       } 
     });
@@ -88,7 +89,7 @@ Ext.define('Manager.controller.Project', {
   
   showRecord: function(request) {
     var p = Ext.widget('projects_form', {
-      recordId: request.params.id
+      recordId: request.id
     });
     
     if(this.getManager()) {

@@ -2,6 +2,7 @@
 //= require ./gina/DefaultText.js
 //= require_tree ./manager/model
 //= require_tree ./manager/store
+//= require_tree ./manager/shared_views
 //= require_tree ./manager/view
 //= require_tree ./manager/controller
 
@@ -60,7 +61,7 @@ Ext.application({
       var token = document.location.hash.replace('#', '');
       this.dispatch(token);
     }.bind(this));
-    Ext.util.History.on('change', this.dispatch, this);    
+    // Ext.util.History.on('change', this.dispatch, this);    
   },
   buildRoute: function(route){
     var match = [];
@@ -108,7 +109,7 @@ Ext.application({
     if(request) {
       var controller = this.getController(request.controller);
       var action = controller[request.action];
-      if(action) { action.call(controller, request); }      
+      if(action) { action.call(controller, request.params); }      
     }
   }
 });
