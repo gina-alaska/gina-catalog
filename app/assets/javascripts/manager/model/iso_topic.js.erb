@@ -1,4 +1,4 @@
 Ext.define('Manager.model.IsoTopic', {
   extend: 'Ext.data.Model',
-  fields: <%= IsoTopic.column_names.to_json %>
+  fields: ['id', 'name', 'long_name', 'long_name_with_code']
 });

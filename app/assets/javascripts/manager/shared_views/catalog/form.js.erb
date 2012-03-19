@@ -101,7 +101,7 @@ Ext.define('Manager.shared_view.catalog.Form', {
             }, {
               xtype: 'combobox', fieldLabel: 'ISO Topic Category', queryMode: 'local', triggerAction: 'all',
               name: 'iso_topic_ids', multiSelect: true, editable: false, store: 'IsoTopics',
-              displayField: 'name', valueField: 'id'
+              displayField: 'long_name_with_code', valueField: 'id'
             }
           ]
         }, {
