@@ -262,7 +262,7 @@ Title: #{self.title}
       :id => self.id,
       :type => self.type,
       :title => self.title,
-      :description => self.short_description,
+      :description => self.description,
       :status => self.status,
       :tags => self.tags.join(', '),
       :links => self.links,
