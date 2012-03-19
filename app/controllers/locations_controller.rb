@@ -6,4 +6,12 @@ class LocationsController < ApplicationController
 
     respond_with(@item.locations)
   end
+  
+  def destroy
+    respond_to do |format|
+      format.json { 
+        render :json => { :success => Location.destroy(params[:id]) }
+      }
+    end
+  end
 end

@@ -176,16 +176,25 @@ Ext.define('Manager.shared_view.catalog.Form', {
       
       var loc_markup = {
         xtype: 'fieldcontainer',
+        role: 'location',
         layout: { type: 'hbox', defaultMargins: { right: 3 } },
         fieldDefaults: { labelAlign: 'top' },
         items: [{
           xtype: 'hiddenfield', name: 'locations_attributes['+this.location_count+'][id]', value: loc.id
         }, {
-          xtype: 'textfield', fieldLabel: 'Label', flex: 1,
+          xtype: 'textfield', fieldLabel: 'Label', flex: 3,
           name: 'locations_attributes['+ this.location_count +'][name]', value: loc.name
         }, {
-          xtype: 'textfield', fieldLabel: 'Geom', flex: 3,
+          xtype: 'textfield', fieldLabel: 'Geom', flex: 10,
           name: 'locations_attributes['+ this.location_count + '][wkt]', value: loc.wkt
+        }, {
+          xtype: 'fieldcontainer',
+          layout: 'hbox',
+          flex: 1,
+          fieldLabel: 'Actions',
+          items: [{
+            xtype: 'button', text: 'Remove', flex: 1, action: 'remove_location', locId: loc.id
+          }]
         }]
       };        
       this.location_count += 1;
@@ -209,6 +218,7 @@ Ext.define('Manager.shared_view.catalog.Form', {
         items: [{
           xtype: 'hiddenfield', name: 'links_attributes['+this.link_count+'][id]', value: link.id
         }, {
+          flex: 1,
           xtype: 'combobox', fieldLabel: 'Category', name: 'links_attributes['+ this.link_count +'][category]', 
           queryMode: 'local', store: 'LinkCategories',  displayField: 'category', valueField: 'category', 
           value: link.category
@@ -218,8 +228,7 @@ Ext.define('Manager.shared_view.catalog.Form', {
         }, {
           xtype: 'textfield', fieldLabel: 'URL', flex: 10,
           name: 'links_attributes['+ this.link_count + '][url]', value: link.url
-        },
-        {
+        }, {
           xtype: 'fieldcontainer',
           layout: 'hbox',
           flex: 1,
@@ -227,8 +236,7 @@ Ext.define('Manager.shared_view.catalog.Form', {
           items: [{
             xtype: 'button', text: 'Remove', flex: 1, action: 'remove_link', linkId: link.id
           }]
-        } 
-]
+        }]
       };   
       this.link_count += 1;
       return link_markup;     
