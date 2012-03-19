@@ -5,6 +5,7 @@ NSCatalog::Application.routes.draw do
   resources :geokeywords
 
   resources :videos
+  resources :links
 
   resources :projects
 #  resources :assets

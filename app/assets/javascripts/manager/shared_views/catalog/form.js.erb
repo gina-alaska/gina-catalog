@@ -203,6 +203,7 @@ Ext.define('Manager.shared_view.catalog.Form', {
       
       var link_markup = {
         xtype: 'fieldcontainer',
+        role: 'link',
         layout: { type: 'hbox', defaultMargins: { right: 3 } },
         fieldDefaults: { labelAlign: 'top' },
         items: [{
@@ -217,7 +218,17 @@ Ext.define('Manager.shared_view.catalog.Form', {
         }, {
           xtype: 'textfield', fieldLabel: 'URL', flex: 10,
           name: 'links_attributes['+ this.link_count + '][url]', value: link.url
-        }]
+        },
+        {
+          xtype: 'fieldcontainer',
+          layout: 'hbox',
+          flex: 1,
+          fieldLabel: 'Actions',
+          items: [{
+            xtype: 'button', text: 'Remove', flex: 1, action: 'remove_link', linkId: link.id
+          }]
+        } 
+]
       };   
       this.link_count += 1;
       return link_markup;     

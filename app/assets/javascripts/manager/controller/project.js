@@ -36,7 +36,10 @@ Ext.define('Manager.controller.Project', {
       },
       'projects_form button[action="new"]': {
         click: function(button) { this.newRecord(); }
-      } 
+      } ,
+      'projects_form button[action="remove_link"]': {
+        click: function(button) { this.removeLink(button.linkId, button.up('fieldcontainer[role="link"]')); }
+      }
     });
   },
   
@@ -49,28 +52,31 @@ Ext.define('Manager.controller.Project', {
     }
   },
   
-  saveRecord: function(form){
-    Ext.Msg.wait('Saving project information', 'Please Wait...');
-    var values = form.getValues();
-    
+  projectUrl: function(record) {
     var url = '/catalog';
-    if (form.record && form.record.id) {
-      url += '/' + form.record.id;
+    if (record && record.id) {
+      url += '/' + record.id;
       method = 'PUT';
     } else {
       method = 'POST';
     }
     
+    return { url: url, method: method };
+  },
+  
+  saveRecord: function(form){
+    Ext.Msg.wait('Saving project information', 'Please Wait...');
+    
+    request = this.projectUrl(form.record);
+    request.params = form.getValues();
+    
     /* Workaround for issue with exit and multi-selects */
     Ext.each(['geokeyword_ids', 'agency_ids', 'person_ids', 'iso_topic_ids'], function(item) {
-      values[item + '[]'] = values[item];
-      delete values[item];            
-    }, this);
+      this[item + '[]'] = this[item];
+      delete this[item];            
+    }, request.params);
     
-    Ext.Ajax.request({
-      url: url,
-      method: method,
-      params: values,
+    Ext.apply(request, {
       scope: form,
       success: function(response) {
         var obj = Ext.decode(response.responseText);
@@ -83,8 +89,10 @@ Ext.define('Manager.controller.Project', {
       },
       failure: function(response) {
         Ext.Msg.alert('Error', 'A server error was encountered while trying to save the project');
-      }
+      }      
     });
+    
+    Ext.Ajax.request(request);
   },
   
   showRecord: function(request) {
@@ -95,6 +103,25 @@ Ext.define('Manager.controller.Project', {
     if(this.getManager()) {
       this.getManager().add(p);      
       this.getManager().getLayout().setActiveItem(p);
+    }
+  },
+  
+  removeLink: function(linkId, linkContainer) {
+    if(!linkId && linkContainer) {
+      linkContainer.up('panel').remove(linkContainer);
+    }
+    if(linkId) {
+      Ext.Ajax.request({
+        url: '/links/' + linkId,
+        method: 'delete',
+        scope: this,
+        success: function(response) {
+          var obj = Ext.decode(response.responseText);
+          if(obj.success) {
+            this.removeLink(0, linkContainer);
+          }
+        }
+      });
     }
   },
   
