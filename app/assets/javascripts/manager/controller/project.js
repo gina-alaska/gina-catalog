@@ -39,7 +39,7 @@ Ext.define('Manager.controller.Project', {
       'projects_form button[action="save"]': {
         click: function(button) { this.saveRecord(button.up('form')); }
       },
-      'projects_form button[action="new"]': {
+      'projects_grid button[action="new"]': {
         click: function(button) { this.newRecord(); }
       } ,
       'projects_form button[action="remove_link"]': {
