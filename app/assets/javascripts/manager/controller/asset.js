@@ -15,6 +15,7 @@ Ext.define('Manager.controller.Asset', {
       'assets_grid': {
         itemdblclick: function(grid, record) { 
           Ext.util.History.add('asset/'+record.get('id')); 
+          this.showRecord({ id: record.get('id') }); 
         }
       },
       'assets_toolbar button[action="search"]': {
@@ -33,7 +34,7 @@ Ext.define('Manager.controller.Asset', {
       'assets_form button[action="save"]': {
         click: function(button) { this.saveRecord(button.up('form')); }
       },
-      'assets_form button[action="new"]': {
+      'assets_toolbar button[action="new"]': {
         click: function(button) { this.newRecord(); }
       } 
     });
@@ -88,7 +89,7 @@ Ext.define('Manager.controller.Asset', {
   
   showRecord: function(request) {
     var p = Ext.widget('assets_form', {
-      recordId: request.params.id
+      recordId: request.id
     });
     
     if(this.getManager()) {
