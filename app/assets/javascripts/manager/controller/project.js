@@ -39,6 +39,13 @@ Ext.define('Manager.controller.Project', {
       'projects_form button[action="save"]': {
         click: function(button) { this.saveRecord(button.up('form')); }
       },
+      'projects_form button[action="cancel"]': {
+        click: function(button) {
+          Ext.util.History.add('');
+          var f = button.up('form');
+          f.up('panel').remove(f);
+        }
+      },
       'projects_grid button[action="new"]': {
         click: function(button) { this.newRecord(); }
       } ,

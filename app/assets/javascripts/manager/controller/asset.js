@@ -34,6 +34,13 @@ Ext.define('Manager.controller.Asset', {
       'assets_form button[action="save"]': {
         click: function(button) { this.saveRecord(button.up('form')); }
       },
+      'assets_form button[action="cancel"]': {
+        click: function(button) {
+          Ext.util.History.add('');
+          var f = button.up('form');
+          f.up('panel').remove(f);
+        }
+      },
       'assets_toolbar button[action="new"]': {
         click: function(button) { this.newRecord(); }
       } 
