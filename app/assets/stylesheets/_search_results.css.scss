@@ -42,7 +42,11 @@
   }
 }
 
+table.quicksearch {
+  top: 0 !important;  
+}
 .quicksearch {
+  
   &.x-toolbar .xtb-text {
     font-size: 18px;
   }
@@ -56,8 +60,9 @@
   }
   
   input.x-form-text {
+    border-radius: 2px;
     line-height: normal;
-    height: 32px !important;
+    height: 36px !important;
     font: normal 18px tahoma, arial, helvetica, sans-serif;
     font-weight: normal;
   }

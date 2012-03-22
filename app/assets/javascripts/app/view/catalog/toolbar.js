@@ -9,16 +9,17 @@ Ext.define('App.view.catalog.toolbar', {
 
     initComponent: function() {
       Ext.apply(this, {
+        layout: 'hbox',
         items: [{
+          flex: 1,
+          name: 'q',
+          cls: 'quicksearch',
+          xtype: 'textfield',
+          plugins: [new Ext.gina.DefaultText({text: 'Enter search terms here'})]
+        }, {
           xtype: 'buttongroup',
           defaults: { scale: 'medium' },
           items: [{
-            name: 'q',
-            cls: 'quicksearch',
-            xtype: 'textfield',
-            plugins: [new Ext.gina.DefaultText({text: 'Enter search terms here'})],
-            width: 400
-          }, {
             xtype: 'button',
             iconCls: 'cancel-icon',
             action: 'clear_text'
