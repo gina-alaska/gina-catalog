@@ -162,12 +162,16 @@ Ext.application({
       layout: 'border',
       defaults: { border: false },
       items: [{
-        id: 'center',
+        itemId: 'center',
         region: 'center',
         border: false,
         layout: 'card',
         deferredRender: false,
         dockedItems: [App.header],
+        listeners: {
+          /* TODO: Remove this, for now it is required as a work around for a bug in Ext-4.1.0-beta3 */
+          render: Ext.emptyFn
+        },
         items: [{
           html: 'Loading...'
         }]

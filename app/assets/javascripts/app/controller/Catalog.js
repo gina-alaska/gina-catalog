@@ -1,7 +1,6 @@
 Ext.define('App.controller.Catalog', {
   extend: 'Ext.app.Controller',
 
-
   stores: ['Catalog', 'Filters'],
 
   init: function() {
@@ -49,5 +48,6 @@ Ext.define('App.controller.Catalog', {
         }]
       }]
     });
+    // this.show();
   }
 });

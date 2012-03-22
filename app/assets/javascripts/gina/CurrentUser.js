@@ -1,10 +1,10 @@
 Ext.define('Ext.gina.CurrentUser', {
-  mixins: ['Ext.util.Observable'],
+  extend: 'Ext.util.Observable',
 
   model: 'App.model.User',
-
-  constructor: function() {
-    this.callParent();
+  
+  initComponent: function() {
+    this.callParent(arguments);
 
     this.addEvents('load', 'logged_in', 'logged_out');
 
@@ -33,4 +33,4 @@ Ext.define('Ext.gina.CurrentUser', {
   get: function(field) {
     return this.user.get(field);
   }
-})
+});
