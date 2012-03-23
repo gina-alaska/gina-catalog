@@ -1,11 +1,11 @@
 /**
- * @class Manager.view.projects.Toolbar
+ * @class Manager.view.agencies.Toolbar
  * @extends Ext.toolbar.Toolbar
- * Toolbar for the projects editor
+ * Toolbar for the agencies editor
  */
-Ext.define('Manager.view.projects.Toolbar', {
+Ext.define('Manager.view.agencies.Toolbar', {
     extend: 'Ext.toolbar.Toolbar', 
-    alias: 'widget.projects_toolbar',
+    alias: 'widget.agencies_toolbar',
     docked: 'top',
     
     initComponent: function() {
@@ -14,6 +14,7 @@ Ext.define('Manager.view.projects.Toolbar', {
         flex: 1,
         cls: 'quicksearch',
         xtype: 'textfield',
+        name: 'query',
         plugins: [new Ext.gina.DefaultText({ text: 'Enter search here' })]
       }, {
         xtype: 'buttongroup',
@@ -28,7 +29,7 @@ Ext.define('Manager.view.projects.Toolbar', {
         xtype: 'buttongroup',
         items: [{
           xtype: 'button',
-          tip: 'New Project',
+          tip: 'New Agency',
           iconCls: 'new-icon',
           action: 'new',
           scale: 'medium'

@@ -8,5 +8,7 @@ Ext.define('Manager.store.Agencies', {
     reader: { type: 'json', totalProperty: 'total', root: 'agencies' }
   },
   sorters: [{ property: 'name_with_acronym' }],
+  remoteFilter: true,
+  remoteSort: true,
   autoLoad: true
 });

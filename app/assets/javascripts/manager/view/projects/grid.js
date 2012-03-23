@@ -32,6 +32,9 @@ Ext.define('Manager.view.projects.Grid', {
     }, 
     
     listeners: {
-      render: function() { this.getStore().load(); }
+      render: function() { 
+        this.getStore().clearFilter();
+        this.getStore().load();
+      }
     }
 });
