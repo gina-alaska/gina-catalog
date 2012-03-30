@@ -10,6 +10,15 @@ Ext.define('App.controller.Search', {
   }, {
     ref: 'applyButton',
     selector: 'catalog_sidebar button[action="search"]'
+  }, {
+    ref: 'sidebar',
+    selector: 'catalog_sidebar'
+  }, {
+    ref: 'filters',
+    selector: 'catalog_sidebar #filters'
+  }, {
+    ref: 'results',
+    selector: 'catalog_sidebar #results'
   }],
 
   stores: [ 'Catalog', 'Filters' ],
@@ -59,6 +68,8 @@ Ext.define('App.controller.Search', {
   },
   
   enableApplyButton: function(){
+    this.showFilters();
+    
     this.getApplyButton().addCls('notice');
     // custom: highlight foreground text to blue for 2 seconds
     this.getApplyButton().enable();
@@ -110,6 +121,8 @@ Ext.define('App.controller.Search', {
   },
 
   doSearch: function(opts) {
+    this.showResults();
+    
     var searchField = Ext.ComponentQuery.query('catalog_toolbar textfield[name="q"]')[0];
     this.replaceSearchParam('q', searchField.getValue(), 'Text: ' +  searchField.getValue());
     
@@ -223,9 +236,16 @@ Ext.define('App.controller.Search', {
     // this.doSearch();
   },
   
+  showFilters: function() {
+    this.getSidebar().setActiveTab(this.getFilters());    
+  },
+  
+  showResults: function() {
+    this.getSidebar().setActiveTab(this.getResults());
+  },
+  
   doFilter: function(item) {
     var win;
-    
     switch(item.filterType) {
       case 'single':
         // this.clearSearchParams( item.field );

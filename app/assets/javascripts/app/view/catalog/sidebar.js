@@ -1,10 +1,13 @@
 Ext.define('App.view.catalog.sidebar', {
-  extend: 'Ext.panel.Panel',
+  extend: 'Ext.tab.Panel',
   alias: 'widget.catalog_sidebar',
 
   autoScroll: true,
   config: { sortHandler: Ext.emptyFn },
-
+  minTabWidth: 120,
+  tabBar: {
+    style: 'font-size: 14px;'
+  },
   layout: {
     type: 'vbox',
     align: 'stretch'
@@ -23,7 +26,6 @@ Ext.define('App.view.catalog.sidebar', {
       minWidth: 40
     });
     
-    
     var tb;
     if(Ext.isIE) {
       tb = ['->', 'Results:', this.resultCount];
@@ -40,27 +42,10 @@ Ext.define('App.view.catalog.sidebar', {
     }
 
     this.items = [{
-      title: 'Search Results',
-      flex: 3,
-      layout: 'fit',
-      dockedItems: [{
-        xtype: 'toolbar',
-        dock: 'bottom',
-        items: tb
-      }],
-      items: {
-        xtype: 'catalog_list',
-        store: this.store
-      }
-    }, {
+      itemId: 'filters',
       title: 'Filters',
-      flex: 1,
       layout: 'fit',
-      margins: '3 0 0 0',
-      collapsible: true,
-      items: {
-        xtype: 'filterlist'
-      },
+      items: { xtype: 'filterlist' },
       dockedItems: [{
         xtype: 'toolbar',
         dock: 'bottom',
@@ -75,6 +60,19 @@ Ext.define('App.view.catalog.sidebar', {
           scale: 'large'
         }]
       }]
+    },{
+      itemId: 'results',
+      title: 'Search Results',
+      layout: 'fit',
+      dockedItems: [{
+        xtype: 'toolbar',
+        dock: 'bottom',
+        items: tb
+      }],
+      items: {
+        xtype: 'catalog_list',
+        store: this.store
+      }
     }];
 
     this.callParent();
