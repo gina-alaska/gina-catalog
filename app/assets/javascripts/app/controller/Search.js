@@ -6,10 +6,10 @@ Ext.define('App.controller.Search', {
     selector: 'catalog_map'
   }, {
     ref: 'textsearch',
-    selector: 'catalog_toolbar textfield[name="q"]'
+    selector: 'catalog_sidebar textfield[name="q"]'
   }, {
     ref: 'applyButton',
-    selector: 'catalog_sidebar button[action="search"]'
+    selector: 'catalog_sidebar button[action="apply"]'
   }, {
     ref: 'sidebar',
     selector: 'catalog_sidebar'
@@ -25,32 +25,36 @@ Ext.define('App.controller.Search', {
 
   init: function() {
     this.control({
-      'catalog_toolbar textfield[name="q"]': {
+      'catalog_sidebar textfield[name="q"]': {
         specialkey: function(field, e) {
           if(e.getKey() === e.ENTER) { this.doSearch(); }
         }
       },
-      'catalog_toolbar button[action="export"]': {
-        click: function() { this.doSearch({ format: 'pdf' }); }
-      },
-      'catalog_toolbar button[action="search"]': {
-        click: this.doSearch
-      },
-      'catalog_toolbar button[action="clear_filters"]': {
-        click: this.clearFilters
-      },
-      'catalog_toolbar button[action="clear_text"]': {
+      'catalog_text_search button[action="clear_text"]': {
         click: function() { this.clearSearchParam('q'); }
       },
-      'catalog_toolbar menuitem[action="filter"]': {
+      'catalog_text_search button[action="search"]': {
+        click: this.doSearch
+      },
+      'catalog_other_buttons button[action="export"]': {
+        click: function() { this.doSearch({ format: 'pdf' }); }
+      },
+      'catalog_other_buttons menuitem[action="filter"]': {
         click: this.doFilter
       },
+      'catalog_search_buttons button[action="clear_filters"]': {
+        click: this.clearFilters
+      },
+      'catalog_search_buttons menuitem[action="filter"]': {
+        click: this.doFilter
+      },
+      
       
       /* Search filter events */
       'catalog_sidebar filterlist': {
         itemclick: this.onFilterClick
       },
-      'catalog_sidebar button[action="search"]': {
+      'catalog_sidebar button[action="apply"]': {
         click: this.doSearch
       },
       
@@ -123,7 +127,7 @@ Ext.define('App.controller.Search', {
   doSearch: function(opts) {
     this.showResults();
     
-    var searchField = Ext.ComponentQuery.query('catalog_toolbar textfield[name="q"]')[0];
+    var searchField = this.getTextsearch();
     this.replaceSearchParam('q', searchField.getValue(), 'Text: ' +  searchField.getValue());
     
     var rawParams = this.getSearchParams();
@@ -246,6 +250,7 @@ Ext.define('App.controller.Search', {
   
   doFilter: function(item) {
     var win;
+    console.log('s', item);
     switch(item.filterType) {
       case 'single':
         // this.clearSearchParams( item.field );

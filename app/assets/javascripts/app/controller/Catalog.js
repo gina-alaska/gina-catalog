@@ -29,13 +29,13 @@ Ext.define('App.controller.Catalog', {
       layout: 'border',
       border: false,
       defaults: { border: false },
-      dockedItems: [{
-        xtype: 'catalog_toolbar',
-        dock: 'top'
-      }],
+      // dockedItems: [{
+      //   xtype: 'catalog_toolbar',
+      //   dock: 'top'
+      // }],
       items: [{
         region: 'west',
-        width: 350,
+        width: 500,
         split: true,
         xtype: 'catalog_sidebar',
         store: this.getStore('Catalog')

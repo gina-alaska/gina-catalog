@@ -4,6 +4,7 @@ Ext.define('App.view.catalog.sidebar', {
 
   autoScroll: true,
   config: { sortHandler: Ext.emptyFn },
+  minWidth: 370,
   minTabWidth: 120,
   tabBar: {
     style: 'font-size: 14px;'
@@ -12,6 +13,24 @@ Ext.define('App.view.catalog.sidebar', {
     type: 'vbox',
     align: 'stretch'
   },
+  dockedItems: [{
+    xtype: 'toolbar',
+    dock: 'top',
+    items: [{
+      flex: 1,
+      name: 'q',
+      cls: 'quicksearch',
+      xtype: 'textfield',
+      hideLabel: true,
+      plugins: [new Ext.gina.DefaultText({text: 'Enter search terms here'})]
+    },{
+      xtype: 'catalog_text_search'
+    }]
+  }, {
+    xtype: 'toolbar',
+    dock: 'top',
+    items: [{ xtype: 'catalog_search_buttons' }, { xtype: 'catalog_other_buttons' }]
+  }],
   
   constructor: function(config){
     this.initConfig(config);
@@ -52,11 +71,11 @@ Ext.define('App.view.catalog.sidebar', {
         layout: { type: 'hbox', pack: 'end' },
         items: [{ 
           xtype: 'button', 
-          text: 'Apply Search Filters', 
+          text: 'Apply Search Filters &rarr;', 
           disabled: true,
           cls: 'apply',
           icon: '/assets/icons/medium/search.png',
-          action: 'search', 
+          action: 'apply', 
           scale: 'large'
         }]
       }]
