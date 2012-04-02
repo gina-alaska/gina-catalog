@@ -80,7 +80,7 @@ Ext.define('App.view.catalog.search_buttons', {
       iconCls: 'data-icon',
       action: 'filter',
       filterType: 'isothemeselector',
-      field: 'iso_theme',
+      field: 'iso_topic_ids',
       description: 'ISO Theme: {name}'
     }, {
       text: 'Long Term Monitoring',
