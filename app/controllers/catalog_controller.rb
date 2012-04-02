@@ -145,6 +145,7 @@ class CatalogController < ApplicationController
         fulltext search[:q]
         with :id, catalog_ids unless catalog_ids.nil? or catalog_ids.empty?
         with :status, search[:status] if search[:status]
+        with :long_term_monitoring, ((search[:long_term_monitoring].to_i > 0) ? true : false) if search.include? :long_term_monitoring
         with :archived_at_year, nil unless search[:archived]
         with :type, search[:type] if search[:type]
         with :agency_ids, search[:agency_ids] if search[:agency_ids]

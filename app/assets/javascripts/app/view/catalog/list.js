@@ -32,11 +32,10 @@ Ext.define('App.view.catalog.list', {
     {
       compiled: true,
       hasGeom: function(locations) {
-        return Ext.Array.some(locations, function(l) { if (l.wkt) { return true } });
+        return Ext.Array.some(locations, function(l) { if (l.wkt) { return true; } });
       }
     }
   ),
-
   autoScroll: true,
   trackOver: true,
   overItemCls: 'x-item-over',

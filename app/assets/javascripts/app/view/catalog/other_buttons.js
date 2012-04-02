@@ -9,7 +9,8 @@ Ext.define('App.view.catalog.other_buttons', {
 
   initComponent: function() {
     Ext.apply(this, {
-      defaults: { scale: 'medium' },
+      defaults: { minWidth: 70, iconAlign: 'top', scale: 'small' },
+      
       items: [{
         xtype: 'button',
         text: 'Sort',

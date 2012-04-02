@@ -36,6 +36,8 @@ Ext.define('App.controller.Catalog', {
       items: [{
         region: 'west',
         width: 500,
+        margin: '3px',
+        // style: 'border-width: 1px; border-style: solid;',
         split: true,
         xtype: 'catalog_sidebar',
         store: this.getStore('Catalog')

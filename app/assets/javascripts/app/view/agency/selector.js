@@ -9,8 +9,8 @@ Ext.define('App.view.agency.selector', {
   store: 'App.store.Agencies',
   autoExpandColumn: 'name',
   columns: [
-    { header: 'Acronym', dataIndex: 'acronym', width: 80 },
-    { id: 'name', header: 'Name', dataIndex: 'name', width: 200 },
-    { header: 'Category', dataIndex: 'category', width: 150 }
+    { header: 'Acronym', dataIndex: 'acronym', flex: 1 },
+    { id: 'name', header: 'Name', dataIndex: 'name', flex: 5 },
+    { header: 'Category', dataIndex: 'category', flex: 2 }
   ]
-})
+});

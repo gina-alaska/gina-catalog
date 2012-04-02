@@ -29,12 +29,6 @@ class ApplicationController < ActionController::Base
           :flash => "Permission Denied"
         }, :status => 403
       end
-      format.geojson do
-        render :json => {
-          :success => false,
-          :flash => "Permission Denied"
-        }, :status => 403
-      end
     end
   end
 end

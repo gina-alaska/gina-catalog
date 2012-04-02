@@ -25,11 +25,6 @@ Ext.define('App.controller.Search', {
 
   init: function() {
     this.control({
-      'catalog_sidebar textfield[name="q"]': {
-        specialkey: function(field, e) {
-          if(e.getKey() === e.ENTER) { this.doSearch(); }
-        }
-      },
       'catalog_text_search button[action="clear_text"]': {
         click: function() { this.clearSearchParam('q'); }
       },
@@ -42,8 +37,8 @@ Ext.define('App.controller.Search', {
       'catalog_other_buttons menuitem[action="filter"]': {
         click: this.doFilter
       },
-      'catalog_search_buttons button[action="clear_filters"]': {
-        click: this.clearFilters
+      'catalog_search_buttons button[action="filter"]': {
+        click: this.doFilter
       },
       'catalog_search_buttons menuitem[action="filter"]': {
         click: this.doFilter
@@ -51,6 +46,14 @@ Ext.define('App.controller.Search', {
       
       
       /* Search filter events */
+      'catalog_sidebar textfield[name="q"]': {
+        specialkey: function(field, e) {
+          if(e.getKey() === e.ENTER) { this.doSearch(); }
+        }
+      },
+      'catalog_sidebar button[action="clear_filters"]': {
+        click: this.clearFilters
+      },
       'catalog_sidebar filterlist': {
         itemclick: this.onFilterClick
       },
@@ -250,7 +253,6 @@ Ext.define('App.controller.Search', {
   
   doFilter: function(item) {
     var win;
-    console.log('s', item);
     switch(item.filterType) {
       case 'single':
         // this.clearSearchParams( item.field );
@@ -281,6 +283,16 @@ Ext.define('App.controller.Search', {
         });
         win.show();
         break;
+      case 'isothemeselector':
+        win = Ext.create("App.view.isotheme.selector",{
+          scope: this,
+          field: item.field,
+          description: item.description,
+          filterType: 'multiple',
+          callback: this.doFilter
+        });
+        win.show();
+        break;        
       case 'agencyselector':
         win = Ext.create("App.view.agency.selector",{
           scope: this,

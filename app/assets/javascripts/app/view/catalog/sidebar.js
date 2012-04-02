@@ -6,9 +6,8 @@ Ext.define('App.view.catalog.sidebar', {
   config: { sortHandler: Ext.emptyFn },
   minWidth: 370,
   minTabWidth: 120,
-  tabBar: {
-    style: 'font-size: 14px;'
-  },
+  activeTab: 1,
+  plain: true,
   layout: {
     type: 'vbox',
     align: 'stretch'
@@ -16,6 +15,7 @@ Ext.define('App.view.catalog.sidebar', {
   dockedItems: [{
     xtype: 'toolbar',
     dock: 'top',
+    cls: 'myborders',
     items: [{
       flex: 1,
       name: 'q',
@@ -28,8 +28,9 @@ Ext.define('App.view.catalog.sidebar', {
     }]
   }, {
     xtype: 'toolbar',
+    cls: 'myborders',
     dock: 'top',
-    items: [{ xtype: 'catalog_search_buttons' }, { xtype: 'catalog_other_buttons' }]
+    items: [{ xtype: 'catalog_search_buttons' },{ xtype: 'catalog_other_buttons' }]
   }],
   
   constructor: function(config){
@@ -64,12 +65,20 @@ Ext.define('App.view.catalog.sidebar', {
       itemId: 'filters',
       title: 'Filters',
       layout: 'fit',
+      border: false,
+      bodyCls: 'myborders',
       items: { xtype: 'filterlist' },
       dockedItems: [{
         xtype: 'toolbar',
         dock: 'bottom',
         layout: { type: 'hbox', pack: 'end' },
-        items: [{ 
+        items: [{
+          xtype: 'button',
+          text: 'Clear Filters',
+          action: 'clear_filters',
+          scale: 'large',
+          iconCls: 'cancel-icon'
+        },{ 
           xtype: 'button', 
           text: 'Apply Search Filters &rarr;', 
           disabled: true,
@@ -83,6 +92,8 @@ Ext.define('App.view.catalog.sidebar', {
       itemId: 'results',
       title: 'Search Results',
       layout: 'fit',
+      border: false,
+      bodyCls: 'myborders',
       dockedItems: [{
         xtype: 'toolbar',
         dock: 'bottom',

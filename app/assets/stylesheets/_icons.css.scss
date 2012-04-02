@@ -34,6 +34,31 @@
   background: url(icons/small/download.png) center no-repeat;
 }
 
+.contact-icon {
+  background: url(icons/small/user.png) center no-repeat;
+}
+.agency-icon {
+  background: url(icons/small/agency.png) center no-repeat;
+}
+.data-icon {
+  background: url(icons/small/db.png) center no-repeat;
+}
+.status-icon {
+  background: url(icons/small/flag.png) center no-repeat;
+}
+.source-icon {
+  background: url(icons/small/application_view_list.png) center no-repeat;
+}
+.calendar-icon {
+  background: url(icons/small/today.png) center no-repeat;
+}
+.filter-icon {
+  background: url(icons/small/filter.png) center no-repeat;
+}
+.small-cancel-icon {
+  background: url(icons/small/cancel.png) center no-repeat;
+}
+
 /* Search related */
 .cancel-icon {
   background: url(icons/medium/x.png) center no-repeat;
@@ -46,4 +71,6 @@
 .new-icon {
   background: url(icons/medium/add-item.png) center no-repeat;
 }
+
+
 
