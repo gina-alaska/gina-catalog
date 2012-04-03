@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120309033322) do
+ActiveRecord::Schema.define(:version => 20120403002936) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -149,6 +149,13 @@ ActiveRecord::Schema.define(:version => 20120309033322) do
     t.string   "name"
     t.string   "url_template"
     t.string   "logo"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "data_types", :force => true do |t|
+    t.string   "name",        :null => false
+    t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

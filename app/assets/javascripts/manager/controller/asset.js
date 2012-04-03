@@ -1,6 +1,6 @@
 Ext.define('Manager.controller.Asset', {
   extend: 'Ext.app.Controller',
-  stores: ['Assets', 'AssetStatus', 'Agencies', 'Users', 'Contacts', 'Geokeywords', 'IsoTopics'],
+  stores: ['Assets', 'AssetStatus', 'Agencies', 'Users', 'Contacts', 'Geokeywords', 'IsoTopics', 'DataTypes'],
 
   refs: [{
     ref: 'search',

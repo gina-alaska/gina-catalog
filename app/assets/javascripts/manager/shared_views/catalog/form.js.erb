@@ -8,7 +8,8 @@ Ext.define('Manager.shared_view.catalog.Form', {
     alias: 'widget.catalog_form',
 
     config: {
-      recordId: null
+      recordId: null,
+      recordType: 'project'
     },
     
     titleTpl: new Ext.Template('Edit {id}::{title}'),
@@ -22,9 +23,6 @@ Ext.define('Manager.shared_view.catalog.Form', {
       this.link_count = 0;
       this.location_count = 0;
       
-      var source_agencies = Ext.create('Manager.store.Agencies', { autoLoad: true });
-      var primary_contacts = Ext.create('Manager.store.Contacts', { autoLoad: true });
-      
       var links = [];
       
       Ext.apply(this, {
@@ -33,125 +31,46 @@ Ext.define('Manager.shared_view.catalog.Form', {
         closable: true,
         border: true,
         fieldDefaults: { anchor: '100%', labelAlign: 'top' },
-        defaults: { layout: 'anchor', margin: '3 3 0 3' },
+        defaults: { bodyStyle: 'padding: 3px;', layout: 'anchor', margin: '3 3 0 3' },
         dockedItems: [{
-          xtype: 'toolbar',
-          dock: 'bottom',
-          ui: 'footer',
-          cls: 'edit',
+          xtype: 'toolbar', dock: 'bottom', ui: 'footer', cls: 'edit',
           defaults: { scale: 'large', minWidth: 100 },
-          items: ['->', {
-            text: 'Cancel',
-            action: 'cancel'
-          }, {
-            text: 'Save',
-            action: 'save'
-          }]
+          items: ['->', 
+            { text: 'Cancel',action: 'cancel'}, 
+            { text: 'Save', action: 'save' }
+          ]
         }],
         items: [{
-          itemId: 'general', xtype: 'panel', title: 'General',
-          bodyStyle: 'padding: 3px;',
-          items: [
-            { xtype: 'hiddenfield', name: 'type', value: 'Asset' },
-            { xtype: 'textfield', fieldLabel: 'Title', name: 'title' }, 
-            { xtype: 'textarea', fieldLabel: 'Description', name: 'description' }, 
-            {
-              layout: 'hbox',
-              defaults: { flex: 1 },
-              border: false,
-              items: [
-                { xtype: 'datefield', fieldLabel: 'Start Date', name: 'start_date', anchor: '100%' },
-                { xtype: 'datefield', fieldLabel: 'End Date', name: 'end_date', anchor: '100%', margin: '0 0 0 3' },
-                {
-                  xtype: 'combobox', fieldLabel: 'Owner', queryMode: 'remote', queryDelay: 100,
-                  triggerAction: 'all', minChars: 2, typeAhead: true, name: 'owner_id', store: 'Users',
-                  displayField: 'fullname_with_email', valueField: 'id', margin: '0 0 0 3'
-                }
-              ]
-            }, {
-              border: false,
-              layout: 'hbox',
-              defaults: { flex: 1 },
-              items: [{
-                xtype: 'combobox', fieldLabel: 'Status', name: 'status', queryMode: 'local',
-                store: 'ProjectStatus',  displayField: 'status', valueField: 'status'
-              }, { 
-                xtype: 'fieldcontainer',
-                fieldLabel: 'Long Term Monitoring',
-                defaultType: 'radiofield',
-                defaults: { flex: 1},
-                layout: 'hbox',
-                margin: '0 0 0 3',
-                items: [{
-                  boxLabel: 'Yes',
-                  name: 'long_term_monitoring',
-                  inputValue: true
-                },{
-                  boxLabel: 'No',
-                  name: 'long_term_monitoring',
-                  inputValue: false,
-                  checked: true
-                }]
-              }]
-            },
-            { xtype: 'textfield', fieldLabel: 'Tags', name: 'tags' }, 
-            {
-              xtype: 'combobox', fieldLabel: 'Geo-Tags', queryMode: 'local', triggerAction: 'all',
-              name: 'geokeyword_ids', multiSelect: true, editable: false, store: 'Geokeywords',
-              displayField: 'name', valueField: 'id'
-            }, {
-              xtype: 'combobox', fieldLabel: 'ISO Topic Category', queryMode: 'local', triggerAction: 'all',
-              name: 'iso_topic_ids', multiSelect: true, editable: false, store: 'IsoTopics',
-              displayField: 'long_name_with_code', valueField: 'id'
-            }
-          ]
+          border: false,
+          layout: { type: 'hbox', align: 'stretch' },
+          bodyStyle: 'padding: 0',
+          defaults: { layout: 'anchor', bodyStyle: 'padding: 3px;', flex: 1 },
+          items: [{
+            flex: 2,
+            itemId: 'general', title: 'Description', margins: '0 3 0 0',
+            xtype: (this.recordType == 'project' ? 'catalog_project_form_panel' : 'catalog_asset_form_panel')
+          }, {
+            itemId: 'properties', title: 'Properties', margins: '0 3 0 0',
+            xtype: 'catalog_properties_form_panel'
+          }, {
+            itemId: 'tags', title: 'Tags',
+            xtype: 'catalog_tags_form_panel'
+          }]
         }, {
           border: false,
           layout: { type: 'hbox', align: 'stretch' },
+          bodyStyle: 'padding: 0',
+          defaults: {  bodyStyle: 'padding: 3px;', flex: 1 },
           items: [{
-            xtype: 'panel', flex: 1, margins: '0 3 0 0', 
-            bodyStyle: 'padding: 3px;', layout: 'anchor',
-            itemId: 'agencies', title: 'Agencies', 
-            items: [{
-              xtype: 'combobox', fieldLabel: 'Source Agency', queryMode: 'remote', triggerAction: 'all',
-              minChars: 3, typeAhead: true, name: 'source_agency_id', store: source_agencies,
-              displayField: 'name_with_acronym', valueField: 'id' 
-            }, {
-              xtype: 'combobox', fieldLabel: 'Other Agencies', queryMode: 'local', triggerAction: 'all',
-              editable: false, minChars: 3, name: 'agency_ids', store: 'Agencies', displayField: 'name_with_acronym',
-              multiSelect: true, valueField: 'id'
-            }]
+            itemId: 'agencies', xtype: 'catalog_agency_form_panel', title: 'Agencies', margins: '0 3 0 0'
           }, {
-            xtype: 'panel', flex: 1, bodyStyle: 'padding: 3px;', layout: 'anchor',
-            itemId: 'contacts', title: 'Contacts',
-            items: [{
-              xtype: 'combobox', fieldLabel: 'Primary Contact', queryMode: 'remote', triggerAction: 'all',
-              minChars: 2, typeAhead: true, name: 'primary_contact_id', store: primary_contacts,
-              displayField: 'fullname_with_email', valueField: 'id'
-            }, {
-              xtype: 'combobox', fieldLabel: 'Other Contacts', queryMode: 'local', triggerAction: 'all',
-              name: 'person_ids', multiSelect: true, editable: false, store: 'Contacts',
-              displayField: 'fullname_with_email', valueField: 'id'
-            }]
+            itemId: 'contacts', xtype: 'catalog_contact_form_panel', title: 'Contacts' 
           }]
         }, {
-          itemId: 'links', xtype: 'panel', title: 'Links',
-          bodyStyle: 'padding: 3px;',
-          dockedItems: [{
-            xtype:'toolbar',
-            dock: 'top',
-            defaults: { scale: 'large' },
-            items: [{ text: '<b>New Link</b>', action: 'add_link' }]
-          }]
+          itemId: 'links', xtype: 'catalog_links_form_panel', title: 'Links'
         },{
-          itemId: 'locations', xtype: 'panel', title: 'Locations',
-          bodyStyle: 'padding: 3px;',
-          dockedItems: [{
-            xtype:'toolbar',
-            dock: 'top',
-            defaults: { scale: 'large' },
-            items: [{ text: '<b>New Location</b>', action: 'add_location' }]
-          }]
+          itemId: 'locations', xtype: 'catalog_location_form_panel', title: 'Locations'
+
         }]
       });       
       
