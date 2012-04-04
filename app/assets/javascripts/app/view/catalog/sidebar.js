@@ -8,6 +8,7 @@ Ext.define('App.view.catalog.sidebar', {
   minTabWidth: 120,
   activeTab: 1,
   plain: true,
+  deferredRender: false,
   layout: {
     type: 'vbox',
     align: 'stretch'
