@@ -126,6 +126,11 @@ ActiveRecord::Schema.define(:version => 20120403002936) do
     t.integer "catalog_id"
   end
 
+  create_table "catalogs_data_types", :id => false, :force => true do |t|
+    t.integer "catalog_id"
+    t.integer "data_type_id"
+  end
+
   create_table "catalogs_geokeywords", :id => false, :force => true do |t|
     t.integer "catalog_id"
     t.integer "geokeyword_id"

@@ -11,6 +11,7 @@ class Catalog < ActiveRecord::Base
   has_and_belongs_to_many :agencies, :join_table => 'catalog_agencies'
   has_and_belongs_to_many :geokeywords
   has_and_belongs_to_many :iso_topics
+  has_and_belongs_to_many :data_types
 
   has_and_belongs_to_many :tags, :join_table => 'catalog_tags', :order => 'highlight ASC, text ASC' do
     def list
@@ -62,6 +63,10 @@ class Catalog < ActiveRecord::Base
     text :iso_topics_long do
       iso_topics.map(&:long_name)
     end
+    text :data_types do
+      data_types.map(&:name)
+    end
+    
     string :status
     string :type
     string :uuid
@@ -74,6 +79,7 @@ class Catalog < ActiveRecord::Base
     integer :funding_agency_id
     integer :agency_ids, :references => Agency, :multiple => true
     integer :iso_topic_ids, :multiple => true
+    integer :data_type_ids, :multiple => true
     
     boolean :long_term_monitoring
     
