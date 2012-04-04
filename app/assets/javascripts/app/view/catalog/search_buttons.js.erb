@@ -25,56 +25,17 @@ Ext.define('App.view.catalog.search_buttons', {
     }, {
       text: 'Data Type',
       iconCls: 'data-icon',
-      menu: [{
-        text: 'Image',
-        action: 'filter',
-        filterType: 'multiple',
-        field: 'data_type',
-        value: 'image',
-        description: 'Data Type: Image'
-      }, {
-        text: 'Database',
-        action: 'filter',
-        filterType: 'multiple',
-        field: 'data_type',
-        value: 'database',
-        description: 'Data Type: Database'
-      }, {
-        text: 'Report',
-        action: 'filter',
-        filterType: 'multiple',
-        field: 'data_type',
-        value: 'report',
-        description: 'Data Type: Report'
-      }, {
-        text: 'GIS',
-        action: 'filter',
-        filterType: 'multiple',
-        field: 'data_type',
-        value: 'gis',
-        description: 'Data Type: GIS'
-      }, {
-        text: 'Map',
-        action: 'filter',
-        filterType: 'multiple',
-        field: 'data_type',
-        value: 'map',
-        description: 'Data Type: Map'
-      }, {
-        text: 'Web Service',
-        action: 'filter',
-        filterType: 'multiple',
-        field: 'data_type',
-        value: 'web_service',
-        description: 'Data Type: Web Service'
-      }, {
-        text: 'Other',
-        action: 'filter',
-        filterType: 'multiple',
-        field: 'data_type',
-        value: 'other',
-        description: 'Data Type: Other'
-      }]
+      menu: <%= 
+        DataType.all.collect do |i| 
+          { 
+            text: i.name, 
+            action: 'filter', 
+            filterType: 'multiple', 
+            field: 'data_types', 
+            value: i.name, 
+            description: "Data Type: #{i.name}"  
+          } 
+        end.to_json %>
     }, {
       text: 'ISO Theme',
       iconCls: 'data-icon',

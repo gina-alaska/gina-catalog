@@ -67,6 +67,10 @@ class Catalog < ActiveRecord::Base
       data_types.map(&:name)
     end
     
+    string :data_types, :multiple => true do
+      data_types.map(&:name)
+    end
+    
     string :status
     string :type
     string :uuid

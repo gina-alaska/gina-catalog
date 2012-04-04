@@ -153,6 +153,7 @@ class CatalogController < ApplicationController
         with :iso_topic_ids, search[:iso_topic_ids] if search[:iso_topic_ids]
         with :contact_id, search[:contact_id] if search[:contact_id]
         with :geokeywords_name, search[:region] if search[:region]
+        with :data_types, search[:data_types] if search[:data_types]
         with(:start_date_year).greater_than(search[:start_date_after]) if search[:start_date_after]
 
         with(:start_date_year).less_than(search[:start_date_before]) if search[:start_date_before]
