@@ -42,25 +42,40 @@ Ext.define('App.view.catalog.sidebar', {
   initComponent: function() {
     this.addEvents('open', 'showall', 'drawaoi', 'filter', 'export');
 
+    this.projectCount = Ext.widget('menuitem', {
+      text: 'Projects: 0'
+    });
+    this.assetCount = Ext.widget('menuitem', {
+      text: 'Data: 0'
+    });
     this.resultCount = Ext.widget('button', {
-      text: '0',
-      minWidth: 40
+      text: 'Total Results: 0',
+      minWidth: 40,
+      menu: [this.projectCount, this.assetCount]
+    });
+    this.limit_selector = Ext.create('Ext.button.Cycle', {
+      prependText: 'Page Size: ',
+      showText: true,
+      changeHandler: this.changeHandler,
+      menu: {
+        items: [{
+          text: '100'
+        }, {
+          text: '200'
+        }, {
+          text: '500'
+        }, {
+          text: '1000'
+        }, {
+          text: '2000',
+          checked: true
+        }, {
+          text: '3000'
+        }]
+      }
     });
     
-    var tb;
-    if(Ext.isIE) {
-      tb = ['->', 'Results:', this.resultCount];
-    } else {
-      this.projectCount = Ext.widget('button', {
-        text: '0',
-        minWidth: 40
-      });
-      this.assetCount = Ext.widget('button', {
-        text: '0',
-        minWidth: 40
-      });
-      tb = ['->', 'Projects:', this.projectCount, 'Data:', this.assetCount, 'Results:', this.resultCount];
-    }
+    var tb = ['->', this.limit_selector, this.resultCount];
 
     this.items = [{
       itemId: 'filters',
@@ -96,8 +111,9 @@ Ext.define('App.view.catalog.sidebar', {
       border: false,
       bodyCls: 'myborders',
       dockedItems: [{
-        xtype: 'toolbar',
+        xtype: 'pagingtoolbar',
         dock: 'bottom',
+        store: this.store,
         items: tb
       }],
       items: {
@@ -110,39 +126,25 @@ Ext.define('App.view.catalog.sidebar', {
       
     this.store.on('datachanged', this.onDataChanged, this);
   },
+  
+  changeHandler: function(cycleBtn, activeItem) {
+    console.log(this);
+    var store = cycleBtn.up('catalog_sidebar').store;
+    store.pageSize = parseInt(activeItem.text, 10);
+    store.loadPage(1);
+  },
 
   onDataChanged: function(store) {
-    this.resultCount.setText(store.getCount());
+    this.resultCount.setText("Total Results: " + store.getTotalCount());
     Ext.defer(this.getRecordCounts, 100, this, [store]);
   },
   
   getRecordCounts: function(store){
-    /* This is disabled in IE */
-    if(Ext.isIE) { return false; }
+    var projects = store.getProxy().getReader().rawData.project;
+    var assets = store.getProxy().getReader().rawData.asset;
     
-    var projects = 0,
-        assets = 0,
-        titles = [];
-    
-    store.each(function(i) {
-      switch(i.get('type')) {
-        case 'Project':
-          if(titles.indexOf(i.get('title')) < 0) {
-            projects += 1;
-            titles.push(i.get('title'));
-          }
-          break;
-        case 'Asset':
-          if(titles.indexOf(i.get('title')) < 0) {
-            assets += 1;
-            titles.push(i.get('title'));
-          }
-          break;          
-      }
-    }, this);
-    
-    this.projectCount.setText(projects || '0');
-    this.assetCount.setText(assets || '0');
+    this.projectCount.setText("Projects: " + (projects || '0'));
+    this.assetCount.setText("Data: " + (assets || '0'));
   },
 
   onSelectionChange: function(sm, selections, opts) {

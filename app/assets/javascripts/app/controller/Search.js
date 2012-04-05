@@ -126,33 +126,24 @@ Ext.define('App.controller.Search', {
       // this.doSearch();
     }
   },
-
-  doSearch: function(opts) {
+  
+  doSearch: function(opts){
     this.showResults();
     
     var searchField = this.getTextsearch();
     this.replaceSearchParam('q', searchField.getValue(), 'Text: ' +  searchField.getValue());
-    
     var rawParams = this.getSearchParams();
-    var params = {};
+    var filters = [];
     for(var name in rawParams) {
       if(rawParams[name]) {
-        var n = "search[" + name +"]";
-        if(Ext.isArray(rawParams[name])) {
-          n += "[]";
-        }
-        params[n] = rawParams[name];        
+        filters.push({
+          property: name,
+          value: rawParams[name]
+        });
       }
     }
-
-    if(opts && opts.format && opts.format == 'pdf') {
-      window.open('/data.pdf?'+Ext.Object.toQueryString(params));
-    } else {
-      this.getStore('Catalog').load({
-        params: Ext.Object.toQueryString(params)
-      });      
-    }
-    
+    this.getStore('Catalog').filters.clear();
+    this.getStore('Catalog').filter(filters);
     this.disableApplyButton();
   },
 
@@ -168,7 +159,7 @@ Ext.define('App.controller.Search', {
           params[f.get('field')].push(f.get('value'));
         } else {
           //No, make it an array with the two values
-          params[f.get('field')] = [params[f.field], f.get('value')];
+          params[f.get('field')] = [params[f.get('field')], f.get('value')];
         }
       } else {
         //Put the value into the params

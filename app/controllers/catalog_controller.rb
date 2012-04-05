@@ -74,12 +74,13 @@ class CatalogController < ApplicationController
   end
 
   def search
-    search = params[:search] || []
+    search = params[:search] || {}
     
     # Handle the filters from the standard extjs data stores
     if params[:filter]
+      logger.info JSON.parse(params[:filter])
       JSON.parse(params[:filter]).each do |f|
-        search[f["property"]] = f["value"]
+        search[f["property"].to_sym] = f["value"]
       end
     end
     
@@ -112,8 +113,9 @@ class CatalogController < ApplicationController
       @results = @results.includes(table_includes)
       @results = @results.where(:id => params[:ids]) unless params[:ids].nil?
       @results = @results.paginate(:page => params[:page], :per_page => params[:limit] || 3000).order('title ASC')
-      @results = [] if Rails.env == 'development'
+      # @results = [] if Rails.env == 'development'
       @total = @results.count
+      @facets = []
     else  
       catalog_ids = search[:ids] unless search[:ids].nil? or search[:ids].empty?
       
@@ -165,8 +167,10 @@ class CatalogController < ApplicationController
         paginate per_page:(params[:limit] || 3000), page:(params[:page] || 1)
         
         order_by(field, direction) if field and direction
+        facet(:type)
       end
       
+      @facets = @search.facet(:type).rows
       @results = @search.results
       @total = @search.total
     end
