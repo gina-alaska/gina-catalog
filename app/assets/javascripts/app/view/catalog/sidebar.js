@@ -128,7 +128,6 @@ Ext.define('App.view.catalog.sidebar', {
   },
   
   changeHandler: function(cycleBtn, activeItem) {
-    console.log(this);
     var store = cycleBtn.up('catalog_sidebar').store;
     store.pageSize = parseInt(activeItem.text, 10);
     store.loadPage(1);
