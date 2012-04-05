@@ -26,7 +26,7 @@ gem 'grit', '>= 2.4.1'
 #gem 'wkhtmltopdf'
 gem 'pdfkit'
 #gem 'wicked_pdf', :git => 'https://github.com/mileszs/wicked_pdf.git'
-gem 'compass', '~> 0.12.alpha.0'
+gem 'compass', '~> 0.12.1'
 gem 'rdiscount'
 gem 'ancestry', '~> 1.2.4'
 gem 'sunspot_rails'
@@ -50,6 +50,7 @@ gem 'sunspot_rails'
 group :assets do
   gem 'sass-rails', "~> 3.1.0"
   gem 'coffee-rails', '~> 3.1.0'
+  gem 'compass-rails'
   gem 'uglifier'
 end
 
