@@ -25,7 +25,7 @@ Ext.define('App.controller.Catalog', {
   
   start: function(panel) {
     this.catalogPanel = panel.add({
-      id: 'catalog',
+      itemId: 'catalog',
       layout: 'border',
       border: false,
       defaults: { border: false },
