@@ -96,9 +96,9 @@ Ext.define('App.view.catalog.sidebar', {
           iconCls: 'cancel-icon'
         },{ 
           xtype: 'button', 
-          text: 'Apply Search Filters &rarr;', 
-          disabled: true,
-          cls: 'apply',
+          text: 'Apply Search Filters', 
+          // disabled: true,
+          // cls: 'apply',
           icon: '/assets/icons/medium/search.png',
           action: 'apply', 
           scale: 'large'
