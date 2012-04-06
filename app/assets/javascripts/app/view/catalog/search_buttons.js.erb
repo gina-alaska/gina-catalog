@@ -8,7 +8,34 @@ Ext.define('App.view.catalog.search_buttons', {
   alias: 'widget.catalog_search_buttons',
 
   initComponent: function() {
-    var menuitems = [{
+    Ext.apply(this, {
+      defaults: { minWidth: 70, scale: 'small', iconAlign: 'top', iconCls: 'contact-icon' },
+      cls: 'catalog_search_buttons',
+      items: [{
+        iconCls: 'filter-icon',
+        text: 'Filter By',
+        menu: this.filterMenu()
+      }, this.sortBy(), {
+        xtype: 'button',
+        text: 'Clear Filters',
+        action: 'clear_filters',
+        // scale: 'large',
+        iconCls: 'small-cancel-icon'
+      },{ 
+        xtype: 'button', 
+        text: 'Apply Search Filters', 
+        // disabled: true,
+        // cls: 'apply',
+        iconCls: 'filter-icon',
+        action: 'apply', 
+        // scale: 'large'
+      }]
+    });        
+
+    this.callParent(arguments);
+  },
+  filterMenu: function() {
+    return [{
       text: 'Agency',
       iconCls: 'agency-icon',
       action: 'filter',
@@ -60,11 +87,7 @@ Ext.define('App.view.catalog.search_buttons', {
         field: 'long_term_monitoring',
         value: '0',
         description: 'Long Term Monitoring: No'
-      }]
-      // action: 'filter',
-      // filterType: 'contactselector',
-      // field: 'contact_ids',
-      // description: 'Contact: {full_name}'     
+      }]   
     }, {
       text: 'Project/Data',
       iconCls: 'data-icon',
@@ -168,23 +191,76 @@ Ext.define('App.view.catalog.search_buttons', {
       action: 'aoi',
       iconCls: 'aoi-icon'
     }];
-    
-    Ext.apply(this, {
-      defaults: { minWidth: 70, scale: 'small', iconAlign: 'top', iconCls: 'contact-icon' },
-      cls: 'catalog_search_buttons',
-      items: [{
-        xtype: 'button',
-        text: 'Clear Filters',
-        action: 'clear_filters',
-        scale: 'small',
-        iconCls: 'small-cancel-icon'
-      }, {
-        iconCls: 'filter-icon',
-        text: 'Filter By',
-        menu: menuitems
+  },
+  sortBy: function(){
+    return {
+      xtype: 'button',
+      text: 'Sort By',
+      iconCls: 'sort-icon',
+      menu: [{
+        text: 'Title',
+        group: 'sort', xtype: 'menucheckitem',
+        hideOnClick: false,
+        menu: this.directionMenu("title_sort","Sort by title")
+      },{
+        text: 'Project/Data',
+        group: 'sort', xtype: 'menucheckitem',
+        hideOnClick: false,
+        menu: this.directionMenu("type","Sort by project/data")
+      },{
+        text: 'Source',
+        group: 'sort', xtype: 'menucheckitem',
+        hideOnClick: false,
+        menu: this.directionMenu("source_agency_acronym","Sort by source agency")
+      },{
+        text: 'Status',
+        group: 'sort', xtype: 'menucheckitem',
+        hideOnClick: false,
+        menu: this.directionMenu("status","Sort by status")
+      },{
+        text: 'Start Date',
+        group: 'sort', xtype: 'menucheckitem',
+        hideOnClick: false,
+        menu: this.directionMenu("start_date_year","Sort by start date")
+      },{
+        text: 'End Date',
+        group: 'sort', xtype: 'menucheckitem',
+        hideOnClick: false,
+        menu: this.directionMenu("end_date_year","Sort by end date")
       }]
-    });        
+    };
+  },
+  directionMenu: function( val, description) {
+    return [{
+      text: 'Ascending',
+      group: 'direction', xtype: 'menucheckitem',
+      field: 'order_by',
+      action: 'filter',
+      filterType: 'single',
+      value: val + "-asc",
+      description: description + " ascending",
+      immediateSearch: true,
+      scope: this,
+      checkHandler: this.checkHandler
+    }, {
+      text: 'Descending',
+      group: 'direction', xtype: 'menucheckitem',
+      field: 'order_by',
+      action: 'filter',
+      filterType: 'single',
+      value: val + "-desc",
+      description: description + " descending",
+      immediateSearch: true,
+      scope: this,
+      checkHandler: this.checkHandler
+    }];
+  },
 
-    this.callParent(arguments);
+  checkHandler: function(menu, checked) {
+    if(checked) {
+      var parent = menu.parentMenu.parentItem;
+
+      parent.setChecked(true);
+    }
   }
 });

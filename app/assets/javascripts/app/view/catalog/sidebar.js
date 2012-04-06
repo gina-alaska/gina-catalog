@@ -13,26 +13,6 @@ Ext.define('App.view.catalog.sidebar', {
     type: 'vbox',
     align: 'stretch'
   },
-  dockedItems: [{
-    xtype: 'toolbar',
-    dock: 'top',
-    cls: 'myborders',
-    items: [{
-      flex: 1,
-      name: 'q',
-      cls: 'quicksearch',
-      xtype: 'textfield',
-      hideLabel: true,
-      plugins: [new Ext.gina.DefaultText({text: 'Enter search terms here'})]
-    },{
-      xtype: 'catalog_text_search'
-    }]
-  }, {
-    xtype: 'toolbar',
-    cls: 'myborders',
-    dock: 'top',
-    items: [{ xtype: 'catalog_search_buttons' },{ xtype: 'catalog_other_buttons' }]
-  }],
   
   constructor: function(config){
     this.initConfig(config);
@@ -54,7 +34,7 @@ Ext.define('App.view.catalog.sidebar', {
       menu: [this.projectCount, this.assetCount]
     });
     this.limit_selector = Ext.create('Ext.button.Cycle', {
-      prependText: 'Page Size: ',
+      prependText: 'Results/Page: ',
       showText: true,
       changeHandler: this.changeHandler,
       menu: {
@@ -77,53 +57,53 @@ Ext.define('App.view.catalog.sidebar', {
     
     var tb = ['->', this.limit_selector, this.resultCount];
 
-    this.items = [{
-      itemId: 'filters',
-      title: 'Filters',
-      layout: 'fit',
-      border: false,
-      bodyCls: 'myborders',
-      items: { xtype: 'filterlist' },
-      dockedItems: [{
-        xtype: 'toolbar',
-        dock: 'bottom',
-        items: ['->', {
-          xtype: 'button',
-          text: 'Clear Filters',
-          action: 'clear_filters',
-          scale: 'large',
-          iconCls: 'cancel-icon'
-        },{ 
-          xtype: 'button', 
-          text: 'Apply Search Filters', 
-          // disabled: true,
-          // cls: 'apply',
-          iconCls: 'search-icon',
-          action: 'apply', 
-          scale: 'large'
-        }]
-      }]
-    },{
-      itemId: 'results',
-      title: 'Search Results',
-      layout: 'fit',
-      border: false,
-      bodyCls: 'myborders',
+    Ext.apply(this, {
       dockedItems: [{
         xtype: 'pagingtoolbar',
         dock: 'bottom',
-        width: '100%',
         store: this.store,
         items: tb
+      },{
+        xtype: 'toolbar',
+        dock: 'top',
+        cls: 'myborders',
+        items: [{
+          flex: 1,
+          name: 'q',
+          cls: 'quicksearch',
+          xtype: 'textfield',
+          hideLabel: true,
+          plugins: [new Ext.gina.DefaultText({text: 'Enter search terms here'})]
+        },{
+          xtype: 'catalog_text_search'
+        }]
+      }, {
+        xtype: 'toolbar',
+        cls: 'myborders',
+        dock: 'top',
+        items: [{ xtype: 'catalog_search_buttons' },{ xtype: 'catalog_other_buttons' }]
       }],
-      items: {
-        xtype: 'catalog_list',
-        store: this.store
-      }
-    }];
+      items: [{
+        itemId: 'filters',
+        title: 'Filters',
+        layout: 'fit',
+        border: false,
+        bodyCls: 'myborders',
+        items: { xtype: 'filterlist' }
+      },{
+        itemId: 'results',
+        title: 'Search Results',
+        layout: 'fit',
+        border: false,
+        bodyCls: 'myborders',
+        items: {
+          xtype: 'catalog_list',
+          store: this.store
+        }
+      }]
+    });
 
     this.callParent();
-      
     this.store.on('datachanged', this.onDataChanged, this);
   },
   
