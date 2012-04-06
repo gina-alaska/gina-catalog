@@ -87,8 +87,7 @@ Ext.define('App.view.catalog.sidebar', {
       dockedItems: [{
         xtype: 'toolbar',
         dock: 'bottom',
-        layout: { type: 'hbox', pack: 'end' },
-        items: [{
+        items: ['->', {
           xtype: 'button',
           text: 'Clear Filters',
           action: 'clear_filters',
