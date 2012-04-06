@@ -98,7 +98,7 @@ Ext.define('App.view.catalog.sidebar', {
           text: 'Apply Search Filters', 
           // disabled: true,
           // cls: 'apply',
-          icon: '/assets/icons/medium/search.png',
+          iconCls: 'search-icon',
           action: 'apply', 
           scale: 'large'
         }]
