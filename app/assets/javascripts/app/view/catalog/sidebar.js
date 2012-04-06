@@ -112,6 +112,7 @@ Ext.define('App.view.catalog.sidebar', {
       dockedItems: [{
         xtype: 'pagingtoolbar',
         dock: 'bottom',
+        width: '100%',
         store: this.store,
         items: tb
       }],
