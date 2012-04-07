@@ -196,7 +196,7 @@ Title: #{self.title}
   end
 
   def published?
-    self.published_at <= Time.now.utc
+    !self.published_at.nil? && self.published_at <= Time.now.utc
   end
 
   ##
