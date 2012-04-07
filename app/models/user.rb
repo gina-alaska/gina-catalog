@@ -44,6 +44,10 @@ class User < ActiveRecord::Base
     u = find_by_login(login.downcase) # need to get the salt
     u && u.authenticated?(password) ? u : nil
   end
+  
+  def self.guest
+    where('identity_url = ?', 'Guest').first
+  end
 
   def email=(value)
     write_attribute :email, (value ? value.downcase : nil)
