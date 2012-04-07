@@ -16,7 +16,7 @@ module AuthenticatedSystem
     # Store the given user id in the session.
     def current_user=(new_user)
       session[:user_id] = new_user ? new_user.id : nil
-      @current_user = new_user || false
+      @current_user = new_user || User.where('identity_url = ?', 'Guest').first
     end
 
     # Check if the user is authorized
@@ -105,12 +105,12 @@ module AuthenticatedSystem
     #
 
     def login_as_guest
-      self.current_user = User.find_by_identity_url('Guest')
+      self.current_user = User.guest.first
     end
 
     # Called from #current_user.  First attempt to login by the user id stored in the session.
     def login_from_session
-      self.current_user = User.find_by_id(session[:user_id]) if session[:user_id]
+      self.current_user = User.where(id: session[:user_id]).first if session[:user_id]
     end
 
     # Called from #current_user.  Now, attempt to login by basic authentication information.
