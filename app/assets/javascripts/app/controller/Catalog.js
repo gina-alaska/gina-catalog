@@ -20,7 +20,10 @@ Ext.define('App.controller.Catalog', {
     panel.getLayout().setActiveItem(this.catalogPanel);
 
     // this.getStore('Catalog').on('beforeload', this.updateFilters, this);
-    this.getStore('Catalog').load();
+    if(!this.loaded) {
+      this.getStore('Catalog').load();
+      this.loaded = true;
+    }
   },
   
   start: function(panel) {
