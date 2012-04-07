@@ -4,7 +4,7 @@
   - unless @item.published?
     .not-published
       %h2 This project is pending review by the system moderators
-      %p After a moderator has reviewd the project, it will become available for public viewing
+      %p After a moderator has reviewed the project, it will become available for public viewing
     .spacer
 
   - if @item.published? or @item.owner == current_user or current_user.is_an_admin?

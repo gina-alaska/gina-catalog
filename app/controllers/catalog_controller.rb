@@ -94,29 +94,20 @@ class CatalogController < ApplicationController
       field = 'title_sort' if field == 'title'
     end
     
+    table_includes = {
+      :tags => [], :locations => [], :agencies => [], :source_agency => [], :links => [], 
+      :primary_contact => [:phone_numbers], :people => [:phone_numbers], :data_source => []
+    }
     
-#    if(params[:q].nil? or params[:q].empty?)
-#      results = sphinx_search('', params[:sort], params[:dir], params[:start], params[:limit])
-#    else
-#      results = sphinx_search(params[:q], params[:sort], params[:dir], params[:start], params[:limit])
-#    end
-#    results = Project.search('', :per_page => 3000)
-#    @results = Catalog.not_archived.published
-#    @results = @results.includes(:locations, :source_agency, :people, :agencies, :tags, :geokeywords)
-#    @results = @results.where(:id => params[:ids]) unless params[:ids].nil?
-#    @results = @results.limit(params[:limit] || 3000).order('title ASC')
-    
-    table_includes = [:tags, :locations, :agencies, :source_agency]
-    
-    if(search.nil? or search.empty?)
-      @results = Catalog.not_archived.published
-      @results = @results.includes(table_includes)
-      @results = @results.where(:id => params[:ids]) unless params[:ids].nil?
-      @results = @results.paginate(:page => params[:page], :per_page => params[:limit] || 3000).order('title ASC')
-      # @results = [] if Rails.env == 'development'
-      @total = @results.count
-      @facets = []
-    else  
+    # if(search.nil? or search.empty?)
+    #   @results = Catalog.not_archived.published
+    #   @results = @results.includes(table_includes)
+    #   @results = @results.where(:id => params[:ids]) unless params[:ids].nil?
+    #   @results = @results.paginate(:page => params[:page], :per_page => params[:limit] || 3000).order('title ASC')
+    #   # @results = [] if Rails.env == 'development'
+    #   @total = @results.count
+    #   @facets = []
+    # else  
       catalog_ids = search[:ids] unless search[:ids].nil? or search[:ids].empty?
       
       if(!catalog_ids and search[:bbox])
@@ -173,7 +164,7 @@ class CatalogController < ApplicationController
       @facets = @search.facet(:type).rows
       @results = @search.results
       @total = @search.total
-    end
+    # end
     
     respond_to do |format|
       format.json

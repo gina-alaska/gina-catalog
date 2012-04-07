@@ -10,7 +10,7 @@ NSCatalog::Application.routes.draw do
   resources :links
 
   resources :projects
-#  resources :assets
+  resources :assets, :as => :dataasset
   resources :agencies
   resources :people
 
