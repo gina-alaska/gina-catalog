@@ -4,7 +4,7 @@ Ext.define('App.store.Catalog', {
   model: 'App.model.SearchResult',
   proxy: {
     type: 'ajax',
-    url: '/data.json',
+    url: '/search.json',
     method: 'POST',
     timeout: 120000,
     reader: {

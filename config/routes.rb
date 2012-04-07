@@ -82,6 +82,7 @@ NSCatalog::Application.routes.draw do
   match '/preferences(.:format)' => 'users#preferences'
   match '/login' => 'sessions#new'
   match '/logout' => 'sessions#destroy'
+  match '/search(.:format)' => 'catalog#search'
   match '/data(.:format)' => 'catalog#search'
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.

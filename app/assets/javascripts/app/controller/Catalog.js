@@ -14,7 +14,7 @@ Ext.define('App.controller.Catalog', {
       }
     });
   },
-  
+
   show: function() {
     var panel = this.catalogPanel.up('panel');
     panel.getLayout().setActiveItem(this.catalogPanel);
@@ -29,10 +29,6 @@ Ext.define('App.controller.Catalog', {
       layout: 'border',
       border: false,
       defaults: { border: false },
-      // dockedItems: [{
-      //   xtype: 'catalog_toolbar',
-      //   dock: 'top'
-      // }],
       items: [{
         region: 'west',
         width: 500,
