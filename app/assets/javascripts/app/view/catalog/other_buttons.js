@@ -9,7 +9,7 @@ Ext.define('App.view.catalog.other_buttons', {
 
   initComponent: function() {
     Ext.apply(this, {
-      defaults: { minWidth: 70, iconAlign: 'top', scale: 'small' },
+      defaults: { minWidth: 60, iconAlign: 'top', scale: 'small' },
       
       items: [{
         xtype: 'button',
@@ -20,7 +20,7 @@ Ext.define('App.view.catalog.other_buttons', {
         xtype: 'button',
         text: 'Help',
         action: 'help',
-        iconCls: 'download-icon'
+        iconCls: 'help-icon'
       }]
     });        
 
