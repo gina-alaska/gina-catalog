@@ -15,13 +15,7 @@ Ext.define('App.view.catalog.search_buttons', {
         iconCls: 'filter-icon',
         text: 'Filter By',
         menu: this.filterMenu()
-      }, this.sortBy(), {
-        xtype: 'button',
-        text: 'Clear Filters',
-        action: 'clear_filters',
-        // scale: 'large',
-        iconCls: 'small-cancel-icon'
-      },{ 
+      }, { 
         xtype: 'button', 
         text: 'Apply Search Filters', 
         // disabled: true,
@@ -29,7 +23,13 @@ Ext.define('App.view.catalog.search_buttons', {
         iconCls: 'filter-icon',
         action: 'apply', 
         // scale: 'large'
-      }]
+      }, {
+        xtype: 'button',
+        text: 'Clear Filters',
+        action: 'clear_filters',
+        // scale: 'large',
+        iconCls: 'small-cancel-icon'
+      }, this.sortBy()]
     });        
 
     this.callParent(arguments);
