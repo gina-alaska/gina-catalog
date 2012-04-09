@@ -19,7 +19,7 @@ Ext.define('App.view.catalog.other_buttons', {
       }, {
         xtype: 'button',
         text: 'Help',
-        action: 'help',
+        action: 'filter-help',
         iconCls: 'help-icon'
       }]
     });        

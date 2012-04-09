@@ -3,5 +3,15 @@ Ext.define('App.view.help.index', {
   alias: 'widget.helpindex',
 
   layout: 'fit',
-  html: '<iframe src="http://catalog.northslope.org/cms/help" class="fulliframe">You browser does not support iframes</iframe>'
+  initComponent: function() {
+  	if(!this.url) { this.url = 'http://catalog.northslope.org/cms/help'; }
+
+  	Ext.apply(this, {
+  	  html: '<iframe src="' + 
+  	  	this.url + 
+  	  	'" class="fulliframe">You browser does not support iframes</iframe>'
+  	});
+
+  	this.callParent();
+  }
 });
