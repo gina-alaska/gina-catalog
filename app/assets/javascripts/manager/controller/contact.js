@@ -146,7 +146,6 @@ Ext.define('Manager.controller.Contact', {
   doSearch: function(){
     var q = this.getSearch().getValue();
     this.getGrid().getStore().filters.clear();
-    console.log('foo', q);
     this.getGrid().getStore().filter({ property: 'query', value: q });
   }
 });
