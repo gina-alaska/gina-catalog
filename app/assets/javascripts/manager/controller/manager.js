@@ -1,6 +1,6 @@
 Ext.define('Manager.controller.Manager', {
   extend: 'Ext.app.Controller',
-  stores: ['Projects', 'Assets', 'Agencies'],
+  stores: ['Projects', 'Assets', 'Agencies', 'Contacts'],
   
   init: function() {
     this.control({
@@ -30,11 +30,16 @@ Ext.define('Manager.controller.Manager', {
         deferredRender: false,
         store: this.getStore("Assets")
       }, {
-        title: 'Contacts'
+        title: 'Contacts',
+        xtype: 'contacts_grid',
+        deferredRender: false,
+        store: Ext.create('Manager.store.Contacts', {  
+          remoteSort: true, remoteFilter: true, pageSize: 25 
+        })
       }, {
         title: 'Agencies',
         xtype: 'agencies_grid',
-        deferredRender: true,
+        deferredRender: false,
         store: Ext.create('Manager.store.Agencies')
       }]
     });

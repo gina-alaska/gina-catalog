@@ -12,5 +12,6 @@ Ext.define('Manager.store.Contacts', {
       root: 'people'
     }
   },  
-  autoLoad: true
+  autoLoad: true,
+  pageSize: 10000
 });

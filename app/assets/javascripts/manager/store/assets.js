@@ -3,7 +3,7 @@ Ext.define('Manager.store.Assets', {
   
   model: 'Manager.model.Catalog',
   proxy: {
-    url: '/data.json',
+    url: '/search.json',
     type: 'ajax',
     actionMethods: { read: 'POST' },
     extraParams: {

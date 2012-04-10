@@ -17,6 +17,9 @@ class Person < ActiveRecord::Base
     text :first_name
     text :last_name
     text :email
+    text :agency do
+      agencies.map{|a| [a.name, a.acronym]}
+    end
   
     integer :id
   end  
@@ -73,8 +76,12 @@ class Person < ActiveRecord::Base
   def as_json(*opts)
     {
       :id => self.id,
+      :first_name => self.first_name,
+      :last_name => self.last_name,
       :full_name => self.full_name,
-      :email => self.email
+      :email => self.email,
+      :agencies => self.agencies.collect(&:acronym).join(','),
+      :update_at => self.updated_at
     }
   end
 end

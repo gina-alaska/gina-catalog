@@ -2,9 +2,6 @@ class AgenciesController < ApplicationController
   respond_to :json
 
   def index
-    logger.info '*************'
-    logger.info search_params.inspect
-    
     if search_params["query"].nil? or search_params["query"].empty?
       @agencies = Agency.active
       @total = @agencies.count
