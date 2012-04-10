@@ -17,7 +17,6 @@ Ext.define('Manager.view.contacts.grid', {
   ],
 
   initComponent: function() {
-    console.log(this.getStore());
     Ext.apply(this, {
       dockedItems: [{
         xtype: 'contacts_toolbar',
