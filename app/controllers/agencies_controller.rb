@@ -21,6 +21,35 @@ class AgenciesController < ApplicationController
     respond_with({ :agencies => @agencies, :total => @total })
   end
   
+  def show
+    @agency = Agency.find_by_id(params[:id])
+
+    respond_with @agency
+  end
+
+  def update
+    @agency = Agency.where(:id => params[:id]).first
+
+    if @agency.update_attributes(agency)    
+      respond_to do |format|
+        format.json { 
+          render :json => {
+            :success => true,
+            :agency => @agency
+          }
+        }
+      end
+    else
+      respond_to do |format|
+        format.json { 
+          render :json => {
+            :success => false,
+            :errors => @agency.errors.full_messages
+          }
+        }
+      end      
+    end
+  end
   protected
   
   def search_params
@@ -35,5 +64,11 @@ class AgenciesController < ApplicationController
     end
     
     search
+  end
+
+  def agency
+    v = params.slice(:id, :name, :description, :category, :acronym, :active)
+
+    v
   end
 end
