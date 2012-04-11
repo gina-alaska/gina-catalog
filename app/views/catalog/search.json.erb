@@ -1,7 +1,4 @@
 { 
   total: <%= @total -%>, 
-  <% @facets.each do |row| %>
-  <%= row.value.downcase %>: <%= row.count %>,
-  <% end %>
   results: <%= raw @results.as_json(:format => 'basic').to_json -%>
 }
