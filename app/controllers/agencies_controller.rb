@@ -27,6 +27,30 @@ class AgenciesController < ApplicationController
     respond_with @agency
   end
 
+  def create
+    @agency = Agency.new( agency )
+
+    if @agency.save
+      respond_to do |format|
+        format.json {
+          render :json => {
+            :success => true,
+            :agency => @agency
+          }
+        }
+      end
+    else
+      respond_to do |format|
+        format.json {
+          render :json => {
+            :success => false,
+            :errors => @agency.errors.full_messages
+          }
+        }
+      end
+    end
+  end
+
   def update
     @agency = Agency.where(:id => params[:id]).first
 
