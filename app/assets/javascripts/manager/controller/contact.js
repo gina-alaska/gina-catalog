@@ -1,6 +1,8 @@
 Ext.define('Manager.controller.Contact', {
   extend: 'Ext.app.Controller',
 
+  stores: ['Agencies'],
+
   refs: [{
     ref: 'search',
     selector: 'contacts_toolbar textfield'
@@ -54,7 +56,7 @@ Ext.define('Manager.controller.Contact', {
   },
   
   contactRequest: function(record) {
-    var url = '/contacts';
+    var url = '/people';
     if (record && record.id) {
       url += '/' + record.id;
       method = 'PUT';
@@ -70,13 +72,21 @@ Ext.define('Manager.controller.Contact', {
     
     request = this.contactRequest(form.record);
     request.params = form.getValues();
-        
+    /* Workaround for issue with exit and multi-selects */
+    Ext.each(['agency_ids'], function(item) {
+      //This is a work around for ExtJS stripping out empty arrays
+      if(Ext.isArray(this[item]) && this[item].length == 0) {
+        this[item] = [""];
+      }
+      this[item + '[]'] = this[item];
+      delete this[item];            
+    }, request.params);   
     Ext.apply(request, {
       scope: form,
       success: function(response) {
         var obj = Ext.decode(response.responseText);
         if(obj.success) {
-          this.loadRecordData(obj.catalog);
+          this.loadRecordData(obj.person);
           Ext.Msg.alert('Success!', 'Contact information has been updated');
         } else {
           Ext.Msg.alert('Error', '<p>The following errors were encountered while saving the contact:</p><br />' + obj.errors.join('<br />'));
@@ -86,7 +96,6 @@ Ext.define('Manager.controller.Contact', {
         Ext.Msg.alert('Error', 'A server error was encountered while trying to save the contact');
       }      
     });
-    
     Ext.Ajax.request(request);
   },
   

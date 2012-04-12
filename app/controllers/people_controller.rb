@@ -11,6 +11,35 @@ class PeopleController < ApplicationController
     respond_with({ :people => @people, :total => solr.total })
   end
   
+  def show
+    @person = Person.where(:id => params[:id]).first
+
+    respond_with @person
+  end
+
+  def update
+    @person = Person.where(:id => params[:id]).first
+
+    if @person.update_attributes(person)    
+      respond_to do |format|
+        format.json { 
+          render :json => {
+            :success => true,
+            :person => @person
+          }
+        }
+      end
+    else
+      respond_to do |format|
+        format.json { 
+          render :json => {
+            :success => false,
+            :errors => @person.errors.full_messages
+          }
+        }
+      end      
+    end
+  end
   protected
   
   def search_params
@@ -25,5 +54,10 @@ class PeopleController < ApplicationController
     end
     
     search
+  end
+
+  def person
+    params.slice(:first_name, :last_name, :email, :agency_ids, :url,
+                 :work_phone, :alt_phone, :mobile_phone, :salutation, :suffix)
   end
 end

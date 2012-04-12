@@ -32,7 +32,7 @@ class Person < ActiveRecord::Base
     self.phone_numbers.each do |pn|
       return pn if pn.name == 'work'
     end
-    false
+    nil
   end
 
   def work_phone=(digits)
@@ -47,7 +47,7 @@ class Person < ActiveRecord::Base
     self.phone_numbers.each do |pn|
       return pn if pn.name == 'alt'
     end
-    false
+    nil
   end
 
   def alt_phone=(digits)
@@ -62,7 +62,7 @@ class Person < ActiveRecord::Base
     self.phone_numbers.each do |pn|
       return pn if pn.name == 'mobile'
     end
-    false
+    nil
   end
   
   def mobile_phone=(digits)
@@ -81,6 +81,13 @@ class Person < ActiveRecord::Base
       :full_name => self.full_name,
       :email => self.email,
       :agencies => self.agencies.collect(&:acronym).join(','),
+      :agency_ids => self.agencies.collect(&:id),
+      :url => self.url,
+      :salutation => self.salutation,
+      :suffix => self.suffix,
+      :work_phone => self.work_phone.try(:digits),
+      :mobile_phone => self.mobile_phone.try(:digits),
+      :alt_phone => self.alt_phone.try(:digits),
       :update_at => self.updated_at
     }
   end
