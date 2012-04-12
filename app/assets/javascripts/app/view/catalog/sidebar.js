@@ -119,7 +119,6 @@ Ext.define('App.view.catalog.sidebar', {
   onDataChanged: function(store) {
     this.resultCount.setText("Total Results: " + store.getTotalCount());
     var filters = Ext.StoreMgr.lookup('Filters').buildFilterRequest();
-    console.log(filters[0]);
     Ext.Ajax.request({
       url: '/catalog/unique',
       params: {
