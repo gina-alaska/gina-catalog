@@ -1,5 +1,8 @@
+//= require_tree ./gina
 //= require_self
-//= require ./gina/DefaultText.js
+//= require      ./gina-map-layers/gina-openlayers.js
+//= require      ./gina-map-layers/projections/all.js
+//= require      ./extjs-openlayers/Basic.js
 //= require_tree ./manager/model
 //= require_tree ./manager/store
 //= require_tree ./manager/shared_views
@@ -9,7 +12,7 @@
 Ext.application({
   name: 'Manager',
   appFolder: '/assets/manager',
-  controllers: ['Manager', 'Project', 'Asset', 'Agency', 'Contact'],
+  controllers: ['Manager', 'Project', 'Asset', 'Agency', 'Contact', 'Location'],
   
   routes: [{
     rule: 'project/:id',

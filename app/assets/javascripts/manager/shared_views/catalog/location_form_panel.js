@@ -16,5 +16,43 @@ Ext.define('Manager.shared_views.catalog.location_form_panel', {
     });      
 
     this.callParent(arguments);
+  },
+  
+  buildLocation: function(loc){
+    Ext.applyIf(loc, {
+      id: '',
+      name: '',
+      wkt: ''
+    });
+    
+    var loc_markup = {
+      xtype: 'fieldcontainer',
+      role: 'location',
+      layout: { type: 'hbox', defaultMargins: { right: 3 } },
+      fieldDefaults: { labelAlign: 'top' },
+      items: [{
+        xtype: 'hiddenfield', name: 'locations_attributes['+this.location_count+'][id]', value: loc.id
+      }, {
+        xtype: 'textfield', fieldLabel: 'Label', flex: 3,
+        name: 'locations_attributes['+ this.location_count +'][name]', value: loc.name
+      }, {
+        xtype: 'location_triggerfield', fieldLabel: 'Geom', flex: 10,
+        name: 'locations_attributes['+ this.location_count + '][wkt]', value: loc.wkt
+      }, {
+        xtype: 'fieldcontainer',
+        layout: 'hbox',
+        flex: 1,
+        fieldLabel: 'Actions',
+        items: [{
+          xtype: 'button', text: 'Remove', flex: 1, action: 'remove_location', locId: loc.id
+        }]
+      }]
+    };        
+    this.location_count += 1;
+    
+    return loc_markup;
+  },
+  addLocation: function(loc){
+    this.add(this.buildLocation(loc));      
   }
 });
