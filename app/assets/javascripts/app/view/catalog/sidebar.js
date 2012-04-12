@@ -28,10 +28,13 @@ Ext.define('App.view.catalog.sidebar', {
     this.assetCount = Ext.widget('menuitem', {
       text: 'Data: 0'
     });
+    this.uniqueCount = Ext.widget('menuitem', {
+      text: 'Unique: 0'
+    });
     this.resultCount = Ext.widget('button', {
       text: 'Total Results: 0',
       minWidth: 40,
-      menu: [this.projectCount, this.assetCount]
+      menu: [this.uniqueCount, this.projectCount, this.assetCount]
     });
     this.limit_selector = Ext.create('Ext.button.Cycle', {
       prependText: 'Results/Page: ',
@@ -115,15 +118,25 @@ Ext.define('App.view.catalog.sidebar', {
 
   onDataChanged: function(store) {
     this.resultCount.setText("Total Results: " + store.getTotalCount());
-    Ext.defer(this.getRecordCounts, 100, this, [store]);
+    var filters = Ext.StoreMgr.lookup('Filters').buildFilterRequest();
+    console.log(filters[0]);
+    Ext.Ajax.request({
+      url: '/catalog/unique',
+      params: {
+        filter: Ext.JSON.encode(filters)
+      },
+      scope: this,
+      success: function(response) {
+        Ext.defer(this.getRecordCounts, 100, this, [Ext.decode(response.responseText)]);
+      }
+    })
+   
   },
   
-  getRecordCounts: function(store){
-    var projects = store.getProxy().getReader().rawData.project;
-    var assets = store.getProxy().getReader().rawData.asset;
-    
-    this.projectCount.setText("Projects: " + (projects || '0'));
-    this.assetCount.setText("Data: " + (assets || '0'));
+  getRecordCounts: function(data) {
+    this.uniqueCount.setText("Unique: " + (data.unique_total || '0'));
+    this.projectCount.setText("Projects: " + (data.projects || '0'));
+    this.assetCount.setText("Data: " + (data.assets || '0'));
   },
 
   onSelectionChange: function(sm, selections, opts) {

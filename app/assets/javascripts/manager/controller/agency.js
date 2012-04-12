@@ -84,22 +84,17 @@ Ext.define('Manager.controller.Agency', {
   
   saveRecord: function(form){
     Ext.Msg.wait('Saving agency information', 'Please Wait...');
-    
+
     request = this.agencyRequest(form.record);
     request.params = form.getValues();
-    
-    /* Workaround for issue with exit and multi-selects */
-    Ext.each(['geokeyword_ids', 'agency_ids', 'person_ids', 'iso_topic_ids'], function(item) {
-      this[item + '[]'] = this[item];
-      delete this[item];            
-    }, request.params);
     
     Ext.apply(request, {
       scope: form,
       success: function(response) {
         var obj = Ext.decode(response.responseText);
+
         if(obj.success) {
-          this.loadRecordData(obj.catalog);
+          this.loadRecordData(obj.agency);
           Ext.Msg.alert('Success!', 'Agency information has been updated');
         } else {
           Ext.Msg.alert('Error', '<p>The following errors were encountered while saving the agency:</p><br />' + obj.errors.join('<br />'));

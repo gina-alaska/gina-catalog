@@ -16,10 +16,11 @@ NSCatalog::Application.routes.draw do
 
   resources :catalog, :constraints => { :format => /[a-z]+(\.[a-z]+)?/ } do
     get :download
-    
     collection do
       post :search
       get :search
+      get :unique
+      post :unique
     end
 
     resources :locations
