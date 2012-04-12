@@ -33,7 +33,7 @@ Ext.define('Manager.controller.Project', {
       },
       'projects_form button[action="add_location"]': {
         click: function(button) {
-          button.up('form').addLocation({});
+          button.up('panel').addLocation({});
         }
       },
       'projects_form button[action="save"]': {
