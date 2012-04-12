@@ -132,43 +132,34 @@ Ext.define('App.controller.Search', {
     
     var searchField = this.getTextsearch();
     this.replaceSearchParam('q', searchField.getValue(), 'Text: ' +  searchField.getValue());
-    var rawParams = this.getSearchParams();
-    var filters = [];
-    for(var name in rawParams) {
-      if(rawParams[name]) {
-        filters.push({
-          property: name,
-          value: rawParams[name]
-        });
-      }
-    }
+
     this.getStore('Catalog').filters.clear();
-    this.getStore('Catalog').filter(filters);
+    this.getStore('Catalog').filter(this.getStore('Filters').buildFilterRequest());
     this.disableApplyButton();
   },
 
-  getSearchParams: function(id) {
-    var filters = this.getStore('Filters');
-  
-    params={};
-    filters.each(function(f) {
-      if(params[f.get('field')]) {
-        //Do we have an array of values?
-        if(Ext.isArray(params[f.get('field')])) {
-          //Yes, Push new value onto the array
-          params[f.get('field')].push(f.get('value'));
-        } else {
-          //No, make it an array with the two values
-          params[f.get('field')] = [params[f.get('field')], f.get('value')];
-        }
-      } else {
-        //Put the value into the params
-        params[f.get('field')] = f.get('value');
-      }
-    }, this);
+  // getSearchParams: function(id) {
+  //   var filters = this.getStore('Filters');
+    
+  //   // params={};
+  //   // filters.each(function(f) {
+  //   //   if(params[f.get('field')]) {
+  //   //     //Do we have an array of values?
+  //   //     if(Ext.isArray(params[f.get('field')])) {
+  //   //       //Yes, Push new value onto the array
+  //   //       params[f.get('field')].push(f.get('value'));
+  //   //     } else {
+  //   //       //No, make it an array with the two values
+  //   //       params[f.get('field')] = [params[f.get('field')], f.get('value')];
+  //   //     }
+  //   //   } else {
+  //   //     //Put the value into the params
+  //   //     params[f.get('field')] = f.get('value');
+  //   //   }
+  //   // }, this);
 
-    return params;
-  },
+  //   return params;
+  // },
   
   clearSearchParam: function(field, value) {
     var filters = this.getStore('Filters');

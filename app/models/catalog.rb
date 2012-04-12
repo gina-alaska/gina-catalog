@@ -40,7 +40,7 @@ class Catalog < ActiveRecord::Base
 
   #Adding solr indexing
   searchable do
-    text :title, { :boost => 2.0 }
+    text :title, { :boost => 2.0, :stored => true }
     text :description
     text :tags do
       tags.map(&:text)
