@@ -9,24 +9,16 @@ Ext.define('Manager.controller.Location', {
   init: function() {
   	this.control({
   		'location_triggerfield': {
-  			edit: this.editLocation
+  			edit: this.editLocation,
+        focus: this.editLocation
   		},
-			'location_window button[action="point"]': {
-				editLocation: this.drawPoint
-			},
-			'location_window button[action="polygon"]': {
-				editLocation: this.drawPolygon
+			'location_window': {
+				save: function(win, wkt) { win.field.setValue(wkt); win.close(); }
 			} 
   	});
   },
   editLocation: function(field){
-  	var win = Ext.widget('location_window');
+  	var win = Ext.widget('location_window', { field: field });
   	win.show();
-  },
-  drawPoint: function(button){
-  	console.log(button);
-  },
-  drawPolygon: function(button){
-  	console.log(button);
   }
 });
