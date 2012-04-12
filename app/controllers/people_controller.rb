@@ -40,6 +40,31 @@ class PeopleController < ApplicationController
       end      
     end
   end
+
+  def create
+    @person = Person.new( person )
+
+    if @person.save
+      respond_to do |format|
+        format.json {
+          render :json => {
+            :success => true,
+            :person => @person
+          }
+        }
+      end
+    else
+      respond_to do |format|
+        format.json {
+          render :json => {
+            :success => false,
+            :errors => @person.errors.full_messages
+          }
+        }
+      end
+    end
+  end
+
   protected
   
   def search_params
