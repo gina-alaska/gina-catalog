@@ -76,11 +76,11 @@ class ServicesController < ApplicationController
 				if user_signed_in?
 					if auth
 						flash[:notice] = 'Your account at ' + @authhash[:provider].capitalize + ' is already connected with the site.'
-						redirect_to services_path
+						redirect_back_or_default '/'
 					else
 						current_user.services.create!(:provider => @authhash[:provider], :uid => @authhash[:uid], :uname => @authhash[:uname], :uemail => @authhash[:uemail])
 						flash[:notice] = 'Your ' + @authhash[:provider].capitalize +  ' account has been added for signing in at this site.'
-						redirect_to services_path
+						redirect_back_or_default '/'
 					end
 				else
 					if auth
