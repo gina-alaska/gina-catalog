@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
-  respond_to :json
+  layout 'pdf'
+  respond_to :json, :html
+
   def index
     if params[:query].nil? or params[:query].empty?
       @users = User.includes(:roles).all
@@ -16,5 +18,9 @@ class UsersController < ApplicationController
 
   def preferences
     respond_with({ :user => current_user })
+  end
+
+  def test
+    respond_with(current_user)
   end
 end

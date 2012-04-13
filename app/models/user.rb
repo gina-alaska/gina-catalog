@@ -3,18 +3,12 @@ require 'digest/sha1'
 class User < ActiveRecord::Base
   has_many :user_roles
   has_many :roles, :through => :user_roles
-
-  include Authentication
-  include Authentication::ByCookieToken
+  has_many :services
 
   validates :email, :presence   => true,
                     :uniqueness => true,
                     :format     => { :with => Authentication.email_regex, :message => Authentication.bad_email_message },
                     :length     => { :within => 6..100 }
-
-  validates :identity_url,
-                    :presence   => true,
-                    :uniqueness => true
 
   scope :real, lambda {
     where('email != ?', 'guest@gina.alaska.edu')
@@ -33,20 +27,11 @@ class User < ActiveRecord::Base
   # anything else you want your user to change should be added here.
   #attr_accessor :mobile_pin_request
   
-  attr_accessible :email, :fullname, :identity_url?, :note_attributes
-  # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
-  # uff.  this is really an authorization, not authentication routine.
-  # We really need a Dispatch Chain here or something.
-  # This will also let us return a human error message.
-  #
-  def self.authenticate(login, password)
-    return nil if login.blank? || password.blank?
-    u = find_by_login(login.downcase) # need to get the salt
-    u && u.authenticated?(password) ? u : nil
-  end
+  attr_accessible :email, :fullname
+
   
   def self.guest
-    where('identity_url = ?', 'Guest').first
+    where('email = ?', 'guest@gina.alaska.edu').first
   end
 
   def email=(value)
@@ -77,13 +62,11 @@ class User < ActiveRecord::Base
 
   def authorize
     return false if self.is_an_admin? || self.authorized?
-
     self.roles << Role.where(:name => 'verified_user')
   end
 
   def unauthorize
     return false if self.is_an_admin? or !self.authorized?
-
     self.roles.delete(Role.where(:name => 'verified_user'))
   end
 

@@ -25,13 +25,33 @@ NSCatalog::Application.routes.draw do
 
     resources :locations
   end
-  
-  resource :session
 
-  resources :users do
-    get :preferences
+  # Omniauth pure
+  match "/signin" => "services#signin"
+  match "/signout" => "services#signout"
+
+  match '/auth/:service/callback' => 'services#create' 
+  match '/auth/failure' => 'services#failure'
+
+  resources :services, :only => [:index, :create, :destroy] do
+    collection do
+      get 'signin'
+      get 'signout'
+      get 'signup'
+      post 'newaccount'
+      get 'failure'
+    end
   end
 
+  resources :users, :only => [:index] do
+      get :preferences
+      get 'test'
+    collection do
+      get :preferences
+      get 'test'
+    end
+  end
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

@@ -12,6 +12,8 @@ gem 'rgeo-activerecord'
 gem 'activerecord-postgis-adapter'
 gem 'rgeo-geojson'
 gem 'will_paginate'
+gem 'omniauth'
+gem 'omniauth-openid'
 
 #gem 'nofxx-georuby'
 #broke in rails 3.1
