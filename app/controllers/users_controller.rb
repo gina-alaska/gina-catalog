@@ -19,8 +19,4 @@ class UsersController < ApplicationController
   def preferences
     respond_with({ :user => current_user })
   end
-
-  def test
-    respond_with(current_user)
-  end
 end

@@ -1,8 +1,14 @@
 <section id="services_new" class="services">
-    <h1>New account</h1>
+    <h1>First Time Login</h1>
 
     <div>
-        <h3>This authentication is new to Omniauth pure</h3>
+        <h3>This is the first time your account has logged into the Northslope Science Catalog.</h3>
+
+        <p class="small">
+            Please make sure the following information is correct.
+            <br />
+            If this is not the correct user <%= link_to "please click this link to logout from the GINA::ID system", 'http://id.gina.alaska.edu/logout' -%> and try again.
+        </p>
         
         <p class="small">
             Provider: <%= @authhash[:provider] %><br />
@@ -12,20 +18,7 @@
         </p>
 
         <%= form_tag :controller => "services", :action => "newaccount" do %>
-            <%= submit_tag "Confirm and create new account" %> <%= submit_tag "Cancel" %>
+            <%= submit_tag "Confirm and continue" %> <%= submit_tag "Cancel" %>
         <% end %>
     </div>
-
-    <p>
-    If you think you already have an Omniauth pure account, and you were just trying to associate a new authentication with your existing account, then you’re in the wrong place. You’re not logged into Omniauth pure right now.
-    </p>
-
-    <p class="small nomargin">
-        If you have a Omniauth pure account, and you’d like to associate another authentication with it, here’s what to do:
-    </p>
-    <ul class="small">
-        <li>Log in in to Omniauth pure with your existing authentication service TODO</li>
-        <li>Go to your settings page (located at the top/right corner of the page)
-        <li>Add one or more accounts to be used to sign-in</li>
-    </ul>
 </section>

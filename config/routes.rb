@@ -27,7 +27,9 @@ NSCatalog::Application.routes.draw do
   end
 
   # Omniauth pure
-  match "/signin" => "services#signin"
+  match "/login" => redirect('/auth/gina')
+  match "/logout" => "services#signout"
+  match "/signin" => redirect('/auth/gina')
   match "/signout" => "services#signout"
 
   match '/auth/:service/callback' => 'services#create' 
@@ -35,7 +37,6 @@ NSCatalog::Application.routes.draw do
 
   resources :services, :only => [:index, :create, :destroy] do
     collection do
-      get 'signin'
       get 'signout'
       get 'signup'
       post 'newaccount'
@@ -44,11 +45,8 @@ NSCatalog::Application.routes.draw do
   end
 
   resources :users, :only => [:index] do
-      get :preferences
-      get 'test'
     collection do
       get :preferences
-      get 'test'
     end
   end
   

@@ -1,5 +1,4 @@
 class ServicesController < ApplicationController
-	layout 'pdf'
 	before_filter :authenticate_user!, :except => [:create, :signin, :signup, :newaccount, :failure]
 
 	protect_from_forgery :except => :create		# see https://github.com/intridea/omniauth/issues/203
@@ -23,7 +22,7 @@ class ServicesController < ApplicationController
 	      session[:service_id] = @newuser.services.first.id
 
 	      flash[:notice] = 'Your account has been created and you have signed in!'
-	      redirect_to root_url
+	      redirect_back_or_default root_url
 	    else
 	    	flash[:error] = 'This is embarrassing! There was an error while creating your account from which we were not able to recover.'
 	      redirect_to root_url
@@ -91,7 +90,7 @@ class ServicesController < ApplicationController
           	session[:service_id] = auth.id
 
           	flash[:notice] = 'Signed up successfully via ' + @authhash[:provider].capitalize + '.'
-          	redirect_to root_url
+          	redirect_back_or_default root_url
           else
           	# this is a new user; show signup; @authhash is available to the view and stored in the sesssion for creation of a new user
           	session[:authhash] = @authhash
@@ -135,7 +134,7 @@ class ServicesController < ApplicationController
 	    session.delete :user_id
 	    session.delete :service_id
 	    flash[:notice] = 'You have been signed out!'
-	  end  
+	  end 
 	  redirect_to root_url
 	end
 

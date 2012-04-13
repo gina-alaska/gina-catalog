@@ -1,3 +1,26 @@
 // Place all the styles related to the services controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+section.services {
+	font-size: 14px;
+
+	h1 {
+		font-size: 1.5em;
+		margin-bottom: 1em;
+		text-align: center;
+		text-decoration: underline;
+	}
+	h3 {
+		font-size: 1.2em;
+		margin-bottom: 0.5em;
+	}
+
+	p {
+		margin: 0.5em;
+	}
+
+	form {
+		text-align: center;
+	}
+}

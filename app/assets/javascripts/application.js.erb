@@ -145,17 +145,13 @@ Ext.define('App', {
 Ext.application({
   name: 'App',
   appFolder: '/assets/app',
-  controllers: ['Catalog', 'Asset', 'Help', 'News', 'Feedback', 'Video', 'Search', 'Map'],
+  controllers: ['Catalog', 'Asset', 'Help', 'News', 'Feedback', 'Video', 'Search', 'Map', 'Rails'],
   launch: function() {
     Ext.util.History.init();
     App.init(this);
     
     // App.current_user.on('logged_out', function() {
-      var splash = Ext.create(this.getController('Catalog').getView('catalog.splash'));
-      this.getController('Search').getStore('Catalog').on('load', splash.recordsLoaded, splash, { single: true });
-      this.getController('Catalog').on('featuresrendered', splash.featuresRendered, splash);
-      
-      splash.show();
+
     // }, this);
 
     App.viewport = Ext.create('Ext.container.Viewport', {
@@ -181,15 +177,25 @@ Ext.application({
       }]
     });
 
-    if(top.location.pathname == '/') {
-      var catalog = this.getController('Catalog');
-      catalog.show();
-    } else if(top.location.pathname.match(/^\/videos/) ) {
-      var video = this.getController('Video');
-      video.show();
-    } else {
-      var asset = this.getController('Asset');
-      asset.show();
+    var splash, controller, path = top.location.pathname;
+    switch(true) {
+      case path == '/':
+        controller = this.getController('Catalog');
+        splash = Ext.create(this.getController('Catalog').getView('catalog.splash'));
+        this.getController('Search').getStore('Catalog').on('load', splash.recordsLoaded, splash, { single: true });
+        this.getController('Catalog').on('featuresrendered', splash.featuresRendered, splash);   
+        splash.show();
+        break;
+      case /^\/videos/.test(path):
+        controller = this.getController('Video');
+        break;
+      case /^\/asset/.test(path):
+        controller = this.getController('Asset');
+        break;
+      default:
+        controller = this.getController('Rails');
+        break;
     }
+    controller.show();
   }
 });

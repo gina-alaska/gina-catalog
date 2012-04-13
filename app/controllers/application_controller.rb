@@ -15,37 +15,20 @@ class ApplicationController < ActionController::Base
     
   def authenticate_user!
     if !current_user
+      session[:return_to] = request.fullpath
+
       flash[:error] = 'You need to sign in before accessing this page!'
-      redirect_to signin_services_path
+      redirect_to signin_path
     end
   end 
 
-  protected
-
-  def authorized?
-    logged_in? && current_user.authorized?
-  end
-
-  def authorization_required
-    authorized? || access_denied
-  end
-
-  def admin_required
-    (logged_in? && current_user.is_an_admin?) || access_denied
-  end
-
-  def access_denied
-    respond_to do |format|
-      format.html do
-        store_location
-        redirect_to new_session_path
-      end
-      format.json do
-        render :json => {
-          :success => false,
-          :flash => "Permission Denied"
-        }, :status => 403
-      end
+  def redirect_back_or_default(default = '/')
+    if session[:return_to]
+      path = session[:return_to]
+      session[:return_to] = nil
+      redirect_to path
+    else
+      redirect_to default
     end
   end
 end
