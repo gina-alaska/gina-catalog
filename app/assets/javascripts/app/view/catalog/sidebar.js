@@ -42,18 +42,18 @@ Ext.define('App.view.catalog.sidebar', {
       changeHandler: this.changeHandler,
       menu: {
         items: [{
-          text: '100'
-        }, {
-          text: '200'
-        }, {
-          text: '500'
-        }, {
-          text: '1000'
+          text: '3000'
         }, {
           text: '2000',
           checked: true
         }, {
-          text: '3000'
+          text: '1000'
+        }, {
+          text: '500'
+        }, {
+          text: '100'
+        }, {
+          text: '50'
         }]
       }
     });
