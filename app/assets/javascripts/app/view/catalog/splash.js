@@ -6,7 +6,7 @@ Ext.define('App.view.catalog.splash', {
 
   layout: { type: 'vbox',align: 'stretch' },
 
-  modal: false,
+  modal: true,
   closable: false,
   preventHeader: true,
 

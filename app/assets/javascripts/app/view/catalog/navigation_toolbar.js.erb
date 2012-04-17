@@ -1,0 +1,90 @@
+/**
+ * @class App.view.catalog.NavigationToolbar
+ * @extends Ext.ButtonGroup
+ * Main Navigation toolbar for catalog
+ */
+Ext.define('App.view.catalog.NavigationToolbar', {
+  extend: 'Ext.ButtonGroup', 
+  alias: 'widget.catalog_navigation_toolbar',
+
+  initComponent: function() {
+    Ext.apply(this, {
+      columns: 3,
+      cls: 'main-menu',
+      defaults: { 
+        scale: 'large', 
+        iconAlign: 'left', 
+        width: '100%', 
+        enableToggle: true, 
+        toggleGroup: 'pages' 
+      }
+    })
+
+    this.callParent(arguments);
+    this.loggedOut();
+  },
+
+  loggedOut: function(){
+    this.removeAll();
+    this.add([{
+      text: 'Catalog',
+      icon: "<%= image_path 'icons/medium/bookmark.png' %>"
+    }, {
+      text: 'News',
+      icon: "<%= image_path 'icons/medium/chat-.png' %>"
+    }, {
+      text: 'Help',
+      icon: "<%= image_path 'icons/medium/male-user.png' %>"
+    }, {
+      text: 'Realtime Data',
+      action: 'external',
+      link: 'http://realtime.hub.gina.alaska.edu',
+      icon: "<%= image_path 'icons/medium/satellite.png' %>"
+    }, {
+      text: 'Contact Us',
+      icon: "<%= image_path 'icons/medium/email.png' %>"
+    }, {
+      text: 'NSSI',
+      action: 'external',
+      link: 'http://northslope.org',
+      icon: "<%= image_path 'icons/medium/globe.png' %>"
+    }]);
+  }, 
+
+  loggedIn: function() {
+    this.removeAll();
+    this.add([{
+      text: 'Catalog',
+      icon: "<%= image_path 'icons/medium/bookmark.png' %>"
+    }, {
+      text: 'News',
+      icon: "<%= image_path 'icons/medium/chat-.png' %>"
+    }, {
+      text: 'Help',
+      action: 'help',
+      icon: "<%= image_path 'icons/medium/male-user.png' %>"
+    }, {
+      text: 'Other Links', 
+      icon: "<%= image_path 'icons/medium/globe.png' %>",
+      menu: [{
+        text: 'North Slope Science Initiative',
+        icon: "<%= image_path 'icons/medium/globe.png' %>",
+        action: 'external',
+        link: 'http://northslope.org',
+      },{
+        text: 'Realtime Data',
+        icon: "<%= image_path 'icons/medium/satellite.png' %>",
+        action: 'external',
+        link: 'http://realtime.hub.gina.alaska.edu'
+      }]
+    }, {
+      text: 'Contact Us',
+      icon: "<%= image_path 'icons/medium/email.png' %>"
+    }, {
+      text: 'Manager',
+      icon: "<%= image_path 'icons/medium/configuration.png' %>",
+      action: 'external',
+      link: '/manager'
+    }]);
+  }
+});

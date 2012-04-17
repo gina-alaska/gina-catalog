@@ -19,3 +19,4 @@ log/solr*
 log/sunspot*
 tools/wkhtmltopdf
 nssi-catalog-export*.xml
+app/assets/images/icons/.DS_Store

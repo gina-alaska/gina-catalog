@@ -10,7 +10,7 @@ Ext.define('App.controller.News', {
       'viewport > #center': {
         render: this.start
       },
-      'viewport > #center button[text="News"]': {
+      'catalog_navigation_toolbar button[text="News"]': {
         click: this.show
       },
       'viewport > #center newsindex': {
@@ -26,8 +26,9 @@ Ext.define('App.controller.News', {
   show: function() {
     App.showLoading();
 
-    this.pages.index = this.pages.parent.add({ xtype: 'newsindex', border: false });
-    // var panel = this.pages.index.up('panel');
+    this.pages.index = this.pages.parent.add({ 
+      xtype: 'newsindex', border: false 
+    });
     this.pages.parent.getLayout().setActiveItem(this.pages.index);
   }
 });

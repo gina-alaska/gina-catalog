@@ -80,19 +80,13 @@ Ext.define('App', {
       }
     });
     
-    this.navToolbar = Ext.create('Ext.ButtonGroup', {
-      border: false,
-      columns: 3,
-      height: 85,
-      cls: 'main-menu',
-      defaults: { scale: 'large', iconAlign: 'left', width: '100%', enableToggle: true, toggleGroup: 'pages' },
-      items: this.nav.toolbarItems(['catalog', 'news', 'help', 'realtime', 'contact', 'nssi'])
+    this.navToolbar = Ext.widget('catalog_navigation_toolbar', {
+      border: false
     });
 
     this.loginToolbar = Ext.create('Ext.ButtonGroup', {
       border: false,
       columns: 1,
-      height: 85,
       cls: 'login-menu',
       buttonAlign: 'center',
       pack: 'center',
@@ -103,31 +97,39 @@ Ext.define('App', {
     this.header = Ext.create('Ext.toolbar.Toolbar', {
       dock: 'top',
       cls: 'main-toolbar',
+      layout: { type: 'hbox', align: 'stretch' },
       items: [{
-        width: 550,
+        flex: 1,
+        bodyStyle: 'background: #187b99;',
         border: false,
         contentEl: 'header',
         xtype: 'panel'
-      }, '->', this.navToolbar, this.loginToolbar]
+      }, this.navToolbar, this.loginToolbar]
     });
 
-    this.current_user = Ext.create('Ext.gina.CurrentUser');
-    this.current_user.on('logged_in', function() {
-      var bbar = this.loginToolbar,
-          items;
+    this.current_user = Ext.create('Ext.gina.CurrentUser', {
+      listeners: {
+        scope: this,
+        'logged_in': function() {
+          var bbar = this.loginToolbar,
+              items;
 
-      items = this.nav.toolbarItems([{
-        xtype: 'panel',
-        height: 37,
-        width: 150,
-        border: false,
-        cls: 'welcome-panel',
-        html: 'Welcome back<br />' + this.current_user.get('fullname')
-      }, 'logout']);
+          this.navToolbar.loggedIn();
+          
+          items = this.nav.toolbarItems([{
+            xtype: 'panel',
+            // height: 37,
+            width: 150,
+            border: false,
+            cls: 'welcome-panel',
+            html: 'Welcome back<br />' + this.current_user.get('fullname')
+          }, 'logout']);
 
-      bbar.removeAll();
-      bbar.add(items);
-    }, this);
+          bbar.removeAll();
+          bbar.add(items);
+        }
+      }
+    });
   },
 
   showLoading: function(msg) {
@@ -145,7 +147,10 @@ Ext.define('App', {
 Ext.application({
   name: 'App',
   appFolder: '/assets/app',
-  controllers: ['Catalog', 'Asset', 'Help', 'News', 'Feedback', 'Video', 'Search', 'Map', 'Rails'],
+  controllers: [
+    'Catalog', 'Asset', 'Help', 'News', 'Feedback', 'Video', 
+    'Search', 'Map', 'Rails', 'External'
+  ],
   launch: function() {
     Ext.util.History.init();
     App.init(this);

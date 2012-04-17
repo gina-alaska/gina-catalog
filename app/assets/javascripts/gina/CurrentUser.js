@@ -3,7 +3,7 @@ Ext.define('Ext.gina.CurrentUser', {
 
   model: 'App.model.User',
   
-  initComponent: function() {
+  constructor: function() {
     this.callParent(arguments);
 
     this.addEvents('load', 'logged_in', 'logged_out');
