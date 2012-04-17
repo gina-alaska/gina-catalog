@@ -10,12 +10,19 @@ class ServicesController < ApplicationController
 			session.delete :authhash
 			redirect_to root_url
 		else	# create account
-			@newuser = User.new
-			@newuser.fullname = session[:authhash][:name]
-			@newuser.email = session[:authhash][:email]
-			@newuser.services.build( :provider => session[:authhash][:provider], :uid => session[:authhash][:uid], :uname => session[:authhash][:name], :uemail => session[:authhash][:email])
+			@newuser = User.where('email = ?', session[:authhash][:email]).first
+			@newuser ||= User.new
 
-			if @newuser.save
+			# Currently existing user but they have never logged in with the new auth system
+			if @newuser.services.empty?
+				@newuser.fullname = session[:authhash][:name]
+				@newuser.email = session[:authhash][:email]
+				@newuser.services.build( :provider => session[:authhash][:provider], :uid => session[:authhash][:uid], :uname => session[:authhash][:name], :uemail => session[:authhash][:email])
+			else
+				@newuser = nil
+			end
+
+			if @newuser and @newuser.save
 				# signin existing user
 	      # in the session his user id and the service id used for signing in is stored
 	      session[:user_id] = @newuser.id
