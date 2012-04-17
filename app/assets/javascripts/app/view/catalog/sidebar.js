@@ -36,29 +36,17 @@ Ext.define('App.view.catalog.sidebar', {
       minWidth: 40,
       menu: [this.uniqueCount, this.projectCount, this.assetCount]
     });
-    this.limit_selector = Ext.create('Ext.button.Cycle', {
-      prependText: 'Results/Page: ',
-      showText: true,
-      changeHandler: this.changeHandler,
-      menu: {
-        items: [{
-          text: '3000'
-        }, {
-          text: '2000',
-          checked: true
-        }, {
-          text: '1000'
-        }, {
-          text: '500'
-        }, {
-          text: '100'
-        }, {
-          text: '50'
-        }]
+
+    this.limit_selector = Ext.create('Ext.form.field.ComboBox', {
+      store: [3000,2000,1000,500,100,50],
+      width: 60,
+      value: this.store.pageSize,
+      listeners: {
+        change: this.changeHandler
       }
     });
     
-    var tb = ['->', this.limit_selector, this.resultCount];
+    var tb = ['->', 'Show', this.limit_selector, this.resultCount];
 
     Ext.apply(this, {
       dockedItems: [{
@@ -109,10 +97,10 @@ Ext.define('App.view.catalog.sidebar', {
     this.callParent();
     this.store.on('datachanged', this.onDataChanged, this);
   },
-  
-  changeHandler: function(cycleBtn, activeItem) {
-    var store = cycleBtn.up('catalog_sidebar').store;
-    store.pageSize = parseInt(activeItem.text, 10);
+
+  changeHandler: function(combo) {
+    var store = combo.up('catalog_sidebar').store;
+    store.pageSize = parseInt(combo.getValue(), 10);
     store.loadPage(1);
   },
 
