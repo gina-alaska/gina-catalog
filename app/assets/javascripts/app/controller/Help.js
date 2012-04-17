@@ -10,7 +10,7 @@ Ext.define('App.controller.Help', {
       'viewport > #center': {
         render: this.start
       },
-      'viewport > #center button[text="Help"]': {
+      'catalog_navigation_toolbar button[action="help"]': {
         click: function() { this.showHelp(); }
       },
       'viewport > #center button[action="filter-help"]': {
@@ -31,7 +31,9 @@ Ext.define('App.controller.Help', {
   showHelp: function(url) {
     App.showLoading();
     
-    this.pages.index = this.pages.parent.add({ xtype: 'helpindex', border: false, url: url });
+    this.pages.index = this.pages.parent.add({ 
+      xtype: 'helpindex', border: false, url: url 
+    });
     this.pages.parent.getLayout().setActiveItem(this.pages.index);
   }
 });
