@@ -16,7 +16,7 @@ NSCatalog::Application.configure do
    # provider :openid, :store => OpenID::Store::Filesystem.new('./tmp'), :name => 'openid'
    
    # dedicated openid
-   provider :openid, :store => OpenID::Store::Filesystem.new('/tmp'), :name => 'gina', :identifier => 'http://id.gina.alaska.edu'
+   provider :openid, :store => OpenID::Store::Filesystem.new('/tmp'), :name => 'gina', :identifier => 'http://id.x.gina.alaska.edu'
    # provider :google_apps, OpenID::Store::Filesystem.new('./tmp'), :name => 'google_apps'
    # /auth/google_apps; you can bypass the prompt for the domain with /auth/google_apps?domain=somedomain.com
    
