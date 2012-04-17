@@ -41,6 +41,7 @@ Ext.define('App.view.catalog.sidebar', {
       store: [3000,2000,1000,500,100,50],
       width: 60,
       value: this.store.pageSize,
+      editable: false,
       listeners: {
         change: this.changeHandler
       }
