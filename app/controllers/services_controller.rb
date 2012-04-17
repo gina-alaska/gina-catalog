@@ -15,7 +15,7 @@ class ServicesController < ApplicationController
 			@newuser.email = session[:authhash][:email]
 			@newuser.services.build( :provider => session[:authhash][:provider], :uid => session[:authhash][:uid], :uname => session[:authhash][:name], :uemail => session[:authhash][:email])
 
-			if @newuser.save!
+			if @newuser.save
 				# signin existing user
 	      # in the session his user id and the service id used for signing in is stored
 	      session[:user_id] = @newuser.id
