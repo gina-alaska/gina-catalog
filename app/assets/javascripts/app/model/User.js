@@ -3,7 +3,7 @@ Ext.define('App.model.User', {
 
   proxy: {
     type: 'ajax',
-    url: '/preferences.json',
+    url: '/users/preferences.json',
     reader: { type: 'json', root: 'user' }
   },
 

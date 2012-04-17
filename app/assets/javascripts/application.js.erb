@@ -111,23 +111,27 @@ Ext.define('App', {
       }, '->', this.navToolbar, this.loginToolbar]
     });
 
-    this.current_user = Ext.create('Ext.gina.CurrentUser');
-    this.current_user.on('logged_in', function() {
-      var bbar = this.loginToolbar,
-          items;
+    this.current_user = Ext.create('Ext.gina.CurrentUser', {
+      listeners: {
+        scope: this,
+        'logged_in': function() {
+          var bbar = this.loginToolbar,
+              items;
 
-      items = this.nav.toolbarItems([{
-        xtype: 'panel',
-        height: 37,
-        width: 150,
-        border: false,
-        cls: 'welcome-panel',
-        html: 'Welcome back<br />' + this.current_user.get('fullname')
-      }, 'logout']);
+          items = this.nav.toolbarItems([{
+            xtype: 'panel',
+            // height: 37,
+            width: 150,
+            border: false,
+            cls: 'welcome-panel',
+            html: 'Welcome back<br />' + this.current_user.get('fullname')
+          }, 'logout']);
 
-      bbar.removeAll();
-      bbar.add(items);
-    }, this);
+          bbar.removeAll();
+          bbar.add(items);
+        }
+      }
+    });
   },
 
   showLoading: function(msg) {
