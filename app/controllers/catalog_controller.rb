@@ -109,6 +109,37 @@ class CatalogController < ApplicationController
     end
   end
 
+  def publish
+    @item = Catalog.where(:id => params[:id]).first
+
+    if (@item.published_at.nil? || @item.published_at > Time.now.utc) 
+      @item.published_at = Time.now.utc
+    else
+      @item.published_at = nil
+    end
+
+    if(@item.save)
+      respond_to do |format|
+        format.json { 
+          render :json => {
+            :success => true,
+            :catalog => @item
+          }
+        }
+      end
+    else
+      respond_to do |format|
+        format.json { 
+          render :json => {
+            :success => false,
+            :errors => @item.errors.full_messages
+          }
+        }
+      end      
+    end
+
+  end
+
   protected
   
   def catalog

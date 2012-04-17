@@ -41,9 +41,12 @@ Ext.define('Manager.controller.Asset', {
           f.up('panel').remove(f);
         }
       },
+      'assets_form button[action="publish"]': {
+        click: function(button) { this.publishRecord(button.up('form')); }
+      },
       'assets_toolbar button[action="new"]': {
         click: function(button) { this.newRecord(); }
-      } 
+      }
     });
   },
   
@@ -59,7 +62,7 @@ Ext.define('Manager.controller.Asset', {
   saveRecord: function(form){
     Ext.Msg.wait('Saving asset information', 'Please Wait...');
     var values = form.getValues();
-    
+    var method;
     var url = '/catalog';
     if (form.record && form.record.id) {
       url += '/' + form.record.id;
@@ -87,6 +90,8 @@ Ext.define('Manager.controller.Asset', {
         } else {
           Ext.Msg.alert('Error', '<p>The following errors were encountered while saving the asset:</p><br />' + obj.errors.join('<br />'));
         }
+        this.down('button[action="save"]').disable();
+        this.down('button[action="validate"]').enable();
       },
       failure: function(response) {
         Ext.Msg.alert('Error', 'A server error was encountered while trying to save the asset');
@@ -94,6 +99,31 @@ Ext.define('Manager.controller.Asset', {
     });
   },
   
+  publishRecord: function(form) {
+      Ext.Msg.wait('Publishing asset', 'Please Wait...');
+      if(form.record.id == null) {
+        return false;
+      }
+      var url = '/catalog/' + form.record.id + '/publish';
+      Ext.Ajax.request({
+        url: url,
+        method: 'POST',
+        scope: form,
+        success: function(response) {
+          var obj = Ext.decode(response.responseText);
+          if(obj.success) {
+            this.loadRecordData(obj.catalog);
+            Ext.Msg.alert('Success!', 'Asset publish status has been changed');
+          } else {
+            Ext.Msg.alert('Error', '<p>The following errors were encountered while saving the asset:</p><br />' + obj.errors.join('<br />'));          
+          }
+        },
+        failure: function(repsonse) {
+          Ext.Msg.alert('Error', "A server error was encountered while trying to publish the asset");
+        }
+      });
+  },
+
   showRecord: function(request) {
     var p = Ext.widget('assets_form', {
       recordId: request.id

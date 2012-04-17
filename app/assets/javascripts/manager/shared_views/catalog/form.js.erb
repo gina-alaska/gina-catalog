@@ -22,9 +22,8 @@ Ext.define('Manager.shared_view.catalog.Form', {
     initComponent: function() {
       this.link_count = 0;
       this.location_count = 0;
-      
+   
       var links = [];
-      
       Ext.apply(this, {
         title: 'Loading...',
         autoScroll: true,
@@ -37,6 +36,7 @@ Ext.define('Manager.shared_view.catalog.Form', {
           defaults: { scale: 'large', minWidth: 100 },
           items: ['->', 
             { text: 'Cancel',action: 'cancel'}, 
+            { text: 'Publish', action: 'publish'},
             { text: 'Save', action: 'save' }
           ]
         }],
@@ -72,10 +72,12 @@ Ext.define('Manager.shared_view.catalog.Form', {
           itemId: 'locations', xtype: 'catalog_location_form_panel', title: 'Locations'
 
         }]
-      });       
-      
+      });     
+
       this.callParent(arguments);
-      
+
+      this.getForm().trackResetOnLoad = true;
+
       if(this.getRecordId()) {
         Ext.Ajax.request({
           url: '/catalog/' + this.getRecordId() + '.json',
@@ -85,6 +87,8 @@ Ext.define('Manager.shared_view.catalog.Form', {
       } else {
         this.setTitle('New Project');
       }
+
+      this.on('dirtychange', this.toggleButtons, this);
     },  
     
     buildLink: function(link){
@@ -141,9 +145,28 @@ Ext.define('Manager.shared_view.catalog.Form', {
       var locations = this.down('#locations');
       locations.removeAll();
       Ext.each(this.record.locations, locations.addLocation, locations);
+
+      if(record.published_at != null && Date.parse(record.published_at) <= Date.now() ){
+        this.down('button[action="publish"]').setText('Unpublish');
+      }
+      else {
+        this.down('button[action="publish"]').setText('Publish');
+      }
+      this.down('button[action="save"]').disable();
+
     },
     
     addLink: function(link){
       this.down('#links').add(this.buildLink(link));      
+    },
+
+    toggleButtons: function(form, dirty) {
+      if(dirty) {
+        this.down('button[action="save"]').enable();
+        this.down('button[action="publish"]').disable();
+      } else {
+        this.down('button[action="save"]').disable();
+        this.down('button[action="publish"]').enable();
+      }
     }
 });

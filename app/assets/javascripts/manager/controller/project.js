@@ -45,6 +45,9 @@ Ext.define('Manager.controller.Project', {
           var f = button.up('form');
           f.up('panel').remove(f);
         }
+      },      
+      'projects_form button[action="publish"]': {
+        click: function(button) { this.publishRecord(button.up('form')); }
       },
       'projects_grid button[action="new"]': {
         click: function(button) { this.newRecord(); }
@@ -109,7 +112,32 @@ Ext.define('Manager.controller.Project', {
     
     Ext.Ajax.request(request);
   },
-  
+    
+  publishRecord: function(form) {
+      Ext.Msg.wait('Publishing project', 'Please Wait...');
+      if(form.record.id == null) {
+        return false;
+      }
+      var url = '/catalog/' + form.record.id + '/publish';
+      Ext.Ajax.request({
+        url: url,
+        method: 'POST',
+        scope: form,
+        success: function(response) {
+          var obj = Ext.decode(response.responseText);
+          if(obj.success) {
+            this.loadRecordData(obj.catalog);
+            Ext.Msg.alert('Success!', 'Project publish status has been changed');
+          } else {
+            Ext.Msg.alert('Error', '<p>The following errors were encountered while saving the project:</p><br />' + obj.errors.join('<br />'));          
+          }
+        },
+        failure: function(repsonse) {
+          Ext.Msg.alert('Error', "A server error was encountered while trying to publish the project");
+        }
+      });
+  },
+
   showRecord: function(request) {
     var p = Ext.widget('projects_form', {
       recordId: request.id
