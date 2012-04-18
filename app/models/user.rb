@@ -88,14 +88,15 @@ class User < ActiveRecord::Base
   end
 
   def as_json(options = {})
-    options[:only] ||= []
-    options[:only] += [:id, :first_name, :last_name, :email, :identity_url]
-
-    options[:methods] ||= []
-    options[:methods] << :admin?
-    options[:methods] << :authorized?
-    options[:methods] << :fullname
-    super(options)
+    {
+      :id => self.id,
+      :first_name => self.first_name,
+      :last_name => self.last_name,
+      :email => self.email,
+      :identity_url => self.identity_url,
+      :roles => self.roles.map(&:name),
+      :fullname => self.fullname
+    }
   end
 
   private
