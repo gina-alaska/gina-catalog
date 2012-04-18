@@ -9,6 +9,6 @@ Ext.define('App.model.User', {
 
   fields: [
     'id', 'first_name', 'last_name', 'email',
-    'identity_url', 'admin?', 'authorized?', 'guest?', 'fullname'
+    'identity_url', 'roles', 'fullname'
   ]
 });

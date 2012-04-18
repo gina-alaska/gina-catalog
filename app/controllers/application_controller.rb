@@ -17,10 +17,21 @@ class ApplicationController < ActionController::Base
     if !current_user
       session[:return_to] = request.fullpath
 
-      flash[:error] = 'You need to sign in before accessing this page!'
+      flash[:error] = 'You must sign in before accessing this page!'
       redirect_to signin_path
     end
   end 
+
+  def authenticate_manager!
+    if !current_user || !(current_user.is_an_admin? || current_user.is_a_manager?)
+      if !current_user
+        authenticate_user!
+      else
+        flash[:error] = 'You do not have permission to access this page'
+        redirect_to root_url
+      end
+    end      
+  end
 
   def redirect_back_or_default(default = '/')
     if session[:return_to]

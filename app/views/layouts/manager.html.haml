@@ -19,7 +19,11 @@
     %input#x-history-field(type="hidden")
     %iframe#x-history-frame
       
-  -#= raw jsflashes
+  #flashes
+    :javascript
+      Ext.onReady(function() {
+        #{jsflashes}
+      });
   #header
     = render 'layouts/header'
   #content.x-hidden

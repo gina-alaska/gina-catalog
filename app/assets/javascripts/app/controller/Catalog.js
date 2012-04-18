@@ -3,6 +3,11 @@ Ext.define('App.controller.Catalog', {
 
   stores: ['Catalog', 'Filters'],
 
+  refs: [{
+    ref: 'catalogList',
+    selector: 'catalog_list'
+  }],
+
   init: function() {
     this.control({
       /* Main viewport events */
@@ -11,6 +16,19 @@ Ext.define('App.controller.Catalog', {
       },
       'viewport > #center button[text="Catalog"]': {
         click: this.show
+      },
+      'catalog_list': {
+        itemcontextmenu: this.showContextMenu
+      },
+      '#catalog_list_menu menuitem[action="edit_record"]': {
+        click: function() {
+          var selected = this.getCatalogList().getSelectionModel().getSelection()[0];
+          if(selected) {
+            window.open('/manager#' + selected.get('type').toLowerCase() + '/' + selected.get('id'));            
+          } else {
+            Ext.gina.Notify.show('error', 'No record was selected');
+          }
+        }
       }
     });
   },
@@ -50,5 +68,23 @@ Ext.define('App.controller.Catalog', {
       }]
     });
     // this.show();
+  },
+
+  createContextMenu: function() {
+    this.contextMenu = new Ext.menu.Menu({
+      itemId: 'catalog_list_menu',
+      items: [{ text: 'Edit', action: 'edit_record' }]
+    });
+  },
+
+  showContextMenu: function(view,record,item, index, e){
+    var roles = App.current_user.get('roles');
+
+    if(roles && (roles.indexOf('admin') >= 0 || roles.indexOf('manager') >= 0)) {
+      if(!this.contextMenu) { this.createContextMenu(); }
+      view.select(record);
+      this.contextMenu.showAt(e.getXY()); 
+      e.stopEvent();      
+    }
   }
 });

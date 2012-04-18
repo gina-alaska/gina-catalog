@@ -2,7 +2,8 @@ class CatalogController < ApplicationController
   # caches_action :show, :layout => true, :if => lambda { |c| c.request.xhr? }
   # caches_action :show, :layout => false, :unless => lambda { |c| c.request.xhr? }
   #caches_action :search
-  
+  before_filter :authenticate_manager!, :only => [:create, :update, :publish]
+
   def create
     if(params[:type].downcase == 'project') 
       @item = Project.new(catalog)
