@@ -5,11 +5,7 @@ module ApplicationHelper
     end
   end
   def jsflashes
-    '<script type="text/javascript">' +
-      'Ext.onReady(function() { ' +
-      flash.map { |type, content| "Ext.gina.Notify.show(\"#{type}\", \"#{content}\");"  }.join(' ') +
-      '});' +
-    '</script>'
+    flash.map { |type, content| "Ext.gina.Notify.show(\"#{type}\", \"#{content}\");"  }.join(' ')
   end
 
   def search_regions
