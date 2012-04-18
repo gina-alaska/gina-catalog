@@ -87,8 +87,8 @@ Ext.define('Manager.shared_view.catalog.Form', {
       } else {
         this.setTitle('New Project');
       }
-
       this.on('dirtychange', this.toggleButtons, this);
+      this.on('render', function() { this.getEl().mask("Please Wait..") }, this, {delay: 100, single:true} );
     },  
     
     buildLink: function(link){
@@ -153,7 +153,7 @@ Ext.define('Manager.shared_view.catalog.Form', {
         this.down('button[action="publish"]').setText('Publish');
       }
       this.down('button[action="save"]').disable();
-
+      this.getEl().unmask();  
     },
     
     addLink: function(link){
