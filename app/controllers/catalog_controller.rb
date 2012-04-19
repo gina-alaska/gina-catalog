@@ -176,7 +176,7 @@ class CatalogController < ApplicationController
     end
     
     table_includes = {
-      :tags => [], :locations => [], :agencies => [], :source_agency => [], :links => [], 
+      :tags => [], :locations => [], :agencies => [], :source_agency => [], :funding_agency => [], :links => [], 
       :primary_contact => [:phone_numbers], :people => [:phone_numbers], :data_source => []
     }
     

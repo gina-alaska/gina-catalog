@@ -128,14 +128,19 @@ Ext.define('App.controller.Search', {
   },
   
   doSearch: function(opts){
+    if(!opts) { opts = {}; }
     this.showResults();
     
     var searchField = this.getTextsearch();
     this.replaceSearchParam('q', searchField.getValue(), 'Text: ' +  searchField.getValue());
-
-    this.getStore('Catalog').filters.clear();
-    this.getStore('Catalog').filter(this.getStore('Filters').buildFilterRequest());
-    this.disableApplyButton();
+    if(opts.format == 'pdf') {
+      var url = this.getStore('Catalog').getProxy().url;
+      window.open('/search.pdf?limit=200&filter=' + Ext.encode(this.getStore('Filters').buildFilterRequest()));
+    } else {
+      this.getStore('Catalog').filters.clear();
+      this.getStore('Catalog').filter(this.getStore('Filters').buildFilterRequest());
+      this.disableApplyButton();
+    }
   },
 
   // getSearchParams: function(id) {
@@ -219,6 +224,8 @@ Ext.define('App.controller.Search', {
 
   clearFilters: function() {
     this.getStore('Filters').removeAll();
+    this.getTextsearch().setValue('');
+    this.getMapPanel().layer('aoi').removeAllFeatures();
     this.enableApplyButton();
   },
   
