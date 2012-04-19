@@ -218,11 +218,8 @@ Ext.define('App.controller.Search', {
   },
 
   clearFilters: function() {
-    /* Don't use removeAll, it doesn't fire the remove event */
-    this.getStore('Filters').each(function(item) {
-      this.getStore('Filters').remove(item);
-    }, this);
-    // this.doSearch();
+    this.getStore('Filters').removeAll();
+    this.enableApplyButton();
   },
   
   showFilters: function() {
