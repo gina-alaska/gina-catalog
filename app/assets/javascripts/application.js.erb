@@ -24,62 +24,6 @@ Ext.define('App', {
   init: function(sys) {
     this.sys = sys;
     
-    // this.nav = Ext.create('Ext.gina.NavigationHandler', {
-    //   manager: this,
-    //   defaultPage: 'home',
-    //   autoStart: false,
-    //   appRootUrl: /^[\/]{0,1}$/,
-
-    //   pages: {
-    //     catalog: {
-    //       title: 'Catalog',
-    //       icon: "<%= image_path 'icons/medium/bookmark.png' %>"
-    //     },
-    //     news: {
-    //       title: 'News',
-    //       icon: "<%= image_path 'icons/medium/chat-.png' %>"
-    //     },
-    //     nssi: {
-    //       title: 'NSSI',
-    //       url: 'http://www.northslope.org',
-    //       mode: 'window',
-    //       icon: "<%= image_path 'icons/medium/globe.png' %>"
-    //     },
-    //     realtime: {
-    //       title: 'Realtime Data',
-    //       url: 'http://realtime.hub.gina.alaska.edu',
-    //       mode: 'window',
-    //       icon: "<%= image_path 'icons/medium/satellite.png' %>"
-    //     },
-    //     contact: {
-    //       title: 'Contact Us',
-    //       icon: "<%= image_path 'icons/medium/email.png' %>"
-    //     },
-    //     help: {
-    //       title: 'Help',
-    //       icon: "<%= image_path 'icons/medium/male-user.png' %>"
-    //     },
-    //     signup: {
-    //       title: 'Signup',
-    //       url: 'http://id.gina.alaska.edu/#signup',
-    //       mode: 'redirect',
-    //       iconCls: 'navigation-agent'
-    //     },
-    //     login: {
-    //       title: 'Login',
-    //       url: '/login',
-    //       iconCls: 'navigation-lock',
-    //       mode: 'redirect'
-    //     },
-    //     logout: {
-    //       title: 'Logout',
-    //       url: '/logout',
-    //       iconCls: 'navigation-lock',
-    //       mode: 'redirect'
-    //     }
-    //   }
-    // });
-    
     this.header = Ext.widget('catalog_navigation_toolbar', {
       dock: 'top',
       cls: 'main-toolbar',
