@@ -13,7 +13,7 @@ Ext.define('App.store.Catalog', {
       root: 'results'
     }
   },
-  pageSize: (Ext.isIE ? 500 : 20),
+  pageSize: (Ext.isIE ? 500 : 2000),
   remoteSort: true,
   remoteFilter: true,
   autoLoad: false
