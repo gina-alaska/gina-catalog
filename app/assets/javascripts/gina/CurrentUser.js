@@ -2,6 +2,7 @@ Ext.define('Ext.gina.CurrentUser', {
   extend: 'Ext.util.Observable',
 
   model: 'App.model.User',
+  loaded: false,
   
   constructor: function() {
     this.callParent(arguments);
@@ -19,8 +20,12 @@ Ext.define('Ext.gina.CurrentUser', {
       this.user = user;
       this.fireEvent('logged_in', this);
     }
-
+    this.loaded = true;
     this.fireEvent('load', this, user);
+  },
+
+  isLoggedIn: function() {
+    return this.user == undefined;
   },
 
   load: function() {

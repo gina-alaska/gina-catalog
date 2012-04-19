@@ -24,112 +24,82 @@ Ext.define('App', {
   init: function(sys) {
     this.sys = sys;
     
-    this.nav = Ext.create('Ext.gina.NavigationHandler', {
-      manager: this,
-      defaultPage: 'home',
-      autoStart: false,
-      appRootUrl: /^[\/]{0,1}$/,
+    // this.nav = Ext.create('Ext.gina.NavigationHandler', {
+    //   manager: this,
+    //   defaultPage: 'home',
+    //   autoStart: false,
+    //   appRootUrl: /^[\/]{0,1}$/,
 
-      pages: {
-        catalog: {
-          title: 'Catalog',
-          icon: "<%= image_path 'icons/medium/bookmark.png' %>"
-        },
-        news: {
-          title: 'News',
-          icon: "<%= image_path 'icons/medium/chat-.png' %>"
-        },
-        nssi: {
-          title: 'NSSI',
-          url: 'http://www.northslope.org',
-          mode: 'window',
-          icon: "<%= image_path 'icons/medium/globe.png' %>"
-        },
-        realtime: {
-          title: 'Realtime Data',
-          url: 'http://realtime.hub.gina.alaska.edu',
-          mode: 'window',
-          icon: "<%= image_path 'icons/medium/satellite.png' %>"
-        },
-        contact: {
-          title: 'Contact Us',
-          icon: "<%= image_path 'icons/medium/email.png' %>"
-        },
-        help: {
-          title: 'Help',
-          icon: "<%= image_path 'icons/medium/male-user.png' %>"
-        },
-        signup: {
-          title: 'Signup',
-          url: 'http://id.gina.alaska.edu/#signup',
-          mode: 'redirect',
-          icon: "<%= image_path 'icons/medium/agent.png' %>"
-        },
-        login: {
-          title: 'Login',
-          url: '/login',
-          icon: "<%= image_path 'icons/medium/lock.png' %>",
-          mode: 'redirect'
-        },
-        logout: {
-          title: 'Logout',
-          url: '/logout',
-          icon: "<%= image_path 'icons/medium/lock.png' %>",
-          mode: 'redirect'
-        }
-      }
-    });
+    //   pages: {
+    //     catalog: {
+    //       title: 'Catalog',
+    //       icon: "<%= image_path 'icons/medium/bookmark.png' %>"
+    //     },
+    //     news: {
+    //       title: 'News',
+    //       icon: "<%= image_path 'icons/medium/chat-.png' %>"
+    //     },
+    //     nssi: {
+    //       title: 'NSSI',
+    //       url: 'http://www.northslope.org',
+    //       mode: 'window',
+    //       icon: "<%= image_path 'icons/medium/globe.png' %>"
+    //     },
+    //     realtime: {
+    //       title: 'Realtime Data',
+    //       url: 'http://realtime.hub.gina.alaska.edu',
+    //       mode: 'window',
+    //       icon: "<%= image_path 'icons/medium/satellite.png' %>"
+    //     },
+    //     contact: {
+    //       title: 'Contact Us',
+    //       icon: "<%= image_path 'icons/medium/email.png' %>"
+    //     },
+    //     help: {
+    //       title: 'Help',
+    //       icon: "<%= image_path 'icons/medium/male-user.png' %>"
+    //     },
+    //     signup: {
+    //       title: 'Signup',
+    //       url: 'http://id.gina.alaska.edu/#signup',
+    //       mode: 'redirect',
+    //       iconCls: 'navigation-agent'
+    //     },
+    //     login: {
+    //       title: 'Login',
+    //       url: '/login',
+    //       iconCls: 'navigation-lock',
+    //       mode: 'redirect'
+    //     },
+    //     logout: {
+    //       title: 'Logout',
+    //       url: '/logout',
+    //       iconCls: 'navigation-lock',
+    //       mode: 'redirect'
+    //     }
+    //   }
+    // });
     
-    this.navToolbar = Ext.widget('catalog_navigation_toolbar', {
-      border: false
-    });
-
-    this.loginToolbar = Ext.create('Ext.ButtonGroup', {
-      border: false,
-      columns: 1,
-      cls: 'login-menu',
-      buttonAlign: 'center',
-      pack: 'center',
-      defaults: { scale: 'large', iconAlign: 'left', width: '100%', enableToggle: true, toggleGroup: 'pages' },
-      items: this.nav.toolbarItems(['signup', 'login'])
-    });
-    
-    this.header = Ext.create('Ext.toolbar.Toolbar', {
+    this.header = Ext.widget('catalog_navigation_toolbar', {
       dock: 'top',
       cls: 'main-toolbar',
       layout: { type: 'hbox', align: 'stretch' },
+      border: false,
       items: [{
         flex: 1,
         bodyStyle: 'background: #187b99;',
         border: false,
         contentEl: 'header',
         xtype: 'panel'
-      }, this.navToolbar, this.loginToolbar]
+      }]
     });
 
     this.current_user = Ext.create('Ext.gina.CurrentUser', {
       listeners: {
-        scope: this,
-        'logged_in': function() {
-          var bbar = this.loginToolbar,
-              items;
-
-          this.navToolbar.loggedIn();
-          
-          items = this.nav.toolbarItems([{
-            xtype: 'panel',
-            // height: 37,
-            width: 150,
-            border: false,
-            cls: 'welcome-panel',
-            html: 'Welcome back<br />' + this.current_user.get('fullname')
-          }, 'logout']);
-
-          bbar.removeAll();
-          bbar.add(items);
-        }
+        'logged_in': Ext.bind(this.header.loggedIn, this.header)
       }
     });
+    this.current_user.load();
   },
 
   showLoading: function(msg) {
@@ -149,7 +119,7 @@ Ext.application({
   appFolder: '/assets/app',
   controllers: [
     'Catalog', 'Asset', 'Help', 'News', 'Feedback', 'Video', 
-    'Search', 'Map', 'Rails', 'External'
+    'Search', 'Map', 'Rails', 'Links'
   ],
   launch: function() {
     Ext.util.History.init();
@@ -182,14 +152,10 @@ Ext.application({
       }]
     });
 
-    var splash, controller, path = top.location.pathname;
+    var controller, path = top.location.pathname;
     switch(true) {
       case path == '/':
         controller = this.getController('Catalog');
-        splash = Ext.create(this.getController('Catalog').getView('catalog.splash'));
-        this.getController('Search').getStore('Catalog').on('load', splash.recordsLoaded, splash, { single: true });
-        this.getController('Catalog').on('featuresrendered', splash.featuresRendered, splash);   
-        splash.show();
         break;
       case /^\/videos/.test(path):
         controller = this.getController('Video');

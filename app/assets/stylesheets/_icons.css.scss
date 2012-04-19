@@ -81,5 +81,9 @@
   background: url(icons/medium/add-item.png) center no-repeat;
 }
 
+/* nav bar icons */
+@import 'icons/navigation/*.png';
 
-
+.x-btn {
+  @include all-navigation-sprites;
+}

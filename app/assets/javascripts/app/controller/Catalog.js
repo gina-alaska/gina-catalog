@@ -37,11 +37,25 @@ Ext.define('App.controller.Catalog', {
     var panel = this.catalogPanel.up('panel');
     panel.getLayout().setActiveItem(this.catalogPanel);
 
+
+    if(App.current_user.loaded && !App.current_user.isLoggedIn()) {
+      this.showSplash();
+    } else {
+      App.current_user.on('logged_out', this.showSplash, this, { single: true });
+    }
+
     // this.getStore('Catalog').on('beforeload', this.updateFilters, this);
     if(!this.loaded) {
       this.getStore('Catalog').load();
       this.loaded = true;
     }
+  },
+
+  showSplash: function() {
+    var splash = Ext.widget('catalog_splash');
+    this.getStore('Catalog').on('load', splash.recordsLoaded, splash, { single: true });
+    this.on('featuresrendered', splash.featuresRendered, splash);   
+    splash.show();
   },
   
   start: function(panel) {

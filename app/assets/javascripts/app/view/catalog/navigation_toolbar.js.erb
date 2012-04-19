@@ -4,87 +4,133 @@
  * Main Navigation toolbar for catalog
  */
 Ext.define('App.view.catalog.NavigationToolbar', {
-  extend: 'Ext.ButtonGroup', 
+  extend: 'Ext.toolbar.Toolbar', 
   alias: 'widget.catalog_navigation_toolbar',
 
   initComponent: function() {
-    Ext.apply(this, {
+    this.callParent(arguments);
+
+    this.add({
+      itemId: 'nav',
+      xtype: 'buttongroup',
       columns: 3,
       cls: 'main-menu',
       defaults: { 
         scale: 'large', 
-        iconAlign: 'left', 
         width: '100%', 
         enableToggle: true, 
         toggleGroup: 'pages' 
-      }
-    })
+      }        
+    }, {
+      itemId: 'auth',
+      xtype: 'buttongroup',
+      columns: 1,
+      cls: 'main-menu',
+      defaults: { 
+        scale: 'large'
+      }                
+    });
 
-    this.callParent(arguments);
     this.loggedOut();
   },
 
+  updateButtons: function(nav, auth){
+    this.down('#nav').removeAll();
+    this.down('#nav').add(nav);
+    this.down('#auth').removeAll();
+    this.down('#auth').add(auth);
+  },
+
   loggedOut: function(){
-    this.removeAll();
-    this.add([{
-      text: 'Catalog',
-      icon: "<%= image_path 'icons/medium/bookmark.png' %>"
+    this.updateButtons(this.loggedOutNavButtons, this.loggedOutAuthButtons);
+  },
+  loggedIn: function(){
+    this.updateButtons(this.loggedInNavButtons, this.loggedInAuthButtons());
+  },
+
+  loggedOutAuthButtons: [{
+    text: 'Signup',
+    action: 'external',
+    link: 'http://id.gina.alaska.edu/#signup',
+    iconCls: 'navigation-agent'
+  }, {
+    text: 'Login',
+    action: 'local',
+    link: '/login',
+    iconCls: 'navigation-lock'
+  }],
+
+  loggedInAuthButtons: function() {
+    return [{
+      xtype: 'panel',
+      width: 150,
+      border: false,
+      cls: 'welcome-panel',      
+      html: 'Welcome back<br />'+ App.current_user.get('fullname')
     }, {
-      text: 'News',
-      icon: "<%= image_path 'icons/medium/chat-.png' %>"
-    }, {
-      text: 'Help',
-      icon: "<%= image_path 'icons/medium/male-user.png' %>"
-    }, {
-      text: 'Realtime Data',
-      action: 'external',
-      link: 'http://realtime.hub.gina.alaska.edu',
-      icon: "<%= image_path 'icons/medium/satellite.png' %>"
-    }, {
-      text: 'Contact Us',
-      icon: "<%= image_path 'icons/medium/email.png' %>"
-    }, {
-      text: 'NSSI',
+      text: 'Logout',
+      action: 'local',
+      link: '/logout',
+      iconCls: 'navigation-lock'
+    }];
+  },
+
+  loggedOutNavButtons: [{
+    text: 'Catalog',
+    iconCls: 'navigation-bookmark'
+  }, {
+    text: 'News',
+    iconCls: 'navigation-news'
+  }, {
+    text: 'Help',
+    action: 'help',
+    iconCls: 'navigation-male-user'
+  }, {
+    text: 'Realtime Data',
+    action: 'external',
+    link: 'http://realtime.hub.gina.alaska.edu',
+    iconCls: 'navigation-satellite'
+  }, {
+    text: 'Contact Us',
+    iconCls: 'navigation-email'
+  }, {
+    text: 'NSSI',
+    action: 'external',
+    link: 'http://northslope.org',
+    iconCls: 'navigation-globe'
+  }],
+
+  loggedInNavButtons: [{
+    text: 'Catalog',
+    icon: "<%= image_path 'icons/medium/bookmark.png' %>"
+  }, {
+    text: 'News',
+    icon: "<%= image_path 'icons/medium/chat-.png' %>"
+  }, {
+    text: 'Help',
+    action: 'help',
+    icon: "<%= image_path 'icons/medium/male-user.png' %>"
+  }, {
+    text: 'Other Links', 
+    icon: "<%= image_path 'icons/medium/globe.png' %>",
+    menu: [{
+      text: 'North Slope Science Initiative',
+      icon: "<%= image_path 'icons/medium/globe.png' %>",
       action: 'external',
       link: 'http://northslope.org',
-      icon: "<%= image_path 'icons/medium/globe.png' %>"
-    }]);
-  }, 
-
-  loggedIn: function() {
-    this.removeAll();
-    this.add([{
-      text: 'Catalog',
-      icon: "<%= image_path 'icons/medium/bookmark.png' %>"
-    }, {
-      text: 'News',
-      icon: "<%= image_path 'icons/medium/chat-.png' %>"
-    }, {
-      text: 'Help',
-      action: 'help',
-      icon: "<%= image_path 'icons/medium/male-user.png' %>"
-    }, {
-      text: 'Other Links', 
-      icon: "<%= image_path 'icons/medium/globe.png' %>",
-      menu: [{
-        text: 'North Slope Science Initiative',
-        icon: "<%= image_path 'icons/medium/globe.png' %>",
-        action: 'external',
-        link: 'http://northslope.org',
-      },{
-        text: 'Realtime Data',
-        icon: "<%= image_path 'icons/medium/satellite.png' %>",
-        action: 'external',
-        link: 'http://realtime.hub.gina.alaska.edu'
-      }]
-    }, {
-      text: 'Contact Us',
-      icon: "<%= image_path 'icons/medium/email.png' %>"
-    }, {
-      text: 'Manager',
-      icon: "<%= image_path 'icons/medium/configuration.png' %>",
+    },{
+      text: 'Realtime Data',
+      icon: "<%= image_path 'icons/medium/satellite.png' %>",
       action: 'external',
-      link: '/manager'
-    }]);
-  }
+      link: 'http://realtime.hub.gina.alaska.edu'
+    }]
+  }, {
+    text: 'Contact Us',
+    icon: "<%= image_path 'icons/medium/email.png' %>"
+  }, {
+    text: 'Manager',
+    icon: "<%= image_path 'icons/medium/configuration.png' %>",
+    action: 'external',
+    link: '/manager'
+  }]
 });
