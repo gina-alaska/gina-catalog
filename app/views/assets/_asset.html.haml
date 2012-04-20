@@ -1,7 +1,7 @@
 .project
   .title= asset.title
 
-  - unless asset.published? || current_user.is_an_admin?
+  - unless asset.published? || (current_user && current_user.is_an_admin?)
     .not-published
       %h2 This project is pending review by the system moderators
       %p After a moderator has reviewed the project, it will become available for public viewing
