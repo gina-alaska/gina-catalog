@@ -21,18 +21,18 @@ Ext.define('Manager.view.contacts.Toolbar', {
         items: [{
           xtype: 'button',
           tip: 'Search',
-          iconCls: 'search-icon',
+          iconCls: 'blue-search',
           action: 'search',
-          scale: 'medium'
+          scale: 'large'
         }]
       }, {
         xtype: 'buttongroup',
         items: [{
           xtype: 'button',
-          tip: 'New Agency',
-          iconCls: 'new-icon',
+          tip: 'New Project',
+          iconCls: 'blue-add-item',
           action: 'new',
-          scale: 'medium'
+          scale: 'large'
         }]
       }];        
 

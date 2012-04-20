@@ -20,18 +20,18 @@ Ext.define('Manager.view.projects.Toolbar', {
         items: [{
           xtype: 'button',
           tip: 'Search',
-          iconCls: 'search-icon',
+          iconCls: 'blue-search',
           action: 'search',
-          scale: 'medium'
+          scale: 'large'
         }]
       }, {
         xtype: 'buttongroup',
         items: [{
           xtype: 'button',
           tip: 'New Project',
-          iconCls: 'new-icon',
+          iconCls: 'blue-add-item',
           action: 'new',
-          scale: 'medium'
+          scale: 'large'
         }]
       }];        
 

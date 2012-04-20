@@ -45,11 +45,11 @@ Ext.define('Manager.shared_views.catalog.LocationWindow', {
         dock: 'top',
         xtype: 'toolbar',
         items: [
-          { itemId: 'clear', text: 'Clear', iconCls: 'trash-icon', 
+          { itemId: 'clear', text: 'Clear', iconCls: 'small-cancel', 
             handler: this.draw, scope: this },
-          { itemId: 'point', text: 'Point', toggleGroup: 'geom', iconCls: 'point-icon', 
+          { itemId: 'point', text: 'Point', toggleGroup: 'geom', iconCls: 'geo-bullet_red', 
             toggleHandler: this.draw, scope: this }, 
-          { itemId: 'polygon', text: 'Polygon', toggleGroup: 'geom', iconCls: 'polygon-icon', 
+          { itemId: 'polygon', text: 'Polygon', toggleGroup: 'geom', iconCls: 'geo-shape_square_red', 
             toggleHandler: this.draw, scope: this }
         ]
       }],
