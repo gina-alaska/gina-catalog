@@ -52,12 +52,12 @@ Ext.define('App.view.catalog.NavigationToolbar', {
     text: 'Signup',
     action: 'external',
     link: 'http://id.gina.alaska.edu/#signup',
-    iconCls: 'navigation-agent'
+    iconCls: 'blue-agent'
   }, {
     text: 'Login',
     action: 'local',
     link: '/login',
-    iconCls: 'navigation-lock'
+    iconCls: 'blue-lock'
   }],
 
   loggedInAuthButtons: function() {
@@ -71,65 +71,65 @@ Ext.define('App.view.catalog.NavigationToolbar', {
       text: 'Logout',
       action: 'local',
       link: '/logout',
-      iconCls: 'navigation-lock'
+      iconCls: 'blue-lock'
     }];
   },
 
   loggedOutNavButtons: [{
     text: 'Catalog',
-    iconCls: 'navigation-bookmark'
+    iconCls: 'blue-bookmark'
   }, {
     text: 'News',
-    iconCls: 'navigation-news'
+    iconCls: 'blue-news'
   }, {
     text: 'Help',
     action: 'help',
-    iconCls: 'navigation-male-user'
+    iconCls: 'blue-male-user'
   }, {
     text: 'Realtime Data',
     action: 'external',
     link: 'http://realtime.hub.gina.alaska.edu',
-    iconCls: 'navigation-satellite'
+    iconCls: 'blue-satellite'
   }, {
     text: 'Contact Us',
-    iconCls: 'navigation-email'
+    iconCls: 'blue-email'
   }, {
     text: 'NSSI',
     action: 'external',
     link: 'http://northslope.org',
-    iconCls: 'navigation-globe'
+    iconCls: 'blue-globe'
   }],
 
   loggedInNavButtons: [{
     text: 'Catalog',
-    icon: "<%= image_path 'icons/medium/bookmark.png' %>"
+    iconCls: 'blue-bookmark'
   }, {
     text: 'News',
-    icon: "<%= image_path 'icons/medium/chat-.png' %>"
+    iconCls: 'blue-news'
   }, {
     text: 'Help',
     action: 'help',
-    icon: "<%= image_path 'icons/medium/male-user.png' %>"
+    iconCls: 'blue-male-user'
   }, {
     text: 'Other Links', 
-    icon: "<%= image_path 'icons/medium/globe.png' %>",
+    iconCls: 'blue-globe',
     menu: [{
       text: 'North Slope Science Initiative',
-      icon: "<%= image_path 'icons/medium/globe.png' %>",
+      iconCls: 'blue-globe',
       action: 'external',
       link: 'http://northslope.org',
     },{
       text: 'Realtime Data',
-      icon: "<%= image_path 'icons/medium/satellite.png' %>",
+      iconCls: 'blue-satellite',
       action: 'external',
       link: 'http://realtime.hub.gina.alaska.edu'
     }]
   }, {
     text: 'Contact Us',
-    icon: "<%= image_path 'icons/medium/email.png' %>"
+    iconCls: 'blue-email'
   }, {
     text: 'Manager',
-    icon: "<%= image_path 'icons/medium/configuration.png' %>",
+    iconCls: 'blue-configuration',
     action: 'external',
     link: '/manager'
   }]

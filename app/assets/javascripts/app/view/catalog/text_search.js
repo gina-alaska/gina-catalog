@@ -9,14 +9,14 @@ Ext.define('App.view.catalog.text_search', {
 
   initComponent: function() {
     Ext.apply(this, {
-      defaults: { scale: 'medium' },
+      defaults: { scale: 'large' },
       items: [{
         xtype: 'button',
-        iconCls: 'cancel-icon',
+        iconCls: 'blue-x',
         action: 'clear_text'
       }, {
         xtype: 'button',
-        iconCls: 'search-icon',
+        iconCls: 'blue-search',
         action: 'search'
       }]
     });

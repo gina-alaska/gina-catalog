@@ -46,7 +46,7 @@ Ext.define('App.controller.Catalog', {
 
     // this.getStore('Catalog').on('beforeload', this.updateFilters, this);
     if(!this.loaded) {
-      this.getStore('Catalog').load();
+      Ext.defer(function() { this.getStore('Catalog').load(); }, 300, this);
       this.loaded = true;
     }
   },

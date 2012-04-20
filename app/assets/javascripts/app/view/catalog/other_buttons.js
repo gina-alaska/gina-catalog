@@ -15,12 +15,12 @@ Ext.define('App.view.catalog.other_buttons', {
         xtype: 'button',
         text: 'Export',
         action: 'export',
-        iconCls: 'download-icon'
+        iconCls: 'small-download'
       }, {
         xtype: 'button',
         text: 'Help',
         action: 'filter-help',
-        iconCls: 'help-icon'
+        iconCls: 'small-help'
       }]
     });        
 

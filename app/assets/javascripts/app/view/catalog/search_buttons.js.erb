@@ -12,7 +12,7 @@ Ext.define('App.view.catalog.search_buttons', {
       defaults: { minWidth: 70, scale: 'small', iconAlign: 'top', iconCls: 'contact-icon' },
       cls: 'catalog_search_buttons',
       items: [{
-        iconCls: 'filter-icon',
+        iconCls: 'small-filter',
         text: 'Filter By',
         menu: this.filterMenu()
       }, { 
@@ -20,14 +20,14 @@ Ext.define('App.view.catalog.search_buttons', {
         text: 'Apply Search Filters', 
         // disabled: true,
         // cls: 'apply',
-        iconCls: 'filter-icon',
+        iconCls: 'small-filter',
         action: 'apply'
       }, {
         xtype: 'button',
         text: 'Clear Filters',
         action: 'clear_filters',
         // scale: 'large',
-        iconCls: 'small-cancel-icon'
+        iconCls: 'small-cancel'
       }, this.sortBy()]
     });        
 
@@ -36,21 +36,21 @@ Ext.define('App.view.catalog.search_buttons', {
   filterMenu: function() {
     return [{
       text: 'Agency',
-      iconCls: 'agency-icon',
+      iconCls: 'small-agency',
       action: 'filter',
       filterType: 'agencyselector',
       field: 'agency_ids',
       description: 'Agency: {name}'
     }, {
       text: 'Contact',
-      iconCls: 'contact-icon',
+      iconCls: 'small-user',
       action: 'filter',
       filterType: 'contactselector',
       field: 'contact_ids',
       description: 'Contact: {full_name}'
     }, {
       text: 'Data Type',
-      iconCls: 'data-icon',
+      iconCls: 'small-db',
       menu: <%= 
         DataType.all.collect do |i| 
           { 
@@ -64,14 +64,14 @@ Ext.define('App.view.catalog.search_buttons', {
         end.to_json %>
     }, {
       text: 'ISO Theme',
-      iconCls: 'data-icon',
+      iconCls: 'small-db',
       action: 'filter',
       filterType: 'isothemeselector',
       field: 'iso_topic_ids',
       description: 'ISO Theme: {name}'
     }, {
       text: 'Long Term Monitoring',
-      iconCls: 'data-icon',
+      iconCls: 'small-db',
       menu: [{
         text: 'Yes',
         action: 'filter',
@@ -89,7 +89,7 @@ Ext.define('App.view.catalog.search_buttons', {
       }]   
     }, {
       text: 'Project/Data',
-      iconCls: 'data-icon',
+      iconCls: 'small-db',
       menu: [{
         text: 'Project',
         field: 'type',
@@ -107,14 +107,14 @@ Ext.define('App.view.catalog.search_buttons', {
       }] 
     }, {
       text: 'Source',
-      iconCls: 'source-icon',
+      iconCls: 'small-application_view_list',
       filterType: 'sourceselector',
       action: 'filter',
       field: 'source_agency_id',
       description: 'Source Agency: {name}'
     }, {
       text: 'Status',
-      iconCls: 'status-icon',
+      iconCls: 'small-flag',
       menu: [{
         text: 'Ongoing',
         field: 'status',
@@ -158,7 +158,7 @@ Ext.define('App.view.catalog.search_buttons', {
       action: 'filter',
       filterType: 'dateselector',
       description: 'Starting Year {type} {year}',
-      iconCls: 'calendar-icon'
+      iconCls: 'small-today'
     }, {
       text: 'Ending Year',
       field: 'end_date',
@@ -166,10 +166,10 @@ Ext.define('App.view.catalog.search_buttons', {
       action: 'filter',
       filterType: 'dateselector',
       description: 'Ending Year {type} {year}',
-      iconCls: 'calendar-icon'
+      iconCls: 'small-today'
     }, {
       text: 'Region',
-      iconCls: 'region-icon',
+      iconCls: 'geo-map',
       menu: [{
         text: 'Alaska',
         field: 'region',
@@ -188,14 +188,14 @@ Ext.define('App.view.catalog.search_buttons', {
     }, {
       text: 'AOI',
       action: 'aoi',
-      iconCls: 'aoi-icon'
+      iconCls: 'geo-aoi'
     }];
   },
   sortBy: function(){
     return {
       xtype: 'button',
       text: 'Sort By',
-      iconCls: 'sort-icon',
+      iconCls: 'small-table_sort',
       menu: [{
         text: 'Title',
         group: 'sort', xtype: 'menucheckitem',
