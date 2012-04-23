@@ -240,8 +240,15 @@ Ext.define('App.controller.Search', {
   doFilter: function(item) {
     var win;
     switch(item.filterType) {
+      case 'sort':
+        this.replaceSearchParam(item.field, item.value, item.description);
+        var sort = item.value.split('-'),
+            field = sort[0],
+            dir = sort[1];
+
+        this.getStore('Catalog').sort(field, dir);        
+        break;
       case 'single':
-        // this.clearSearchParams( item.field );
         this.replaceSearchParam(item.field, item.value, item.description);
         /* now handled by the apply button, unless immediateSearch is true */
         if(item.immediateSearch === true) {

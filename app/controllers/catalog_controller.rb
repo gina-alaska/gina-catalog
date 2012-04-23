@@ -77,12 +77,9 @@ class CatalogController < ApplicationController
   def search
     @search = solr_search
     
-    @facets = @search.facet(:type).rows
     @results = @search.results
     @total = @search.total
     
-
-
     respond_to do |format|
       format.json
       format.js
@@ -239,7 +236,6 @@ class CatalogController < ApplicationController
       paginate per_page:(params[:limit] || 3000), page:(params[:page] || 1)
       
       order_by(field, direction) if field and direction
-      facet(:type)
     end
    
     results

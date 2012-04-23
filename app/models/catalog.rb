@@ -121,7 +121,7 @@ class Catalog < ActiveRecord::Base
       }.compact!
     end
     string :title_sort do
-      title.downcase.gsub(/^(\s+|an?|the)/, '').gsub(/["']/, '')
+      title.downcase.gsub(/^(\ban(d?)\b|\bthe\b)/, '').gsub(/^\s+/, '').gsub(/["']/, '')
     end
     string :source_agency_acronym do
       source_agency.try(&:acronym)
