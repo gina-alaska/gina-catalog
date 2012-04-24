@@ -121,7 +121,8 @@ class Catalog < ActiveRecord::Base
       }.compact!
     end
     string :title_sort do
-      title.downcase.split(/\s+/).delete_if { |word| /^(.?|an(d?)|the)$/ =~ word }.join(' ').gsub(/["']/,'')
+      filtered_words = ['a', 'the', 'and', 'an', 'of', 'i', '' ]
+      title.downcase.split(/\s+/).delete_if { |word| filtered_words.include? word }.join(' ').gsub(/["',]/,'')
     end
     string :source_agency_acronym do
       source_agency.try(&:acronym)
