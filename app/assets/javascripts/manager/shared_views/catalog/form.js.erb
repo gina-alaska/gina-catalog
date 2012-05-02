@@ -86,7 +86,7 @@ Ext.define('Manager.shared_view.catalog.Form', {
           scope: this
         });        
       } else {
-        this.setTitle('New Project');
+        this.setTitle(this.newTitle);
       }
       this.on('dirtychange', this.toggleButtons, this);
     },  

@@ -9,18 +9,30 @@ Ext.define('Manager.view.assets.Toolbar', {
     docked: 'top',
     
     initComponent: function() {
+      this.layout = 'hbox';
       this.items = [{
-        xtype: 'button',
-        text: 'New Asset',
-        action: 'new'
-      },'->', {
+        flex: 1,
+        cls: 'quicksearch',
         xtype: 'textfield',
-        width: 300,
         plugins: [new Ext.gina.DefaultText({ text: 'Enter search here' })]
       }, {
-        xtype: 'button',
-        text: 'Search',
-        action: 'search'
+        xtype: 'buttongroup',
+        items: [{
+          xtype: 'button',
+          tip: 'Search',
+          iconCls: 'blue-search',
+          action: 'search',
+          scale: 'large'
+        }]
+      }, {
+        xtype: 'buttongroup',
+        items: [{
+          xtype: 'button',
+          tip: 'New Data',
+          iconCls: 'blue-add-item',
+          action: 'new',
+          scale: 'large'
+        }]
       }];        
 
       this.callParent(arguments);
