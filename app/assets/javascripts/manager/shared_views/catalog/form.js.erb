@@ -79,6 +79,7 @@ Ext.define('Manager.shared_view.catalog.Form', {
       this.getForm().trackResetOnLoad = true;
 
       if(this.getRecordId()) {
+        this.on('render', function() { this.getEl().mask("Please Wait..") }, this, {delay: 100, single:true} );
         Ext.Ajax.request({
           url: '/catalog/' + this.getRecordId() + '.json',
           success: this.onRequestSuccess,
@@ -88,7 +89,6 @@ Ext.define('Manager.shared_view.catalog.Form', {
         this.setTitle('New Project');
       }
       this.on('dirtychange', this.toggleButtons, this);
-      this.on('render', function() { this.getEl().mask("Please Wait..") }, this, {delay: 100, single:true} );
     },  
     
     buildLink: function(link){
