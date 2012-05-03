@@ -14,6 +14,7 @@ gem 'rgeo-geojson'
 gem 'will_paginate'
 gem 'omniauth'
 gem 'omniauth-openid'
+gem 'resque'
 
 #gem 'nofxx-georuby'
 #broke in rails 3.1

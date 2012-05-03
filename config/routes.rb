@@ -104,6 +104,8 @@ NSCatalog::Application.routes.draw do
   #     resources :products
   #   end
 
+  mount Resque::Server.new, :at => '/resque'
+
   match '/preferences(.:format)' => 'users#preferences'
   match '/login' => 'sessions#new'
   match '/logout' => 'sessions#destroy'
