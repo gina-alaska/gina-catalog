@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120413001434) do
+ActiveRecord::Schema.define(:version => 20120502200718) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -507,6 +507,14 @@ ActiveRecord::Schema.define(:version => 20120413001434) do
   create_table "projects_tags", :id => false, :force => true do |t|
     t.integer "project_id"
     t.integer "tag_id"
+  end
+
+  create_table "repos", :force => true do |t|
+    t.string   "repohex",    :null => false
+    t.string   "slug",       :null => false
+    t.integer  "catalog_id", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "role_permissions", :force => true do |t|

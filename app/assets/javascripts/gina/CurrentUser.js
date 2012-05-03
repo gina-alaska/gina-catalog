@@ -25,7 +25,7 @@ Ext.define('Ext.gina.CurrentUser', {
   },
 
   isLoggedIn: function() {
-    return this.user == undefined;
+    return this.user != undefined;
   },
 
   load: function() {

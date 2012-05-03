@@ -5,7 +5,9 @@ class Catalog < ActiveRecord::Base
   belongs_to :owner, :class_name => 'User'
   belongs_to :primary_contact, :class_name => 'Person'
   belongs_to :data_source
-
+  
+  has_one :repo
+  
   belongs_to :source_agency, :class_name => 'Agency'
   belongs_to :funding_agency, :class_name => 'Agency'
   has_and_belongs_to_many :agencies, :join_table => 'catalog_agencies'
@@ -138,27 +140,28 @@ class Catalog < ActiveRecord::Base
     wkt = wkt.as_text if wkt.respond_to? :as_text
     joins(:locations).where("ST_Intersects(geom, ?::geometry)", "SRID=#{srid};#{wkt}")
   end
-
-  def repo
-    @repo ||= RepoProxy.new(self, :class_name => 'RepoFile')
-    @repo
+  
+  def convert_repo!
+    if self.repo.nil? && self.repohex
+      self.create_repo!(repohex: self.repohex, slug: self.repohex)
+    end
   end
   
   def repo_exists?
     RepoProxy.exists?(self)
   end
 
-  def repohex
-    if read_attribute(:repohex).nil?
-      hex = RepoProxy::generate_hex
-      while File.directory? RepoProxy::repo_path(hex)
-        hex = RepoProxy::generate_hex
-      end
-      write_attribute(:repohex, hex)
-    end
-    
-    super
-  end
+  # def repohex
+  #   if read_attribute(:repohex).nil?
+  #     hex = RepoProxy::generate_hex
+  #     while File.directory? RepoProxy::repo_path(hex)
+  #       hex = RepoProxy::generate_hex
+  #     end
+  #     write_attribute(:repohex, hex)
+  #   end
+  #   
+  #   super
+  # end
 
   def readme_template
     <<-EOF
@@ -291,6 +294,7 @@ Title: #{self.title}
       :created_at => self.created_at,
       :updated_at => self.updated_at,
       :locations => self.locations,
+      :repo_slug => self.repo.try(:slug),
       :long_term_monitoring => self.long_term_monitoring,
       :owner_id => self.owner_id
     }    

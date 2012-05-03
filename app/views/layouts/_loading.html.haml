@@ -1,0 +1,25 @@
+#loading Loading....
+#splash-header.x-hidden
+  .image= image_tag 'nssi-logo2.png', :alt=>"NSSI LOGO"
+  .text North Slope Science Catalog
+#splash-content.x-hidden
+  - if Rails.env == 'development'
+    %h1 NSSI DEMONSTRATION SITE
+  %h2 This site works best using Firefox, Chrome, IE9+  or Opera, <a href="/cms/help/browser-requirements" target="_blank">more information here</a>
+
+  %h1 Discover Projects and Data Products
+  %h2
+    Catalog facilitates the discovery and dissemination of science based information products in
+    support of analysis and decision making concerned with development and climate change
+    on the North Slope of Alaska
+  -# .buttons To enter Catalog: Visitors please click 'Guest' - Registered users please click 'Login'
+#splash-footer.x-hidden
+  .disclaimer
+    This website makes use of advanced visualization tools for the search and display of GIS information
+    which may not be compliant with <a href="http://www.section508.gov" target="_blank">ADA Section 508</a>.
+    .poweredby Powered by <a href="http://www.gina.alaska.edu">GINA</a>
+#flash_content
+  :javascript
+    Ext.onReady(function() {
+      #{jsflashes}
+    });

@@ -1,4 +1,6 @@
 NSCatalog::Application.routes.draw do
+  resources :repos
+
   resources :data_types
 
   resources :iso_topics
