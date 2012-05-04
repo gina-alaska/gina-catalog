@@ -50,8 +50,9 @@ module NSCatalog
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
 
+    config.archive_path = "#{config.root}/archive"
     config.repos_path = "#{config.root}/repos"
-    config.repos_tmp = "#{config.root}/repos_tmp"
+    config.repos_tmp = "#{config.root}/tmp/repos"
 
     require 'pdfkit'
     config.middleware.use PDFKit::Middleware
