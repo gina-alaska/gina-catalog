@@ -56,10 +56,10 @@ module NSCatalog
     require 'pdfkit'
     config.middleware.use PDFKit::Middleware
     
-    require "#{config.root}/extras/git_http"
-    config.middleware.use GitHttp, {
+    require "#{config.root}/extras/grack/lib/git_http"
+    config.middleware.use GitHttp::Middleware, {
       :project_root => "#{config.repos_path}",
-      :url_root => '/repos',
+      :uri_root => '/repos',
       :git_path => '/usr/bin/git',
       :upload_pack => true,
       :receive_pack => true,
