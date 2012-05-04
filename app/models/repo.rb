@@ -106,6 +106,45 @@ Title: #{self.catalog.title}
     end
   end
   
+  ## ARCHIVE
+  def async_create_archive(branch = 'master')
+    Resque.enqueue(Archive, self.repohex, branch)
+  end
+  
+  def prep_for_archive
+  end
+  
+  def create_archive(treeish, opts={})
+    opts[:prefix] ||= "#{self.repohex}/"
+    
+    dest = File.join(Rails.root, 'public', 'archive')
+    FileUtils.mkdir_p(dest)
+    
+    zip = File.join(dest, "#{self.slug}.zip")
+    File.open(zip, 'wb') do |fp|
+      fp << archive_zip(treeish, opts[:prefix])
+    end
+    
+    targz = File.join(dest, "#{self.slug}.tar.gz")
+    File.open(targz, 'wb') do |fp|
+      fp << archive_tar_gz(treeish, opts[:prefix])
+    end
+  end
+
+  def archive_tar_gz(treeish, prefix = nil)
+    prep_for_archive
+    return grit.archive_tar_gz(treeish, prefix)
+  end
+  
+  def archive_zip(treeish, prefix = nil)
+    prep_for_archive
+    options = {}
+    options[:format] = 'zip'
+    options[:prefix] = prefix unless prefix.nil?
+    return grit.git.archive({ :format => 'zip', :prefix => prefix }, treeish)
+  end  
+  ##
+  
   def to_param
     self.slug
   end
