@@ -1,8 +1,0 @@
-!!!5
-
-%html
-  %head
-    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}
-    = raw "<link href=\"#{request.protocol}#{request.host_with_port}#{asset_path("pdf.css")}\" media=\"screen\" rel=\"stylesheet\" type=\"text/css\" />"
-  %body
-    = yield
