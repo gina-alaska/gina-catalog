@@ -1,0 +1,33 @@
+- theme = NSCatalog::Application.config.theme
+!!! 5
+%html
+%head
+  = render "#{theme}/head"
+  
+  = include_css(:extjs, :version => '4.1.0-rc3')
+  = include_js(:extjs, :version => '4.1.0-rc3')
+  = include_js(:proj4js)
+  = include_js(:openlayers, :version => '2.11')
+  = javascript_include_tag "prototype", "application"
+
+  = stylesheet_link_tag 'application', :media => 'screen, projection'
+  = stylesheet_link_tag 'print', :media => 'print'
+  /[if IE]
+    = stylesheet_link_tag 'ie', :media => 'screen, projection'
+
+%body
+  %form#history-form.x-hide-display
+    %input(type="hidden" id="x-history-field")
+    %iframe#x-history-frame
+  
+  #header
+    = render "#{theme}/header"
+
+  = render "#{theme}/splash"
+  
+  #content.x-hidden
+    = yield
+  #footer.x-hidden
+    = render "#{theme}/footer"
+		
+  = render "#{theme}/analytics"
