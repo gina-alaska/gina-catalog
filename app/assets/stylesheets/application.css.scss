@@ -15,6 +15,11 @@
 
 body {
   font-family: "trebuchet ms", Verdana, Tahoma, Arial, Helvetica, san-serif;
+  background-color: white;
+}
+
+.x-viewport, .x-viewport body {
+	background-color: white;
 }
 
 .x-btn.apply {

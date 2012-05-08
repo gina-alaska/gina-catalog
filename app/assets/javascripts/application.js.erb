@@ -27,8 +27,12 @@ Ext.define('App', {
     this.header = Ext.widget('catalog_navigation_toolbar', {
       dock: 'top',
       cls: 'main-toolbar',
+	  frame: true,
       layout: { type: 'hbox', align: 'stretch' },
-      border: false,
+      // margin: '5 5 5 5',
+	  margin: '0 0 5 0',
+	  
+      // border: false,
       items: [{
         flex: 1,
         bodyStyle: 'background: #187b99;',
@@ -82,6 +86,8 @@ Ext.application({
         border: false,
         layout: 'card',
         deferredRender: false,
+		margin: '3',
+		frame: true,
         dockedItems: [App.header],
         listeners: {
           /* TODO: Remove this, for now it is required as a work around for a bug in Ext-4.1.0-beta3 */
