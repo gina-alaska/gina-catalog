@@ -24,11 +24,12 @@
     %input(type="hidden" id="x-history-field")
     %iframe#x-history-frame
      
-  = render 'layouts/splash'
-
   -#= raw jsflashes
   #header
     = render 'layouts/header'
+
+  = render 'layouts/splash'
+
   #content.x-hidden
     = yield
   #footer.x-hidden
