@@ -40,6 +40,7 @@ namespace :deploy do
   task :link_configs do
     run "ln -nfs #{deploy_to}/#{shared_dir}/config/database.yml #{release_path}/config/database.yml"
     run "ln -nfs #{deploy_to}/#{shared_dir}/config/sunspot.yml #{release_path}/config/sunspot.yml"
+    run "ln -nfs #{deploy_to}/#{shared_dir}/config/catalog.rb #{release_path}/config/initializers/catalog.rb"
     run "ln -nfs #{deploy_to}/#{shared_dir}/solr/pids #{release_path}/solr/pids"
     run "ln -nfs #{deploy_to}/#{shared_dir}/solr/data #{release_path}/solr/data"
     run "ln -nfs #{release_path}/tools/wkhtmltopdf-amd64 #{release_path}/tools/wkhtmltopdf"
