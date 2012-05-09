@@ -170,6 +170,7 @@ class CatalogController < ApplicationController
       # Custom sort field for title, extjs isn't able to specify one 
       # in it's config so we have to munge it here
       field = 'title_sort' if field == 'title'
+      field = 'geokeyword_sort' if field == 'geokeywords'
     end
     
     table_includes = {

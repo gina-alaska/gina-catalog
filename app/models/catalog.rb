@@ -57,7 +57,7 @@ class Catalog < ActiveRecord::Base
       [funding_agency.name, funding_agency.acronym] unless funding_agency.nil?
     end
     text :geokeywords do
-      geokeywords.map(&:name)
+      geokeywords.map(&:name).sort
     end
     text :iso_topics do
       iso_topics.map(&:name)
@@ -108,7 +108,7 @@ class Catalog < ActiveRecord::Base
       updated_at.try(:year)
     end
     string :geokeywords_name, :multiple => true do
-      geokeywords.map(&:name)
+      geokeywords.map(&:name).sort
     end
     
     time :published_at
@@ -121,6 +121,9 @@ class Catalog < ActiveRecord::Base
         next if location.center.nil?
         Sunspot::Util::Coordinates.new(location.center.try(:x), location.center.try(:y))
       }.compact!
+    end
+    string :geokeyword_sort do
+      geokeywords.map(&:name).sort.join(' ')
     end
     string :title_sort do
       filtered_words = ['a', 'the', 'and', 'an', 'of', 'i', '' ]
@@ -265,6 +268,7 @@ Title: #{self.title}
       :status => self.status,
       :source_agency_acronym => self.source_agency.try(:acronym),
       :source_agency_id => self.source_agency.try(:id),
+      :geokeywords => self.geokeywords.collect(&:name).sort,
       :created_at => self.created_at,
       :updated_at => self.updated_at,
       :locations => self.locations
@@ -284,7 +288,7 @@ Title: #{self.title}
       :source_agency_id => self.source_agency_id,
       :start_date => self.start_date.try(:strftime, '%F'),
       :end_date => self.end_date.try(:strftime, '%F'),
-      :geokeywords => self.geokeywords.collect(&:name),
+      :geokeywords => self.geokeywords.collect(&:name).sort,
       :geokeyword_ids => self.geokeyword_ids,
       :agency_ids => self.agency_ids,
       :primary_contact_id => self.primary_contact_id,
