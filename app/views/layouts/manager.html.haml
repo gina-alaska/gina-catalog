@@ -1,3 +1,4 @@
+- theme = NSCatalog::Application.config.theme
 !!! 5
 %html
 %head
@@ -25,7 +26,7 @@
         #{jsflashes}
       });
   #header
-    = render 'layouts/header'
+    = render "layouts/#{theme}/header"
   #content.x-hidden
     = yield
   #footer.x-hidden
