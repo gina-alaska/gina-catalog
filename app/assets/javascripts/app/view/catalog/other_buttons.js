@@ -14,7 +14,13 @@ Ext.define('App.view.catalog.other_buttons', {
       items: [{
         xtype: 'button',
         text: 'Export',
-        action: 'export',
+		menu: [{
+			text: 'PDF',
+			action: 'export'
+		}, {
+			text: 'HTML',
+			action: 'export-html'
+		}],
         iconCls: 'small-download'
       }, {
         xtype: 'button',

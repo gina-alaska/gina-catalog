@@ -31,8 +31,11 @@ Ext.define('App.controller.Search', {
       'catalog_text_search button[action="search"]': {
         click: this.doSearch
       },
-      'catalog_other_buttons button[action="export"]': {
+      'catalog_other_buttons menuitem[action="export"]': {
         click: function() { this.doSearch({ format: 'pdf' }); }
+      },
+      'catalog_other_buttons menuitem[action="export-html"]': {
+        click: function() { this.doSearch({ format: 'html' }); }
       },
       'catalog_other_buttons menuitem[action="filter"]': {
         click: this.doFilter
@@ -133,9 +136,9 @@ Ext.define('App.controller.Search', {
     
     var searchField = this.getTextsearch();
     this.replaceSearchParam('q', searchField.getValue(), 'Text: ' +  searchField.getValue());
-    if(opts.format == 'pdf') {
+    if(opts.format == 'pdf' || opts.format == 'html') {
       var url = this.getStore('Catalog').getProxy().url;
-      window.open('/search.pdf?limit=200&filter=' + Ext.encode(this.getStore('Filters').buildFilterRequest()));
+      window.open('/search.'+ opts.format +'?limit=200&filter=' + Ext.encode(this.getStore('Filters').buildFilterRequest()));
     } else {
       this.getStore('Catalog').filters.clear();
       this.getStore('Catalog').filter(this.getStore('Filters').buildFilterRequest());

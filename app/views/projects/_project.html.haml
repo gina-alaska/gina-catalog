@@ -77,7 +77,7 @@
       = project.tags.list
       .spacer
 
-    - unless project.repo.empty?
+    - if project.repo and not project.repo.empty?
       .tabbed
         %label Download Link:
         = link_to catalog_url(project, :format => 'zip'), catalog_url(project, :format => 'zip'), :target => :_blank
