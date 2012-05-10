@@ -11,7 +11,14 @@ class Catalog < ActiveRecord::Base
   belongs_to :source_agency, :class_name => 'Agency'
   belongs_to :funding_agency, :class_name => 'Agency'
   has_and_belongs_to_many :agencies, :join_table => 'catalog_agencies'
-  has_and_belongs_to_many :geokeywords
+  has_and_belongs_to_many :geokeywords, :order => 'name ASC' do
+    def list
+      proxy_association.owner.geokeywords.collection.join(', ')
+    end
+    def collection
+      proxy_association.owner.geokeywords.collect(&:name).compact
+    end
+  end
   has_and_belongs_to_many :iso_topics
   has_and_belongs_to_many :data_types
 
@@ -268,7 +275,7 @@ Title: #{self.title}
       :status => self.status,
       :source_agency_acronym => self.source_agency.try(:acronym),
       :source_agency_id => self.source_agency.try(:id),
-      :geokeywords => self.geokeywords.collect(&:name).sort,
+      :geokeywords => self.geokeywords.list,
       :created_at => self.created_at,
       :updated_at => self.updated_at,
       :locations => self.locations
@@ -288,7 +295,7 @@ Title: #{self.title}
       :source_agency_id => self.source_agency_id,
       :start_date => self.start_date.try(:strftime, '%F'),
       :end_date => self.end_date.try(:strftime, '%F'),
-      :geokeywords => self.geokeywords.collect(&:name).sort,
+      :geokeywords => self.geokeywords.list,
       :geokeyword_ids => self.geokeyword_ids,
       :agency_ids => self.agency_ids,
       :primary_contact_id => self.primary_contact_id,
