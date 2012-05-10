@@ -2,7 +2,7 @@ class PeopleController < ApplicationController
   respond_to :json
 
   def index
-    solr = Person.search(:include => [:agencies]) do
+    solr = Person.search(:include => [:agencies, :phone_numbers]) do
       fulltext search_params["query"]
       paginate per_page:(params[:limit] || 3000), page:(params[:page] || 1)
     end
