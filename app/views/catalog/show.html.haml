@@ -74,6 +74,12 @@
       %label Tags:
       = @item.tags.list
       .spacer
+	  
+    .tags.tabbed
+      %label Geokeywords:
+      = @item.geokeywords.list
+      .spacer
+	  
 
     - if @item.repo and not @item.repo.empty?
       .tabbed
