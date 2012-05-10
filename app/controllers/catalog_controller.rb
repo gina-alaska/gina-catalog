@@ -175,7 +175,7 @@ class CatalogController < ApplicationController
     
     table_includes = {
       :tags => [], :locations => [], :agencies => [], :source_agency => [], :funding_agency => [], :links => [], 
-      :primary_contact => [:phone_numbers], :people => [:phone_numbers], :data_source => []
+      :primary_contact => [:phone_numbers], :people => [:phone_numbers], :data_source => [], :geokeywords => []
     }
     
     # if(search.nil? or search.empty?)
