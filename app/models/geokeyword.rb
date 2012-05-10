@@ -6,5 +6,5 @@ class Geokeyword < ActiveRecord::Base
   def self.intersects(wkt, srid=4326)
     wkt = wkt.as_text if wkt.respond_to? :as_text
     where("ST_Intersects(geom, ?::geometry)", "SRID=#{srid};#{wkt}")
-  end
+  end  
 end
