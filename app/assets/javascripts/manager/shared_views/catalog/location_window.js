@@ -99,13 +99,6 @@ Ext.define('Manager.shared_views.catalog.LocationWindow', {
     this.drawlayer = new OpenLayers.Layer.Vector('draw');
     this.map.addLayer(this.drawlayer);
 
-    if(this.field && this.field.getValue()) {
-      var wkt = new OpenLayers.Format.WKT();
-      var feature = wkt.read(this.field.getValue());
-      feature.geometry.transform(this.map.displayProjection, this.map.getProjectionObject());
-      this.drawlayer.addFeatures(feature);
-    }
-
     toolconfig = {
       eventListeners: { featureadded: Ext.bind(this.featureAdded, this) }
     };
@@ -113,6 +106,26 @@ Ext.define('Manager.shared_views.catalog.LocationWindow', {
     this.map.addControl(this.pointDraw);
     this.polygonDraw = new OpenLayers.Control.DrawFeature(this.drawlayer, OpenLayers.Handler.Polygon, toolconfig);
     this.map.addControl(this.polygonDraw);
+	
+  // this.selectFeature = new OpenLayers.Control.SelectFeature(this.drawlayer, { toggle: false });
+  // this.map.addControl(this.selectFeature);
+  // this.selectFeature.activate();
+	
+  	this.editFeature = new OpenLayers.Control.ModifyFeature(this.drawlayer, {
+      toggle: false,
+  	  standalone: true
+  	});
+  	this.map.addControl(this.editFeature);
+  	this.editFeature.activate();
+	
+    if(this.field && this.field.getValue()) {
+      var wkt = new OpenLayers.Format.WKT();
+      var feature = wkt.read(this.field.getValue());
+      feature.geometry.transform(this.map.displayProjection, this.map.getProjectionObject());
+      this.drawlayer.addFeatures(feature);
+      // this.selectFeature.clickFeature(feature);
+  	  this.editFeature.selectFeature(feature);
+    }
   },
 
   featureAdded: function(e) {
@@ -125,5 +138,7 @@ Ext.define('Manager.shared_views.catalog.LocationWindow', {
         break;
     }
     e.object.deactivate();
+    // this.selectFeature.clickFeature(feature);
+	  this.editFeature.selectFeature(e.feature);
   }
 });
