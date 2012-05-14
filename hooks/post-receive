@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+APP_PATH="../.."
+export REPO_PATH=`pwd`
+
+eval "$(rbenv init -)"
+repo_script="${APP_PATH}/script/repo-update-hook.rb"
+nohup $APP_PATH/script/rails runner "${repo_script}" >> foo.log 2>&1 &

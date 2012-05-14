@@ -48,12 +48,28 @@ Title: #{self.catalog.title}
     index.commit(msg, grit.commits)
   end
   
+  def clone_path=(path)
+    @clone_path = path
+  end
+  
   def clone_path
-    File.join(NSCatalog::Application.config.repos_tmp, self.repohex)
+    @clone_path ||= File.join(NSCatalog::Application.config.repos_tmp, self.repohex)
   end
   
   def cloned?
     !@cloned.nil?
+  end
+  
+  def clone_to(path)
+    cpath = File.join(path, self.repohex)
+    
+    unless File.exists?(File.join(cpath, '.git'))
+      git = Grit::Git.new(path)
+      self.clone_path = cpath
+      git.clone({ :quiet => false, :timeout => false}, self.path, self.clone_path)
+    end
+    
+    Grit::Git.new(File.join(self.clone_path, '.git'))
   end
   
   def clone_repo(opts = {}, &block)
@@ -69,11 +85,7 @@ Title: #{self.catalog.title}
       opts[:autocommit] = true unless opts.include? :autocommit
     end
   
-    unless cloned?
-      git = Grit::Git.new(NSCatalog::Application.config.repos_tmp)
-      git.clone({:quiet => true, :timeout => false}, self.path, self.clone_path)
-      @cloned = Grit::Git.new(File.join(self.clone_path, '.git'))
-    end
+    @cloned ||= self.clone_to(NSCatalog::Application.config.repos_tmp)
     
     if block_given?
       Dir.chdir(self.clone_path) do
@@ -109,6 +121,10 @@ Title: #{self.catalog.title}
   ## ARCHIVE
   def async_create_archive(branch = 'master')
     Resque.enqueue(Archive, self.repohex, branch)
+  end
+  
+  def async_update_cdn_clone(branch = 'master')
+    Resque.enqueue(CdnClone, self.repohex, branch)
   end
   
   def archive_filenames
