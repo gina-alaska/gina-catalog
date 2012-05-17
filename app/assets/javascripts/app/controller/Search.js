@@ -37,6 +37,9 @@ Ext.define('App.controller.Search', {
       'catalog_other_buttons menuitem[action="export-html"]': {
         click: function() { this.doSearch({ format: 'html' }); }
       },
+      'catalog_other_buttons menuitem[action="export-csv"]': {
+        click: function() { this.doSearch({ format: 'csv' }); }
+      },
       'catalog_other_buttons menuitem[action="filter"]': {
         click: this.doFilter
       },
@@ -136,7 +139,7 @@ Ext.define('App.controller.Search', {
     
     var searchField = this.getTextsearch();
     this.replaceSearchParam('q', searchField.getValue(), 'Text: ' +  searchField.getValue());
-    if(opts.format == 'pdf' || opts.format == 'html') {
+    if(['pdf', 'html', 'csv'].indexOf(opts.format) >= 0) {
       var url = this.getStore('Catalog').getProxy().url;
       window.open('/search.'+ opts.format +'?limit=200&filter=' + Ext.encode(this.getStore('Filters').buildFilterRequest()));
     } else {

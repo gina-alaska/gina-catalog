@@ -20,6 +20,9 @@ Ext.define('App.view.catalog.other_buttons', {
 		}, {
 			text: 'HTML',
 			action: 'export-html'
+		}, {
+			text: 'CSV',
+			action: 'export-csv'
 		}],
         iconCls: 'small-download'
       }, {
