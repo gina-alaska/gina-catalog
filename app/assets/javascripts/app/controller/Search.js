@@ -135,42 +135,19 @@ Ext.define('App.controller.Search', {
   
   doSearch: function(opts){
     if(!opts) { opts = {}; }
-    this.showResults();
-    
     var searchField = this.getTextsearch();
     this.replaceSearchParam('q', searchField.getValue(), 'Text: ' +  searchField.getValue());
-    if(['pdf', 'html', 'csv'].indexOf(opts.format) >= 0) {
+    if(['pdf', 'html', 'csv'].indexOf(opts.format) >= ) {
       var url = this.getStore('Catalog').getProxy().url;
       window.open('/search.'+ opts.format +'?limit=200&filter=' + Ext.encode(this.getStore('Filters').buildFilterRequest()));
     } else {
+   	  this.showResults();
+    
       this.getStore('Catalog').filters.clear();
       this.getStore('Catalog').filter(this.getStore('Filters').buildFilterRequest());
       this.disableApplyButton();
     }
   },
-
-  // getSearchParams: function(id) {
-  //   var filters = this.getStore('Filters');
-    
-  //   // params={};
-  //   // filters.each(function(f) {
-  //   //   if(params[f.get('field')]) {
-  //   //     //Do we have an array of values?
-  //   //     if(Ext.isArray(params[f.get('field')])) {
-  //   //       //Yes, Push new value onto the array
-  //   //       params[f.get('field')].push(f.get('value'));
-  //   //     } else {
-  //   //       //No, make it an array with the two values
-  //   //       params[f.get('field')] = [params[f.get('field')], f.get('value')];
-  //   //     }
-  //   //   } else {
-  //   //     //Put the value into the params
-  //   //     params[f.get('field')] = f.get('value');
-  //   //   }
-  //   // }, this);
-
-  //   return params;
-  // },
   
   clearSearchParam: function(field, value) {
     var filters = this.getStore('Filters');
