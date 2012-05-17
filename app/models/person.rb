@@ -28,6 +28,12 @@ class Person < ActiveRecord::Base
     [self.last_name, self.first_name].compact.join(', ')
   end
   
+  def contact_string
+    cnt = "#{first_name} #{last_name}"
+    cnt << " <#{email}" unless email.nil?
+    cnt
+  end
+  
   def work_phone
     self.phone_numbers.each do |pn|
       return pn if pn.name == 'work'

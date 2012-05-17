@@ -89,6 +89,20 @@ class CatalogController < ApplicationController
       format.pdf do
         render :pdf => 'nssi_catalog_search.pdf', :layout => 'pdf.html'
       end
+      format.csv do
+        filename = "catalog-#{Time.now.strftime("%Y%m%d")}"
+        if request.env['HTTP_USER_AGENT'] =~ /msie/i
+          headers['Pragma'] = 'public'
+          headers["Content-type"] = "text/plain" 
+          headers['Cache-Control'] = 'no-cache, must-revalidate, post-check=0, pre-check=0'
+          headers['Content-Disposition'] = "attachment; filename=\"#{filename}\"" 
+          headers['Expires'] = "0" 
+        else
+          headers["Content-Type"] ||= 'text/csv'
+          headers["Content-Disposition"] = "attachment; filename=\"#{filename}\"" 
+        end
+        render :layout => false
+      end
     end
   end
   
@@ -144,7 +158,7 @@ class CatalogController < ApplicationController
     v = params.slice(
           :title, :description, :agengy_ids, :tags, :source_agency_id, :status,
           :geokeyword_ids, :links_attributes, :locations_attributes, :data_type_ids,
-          :agency_ids, :person_ids, :iso_topic_ids, :start_date, :end_date, :long_term_monitoring, 
+          :agency_ids, :contact_ids, :iso_topic_ids, :start_date, :end_date, :long_term_monitoring, 
     )    
     v["tags"] = v["tags"].split(/,\s+/)
     
@@ -223,7 +237,7 @@ class CatalogController < ApplicationController
       with :agency_ids, search[:agency_ids] if search[:agency_ids]
       with :source_agency_id, search[:source_agency_id] if search[:source_agency_id]
       with :iso_topic_ids, search[:iso_topic_ids] if search[:iso_topic_ids]
-      with :contact_id, search[:contact_id] if search[:contact_id]
+      with :person_ids, search[:contact_ids] if search[:contact_ids]
       with :geokeywords_name, search[:region] if search[:region]
       with :data_types, search[:data_types] if search[:data_types]
       with(:start_date_year).greater_than(search[:start_date_after]) if search[:start_date_after]
