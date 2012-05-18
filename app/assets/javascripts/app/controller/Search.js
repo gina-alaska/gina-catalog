@@ -137,7 +137,7 @@ Ext.define('App.controller.Search', {
     if(!opts) { opts = {}; }
     var searchField = this.getTextsearch();
     this.replaceSearchParam('q', searchField.getValue(), 'Text: ' +  searchField.getValue());
-    if(['pdf', 'html', 'csv'].indexOf(opts.format) >= ) {
+    if(['pdf', 'html', 'csv'].indexOf(opts.format) >= 0) {
       var url = this.getStore('Catalog').getProxy().url;
       window.open('/search.'+ opts.format +'?limit=200&filter=' + Ext.encode(this.getStore('Filters').buildFilterRequest()));
     } else {
