@@ -9,7 +9,7 @@ Ext.define('App.view.person.selector', {
   store: 'App.store.People',
   autoExpandColumn: 'full_name',
   columns: [
-    { id: 'full_name', header: 'Full Name', dataIndex: 'full_name', width: 80 },
-    { header: 'Email', dataIndex: 'email', width: 200 }
+    { id: 'full_name', header: 'Full Name', dataIndex: 'full_name', flex: 1 },
+    { header: 'Email', dataIndex: 'email', flex: 3 }
   ]
 })
