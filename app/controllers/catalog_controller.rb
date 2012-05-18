@@ -90,7 +90,7 @@ class CatalogController < ApplicationController
         render :pdf => 'nssi_catalog_search.pdf', :layout => 'pdf.html'
       end
       format.csv do
-        filename = "catalog-#{Time.now.strftime("%Y%m%d")}"
+        filename = "catalog-#{Time.now.strftime("%Y%m%d")}.csv"
         if request.env['HTTP_USER_AGENT'] =~ /msie/i
           headers['Pragma'] = 'public'
           headers["Content-type"] = "text/plain" 
