@@ -32,6 +32,14 @@ Title: #{self.catalog.title}
     EOF
   end  
   
+  def empty?
+    files.count <= 1
+  end
+
+  def files
+    RepoFilelist.new(grit).tree
+  end
+  
   def grit
     @grit ||= Grit::Repo.new(self.path)
   end
