@@ -1,4 +1,4 @@
 development: localhost:6379
 test: localhost:6379
-staging: nssi-vm.gina.alaska.edu:6379
-production: nssi-vm.gina.alaska.edu:6379
+staging: catalog.gina.alaska.edu:6379
+production: catalog.gina.alaska.edu:6379
