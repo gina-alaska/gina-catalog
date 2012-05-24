@@ -8,6 +8,7 @@ Ext.define('Manager.shared_views.catalog.agency_form_panel', {
     alias: 'widget.catalog_agency_form_panel',
 
     initComponent: function() {
+      var funding_agencies = Ext.create('Manager.store.Agencies', { autoLoad: true });
       var source_agencies = Ext.create('Manager.store.Agencies', { autoLoad: true });
       
       Ext.apply(this, {
@@ -15,6 +16,10 @@ Ext.define('Manager.shared_views.catalog.agency_form_panel', {
         items: [{
           xtype: 'combobox', fieldLabel: 'Primary Agency', queryMode: 'remote', triggerAction: 'all',
           minChars: 3, typeAhead: true, name: 'source_agency_id', store: source_agencies,
+          displayField: 'name_with_acronym', valueField: 'id' 
+        }, {
+          xtype: 'combobox', fieldLabel: 'Funding Agency', queryMode: 'remote', triggerAction: 'all',
+          minChars: 3, typeAhead: true, name: 'funding_agency_id', store: funding_agencies,
           displayField: 'name_with_acronym', valueField: 'id' 
         }, {
           xtype: 'combobox', fieldLabel: 'Other Agencies', queryMode: 'local', triggerAction: 'all',

@@ -294,6 +294,7 @@ Title: #{self.title}
       :links => self.links,
       :source_agency_acronym => self.source_agency.try(:acronym),
       :source_agency_id => self.source_agency_id,
+      :funding_agency_id => self.funding_agency_id,
       :start_date => self.start_date.try(:strftime, '%F'),
       :end_date => self.end_date.try(:strftime, '%F'),
       :geokeywords => self.geokeywords.list,
