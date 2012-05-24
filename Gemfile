@@ -15,6 +15,7 @@ gem 'will_paginate'
 gem 'omniauth'
 gem 'omniauth-openid'
 gem 'resque'
+gem 'quiet_assets', :group => :development
 
 #gem 'nofxx-georuby'
 #broke in rails 3.1
