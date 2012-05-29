@@ -4,16 +4,23 @@ class Repo < ActiveRecord::Base
   validates_uniqueness_of :repohex
   validates_uniqueness_of :slug
 
-  before_create :init
+  after_create :init
 
   def exists?
     File.directory?(self.path)
+  end
+  
+  def slug
+    if read_attribute(:slug).nil?
+      write_attribute(:slug, self.repohex)
+    end
+    read_attribute(:slug)
   end
 
   def repohex
     if read_attribute(:repohex).nil?
       hex = self.generate_hex
-      while File.directory? self.path
+      while File.directory? self.path(hex)
         hex = self.generate_hex
       end
       write_attribute(:repohex, hex)
@@ -22,8 +29,14 @@ class Repo < ActiveRecord::Base
     super
   end
   
-  def path
-    File.join(NSCatalog::Application.config.repos_path, "#{repohex}.git")
+  def path(hex = self.repohex)
+    oldpath = File.join(NSCatalog::Application.config.repos_path, "#{hex}.git")
+    if File.directory?(oldpath)
+      return oldpath
+    else
+      subdir = hex[0..1]
+      return File.join(NSCatalog::Application.config.repos_path, subdir, "#{hex}.git")
+    end
   end
 
   def readme_template

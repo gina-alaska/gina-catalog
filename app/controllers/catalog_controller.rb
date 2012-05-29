@@ -9,7 +9,6 @@ class CatalogController < ApplicationController
       @item = Project.new(catalog)
     else
       @item = Asset.new(catalog)
-      @item.create_repo!
     end
     
     if @item.save

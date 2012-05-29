@@ -43,7 +43,7 @@ class Catalog < ActiveRecord::Base
   scope :not_archived, where('archived_at IS NULL')
 
   before_create :set_data_source
-  before_create :repohex
+  # before_create :repohex
   
   accepts_nested_attributes_for :links, :locations
 

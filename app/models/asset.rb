@@ -1,27 +1,6 @@
 class Asset < Catalog
   STATUSES = %w(Remote Local)
 
-  #belongs_to :data_source, :class_name => 'DataSource'
-
-  #has_many :files, :class_name => 'AssetFile'
-  #has_and_belongs_to_many :gcmd_themes
-  #has_and_belongs_to_many :tags, :order => 'highlight ASC, text ASC' do
-  #  def list
-  #    proxy_owner.tags.collect(&:text).join(', ')
-  #  end
-  #end
-
-  #has_many :locations, :as => :locatable, :dependent => :destroy
-  
-  #belongs_to :license
-
-  #belongs_to :source_agency, :class_name => 'Agency'
-  #belongs_to :funding_agency, :class_name => 'Agency'
-
-  #belongs_to :owner, :class_name => 'User'
-  #has_many :links, :as => :linkable
-  #has_one :description, :class_name => 'AssetDescription'
-
   delegate :downloadable, :to => :license
 
   scope :public, :joins => :license, :conditions => { :licenses => { :downloadable => true } }
@@ -31,6 +10,8 @@ class Asset < Catalog
   #validates_presence_of :license_id
 
   #after_create :setup_path
+  
+  after_create :create_repo!
 
   #define_index do
   #  indexes title,  :type => :string, :sortable => true
