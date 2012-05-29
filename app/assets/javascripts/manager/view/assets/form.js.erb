@@ -6,5 +6,10 @@
 Ext.define('Manager.view.assets.Form', {
   extend: 'Manager.shared_view.catalog.Form', 
   alias: 'widget.assets_form',
-  newTitle: 'New Data'
+  newTitle: 'New Data',
+  
+  initComponent: function() {
+    this.setRecordType('asset');
+    this.callParent(arguments);
+  }
 });
