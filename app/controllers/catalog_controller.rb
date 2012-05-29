@@ -9,6 +9,7 @@ class CatalogController < ApplicationController
       @item = Project.new(catalog)
     else
       @item = Asset.new(catalog)
+      @item.create_repo!
     end
     
     if @item.save
@@ -64,12 +65,10 @@ class CatalogController < ApplicationController
       format.html { render :layout => false }
       format.json { render :json => @item.as_json(:format => 'full') }
       format.tar_gz do
-        render :content_type => "application/octet-stream", :layout => false, 
-          :text => @item.repo.archive_tar_gz('master', "#{@item.id}/")
+        sendfile(@item.repo.archive_filenames[:tar_gz])
       end
       format.zip do
-        render :content_type => "application/octet-stream", :layout => false, 
-          :text => @item.repo.archive_zip('master', "#{@item.id}/")
+        sendfile(@item.repo.archive_filenames[:zip])
       end
     end
   end

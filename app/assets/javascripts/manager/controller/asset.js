@@ -86,7 +86,7 @@ Ext.define('Manager.controller.Asset', {
         var obj = Ext.decode(response.responseText);
         if(obj.success) {
           this.loadRecordData(obj.catalog);
-          Ext.Msg.alert('Success!', 'Asset information has been updated');
+          Ext.Msg.alert('Success!', 'Asset information has been saved');
         } else {
           Ext.Msg.alert('Error', '<p>The following errors were encountered while saving the asset:</p><br />' + obj.errors.join('<br />'));
         }
