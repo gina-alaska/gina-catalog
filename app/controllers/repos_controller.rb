@@ -5,7 +5,6 @@ class ReposController < ApplicationController
   
   def show
     @repo = Repo.where(:slug => params[:id]).first
-    
     respond_with(@repo)
   end
   

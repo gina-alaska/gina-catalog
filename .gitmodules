@@ -4,6 +4,3 @@
 [submodule "app/assets/javascripts/extjs-openlayers"]
 	path = app/assets/javascripts/extjs-openlayers
 	url = git@github.com:gina-alaska/extjs-openlayers.git
-[submodule "extras/grack"]
-	path = extras/grack
-	url = https://github.com/teknofire/grack.git

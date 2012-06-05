@@ -59,6 +59,8 @@ Title: #{self.catalog.title}
     
   def init
     @grit = Grit::Repo.init_bare_or_open(self.path)
+    update_hooks
+    
     create_file('README', readme_template, 'Creating README file')
   end
   
@@ -140,6 +142,11 @@ Title: #{self.catalog.title}
   end
   
   ## ARCHIVE
+  def update_hooks
+    cmd = ['ln -sf', (Rails.root + 'hooks/post-receive').to_s, "#{path}/hooks/post-receive"]
+    `#{cmd.join(' ')}`
+  end
+  
   def async_create_archive(branch = 'master')
     Resque.enqueue(Archive, self.repohex, branch)
   end

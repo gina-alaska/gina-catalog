@@ -64,10 +64,10 @@ class CatalogController < ApplicationController
       format.html { render :layout => false }
       format.json { render :json => @item.as_json(:format => 'full') }
       format.tar_gz do
-        sendfile(@item.repo.archive_filenames[:tar_gz])
+        send_file(@item.repo.archive_filenames[:tar_gz])
       end
       format.zip do
-        sendfile(@item.repo.archive_filenames[:zip])
+        send_file(@item.repo.archive_filenames[:zip])
       end
     end
   end
