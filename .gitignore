@@ -23,3 +23,4 @@ app/assets/images/icons/.DS_Store
 archive/*.zip
 archive/*.tar.gz
 config/initializers/catalog.rb
+repo_clones
