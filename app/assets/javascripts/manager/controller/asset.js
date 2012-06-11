@@ -26,11 +26,25 @@ Ext.define('Manager.controller.Asset', {
           if(e.getKey() === e.ENTER) { this.doSearch(); }
         }
       },
+      
       'assets_form button[action="add_link"]': {
         click: function(button) {
           button.up('form').addLink({});
         }
       },
+      'assets_form button[action="remove_link"]': {
+        click: function(button) { this.removeLink(button.linkId, button.up('fieldcontainer[role="link"]')); }
+      },
+      
+      'assets_form button[action="add_location"]': {
+        click: function(button) {
+          button.up('panel').addLocation({});
+        }
+      },
+      'assets_form button[action="remove_location"]': {
+        click: function(button) { this.removeLocation(button.locId, button.up('fieldcontainer[role="location"]')); }
+      },
+      
       'assets_form button[action="save"]': {
         click: function(button) { this.saveRecord(button.up('form')); }
       },
@@ -59,27 +73,33 @@ Ext.define('Manager.controller.Asset', {
     }
   },
   
-  saveRecord: function(form){
-    Ext.Msg.wait('Saving asset information', 'Please Wait...');
-    var values = form.getValues();
-    var method;
+  assetRequest: function(record) {
     var url = '/catalog';
-    if (form.record && form.record.id) {
-      url += '/' + form.record.id;
+    if (record && record.id) {
+      url += '/' + record.id;
       method = 'PUT';
     } else {
       method = 'POST';
     }
     
+    return { url: url, method: method };
+  },  
+  
+  saveRecord: function(form){
+    Ext.Msg.wait('Saving asset information', 'Please Wait...');
+    var values = form.getValues();
+    var method;
+    var url = '/catalog';
+    
+    var request = this.assetRequest(form.record)
+        
     /* Workaround for issue with exit and multi-selects */
     Ext.each(['geokeyword_ids', 'agency_ids', 'person_ids', 'iso_topic_ids'], function(item) {
       values[item + '[]'] = values[item];
       delete values[item];            
     }, this);
     
-    Ext.Ajax.request({
-      url: url,
-      method: method,
+    Ext.apply(request, {
       params: values,
       scope: form,
       success: function(response) {
@@ -97,6 +117,8 @@ Ext.define('Manager.controller.Asset', {
         Ext.Msg.alert('Error', 'A server error was encountered while trying to save the asset');
       }
     });
+    
+    Ext.Ajax.request(request);
   },
   
   publishRecord: function(form) {
@@ -134,6 +156,48 @@ Ext.define('Manager.controller.Asset', {
       this.getManager().getLayout().setActiveItem(p);
     }
   },
+  
+  removeLink: function(linkId, linkContainer) {
+    if(!linkId && linkContainer) {
+      linkContainer.up('panel').remove(linkContainer);
+    }
+    if(linkId) {
+      Ext.Ajax.request({
+        url: '/links/' + linkId,
+        method: 'delete',
+        scope: this,
+        success: function(response) {
+          var obj = Ext.decode(response.responseText);
+          if(obj.success) {
+            this.removeLink(0, linkContainer);
+          }
+        }
+      });
+    }
+  },
+  
+  removeLocation: function(locId, locContainer){
+    if(!locId && locContainer) {
+      locContainer.up('panel').remove(locContainer);
+    }
+    if(locId) { 
+      var form = locContainer.up('form');
+      var request = this.assetRequest(form.record);
+      request.url += '/locations/' + locId;
+      
+      Ext.apply(request, {
+        method: 'delete',
+        scope: this,
+        success: function(response) {
+          var obj = Ext.decode(response.responseText);
+          if(obj.success) {
+            this.removeLocation(0, locContainer);
+          }
+        }
+      });
+      Ext.Ajax.request(request);
+    }
+  },  
   
   doSearch: function(){
     var q = this.getSearch().getValue();

@@ -31,11 +31,18 @@ Ext.define('Manager.controller.Project', {
           button.up('form').addLink({});
         }
       },
+      'projects_form button[action="remove_link"]': {
+        click: function(button) { this.removeLink(button.linkId, button.up('fieldcontainer[role="link"]')); }
+      },
       'projects_form button[action="add_location"]': {
         click: function(button) {
           button.up('panel').addLocation({});
         }
       },
+      'projects_form button[action="remove_location"]': {
+        click: function(button) { this.removeLocation(button.locId, button.up('fieldcontainer[role="location"]')); }
+      },
+            
       'projects_form button[action="save"]': {
         click: function(button) { this.saveRecord(button.up('form')); }
       },
@@ -51,12 +58,6 @@ Ext.define('Manager.controller.Project', {
       },
       'projects_grid button[action="new"]': {
         click: function(button) { this.newRecord(); }
-      } ,
-      'projects_form button[action="remove_link"]': {
-        click: function(button) { this.removeLink(button.linkId, button.up('fieldcontainer[role="link"]')); }
-      },
-      'projects_form button[action="remove_location"]': {
-        click: function(button) { this.removeLocation(button.locId, button.up('fieldcontainer[role="location"]')); }
       }
     });
   },
