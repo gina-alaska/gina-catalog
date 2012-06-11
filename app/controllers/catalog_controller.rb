@@ -155,8 +155,8 @@ class CatalogController < ApplicationController
   def catalog
     v = params.slice(
           :title, :description, :agengy_ids, :tags, :source_agency_id, :funding_agency_id, :status,
-          :geokeyword_ids, :links_attributes, :locations_attributes, :data_type_ids,
-          :agency_ids, :contact_ids, :iso_topic_ids, :start_date, :end_date, :long_term_monitoring, 
+          :geokeyword_ids, :links_attributes, :locations_attributes, :data_type_ids, :primary_contact_id,
+          :agency_ids, :contact_ids, :iso_topic_ids, :start_date, :end_date, :long_term_monitoring
     )    
     v["tags"] = v["tags"].split(/,\s+/)
     
