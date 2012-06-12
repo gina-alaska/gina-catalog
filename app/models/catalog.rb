@@ -159,6 +159,10 @@ class Catalog < ActiveRecord::Base
     end
   end
   
+  def downloadable?(format = :zip)
+    self.repo && self.repo.archive_available?(format)
+  end
+  
   def repo_exists?
     RepoProxy.exists?(self)
   end
@@ -275,6 +279,7 @@ Title: #{self.title}
       :title => self.title,
       :description => self.short_description,
       :status => self.status,
+      :downloadable => self.downloadable?,
       :source_agency_acronym => self.source_agency.try(:acronym),
       :source_agency_id => self.source_agency.try(:id),
       :geokeywords => self.geokeywords.list,

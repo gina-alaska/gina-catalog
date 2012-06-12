@@ -163,6 +163,10 @@ Title: #{self.catalog.title}
     }
   end
   
+  def archive_available?(format = :zip)
+    File.exists?(archive_filenames[format])
+  end
+  
   def create_archive(treeish, opts={})
     opts[:prefix] ||= "#{self.repohex}/"
     
