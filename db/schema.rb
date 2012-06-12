@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120502200718) do
+ActiveRecord::Schema.define(:version => 20120611223821) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -109,6 +109,7 @@ ActiveRecord::Schema.define(:version => 20120502200718) do
     t.datetime "updated_at"
     t.string   "repohex"
     t.boolean  "long_term_monitoring"
+    t.integer  "use_agreement_id"
   end
 
   create_table "catalog_agencies", :id => false, :force => true do |t|
@@ -468,6 +469,14 @@ ActiveRecord::Schema.define(:version => 20120502200718) do
     t.datetime "updated_at"
   end
 
+  create_table "previews", :force => true do |t|
+    t.integer  "catalog_id", :null => false
+    t.string   "md5",        :null => false
+    t.string   "image",      :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "project_agencies", :force => true do |t|
     t.integer  "project_id"
     t.integer  "agency_id"
@@ -550,6 +559,56 @@ ActiveRecord::Schema.define(:version => 20120502200718) do
     t.datetime "updated_at"
   end
 
+  create_table "spreadsheet_projects", :id => false, :force => true do |t|
+    t.integer "recno"
+    t.string  "Yr 1st Funded",                    :limit => 75
+    t.string  "Funding Source",                   :limit => 250
+    t.string  "funding source acronym",           :limit => 75
+    t.string  "Point of Contact",                 :limit => 75
+    t.string  "PC Affiliation",                   :limit => 75
+    t.string  "PC Phone",                         :limit => 75
+    t.string  "PC Email",                         :limit => 75
+    t.string  "Other Cooperators",                :limit => 250
+    t.string  "other cooperators acronym",        :limit => 250
+    t.string  "Theme",                            :limit => 250
+    t.string  "Other Theme",                      :limit => 250
+    t.string  "Location",                         :limit => 250
+    t.string  "Other Location",                   :limit => 250
+    t.string  "Keyword",                          :limit => 300
+    t.string  "Original Start Date",              :limit => 75
+    t.string  "start date as date",               :limit => 75
+    t.string  "End Date/ On-Going",               :limit => 75
+    t.string  "Title",                            :limit => 250
+    t.string  "Synopsis",                         :limit => nil
+    t.string  "Report Status",                    :limit => 200
+    t.string  "Report Location: Website/Contact", :limit => 300
+  end
+
+  create_table "spreadsheet_projects_bup", :id => false, :force => true do |t|
+    t.integer "recno"
+    t.string  "Yr 1st Funded",                    :limit => 75
+    t.string  "Funding Source",                   :limit => 250
+    t.string  "funding source acronym",           :limit => 75
+    t.string  "Point of Contact",                 :limit => 75
+    t.string  "PC Affiliation",                   :limit => 75
+    t.string  "PC Phone",                         :limit => 75
+    t.string  "PC Email",                         :limit => 75
+    t.string  "Other Cooperators",                :limit => 250
+    t.string  "other cooperators acronym",        :limit => 250
+    t.string  "Theme",                            :limit => 250
+    t.string  "Other Theme",                      :limit => 250
+    t.string  "Location",                         :limit => 250
+    t.string  "Other Location",                   :limit => 250
+    t.string  "Keyword",                          :limit => 300
+    t.string  "Original Start Date",              :limit => 75
+    t.string  "start date as date",               :limit => 75
+    t.string  "End Date/ On-Going",               :limit => 75
+    t.string  "Title",                            :limit => 250
+    t.string  "Synopsis",                         :limit => nil
+    t.string  "Report Status",                    :limit => 200
+    t.string  "Report Location: Website/Contact", :limit => 300
+  end
+
   create_table "synopses", :force => true do |t|
     t.integer  "project_id"
     t.boolean  "active"
@@ -579,6 +638,14 @@ ActiveRecord::Schema.define(:version => 20120502200718) do
   create_table "themes", :force => true do |t|
     t.string   "name",        :limit => 80
     t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "use_agreements", :force => true do |t|
+    t.string   "title"
+    t.text     "content"
+    t.boolean  "required",   :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
   end

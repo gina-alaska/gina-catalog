@@ -1,4 +1,6 @@
 NSCatalog::Application.routes.draw do
+  resources :use_agreements
+
   resources :repos
 
   resources :data_types
@@ -17,12 +19,12 @@ NSCatalog::Application.routes.draw do
   resources :people
 
   resources :catalog, :constraints => { :format => /[a-z]+(\.[a-z]+)?/ } do
-    
     member do
       get :download
       post :publish
     end
     collection do
+      # get :download
       post :search
       get :search
       get :unique

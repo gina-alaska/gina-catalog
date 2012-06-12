@@ -7,6 +7,7 @@ class Catalog < ActiveRecord::Base
   belongs_to :data_source
   
   has_one :repo
+  belongs_to :use_agreement
   
   belongs_to :source_agency, :class_name => 'Agency'
   belongs_to :funding_agency, :class_name => 'Agency'

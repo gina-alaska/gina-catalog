@@ -1,0 +1,2 @@
+class UseAgreementsController < ApplicationController
+end
