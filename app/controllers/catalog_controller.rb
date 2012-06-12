@@ -71,6 +71,22 @@ class CatalogController < ApplicationController
       end
     end
   end
+  
+  def download
+    @catalog = Catalog.where(:id => params[:id]).first
+    
+    respond_to do |format|
+      if @catalog.use_agreement
+        format.json {
+          render :json => @catalog.use_agreement
+        }
+      else
+        format.json {
+          render :json => { :title => "Success" }
+        }
+      end
+    end
+  end
 
   def search
     @search = solr_search
