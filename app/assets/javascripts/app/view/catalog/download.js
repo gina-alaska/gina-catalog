@@ -77,9 +77,49 @@ Ext.define('App.view.catalog.download', {
     }
   },
   
+  userInfoCard: function(data) {
+    var buttons = this.acceptanceButtons('download-card');
+    
+    return {
+      xtype: 'form',
+      itemId: 'user-info-card',
+      defaults: { border: false, anchor: '100%' },
+      defaultType: 'textfield',
+      layout: {
+        type: 'vbox',
+        align: 'stretch',
+        pack: 'center',
+        padding: '5px'
+      },
+      items: [{
+        itemId: 'title',
+        xtype: 'panel',
+        bodyCls: 'title',
+        html: 'Please provide the following information, some better text should go here',
+        padding: '0 0 5px 0'
+      },{
+        name: 'info[name]',
+        fieldLabel: 'Name'
+      }, {
+        name: 'info[email]',
+        fieldLabel: 'Email'
+      }, {
+        name: 'info[phone_number]',
+        fieldLabel: 'Phone Number'
+      }, {
+        name: 'info[use]',
+        fieldLabel: 'Brief description of the intended use for this dataset',
+        labelAlign: 'top',
+        xtype: 'textarea',
+        flex: 1
+      }],
+      dockedItems: buttons
+    }
+  },
+  
   useAgreementCard: function(data) {
     //TODO: Add check here to determine where next button goes based on requirements
-    var buttons =  this.acceptanceButtons('download-card');
+    var buttons =  this.acceptanceButtons('user-info-card');
     
     return {
       itemId: 'use-agreement-card',
@@ -110,7 +150,7 @@ Ext.define('App.view.catalog.download', {
   handleDownload: function(xhr) {
     data = Ext.decode(xhr.responseText);
     
-    this.add(this.useAgreementCard(data), this.downloadCard());
+    this.add(this.useAgreementCard(data), this.userInfoCard(data), this.downloadCard());
     this.getLayout().setActiveItem('use-agreement-card');    
     this.updateContent(data);
   },
@@ -139,12 +179,12 @@ Ext.define('App.view.catalog.download', {
       xtype: 'toolbar',
       dock: 'bottom',
       items: ['->', {
-        text: 'Decline',
+        text: 'Cancel',
         scale: 'large',
         scope: this,
         handler: function() { this.close(); }
       }, {
-        text: 'Accept',
+        text: 'Continue &raquo;',
         scale: 'large',
         scope: this,
         handler: function() {
