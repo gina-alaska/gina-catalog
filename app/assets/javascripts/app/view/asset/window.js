@@ -60,7 +60,13 @@ Ext.define('App.view.asset.window', {
     this.dockedItems = [{
       xtype: 'toolbar',
       dock: 'bottom',
-      items: [{
+      items: [{ 
+        xtype: 'button',
+        scale: 'large',
+        action: 'download',
+        text: 'Download',
+        disabled: !this.getRecord().get('downloadable')
+      }, '->', {
         xtype: 'button',
         scale: 'large',
         action: 'close',

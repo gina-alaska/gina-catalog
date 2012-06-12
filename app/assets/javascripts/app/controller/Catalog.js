@@ -17,6 +17,15 @@ Ext.define('App.controller.Catalog', {
       'viewport > #center button[text="Catalog"]': {
         click: this.show
       },
+      'assetwindow button[action="download"]': {
+        click: function(button) {
+          var win = Ext.widget('downloadwindow', {
+            record: button.up('window').getRecord()
+          });
+          win.show();
+        }  
+      },
+      
       'catalog_list': {
         itemcontextmenu: this.showContextMenu
       },

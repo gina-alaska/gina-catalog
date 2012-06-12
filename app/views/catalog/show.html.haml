@@ -81,10 +81,10 @@
       .spacer
 	  
 
-    - if @item.repo and not @item.repo.empty?
+    - if @item.repo and @item.repo.archive_available?(:zip)
       .tabbed
         %label Download Link:
-        = link_to catalog_url(@item, :format => 'zip'), catalog_url(@item, :format => 'zip'), :target => :_blank
+        = link_to File.basename(@item.repo.archive_filenames[:zip]), catalog_url(@item, :format => 'zip'), :target => :_blank
         .spacer
 
     - unless @item.links.nil? or  @item.links.empty?
