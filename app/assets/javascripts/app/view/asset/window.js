@@ -66,7 +66,7 @@ Ext.define('App.view.asset.window', {
           action: 'download',
           text: 'Download',
           flex: 1,
-          disabled: !this.getRecord().get('downloadable')
+          hidden: !this.getRecord().get('downloadable')
         }, {
           xtype: 'button',
           scale: 'large',
