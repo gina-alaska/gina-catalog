@@ -7,6 +7,7 @@ Ext.define('App.view.asset.window', {
   constrain: true,
   
   layout: 'fit',
+  bodyStyle: 'background: white',
   
   config: {
     record: null
@@ -54,25 +55,29 @@ Ext.define('App.view.asset.window', {
         url: '/catalog/' + this.getRecord().get('id'),
         renderer: 'html',
         autoLoad: true
-      }
-    }];
-    
-    this.dockedItems = [{
-      xtype: 'toolbar',
-      dock: 'bottom',
-      items: [{ 
-        xtype: 'button',
-        scale: 'large',
-        action: 'download',
-        text: 'Download',
-        disabled: !this.getRecord().get('downloadable')
-      }, '->', {
-        xtype: 'button',
-        scale: 'large',
-        action: 'close',
-        text: 'Close Window'
+      },
+      dockedItems: [{
+        xtype: 'toolbar',
+        dock: 'bottom',
+        ui: 'footer',
+        items: [{ 
+          xtype: 'button',
+          scale: 'large',
+          action: 'download',
+          text: 'Download',
+          flex: 1,
+          disabled: !this.getRecord().get('downloadable')
+        }, {
+          xtype: 'button',
+          scale: 'large',
+          action: 'close',
+          flex: 1,
+          text: 'Close Window'
+        }]
       }]
     }];
+    
+    // this.dockedItems = ;
 
     this.callParent(arguments);
   }
