@@ -1,4 +1,6 @@
 NSCatalog::Application.routes.draw do
+  resources :contact_infos
+
   resources :use_agreements
 
   resources :repos
