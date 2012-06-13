@@ -71,9 +71,12 @@ Ext.define('App.view.catalog.download', {
       }, {
         xtype: 'button',
         scale: 'large',
+        width: 300,
         url: '/catalog/' + this.getRecord().get('id') + '.zip',
         text: 'Download!'
-      }]
+      }],
+      dockedItems: this.closeButton()
+      
     }
   },
   
@@ -178,15 +181,18 @@ Ext.define('App.view.catalog.download', {
     return {
       xtype: 'toolbar',
       dock: 'bottom',
-      items: ['->', {
+      ui: 'footer',
+      items: [{
         text: 'Cancel',
         scale: 'large',
         scope: this,
+        flex: 1,
         handler: function() { this.close(); }
       }, {
         text: 'Continue &raquo;',
         scale: 'large',
         scope: this,
+        flex: 1,
         handler: function() {
           this.getLayout().setActiveItem(nextCard);
         }
@@ -198,10 +204,12 @@ Ext.define('App.view.catalog.download', {
     return {
       xtype: 'toolbar',
       dock: 'bottom',
-      items: ['->', {
+      ui: 'footer',
+      items: [{
         text: 'Close',
         scope: this,
         scale: 'large',
+        flex: 1,
         handler: function() { this.close(); }
       }]
     };
