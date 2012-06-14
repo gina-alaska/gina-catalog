@@ -12,6 +12,9 @@ Ext.define('Manager.store.Contacts', {
       root: 'people'
     }
   },  
+  sorters: [{ property: 'last_name' }],
   autoLoad: true,
-  pageSize: 10000
+  pageSize: 10000,
+  remoteSort: true,
+  remoteFilter: true
 });

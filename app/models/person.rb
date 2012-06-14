@@ -15,12 +15,24 @@ class Person < ActiveRecord::Base
   
   searchable do
     text :first_name
+    string :first_name do
+      first_name.try(:downcase).try(:gsub, /[\.,\s]/, '')
+    end
+    
     text :last_name
+    string :last_name do
+      last_name.try(:downcase).try(:gsub, /[\.,\s]/, '')
+    end
+    
     text :email
+    string :email do
+      email.try(:downcase).try(:gsub, /\s/, '')
+    end
+    
     text :agency do
       agencies.map{|a| [a.name, a.acronym]}
     end
-  
+      
     integer :id
   end  
   
