@@ -2,21 +2,25 @@ class AgenciesController < ApplicationController
   respond_to :json
 
   def index
-    if search_params["query"].nil? or search_params["query"].empty?
-      @agencies = Agency.active
-      @total = @agencies.count
-    else
-      search = Agency.search do
-        adjust_solr_params do |p|
-          p[:mm] = "1<1"
-        end
-        
-        fulltext search_params["query"]
+    search = Agency.search do
+      adjust_solr_params do |p|
+        p[:mm] = "1<1"
       end
       
-      @agencies = search.results
-      @total = search.total
+      # Handle the sorting from the standard extjs data stores
+      if params[:sort]
+        s = JSON.parse(params[:sort]).first 
+        field, direction = s["property"], s["direction"].downcase.to_sym
+        order_by(field, direction) if field and direction      
+      end      
+        
+      # with :active, true
+      paginate per_page:(params[:limit] || 3000), page:(params[:page] || 1)
+      fulltext search_params["query"] unless search_params["query"].nil?
     end
+      
+    @agencies = search.results
+    @total = search.total
 
     respond_with({ :agencies => @agencies, :total => @total })
   end

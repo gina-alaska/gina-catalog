@@ -7,5 +7,6 @@ Ext.define('App.store.Agencies', {
     timeout: 120000,
     reader: { type: 'json', totalProperty: 'total', root: 'agencies' }
   },
+  pageSize: 3000,
   autoLoad: false
 });

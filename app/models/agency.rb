@@ -30,9 +30,22 @@ class Agency < ActiveRecord::Base
   
   searchable do
     text :name
+    string :name do
+      name.downcase.gsub(/[\.,]/, '')
+    end
+    
     text :acronym
+    string :acronym do
+      acronym.downcase
+    end
+    
+    
     text :description
+    
     text :category
+    string :category
+    
+    boolean :active
     
     integer :id
   end
