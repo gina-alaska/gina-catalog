@@ -81,10 +81,12 @@ Ext.define('App.view.catalog.download', {
   },
   
   userInfoCard: function(data) {
-    var buttons = this.acceptanceButtons('download-card');
+    var buttons = this.acceptanceButtons(this.current_card += 1, 'user-info-card');
     
     return {
       xtype: 'form',
+      url: '/contact_infos',
+      method: 'POST',
       itemId: 'user-info-card',
       defaults: { border: false, anchor: '100%' },
       defaultType: 'textfield',
@@ -110,11 +112,15 @@ Ext.define('App.view.catalog.download', {
         name: 'info[phone_number]',
         fieldLabel: 'Phone Number'
       }, {
-        name: 'info[use]',
+        name: 'info[usage_description]',
         fieldLabel: 'Brief description of the intended use for this dataset',
         labelAlign: 'top',
         xtype: 'textarea',
         flex: 1
+      }, {
+        xtype: 'hiddenfield',
+        name: 'catalog_id',
+        value: this.getRecord().get('id')
       }],
       dockedItems: buttons
     }
@@ -122,7 +128,7 @@ Ext.define('App.view.catalog.download', {
   
   useAgreementCard: function(data) {
     //TODO: Add check here to determine where next button goes based on requirements
-    var buttons =  this.acceptanceButtons('user-info-card');
+    var buttons =  this.acceptanceButtons(this.current_card += 1);
     
     return {
       itemId: 'use-agreement-card',
@@ -135,27 +141,36 @@ Ext.define('App.view.catalog.download', {
       items: [{
         itemId: 'title',
         bodyCls: 'title',
-        html: 'Preparing data for download....'
+        html: data.title
       }, {
         itemId: 'info',
         bodyCls: 'info',
-        hidden: true,
-        html: 'Acceptance of the data use agreement is required to download this dataset'
+        html: 'Acceptance of the data use agreement is required to download this dataset',
+        hidden: !data.required
       }, {
         itemId: 'content',
         flex: 1,
-        xtype: 'textarea'
+        xtype: 'textarea',
+        value: data.content
       }],
       dockedItems: buttons
     };
   },
   
   handleDownload: function(xhr) {
+    this.current_card = 1;
     data = Ext.decode(xhr.responseText);
+    if (data.use_agreement) {
+      this.add(this.useAgreementCard(data.use_agreement));
+    }    
+    if (data.request_contact_info) {
+      this.add(this.userInfoCard())
+    }
     
-    this.add(this.useAgreementCard(data), this.userInfoCard(data), this.downloadCard());
-    this.getLayout().setActiveItem('use-agreement-card');    
-    this.updateContent(data);
+    this.add(this.downloadCard());
+      
+    this.getLayout().setActiveItem(1);    
+    // this.updateContent(data);
   },
   
   handleFailure: function(){
@@ -169,15 +184,35 @@ Ext.define('App.view.catalog.download', {
     }
   },
   
-  addButtons: function(data) {
-    if(data && data.required) {
-      this.addAcceptanceButtons();
+  acceptanceButtons: function(nextCard, form) {
+    if(form) {
+      console.log(form);
+      nextHandler = function() {
+        this.down('#' + form).submit({
+          scope: this,
+          success: function(form, action) {
+            this.getLayout().setActiveItem(nextCard);
+          },
+          failure: function(form, action) {
+            switch (action.failureType) {
+              case Ext.form.action.Action.CLIENT_INVALID:
+                  Ext.Msg.alert('Failure', 'Form fields may not be submitted with invalid values');
+                  break;
+              case Ext.form.action.Action.CONNECT_FAILURE:
+                  Ext.Msg.alert('Failure', 'Ajax communication failed');
+                  break;
+              case Ext.form.action.Action.SERVER_INVALID:
+                 Ext.Msg.alert('Failure', action.result.msg.join('<br />'));
+            }
+          }        
+        });
+      }
     } else {
-      this.addCloseButton();
+      nextHandler = function() {
+        this.getLayout().setActiveItem(nextCard);
+      }
     }
-  },
-  
-  acceptanceButtons: function(nextCard) {
+    
     return {
       xtype: 'toolbar',
       dock: 'bottom',
@@ -193,9 +228,7 @@ Ext.define('App.view.catalog.download', {
         scale: 'large',
         scope: this,
         flex: 1,
-        handler: function() {
-          this.getLayout().setActiveItem(nextCard);
-        }
+        handler: nextHandler
       }]
     };    
   },

@@ -78,11 +78,7 @@ class CatalogController < ApplicationController
     respond_to do |format|
       if @catalog.use_agreement
         format.json {
-          render :json => @catalog.use_agreement
-        }
-      else
-        format.json {
-          render :json => { :title => "Success" }
+          render json: { use_agreement: @catalog.use_agreement, request_contact_info: @catalog.request_contact_info? }
         }
       end
     end
