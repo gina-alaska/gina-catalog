@@ -94,46 +94,6 @@ Ext.define('Manager.shared_view.catalog.Form', {
       this.on('dirtychange', this.toggleButtons, this);
     },  
     
-    buildLink: function(link){
-      Ext.applyIf(link, {
-        id: '',
-        category: '',
-        display_text: '',
-        url: ''
-      });
-      
-      var link_markup = {
-        xtype: 'fieldcontainer',
-        role: 'link',
-        layout: { type: 'hbox', defaultMargins: { right: 3 } },
-        fieldDefaults: { labelAlign: 'top' },
-        items: [{
-          xtype: 'hiddenfield', name: 'links_attributes['+this.link_count+'][id]', value: link.id
-        }, {
-          flex: 1,
-          xtype: 'combobox', fieldLabel: 'Category', name: 'links_attributes['+ this.link_count +'][category]', 
-          queryMode: 'local', store: 'LinkCategories',  displayField: 'category', valueField: 'category', 
-          value: link.category
-        }, {
-          xtype: 'textfield', fieldLabel: 'Text', flex: 2,
-          name: 'links_attributes['+ this.link_count + '][display_text]', value: link.display_text
-        }, {
-          xtype: 'textfield', fieldLabel: 'URL', flex: 10,
-          name: 'links_attributes['+ this.link_count + '][url]', value: link.url
-        }, {
-          xtype: 'fieldcontainer',
-          layout: 'hbox',
-          flex: 1,
-          fieldLabel: 'Actions',
-          items: [{
-            xtype: 'button', text: 'Remove', flex: 1, action: 'remove_link', linkId: link.id
-          }]
-        }]
-      };   
-      this.link_count += 1;
-      return link_markup;     
-    },
-    
     onRequestSuccess: function(response){
       this.loadRecordData(Ext.JSON.decode(response.responseText));
     },
@@ -143,10 +103,12 @@ Ext.define('Manager.shared_view.catalog.Form', {
       this.setTitle(this.titleTpl.apply(this.record));
       this.getForm().setValues(this.record);
       
-      this.down('#links').removeAll();
-      Ext.each(this.record.links, this.addLink, this);
+      var links = this.down('#links');
+      links.reset();
+      Ext.each(this.record.links, links.addLink, links);
+      
       var locations = this.down('#locations');
-      locations.removeAll();
+      locations.reset();
       Ext.each(this.record.locations, locations.addLocation, locations);
 
       if(record.published_at != null && Date.parse(record.published_at) <= Date.now() ){
@@ -157,10 +119,6 @@ Ext.define('Manager.shared_view.catalog.Form', {
       }
       this.down('button[action="save"]').disable();
       this.getEl().unmask();  
-    },
-    
-    addLink: function(link){
-      this.down('#links').add(this.buildLink(link));      
     },
 
     toggleButtons: function(form, dirty) {

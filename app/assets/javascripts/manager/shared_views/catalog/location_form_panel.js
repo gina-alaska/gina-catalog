@@ -15,7 +15,13 @@ Ext.define('Manager.shared_views.catalog.location_form_panel', {
       }]
     });      
 
+    this.location_count = 0;
     this.callParent(arguments);
+  },
+  
+  reset: function() {
+    this.removeAll();
+    this.location_count = 0;
   },
   
   buildLocation: function(loc){

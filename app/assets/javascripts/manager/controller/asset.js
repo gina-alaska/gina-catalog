@@ -29,7 +29,7 @@ Ext.define('Manager.controller.Asset', {
       
       'assets_form button[action="add_link"]': {
         click: function(button) {
-          button.up('form').addLink({});
+          button.up('panel').addLink({});
         }
       },
       'assets_form button[action="remove_link"]': {
@@ -94,8 +94,8 @@ Ext.define('Manager.controller.Asset', {
     var request = this.assetRequest(form.record)
         
     /* Workaround for issue with exit and multi-selects */
-    Ext.each(['geokeyword_ids', 'agency_ids', 'person_ids', 'iso_topic_ids'], function(item) {
-      values[item + '[]'] = values[item];
+    Ext.each(['data_type_ids', 'geokeyword_ids', 'agency_ids', 'person_ids', 'iso_topic_ids'], function(item) {
+      values[item + '[]'] = values[item].length > 0 ? values[item] : "";
       delete values[item];            
     }, this);
     

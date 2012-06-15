@@ -315,7 +315,8 @@ Title: #{self.title}
       :locations => self.locations,
       :repo_slug => self.repo.try(:slug),
       :long_term_monitoring => self.long_term_monitoring,
-      :owner_id => self.owner_id
+      :owner_id => self.owner_id,
+      :data_type_ids => self.data_type_ids
     }    
   end
 
