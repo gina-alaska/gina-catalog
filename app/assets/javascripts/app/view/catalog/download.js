@@ -186,7 +186,6 @@ Ext.define('App.view.catalog.download', {
   
   acceptanceButtons: function(nextCard, form) {
     if(form) {
-      console.log(form);
       nextHandler = function() {
         this.down('#' + form).submit({
           scope: this,

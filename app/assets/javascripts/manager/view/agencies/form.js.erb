@@ -96,7 +96,6 @@ Ext.define('Manager.view.agencies.Form', {
   },
 
   onRequestSuccess: function(response) {
-    console.log(response)
     this.loadRecordData(Ext.JSON.decode(response.responseText));
   },
 

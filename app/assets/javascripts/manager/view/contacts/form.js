@@ -79,13 +79,11 @@ Ext.define('Manager.view.contacts.Form', {
   },
 
   onRequestSuccess: function(response) {
-    console.log(response)
     this.loadRecordData(Ext.JSON.decode(response.responseText));
   },
 
   loadRecordData: function(record){
     this.record = record;
-    console.log(this.record);
     this.setTitle(this.titleTpl.apply(this.record));
     this.getForm().setValues(this.record);
 
