@@ -90,8 +90,8 @@ Ext.define('Manager.controller.Project', {
     request.params = form.getValues();
     
     /* Workaround for issue with exit and multi-selects */
-    Ext.each(['geokeyword_ids', 'agency_ids', 'person_ids', 'iso_topic_ids'], function(item) {
-      this[item + '[]'] = this[item];
+    Ext.each(['data_type_ids', 'geokeyword_ids', 'agency_ids', 'person_ids', 'iso_topic_ids'], function(item) {
+      this[item + '[]'] = (this[item] && this[item].length > 0) ? this[item] : "";
       delete this[item];            
     }, request.params);
     
