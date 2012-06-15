@@ -9,4 +9,4 @@ export REPO_PATH=`pwd`
 eval "$(rbenv init -)"
 repo_script="${APP_PATH}/script/repo-update-hook.rb"
 echo "Updating repo archive"
-nohup $APP_PATH/script/rails runner "${repo_script}" >> foo.log 2>&1 &
+nohup $APP_PATH/script/rails runner "${repo_script}" 2>&1 &
