@@ -6,7 +6,9 @@ APP_PATH="${hook_path}/.."
 
 export REPO_PATH=`pwd`
 
-eval "$(rbenv init -)"
+. "${APP_PATH}/config/git_hooks_env"
+env
+
 repo_script="${APP_PATH}/script/repo-update-hook.rb"
 echo "Updating repo archive"
-nohup $APP_PATH/script/rails runner "${repo_script}" 2>&1 &
+nohup $APP_PATH/script/rails runner "${repo_script}" > lastrun.log 2>&1 &

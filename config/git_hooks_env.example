@@ -1,0 +1,3 @@
+# Set any path stuff necessary to initialize your ruby paths
+# Git likes to put it's own stuff in $PATH and it can mess with rbenv
+PATH=$HOME/.rbenv/shims:$HOME/.rbenv/shims:$HOME/.rbenv/bin:$PATH
