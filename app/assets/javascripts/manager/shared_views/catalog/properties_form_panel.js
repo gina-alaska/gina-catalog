@@ -10,8 +10,8 @@ Ext.define('Manager.shared_views.catalog.properties_form_panel', {
   initComponent: function() {
     Ext.apply(this, {
       items: [
-        { xtype: 'datefield', fieldLabel: 'Start Date', name: 'start_date', anchor: '100%' },
-        { xtype: 'datefield', fieldLabel: 'End Date', name: 'end_date', anchor: '100%' },
+        { xtype: 'datefield', fieldLabel: 'Start Date', name: 'start_date', anchor: '100%', format: 'Y/m/d' },
+        { xtype: 'datefield', fieldLabel: 'End Date', name: 'end_date', anchor: '100%', format: 'Y/m/d' },
         {
           xtype: 'combobox', fieldLabel: 'Status', name: 'status', queryMode: 'local',
           store: 'ProjectStatus',  displayField: 'status', valueField: 'status'
