@@ -28,7 +28,7 @@ Ext.define('Manager.controller.Project', {
       },
       'projects_form button[action="add_link"]': {
         click: function(button) {
-          button.up('form').addLink({});
+          button.up('panel').addLink({});
         }
       },
       'projects_form button[action="remove_link"]': {
