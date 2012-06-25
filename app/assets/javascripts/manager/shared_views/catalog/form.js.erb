@@ -51,6 +51,7 @@ Ext.define('Manager.shared_view.catalog.Form', {
             xtype: (this.recordType == 'project' ? 'catalog_project_form_panel' : 'catalog_asset_form_panel')
           }, {
             itemId: 'properties', title: 'Properties', margins: '0 3 0 0',
+            statusStore: (this.recordType == 'project' ? 'ProjectStatus' : 'AssetStatus'),
             xtype: 'catalog_properties_form_panel'
           }, {
             itemId: 'tags', title: 'Tags', margins: '0 3 0 0',

@@ -14,7 +14,7 @@ Ext.define('Manager.shared_views.catalog.properties_form_panel', {
         { xtype: 'datefield', fieldLabel: 'End Date', name: 'end_date', anchor: '100%', format: 'Y/m/d' },
         {
           xtype: 'combobox', fieldLabel: 'Status', name: 'status', queryMode: 'local',
-          store: 'ProjectStatus',  displayField: 'status', valueField: 'status'
+          store: this.statusStore,  displayField: 'status', valueField: 'status'
         }, {
           xtype: 'textfield', fieldLabel: 'Data Source', queryMode: 'remote', queryDelay: 100,
           triggerAction: 'all', minChars: 2, typeAhead: true, name: 'data_source_id', store: 'DataSources',
