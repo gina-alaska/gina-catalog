@@ -14,7 +14,7 @@ Ext.define('Manager.view.projects.Grid', {
       { header: 'Geokeywords', dataIndex: 'geokeywords', flex: 1 },
       { header: 'Source', dataIndex: 'source_agency_acronym', flex: 1 },
       { header: 'Status', dataIndex: 'status', flex: 1 },
-      { header: 'Added', dataIndex: 'created_at', flex: 1 },
+      { header: 'Published Date', dataIndex: 'published_at', flex: 1 },
       { header: 'Last Updated', dataIndex: 'updated_at', flex: 1 }
     ],
     
