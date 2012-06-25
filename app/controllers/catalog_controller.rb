@@ -61,7 +61,11 @@ class CatalogController < ApplicationController
     @item = @item.includes({ :people => [ :addresses, :phone_numbers ] }).find_by_id(params[:id])
 
     respond_to do |format|
-      format.html { render :layout => false }
+      format.html { 
+        if request.xhr?
+          render :layout => false 
+        end
+      }
       format.json { render :json => @item.as_json(:format => 'full') }
       format.tar_gz do
         send_file(@item.repo.archive_filenames[:tar_gz])

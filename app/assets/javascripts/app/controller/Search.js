@@ -176,13 +176,13 @@ Ext.define('App.controller.Search', {
     }
   },
   
-  replaceSearchParam: function(field, value, desc) {
+  replaceSearchParam: function(field, value, desc, sort) {
     var filters = this.getStore('Filters');
     
     // Don't add blank values
     if(value === "") { return false; }
     var index = this.findSearchParam(field);
-    var data = { field: field, value: value, desc: desc };
+    var data = { field: field, value: value, desc: desc, sort: sort };
     if(index < 0) {
       // Value doesn't exist in the filters yet
       filters.add(data);
@@ -224,12 +224,17 @@ Ext.define('App.controller.Search', {
     var win;
     switch(item.filterType) {
       case 'sort':
-        this.replaceSearchParam(item.field, item.value, item.description);
-        var sort = item.value.split('-'),
-            field = sort[0],
-            dir = sort[1];
+        if (item.value == '') {
+          this.clearSearchParam(item.field);
+          this.getStore('Catalog').sort();
+        } else {
+          this.replaceSearchParam(item.field, item.value, item.description);
+          var sort = item.value.split('-'),
+              field = sort[0],
+              dir = sort[1];
 
-        this.getStore('Catalog').sort(field, dir);        
+          this.getStore('Catalog').sort(field, dir);                  
+        }
         break;
       case 'single':
         this.replaceSearchParam(item.field, item.value, item.description);

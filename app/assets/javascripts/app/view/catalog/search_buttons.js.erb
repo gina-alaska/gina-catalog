@@ -258,8 +258,7 @@ Ext.define('App.view.catalog.search_buttons', {
   checkHandler: function(menu, checked) {
     if(checked) {
       var parent = menu.parentMenu.parentItem;
-
-      parent.setChecked(true);
+      if(parent) { parent.setChecked(true); }
     }
   }
 });

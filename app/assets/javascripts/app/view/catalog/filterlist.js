@@ -9,7 +9,9 @@ Ext.define('App.view.catalog.filterlist', {
     '<tpl for=".">',
       '<div class="filter_wrap" id="filter_{id}">',
         '<div class="desc">{desc}</div>',
+        '<tpl if="sort != true">',
         '<div class="remove"><a id="{id}" action="remove" href="#"></a></div>',
+        '</tpl>',
       '</div>',
     '</tpl>'
   ),
