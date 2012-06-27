@@ -100,7 +100,7 @@ Ext.define('App.view.catalog.download', {
         itemId: 'title',
         xtype: 'panel',
         bodyCls: 'title',
-        html: 'Please provide the following information, some better text should go here',
+        html: 'Please enter contact/use information so we can provide updates regarding this product.',
         padding: '0 0 5px 0'
       },{
         name: 'info[name]',
