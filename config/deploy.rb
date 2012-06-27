@@ -45,6 +45,7 @@ namespace :deploy do
     run "ln -nfs #{deploy_to}/#{shared_dir}/solr/data #{release_path}/solr/data"
     run "ln -nfs #{release_path}/tools/wkhtmltopdf-amd64 #{release_path}/tools/wkhtmltopdf"
     run "ln -nfs /san/pod/nssi_silo/git #{release_path}/repos"
+    run "ln -nfs /san/pod/nssi_silo/archives #{release_path}/archive"
     run "ln -nfs /san/pod/nssi_silo/videos #{release_path}/public/video"
     run "ln -nfs /san/pod/nssi_silo/cms/system #{release_path}/vendor/cms/public/system"
   end
