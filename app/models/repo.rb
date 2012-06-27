@@ -175,10 +175,11 @@ Title: #{self.catalog.title}
     File.open(archive_filenames[:zip], 'wb') do |fp|
       fp << archive_zip(treeish, opts[:prefix])
     end
-    
-    File.open(archive_filenames[:tar_gz], 'wb') do |fp|
-      fp << archive_tar_gz(treeish, opts[:prefix])
-    end
+      
+    # don't make tar.gz for now
+    # File.open(archive_filenames[:tar_gz], 'wb') do |fp|
+    #   fp << archive_tar_gz(treeish, opts[:prefix])
+    # end
   end
 
   def archive_tar_gz(treeish, prefix = nil)
