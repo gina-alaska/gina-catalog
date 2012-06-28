@@ -228,7 +228,7 @@ Ext.define('App.controller.Search', {
           this.clearSearchParam(item.field);
           this.getStore('Catalog').sort();
         } else {
-          this.replaceSearchParam(item.field, item.value, item.description);
+          this.replaceSearchParam(item.field, item.value, item.description, true);
           var sort = item.value.split('-'),
               field = sort[0],
               dir = sort[1];
