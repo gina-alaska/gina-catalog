@@ -83,7 +83,7 @@ Ext.define('App.view.catalog.map', {
       strategies: [ pcluster ],
       styleMap: new OpenLayers.StyleMap({
         "default": new OpenLayers.Style({
-          label: (Ext.isIE6 || Ext.isIE7 || Ext.isIE8) ? false : "${count}",
+          label: (Ext.isIE6 || Ext.isIE7 || Ext.isIE8) ? '' : "${count}",
           pointRadius: "${radius}",
           fillColor: "#94fbff",
           fillOpacity: 0.3,
@@ -105,7 +105,7 @@ Ext.define('App.view.catalog.map', {
       strategies: [ dcluster ],      
       styleMap: new OpenLayers.StyleMap({
         "default": new OpenLayers.Style({
-          label: (Ext.isIE6 || Ext.isIE7 || Ext.isIE8) ? false : "${count}",
+          label: (Ext.isIE6 || Ext.isIE7 || Ext.isIE8) ? '' : "${count}",
           graphicName: 'circle',
           pointRadius: "${radius}",
           fillColor: "#ffcc66",
