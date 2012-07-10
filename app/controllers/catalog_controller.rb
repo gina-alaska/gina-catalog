@@ -104,11 +104,11 @@ class CatalogController < ApplicationController
       format.csv do
         filename = "catalog-#{Time.now.strftime("%Y%m%d")}.csv"
         if request.env['HTTP_USER_AGENT'] =~ /msie/i
-          headers['Pragma'] = 'public'
-          headers["Content-type"] = "text/plain" 
-          headers['Cache-Control'] = 'no-cache, must-revalidate, post-check=0, pre-check=0'
+          # headers['Pragma'] = 'public'
+          headers["Content-type"] = "text/csv" 
+          # headers['Cache-Control'] = 'no-cache, must-revalidate, post-check=0, pre-check=0'
           headers['Content-Disposition'] = "attachment; filename=\"#{filename}\"" 
-          headers['Expires'] = "0" 
+          # headers['Expires'] = "0" 
         else
           headers["Content-Type"] ||= 'text/csv'
           headers["Content-Disposition"] = "attachment; filename=\"#{filename}\"" 
