@@ -77,6 +77,10 @@ class Catalog < ActiveRecord::Base
       data_types.map(&:name)
     end
     
+    text :source_url do 
+      source_url.try(:gsub, 'http://', '').try(:split, '/')
+    end
+    
     string :data_types, :multiple => true do
       data_types.map(&:name)
     end
