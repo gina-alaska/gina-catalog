@@ -83,7 +83,7 @@ Ext.define('Manager.shared_view.catalog.Form', {
       this.getForm().trackResetOnLoad = true;
 
       if(this.getRecordId()) {
-        this.on('render', function() { this.getEl().mask("Please Wait..") }, this, {delay: 100, single:true} );
+        this.on('render', function() { this.getEl().mask("Please Wait.."); }, this, {delay: 100, single:true} );
         Ext.Ajax.request({
           url: '/catalog/' + this.getRecordId() + '.json',
           success: this.onRequestSuccess,
@@ -100,19 +100,21 @@ Ext.define('Manager.shared_view.catalog.Form', {
     },
     
     loadRecordData: function(record){
+      var links, locations;
+      
       this.record = record;
       this.setTitle(this.titleTpl.apply(this.record));
       this.getForm().setValues(this.record);
       
-      var links = this.down('#links');
+      links = this.down('#links');
       links.reset();
       Ext.each(this.record.links, links.addLink, links);
       
-      var locations = this.down('#locations');
+      locations = this.down('#locations');
       locations.reset();
       Ext.each(this.record.locations, locations.addLocation, locations);
 
-      if(record.published_at != null && Date.parse(record.published_at) <= Date.now() ){
+      if(record.published_at !== null && Date.parse(record.published_at) <= Date.now()) {
         this.down('button[action="publish"]').setText('Unpublish');
       }
       else {
