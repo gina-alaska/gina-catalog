@@ -41,7 +41,9 @@ class SdsController < ApplicationController
       unless request.path == use_agreement_secure_datum_path(@catalog)
         redirect_to use_agreement_secure_datum_path(@catalog) 
       end
-    elsif (@catalog.request_contact_info or @catalog.require_contact_info) and contact_info_cookie.nil?
+    elsif ask_for_contact_info?
+      # make sure we didn't already ask them for their info, but also check to make sure
+      # it was for the current catalog item
       unless request.path == contactinfo_secure_datum_path(@catalog)
         redirect_to contactinfo_secure_datum_path(@catalog)
       end
@@ -52,6 +54,11 @@ class SdsController < ApplicationController
     end
   end
   
+  def ask_for_contact_info?
+    (@catalog.request_contact_info or @catalog.require_contact_info) and 
+    (contact_info_cookie.nil? or cookies.signed[:contact_info_catalog_id] != @catalog.id)
+  end
+  
   def save_contact_info
     @catalog = fetch_catalog
     
@@ -60,10 +67,12 @@ class SdsController < ApplicationController
     @contact_info.catalog = @catalog
     
     if @contact_info.save
-      cookies.signed[:contact_info] = @contact_info.id
+      cookies.signed[:contact_info_catalog_id] = @catalog.id
+      cookies.signed[:contact_info_id] = @contact_info.id
       redirect_to_next_step      
     elsif !@catalog.require_contact_info
-      cookies.signed[:contact_info] = true
+      cookies.signed[:contact_info_catalog_id] = @catalog.id
+      cookies.signed[:contact_info_id] = true
       redirect_to_next_step      
     else
       flash[:error] = 'Error while saving contact information'
