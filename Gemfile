@@ -34,6 +34,7 @@ gem 'pdfkit'
 gem 'rdiscount'
 gem 'ancestry', '~> 1.2.4'
 gem 'sunspot_rails'
+gem 'bootstrap-sass', '~> 2.0.4.0'
 
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -67,6 +68,8 @@ group :development do
   #gem 'sunspot_solr'
   gem 'progress_bar'
 end
+
+gem 'jquery-rails'
 
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators

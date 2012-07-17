@@ -1,0 +1,19 @@
+.contact-info-form
+  %h3 Contact Info Request
+  = form_for contact_info, :url => secure_datum_path(catalog), :method => :PUT, class: 'form-horizontal' do |f|
+    %fieldset
+      .control-group
+        %label.control-label{for: 'contact_info_name'} Name
+        .controls
+          = f.text_field :name, class: 'span8'
+      .control-group
+        %label.control-label{for: 'contact_info_email'} Email
+        .controls
+          = f.text_field :email, class: 'span8'
+      .control-group
+        %label.control-label{for: 'contact_info_usage_description'} Use Description
+        .controls
+          = f.text_area :usage_description, rows: 5, class: 'span8'            
+    = submit_tag 'Submit', class: 'btn btn-primary btn-large pull-right'
+:javascript
+  #{add_js_errors_for(contact_info)}

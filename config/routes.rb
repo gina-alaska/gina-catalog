@@ -36,6 +36,13 @@ NSCatalog::Application.routes.draw do
     resources :locations
   end
 
+  resources :sds, :as => 'secure_data' do
+    get :use_agreement, :on => :member
+    get :contactinfo, :on => :member
+    get :download, :on => :member
+    get :reset, :on => :collection
+  end
+
   # Omniauth pure
   match "/login" => redirect('/auth/gina')
   match "/logout" => "services#signout"

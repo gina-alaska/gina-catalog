@@ -1,0 +1,4 @@
+.hero-unit
+  = render 'catalog_description', catalog: @catalog
+  %p
+    = link_to 'Click here to start your download', catalog_path(@catalog, :format => :zip), :class => 'btn btn-primary btn-large'
