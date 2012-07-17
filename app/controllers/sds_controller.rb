@@ -5,9 +5,9 @@ class SdsController < ApplicationController
   end
   
   def reset
-    cookies.signed[:use_agreement] = false
-    cookies.signed[:contact_info] = false
-    
+    cookies.signed[:use_agreement_id] = nil
+    cookies.signed[:contact_info_id] = nil
+    cookies.signed[:contact_info_catalog_id] = nil
     redirect_to secure_data_path
   end
   
@@ -37,13 +37,14 @@ class SdsController < ApplicationController
   
   def redirect_to_next_step
     @catalog = fetch_catalog
-    if @catalog.use_agreement and not cookies.signed[:use_agreement]
+    
+    logger.info !contact_info_cookie
+    
+    if ask_for_use_agreement?
       unless request.path == use_agreement_secure_datum_path(@catalog)
         redirect_to use_agreement_secure_datum_path(@catalog) 
       end
     elsif ask_for_contact_info?
-      # make sure we didn't already ask them for their info, but also check to make sure
-      # it was for the current catalog item
       unless request.path == contactinfo_secure_datum_path(@catalog)
         redirect_to contactinfo_secure_datum_path(@catalog)
       end
@@ -54,9 +55,15 @@ class SdsController < ApplicationController
     end
   end
   
+  def ask_for_use_agreement?
+    @catalog.use_agreement and not cookies.signed[:use_agreement_id] == @catalog.use_agreement_id
+  end
+  
+  # make sure we didn't already ask them for their info, but also check to make sure
+  # it was for the current catalog item
   def ask_for_contact_info?
     (@catalog.request_contact_info or @catalog.require_contact_info) and 
-    (contact_info_cookie.nil? or cookies.signed[:contact_info_catalog_id] != @catalog.id)
+    (!contact_info_cookie or cookies.signed[:contact_info_catalog_id] != @catalog.id)
   end
   
   def save_contact_info
@@ -81,12 +88,14 @@ class SdsController < ApplicationController
   end
   
   def save_use_agreement
-    cookies.signed[:use_agreement] = true
+    @catalog = fetch_catalog
+    
+    cookies.signed[:use_agreement_id] = @catalog.use_agreement_id
     redirect_to_next_step      
   end
   
   def contact_info_cookie
-    ContactInfo.find(cookies.signed[:contact_info]) if cookies.signed[:contact_info]
+    ContactInfo.find(cookies.signed[:contact_info_id]) if cookies.signed[:contact_info_id]
   end
   
   def fetch_catalog

@@ -1,2 +1,8 @@
 @import 'bootstrap';
 @import "bootstrap-responsive";
+
+#content {
+  input[type="text"], textarea {
+    max-width: 100%;
+  }
+}
