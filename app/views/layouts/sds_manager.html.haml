@@ -1,0 +1,26 @@
+- theme = NSCatalog::Application.config.theme
+!!!5
+%html
+  %head
+    = render "layouts/#{theme}/head"
+    = javascript_include_tag 'sds'
+    = stylesheet_link_tag 'sds', :media => 'all'
+  %body
+    #header.navbar.navbar-fixed-top
+      .navbar-inner
+        .container
+          = link_to 'NSSI SDS Manager', secure_data_path, class: 'brand'
+          %ul.nav.pull-right
+            %li= link_to 'Catalog', root_path
+            %li.divider-vertical
+            %li.dropdown.avatar
+              = link_to '#', class: 'dropdown-toggle', "data-toggle" => "dropdown" do
+                = image_tag avatar_url(current_user, 32)
+                %b.caret
+              %ul.dropdown-menu
+                %li= link_to "Hello #{current_user.fullname}", '#'
+                %li.divider
+                %li= link_to 'Logout', '/logout'
+    #content.container{style: "margin-top: 45px;"}
+      = show_flash_messages
+      = yield

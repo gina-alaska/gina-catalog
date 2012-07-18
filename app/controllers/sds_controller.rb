@@ -1,5 +1,11 @@
 class SdsController < ApplicationController
-  before_filter :redirect_to_next_step, :except => [:reset, :update]
+  before_filter :redirect_to_next_step, :except => [:index, :reset, :update]
+	before_filter :authenticate_manager!, :only => [:index]
+  
+  def index
+    @contact_infos = ContactInfo.order('created_at DESC')
+    render layout: 'sds_manager'
+  end
   
   def show
   end
@@ -37,8 +43,6 @@ class SdsController < ApplicationController
   
   def redirect_to_next_step
     @catalog = fetch_catalog
-    
-    logger.info !contact_info_cookie
     
     if ask_for_use_agreement?
       unless request.path == use_agreement_secure_datum_path(@catalog)

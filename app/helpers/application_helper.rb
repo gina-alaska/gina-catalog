@@ -1,9 +1,16 @@
 module ApplicationHelper
+  def avatar_url(user, size=48)
+    default_url = "#{root_url}images/guest.png"
+    gravatar_id = Digest::MD5.hexdigest(user.email.downcase)
+    "http://gravatar.com/avatar/#{gravatar_id}.png?s=#{size}&d=#{CGI.escape(default_url)}"
+  end
+  
   def flashes
     flash.map do |type, content|
       content_tag(:div, content_tag(:p, content), :class => "flash_message #{type}")
     end
   end
+  
   def jsflashes
     flash.map { |type, content| "Ext.gina.Notify.show(\"#{type}\", \"#{content}\");"  }.join(' ')
   end

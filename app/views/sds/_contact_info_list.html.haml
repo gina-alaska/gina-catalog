@@ -1,0 +1,16 @@
+%table.table.table-striped.table-bordered.table-condensed
+  %thead
+    %tr
+      %th Name
+      %th Email
+      %th Phone Number
+      %th Record
+      %th Submitted
+  %tbody
+    - contact_infos.each do |ci|
+      %tr
+        %td= ci.name
+        %td= ci.email
+        %td= ci.phone_number
+        %td= ci.catalog.title
+        %td= ci.created_at
