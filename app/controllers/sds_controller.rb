@@ -99,6 +99,11 @@ class SdsController < ApplicationController
   end
   
   def fetch_catalog
-    Catalog.find(params[:id]) if params[:id]
+    d = DownloadUrl.where(uuid: params[:id]).first
+    if d.nil?
+      Catalog.find(params[:id]) if params[:id]
+    else
+      d.catalog
+    end
   end
 end
