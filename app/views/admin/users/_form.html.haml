@@ -1,0 +1,9 @@
+= form_for user, url: admin_user_path(user) do |f|
+  %h3 Roles
+  = f.fields_for :roles do |rf|
+    - Role.all.each do |role|
+      %label.checkbox
+        = rf.check_box role.name.to_sym, { checked: user.roles.include?(role) }
+        = role.name.humanize
+  = link_to 'Cancel', admin_users_path, class: 'btn'
+  = f.submit class: 'btn btn-primary'

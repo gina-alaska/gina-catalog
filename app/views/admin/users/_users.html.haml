@@ -1,0 +1,12 @@
+= form_tag admin_users_path, method: 'GET', class: 'pull-right form-search' do
+  = text_field_tag :q, params[:q], class: 'search-query', placeholder: 'Enter user search terms here'
+  = submit_tag 'Search', class: 'btn'
+%table.table.table-striped.table-bordered.table-condensed
+  %thead
+    %tr
+      %th Name
+      %th Email
+      %th Roles
+      %th Actions
+  %tbody
+    = render @users

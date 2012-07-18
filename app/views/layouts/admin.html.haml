@@ -1,0 +1,40 @@
+- theme = NSCatalog::Application.config.theme
+!!!5
+%html
+  %head
+    = render "layouts/#{theme}/head"
+    = javascript_include_tag 'admin'
+    = stylesheet_link_tag 'admin', :media => 'all'
+  %body
+    #header.navbar.navbar-fixed-top
+      .navbar-inner
+        .container
+          = link_to 'Catalog Admin', admin_path, class: 'brand'
+          %ul.nav.pull-right
+            %li= link_to 'Catalog', root_path
+            %li.divider-vertical
+            %li.dropdown.avatar
+              = link_to '#', class: 'dropdown-toggle', "data-toggle" => "dropdown" do
+                = image_tag avatar_url(current_user, 32)
+                %b.caret
+              %ul.dropdown-menu
+                %li= link_to "Hello #{current_user.fullname}", '#'
+                %li.divider
+                %li= link_to 'Logout', '/logout'
+    .visible-desktop.spacer{style: "margin-top: 45px;"}
+    #content.container
+      = show_flash_messages
+      .row
+        .span3
+          %ul.nav.nav-list
+            %li.nav-header Menu
+            %li
+              = link_to admin_users_path do
+                %i.icon-user
+                Users
+            %li
+              = link_to admin_roles_path do 
+                %i.icon-briefcase
+                Roles
+        .span9
+          = yield

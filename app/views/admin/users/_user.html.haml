@@ -1,0 +1,5 @@
+%tr
+  %td= user.fullname
+  %td= user.email
+  %td= user.roles.map(&:name).join(', ')
+  %td= link_to 'Edit', admin_user_path(user), class: 'btn'

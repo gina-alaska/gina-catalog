@@ -1,0 +1,19 @@
+// Place all the styles related to the Admin controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+@import 'bootstrap';
+@import "bootstrap-responsive";
+
+.navbar .nav li.avatar > a {
+  padding: 3px 10px 0px;
+  
+  .caret {
+    margin-top: 12px;
+  }
+}
+
+.avatar {
+  img {
+    border: 1px solid #000;
+  }
+}

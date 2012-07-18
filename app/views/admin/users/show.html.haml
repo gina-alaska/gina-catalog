@@ -1,0 +1,12 @@
+%h1= @user.fullname
+%dl.dl-horizontal
+  %dt Email
+  %dd= @user.email
+  %dt Agency
+  %dd= @user.agency.try(:name) || '&nbsp;'.html_safe
+  %dt Roles
+  %dd= @user.roles.map(&:name).join(', ') || '&nbsp;'.html_safe
+
+%br
+-unless current_user == @user
+  = render 'form', user: @user

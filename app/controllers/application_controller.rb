@@ -44,6 +44,17 @@ class ApplicationController < ActionController::Base
     end      
   end
 
+  def authenticate_admin!
+    if !current_user || !(current_user.is_an_admin?)
+      if !current_user
+        authenticate_user!
+      else
+        flash[:error] = 'You do not have permission to access this page'
+        redirect_to root_url
+      end
+    end      
+  end
+
   def redirect_back_or_default(default = '/')
     if session[:return_to]
       path = session[:return_to]

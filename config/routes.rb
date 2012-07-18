@@ -42,6 +42,12 @@ NSCatalog::Application.routes.draw do
     get :download, :on => :member
     get :reset, :on => :collection
   end
+   
+  match '/admin' => 'admin#index', as: 'admin'
+  namespace :admin do
+    resources :users
+    resources :roles
+  end
 
   # Omniauth pure
   match "/login" => redirect('/auth/gina')
