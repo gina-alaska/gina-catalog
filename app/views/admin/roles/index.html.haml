@@ -1,0 +1,9 @@
+.row-fluid
+  .span8
+    %h3 Roles
+  .span4
+    .pull-right
+      = link_to 'New Role', new_admin_role_path, class: 'btn'
+%br 
+
+= render 'roles', roles: @roles
