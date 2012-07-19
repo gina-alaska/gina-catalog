@@ -10,17 +10,25 @@
       .navbar-inner
         .container
           = link_to 'NSSI SDS Manager', secure_data_path, class: 'brand'
-          %ul.nav.pull-right
-            %li= link_to 'Catalog', root_path
-            %li.divider-vertical
-            %li.dropdown.avatar
-              = link_to '#', class: 'dropdown-toggle', "data-toggle" => "dropdown" do
-                = image_tag avatar_url(current_user, 32)
-                %b.caret
-              %ul.dropdown-menu
-                %li= link_to "Hello #{current_user.fullname}", '#'
-                %li.divider
-                %li= link_to 'Logout', '/logout'
+          = render 'layouts/admin_menu'
+                
     #content.container{style: "margin-top: 45px;"}
       = show_flash_messages
-      = yield
+      .row
+        .span3
+          %ul.nav.nav-list
+            %li.nav-header Main
+            %li
+              = link_to '#' do
+                %i.icon-user
+                Contact Info
+            %li
+              = link_to '#' do
+                %i.icon-edit
+                Use Agreements
+            %li 
+              = link_to '#' do
+                %i.icon-barcode
+                Data Records
+        .span9
+          = yield

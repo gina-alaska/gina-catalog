@@ -8,7 +8,7 @@
   padding: 3px 10px 0px;
   
   .caret {
-    margin-top: 12px;
+    margin-top: 13px;
   }
 }
 
@@ -18,11 +18,23 @@
   }
 }
 
-ul.quick-search {
-  .header {
-    padding-top: 7px;
-    padding-bottom: 7px;
-    margin-top: 2px;
-    margin-bottom: 2px;
+.quick-search {
+  margin-bottom: 5px;
+  
+  ul.nav {
+    margin-bottom: 0;
+  
+    .header {
+      padding-top: 4px;
+      padding-right: 5px;
+      margin-top: 2px;
+    }
+    a {
+      padding-top: 5px;
+      padding-bottom: 5px;
+    }
+  }
+  form {
+    margin-bottom: 0;
   }
 }

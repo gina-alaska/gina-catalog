@@ -1,9 +1,4 @@
-.row-fluid
-  .span8
-    %h3 Roles
-  .span4
-    .pull-right
-      = link_to 'New Role', new_admin_role_path, class: 'btn'
-%br 
-
+%h1 Roles
+.pull-right{style:"margin-bottom: 5px;"}
+  = link_to 'New Role', new_admin_role_path, class: 'btn'
 = render 'roles', roles: @roles

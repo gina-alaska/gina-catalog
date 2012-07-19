@@ -1,5 +1,5 @@
 .row-fluid
-  = form_for role, url: admin_role_path(role) do |f|
+  = form_for role, url: role.new_record? ? admin_roles_path : admin_role_path(role) do |f|
     = f.label :name
     = f.text_field :name, class: 'span12'
     = f.label :description

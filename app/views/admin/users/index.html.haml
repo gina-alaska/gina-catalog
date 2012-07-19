@@ -1,1 +1,17 @@
-= render 'users', users: @users
+%h1 Users
+.well.quick-search
+  .row-fluid
+    %ul.nav.nav-pills.span7
+      %li.header Quick Search:
+      %li{class: (!params[:q] || current_page?(q: ''))? 'active' : ''}
+        = link_to 'All', admin_users_path(q: '')
+      %li{class: (current_page?(q: 'admin'))? 'active' : ''}
+        = link_to 'Admin', admin_users_path(q: 'admin')
+      %li{class: (current_page?(q: 'manager'))? 'active' : ''}
+        = link_to 'Manager', admin_users_path(q: 'manager')
+    .span5
+      = form_tag admin_users_path, method: 'GET', class: 'form-search pull-right' do
+        = text_field_tag :q, params[:q], class: 'search-query', placeholder: 'Enter user search terms here'
+        = submit_tag 'Search', class: 'btn'  
+.row-fluid
+  = render 'users', users: @users

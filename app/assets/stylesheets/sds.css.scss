@@ -1,22 +1,7 @@
-@import 'bootstrap';
-@import "bootstrap-responsive";
+@import 'admin';
 
 #content {
   input[type="text"], textarea {
     max-width: 100%;
-  }
-}
-
-.navbar .nav li.avatar > a {
-  padding: 3px 10px 0px;
-  
-  .caret {
-    margin-top: 12px;
-  }
-}
-
-.avatar {
-  img {
-    border: 1px solid #000;
   }
 }
