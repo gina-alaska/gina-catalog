@@ -7,7 +7,7 @@
       %li= link_to 'Catalog', root_path
       %li= link_to_if (current_user.is_an_admin? or current_user.is_a_manager?), 'Manager', '/manager'
       %li= link_to_if current_user.is_an_admin?, 'Admin', admin_path
-      %li= link_to_if (current_user.is_an_admin? or current_user.is_an_sds_manager?), 'Secure Data Systems', secure_data_path
+      %li= link_to_if (current_user.is_an_admin? or current_user.is_an_sds_manager?), 'Secure Data Systems', sds_admin_path
 
   %li.dropdown.avatar
     = link_to '#', class: 'dropdown-toggle', "data-toggle" => "dropdown" do

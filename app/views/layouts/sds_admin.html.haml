@@ -9,7 +9,7 @@
     #header.navbar.navbar-fixed-top
       .navbar-inner
         .container
-          = link_to 'NSSI SDS Manager', secure_data_path, class: 'brand'
+          = link_to 'NSSI SDS Admin', sds_admin_path, class: 'brand'
           = render 'layouts/admin_menu'
                 
     #content.container{style: "margin-top: 45px;"}
@@ -19,11 +19,11 @@
           %ul.nav.nav-list
             %li.nav-header Main
             %li
-              = link_to '#' do
+              = link_to sds_admin_contact_infos_path do
                 %i.icon-user
                 Contact Info
             %li
-              = link_to '#' do
+              = link_to sds_admin_use_agreements_path do
                 %i.icon-edit
                 Use Agreements
             %li 

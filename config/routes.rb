@@ -36,17 +36,24 @@ NSCatalog::Application.routes.draw do
     resources :locations
   end
 
+   
+  match '/admin' => 'admin#index', as: 'admin'
+  namespace :admin do
+    resources :users
+    resources :roles
+  end
+
   resources :sds, :as => 'secure_data' do
     get :use_agreement, :on => :member
     get :contactinfo, :on => :member
     get :download, :on => :member
     get :reset, :on => :collection
   end
-   
-  match '/admin' => 'admin#index', as: 'admin'
-  namespace :admin do
-    resources :users
-    resources :roles
+  
+  match '/sds_admin' => 'sds_admin#index', as: 'sds_admin'
+  namespace :sds_admin do
+    resources :contact_infos
+    resources :use_agreements
   end
 
   # Omniauth pure

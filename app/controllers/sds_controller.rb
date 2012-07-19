@@ -1,11 +1,5 @@
 class SdsController < ApplicationController
   before_filter :redirect_to_next_step, :except => [:index, :reset, :update]
-	before_filter :authenticate_manager!, :only => [:index]
-  
-  def index
-    @contact_infos = ContactInfo.order('created_at DESC')
-    render layout: 'sds_manager'
-  end
   
   def show
   end
