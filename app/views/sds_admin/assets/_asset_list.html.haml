@@ -1,0 +1,17 @@
+%table.table.table-striped.table-bordered.table-condensed
+  %thead
+    %tr
+      %th.span4 Title
+      %th.span5 Description
+      %th.span2 Primary Agency
+      %th.span1 Actions
+  %tbody
+    - assets.each do |asset|
+      %tr
+        %td= asset.title
+        %td= truncate(asset.description, length: 100)
+        %td= asset.source_agency.try(:acronym)
+        %td
+          = link_to edit_sds_admin_asset_path(asset), class: 'btn' do
+            %i.icon-edit
+            Edit

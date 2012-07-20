@@ -17,6 +17,7 @@ gem 'omniauth-openid'
 gem 'resque'
 gem 'quiet_assets', :group => :development
 gem 'uuidtools'
+gem 'kaminari'
 
 #gem 'nofxx-georuby'
 #broke in rails 3.1

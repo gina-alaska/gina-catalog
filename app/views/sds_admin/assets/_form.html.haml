@@ -1,0 +1,19 @@
+= form_for asset, url: (asset.new_record? ? sds_admin_assets_path : sds_admin_asset_path(asset)), html: { class: 'well form-horizontal' } do |f|
+  %fieldset
+    %h2 Secure Data Settings
+    .control-group
+      = f.label :use_agreement_id, class: 'control-label'
+      .controls
+        = f.select :use_agreement_id, options_from_collection_for_select(UseAgreement.all, :id, :title, asset.use_agreement_id), include_blank: true
+    .control-group
+      = f.label :request_contact_info, class: 'control-label'
+      .controls
+        = f.check_box :request_contact_info
+    .control-group
+      = f.label :require_contact_info, class: 'control-label'
+      .controls
+        = f.check_box :require_contact_info
+  .form-actions
+    .pull-right
+      = link_to 'Cancel', sds_admin_assets_path, class: 'btn'
+      = f.submit 'Submit', class: 'btn btn-primary'

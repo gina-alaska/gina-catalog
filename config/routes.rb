@@ -54,6 +54,7 @@ NSCatalog::Application.routes.draw do
   namespace :sds_admin do
     resources :contact_infos
     resources :use_agreements
+    resources :assets
   end
 
   # Omniauth pure
