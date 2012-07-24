@@ -5,7 +5,7 @@
     = render "layouts/#{theme}/head"
     = javascript_include_tag 'admin'
     = stylesheet_link_tag 'admin', :media => 'all'
-  %body
+  %body{"data-spy"=>"scroll", "data-target" => ".subnav", "data-offset" => 50}
     #header.navbar.navbar-fixed-top
       .navbar-inner
         .container
@@ -15,16 +15,20 @@
     #content.container
       = show_flash_messages
       .row
-        .span3
+        .span2
           %ul.nav.nav-list
             %li.nav-header Menu
             %li
-              = link_to admin_users_path do
-                %i.icon-user
-                Users
+              = link_to admin_assets_path do
+                %i.icon-barcode
+                Data Records            
             %li
               = link_to admin_roles_path do 
                 %i.icon-briefcase
                 Roles
-        .span9
+            %li
+              = link_to admin_users_path do
+                %i.icon-user
+                Users
+        .span10
           = yield

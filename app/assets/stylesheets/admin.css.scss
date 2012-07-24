@@ -1,8 +1,70 @@
 // Place all the styles related to the Admin controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+@import 'compass';
 @import 'bootstrap';
 @import "bootstrap-responsive";
+@import 'select2-2.1/select2';
+
+.subnav {
+  width: 100%;
+  height: 36px;
+  background-repeat: repeat-x;
+  background-color: #EEE;
+  @include background-image(linear-gradient(top, #F5F5F5 0%, #EEE 100%));
+  @include border-radius(5px);
+  border: 1px solid #E5E5E5;
+  
+  .nav {
+    margin-bottom: 0;
+  }
+  .nav > li.active > a, .nav > li > a:hover {
+    padding-left: 13px;
+    color: #777;
+    background-color: #E9E9E9;
+    border-right-color: #DDD;
+    border-left: 0;
+    @include box-shadow(inset 0 3px 5px rgba(0, 0, 0, .05));
+  }
+  
+  .nav > li > a {
+    margin: 0;
+    padding-top: 11px;
+    padding-bottom: 11px;
+    border-left: 1px solid #F5F5F5;
+    border-right: 1px solid #E5E5E5;
+    @include border-radius(0);
+  }
+}
+.subnav-fixed-top {
+  position: fixed;
+  top: 40px;
+  left: 0;
+  right: 0;
+  z-index: 1020;
+  border-color: #D5D5D5;
+  border-width: 0 0 1px;
+  @include border-radius(0);
+  
+  ul.nav {
+    margin: 0 auto;
+    padding: 0 1px;
+  }
+}
+
+/* Small Screens */
+@media (min-width: 980px) {
+  .subnav-fixed-top .nav {
+    width: 938px;
+  }  
+}
+
+/* Desktop Screens */
+@media (min-width: 1210px) {
+  .subnav-fixed-top .nav {
+    width: 1168px;
+  }  
+}
 
 .navbar .nav li.avatar > a {
   padding: 3px 10px 0px;
@@ -36,5 +98,18 @@
   }
   form {
     margin-bottom: 0;
+  }
+}
+
+.asset-form {
+  .select2-container { margin-left: 0; }
+  section {
+    padding-top: 80px;
+  }
+  
+  h2 {
+    padding-bottom: 0.2em;
+    margin-bottom: 0.5em;
+    border-bottom: 1px solid #E5E5E5;
   }
 }

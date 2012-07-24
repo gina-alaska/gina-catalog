@@ -1,0 +1,79 @@
+.asset-form
+  = form_for asset, url: (asset.new_record? ? admin_assets_path : admin_asset_path(asset)), html: { class: 'form-horizontal' } do |f|
+    .subnav
+      %ul.nav.nav-pills
+        %li.active= link_to 'Description', '#description'
+        %li= link_to 'Contacts', '#contacts'
+        %li= link_to 'Agencies', '#agencies'
+        %li= link_to 'Tags', '#sds'
+        %li= link_to 'Links', '#sds'
+        %li= link_to 'Locations', '#sds'
+        %li= link_to 'Downloads/Files', '#sds'
+        %li= link_to 'SDS', '#sds'
+        %li.pull-right
+          #actions{style:"padding-top:4px; padding-right: 4px;"}
+            = link_to 'Cancel', admin_assets_path, class: 'btn'
+            = f.submit 'Submit', class: 'btn btn-primary'
+    %section#description
+      %h2 Description
+      = render 'description_fields', f: f, asset: asset
+    %section#contacts
+      %h2 Contacts
+      = render 'contact_fields', f: f, asset: asset
+    %section#agencies
+      %h2 Agencies
+      = render 'agency_fields', f: f, asset: asset
+    %section#tags
+      %h2 Tags
+    %section#links 
+      %h2 Links
+    %section#locations
+      %h2 Locations
+    %section#downloads
+      %h2 Downloads/Files
+    %section#sds
+      %h2 Secure Data System
+      %fieldset
+        .control-group
+          = f.label :use_agreement_id, class: 'control-label'
+          .controls
+            = f.select :use_agreement_id, options_from_collection_for_select(UseAgreement.all, :id, :title, asset.use_agreement_id), include_blank: true
+        .control-group
+          = f.label :request_contact_info, class: 'control-label'
+          .controls
+            = f.check_box :request_contact_info
+        .control-group
+          = f.label :require_contact_info, class: 'control-label'
+          .controls
+            = f.check_box :require_contact_info
+            
+:javascript
+  // $('.subnav').scrollspy();
+  
+  // fix sub nav on scroll
+  var $win = $(window)
+    , $nav = $('.subnav')
+    , navTop = $('.subnav').length && $('.subnav').offset().top - 40
+    , isFixed = 0
+
+  processScroll()
+
+  // hack sad times - holdover until rewrite for 2.1
+  $nav.on('click', function () {
+    if (!isFixed) {
+      setTimeout(function () {  $win.scrollTop($win.scrollTop() - 40) }, 10)
+    }
+  })
+  
+  $win.on('scroll', processScroll)
+
+  function processScroll() {
+    var i, scrollTop = $win.scrollTop()
+    if (scrollTop >= navTop && !isFixed) {
+      isFixed = 1
+      $nav.addClass('subnav-fixed-top')
+    } else if (scrollTop <= navTop && isFixed) {
+      isFixed = 0
+      $nav.removeClass('subnav-fixed-top')
+    }
+  }

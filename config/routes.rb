@@ -41,6 +41,7 @@ NSCatalog::Application.routes.draw do
   namespace :admin do
     resources :users
     resources :roles
+    resources :assets
   end
 
   resources :sds, :as => 'secure_data' do
