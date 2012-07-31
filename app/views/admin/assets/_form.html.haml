@@ -3,12 +3,13 @@
     .subnav
       %ul.nav.nav-pills
         %li.active= link_to 'Description', '#description'
+        %li= link_to 'General', '#general'
         %li= link_to 'Contacts', '#contacts'
         %li= link_to 'Agencies', '#agencies'
-        %li= link_to 'Tags', '#sds'
-        %li= link_to 'Links', '#sds'
-        %li= link_to 'Locations', '#sds'
-        %li= link_to 'Downloads/Files', '#sds'
+        %li= link_to 'Tags', '#tags'
+        %li= link_to 'Links', '#links'
+        %li= link_to 'Locations', '#locations'
+        %li= link_to 'Downloads/Files', '#downloads'
         %li= link_to 'SDS', '#sds'
         %li.pull-right
           #actions{style:"padding-top:4px; padding-right: 4px;"}
@@ -17,6 +18,9 @@
     %section#description
       %h2 Description
       = render 'description_fields', f: f, asset: asset
+    %section#general
+      %h2 General
+      = render 'general_fields', f: f, asset: asset
     %section#contacts
       %h2 Contacts
       = render 'contact_fields', f: f, asset: asset
@@ -25,8 +29,10 @@
       = render 'agency_fields', f: f, asset: asset
     %section#tags
       %h2 Tags
+      = render 'tag_fields', f: f, asset: asset
     %section#links 
       %h2 Links
+      = render 'link_fields', f: f, asset: asset
     %section#locations
       %h2 Locations
     %section#downloads
