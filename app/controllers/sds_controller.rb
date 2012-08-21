@@ -18,7 +18,6 @@ class SdsController < ApplicationController
   
   def contactinfo
     @contact_info = contact_info_from_cookie
-    logger.info @contact_info.inspect
     @contact_info ||= ContactInfo.new
   end
   
@@ -43,8 +42,6 @@ class SdsController < ApplicationController
   
   def redirect_to_next_step(current = 0)
     @catalog = fetch_catalog
-    logger.info '************'
-    logger.info "Current Step: #{current}"
     if current < STEP[:use_agreement] and ask_for_use_agreement?
       unless request.path == use_agreement_secure_datum_path(@catalog)
         redirect_to use_agreement_secure_datum_path(@catalog) 
