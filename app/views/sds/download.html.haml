@@ -1,12 +1,15 @@
 .row
-  .hero-unit.span8.offset2
+  .span6.offset3
     = render 'catalog_description', catalog: @catalog
+.row
+  .span4.offset4
     %p{ style: "text-align: center" }
       - if @catalog.download_urls.count > 0
         - @catalog.download_urls.each do |item|
-          = link_to item.url, :class => 'btn btn-primary btn-large' do
-            Click here to download the<br />
-            = item.name
+          .row-fluid{style:"margin-top:5px"}
+            = link_to item.url, :class => 'btn btn-large span12' do
+              Click to download: <br />
+              = item.name
         / end each
       - else
         = link_to 'Click here to start your download', catalog_path(@catalog, :format => :zip), :class => 'btn btn-primary btn-large'

@@ -1,4 +1,4 @@
 .row
-  .hero-unit.span8.offset2
-    = render 'catalog_description', catalog: @catalog
+  .span8.offset2
+    .hidden-phone= render 'catalog_description', catalog: @catalog
     = render 'contact_info_form', catalog: @catalog, contact_info: @contact_info
