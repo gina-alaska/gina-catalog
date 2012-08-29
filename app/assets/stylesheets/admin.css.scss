@@ -9,6 +9,16 @@
 /*$baseColor: #108572;*/
 $navbarColor: #187b99;
 
+.form-text {
+  height: 28px;
+  line-height: 28px;
+  padding: 4px;
+}
+
+.row-fluid {
+  .actions { text-align: right; }
+}
+
 .navbar .navbar-inner {
   background-color: $navbarColor;
   $start: $navbarColor;
