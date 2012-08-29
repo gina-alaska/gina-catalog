@@ -6,6 +6,32 @@
 @import "bootstrap-responsive";
 @import 'select2-2.1/select2';
 
+/*$baseColor: #108572;*/
+$navbarColor: #187b99;
+
+.navbar .navbar-inner {
+  background-color: $navbarColor;
+  $start: $navbarColor;
+  $end: lighten($navbarColor, 5%);
+  @include background-image(linear-gradient($start, $end));
+
+  .brand {
+    color: #FFF;
+    font-weight: bold;
+  }
+  
+  .nav a {
+    color: #EFEFEF;
+  }
+
+  .dropdown-menu a {
+    color: #3F3F3F;
+    font-weight: bold;
+    @include text-shadow(1px 1px 1px rgba(0,0,0,.1));
+  }
+}
+
+
 .full-width {
   width: 100%;
 }
