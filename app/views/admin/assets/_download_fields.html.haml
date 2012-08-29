@@ -1,5 +1,21 @@
-%fieldset
+- if asset.repo
   .control-group
     %label.control-label Repo URL
     .controls
-      %span.form-text= link_to repo_url(asset.repo, format: 'git'), repo_url(asset.repo, format: 'git')        
+      %span.form-text= link_to repo_url(asset.repo.slug, format: 'git'), repo_url(asset.repo.slug, format: 'git')
+    
+.control-group 
+  %label.control-label Download URLs
+  .controls
+    = f.fields_for :download_urls do |d|
+      = d.hidden_field :id
+      .input-append
+        = d.text_field :url, class: 'span8'
+        = link_to '#', class: 'btn btn-danger' do
+          %i.icon-trash.icon-white
+      %p
+    %fieldset
+      .pull-right
+        = link_to '#', class: 'btn btn-success' do
+          %i.icon-plus.icon-white
+          Add download url
