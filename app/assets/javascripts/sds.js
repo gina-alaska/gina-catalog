@@ -1,4 +1,4 @@
 //= require jquery
 //= require jquery_ujs
-//= require bootstrap
+//= require bootstrap-alert
 //= require_self
