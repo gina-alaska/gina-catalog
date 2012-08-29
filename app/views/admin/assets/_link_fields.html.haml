@@ -15,7 +15,10 @@
           = link_builder.hidden_field :id
           = link_to link_builder.object.url, class: 'btn' do
             %i.icon-share
+            Open
           = link_to '#', class: 'btn btn-danger' do
             %i.icon-trash.icon-white
 .pull-right{style:"margin-top:3px;"}
-  = link_to 'New Link', '#', class: 'btn btn-success'
+  = link_to '#', class: 'btn btn-success' do
+    %i.icon-plus.icon-white
+    Add link
