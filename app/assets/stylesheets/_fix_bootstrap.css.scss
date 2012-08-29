@@ -1,0 +1,11 @@
+.input-append .add-on, .input-append .btn {
+  margin-left: -4px;
+}
+
+.input-prepend.input-append .add-on:first-child, .input-prepend.input-append .btn:first-child {
+  margin-right: -4px;
+}
+
+.input-prepend.input-append .add-on:last-child, .input-prepend.input-append .btn:last-child {
+  margin-left: -4px;
+}
