@@ -2,4 +2,7 @@
   %td= user.fullname
   %td= user.email
   %td= user.roles.map(&:name).join(', ')
-  %td= link_to 'Edit', admin_user_path(user), class: 'btn'
+  %td.actions
+    = link_to admin_user_path(user), class: 'btn' do
+      %i.icon-edit
+      Edit
