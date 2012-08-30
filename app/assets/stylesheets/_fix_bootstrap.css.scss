@@ -9,3 +9,19 @@
 .input-prepend.input-append .add-on:last-child, .input-prepend.input-append .btn:last-child {
   margin-left: -4px;
 }
+
+ul.nav-list.well {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+ul.nav-list {
+  .nav-header {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    line-height: 13px;
+    font-size: 13px;
+    height: 16px;
+    border-bottom: 1px solid #CFCFCF;
+  }
+}
