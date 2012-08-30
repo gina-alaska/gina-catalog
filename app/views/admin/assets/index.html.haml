@@ -1,8 +1,11 @@
-%h1 Data Records
-.well.quick-search
-  = form_tag admin_assets_path, method: 'GET', class: 'form-search pull-right' do
-    = text_field_tag :q, search_query, placeholder: 'Enter search terms here'
-    = submit_tag 'Search', class: 'btn'
+.navbar
+  .navbar-inner
+    .brand
+      Data Records
+    
+    = form_tag admin_assets_path, method: 'GET', class: 'form-search pull-right' do
+      = text_field_tag :q, search_query, placeholder: 'Enter search terms here'
+      = submit_tag 'Search', class: 'btn'
 = render 'asset_list', assets: @assets
 .pagination-centered
   = paginate @assets
