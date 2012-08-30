@@ -1,4 +1,7 @@
-%h1 Use Agreements
-.pull-right{style:"margin-bottom: 5px;"}
-  = link_to 'New Use Agreement', new_sds_admin_use_agreement_path, class: 'btn'
+.navbar
+  .navbar-inner
+    .brand
+      Use Agreements
+    .pull-right{style:"margin-bottom: 5px;"}
+      = link_to 'New Use Agreement', new_sds_admin_use_agreement_path, class: 'btn'
 = render 'use_agreements_list', use_agreements: @use_agreements

@@ -3,32 +3,33 @@
 %html
   %head
     = render "layouts/#{theme}/head"
-    = javascript_include_tag 'sds'
-    = stylesheet_link_tag 'sds', :media => 'all'
+    = javascript_include_tag 'sds_admin'
+    = stylesheet_link_tag 'sds_admin', :media => 'all'
   %body
-    #header.navbar.navbar-fixed-top
-      .navbar-inner
-        .container
-          = link_to 'NSSI SDS Admin', sds_admin_path, class: 'brand'
-          = render 'layouts/admin_menu'
+    #header
+      .navbar.navbar-fixed-top
+        .navbar-inner
+          .container
+            = link_to 'NSSI SDS Admin', sds_admin_path, class: 'brand'
+            = render 'layouts/admin_menu'
                 
     #content.container{style: "margin-top: 45px;"}
       = show_flash_messages
       .row
         .span2
-          %ul.nav.nav-list
+          %ul.nav.nav-list.well
             %li.nav-header Main
             %li
               = link_to sds_admin_contact_infos_path do
                 %i.icon-user
                 Contact Info
-            %li
-              = link_to sds_admin_use_agreements_path do
-                %i.icon-edit
-                Use Agreements
             %li 
               = link_to sds_admin_assets_path do
                 %i.icon-barcode
                 Data Records
+            %li
+              = link_to sds_admin_use_agreements_path do
+                %i.icon-edit
+                Use Agreements
         .span10
           = yield

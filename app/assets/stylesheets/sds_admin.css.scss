@@ -1,3 +1,15 @@
 // Place all the styles related to the SdsAdmin controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+@import 'compass';
+@import 'bootstrap';
+@import "bootstrap-responsive";
+@import 'select2-2.1/select2';
+
+/*$baseColor: #108572;*/
+$headerNavbarColor: #187b99;
+$navbarColor: #F5F5F5;
+
+@import 'fix_bootstrap';
+

@@ -3,15 +3,21 @@
     %tr
       %th.span4 Title
       %th.span5 Description
-      %th.span2 Primary Agency
+      %th Geokeywords
+      %th Source
+      %th Status
+      %th.span2 Publish Date
       %th.span1 Actions
   %tbody
     - assets.each do |asset|
       %tr
         %td= asset.title
-        %td= truncate(asset.description, length: 100)
+        %td= truncate(asset.description, length: 200)
+        %td= asset.geokeywords.map(&:name).join(', ')
         %td= asset.source_agency.try(:acronym)
+        %td= asset.status
+        %td= asset.published_at.try(:strftime, '%Y-%m-%d')
         %td
-          = link_to edit_sds_admin_asset_path(asset), class: 'btn' do
+          = link_to edit_admin_asset_path(asset), class: 'btn' do
             %i.icon-edit
-            Edit
+            Manage
