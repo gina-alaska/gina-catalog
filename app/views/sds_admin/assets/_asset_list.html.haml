@@ -6,6 +6,7 @@
       %th Geokeywords
       %th Source
       %th Status
+      %th Download Requests
       %th.span2 Publish Date
       %th.span1 Actions
   %tbody
@@ -16,6 +17,7 @@
         %td= asset.geokeywords.map(&:name).join(', ')
         %td= asset.source_agency.try(:acronym)
         %td= asset.status
+        %td= asset.contact_infos.count
         %td= asset.published_at.try(:strftime, '%Y-%m-%d')
         %td
           = link_to edit_sds_admin_asset_path(asset), class: 'btn' do
