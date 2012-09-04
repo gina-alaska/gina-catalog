@@ -57,6 +57,7 @@ NSCatalog::Application.routes.draw do
     resources :use_agreements
     resources :assets do
       get "add_download_url", on: :member
+      resources :download_urls
     end
   end
 

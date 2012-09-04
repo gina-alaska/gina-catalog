@@ -30,7 +30,7 @@ class SdsAdmin::AssetsController < SdsAdminController
       if @asset.update_attributes(asset_params)
         format.html do
           flash[:success] = "Successfully update asset information"
-          redirect_to sds_admin_assets_path
+          redirect_to edit_sds_admin_asset_path(@asset)
         end
       else
         format.html do
