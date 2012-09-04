@@ -6,8 +6,8 @@
     %p{ style: "text-align: center" }
       - if @catalog.download_urls.count > 0
         - @catalog.download_urls.each do |item|
-          .row-fluid{style:"margin-top:5px"}
-            = link_to item.url, :class => 'btn btn-large span12' do
+          .row-fluid{style:"margin-top:20px"}
+            = link_to item.url, :class => 'btn btn-large btn-primary span12' do
               Click to download: <br />
               = item.name
         / end each
