@@ -12,7 +12,7 @@ class SdsAdmin::AssetsController < SdsAdminController
       end
       
       fulltext search_query
-      with :owner_id, current_user.id unless current_user.is_an_admin?
+      with :source_agency_id, current_user.agency_id unless current_user.is_an_admin?
       paginate per_page:(params[:limit] || 20), page:(params[:page] || 1)
     end
     session[:last_search_query] = params[:q] if params.include? :q
