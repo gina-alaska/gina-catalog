@@ -17,9 +17,10 @@ class Admin::UsersController < AdminController
   
   def update
     @user = fetch_user
-    roles = user_params['roles'].collect do |role|
+    roles = user_params[:roles].collect do |role|
       Role.where(name: role).first
     end
+    @user.agency_id = user_params[:agency_id]
     @user.roles = roles.compact
     respond_to do |format|
       if @user.save
@@ -34,7 +35,7 @@ class Admin::UsersController < AdminController
   protected
   
   def user_params
-    p = params[:user].slice(:roles)
+    p = params[:user].slice(:roles, :agency_id)
     p['roles'] = p['roles'].collect { |k,v| k if v.to_i == 1 }.compact
     p
   end

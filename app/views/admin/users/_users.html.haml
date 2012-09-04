@@ -3,7 +3,17 @@
     %tr
       %th Name
       %th Email
+      %th Agency
       %th Roles
       %th.actions Actions
   %tbody
-    = render @users
+    - @users.each do |user|
+      %tr
+        %td= user.fullname
+        %td= user.email
+        %td= user.agency.try(:name_with_acronym)
+        %td= user.roles.map(&:name).join(', ')
+        %td.actions
+          = link_to admin_user_path(user), class: 'btn' do
+            %i.icon-edit
+            Edit
