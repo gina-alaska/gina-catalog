@@ -1,5 +1,7 @@
 = form_for asset, url: (asset.new_record? ? sds_admin_assets_path : sds_admin_asset_path(asset)), html: { class: 'form-horizontal' } do |f|
   %fieldset
+    = render 'download_fields', f: f, asset: asset
+  
     %h2 Secure Data Settings
     = render 'admin/assets/sds_fields', f: f, asset: asset
     

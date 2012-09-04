@@ -41,6 +41,17 @@ class SdsAdmin::AssetsController < SdsAdminController
     end
   end
   
+  def add_download_url
+    @asset = fetch_asset
+    @asset.download_urls.build
+    
+    respond_to do |format|
+      format.html {
+        render 'edit'
+      }
+    end
+  end
+  
   protected
   
   def search_query
@@ -49,7 +60,7 @@ class SdsAdmin::AssetsController < SdsAdminController
   helper_method :search_query
   
   def asset_params
-    params[:asset].slice(:use_agreement_id, :request_contact_info, :require_contact_info)
+    params[:asset].slice(:use_agreement_id, :request_contact_info, :require_contact_info, :download_urls_attributes)
   end
   
   def fetch_asset

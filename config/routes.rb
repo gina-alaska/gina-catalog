@@ -55,7 +55,9 @@ NSCatalog::Application.routes.draw do
   namespace :sds_admin do
     resources :contact_infos
     resources :use_agreements
-    resources :assets
+    resources :assets do
+      get "add_download_url", on: :member
+    end
   end
 
   # Omniauth pure
