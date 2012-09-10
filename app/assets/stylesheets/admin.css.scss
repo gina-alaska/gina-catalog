@@ -3,11 +3,11 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 @import 'compass';
 
-/*$navbarBackground: #187b99;
-$navbarBackgroundHighlight: lighten($navbarBackground, 10%);
-$navbarText: black;
-$navbarLinkColor: black;
-$navbarBrand: black;*/
+$navbarInverseBackground: #187b99;
+$navbarInverseBackgroundHighlight: lighten($navbarInverseBackground, 10%);
+$navbarInverseText: white;
+$navbarInverseLinkColor: white;
+$navbarInverseBrand: white;
 
 @import 'bootstrap';
 @import "bootstrap-responsive";
