@@ -1,0 +1,8 @@
+%h1
+  Edit: 
+  = @asset.title
+%p
+  :markdown
+    #{truncate(@asset.description, length: 200)}
+    
+= render 'form', asset: @asset

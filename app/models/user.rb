@@ -4,6 +4,8 @@ class User < ActiveRecord::Base
   has_many :user_roles
   has_many :roles, :through => :user_roles
   has_many :services
+  
+  belongs_to :agency
 
   validates :email, :presence   => true,
                     :uniqueness => true,
@@ -16,8 +18,14 @@ class User < ActiveRecord::Base
   searchable do
     text :first_name
     text :last_name
-    text :email
+    text :email do 
+      self.email.gsub('@', ' ')
+    end
+    text :roles do 
+      self.roles.map(&:name)
+    end
     
+    string :last_name    
     integer :id
   end
 

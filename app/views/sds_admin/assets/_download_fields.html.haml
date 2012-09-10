@@ -1,0 +1,24 @@
+- if asset.repo
+  .pull-right
+    = link_to add_download_url_sds_admin_asset_path(asset), class: 'btn btn-success' do
+      %i.icon-plus.icon-white
+      Add download url
+  %h2 Remote download urls  
+  %table.table.table-bordered.tabled-stripped.table-condensed
+    %tr
+      %th Name
+      %th URL
+      %th.actions Actions
+    = f.fields_for :download_urls do |d|
+      %tr
+        %td
+          = d.text_field :name, class: 'span3'
+        %td
+          = d.text_field :url, class: 'span6'
+        %td
+          = d.hidden_field :id
+          - unless d.object.new_record?
+            = link_to secure_datum_path(d.object.uuid), class: 'btn' do
+              %i.icon-share
+            = link_to sds_admin_asset_download_url_path(asset, d.object), method: :DELETE, confirm: 'Are you sure?', class: 'btn btn-danger' do
+              %i.icon-trash.icon-white

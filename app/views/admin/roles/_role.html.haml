@@ -1,0 +1,6 @@
+%tr
+  %td= role.name
+  %td= role.description
+  %td.actions
+    = link_to 'Edit', edit_admin_role_path(role), class: 'btn'
+    = link_to 'Delete', admin_role_path(role), method: :delete, class: 'btn btn-danger', confirm: 'Are you sure?'

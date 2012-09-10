@@ -1,0 +1,10 @@
+.row-fluid
+  = form_for role, url: role.new_record? ? admin_roles_path : admin_role_path(role) do |f|
+    = f.label :name
+    = f.text_field :name, class: 'span12'
+    = f.label :description
+    = f.text_field :description, class: 'span12'
+    .form-actions
+      .pull-right
+        = link_to 'Cancel', admin_roles_path, class: 'btn'
+        = f.submit class: 'btn btn-primary'

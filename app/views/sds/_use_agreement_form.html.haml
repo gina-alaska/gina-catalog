@@ -1,0 +1,5 @@
+%h3= use_agreement.title
+= form_for use_agreement, :url => secure_datum_path(catalog), class: 'form-horizontal' do |f|
+  %fieldset
+    = f.text_area :content, rows: 10, class: 'span8'
+  = submit_tag 'Continue', class: 'btn btn-primary btn-large pull-right'

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120613231056) do
+ActiveRecord::Schema.define(:version => 20120717233345) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -187,6 +187,16 @@ ActiveRecord::Schema.define(:version => 20120613231056) do
     t.datetime "locked_at"
     t.datetime "failed_at"
     t.string   "locked_by"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "download_urls", :force => true do |t|
+    t.string   "name"
+    t.string   "file_type"
+    t.string   "url"
+    t.integer  "catalog_id"
+    t.string   "uuid"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

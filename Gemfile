@@ -16,6 +16,10 @@ gem 'omniauth'
 gem 'omniauth-openid'
 gem 'resque'
 gem 'quiet_assets', :group => :development
+gem 'uuidtools'
+gem 'kaminari'
+gem 'RedCloth'
+gem 'bluecloth'
 
 #gem 'nofxx-georuby'
 #broke in rails 3.1
@@ -31,9 +35,10 @@ gem 'grit', '>= 2.4.1'
 gem 'pdfkit'
 #gem 'wicked_pdf', :git => 'https://github.com/mileszs/wicked_pdf.git'
 #gem 'compass', '~> 0.12.1'
-gem 'rdiscount'
+#gem 'rdiscount'
 gem 'ancestry', '~> 1.2.4'
 gem 'sunspot_rails'
+gem 'bootstrap-sass', '~> 2.1.0.0'
 
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -67,6 +72,8 @@ group :development do
   #gem 'sunspot_solr'
   gem 'progress_bar'
 end
+
+gem 'jquery-rails'
 
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators

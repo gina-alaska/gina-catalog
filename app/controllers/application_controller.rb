@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   end
   
   def user_signed_in?
-    return 1 if current_user 
+    return true if current_user 
   end
     
   def authenticate_user!
@@ -24,6 +24,28 @@ class ApplicationController < ActionController::Base
 
   def authenticate_manager!
     if !current_user || !(current_user.is_an_admin? || current_user.is_a_manager?)
+      if !current_user
+        authenticate_user!
+      else
+        flash[:error] = 'You do not have permission to access this page'
+        redirect_to root_url
+      end
+    end      
+  end
+  
+  def authenticate_sds_manager!
+    if !current_user || !(current_user.is_an_admin? || current_user.is_a_sds_manager?)
+      if !current_user
+        authenticate_user!
+      else
+        flash[:error] = 'You do not have permission to access this page'
+        redirect_to root_url
+      end
+    end      
+  end
+
+  def authenticate_admin!
+    if !current_user || !(current_user.is_an_admin?)
       if !current_user
         authenticate_user!
       else

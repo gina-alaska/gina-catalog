@@ -1,0 +1,16 @@
+= form_for asset, url: (asset.new_record? ? sds_admin_assets_path : sds_admin_asset_path(asset)), html: { class: 'form-horizontal' } do |f|
+  %fieldset
+    = render 'download_fields', f: f, asset: asset
+  
+    %h2 Secure Data Settings
+    = render 'admin/assets/sds_fields', f: f, asset: asset
+    
+  .form-actions
+    .pull-right
+      = link_to sds_admin_assets_path, class: 'btn btn-inverse' do
+        %i.icon-arrow-left.icon-white
+        Back
+      = f.submit 'Save Record', class: 'btn btn-primary'
+      
+%h2 Contact info for download requests      
+= render 'sds_admin/contact_infos/contact_info_list', contact_infos: asset.contact_infos.order('created_at DESC')
