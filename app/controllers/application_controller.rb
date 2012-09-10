@@ -34,7 +34,7 @@ class ApplicationController < ActionController::Base
   end
   
   def authenticate_sds_manager!
-    if !current_user || !(current_user.is_an_admin? || current_user.is_a_manager?)
+    if !current_user || !(current_user.is_an_admin? || current_user.is_a_sds_manager?)
       if !current_user
         authenticate_user!
       else

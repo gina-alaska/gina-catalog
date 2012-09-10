@@ -1,5 +1,5 @@
 class SdsAdminController < ApplicationController
-	before_filter :authenticate_manager!
+	before_filter :authenticate_sds_manager!
   
   def index
   end
