@@ -6,6 +6,7 @@ class Catalog < ActiveRecord::Base
   belongs_to :primary_contact, :class_name => 'Person'
   belongs_to :data_source
   
+  has_many :download_urls
   has_one :repo
   belongs_to :use_agreement
   
@@ -37,6 +38,7 @@ class Catalog < ActiveRecord::Base
 
   has_many :links, :as => :asset, :dependent => :destroy
   has_many :locations, :as => :asset, :dependent => :destroy
+  has_many :contact_infos, :dependent => :destroy
 
   scope :published, lambda { where('published_at <= ?', Time.now.utc) }
   scope :unpublished, where('published_at is null')
@@ -46,7 +48,7 @@ class Catalog < ActiveRecord::Base
   before_create :set_data_source
   # before_create :repohex
   
-  accepts_nested_attributes_for :links, :locations
+  accepts_nested_attributes_for :links, :locations, :download_urls
 
   #Adding solr indexing
   searchable do

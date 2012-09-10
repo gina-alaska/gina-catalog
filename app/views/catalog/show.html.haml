@@ -8,7 +8,10 @@
     .spacer
 
   - if @item.published? or @item.owner == current_user or current_user.is_an_admin?
-    .description.tabbed= raw RDiscount.new(@item.description).to_html
+    .description.tabbed
+      :markdown 
+        #{@item.description}
+        
     .spacer
 
     .status.tabbed

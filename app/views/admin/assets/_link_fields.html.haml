@@ -1,0 +1,24 @@
+.links
+  .header.row-fluid
+    .span2 Category
+    .span4 Display Text
+    .span4 URL
+    .span2.actions Actions
+  .body
+    = f.fields_for :links do |link_builder|
+      .link.row-fluid
+        .span2
+          = link_builder.select :category, options_for_select(Link::CATEGORIES, link_builder.object.category), {}, class: 'full-width'
+        .span4= link_builder.text_field :display_text, class: 'full-width'
+        .span4= link_builder.text_field :url, class: 'full-width'
+        .span2.actions
+          = link_builder.hidden_field :id
+          = link_to link_builder.object.url, class: 'btn' do
+            %i.icon-share
+            Open
+          = link_to '#', class: 'btn btn-danger' do
+            %i.icon-trash.icon-white
+.pull-right{style:"margin-top:3px;"}
+  = link_to '#', class: 'btn btn-success' do
+    %i.icon-plus.icon-white
+    Add link

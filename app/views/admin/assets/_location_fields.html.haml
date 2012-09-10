@@ -1,0 +1,21 @@
+.links
+  .header.row-fluid
+    .span4 Name
+    .span6 WKT
+    .span2.actions Actions
+  .body
+    = f.fields_for :locations do |location|
+      .link.row-fluid
+        .span4= location.text_field :name, class: 'full-width'
+        .span6= location.text_field :wkt, class: 'full-width'
+        .span2.actions
+          = location.hidden_field :id
+          = link_to '#', class: 'btn' do
+            %i.icon-globe
+            Map
+          = link_to '#', class: 'btn btn-danger' do
+            %i.icon-trash.icon-white
+.pull-right{style:"margin-top:3px;"}
+  = link_to '#', class: 'btn btn-success' do
+    %i.icon-plus.icon-white
+    Add location

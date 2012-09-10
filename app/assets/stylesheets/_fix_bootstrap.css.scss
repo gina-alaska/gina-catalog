@@ -1,0 +1,41 @@
+.input-append .add-on, .input-append .btn {
+  margin-left: -4px;
+}
+
+.input-prepend.input-append .add-on:first-child, .input-prepend.input-append .btn:first-child {
+  margin-right: -4px;
+}
+
+.input-prepend.input-append .add-on:last-child, .input-prepend.input-append .btn:last-child {
+  margin-left: -4px;
+}
+
+ul.nav-list.well {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+ul.nav-list {
+  .nav-header {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    line-height: 13px;
+    font-size: 13px;
+    height: 16px;
+    border-bottom: 1px solid #CFCFCF;
+  }
+}
+
+.navbar .nav li.avatar > a {
+  padding: 3px 10px 3px;
+  
+  .caret {
+    margin-top: 15px;
+  }
+}
+
+.avatar {
+  img {
+    border: 1px solid #000;
+  }
+}

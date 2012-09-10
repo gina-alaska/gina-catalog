@@ -50,6 +50,10 @@ class Agency < ActiveRecord::Base
     integer :id
   end
   
+  def name_with_acronym
+    "#{name} (#{acronym})"
+  end
+  
   def category=(value)
     value = CATEGORIES[value] if value.is_a? Symbol
     super(value)

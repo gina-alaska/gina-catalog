@@ -1,0 +1,17 @@
+%table.table.table-striped.table-bordered.table-condensed
+  %thead
+    %tr
+      %th Name
+      %th Description
+      %th Created
+      %th.span2 Actions
+  %tbody
+    - use_agreements.each do |ua|
+      %tr
+        %td= ua.title
+        %td= truncate(ua.content, length: 100)
+        %td= ua.created_at
+        %td
+          = link_to edit_sds_admin_use_agreement_path(ua), class: 'btn' do
+            %i.icon-edit
+            Edit

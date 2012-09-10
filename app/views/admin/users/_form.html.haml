@@ -1,0 +1,20 @@
+= form_for [:admin, user], html: { class: 'form-horizontal' } do |f|
+  %h3 User Form
+  .control-group
+    = f.label :agency, class: 'control-label'
+    .controls
+      = f.select :agency_id, options_from_collection_for_select(Agency.order(:name).all, :id, :name_with_acronym, user.agency_id), { include_blank: true }, { class: 'full-width' }
+  .control-group
+    = f.label :roles, class: 'control-label'
+    .controls
+      = f.fields_for :roles do |rf|
+        - Role.all.each do |role|
+          %label.checkbox
+            = rf.check_box role.name.to_sym, { checked: user.roles.include?(role) }
+            = role.name.humanize
+  %fieldset.form-actions
+    .pull-right
+      = link_to 'Cancel', admin_users_path, class: 'btn'
+      = f.submit class: 'btn btn-primary'
+:javascript
+  $('#user_agency_id').select2();

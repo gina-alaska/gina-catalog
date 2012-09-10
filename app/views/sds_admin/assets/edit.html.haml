@@ -1,0 +1,6 @@
+%h1= @asset.title
+%p
+  :markdown
+    #{@asset.description}
+
+= render 'form', asset: @asset

@@ -1,0 +1,2 @@
+module SdsAdmin::AssetsHelper
+end

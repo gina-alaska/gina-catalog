@@ -1,0 +1,11 @@
+.control-group
+  = f.label :primary_contact_id, class: 'control-label'
+  .controls
+    = f.select :primary_contact_id, options_from_collection_for_select(Person.all, :id, :full_name, asset.primary_contact_id), {}, class: 'span8'
+.control-group
+  = f.label :people, 'Other Contacts', class: 'control-label'
+  .controls
+    = f.select :people, options_from_collection_for_select(Person.all, :id, :full_name, asset.people.map(&:id)), {}, multiple: true, class: 'span8'
+:javascript
+  $('#asset_primary_contact_id').select2();
+  $('#asset_people').select2();
