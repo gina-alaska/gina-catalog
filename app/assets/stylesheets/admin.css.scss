@@ -2,13 +2,16 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 @import 'compass';
+
+/*$navbarBackground: #187b99;
+$navbarBackgroundHighlight: lighten($navbarBackground, 10%);
+$navbarText: black;
+$navbarLinkColor: black;
+$navbarBrand: black;*/
+
 @import 'bootstrap';
 @import "bootstrap-responsive";
 @import 'select2-2.1/select2';
-
-/*$baseColor: #108572;*/
-$headerNavbarColor: #187b99;
-$navbarColor: #F5F5F5;
 
 @import 'fix_bootstrap';
 
@@ -86,7 +89,7 @@ $navbarColor: #F5F5F5;
   }  
 }
 
-.quick-search {
+/*.quick-search {
   margin-bottom: 5px;
   
   ul.nav {
@@ -105,7 +108,7 @@ $navbarColor: #F5F5F5;
   form {
     margin-bottom: 0;
   }
-}
+}*/
 
 .asset-form {
   .select2-container { margin-left: 0; }
