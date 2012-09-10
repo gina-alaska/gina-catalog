@@ -38,7 +38,7 @@ gem 'pdfkit'
 #gem 'rdiscount'
 gem 'ancestry', '~> 1.2.4'
 gem 'sunspot_rails'
-gem 'bootstrap-sass', '~> 2.0.4.0'
+gem 'bootstrap-sass', '~> 2.1.0.0'
 
 # Use unicorn as the web server
 # gem 'unicorn'
