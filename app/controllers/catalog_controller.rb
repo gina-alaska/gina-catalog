@@ -201,7 +201,8 @@ class CatalogController < ApplicationController
     
     table_includes = {
       :tags => [], :locations => [], :agencies => [], :source_agency => [], :funding_agency => [], :links => [], 
-      :primary_contact => [:phone_numbers], :people => [:phone_numbers], :data_source => [], :geokeywords => []
+      :primary_contact => [:phone_numbers], :people => [:phone_numbers], :data_source => [], :geokeywords => [], 
+      :repo => []
     }
     
     # if(search.nil? or search.empty?)
@@ -260,7 +261,7 @@ class CatalogController < ApplicationController
       
       with(:end_date_year).less_than(search[:end_date_before]) if search[:end_date_before]
 
-      paginate per_page:(params[:limit] || 3000), page:(params[:page] || 1)
+      paginate per_page:(params[:limit] || 10000), page:(params[:page] || 1)
       
       order_by(field, direction) if field and direction
     end
