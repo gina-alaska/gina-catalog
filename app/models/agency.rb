@@ -6,7 +6,8 @@ class Agency < ActiveRecord::Base
     'Federal',
     'Local',
     'Foundation',
-    'Non-Governmental'
+    'Non-Governmental',
+    'Unknown'
   ]
 
   has_many :agency_people
