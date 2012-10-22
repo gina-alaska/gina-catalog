@@ -14,16 +14,21 @@ class ServicesController < ApplicationController
 			@newuser ||= User.new
 
 			# Check to see if this is a new user or one that needs to be upgraded to the new auth system
-			if @newuser.new_record? || (@newuser.services.empty? && @newuser.identity_url == session[:authhash][:uid])
-				@newuser.fullname = session[:authhash][:name]
-				@newuser.email = session[:authhash][:email]
-				@newuser.services.build( :provider => session[:authhash][:provider], :uid => session[:authhash][:uid], 
-																	:uname => session[:authhash][:name], :uemail => session[:authhash][:email])
-			else
-				# User already exists and has been upgraded
-				# someone is probably trying to spoof their account from another auth system
-				@newuser = nil
-			end
+      # if @newuser.new_record? || (@newuser.services.empty? && @newuser.identity_url == session[:authhash][:uid])
+      #   @newuser.fullname = session[:authhash][:name]
+      #   @newuser.email = session[:authhash][:email]
+      # else
+      #   # User already exists and has been upgraded
+      #   # someone is probably trying to spoof their account from another auth system
+      #   @newuser = nil
+      #         flash[:error] = "There was an error while trying to upgrade your account, please email info@gina.alaska.edu to get this problem resolved."
+      #         redirect_to root_url
+      #         return
+      # end
+			@newuser.fullname = session[:authhash][:name]
+			@newuser.email = session[:authhash][:email]
+			@newuser.services.build( :provider => session[:authhash][:provider], :uid => session[:authhash][:uid], 
+																:uname => session[:authhash][:name], :uemail => session[:authhash][:email])
 
 			if @newuser && @newuser.save
 				# signin existing user
