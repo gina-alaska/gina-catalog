@@ -180,7 +180,8 @@ Ext.define('App.controller.Search', {
     var filters = this.getStore('Filters');
     
     // Don't add blank values
-    if(value === "") { return false; }
+    if(value === "" && field != 'q') { return false; }
+    
     var index = this.findSearchParam(field);
     var data = { field: field, value: value, desc: desc, sort: sort };
     if(index < 0) {
