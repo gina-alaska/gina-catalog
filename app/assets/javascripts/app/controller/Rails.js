@@ -18,14 +18,9 @@ Ext.define('App.controller.Rails', {
     this.page = panel.add({
       xtype: 'panel',
       border: false,
-      layout: {
-        type: 'hbox',
-        pack: 'center'
-      },
-      items: [{
-        border: false,
-        contentEl: 'content'        
-      }]
+      layout: 'fit',
+      autoScroll: true,
+      contentEl: 'content'        
     });
   },
 
