@@ -1,3 +1,23 @@
-.hero-unit
-  %h1 Welcome to the SDS Manager
-  %p Please pick an option from the menu on the left
+.navbar
+  .navbar-inner
+    .brand SDS Manager Dashboard
+    .pull-right
+      = link_to sds_admin_path, class: 'btn' do
+        %i.icon-refresh
+        Refresh
+
+.row-fluid
+  .span6
+    %h4 Download Counts
+    .well.well-small
+      = render 'counts', total_downloads: @total_downloads
+  .span6
+    %h4 Top Downloads
+    .well.well-small
+      = render 'top_downloads', top_downloads: @top_downloads
+
+.row-fluid
+  .span12
+    %h4 Latest Access Log
+    .well.well-small
+      = render 'access_log', access_log: @latest_access

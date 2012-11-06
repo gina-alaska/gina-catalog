@@ -1,0 +1,5 @@
+%dl.dl-horizontal
+  %dt Last 30 days:
+  %dd= total_downloads.where('created_at > ?', 1.month.ago).count()
+  %dt Total:
+  %dd= total_downloads.count()
