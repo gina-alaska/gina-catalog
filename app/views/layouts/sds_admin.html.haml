@@ -23,15 +23,16 @@
               = link_to sds_admin_path do
                 %i.icon-home
                 Dashboard
-            %li 
-              = link_to sds_admin_assets_path do
-                %i.icon-barcode
-                Data Records
-            %li
-              = link_to sds_admin_use_agreements_path do
-                %i.icon-edit
-                Use Agreements
+            - if current_user.is_an_sds_admin? or current_user.is_an_sds_manager?
+              %li 
+                = link_to sds_admin_assets_path do
+                  %i.icon-barcode
+                  Data Records
             - if current_user.is_an_sds_admin?
+              %li
+                = link_to sds_admin_use_agreements_path do
+                  %i.icon-edit
+                  Use Agreements
               %li
                 = link_to sds_admin_contact_infos_path do
                   %i.icon-user
