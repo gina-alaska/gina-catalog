@@ -9,15 +9,13 @@
 .row-fluid
   .span6
     %h4 Download Counts
-    .well.well-small
-      = render 'counts', total_downloads: @total_downloads
+    = render 'counts', total_downloads: @total_downloads
   .span6
     %h4 Top Downloads
-    .well.well-small
-      = render 'top_downloads', top_downloads: @top_downloads
+    = render 'top_downloads', top_downloads: @top_downloads
 
 .row-fluid
   .span12
     %h4 Latest Access Log
-    .well.well-small
+    %div{style:"max-height:500px; overflow:auto;"}
       = render 'access_log', access_log: @latest_access
