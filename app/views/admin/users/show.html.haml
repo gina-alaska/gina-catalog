@@ -8,5 +8,5 @@
   %dd= @user.roles.map(&:name).join(', ') || '&nbsp;'.html_safe
 
 %br
--unless current_user == @user
-  = render 'form', user: @user
+/ -unless current_user == @user
+= render 'form', user: @user
