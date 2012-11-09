@@ -24,3 +24,4 @@ archive/*.zip
 archive/*.tar.gz
 config/initializers/catalog.rb
 repo_clones
+db/data
