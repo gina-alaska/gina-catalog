@@ -10,7 +10,7 @@
       .navbar.navbar-fixed-top.navbar-inverse
         .navbar-inner
           .container
-            = link_to 'NSSI SDS Admin', sds_admin_path, class: 'brand'
+            = link_to 'SDS Manager', sds_admin_path, class: 'brand'
             = render 'layouts/admin_menu'
                 
     #content.container{style: "margin-top: 45px;"}
@@ -20,16 +20,22 @@
           %ul.nav.nav-list.well
             %li.nav-header Main
             %li
-              = link_to sds_admin_contact_infos_path do
-                %i.icon-user
-                Contact Info
-            %li 
-              = link_to sds_admin_assets_path do
-                %i.icon-barcode
-                Data Records
-            %li
-              = link_to sds_admin_use_agreements_path do
-                %i.icon-edit
-                Use Agreements
+              = link_to sds_admin_path do
+                %i.icon-home
+                Dashboard
+            - if current_user.is_an_sds_admin? or current_user.is_an_sds_manager?
+              %li 
+                = link_to sds_admin_assets_path do
+                  %i.icon-barcode
+                  Data Records
+            - if current_user.is_an_sds_admin?
+              %li
+                = link_to sds_admin_use_agreements_path do
+                  %i.icon-edit
+                  Use Agreements
+              %li
+                = link_to sds_admin_contact_infos_path do
+                  %i.icon-user
+                  Contact Info
         .span10
           = yield
