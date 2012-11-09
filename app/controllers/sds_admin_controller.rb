@@ -5,7 +5,7 @@ class SdsAdminController < ApplicationController
     @top_downloads = ContactInfo.select("catalog_id, count(*) as download_count").group("catalog_id")
     @top_downloads = @top_downloads.order('download_count DESC').limit(10) 
     
-    @latest_access = ContactInfo.where('created_at < ?', 1.month.ago).order('created_at DESC')
+    @latest_access = ContactInfo.where('created_at > ?', 1.month.ago).order('created_at DESC')
     
     @total_downloads = ContactInfo
     
