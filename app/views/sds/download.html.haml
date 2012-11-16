@@ -1,11 +1,13 @@
-= render 'catalog_description', catalog: @catalog
-%p{ style: "text-align: center" }
-  - if @catalog.download_urls.count > 0
-    - @catalog.download_urls.each do |item|
-      .row-fluid{style:"margin-top:20px"}
-        = link_to item.url, :class => 'btn btn-large btn-primary btn-block' do
-          Click to download: <br />
-          = item.name
-    / end each
-  - else
-    = link_to 'Click here to start your download', catalog_path(@catalog, :format => :zip), :class => 'btn btn-primary btn-large'
+.row-fluid
+  .span12
+    = render 'catalog_description', catalog: @catalog
+    %p{ style: "text-align: center" }
+      - if @catalog.download_urls.count > 0
+        - @catalog.download_urls.each do |item|
+          .row-fluid{style:"margin-top:20px"}
+            = link_to item.url, :class => 'btn btn-large btn-primary btn-block' do
+              Click to download: <br />
+              = item.name
+        / end each
+      - else
+        = link_to 'Click here to start your download', catalog_path(@catalog, :format => :zip), :class => 'btn btn-primary btn-large'

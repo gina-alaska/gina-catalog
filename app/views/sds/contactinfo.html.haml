@@ -1,2 +1,4 @@
-.hidden-phone= render 'catalog_description', catalog: @catalog
-= render 'contact_info_form', catalog: @catalog, contact_info: @contact_info
+.row-fluid
+  .span12
+    .hidden-phone= render 'catalog_description', catalog: @catalog
+    = render 'contact_info_form', catalog: @catalog, contact_info: @contact_info
