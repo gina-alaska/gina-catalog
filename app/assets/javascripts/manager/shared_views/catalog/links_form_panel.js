@@ -67,7 +67,5 @@ Ext.define('Manager.shared_views.catalog.links_form_panel', {
     };   
     this.link_count += 1;
     return link_markup;     
-  },
-  
-  
+  }
 });

@@ -1,5 +1,5 @@
 class Link < ActiveRecord::Base
-  CATEGORIES = ['Website', 'Report', 'Shape File', 'WMS', 'WCS', 'WFS', 'KML', 'Layer', 'Metadata']
+  CATEGORIES = ['Website', 'Download', 'Report', 'Shape File', 'WMS', 'WCS', 'WFS', 'KML', 'Layer', 'Metadata']
 
   belongs_to :asset, :polymorphic => true
 

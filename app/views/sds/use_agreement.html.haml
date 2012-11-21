@@ -1,3 +1,5 @@
-= render 'catalog_description', catalog: @catalog
-= render 'use_agreement_form', catalog: @catalog, use_agreement: @catalog.use_agreement
+.row-fluid
+  .span12
+    = render 'catalog_description', catalog: @catalog
+    = render 'use_agreement_form', catalog: @catalog, use_agreement: @catalog.use_agreement
   
