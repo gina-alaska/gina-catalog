@@ -50,7 +50,11 @@ Title: #{self.catalog.title}
   end
 
   def files
-    RepoFilelist.new(grit).tree
+    if File.exists?(self.path)
+      RepoFilelist.new(grit).tree
+    else
+      []
+    end
   end
   
   def grit
