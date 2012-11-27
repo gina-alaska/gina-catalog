@@ -1,3 +1,24 @@
-#logo= image_tag 'nssi-logo.png', :alt => 'NSSI Logo'
-%h1 North Slope Science Catalog
-%h2 Data Products & Project Tracking
+.navbar.navbar-inverse.navbar-static-top
+  .navbar-inner
+    .container
+      = link_to root_url, class: 'brand' do
+        = image_tag 'nssi-logo.png', alt: 'NSSI Logo', class: 'logo pull-left'
+        North Slope Science Catalog
+        %br/
+        %small Data Products & Project Tracking
+.navbar.navbar-static-top
+  .navbar-inner
+    .container
+      %ul.nav
+        %li
+          = link_to root_url do 
+            %i.icon-home
+            Home
+        %li
+          = link_to '#' do
+            %i.icon-road
+            Projects
+        %li
+          = link_to '#' do
+            %i.icon-file
+            Data

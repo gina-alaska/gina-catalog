@@ -1,1 +1,21 @@
-
+#splash
+  .logo
+    = image_tag 'nssi-logo.png', alt: 'Northslope Science Catalog'
+    - if Rails.env == 'development'
+      %h1 CATALOG DEV SITE
+    - else
+      %h1 Northslope Science Catalog
+    %h2 Discover Projects and Data Products
+  .hero-unit
+    %p Catalog facilitates the discovery and dissemination of science based information products in support of analysis and decision making concerned with development and climate change 
+  -# .buttons To enter Catalog: Visitors please click 'Guest' - Registered users please click 'Login'
+  
+.row-fluid
+  .span4.well
+    Left
+  .span4.well
+    Center
+  .span4.well
+    Right
+/ = link_to catalogs_path, class: 'btn btn-primary btn-block' do
+/ Click here to start exploring
