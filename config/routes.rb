@@ -20,20 +20,8 @@ NSCatalog::Application.routes.draw do
   resources :agencies
   resources :people
 
-  resources :catalog, :constraints => { :format => /[a-z]+(\.[a-z]+)?/ } do
-    member do
-      get :download
-      post :publish
-    end
-    collection do
-      # get :download
-      post :search
-      get :search
-      get :unique
-      post :unique
-    end
-
-    resources :locations
+  resource :catalog do
+    post :search
   end
 
    
