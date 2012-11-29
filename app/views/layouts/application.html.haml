@@ -2,20 +2,15 @@
 !!! 5
 %html
 %head
-  = render "layouts/#{theme}/head"
-  
-  / = include_js(:proj4js)
-  / = include_js(:openlayers, :version => '2.12')
-  = javascript_include_tag "application"
+  = render "layouts/#{theme}/head"  
   = stylesheet_link_tag 'application', :media => 'all'
-
+  = javascript_include_tag "application"
 %body
   #header= render "layouts/#{theme}/header"
   / = render "layouts/#{theme}/splash"
-  .container
-    #content
-      = yield
-    #footer
-      = render "layouts/#{theme}/footer"
+  #content
+    = yield
+  #footer
+    = render "layouts/#{theme}/footer"
 		
-  = render "layouts/#{theme}/analytics"
+  / = render "layouts/#{theme}/analytics"

@@ -1,7 +1,7 @@
 @import "compass";
 
 /* white */
-$primaryColor: #EFEFEF;
+/*$primaryColor: #EFEFEF;*/
 /* orange */
 /*$primaryColor: #f5ba37; */
 /* dark */
@@ -17,6 +17,7 @@ $navbarInverseContrastColor: contrast-color($primaryColor, #1F1F1F, #DFDFDF);
 $navbarInverseLinkColor: $navbarInverseContrastColor;
 $navbarInverseLinkColorHover: darken($navbarInverseContrastColor, 10%);
 $navbarInverseLinkBackgroundHover: darken($primaryColor, 10%);
+$navbarInverseSearchBackground: #FFF;
 
 $navbarLinkColor: #3f3f3f;
 $navbarLinkColorHover: darken($navbarLinkColor, 10%);
@@ -25,10 +26,18 @@ $navbarBackgroundHighlight: lighten($navbarBackground, 10%);
 $navbarLinkBackgroundHover: darken($navbarBackground, 10%);
 
 @import "bootstrap";
+@import "catalogs";
+
+.navbar {
+  .btn {
+    margin-top: 0px;
+  }
+  .btn-block {
+    width:100%;
+  }
+}
 
 #header {
-  margin-bottom: 5px;
-  
   .logo {
     height: 40px;
     margin-right: 20px;
@@ -46,6 +55,15 @@ $navbarLinkBackgroundHover: darken($navbarBackground, 10%);
   .logo { text-align: center; }
 }
 
-#footer.poweredby {
+#content {
+  padding: 5px;
+}
+
+#footer {
+  border-top: 1px solid #EFEFEF;
+  padding: 10px;
+}
+
+#footer .poweredby {
   text-align: right;
 }

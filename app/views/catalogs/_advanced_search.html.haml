@@ -1,0 +1,22 @@
+= form_tag search_url, style: 'width:100%' do
+  .navbar
+    .navbar-inner
+      .row-fluid.navbar-search
+        .span8
+          = text_field_tag 'search[q]', search_params[:q], placeholder: 'Enter search keywords', class: 'span12'
+        .span4
+          = submit_tag 'Search', class: 'btn btn-primary btn-block'
+      
+  #advanced.accordion
+    .accordion-group
+      .accordion-heading
+        = link_to 'Agencies', '#agencies', class: 'accordion-toggle', data: { toggle: 'collapse', parent: '#advanced' }
+      #agencies.accordion-body.collapse
+        .accordion-inner
+          Agency list
+    .accordion-group
+      .accordion-heading
+        = link_to 'Contacts', '#contacts', class: 'accordion-toggle', data: { toggle: 'collapse', parent: '#advanced' }
+      #contacts.accordion-body.collapse
+        .accordion-inner
+          Contacts list

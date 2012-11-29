@@ -1,26 +1,21 @@
 .navbar.navbar-inverse.navbar-static-top
   .navbar-inner
-    .container
-      = link_to root_url, class: 'brand' do
-        = image_tag 'nssi-logo.png', alt: 'NSSI Logo', class: 'logo pull-left'
-        North Slope Science Catalog
-        %br/
-        %small Data Products & Project Tracking
-.navbar.navbar-static-top
-  .navbar-inner
-    .container
-      %ul.nav
-        %li
-          = link_to root_url do 
-            %i.icon-home
-            Home
-        %li
-          = link_to '#' do
-            %i.icon-road
-            Projects
-        %li
-          = link_to '#' do
-            %i.icon-file
-            Data
-      = form_tag search_catalog_path, class: 'navbar-search pull-right' do
-        = text_field_tag 'search[q]', nil, placeholder: "Quick Search", class: 'search-query'
+    %ul.nav
+      %li{class:(current_page?(root_url) ? 'active' : '')}
+        = link_to root_url do 
+          %i.icon-home.icon-white
+          Home
+      %li{class:(params[:controller] == 'projects' ? 'active' : '')}
+        = link_to '#' do
+          %i.icon-road.icon-white
+          Projects
+      %li{class:(params[:controller] == 'assets' ? 'active' : '')}
+        = link_to '#' do
+          %i.icon-file.icon-white
+          Data
+      %li{class:(current_page?(search_path) ? 'active' : '')}
+        = link_to search_path do
+          %i.icon-search.icon-white
+          Advanced Search
+    = form_tag search_path, class: 'navbar-search pull-right' do
+      = text_field_tag 'search[q]', nil, placeholder: "Quick Search", class: 'search-query'

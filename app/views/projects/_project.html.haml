@@ -1,107 +1,18 @@
-.project
-  .title= project.title
+- collapse ||= false
+%dl.project
+  %h4.title= project.title
 
-  - unless project.published? || (current_user && current_user.is_an_admin?)
-    .not-published
-      %h2 This project is pending review by the system moderators
-      %p After a moderator has reviewed the project, it will become available for public viewing
-    .spacer
+  - if !project.published?
+    .alert.alert-warning
+      %h4 This project is pending review by the system moderators
+      After a moderator has reviewed the project, it will become available for public viewing
+  - if project.published? or current_user.is_an_admin?
+    = render 'catalogs/status', item: project
 
-  - if project.published?
-    .description.tabbed
+  
+    %dt Description
+    %dd
       :markdown
         #{project.description}
-    .spacer
-
-    .status.tabbed
-      %label Status:
-      = project.status
-
-    -#- unless project.year_funded.nil?
-    -#  .funded.tabbed
-    -#    %label Year Funded:
-    -#    = project.year_funded
-    - unless project.start_date.nil?
-      .start_date.tabbed
-        %label Start Date:
-        = project.start_date.strftime('%Y/%m/%d')
-    - unless project.end_date.nil?
-      .end_date.tabbed
-        %label End Date:
-        = project.end_date.strftime('%Y/%m/%d')
-
-    .spacer
-
-    - unless project.primary_contact.nil?
-      .primary_contact.tabbed
-        %label Primary Contact:
-        = render project.primary_contact
-      .spacer
-
-    - unless project.people.nil? or project.people.empty?
-      .other_contacts.tabbed
-        %label Other Contacts:
-        = render project.people
-      .spacer
-
-    - unless project.source_agency.nil?
-      .source_agency.tabbed
-        %label Primary Agency:
-        = project.source_agency.name
-
-    - unless project.funding_agency.nil?
-      .funding_agency.tabbed
-        %label Funding Agency:
-        = project.funding_agency.name
-
-    .agencies.tabbed
-      %label Other Agencies:
-      = project.agencies.collect(&:acronym).compact.join(', ')
-
-    .spacer
-
-    - unless project.locations.nil? or project.locations.empty?
-      .locations.tabbed
-        %label Locations:
-        = project.locations.collect(&:name).compact.join(', ')
-
-    .spacer
-
-    -#.gcmd_themes.tabbed
-    -#  %label GCMD Themes:
-    -#  = project.gcmd_themes.collect(&:name).compact.join(', ')
-    -#.spacer
-
-    .tags.tabbed
-      %label Tags:
-      = project.tags.list
-      .spacer
-
-    - if project.repo and not project.repo.empty?
-      .tabbed
-        %label Download Link:
-        = link_to catalog_url(project, :format => 'zip'), catalog_url(project, :format => 'zip'), :target => :_blank
-        .spacer
-
-    - unless project.links.nil? or  project.links.empty?
-      .links.tabbed
-        %label Links:
-        %ul= render project.links
-      .spacer
-
-    -#- unless project.note.nil? or project.note.text.empty?
-    -#  .notes.tabbed
-    -#    %label Notes:
-    -#    = raw RDiscount.new(project.note.text).to_html
-    -#  .spacer
-
-    .project_info_source.tabbed
-      .organization
-        %label Record Information Source:
-        = project.data_source.name
-      .website
-        %label Direct Record Link:
-        - if project.data_source.name == 'NSSI'
-          = link_to project_url(project), project_url(project), :target => :_blank
-        - else
-          = link_to project.source_url, project.source_url, :target => :_blank
+    
+    = render 'catalogs/collapsed_content', item: project, collapse: collapse

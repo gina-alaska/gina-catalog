@@ -16,13 +16,14 @@ NSCatalog::Application.routes.draw do
   resources :links
 
   resources :projects
-  resources :assets, :as => :dataasset
+  resources :assets, :as => :data
   resources :agencies
   resources :people
 
   resource :catalog do
     post :search
   end
+  match '/search' => 'catalogs#search', as: 'search'
 
    
   match '/admin' => 'admin#index', as: 'admin'

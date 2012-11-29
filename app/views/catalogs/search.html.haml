@@ -1,2 +1,13 @@
-.results
-  = render @results
+.row-fluid
+  .span4.sidebar
+    %h4 Advanced Search
+    = render 'advanced_search', search_params: @search_params
+  .span8.search
+    - if @results.empty?
+      %p.lead No search results
+    - @results.each do |result|
+      .result
+        .content{"data-toggle"=>"collapse", "data-target"=>"##{result.class}-#{result.id}.collapse", class: (@results.count > 1 ? 'pointer' : '')}
+          = render result, collapse: (@results.count > 1)
+        .buttons
+          = link_to 'View', result, class: 'btn btn-primary'

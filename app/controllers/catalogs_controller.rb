@@ -87,10 +87,16 @@ class CatalogsController < ApplicationController
   end
 
   def search
-    @search = solr_search
+    @search_params = params[:search] || {}
+    @search = solr_search(@search_params)
     
-    @results = @search.results
-    @total = @search.total
+    if @search 
+      @results = @search.results
+      @total = @search.total
+    else
+      @results = []
+      @total = 0
+    end
     
     respond_to do |format|
       format.json
@@ -175,43 +181,15 @@ class CatalogsController < ApplicationController
     v
   end
 
-  def solr_search
-    search = params[:search] || {}
-    
-    # Handle the filters from the standard extjs data stores
-    if params[:filter]
-      logger.info JSON.parse(params[:filter])
-      JSON.parse(params[:filter]).each do |f|
-        search[f["property"].to_sym] = f["value"]
-      end
-    end
-    
-    # Handle the sorting from the standard extjs data stores
-    if params[:sort]
-      s = JSON.parse(params[:sort]).first 
-      field, direction = s["property"], s["direction"].downcase.to_sym
-      
-      # Custom sort field for title, extjs isn't able to specify one 
-      # in it's config so we have to munge it here
-      field = 'title_sort' if field == 'title'
-      field = 'geokeyword_sort' if field == 'geokeywords'
-    end
+  def solr_search(search)    
+    return false if search.nil? or search.keys.empty?
     
     table_includes = {
       :tags => [], :locations => [], :agencies => [], :source_agency => [], :funding_agency => [], :links => [], 
       :primary_contact => [:phone_numbers], :people => [:phone_numbers], :data_source => [], :geokeywords => [], 
       :repo => []
     }
-    
-    # if(search.nil? or search.empty?)
-    #   @results = Catalog.not_archived.published
-    #   @results = @results.includes(table_includes)
-    #   @results = @results.where(:id => params[:ids]) unless params[:ids].nil?
-    #   @results = @results.paginate(:page => params[:page], :per_page => params[:limit] || 3000).order('title ASC')
-    #   # @results = [] if Rails.env == 'development'
-    #   @total = @results.count
-    #   @facets = []
-    # else  
+  
     catalog_ids = search[:ids] unless search[:ids].nil? or search[:ids].empty?
     
     if(!catalog_ids and search[:bbox])
