@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120717233345) do
+ActiveRecord::Schema.define(:version => 20121130014912) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -291,6 +291,20 @@ ActiveRecord::Schema.define(:version => 20120717233345) do
     t.string   "character_set",            :limit => 25
     t.spatial  "llgeom_raw",               :limit => {:srid=>4326, :type=>"multi_polygon"}
     t.string   "progress",                                                                  :default => "INPROCESS"
+  end
+
+  create_table "images", :force => true do |t|
+    t.string   "title"
+    t.string   "description"
+    t.string   "link_to_url"
+    t.string   "file_uid"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  create_table "images_setups", :id => false, :force => true do |t|
+    t.integer "setup_id"
+    t.integer "image_id"
   end
 
   create_table "iso_topic_categories", :force => true do |t|
@@ -579,6 +593,16 @@ ActiveRecord::Schema.define(:version => 20120717233345) do
     t.string   "value"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "setups", :force => true do |t|
+    t.string   "primary_color"
+    t.string   "title"
+    t.string   "by_line"
+    t.string   "url"
+    t.string   "logo_uid"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   create_table "spreadsheet_projects", :id => false, :force => true do |t|

@@ -1,4 +1,14 @@
 NSCatalog::Application.routes.draw do
+  resources :images
+
+  resources :setups
+  resource :settings, controller: 'setups' do
+    get :carousel
+    post :add_carousel_image
+    post :remove_carousel_image
+  end
+  match '/theme(.:format)' => 'setups#show'
+
   resources :contact_infos
 
   resources :use_agreements
@@ -24,7 +34,6 @@ NSCatalog::Application.routes.draw do
     post :search
   end
   match '/search' => 'catalogs#search', as: 'search'
-
    
   match '/admin' => 'admin#index', as: 'admin'
   namespace :admin do
@@ -49,7 +58,7 @@ NSCatalog::Application.routes.draw do
       resources :download_urls
     end
   end
-
+  
   # Omniauth pure
   match "/login" => redirect('/auth/gina')
   match "/logout" => "services#signout"
@@ -120,8 +129,6 @@ NSCatalog::Application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-
-  mount Resque::Server.new, :at => '/resque'
 
   match '/preferences(.:format)' => 'users#preferences'
   match '/login' => 'sessions#new'

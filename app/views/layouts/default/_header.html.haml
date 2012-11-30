@@ -5,17 +5,38 @@
         = link_to root_url do 
           %i.icon-home.icon-white
           Home
-      %li{class:(params[:controller] == 'projects' ? 'active' : '')}
-        = link_to '#' do
-          %i.icon-road.icon-white
-          Projects
-      %li{class:(params[:controller] == 'assets' ? 'active' : '')}
-        = link_to '#' do
-          %i.icon-file.icon-white
-          Data
+      / %li{class:(params[:controller] == 'projects' ? 'active' : '')}
+      /   = link_to '#' do
+      /     %i.icon-road.icon-white
+      /     Projects
+      / %li{class:(params[:controller] == 'assets' ? 'active' : '')}
+      /   = link_to '#' do
+      /     %i.icon-file.icon-white
+      /     Data
       %li{class:(current_page?(search_path) ? 'active' : '')}
         = link_to search_path do
-          %i.icon-search.icon-white
-          Advanced Search
+          %i.icon-file.icon-white
+          Data
+      %li
+        = link_to '#' do
+          %i.icon-map-marker.icon-white
+          Maps
+      %li
+        = link_to '#' do
+          %i.icon-user.icon-white
+          Partners
+      %li
+        = link_to '#' do
+          %i.icon-info-sign.icon-white
+          About
+      %li
+        = link_to '#' do
+          %i.icon-question-sign.icon-white
+          Help
+      %li
+        = link_to '#' do
+          %i.icon-envelope.icon-white
+          Contact Us
+      
     = form_tag search_path, class: 'navbar-search pull-right' do
       = text_field_tag 'search[q]', nil, placeholder: "Quick Search", class: 'search-query'

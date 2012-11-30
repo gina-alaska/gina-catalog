@@ -1,10 +1,23 @@
 class ApplicationController < ActionController::Base
-  #protect_from_forgery
-
+  protect_from_forgery
+  
+  before_filter :fetch_setup
+  
   helper_method :current_user
   helper_method :user_signed_in?
 
+  protected
+  
+  def fetch_setup
+    @setup = Setup.where(:url => request.host).first
+    
+    if @setup.nil? 
+      redirect_to new_settings_path
+    end
+  end
+
   private  
+  
   def current_user  
     @current_user ||= User.find_by_id(session[:user_id]) if session[:user_id]  
   end

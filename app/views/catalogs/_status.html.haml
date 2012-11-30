@@ -1,4 +1,4 @@
-.row-fluid.dl-horizontal
+.row-fluid
   .span3
     %strong Status:
     = item.status
@@ -15,3 +15,8 @@
     .span3
       %strong End Date:
       = item.end_date.strftime('%Y/%m/%d')  
+- unless item.data_types.empty?
+  .row-fluid
+    .span12
+      %strong Data Types:
+      = item.data_types.collect(&:name).join(', ')

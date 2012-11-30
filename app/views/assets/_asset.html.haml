@@ -5,7 +5,7 @@
     .alert.alert-warning
       %h4 This data record is pending review by the system moderators
       After a moderator has reviewed the project, it will become available for public viewing
-  - if asset.published? or current_user.is_an_admin?
+  - if asset.published? or (current_user and current_user.is_an_admin?)
     = render 'catalogs/status', item: asset
 
     %dt Description

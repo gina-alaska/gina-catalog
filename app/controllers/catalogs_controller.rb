@@ -219,23 +219,26 @@ class CatalogsController < ApplicationController
       data_accessor_for(Asset).include=table_includes
       fulltext search[:q]
       with :id, catalog_ids unless catalog_ids.nil? or catalog_ids.empty?
-      with :status, search[:status] if search[:status]
+      with :status, search[:status] if search[:status].present?
       with :long_term_monitoring, ((search[:long_term_monitoring].to_i > 0) ? true : false) if search.include? :long_term_monitoring
       with :archived_at_year, nil unless search[:archived]
-      with :type, search[:type] if search[:type]
-      with :agency_ids, search[:agency_ids] if search[:agency_ids]
-      with :source_agency_id, search[:source_agency_id] if search[:source_agency_id]
-      with :iso_topic_ids, search[:iso_topic_ids] if search[:iso_topic_ids]
-      with :person_ids, search[:contact_ids] if search[:contact_ids]
-      with :geokeywords_name, search[:region] if search[:region]
-      with :data_types, search[:data_types] if search[:data_types]
-      with(:start_date_year).greater_than(search[:start_date_after]) if search[:start_date_after]
-
-      with(:start_date_year).less_than(search[:start_date_before]) if search[:start_date_before]
-
-      with(:end_date_year).greater_than(search[:end_date_after]) if search[:end_date_after]
+      with :type, search[:type] if search[:type].present?
+      with :agency_ids, search[:agency_ids] if search[:agency_ids].present?
+      with :source_agency_id, search[:source_agency_id] if search[:source_agency_id].present?
+      with :iso_topic_ids, search[:iso_topic_ids] if search[:iso_topic_ids].present?
+      with :person_ids, search[:contact_ids] if search[:contact_ids].present?
+      with :geokeywords_name, search[:region] if search[:region].present?
+      with :data_types, search[:data_types] if search[:data_types].present?
+  
+      with(:published_at).less_than(Time.zone.now) unless current_user and current_user.is_an_admin?
       
-      with(:end_date_year).less_than(search[:end_date_before]) if search[:end_date_before]
+      with(:start_date_year).greater_than(search[:start_date_after]) if search[:start_date_after].present?
+
+      with(:start_date_year).less_than(search[:start_date_before]) if search[:start_date_before].present?
+
+      with(:end_date_year).greater_than(search[:end_date_after]) if search[:end_date_after].present?
+      
+      with(:end_date_year).less_than(search[:end_date_before]) if search[:end_date_before].present?
 
       paginate per_page:(params[:limit] || 10000), page:(params[:page] || 1)
       

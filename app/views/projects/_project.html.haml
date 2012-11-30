@@ -6,7 +6,7 @@
     .alert.alert-warning
       %h4 This project is pending review by the system moderators
       After a moderator has reviewed the project, it will become available for public viewing
-  - if project.published? or current_user.is_an_admin?
+  - if project.published? or (current_user and current_user.is_an_admin?)
     = render 'catalogs/status', item: project
 
   

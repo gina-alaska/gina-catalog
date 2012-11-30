@@ -1,0 +1,22 @@
+.navbar
+  .navbar-inner
+    .brand= "#{@setup.title} Settings"
+    = link_to 'Edit', edit_settings_path, class: 'btn pull-right'
+    
+%dl.dl-horizontal
+  %dt Title
+  %dd= @setup.title
+  %dt By line
+  %dd= @setup.by_line
+
+.navbar
+  .navbar-inner
+    .brand Carousel Setup
+    = link_to 'Add image', carousel_settings_path, class: 'btn btn-success pull-right'
+%ul.thumbnails.carousel
+  - @setup.images.each do |image|
+    %li.span4{style:'position: relative'}
+      = render 'image', image: image
+      .buttons
+        = link_to 'Edit', edit_image_path(image)
+        = link_to 'X', remove_carousel_image_settings_path(image_id: image), method: 'POST'

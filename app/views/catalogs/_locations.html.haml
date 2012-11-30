@@ -3,3 +3,7 @@
   %dd= item.locations.where('name is not null and length(name) > 0').collect(&:name).compact.join(', ')
   %br
 
+- unless item.geokeywords.empty?
+  %dt Regions
+  %dd= item.geokeywords.collect(&:name).join(', ')
+  %br

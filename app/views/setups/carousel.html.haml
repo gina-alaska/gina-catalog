@@ -1,0 +1,16 @@
+.navbar
+  .navbar-inner
+    .brand Available Images
+    = link_to 'Upload image', new_image_path, class: 'btn btn-success pull-right'
+      
+
+%ul.thumbnails
+  - Image.all.each do |image|
+    %li.span4
+      .thumbnail
+        %img{src:"http://placehold.it/300x200", alt: ''}
+        %h4= link_to_unless image.link_to_url.empty?, image.title, image.link_to_url
+        %p= image.description
+        .buttons
+          = link_to 'Add', add_carousel_image_settings_path(image_id: image), method: 'POST', class: 'btn'
+          = link_to 'Edit', edit_image_path(image), class: 'btn'
