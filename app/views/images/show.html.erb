@@ -17,7 +17,7 @@
 
 <p>
   <b>File uid:</b>
-  <%= @image.file_uid %>
+  <%= image_tag @image.file.thumb('300x300').url, alt: @image.title %>
 </p>
 
 

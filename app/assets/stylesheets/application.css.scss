@@ -38,9 +38,9 @@ $navbarLinkBackgroundHover: darken($navbarBackground, 10%);
   input[type="submit"].btn {
     margin-top: 0px;
   }
-  .btn-block {
-    width:100%;
-  }
+}
+input[type="submit"].btn-block {
+  width:100%;
 }
 
 #header {
@@ -54,6 +54,9 @@ $navbarLinkBackgroundHover: darken($navbarBackground, 10%);
   
   .brand small {
     font-size: 0.8em;
+  }
+  .page-header {
+    margin-bottom: 0px;
   }
 }
 
@@ -74,6 +77,7 @@ $navbarLinkBackgroundHover: darken($navbarBackground, 10%);
 }
 
 #footer {
+  margin-top: 10px;
   border-top: 1px solid #EFEFEF;
   padding: 10px;
 }

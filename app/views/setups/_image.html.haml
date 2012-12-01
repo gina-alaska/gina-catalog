@@ -1,4 +1,4 @@
 .thumbnail
-  %img{src:"http://placehold.it/300x200", alt: ''}
+  = image_tag image.file.thumb('300x200').url, alt: image.title
   %h4= link_to_unless image.link_to_url.empty?, image.title, image.link_to_url
   %p= image.description

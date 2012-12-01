@@ -1,7 +1,3 @@
-.page-header
-  %h1
-    = @setup.title
-    %small= @setup.by_line
 #splash.row-fluid
   .span5
     %p.lead Compellingly engineer cooperative strategic theme areas before prospective paradigms. Assertively foster standards compliant process improvements after effective materials. Holisticly synthesize efficient potentialities after 24/7 technology. Appropriately synergize seamless infrastructures with global scenarios. Monotonectally revolutionize bleeding-edge expertise rather than multimedia based communities. 
@@ -9,17 +5,18 @@
   .span7
     #carousel.carousel.slide
       .carousel-inner
-        .active.item
-          = image_tag 'nssi-logo.png', alt: 'Northslope Science Catalog', style:"height: 100%"
-          .carousel-caption
-            %h4 Northslope Science Catalog
-            %p Catalog facilitates the discovery and dissemination of science based information products in support of analysis and decision making concerned with development and climate change
+        - @setup.carousel_images.each do |image|
+          .item{class: @setup.carousel_images.first == image ? 'active' : '' }
+            = image_tag image.file.thumb('640x480#').url, alt: image.title
+            .carousel-caption
+              %h4= link_to_unless image.link_to_url.empty?, image.title, image.link_to_url
+              %p= image.description
       %a.carousel-control.left{href:"#carousel", "data-slide"=>"prev"} &lsaquo;
       %a.carousel-control.right{href:"#carousel", "data-slide"=>"next"} &rsaquo;
-    %h3 News, Announcements and Events
-    %p
-      %strong Nov. 29th, 2012
-      Proactively visualize competitive outsourcing rather than inexpensive applications. Energistically repurpose cross functional information whereas multimedia based leadership skills. Phosfluorescently coordinate virtual metrics whereas sticky quality vectors. Dramatically impact viral mindshare for functional ROI. Objectively myocardinate backward-compatible supply chains whereas clicks-and-mortar functionalities. 
+%h2 News, Announcements and Events
+%p.lead
+  %strong Nov. 29th, 2012
+  Proactively visualize competitive outsourcing rather than inexpensive applications. Energistically repurpose cross functional information whereas multimedia based leadership skills. Phosfluorescently coordinate virtual metrics whereas sticky quality vectors. Dramatically impact viral mindshare for functional ROI. Objectively myocardinate backward-compatible supply chains whereas clicks-and-mortar functionalities. 
 .row-fluid
   .span4
     .left-well.well.well-small

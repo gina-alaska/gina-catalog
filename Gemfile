@@ -21,6 +21,7 @@ gem 'uuidtools'
 gem 'RedCloth'
 gem 'bluecloth'
 gem 'turbolinks' #, '0.5.1'
+gem 'dragonfly'
 
 #gem 'nofxx-georuby'
 #broke in rails 3.1

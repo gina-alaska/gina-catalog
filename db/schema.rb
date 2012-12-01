@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121130014912) do
+ActiveRecord::Schema.define(:version => 20121130214837) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -86,6 +86,11 @@ ActiveRecord::Schema.define(:version => 20121130014912) do
   create_table "assets_tags", :id => false, :force => true do |t|
     t.integer "asset_id"
     t.integer "tag_id"
+  end
+
+  create_table "carousel_images_setups", :id => false, :force => true do |t|
+    t.integer "setup_id"
+    t.integer "image_id"
   end
 
   create_table "catalog", :force => true do |t|

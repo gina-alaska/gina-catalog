@@ -2,11 +2,7 @@
 !!! 5
 %html
 %head
-  = render "layouts/#{theme}/head"  
   = stylesheet_link_tag 'application', :media => 'all'
   = javascript_include_tag "application"
 %body
-  #header.container= render "layouts/#{theme}/header"
-  / = render "layouts/#{theme}/splash"
-  #content.container
-    = yield
+  = yield

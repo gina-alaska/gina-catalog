@@ -9,6 +9,7 @@ class SetupsController < ApplicationController
     
     respond_to do |format|
       format.html
+      format.js
       format.css {
         raw  = render_to_string :template => 'setups/show.css.scss.erb'
         # erb  = ERB.new(raw).result(binding)
@@ -65,34 +66,31 @@ class SetupsController < ApplicationController
     end
   end
   
-  def carousel
-  end
-  
   def add_carousel_image
-    @image = Image.find(params[:image_id])
+    @image = @setup.images.find(params[:image_id])
     
-    if @image and !@setup.images.exists?(@image) and @setup.images << @image
+    if @image and !@setup.carousel_images.exists?(@image) and @setup.carousel_images << @image
       respond_to do |format|
         format.html {
-          flash[:error] = "Added carousel image"
-          redirect_to settings_path
+          flash[:success] = "Added carousel image"
+          redirect_to images_path
         }
       end
     else
       respond_to do |format|
         format.html {
           flash[:error] = "Unable to add carousel image"
-          redirect_to settings_path
+          redirect_to images_path
         }
       end
     end
   end
   
   def remove_carousel_image
-    if @setup.images.delete(Image.find(params[:image_id]))
+    if @setup.carousel_images.delete(Image.find(params[:image_id]))
       respond_to do |format|
         format.html {
-          flash[:error] = "Removed carousel image"
+          flash[:success] = "Removed carousel image"
           redirect_to settings_path
         }
       end
