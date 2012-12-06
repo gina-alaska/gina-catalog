@@ -1,9 +1,9 @@
-%div{style:"padding: 0 5px 0 5px;"}
+.row-fluid
   %ul.thumbnails
     - @images.each do |image|
       %li.span3
         .thumbnail
-          = image_tag image.file.thumb('200x200').url, alt: image.title
+          = image_tag image.file.thumb('100x100').url, alt: image.title
           %h4= link_to_unless image.link_to_url.empty?, image.title, image.link_to_url
           %p= image.description
           .buttons{style:"text-align:center;"}

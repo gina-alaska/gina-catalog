@@ -1,0 +1,19 @@
+#splash.row-fluid
+  .span5.lead
+    = @page.content_for(:body)
+  .span7
+    = render 'carousel', images: @setup.carousel_images
+    = render 'news'
+.row-fluid
+  .span4
+    = link_to search_path, class: 'btn btn-block left-well' do
+      = @page.content_for(:data_button)
+    = @page.content_for(:data_links)
+  .span4
+    = link_to page_path('maps'), class: 'btn btn-block center-well' do
+      = @page.content_for(:maps_button)
+    = @page.content_for(:map_links)
+  .span4
+    = link_to page_path('partners'), class: 'btn btn-block right-well' do
+      = @page.content_for(:partners_button)
+    = @page.content_for(:partner_links)

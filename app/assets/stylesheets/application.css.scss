@@ -18,6 +18,9 @@ $navbarLinkBackgroundHover: darken($navbarBackground, 10%);
 
 @import "bootstrap";
 @import "catalogs";
+@import "setups";
+@import "markitup";
+@import "markitup-html";
 
 .carousel.thumbnails {
   .buttons {
@@ -44,6 +47,8 @@ input[type="submit"].btn-block {
 }
 
 #header {
+  margin-bottom: 25px;
+  
   .logo {
     height: 40px;
     margin-right: 20px;
@@ -84,4 +89,14 @@ input[type="submit"].btn-block {
 
 #footer .poweredby {
   text-align: right;
+}
+
+ul.nav.nav-tabs {
+  margin-bottom: 0;
+}
+.tab-content {
+  border-left: 1px solid #dfdfdf;
+  border-right: 1px solid #dfdfdf;
+  border-bottom: 1px solid #dfdfdf;
+  .content { padding: 3px; }
 }

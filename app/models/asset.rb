@@ -77,10 +77,10 @@ class Asset < Catalog
   def has_extent?
     !self.geom.nil?
   end
-
-  def klass
-    'Data'
-  end
+  # 
+  # def klass
+  #   'Data'
+  # end
 
   def for_gmapx
     return [] unless self.has_extent?

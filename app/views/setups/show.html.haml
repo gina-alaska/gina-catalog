@@ -1,36 +1,35 @@
-.navbar
-  .navbar-inner
-    .brand= "#{@setup.title} Settings"
-    = link_to 'Edit', edit_settings_path, class: 'btn pull-right'
-    
-%dl.dl-horizontal
-  %dt Title
-  %dd= @setup.title
-  %dt By line
-  %dd= @setup.by_line
-
-#carousel_images{style:"position:relative;"}
-  .navbar
-    .navbar-inner
-      .brand Carousel Setup
-      = link_to 'Add image', '#add_image_modal', role: 'button', data: { toggle: 'modal' }, class: 'btn btn-success pull-right'
-  .images
-    %ul.thumbnails.carousel
-      - @setup.carousel_images.each do |image|
-        %li.span4{style:'position: relative'}
-          = render 'image', image: image
-          .buttons
-            = link_to 'X', remove_carousel_image_settings_path(image_id: image), method: 'POST', remote: true
+.tabbable
+  %ul.nav.nav-tabs
+    %li.active
+      = link_to 'Pages', '#pages', data: { toggle: 'tab' }
+    %li
+      = link_to 'Settings', '#settings', data: { toggle: 'tab' }
+    %li
+      = link_to 'Carousel', '#carousel', data: { toggle: 'tab' }
+  .tab-content
+    #pages.tab-pane.active
+      .navbar.navbar-static-top
+        .navbar-inner
+          .brand= "#{@setup.title} Pages"
+          = link_to new_settings_page_path, class: 'btn btn-success pull-right' do
+            %i.icon-plus.icon-white
+            New Page
+      .content
+        = render 'pages', setup: @setup
         
-  #add_image_modal.modal.hide.fade{tabindex:"-1", role:"dialog",style:"width:960px; margin-left:-480px;"}
-    .modal-header
-      = link_to 'x', '#', class: 'close', data: { dismiss: 'modal' }
-      %h3 Select and Image
-    .modal-body{style:'padding:0; max-height:inherit;'}
-      %iframe{src:images_path, style:"width:100%;height:400px;border:0px;"}
-    .modal-footer
-      = link_to 'Close', '#', data: { dismiss: 'modal' }
-:javascript
-  $('#add_image_modal').on('hidden', function() {
-    $('#carousel_images .images').load('#{settings_path} #carousel_images ul');
-  });
+    #settings.tab-pane
+      .navbar.navbar-static-top
+        .navbar-inner
+          .brand= "#{@setup.title} Settings"
+          = link_to 'Edit', edit_settings_path, class: 'btn pull-right'
+      .content
+        = render 'settings', setup: @setup
+    
+    #carousel.tab-pane
+      #carousel_images{style:"position:relative;"}
+        .navbar.navbar-static-top
+          .navbar-inner
+            .brand Carousel Setup
+            = link_to 'Add image', '#add_image_modal', role: 'button', data: { toggle: 'modal' }, class: 'btn btn-success pull-right'
+        .content
+          = render 'carousel_settings', setup: @setup

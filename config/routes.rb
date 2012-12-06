@@ -1,4 +1,8 @@
 NSCatalog::Application.routes.draw do
+  resources :pages, only: :show do
+    get :not_found, on: :collection
+  end
+
   resources :images
 
   resources :setups
@@ -7,6 +11,11 @@ NSCatalog::Application.routes.draw do
     post :add_carousel_image
     post :remove_carousel_image
   end
+  
+  namespace :settings, :module => 'setups' do
+    resources :pages
+  end
+  
   match '/theme(.:format)' => 'setups#show'
 
   resources :contact_infos
@@ -26,7 +35,8 @@ NSCatalog::Application.routes.draw do
   resources :links
 
   resources :projects
-  resources :assets, :as => :data
+  resources :assets, as: 'data'
+  
   resources :agencies
   resources :people
 
@@ -133,11 +143,11 @@ NSCatalog::Application.routes.draw do
   match '/preferences(.:format)' => 'users#preferences'
   match '/login' => 'sessions#new'
   match '/logout' => 'sessions#destroy'
-  match '/search(.:format)' => 'catalog#search'
-  match '/data(.:format)' => 'catalog#search'
+  match '/:id' => 'pages#show', as: :page
+  
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => "welcome#index"
+  root :to => "pages#show", :id => 'home'
 
   # See how all your routes lay out with "rake routes"
 
