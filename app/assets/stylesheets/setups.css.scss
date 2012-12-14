@@ -9,3 +9,16 @@
   &.edit {
   }
 }
+
+.pages_list {
+  margin-bottom: 0;
+  
+  td {
+    line-height: 40px;
+  }
+  .actions {
+    text-align: right;
+    width: 1%;
+    white-space: nowrap;
+  }
+}

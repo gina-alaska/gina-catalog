@@ -20,9 +20,9 @@
     $('#page_slug').slugify('#page_title');
     
   .control-group
-    = f.label :layout, class: 'control-label'
+    = f.label :page_layout_id, 'Layout', class: 'control-label'
     .controls
-      = f.select :layout, @layouts, class: 'span12'
+      = f.select :page_layout_id, options_from_collection_for_select(@setup.page_layouts, :id, :name, page.page_layout.id), class: 'span12'
       
       
   %ul.nav.nav-tabs

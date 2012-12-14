@@ -3,4 +3,19 @@ class Image < ActiveRecord::Base
   image_accessor :file
   
   has_and_belongs_to_many :setups
+  
+  liquid_methods :title, :description, :link_to_url, :image_url
+  
+  def image_url
+    self.file.url
+  end
+  
+  def to_liquid
+    {
+      'title' => self.title,
+      'description' => self.description,
+      'link_to_url' => self.link_to_url,
+      'tag' => "<img src=\"#{self.file.thumb('640x480#').url}\" alt=\"#{self.title}\" />"
+    }
+  end
 end

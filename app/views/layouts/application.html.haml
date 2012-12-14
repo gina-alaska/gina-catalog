@@ -3,8 +3,8 @@
 %html
 %head
   = render "layouts/#{theme}/head"  
-  = stylesheet_link_tag 'application', :media => 'all'
-  = javascript_include_tag "application"
+  = javascript_include_tag "application", data: {'turbolinks-track' => ''}
+  = stylesheet_link_tag 'application', data: {'turbolinks-track' => ''}
 %body
   .container
     #header= render "layouts/#{theme}/header"
@@ -12,4 +12,4 @@
       = show_flash_messages
       = yield
     #footer= render "layouts/#{theme}/footer"
-  = render "layouts/#{theme}/analytics"
+  = render "layouts/#{theme}/analytics" unless Rails.env == 'development'

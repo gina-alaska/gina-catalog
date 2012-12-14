@@ -1,11 +1,10 @@
 class Setups::PagesController < ApplicationController
   def new
-    @layouts = ['show']
     @page = @setup.pages.build
+    @page.page_layout = @setup.page_layouts.where(default: true).first
   end
   
   def edit
-    @layouts = ['home', 'show']
     @page = @setup.pages.where(slug: params[:id]).first
   end
   

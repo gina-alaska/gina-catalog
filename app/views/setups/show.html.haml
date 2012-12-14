@@ -3,6 +3,8 @@
     %li.active
       = link_to 'Pages', '#pages', data: { toggle: 'tab' }
     %li
+      = link_to 'Layouts', '#layouts', data: { toggle: 'tab' }
+    %li
       = link_to 'Settings', '#settings', data: { toggle: 'tab' }
     %li
       = link_to 'Carousel', '#carousel', data: { toggle: 'tab' }
@@ -16,7 +18,17 @@
             New Page
       .content
         = render 'pages', setup: @setup
-        
+    
+    #layouts.tab-pane
+      .navbar.navbar-static-top
+        .navbar-inner
+          .brand Layouts
+          = link_to new_settings_page_layout_path, class: 'btn btn-success pull-right' do
+            %i.icon-plus.icon-white
+            New Layout
+      .content
+        = render 'layouts', setup: @setup
+    
     #settings.tab-pane
       .navbar.navbar-static-top
         .navbar-inner
@@ -30,6 +42,8 @@
         .navbar.navbar-static-top
           .navbar-inner
             .brand Carousel Setup
-            = link_to 'Add image', '#add_image_modal', role: 'button', data: { toggle: 'modal' }, class: 'btn btn-success pull-right'
+            = link_to '#add_image_modal', role: 'button', data: { toggle: 'modal' }, class: 'btn btn-success pull-right' do
+              %i.icon-plus.icon-white
+              Add image
         .content
           = render 'carousel_settings', setup: @setup

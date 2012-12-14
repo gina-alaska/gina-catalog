@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121201005856) do
+ActiveRecord::Schema.define(:version => 20121206214539) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -484,14 +484,28 @@ ActiveRecord::Schema.define(:version => 20121201005856) do
     t.string  "salt",       :null => false
   end
 
+  create_table "page_layouts", :force => true do |t|
+    t.string   "name"
+    t.text     "content"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.boolean  "default"
+  end
+
+  create_table "page_layouts_setups", :id => false, :force => true do |t|
+    t.integer "setup_id"
+    t.integer "page_layout_id"
+  end
+
   create_table "pages", :force => true do |t|
     t.string   "title"
     t.string   "slug"
     t.string   "sections"
     t.text     "content"
     t.string   "layout"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.integer  "page_layout_id"
   end
 
   create_table "pages_setups", :id => false, :force => true do |t|

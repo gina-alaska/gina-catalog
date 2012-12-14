@@ -14,6 +14,7 @@ NSCatalog::Application.routes.draw do
   
   namespace :settings, :module => 'setups' do
     resources :pages
+    resources :page_layouts
   end
   
   match '/theme(.:format)' => 'setups#show'
@@ -35,7 +36,7 @@ NSCatalog::Application.routes.draw do
   resources :links
 
   resources :projects
-  resources :assets, as: 'data'
+  resources :assets
   
   resources :agencies
   resources :people

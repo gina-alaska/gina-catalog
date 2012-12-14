@@ -1,0 +1,17 @@
+%table.pages_list.table.table-striped.table-condensed
+  %thead
+    %tr
+      %th Name
+      %th.actions Actions
+  %tbody
+    - setup.page_layouts.each do |layout|
+      %tr
+        %td
+          = link_to edit_settings_page_layout_path(layout), class: 'edit' do
+            %i.icon-file
+            = layout.name
+        %td.actions
+          = link_to edit_settings_page_layout_path(layout), class: 'btn' do
+            %i.icon-edit    
+          = link_to settings_page_layout_path(layout), method: 'DELETE', class: 'btn btn-danger', data: { confirm: 'Are you sure?' } do
+            %i.icon-trash.icon-white

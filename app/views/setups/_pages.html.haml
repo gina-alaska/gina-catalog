@@ -1,8 +1,8 @@
-%table.table.table-striped.table-condensed
+%table.pages_list.table.table-striped.table-condensed
   %thead
     %tr
       %th Title
-      %th Actions
+      %th.actions Actions
   %tbody
     - setup.pages.each do |page|
       %tr
@@ -10,7 +10,9 @@
           = link_to edit_settings_page_path(page), class: 'edit' do
             %i{class: (page.slug == 'home' ? 'icon-home' : 'icon-file' )}
             = page.title
-        %td.span2
+        %td.actions
+          = link_to edit_settings_page_path(page), class: 'btn' do
+            %i.icon-edit    
           = link_to page_path(page), class: 'btn' do
             %i.icon-eye-open    
           = link_to settings_page_path(page), method: 'DELETE', class: 'btn btn-danger', data: { confirm: 'Are you sure?' } do
