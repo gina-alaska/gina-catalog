@@ -17,7 +17,7 @@ gem 'omniauth-openid'
 gem 'resque'
 gem 'quiet_assets', :group => :development
 gem 'uuidtools'
-# gem 'kaminari'
+gem 'kaminari'
 gem 'RedCloth'
 gem 'bluecloth'
 gem 'turbolinks', git: 'git://github.com/rails/turbolinks.git'
