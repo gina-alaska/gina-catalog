@@ -45,31 +45,7 @@ NSCatalog::Application.routes.draw do
     post :search
   end
   match '/search' => 'catalogs#search', as: 'search'
-   
-  match '/admin' => 'admin#index', as: 'admin'
-  namespace :admin do
-    resources :users
-    resources :roles
-    resources :assets
-  end
-
-  resources :sds, :as => 'secure_data' do
-    get :use_agreement, :on => :member
-    get :contactinfo, :on => :member
-    get :download, :on => :member
-    get :reset, :on => :collection
-  end
-  
-  match '/sds_admin' => 'sds_admin#index', as: 'sds_admin'
-  namespace :sds_admin do
-    resources :contact_infos
-    resources :use_agreements
-    resources :assets do
-      get "add_download_url", on: :member
-      resources :download_urls
-    end
-  end
-  
+     
   # Omniauth pure
   match "/login" => redirect('/auth/gina')
   match "/logout" => "services#signout"
