@@ -15,5 +15,5 @@
     = link_to 'Close', '#', data: { dismiss: 'modal' }
 :javascript
   $('#add_image_modal').on('hidden', function() {
-    $('#carousel_images .images').load('#{settings_path} #carousel_images ul');
+    $('#carousel_images .images').load('#{manager_path} #carousel_images ul');
   });

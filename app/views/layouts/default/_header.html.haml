@@ -1,7 +1,10 @@
 .page-header
+  - if !current_user.nil? and current_user.is_an_admin?
+    = link_to 'Manage Site', manager_path, class: 'btn btn-primary pull-right'
   %h1
     = @setup.title
     %small= @setup.by_line
+
 .navbar.navbar-inverse.navbar-static-top
   .navbar-inner
     %ul.nav
@@ -9,14 +12,6 @@
         = link_to root_url do 
           %i.icon-home.icon-white
           Home
-      / %li{class:(params[:controller] == 'projects' ? 'active' : '')}
-      /   = link_to '#' do
-      /     %i.icon-road.icon-white
-      /     Projects
-      / %li{class:(params[:controller] == 'assets' ? 'active' : '')}
-      /   = link_to '#' do
-      /     %i.icon-file.icon-white
-      /     Data
       %li{class:(current_page?(search_path) ? 'active' : '')}
         = link_to search_path do
           %i.icon-file.icon-white

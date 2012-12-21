@@ -2,29 +2,14 @@
 !!! 5
 %html
 %head
-  = render "layouts/#{theme}/head"
-
-  = include_css(:extjs, :version => '4.1.1-rc1')
-  = include_js(:extjs, :version => '4.1.1-rc1')
-  = include_js(:proj4js)
-  = include_js(:openlayers, :version => '2.11')
-
-  = javascript_include_tag "manager"
-  
-  = stylesheet_link_tag 'manager', :media => 'screen, projection'
-
+  = render "layouts/#{theme}/head"  
+  = javascript_include_tag "application", data: {'turbolinks-track' => ''}
+  = stylesheet_link_tag 'application', data: {'turbolinks-track' => ''}
 %body
-  %form#history-form.x-hide-display
-    %input#x-history-field(type="hidden")
-    %iframe#x-history-frame
-      
-  #flashes
-    :javascript
-      Ext.onReady(function() {
-        #{jsflashes}
-      });
-  #header
-    = render "layouts/#{theme}/header"
-  #content.x-hidden
-    = yield
-  #footer.x-hidden
+  .container
+    #header= render "layouts/manager/header"
+    #content
+      = show_flash_messages
+      = yield
+    #footer= render "layouts/#{theme}/footer"
+  = render "layouts/#{theme}/analytics" unless Rails.env == 'development'

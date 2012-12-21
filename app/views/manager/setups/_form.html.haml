@@ -1,4 +1,4 @@
-= form_for setup, html: { class: 'form-horizontal' } do |f|
+= form_for setup, url: manager_setup_path, html: { class: 'form-horizontal' } do |f|
   - if setup.errors.any?
     #error_explanation.alert.alert-error
       %h4
@@ -18,5 +18,8 @@
     .controls
       = f.text_field :by_line, class: 'span12'
 
-  .actions
+  .form-actions
+    = link_to manager_path, class: 'btn' do
+      %i.icon-arrow-left
+      Back
     = f.submit class: 'btn btn-primary pull-right'

@@ -1,4 +1,4 @@
-= form_for([:settings, @page_layout]) do |f|
+= form_for([:manager, @page_layout]) do |f|
   - if @page_layout.errors.any?
     #error_explanation
       %h2
@@ -17,7 +17,7 @@
     = f.text_area :content, class: 'editor span12', style: 'border:1px solid #dfdfdf;'
     
   .form-actions
-    = link_to settings_path, class: 'btn' do
+    = link_to manager_path, class: 'btn' do
       %i.icon-arrow-left
       Back
     = f.submit class: 'btn btn-primary pull-right'

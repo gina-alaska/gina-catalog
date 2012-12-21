@@ -1,4 +1,4 @@
-class SetupsController < ApplicationController
+class Manager::SetupsController < ManagerController
   before_filter :fetch_setup, except: [:new,:create]
   
   def show
@@ -34,7 +34,7 @@ class SetupsController < ApplicationController
       respond_to do |format|
         format.html {
           flash[:success] = 'First time setup completed!'
-          redirect_to settings_path
+          redirect_to manager_path
         }
       end
     else
@@ -54,7 +54,7 @@ class SetupsController < ApplicationController
       respond_to do |format|
         format.html {
           flash[:success] = 'Settings updated'
-          redirect_to settings_path
+          redirect_to manager_path
         }
       end
     else
@@ -91,14 +91,14 @@ class SetupsController < ApplicationController
       respond_to do |format|
         format.html {
           flash[:success] = "Removed carousel image"
-          redirect_to settings_path
+          redirect_to manager_path
         }
       end
     else
       respond_to do |format|
         format.html {
           flash[:error] = "Unable to remove carousel image"
-          redirect_to settings_path
+          redirect_to manager_path
         }
       end
     end

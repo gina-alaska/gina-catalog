@@ -12,6 +12,13 @@ NSCatalog::Application.routes.draw do
     post :remove_carousel_image
   end
   
+  match '/manager' => 'manager#dashboard', as: 'manager'
+  namespace :manager do
+    resources :pages
+    resources :page_layouts
+    resource :setup
+  end
+  
   namespace :settings, :module => 'setups' do
     resources :pages
     resources :page_layouts

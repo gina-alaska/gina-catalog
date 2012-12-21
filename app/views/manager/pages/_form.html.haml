@@ -1,0 +1,46 @@
+= form_for [:manager, page] do |f|
+  - if page.errors.any?
+    #error_explanation.alert.alert-error
+      %h4
+        = pluralize(page.errors.count, "error")
+        prohibited this page from being saved:
+      %ul
+        - page.errors.full_messages.each do |msg|
+          %li= msg
+          
+  .control-group
+    = f.label :title, class: 'control-label'
+    .controls
+      = f.text_field :title, class: 'span12'
+  .control-group
+    = f.label :slug, class: 'control-label'
+    .controls
+      = f.text_field :slug, class: 'span12'
+  :javascript
+    $('#page_slug').slugify('#page_title');
+    
+  .control-group
+    = f.label :page_layout_id, 'Layout', class: 'control-label'
+    .controls
+      = f.select :page_layout_id, options_from_collection_for_select(@setup.page_layouts, :id, :name, page.page_layout.try(:id)), class: 'span12'
+      
+      
+  %ul.nav.nav-tabs
+    - page.sections.each do |section|
+      %li{class:(section == page.sections.first ? 'active' : '')}= link_to section.humanize, "##{section}", data: { toggle: 'tab'}
+      
+  .tab-content
+    - page.content.each do |name,content|
+      .tab-pane{id:name, class:(name == page.sections.first ? 'active' : '')}
+        - if name == 'images'
+          = render 'images', page: page
+        - else
+          = text_area_tag "page[content][#{name}]", content, class: 'editor span12', style:"border: none;", rows: 10
+
+  .form-actions
+    = link_to manager_path, class: 'btn' do 
+      %i.icon-arrow-left
+      Back
+    .pull-right
+      = f.submit 'Save and Close', class: 'btn btn-primary'
+    

@@ -1,4 +1,4 @@
-class Setups::PagesController < ApplicationController
+class Manager::PagesController < ManagerController
   def new
     @page = @setup.pages.build
     @page.page_layout = @setup.page_layouts.where(default: true).first

@@ -3,6 +3,8 @@ class Image < ActiveRecord::Base
   image_accessor :file
   
   has_and_belongs_to_many :setups
+  has_many :page_images
+  has_many :pages, :through => :page_images
   
   liquid_methods :title, :description, :link_to_url, :image_url
   

@@ -1,4 +1,4 @@
-class Setups::PageLayoutsController < ApplicationController
+class Manager::PageLayoutsController < ManagerController
   # GET /setups/page_layouts/1
   # GET /setups/page_layouts/1.json
   def show
@@ -34,7 +34,7 @@ class Setups::PageLayoutsController < ApplicationController
 
     respond_to do |format|
       if @page_layout.save
-        format.html { redirect_to settings_path, notice: 'Page layout was successfully created.' }
+        format.html { redirect_to manager_path, notice: 'Page layout was successfully created.' }
         format.json { render json: @page_layout, status: :created, location: @page_layout }
       else
         format.html { render action: "new" }
@@ -50,7 +50,7 @@ class Setups::PageLayoutsController < ApplicationController
 
     respond_to do |format|
       if @page_layout.update_attributes(params[:page_layout])
-        format.html { redirect_to settings_path, notice: 'Page layout was successfully updated.' }
+        format.html { redirect_to manager_path, notice: 'Page layout was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -66,7 +66,7 @@ class Setups::PageLayoutsController < ApplicationController
     @page_layout.destroy
 
     respond_to do |format|
-      format.html { redirect_to settings_path }
+      format.html { redirect_to manager_path }
       format.json { head :no_content }
     end
   end

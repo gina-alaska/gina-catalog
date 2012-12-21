@@ -7,6 +7,9 @@ class Page < ActiveRecord::Base
   serialize :content
   
   has_and_belongs_to_many :setups
+  has_many :page_images
+  has_many :images, :through => :page_images
+  
   belongs_to :page_layout
   
   liquid_methods :title, :slug
@@ -17,7 +20,9 @@ class Page < ActiveRecord::Base
   
   def sections
     s = super
+    
     s = ['body'] if s.nil? or s.empty?
+    s << 'images' unless s.include?('images')
     
     s
   end

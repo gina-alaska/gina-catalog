@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121206214539) do
+ActiveRecord::Schema.define(:version => 20121220215832) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -482,6 +482,13 @@ ActiveRecord::Schema.define(:version => 20121206214539) do
     t.integer "timestamp",  :null => false
     t.string  "server_url"
     t.string  "salt",       :null => false
+  end
+
+  create_table "page_images", :force => true do |t|
+    t.integer  "image_id"
+    t.integer  "page_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "page_layouts", :force => true do |t|
