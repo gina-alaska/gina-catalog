@@ -17,7 +17,7 @@ class PagesController < ApplicationController
   protected
   
   def fetch_page
-    @page = @setup.pages.where(slug: params[:id]).first
+    @page = @setup.pages.where(slug: params[:slug]).first
     if @page.nil?
       redirect_to page_path('404-not-found')
     end

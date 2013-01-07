@@ -1,5 +1,5 @@
 .row-fluid
   .span10.offset1
     %h3 New image
-    = render 'form'
+    = render 'form', image: @image
     = link_to 'Back', images_path

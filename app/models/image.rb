@@ -6,6 +6,8 @@ class Image < ActiveRecord::Base
   has_many :page_images
   has_many :pages, :through => :page_images
   
+  validates_length_of :description, :maximum => 255
+  
   liquid_methods :title, :description, :link_to_url, :image_url
   
   def image_url
@@ -17,7 +19,10 @@ class Image < ActiveRecord::Base
       'title' => self.title,
       'description' => self.description,
       'link_to_url' => self.link_to_url,
+      'thumb' => ::ImageTagDrop.new(self),
       'tag' => "<img src=\"#{self.file.thumb('640x480#').url}\" alt=\"#{self.title}\" />"
+      
+      
     }
   end
 end

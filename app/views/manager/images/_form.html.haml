@@ -1,0 +1,61 @@
+= form_for [:manager, image], html: { id: 'upload_image_form', class: 'form-horizontal' } do |f|
+  - if image.errors.any?
+    #error_explanation.alert.alert-error
+      %h2
+        = pluralize(image.errors.count, "error")
+        prohibited this image from being saved:
+      %ul
+        - image.errors.full_messages.each do |msg|
+          %li= msg
+  
+  .control-group
+    = f.label :title, class: 'control-label'
+    .controls
+      = f.text_field :title
+
+  .control-group
+    = f.label :description, class: 'control-label'
+    .controls
+      = f.text_field :description
+    
+  .control-group
+    = f.label :link_to_url, class: 'control-label'
+    .controls
+      = f.text_field :link_to_url
+    
+  .control-group
+    = f.label :file, class: 'control-label'
+    .controls
+      - if image.file
+        = image_tag image.file.thumb('300x300').url
+        %br/
+      = f.file_field :file
+    
+  .buttons
+    = link_to 'Submit image', '#', class: 'btn btn-primary', id: 'upload-image-button'
+:javascript
+  $(document).ready(function() {
+    // Initialize the jQuery File Upload widget:
+    $('#upload_image_form').fileupload({
+      dataType: 'json',
+      add: function(e, data) {
+        $('#upload-image-button').on('click', function() {
+          data.submit();
+        });
+      },
+      submit: function (e, data) {
+        data.context = $('#upload-image-button').text('Uploading....');
+      },
+      fail: function(e, data) {
+        alert("Error while uploading image")
+      },
+      done: function(e, data) {
+        $('#upload_image_form').each(function() { this.reset(); })
+        #{render '/manager/images/refresh_image_list.js.erb'}
+        $('#image_chooser_modal a[href="#thumbnail-list"]').tab('show');
+      },
+      always: function (e, data) {
+        data.context.text('Submit image');
+      }
+    });
+  });

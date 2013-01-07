@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121220215832) do
+ActiveRecord::Schema.define(:version => 20121222025325) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -513,6 +513,10 @@ ActiveRecord::Schema.define(:version => 20121220215832) do
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
     t.integer  "page_layout_id"
+    t.integer  "parent_id"
+    t.integer  "lft"
+    t.integer  "rgt"
+    t.integer  "depth"
   end
 
   create_table "pages_setups", :id => false, :force => true do |t|

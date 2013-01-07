@@ -4,23 +4,9 @@
     = link_to new_manager_page_path, class: 'btn btn-success pull-right' do
       %i.icon-plus.icon-white
       New Page
-.content
-  %table.pages_list.table.table-striped.table-condensed
-    %thead
-      %tr
-        %th Title
-        %th.actions Actions
-    %tbody
-      - setup.pages.each do |page|
-        %tr
-          %td
-            = link_to edit_manager_page_path(page), class: 'edit' do
-              %i{class: (page.slug == 'home' ? 'icon-home' : 'icon-file' )}
-              = page.title
-          %td.actions
-            = link_to edit_manager_page_path(page), class: 'btn' do
-              %i.icon-edit    
-            = link_to page_path(page), class: 'btn' do
-              %i.icon-eye-open    
-            = link_to manager_page_path(page), method: 'DELETE', class: 'btn btn-danger', data: { confirm: 'Are you sure?' } do
-              %i.icon-trash.icon-white
+.page-list
+  .row-fluid.header
+    .span9.title Title
+    .span3.actions Actions
+  - setup.pages.roots.each do |page|
+    = render '/manager/pages/page', page: page

@@ -1,7 +1,10 @@
 require 'html/pipeline'
 
 class Page < ActiveRecord::Base
-  attr_accessible :content, :layout, :slug, :title, :sections, :page_layout_id, :page_layout
+  attr_accessible :content, :layout, :slug, :title, :sections, :page_layout_id, :page_layout, :parent_id
+  
+  acts_as_nested_set
+  before_save :rebuild_slug
   
   serialize :sections
   serialize :content
@@ -12,10 +15,21 @@ class Page < ActiveRecord::Base
   
   belongs_to :page_layout
   
-  liquid_methods :title, :slug
+  accepts_nested_attributes_for :images
   
-  def to_param
-    self.slug
+  liquid_methods :title, :slug, :images
+  
+  # def to_param
+  #   self.slug
+  # end
+  
+  def rebuild_slug
+    parent_slugs = self.ancestors.collect { |p| p.slug.split('/').last } << self.slug_without_path
+    self.slug = parent_slugs.join('/')
+  end
+  
+  def slug_without_path
+    self.read_attribute(:slug).split('/').last
   end
   
   def sections
@@ -53,7 +67,8 @@ class Page < ActiveRecord::Base
     {
       'title' => self.title,
       'slug' => self.slug,
-      'content' => ::PageContentDrop.new(self)
+      'content' => ::PageContentDrop.new(self),
+      'images' => self.images
     }
   end
 end

@@ -11,7 +11,7 @@
   = f.label :name
   = f.text_field :name, class: 'span12'
   = f.label :default
-  = f.select :default, [['No', 0], ['Yes', 1]], class: 'span12'
+  = f.select :default, [['No', false], ['Yes', true]], class: 'span12'
   = f.label :content
   %div{style:"border:1px solid #dfdfdf;"}
     = f.text_area :content, class: 'editor span12', style: 'border:1px solid #dfdfdf;'

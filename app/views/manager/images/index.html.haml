@@ -14,6 +14,5 @@
           %h5= link_to_unless image.link_to_url.empty?, image.title, image.link_to_url
           %p= image.description
           .buttons{style:"text-align:center;"}
-            = link_to 'Add', add_carousel_image_settings_path(image_id: image), method: 'POST', class: 'btn'
-            = link_to 'Edit', edit_image_path(image), class: 'btn'
-            = link_to 'Delete', image, method: "DELETE", data: { confirm: 'Are you sure?' }, class: 'btn'
+            = link_to 'Edit', edit_manager_image_path(image), class: 'btn'
+            = link_to 'Delete', [:manager, image], method: "DELETE", data: { confirm: 'Are you sure?' }, class: 'btn'

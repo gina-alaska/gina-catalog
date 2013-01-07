@@ -1,11 +1,13 @@
 class Manager::PagesController < ManagerController
+  before_filter :fetch_page, :except => [:new, :create]
+  
   def new
     @page = @setup.pages.build
     @page.page_layout = @setup.page_layouts.where(default: true).first
+    @page.parent = @setup.pages.find(params[:parent])
   end
   
   def edit
-    @page = @setup.pages.where(slug: params[:id]).first
   end
   
   def create
@@ -16,7 +18,7 @@ class Manager::PagesController < ManagerController
       respond_to do |format|
         format.html {
           flash[:success] = "#{@page.title} page created"
-          redirect_to settings_path
+          redirect_to manager_path
         }
       end
     else
@@ -29,13 +31,11 @@ class Manager::PagesController < ManagerController
   end
   
   def update
-    @page = @setup.pages.where(slug: params[:id]).first
-    
     if @page.update_attributes(params[:page])
       respond_to do |format|
         format.html {
           flash[:success] = "#{@page.title} page updated"
-          redirect_to settings_path
+          redirect_to manager_path
         }
       end
     else
@@ -48,22 +48,32 @@ class Manager::PagesController < ManagerController
   end
   
   def destroy
-    @page = @setup.pages.where(slug: params[:id]).first
-    
     if @page.destroy
       respond_to do |format|
         format.html {
           flash[:success] = "#{@page.title} page deleted"
-          redirect_to settings_path
+          redirect_to manager_path
         }
       end
     else
       respond_to do |format|
         format.html {
           flash[:success] = "Unable to delete #{@page.title}"
-          redirect_to settings_path
+          redirect_to manager_path
         }
       end
     end
+  end
+  
+  def upload_image
+    respond_to do |format|
+      format.js
+    end
+  end
+  
+  protected
+  
+  def fetch_page
+    @page = @setup.pages.find(params[:id])
   end
 end

@@ -24,6 +24,7 @@ gem 'turbolinks', git: 'git://github.com/rails/turbolinks.git'
 gem 'html-pipeline'
 gem 'liquid'
 gem 'dragonfly'
+gem 'awesome_nested_set'
 
 #gem 'nofxx-georuby'
 #broke in rails 3.1

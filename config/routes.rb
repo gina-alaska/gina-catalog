@@ -3,8 +3,6 @@ NSCatalog::Application.routes.draw do
     get :not_found, on: :collection
   end
 
-  resources :images
-
   resources :setups
   resource :settings, controller: 'setups' do
     get :carousel
@@ -14,18 +12,20 @@ NSCatalog::Application.routes.draw do
   
   match '/manager' => 'manager#dashboard', as: 'manager'
   namespace :manager do
-    resources :pages
+    resources :images
+    resources :pages do
+      get :upload_image, :on => :member
+      resources :images, :only => [] do
+        member do
+          post :add
+          post :remove
+        end
+      end
+    end
     resources :page_layouts
     resource :setup
   end
   
-  namespace :settings, :module => 'setups' do
-    resources :pages
-    resources :page_layouts
-  end
-  
-  match '/theme(.:format)' => 'setups#show'
-
   resources :contact_infos
 
   resources :use_agreements
@@ -127,13 +127,13 @@ NSCatalog::Application.routes.draw do
   match '/preferences(.:format)' => 'users#preferences'
   match '/login' => 'sessions#new'
   match '/logout' => 'sessions#destroy'
-  match '/:id' => 'pages#show', as: :page
   
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => "pages#show", :id => 'home'
+  root :to => "pages#show", :slug => 'home'
 
   # See how all your routes lay out with "rake routes"
+  match '*slug' => 'pages#show', as: :page
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.

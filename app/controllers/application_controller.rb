@@ -67,6 +67,10 @@ class ApplicationController < ActionController::Base
       end
     end      
   end
+  
+  def save_url(url = nil)
+    session[:return_to] = url || request.fullpath
+  end
 
   def redirect_back_or_default(default = '/')
     if session[:return_to]

@@ -1,21 +1,26 @@
 .navbar.navbar-static-top
   .navbar-inner
     .brand Images
-    = link_to '#', class: 'btn btn-success pull-right' do
-      %i.icon-plus.icon-white
-      Add Image
+    - if page.new_record?
+      = link_to 'Save page before adding images', '#', class: 'btn btn-info pull-right disabled'
+    - else
+      = link_to '#image_chooser_modal', role: 'button', data: { toggle: 'modal' }, class: 'btn btn-success pull-right' do
+        %i.icon-plus.icon-white
+        Add Image
 .row-fluid
-  .span12{style:'padding: 3px;'}
-    - if page.images.count == 0
-      %p.lead No images 
-    %ul.thumbnails
-      - page.images.each do |image|
-        %li.span3
-          .thumbnail
-            = image_tag image.file.thumb('100x100').url, alt: image.title
-            %h4= link_to_unless image.link_to_url.empty?, image.title, image.link_to_url
-            %p= image.description
-            .buttons{style:"text-align:center;"}
-              = link_to 'Add', add_carousel_image_settings_path(image_id: image), method: 'POST', class: 'btn'
-              = link_to 'Edit', edit_image_path(image), class: 'btn'
-              = link_to 'Delete', image, method: "DELETE", data: { confirm: 'Are you sure?' }, class: 'btn'
+  .image-list.span12
+    .thumbnails{style:'padding: 3px;'}
+      - if page.images.count == 0
+        %p.lead No images 
+      - else
+        %ul
+          - page.images.each do |image|
+            %li.thumbnail
+              .image
+                = image_tag image.file.thumb('250x250#').url, alt: image.title
+                .caption
+                  %h5= link_to_unless image.link_to_url.empty?, image.title, image.link_to_url
+                  %p= image.description
+              .btn-group{style:"text-align:center;"}
+                = link_to 'Edit', edit_manager_image_path(image), class: 'btn'
+                = link_to 'Remove', remove_manager_page_image_path(page, image), method: "POST", data: { confirm: 'Are you sure?' }, class: 'btn', remote: true

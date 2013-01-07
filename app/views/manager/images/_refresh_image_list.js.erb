@@ -1,0 +1,7 @@
+//$('#images .image-list').load('#{edit_manager_page_path(page)} #images .thumbnails');
+
+$.get('<%= edit_manager_page_path(@page) %>', function(responseText, textStatus, xhr) {
+  var response = $(responseText);
+  $('#images .image-list').replaceWith(response.find('#images .image-list'));
+  $('#image_chooser_modal #thumbnail-list').replaceWith(response.find('#image_chooser_modal #thumbnail-list'));
+});

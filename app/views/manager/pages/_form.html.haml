@@ -12,17 +12,28 @@
     = f.label :title, class: 'control-label'
     .controls
       = f.text_field :title, class: 'span12'
-  .control-group
-    = f.label :slug, class: 'control-label'
-    .controls
-      = f.text_field :slug, class: 'span12'
-  :javascript
-    $('#page_slug').slugify('#page_title');
-    
-  .control-group
-    = f.label :page_layout_id, 'Layout', class: 'control-label'
-    .controls
-      = f.select :page_layout_id, options_from_collection_for_select(@setup.page_layouts, :id, :name, page.page_layout.try(:id)), class: 'span12'
+      
+  = link_to 'Advanced Options', '#advanced', data: { toggle: 'collapse' }
+  
+  #advanced.collapse
+    .control-group
+      = f.label :slug, class: 'control-label'
+      .controls
+        = f.text_field :slug, value: page.slug_without_path, class: 'span12'
+    :javascript
+      $('#page_slug').slugify('#page_title');
+
+    .row-fluid
+      .span6
+        .control-group
+          = f.label :parent_id, class: 'control-label'
+          .controls
+            = f.select :parent_id, nested_set_options(@setup.pages, page) {|i| "#{'-' * i.level} #{i.title}" }
+      .span6
+        .control-group
+          = f.label :page_layout_id, 'Layout', class: 'control-label'
+          .controls
+            = f.select :page_layout_id, options_from_collection_for_select(@setup.page_layouts, :id, :name, page.page_layout.try(:id)), class: 'span12'
       
       
   %ul.nav.nav-tabs
@@ -43,4 +54,5 @@
       Back
     .pull-right
       = f.submit 'Save and Close', class: 'btn btn-primary'
-    
+
+= render 'image_chooser', page: page unless page.new_record?

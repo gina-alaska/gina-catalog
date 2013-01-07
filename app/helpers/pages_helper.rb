@@ -7,7 +7,7 @@ module PagesHelper
         :attributes => {
           'a' => ['href', 'class', 'data-slide'],
           'img' => ['src', 'alt'],
-          'div' => ['itemscope', 'itemtype'],
+          'div' => ['itemscope', 'itemtype', 'style'],
           :all => ['abbr', 'accept', 'accept-charset',
                     'accesskey', 'action', 'align', 'alt', 'axis',
                     'border', 'cellpadding', 'cellspacing', 'char',

@@ -1,6 +1,6 @@
 .navbar.navbar-static-top
   .navbar-inner
-    .brand Pages
+    .brand Layouts
     = link_to new_manager_page_layout_path, class: 'btn btn-success pull-right' do
       %i.icon-plus.icon-white
       New Layout
@@ -17,6 +17,8 @@
             = link_to edit_manager_page_layout_path(layout), class: 'edit' do
               %i.icon-file
               = layout.name
+              - if layout.default?
+                (default)
           %td.actions
             = link_to edit_manager_page_layout_path(layout), class: 'btn' do
               %i.icon-edit    

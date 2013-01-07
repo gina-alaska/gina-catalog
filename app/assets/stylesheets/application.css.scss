@@ -18,9 +18,10 @@ $navbarLinkBackgroundHover: darken($navbarBackground, 10%);
 
 @import "bootstrap";
 @import "catalogs";
-@import "setups";
+@import "manager";
 @import "markitup";
 @import "markitup-html";
+@import "jquery.fileupload-ui";
 
 .carousel.thumbnails {
   .buttons {
@@ -94,9 +95,23 @@ input[type="submit"].btn-block {
 ul.nav.nav-tabs {
   margin-bottom: 0;
 }
+
 .tab-content {
   border-left: 1px solid #dfdfdf;
   border-right: 1px solid #dfdfdf;
   border-bottom: 1px solid #dfdfdf;
   .content { padding: 3px; }
+}
+
+.thumbnail {
+  position: relative;
+  .caption {
+    position: absolute;
+    bottom: 0px;
+    background: rgba(0,0,0, 0.7);
+    color: #fff;
+    left:0;
+    right:0;
+    overflow: auto;
+  }
 }
