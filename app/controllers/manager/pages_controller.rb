@@ -4,7 +4,7 @@ class Manager::PagesController < ManagerController
   def new
     @page = @setup.pages.build
     @page.page_layout = @setup.page_layouts.where(default: true).first
-    @page.parent = @setup.pages.find(params[:parent])
+    @page.parent = @setup.pages.find(params[:parent]) if params[:parent]
   end
   
   def edit

@@ -29,7 +29,7 @@ class Page < ActiveRecord::Base
   end
   
   def slug_without_path
-    self.read_attribute(:slug).split('/').last
+    self.read_attribute(:slug).try(:split, '/').try(:last)
   end
   
   def sections
