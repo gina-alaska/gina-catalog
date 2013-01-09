@@ -49,7 +49,7 @@ class Catalog < ActiveRecord::Base
   # before_create :repohex
   
   accepts_nested_attributes_for :links, :locations, :download_urls
-
+  
   #Adding solr indexing
   searchable do
     text :title, { :boost => 2.0, :stored => true }
@@ -326,7 +326,11 @@ Title: #{self.title}
       :data_type_ids => self.data_type_ids
     }    
   end
-
+  
+  def to_s
+    self.title
+  end
+  
   protected
 
   def build_source_url

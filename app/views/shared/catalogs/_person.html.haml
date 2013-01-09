@@ -1,0 +1,19 @@
+%address
+  = person.full_name
+  - person.addresses do |address|
+    - next if address.line1.nil? and address.line2.nil? and address.city.nil?
+    %br
+    = address.line1
+    %br
+    = address.line2
+    %br
+    = "#{address.city}, #{address.state} #{address.zipcode}"
+  - unless person.email.nil? or person.email.empty?
+    %br
+    %strong Email:
+    = person.email
+  - person.phone_numbers.each do |pn|
+    - next if pn.digits.nil? or pn.digits.empty?
+    %br
+    %strong= "#{pn.name.humanize}:"
+    = pn.digits

@@ -1,5 +1,8 @@
 class Manager::DataController < ApplicationController
   layout 'manager'
+  
+  before_filter :fetch_record, :except => [:index, :create, :new]
+  
   include CatalogConcerns::Search
   
   respond_to :html
@@ -17,5 +20,17 @@ class Manager::DataController < ApplicationController
     end
     
     respond_with @catalogs
+  end
+  
+  def show
+    respond_to do |format|
+      format.html
+    end
+  end
+  
+  protected
+  
+  def fetch_record
+    @catalog = Catalog.find(params[:id])
   end
 end
