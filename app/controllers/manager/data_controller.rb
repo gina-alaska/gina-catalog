@@ -28,6 +28,12 @@ class Manager::DataController < ApplicationController
     end
   end
   
+  def edit
+    respond_to do |format|
+      format.html
+    end
+  end
+  
   protected
   
   def fetch_record

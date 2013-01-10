@@ -2,7 +2,24 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-
+.section-nav .nav {
+  width: 250px;
+  top: 50px;
+  border: 1px solid #EFEFEF;
+  @include border-radius(6px);
+  
+  li:first-child > a {
+    @include border-top-radius(6px);
+  }
+  li:last-child > a {
+    @include border-bottom-radius(6px);
+  }
+  
+  li > a {
+    padding: 9px 15px;
+    border: 0;
+  }
+}
 
 .pages li > a {
   padding: 10px;

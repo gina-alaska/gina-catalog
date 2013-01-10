@@ -90,13 +90,14 @@ class CatalogsController < ApplicationController
 
   def search
     @search_params = params[:search] || {}
+    @search_params['order_by'] ||= 'title_sort-ascending'
     @search = solr_search(@search_params, params[:page], params[:limit])
     
-    if @search 
+    if @search.respond_to? :results
       @results = @search.results
       @total = @search.total
     else
-      @results = []
+      @results = @search
       @total = 0
     end
     

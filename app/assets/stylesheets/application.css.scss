@@ -22,6 +22,11 @@ $navbarLinkBackgroundHover: darken($navbarBackground, 10%);
 @import "markitup";
 @import "markitup-html";
 @import "jquery.fileupload-ui";
+@import 'select2/select2';
+
+.row-fluid .select2-container.span12 {
+  margin-left: 0;
+}
 
 .carousel.thumbnails {
   .buttons {
@@ -40,7 +45,6 @@ $navbarLinkBackgroundHover: darken($navbarBackground, 10%);
 
 .navbar {
   input[type="submit"].btn {
-    margin-top: 0px;
   }
 }
 input[type="submit"].btn-block {
@@ -48,8 +52,6 @@ input[type="submit"].btn-block {
 }
 
 #header {
-  margin-bottom: 25px;
-  
   .logo {
     height: 40px;
     margin-right: 20px;
@@ -79,7 +81,6 @@ input[type="submit"].btn-block {
 }
 
 #content {
-  margin-top: 5px;
 }
 
 #footer {
