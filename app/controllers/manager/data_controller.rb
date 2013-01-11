@@ -1,6 +1,4 @@
-class Manager::DataController < ApplicationController
-  layout 'manager'
-  
+class Manager::DataController < ManagerController
   before_filter :fetch_record, :except => [:index, :create, :new]
   
   include CatalogConcerns::Search
@@ -34,7 +32,31 @@ class Manager::DataController < ApplicationController
     end
   end
   
+  def update
+    if @catalog.update_attributes(catalog_params(@catalog.type))
+      respond_to do |format|
+        format.html {
+          flash[:success] = 'Updated catalog record'
+          redirect_to manager_datum_path(@catalog)
+        }
+      end
+    else
+      respond_to do |format|
+        format.html {
+          render 'edit'
+        }
+      end
+    end
+    
+  end
+  
   protected
+  
+  def catalog_params(type)
+    params[type.downcase.to_sym].slice(:title, :description, :start_date, :end_date, :status, 
+      :owner_id, :primary_contact_id, :people_ids, :source_agency_id, :funding_agency_id, 
+      :agency_ids)
+  end
   
   def fetch_record
     @catalog = Catalog.find(params[:id])
