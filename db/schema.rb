@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121222025325) do
+ActiveRecord::Schema.define(:version => 20130111032459) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -649,6 +649,15 @@ ActiveRecord::Schema.define(:version => 20121222025325) do
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
   end
+
+  create_table "site_urls", :force => true do |t|
+    t.string   "url"
+    t.integer  "setup_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "site_urls", ["url"], :name => "index_site_urls_on_url"
 
   create_table "spreadsheet_projects", :id => false, :force => true do |t|
     t.integer "recno"

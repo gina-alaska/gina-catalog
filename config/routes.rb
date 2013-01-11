@@ -2,13 +2,6 @@ NSCatalog::Application.routes.draw do
   resources :pages, only: :show do
     get :not_found, on: :collection
   end
-
-  resources :setups
-  resource :settings, controller: 'setups' do
-    get :carousel
-    post :add_carousel_image
-    post :remove_carousel_image
-  end
   
   match '/manager' => 'manager#dashboard', as: 'manager'
   namespace :manager do
