@@ -13,9 +13,10 @@ class Agency < ActiveRecord::Base
   has_many :agency_people
   has_many :people, :through => :agency_people  
   
-  has_many :project_agencies, :dependent => :destroy
-  has_many :projects, :through => :project_agencies
-  
+  # has_many :catalog_agencies, :dependent => :destroy
+  # has_many :projects, :through => :project_agencies
+  has_and_belongs_to_many :catalogs, join_table: :catalog_agencies
+
   scope :active, :conditions => { :active => true }, :order => 'name asc'
   
   validates_presence_of     :name

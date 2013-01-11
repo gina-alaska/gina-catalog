@@ -89,8 +89,12 @@ class CatalogsController < ApplicationController
   end
 
   def search
+    @agencies = Agency.select([:name,:id]).collect{|a| [a.name, a.id]}.group_by{|a| a.first.first }
+     #Agency.all #.group_by{|a| a.name[0]}
+  
     @search_params = params[:search] || {}
     @search_params['order_by'] ||= 'title_sort-ascending'
+
     @search = solr_search(@search_params, params[:page], params[:limit])
     
     if @search.respond_to? :results
