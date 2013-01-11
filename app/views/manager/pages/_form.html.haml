@@ -1,0 +1,63 @@
+= form_for [:manager, page] do |f|
+  - if page.errors.any?
+    #error_explanation.alert.alert-error
+      %h4
+        = pluralize(page.errors.count, "error")
+        prohibited this page from being saved:
+      %ul
+        - page.errors.full_messages.each do |msg|
+          %li= msg
+          
+  .control-group
+    = f.label :title, class: 'control-label'
+    .controls
+      = f.text_field :title, class: 'span12'
+      
+  = link_to 'Advanced Options', '#advanced', data: { toggle: 'collapse' }
+  
+  #advanced.collapse
+    .control-group
+      = f.label :slug, class: 'control-label'
+      .controls
+        = f.text_field :slug, value: page.slug_without_path, class: 'span12'
+    :javascript
+      $('#page_slug').slugify('#page_title');
+
+    .row-fluid
+      .span6
+        .control-group
+          = f.label :parent_id, class: 'control-label'
+          .controls
+            = f.select :parent_id, nested_set_options(@setup.pages, page) {|i| "#{'-' * i.level} #{i.title}" }, include_blank: true
+      .span6
+        .control-group
+          = f.label :page_layout_id, 'Layout', class: 'control-label'
+          .controls
+            = f.select :page_layout_id, options_from_collection_for_select(@setup.page_layouts, :id, :name, page.page_layout.try(:id)), class: 'span12'
+      
+      
+  #page_tabs.tabbable
+    %ul.nav.nav-tabs
+      - page.sections.each do |section|
+        %li{class:(section == page.sections.first ? 'active' : '')}= link_to section.humanize, "##{section}", data: { toggle: 'tab'}
+      %li{id: 'new_page_tab'}
+        =link_to "#", id: 'new_page_btn', data: {toggle: "modal", target:"#new_page_modal"} do
+          %i.icon-plus
+      
+  #page_content.tab-content
+    - page.content.each do |name,content|
+      .tab-pane{id:name, class:(name == page.sections.first ? 'active' : '')}
+        - if name == 'images'
+          = render 'images', page: page
+        - else
+          = text_area_tag "page[content][#{name}]", content, class: 'editor span12', style:"border: none;", rows: 10
+    
+  .form-actions
+    = link_to manager_path, class: 'btn' do 
+      %i.icon-arrow-left
+      Back
+    .pull-right
+      = f.submit 'Save and Close', class: 'btn btn-primary'
+
+= render 'image_chooser', page: page unless page.new_record?
+= render 'manager/page_layouts/new_page', page: page

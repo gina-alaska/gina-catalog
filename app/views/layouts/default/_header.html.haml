@@ -1,3 +1,41 @@
-#logo= image_tag 'nssi-logo.png', :alt => 'NSSI Logo'
-%h1 North Slope Science Catalog
-%h2 Data Products & Project Tracking
+.page-header
+  - if !current_user.nil? and current_user.is_an_admin?
+    = link_to 'Manage Site', manager_path, class: 'btn btn-primary pull-right'
+  %h1
+    = @setup.title
+    %small= @setup.by_line
+
+.navbar.navbar-inverse.navbar-static-top
+  .navbar-inner
+    %ul.nav
+      %li{class:(current_page?(root_url) ? 'active' : '')}
+        = link_to root_url do 
+          %i.icon-home.icon-white
+          Home
+      %li{class:(current_page?(search_path) ? 'active' : '')}
+        = link_to search_path do
+          %i.icon-file.icon-white
+          Data
+      %li
+        = link_to page_path('maps') do
+          %i.icon-map-marker.icon-white
+          Maps
+      %li
+        = link_to page_path('partners') do
+          %i.icon-user.icon-white
+          Partners
+      %li
+        = link_to page_path('about') do
+          %i.icon-info-sign.icon-white
+          About
+      %li
+        = link_to page_path('help') do
+          %i.icon-question-sign.icon-white
+          Help
+      %li
+        = link_to page_path('contact-us') do
+          %i.icon-envelope.icon-white
+          Contact Us
+      
+    = form_tag search_path, class: 'navbar-search pull-right' do
+      = text_field_tag 'search[q]', nil, placeholder: "Quick Search", class: 'search-query'

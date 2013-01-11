@@ -1,0 +1,51 @@
+= form_tag search_url, style: 'width:100%' do
+  %h4 Keyword search
+  .row-fluid
+    .span9
+      = text_field_tag 'search[q]', search_params[:q], placeholder: 'Enter keyword search', class: 'span12'
+    .span3
+      = submit_tag 'Search', class: 'btn btn-primary btn-block'
+          
+  %h4 Advanced Options
+  #advanced.accordion
+    .accordion-group
+      .accordion-heading
+        = link_to 'General', '#general', class: 'accordion-toggle', data: { toggle: 'collapse', parent: '#advanced' }
+      #general.accordion-body.collapse
+        .accordion-inner
+          = label_tag 'search[type]', 'Record Type'
+          = select_tag 'search[type]', options_for_select([['Projects', 'Project'], ['Data', 'Asset']], search_params[:type]), class: 'span12', prompt: "Projects and Data"
+
+          = label_tag 'search[data_types]', 'Data Type'
+          = select_tag 'search[data_types]', options_from_collection_for_select(DataType.all, :name, :name, search_params[:data_types]), class: 'span12', prompt: 'All types'
+
+          = label_tag 'search[status]', 'Status'
+          = select_tag 'search[status]', options_for_select(Project::STATUSES + Asset::STATUSES, search_params[:status]), class: 'span12', prompt: 'Any'
+
+          = label_tag 'search[start_date_afer]', 'Starts after'
+          = number_field_tag 'search[start_date_afer]', search_params[:start_date_afer], min: 1900, max: Time.zone.now.year, class: 'span12', placeholder: 'YYYY'
+              
+          = label_tag 'search[end_date_before]', 'Ends before'
+          = number_field_tag 'search[end_date_before]', search_params[:end_date_before], min: 1900, max: Time.zone.now.year, class: 'span12', placeholder: 'YYYY'
+              
+          = label_tag 'search[region]', 'Region'
+          = select_tag 'search[region]', options_from_collection_for_select(Geokeyword.all, :name, :name, search_params[:region]), class: 'span12', prompt: 'All regions'
+
+          = label_tag 'search[long_term_monitoring]', class: 'checkbox' do
+            = check_box_tag 'search[long_term_monitoring]', 1, search_params[:long_term_monitoring]
+            Long Term Monitoring
+
+    .accordion-group
+      .accordion-heading
+        = link_to 'Agencies', '#agencies', class: 'accordion-toggle', data: { toggle: 'collapse', parent: '#advanced' }
+      #agencies.accordion-body.collapse
+        .accordion-inner
+          Agency list
+          
+    .accordion-group
+      .accordion-heading
+        = link_to 'Contacts', '#contacts', class: 'accordion-toggle', data: { toggle: 'collapse', parent: '#advanced' }
+      #contacts.accordion-body.collapse
+        .accordion-inner
+          Contacts list
+              

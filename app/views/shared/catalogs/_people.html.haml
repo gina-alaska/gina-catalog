@@ -1,0 +1,7 @@
+- unless item.primary_contact.nil?
+  %dt Primary Contact
+  %dd= render '/shared/catalogs/person', person: item.primary_contact
+
+- unless item.people.nil? or item.people.empty?
+  %dt Other Contacts
+  %dd= render :partial => '/shared/catalogs/person', collection: item.people

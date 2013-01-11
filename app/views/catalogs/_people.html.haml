@@ -1,0 +1,7 @@
+- unless item.primary_contact.nil?
+  %dt Primary Contact
+  %dd= render item.primary_contact
+
+- unless item.people.nil? or item.people.empty?
+  %dt Other Contacts
+  %dd= render item.people

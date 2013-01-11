@@ -1,0 +1,13 @@
+.group
+  .row-fluid
+    .span8.title
+      = link_to edit_manager_page_layout_path(layout), class: 'edit' do
+        %i.icon-file
+        = layout.name
+        - if layout.default?
+          (default)
+    .span4.actions
+      = link_to edit_manager_page_layout_path(layout), class: 'btn' do
+        %i.icon-edit    
+      = link_to manager_page_layout_path(layout), method: 'DELETE', class: 'btn btn-danger', data: { confirm: 'Are you sure?' } do
+        %i.icon-trash.icon-white

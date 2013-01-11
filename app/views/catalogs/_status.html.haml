@@ -1,0 +1,22 @@
+.row-fluid
+  .span3
+    %strong Status:
+    = item.status
+      
+  .span3
+    %strong Type:
+    = item.class == Project ? 'Project' : 'Data'
+
+  - unless item.start_date.nil?
+    .span3
+      %strong Start Date:
+      = item.start_date.strftime('%Y/%m/%d')
+  - unless item.end_date.nil?
+    .span3
+      %strong End Date:
+      = item.end_date.strftime('%Y/%m/%d')  
+- unless item.data_types.empty?
+  .row-fluid
+    .span12
+      %strong Data Types:
+      = item.data_types.collect(&:name).join(', ')

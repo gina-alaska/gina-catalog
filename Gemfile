@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.1.4'
+gem 'rails', '3.2.11'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -11,7 +11,7 @@ gem 'rgeo'
 gem 'rgeo-activerecord'
 gem 'activerecord-postgis-adapter'
 gem 'rgeo-geojson'
-gem 'will_paginate'
+# gem 'will_paginate'
 gem 'omniauth'
 gem 'omniauth-openid'
 gem 'resque'
@@ -20,25 +20,23 @@ gem 'uuidtools'
 gem 'kaminari'
 gem 'RedCloth'
 gem 'bluecloth'
+gem 'turbolinks', git: 'git://github.com/rails/turbolinks.git'
+gem 'html-pipeline'
+gem 'liquid'
+gem 'dragonfly'
+gem 'awesome_nested_set'
 
 #gem 'nofxx-georuby'
 #broke in rails 3.1
 #gem 'postgis_adapter', :git => 'http://github.com/gina-alaska/postgis_adapter.git'
 
 #gem 'spatial_adapter', :git => 'https://github.com/juniorz/spatial_adapter.git'
+
 gem "haml"
-gem 'progressbar'
-gem 'ruby-openid', :git => 'git://github.com/jmthomas/ruby-openid.git'
-gem 'rack-openid', '>= 0.2.1', :require => 'rack/openid'
 gem 'grit', '>= 2.4.1'
-#gem 'wkhtmltopdf'
 gem 'pdfkit'
-#gem 'wicked_pdf', :git => 'https://github.com/mileszs/wicked_pdf.git'
-#gem 'compass', '~> 0.12.1'
-#gem 'rdiscount'
 gem 'ancestry', '~> 1.2.4'
-gem 'sunspot_rails'
-gem 'bootstrap-sass', '~> 2.1.0.0'
+gem 'bootstrap-sass', '~> 2.2.2.0'
 
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -57,8 +55,8 @@ gem 'bootstrap-sass', '~> 2.1.0.0'
 # gem 'aws-s3', :require => 'aws/s3'
 
 group :assets do
-  gem 'sass-rails', "3.1.4"
-  gem 'coffee-rails', '~> 3.1.0'
+  gem 'sass-rails', "~> 3.2.0"
+  gem 'coffee-rails', '~> 3.2.0'
   gem 'compass-rails'
   gem 'uglifier'
 end
@@ -68,6 +66,8 @@ group :production do
 end
 
 gem 'sunspot_solr'
+gem 'sunspot_rails'
+
 group :development do
   #gem 'sunspot_solr'
   gem 'progress_bar'

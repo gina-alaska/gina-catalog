@@ -5,7 +5,7 @@ class Project < Catalog
   #validates_presence_of :owner
   #validates_length_of :title, :maximum => 255
   #validates_inclusion_of :status, :in => STATUSES
-
+  
   def to_xml(options = {})
     default_except = [
             :budget, :delta, :remote_url, :status, :funding_year,

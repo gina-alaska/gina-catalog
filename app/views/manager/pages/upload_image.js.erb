@@ -1,0 +1,4 @@
+$.get("<%= new_manager_image_path %>", function(responseText, textStatus, xhr) {
+  var response = $(responseText);
+  $('#image_chooser_modal .thumbnails').replaceWith(response.find('#upload_image_form'));
+});

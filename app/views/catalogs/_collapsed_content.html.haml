@@ -1,0 +1,35 @@
+- collapse ||= false
+.collapsed_content{class: collapse ? 'collapse' : '', id:"#{item.class}-#{item.id}" }
+  = render 'catalogs/people', item: item
+  = render 'catalogs/agencies', item: item
+  = render 'catalogs/locations', item: item
+
+  -#.gcmd_themes.tabbed
+  -#  %label GCMD Themes:
+  -#  = item.gcmd_themes.collect(&:name).compact.join(', ')
+  -#.spacer
+
+  %dt Tags
+  %dd= item.tags.list
+  %br
+
+  / - if item.repo and not item.repo.empty?
+  /   .tabbed
+  /     %label Download Link:
+  /     = link_to catalog_url(item, :format => 'zip'), catalog_url(item, :format => 'zip'), :target => :_blank
+  /     .spacer
+
+  - unless item.links.nil? or  item.links.empty?
+    %dt Links
+    %dd= render item.links
+    %br
+
+  %dt Record Information Source
+  %dd= item.data_source.name
+  %br
+    
+  %dt Direct Record Link:
+  - if item.data_source.name == 'NSSI'
+    %dd= link_to item.data_source.name, item, :target => :_blank
+  - else
+    %dd= link_to item.source_url, item.source_url, :target => :_blank

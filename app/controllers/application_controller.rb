@@ -1,10 +1,23 @@
 class ApplicationController < ActionController::Base
-  #protect_from_forgery
-
+  protect_from_forgery
+  
+  before_filter :fetch_setup
+  
   helper_method :current_user
   helper_method :user_signed_in?
 
+  protected
+  
+  def fetch_setup
+    @setup = Setup.includes(:urls).where(site_urls: { :url => request.host }).first
+    
+    if @setup.nil? 
+      redirect_to new_manager_setup_path
+    end
+  end
+
   private  
+  
   def current_user  
     @current_user ||= User.find_by_id(session[:user_id]) if session[:user_id]  
   end
@@ -53,6 +66,10 @@ class ApplicationController < ActionController::Base
         redirect_to root_url
       end
     end      
+  end
+  
+  def save_url(url = nil)
+    session[:return_to] = url || request.fullpath
   end
 
   def redirect_back_or_default(default = '/')

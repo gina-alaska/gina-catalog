@@ -2,32 +2,14 @@
 !!! 5
 %html
 %head
-  = render "layouts/#{theme}/head"
-  
-  = include_css(:extjs, :version => '4.1.1a')
-  = include_js(:extjs, :version => '4.1.1a')
-  = include_js(:proj4js)
-  = include_js(:openlayers, :version => '2.12')
-  = javascript_include_tag "prototype", "application"
-
-  = stylesheet_link_tag 'application', :media => 'screen, projection'
-  = stylesheet_link_tag 'print', :media => 'print'
-  /[if IE]
-    = stylesheet_link_tag 'ie', :media => 'screen, projection'
-
+  = render "layouts/#{theme}/head"  
+  = javascript_include_tag "application", data: {'turbolinks-track' => ''}
+  = stylesheet_link_tag 'application', data: {'turbolinks-track' => ''}
 %body
-  %form#history-form.x-hide-display
-    %input(type="hidden" id="x-history-field")
-    %iframe#x-history-frame
-  
-  #header
-    = render "layouts/#{theme}/header"
-
-  = render "layouts/#{theme}/splash"
-  
-  #content.x-hidden
-    = yield
-  #footer.x-hidden
-    = render "layouts/#{theme}/footer"
-		
-  = render "layouts/#{theme}/analytics"
+  .container
+    #header= render "layouts/#{theme}/header"
+    #content
+      = show_flash_messages
+      = yield
+    #footer= render "layouts/#{theme}/footer"
+  = render "layouts/#{theme}/analytics" unless Rails.env == 'development'

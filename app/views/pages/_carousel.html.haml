@@ -1,0 +1,10 @@
+#carousel.carousel.slide
+  .carousel-inner
+    - images.each do |image|
+      .item{class: images.first == image ? 'active' : '' }
+        = image_tag image.file.thumb('640x480#').url, alt: image.title
+        .carousel-caption
+          %h4= link_to_unless image.link_to_url.empty?, image.title, image.link_to_url
+          %p= image.description
+  %a.carousel-control.left{href:"#carousel", "data-slide"=>"prev"} &lsaquo;
+  %a.carousel-control.right{href:"#carousel", "data-slide"=>"next"} &rsaquo;

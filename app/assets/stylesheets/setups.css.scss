@@ -1,0 +1,24 @@
+// Place all the styles related to the Setups controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.pages li > a {
+  padding: 10px;
+  padding-left: 20px;
+  font-size: 1.1em;
+  
+  &.edit {
+  }
+}
+
+.pages_list {
+  margin-bottom: 0;
+  
+  td {
+    line-height: 40px;
+  }
+  .actions {
+    text-align: right;
+    width: 1%;
+    white-space: nowrap;
+  }
+}

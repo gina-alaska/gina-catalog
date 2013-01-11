@@ -1,31 +1,121 @@
-@import "compass";
-@import "_icons.css.scss";
-@import "_search_results.css.scss";
+// Place all the styles related to the Setups controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
 
-$main-bg-color: #187b99; 
-
-#header {
-  height: 80px;
-  padding: 5px 0 0 0;
-  color: #fff;
-  background: $main-bg-color;
-  font-weight: bold;
-  font-size: 14px;
-
-  #logo img {
-    height: 70px;
-    float: left;
-    margin: 0 15px 0 5px;
+.section-nav .nav {
+  width: 250px;
+  top: 50px;
+  border: 1px solid #EFEFEF;
+  @include border-radius(6px);
+  
+  li:first-child > a {
+    @include border-top-radius(6px);
   }
-
-  h1 {
-    margin-top: 8px;
-    font-size: 26px;
+  li:last-child > a {
+    @include border-bottom-radius(6px);
   }
-} 
+  
+  li > a {
+    padding: 9px 15px;
+    border: 0;
+  }
+}
+
+.pages li > a {
+  padding: 10px;
+  padding-left: 20px;
+  font-size: 1.1em;
+  
+  &.edit {
+  }
+}
+
+.page-list .group {
+  &:nth-child(odd) {
+    background-color: #eee;
+  }
+  
+  vertical-align: bottom;
+  border-top: 1px solid #efefef;
+  
+  .actions {
+    text-align:right;
+    padding: 3px;
+  }
+  .title {
+    padding-left: 3px;
+    padding-top: 8px;
+  }
+}
+.page-list .header {
+  border-bottom: 1px solid #dfdfdf;
+  margin: 0;
+  div { padding-top: 5px; font-weight: bold; }
+  .title { padding-left: 3px; }
+  .actions { text-align: right; padding-right: 3px; }
+}
+
+.thumbnails ul {
+  margin-left: 10px;
+}
+
+.image-list {
+  .thumbnail {
+    width:250px;
+    display: inline-block;
+    margin-left: 10px;
+    margin-top: 10px;
+    .image { position: relative; margin-bottom: 5px; }
+    .caption {
+      position: absolute;
+      bottom: 0px;
+      background: rgba(0,0,0, 0.7);
+      color: #fff;
+      left:0;
+      right:0;
+      height: 33%;
+      overflow: auto;
+    }
+  }
+}
  
-.x-toolbar.edit.x-toolbar-footer {
-  background: $main-bg-color;
-  border-top: 1px solid darken($main-bg-color, 10%) !important;
-  padding: 3px 0 3px 3px;
+#image_chooser_modal {
+  .modal-body {
+    padding: 0;
+    padding-left: 10px;
+  }
+  
+  .nav-tabs {
+    margin-top: 10px;
+    margin-right: -1px;
+  }
+  
+  .nav-tabs a {
+  }
+  
+  .tab-content {
+    padding: 0;
+    border-right: none;
+    border-bottom: none;
+  }
+  
+  .tab-content ul {
+    margin: 0;
+  }
+  
+  #thumbnail-list {
+    padding: 0 0 10px 0;
+  }
+  
+  #upload-image {
+    padding-top: 10px;
+    padding-left: 20px;
+  }
+  
+  .thumbnail {
+    width:250px;
+    display: inline-block;
+    margin-left: 10px;
+    margin-top: 10px;
+  }
 }

@@ -1,2 +1,0 @@
-module SdsAdmin::UseAgreementsHelper
-end

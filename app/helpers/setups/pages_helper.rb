@@ -1,0 +1,2 @@
+module Setups::PagesHelper
+end

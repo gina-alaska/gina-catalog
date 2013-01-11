@@ -1,0 +1,12 @@
+.navbar.navbar-inverse.navbar-static-top
+  .navbar-inner
+    .brand= @setup.title
+    %ul.nav.pull-right
+      %li
+        = link_to 'View website', root_path
+      %li
+        = link_to 'Site Manager', manager_path
+      %li
+        = link_to 'Data Manager', manager_data_path
+      %li
+        = link_to 'Logout', logout_path

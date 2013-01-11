@@ -1,0 +1,13 @@
+.navbar.navbar-static-top
+  .navbar-inner
+    .brand Layouts
+    = link_to new_manager_page_layout_path, class: 'btn btn-success pull-right' do
+      %i.icon-plus.icon-white
+      New Layout
+
+.page-list
+  .row-fluid.header
+    .span9.title Title
+    .span3.actions Actions
+  - setup.page_layouts.each do |layout|
+    =render 'manager/page_layouts/layout', layout: layout

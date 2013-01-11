@@ -1,4 +1,5 @@
 class ServicesController < ApplicationController
+  before_filter :fetch_setup, :only => []
 	before_filter :authenticate_user!, :except => [:create, :signin, :signup, :newaccount, :failure]
 
 	protect_from_forgery :except => :create		# see https://github.com/intridea/omniauth/issues/203

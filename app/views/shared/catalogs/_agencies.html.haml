@@ -1,0 +1,14 @@
+- unless item.source_agency.nil?
+  %dt Primary Agency
+  %dd= item.source_agency.name
+  %br
+
+- unless item.funding_agency.nil?
+  %dt Funding Agency
+  %dd= item.funding_agency.name
+  %br
+
+- unless item.agencies.empty?
+  %dt Other Agencies
+  %dd= item.agencies.collect(&:name).join(', ')
+  %br

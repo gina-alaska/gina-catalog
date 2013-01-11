@@ -1,8 +1,0 @@
-- @cms_page.children.published.reverse.each do |page|
-  .news 
-    %h1
-      = link_to cms_page_content(:title, page), "/cms#{page.full_path}"
-    .intro
-      = cms_page_content(:intro, page)
-    .more
-      = link_to "Click here to see the full news post", "/cms#{page.full_path}"

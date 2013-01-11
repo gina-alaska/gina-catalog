@@ -1,4 +1,26 @@
 NSCatalog::Application.routes.draw do
+  resources :pages, only: :show do
+    get :not_found, on: :collection
+  end
+  
+  match '/manager' => 'manager#dashboard', as: 'manager'
+  namespace :manager do
+    resources :data
+    resources :images
+    resources :pages do
+      get :upload_image, :on => :member
+      post :add, :on => :member
+      resources :images, :only => [] do
+        member do
+          post :add
+          post :remove
+        end
+      end
+    end
+    resources :page_layouts
+    resource :setup
+  end
+  
   resources :contact_infos
 
   resources :use_agreements
@@ -16,51 +38,16 @@ NSCatalog::Application.routes.draw do
   resources :links
 
   resources :projects
-  resources :assets, :as => :dataasset
+  resources :assets
+  
   resources :agencies
   resources :people
 
-  resources :catalog, :constraints => { :format => /[a-z]+(\.[a-z]+)?/ } do
-    member do
-      get :download
-      post :publish
-    end
-    collection do
-      # get :download
-      post :search
-      get :search
-      get :unique
-      post :unique
-    end
-
-    resources :locations
+  resource :catalog do
+    post :search
   end
-
-   
-  match '/admin' => 'admin#index', as: 'admin'
-  namespace :admin do
-    resources :users
-    resources :roles
-    resources :assets
-  end
-
-  resources :sds, :as => 'secure_data' do
-    get :use_agreement, :on => :member
-    get :contactinfo, :on => :member
-    get :download, :on => :member
-    get :reset, :on => :collection
-  end
-  
-  match '/sds_admin' => 'sds_admin#index', as: 'sds_admin'
-  namespace :sds_admin do
-    resources :contact_infos
-    resources :use_agreements
-    resources :assets do
-      get "add_download_url", on: :member
-      resources :download_urls
-    end
-  end
-
+  match '/search' => 'catalogs#search', as: 'search'
+     
   # Omniauth pure
   match "/login" => redirect('/auth/gina')
   match "/logout" => "services#signout"
@@ -91,7 +78,6 @@ NSCatalog::Application.routes.draw do
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'
   # Keep in mind you can assign values other than :controller and :action
-  match 'manager' => 'manager#index'
   
   # Sample of named route:
   #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
@@ -133,18 +119,16 @@ NSCatalog::Application.routes.draw do
   #     resources :products
   #   end
 
-  mount Resque::Server.new, :at => '/resque'
-
   match '/preferences(.:format)' => 'users#preferences'
   match '/login' => 'sessions#new'
   match '/logout' => 'sessions#destroy'
-  match '/search(.:format)' => 'catalog#search'
-  match '/data(.:format)' => 'catalog#search'
+  
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => "welcome#index"
+  root :to => "pages#show", :slug => 'home'
 
   # See how all your routes lay out with "rake routes"
+  match '*slug' => 'pages#show', as: :page
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
