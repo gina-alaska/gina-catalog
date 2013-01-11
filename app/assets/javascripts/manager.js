@@ -8,4 +8,5 @@
 //= require 'jquery-file-upload/jquery.iframe-transport'
 //= require 'jquery-file-upload/tmpl.min'
 //= require 'markitup'
+//= require 'manager/pages'
 //= require_self

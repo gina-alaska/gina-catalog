@@ -1,0 +1,12 @@
+#new_page_modal.modal.hide
+  = form_for ['add', :manager, page], html: {id: 'add_new_page', style: 'margin-bottom: 0px;'} do
+    .modal-header
+      %h3
+        Create new page
+    .modal-body
+      Page name:
+      = text_field_tag 'new_page_name'
+    .modal-footer
+      .btn{ data: {dismiss: "modal" }}
+        Cancel
+      = submit_tag "Create",  class: 'btn btn-primary'

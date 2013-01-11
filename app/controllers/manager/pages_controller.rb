@@ -10,6 +10,16 @@ class Manager::PagesController < ManagerController
   def edit
   end
   
+  def add
+    @page.sections = @page.sections << params[:new_page_name] unless @page.sections.include? params[:new_page_name]
+
+    if @page.save
+      render action: 'edit', layout: !request.xhr?
+    else
+      render action: 'edit', error: "Page could not be added", layout: !request.xhr?
+    end 
+  end
+  
   def create
     @page = @setup.pages.build(params[:page])
     @setup.pages << @page

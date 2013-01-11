@@ -36,18 +36,22 @@
             = f.select :page_layout_id, options_from_collection_for_select(@setup.page_layouts, :id, :name, page.page_layout.try(:id)), class: 'span12'
       
       
-  %ul.nav.nav-tabs
-    - page.sections.each do |section|
-      %li{class:(section == page.sections.first ? 'active' : '')}= link_to section.humanize, "##{section}", data: { toggle: 'tab'}
+  #page_tabs.tabbable
+    %ul.nav.nav-tabs
+      - page.sections.each do |section|
+        %li{class:(section == page.sections.first ? 'active' : '')}= link_to section.humanize, "##{section}", data: { toggle: 'tab'}
+      %li{id: 'new_page_tab'}
+        =link_to "#", id: 'new_page_btn', data: {toggle: "modal", target:"#new_page_modal"} do
+          %i.icon-plus
       
-  .tab-content
+  #page_content.tab-content
     - page.content.each do |name,content|
       .tab-pane{id:name, class:(name == page.sections.first ? 'active' : '')}
         - if name == 'images'
           = render 'images', page: page
         - else
           = text_area_tag "page[content][#{name}]", content, class: 'editor span12', style:"border: none;", rows: 10
-
+    
   .form-actions
     = link_to manager_path, class: 'btn' do 
       %i.icon-arrow-left
@@ -56,3 +60,4 @@
       = f.submit 'Save and Close', class: 'btn btn-primary'
 
 = render 'image_chooser', page: page unless page.new_record?
+= render 'manager/page_layouts/new_page', page: page
