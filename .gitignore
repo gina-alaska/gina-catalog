@@ -27,3 +27,4 @@ repo_clones
 db/data
 /data
 .powder
+.DS_Store
