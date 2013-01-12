@@ -1,7 +1,7 @@
-Northslope Science Catalog
+GINA Catalog
 ==========================
 
-Application Website: http://catalog.northslope.org
+Stuff
 
 External Requirements
 ------------
