@@ -26,8 +26,14 @@
       %tr
         %td
           = link_to item.title.truncate(70), manager_datum_path(item)
-          %br/
-          %small.muted= item.description.try(:truncate, 180)
+          - unless item.short_description.nil?
+            %br/
+            %small= item.short_description.try(:humanize)
+          - unless item.tags.count == 0
+            %br/
+            %small.muted
+              %b Tags:
+              = item.tags.list
         %td= item.type.humanize
         %td= item.status.try(:humanize)
         %td= item.start_date.try(:year)
