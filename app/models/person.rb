@@ -42,9 +42,10 @@ class Person < ActiveRecord::Base
   
   def contact_string
     cnt = "#{first_name} #{last_name}"
-    cnt << " <#{email}" unless email.nil?
+    cnt << " <#{email}>" unless email.nil?
     cnt
   end
+  alias_method :to_s, :full_name
   
   def work_phone
     self.phone_numbers.each do |pn|

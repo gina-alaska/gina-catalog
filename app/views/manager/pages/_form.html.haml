@@ -57,6 +57,7 @@
       %i.icon-arrow-left
       Back
     .pull-right
+      = f.submit 'Save', id: 'save', class: 'btn btn-primary', remote: true
       = f.submit 'Save and Close', class: 'btn btn-primary'
 
 = render 'image_chooser', page: page unless page.new_record?

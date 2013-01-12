@@ -1,0 +1,20 @@
+.links
+  .header.row-fluid
+    .span4 Name
+    .span6 WKT
+    .span2.actions Actions
+  .body
+    = f.fields_for :locations do |location|
+      .link.row-fluid
+        .span4= location.text_field :name, class: 'span12'
+        .span6= location.text_field :wkt, class: 'span12'
+        .span2.actions
+          = location.hidden_field :id
+          = link_to '#', class: 'btn' do
+            %i.icon-globe
+          = link_to '#', class: 'btn btn-danger' do
+            %i.icon-trash.icon-white
+  .clearfix{style:"margin-top:3px;"}
+    = link_to '#', class: 'btn btn-success pull-right' do
+      %i.icon-plus.icon-white
+      Add location

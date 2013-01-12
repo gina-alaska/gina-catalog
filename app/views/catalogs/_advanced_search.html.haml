@@ -40,7 +40,17 @@
         = link_to 'Agencies', '#agencies', class: 'accordion-toggle', data: { toggle: 'collapse', parent: '#advanced' }
       #agencies.accordion-body.collapse
         .accordion-inner
-          Agency list
+          =label_tag 'search[source_agency_ids]', 'Primary Agency'
+          =select_tag 'search[source_agency_ids]', options_from_collection_for_select(Agency.all, :id, :name, search_params[:source_agency_ids]), multiple: true,
+            class: 'span12', data: {placeholder: 'All Agencies'}
+        
+          =label_tag 'search[funding_agency_ids]', 'Funding Agency'
+          =select_tag 'search[funding_agency_ids]', options_from_collection_for_select(Agency.all, :id, :name, search_params[:funding_agency_ids]), multiple: true,
+            class: 'span12', data: {placeholder: 'All Agencies'}
+          
+          =label_tag 'search[agency_ids]', 'Other Agencies'
+          =select_tag 'search[agency_ids]', options_from_collection_for_select(Agency.all, :id, :name, search_params[:agency_ids]), multiple: true, 
+            class: 'span12', data: {placeholder: 'All Agencies'}
           
     .accordion-group
       .accordion-heading
@@ -48,4 +58,5 @@
       #contacts.accordion-body.collapse
         .accordion-inner
           Contacts list
-              
+:javascript
+  $("#agencies select").select2();              
