@@ -46,7 +46,7 @@ class Manager::PagesController < ManagerController
         format.html {
           if params["commit"] == "Save"
             flash[:success] = "#{@page.title} page updated"
-            redirect_to :back
+            render :edit
           else
             flash[:success] = "#{@page.title} page updated"
             redirect_to manager_path
