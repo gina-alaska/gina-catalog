@@ -44,11 +44,10 @@ class Manager::PagesController < ManagerController
     if @page.update_attributes(params[:page])
       respond_to do |format|
         format.html {
+          flash[:success] = "#{@page.title} page updated"
           if params["commit"] == "Save"
-            flash[:success] = "#{@page.title} page updated"
-            render :edit
+            redirect_to edit_manager_page_path(@page)
           else
-            flash[:success] = "#{@page.title} page updated"
             redirect_to manager_path
           end
         }
