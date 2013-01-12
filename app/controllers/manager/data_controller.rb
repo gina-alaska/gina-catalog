@@ -55,7 +55,7 @@ class Manager::DataController < ManagerController
   def catalog_params(type)    
     params[type.downcase.to_sym].slice(:title, :description, :start_date, :end_date, :status, 
       :owner_id, :primary_contact_id, :people_ids, :source_agency_id, :funding_agency_id, 
-      :agency_ids, :tags)      
+      :agency_ids, :tags, :geokeywords)      
   end
   
   def split_word_list(key, params)
