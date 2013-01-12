@@ -57,6 +57,12 @@
         = link_to 'Contacts', '#contacts', class: 'accordion-toggle', data: { toggle: 'collapse', parent: '#advanced' }
       #contacts.accordion-body.collapse
         .accordion-inner
-          Contacts list
+          =label_tag 'search[primary_contact_id]', 'Primary Contact'
+          =select_tag 'search[primary_contact_id]', options_from_collection_for_select(Person.all, :id, :contact_string, search_params[:primary_contact_id]),
+            class: 'span12', data: {placeholder: 'All Contacts'}, :include_blank => true 
+          =label_tag 'search[contact_ids]', 'Contacts'
+          =select_tag 'search[contact_ids]', options_from_collection_for_select(Person.all, :id, :contact_string, search_params[:contact_ids]), multiple: true,
+            class: 'span12', data: {placeholder: 'All Contacts'}
+            
 :javascript
-  $("#agencies select").select2();              
+  $("#agencies select, #contacts select").select2({allowClear: true});              
