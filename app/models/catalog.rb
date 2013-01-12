@@ -232,20 +232,27 @@ Title: #{self.title}
   ##
   def tags=(tags)
     # self.tags.clear unless self.new_record?
-
+    if tags.kind_of? String
+      tags = tags.split(/,\s*/).uniq.compact
+    end
+    
+    ids = []
     unless tags.nil? or tags.empty?
       tags.each do |t|
         text = t.respond_to?(:text) ? t.text : t
 
         next if text.size < 3
-        tag = Tag.find_or_create_by_text(text)
-        self.tags << tag unless self.tags.include? tag
+        ids << Tag.find_or_create_by_text(text).id
       end
-    end
+      self.tag_ids = ids
+    end    
   end
   
   def geokeywords=(keywords) 
     # self.geokeywords.clear unless self.new_record?
+    if keywords.kind_of? String
+      keywords = keywords.split(/,\s*/).uniq.compact
+    end
     
     ids = []
     unless keywords.nil? or keywords.empty?
@@ -265,9 +272,7 @@ Title: #{self.title}
   end
 
   def short_description
-    return nil if self.description.nil?
-    #self.synopsis.text.gsub(/^(.{200}[\w.]*)(.*)/) {$2.empty? ? $1 : $1 + '...'}
-    self.description.slice(0..150)
+    self.description.try(:split, "\n").try(:first).try(:truncate, 150)
   end
 
   def as_json(opts = {})

@@ -52,13 +52,20 @@ class Manager::DataController < ManagerController
   
   protected
   
-  def catalog_params(type)
+  def catalog_params(type)    
     params[type.downcase.to_sym].slice(:title, :description, :start_date, :end_date, :status, 
       :owner_id, :primary_contact_id, :people_ids, :source_agency_id, :funding_agency_id, 
-      :agency_ids)
+      :agency_ids, :tags)      
+  end
+  
+  def split_word_list(key, params)
+    if params[key]
+      list = params.delete(key)
+      params[key] = list.split(/,\s*/).uniq.compact
+    end
   end
   
   def fetch_record
-    @catalog = Catalog.find(params[:id])
+    @catalog = Catalog.includes(:tags, :links, :locations, :agencies, :geokeywords, :people).find(params[:id])
   end
 end
