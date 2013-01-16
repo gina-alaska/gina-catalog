@@ -19,6 +19,7 @@ NSCatalog::Application.routes.draw do
     end
     resources :page_layouts
     resource :setup
+    resources :catalog_collections
   end
   
   resources :contact_infos
@@ -46,6 +47,7 @@ NSCatalog::Application.routes.draw do
   resource :catalog do
     post :search
   end
+
   match '/search' => 'catalogs#search', as: 'search'
      
   # Omniauth pure

@@ -1,0 +1,18 @@
+.navbar.navbar-static-top
+  .navbar-inner
+    %ul.nav
+      %li
+        = link_to manager_data_path do
+          %i.icon-arrow-left
+          Back
+    .pull-right
+      = link_to edit_manager_datum_path(@catalog), class: 'btn' do
+        %i.icon-edit
+        Edit
+      = link_to 'Toggle Publish', '#', class: 'btn'
+      = link_to '#', class: 'btn btn-danger', data: { confirm: 'Are you sure?' } do
+        %i.icon-trash
+        Delete
+%br/
+
+= render '/shared/catalogs/catalog', catalog: @catalog

@@ -47,7 +47,9 @@ module CatalogConcerns
           with :type, search[:type] if search[:type].present?
           with :agency_ids, search[:agency_ids] if search[:agency_ids].present?
           with :source_agency_id, search[:source_agency_id] if search[:source_agency_id].present?
+          with :funding_agency_id, search[:funding_agency_id] if search[:funding_agency_id].present?
           with :iso_topic_ids, search[:iso_topic_ids] if search[:iso_topic_ids].present?
+          with :primary_contact_id, search[:primary_contact_id] if search[:primary_contact_id].present?
           with :person_ids, search[:contact_ids] if search[:contact_ids].present?
           with :geokeywords_name, search[:region] if search[:region].present?
           with :data_types, search[:data_types] if search[:data_types].present?

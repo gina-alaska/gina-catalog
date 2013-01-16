@@ -40,12 +40,29 @@
         = link_to 'Agencies', '#agencies', class: 'accordion-toggle', data: { toggle: 'collapse', parent: '#advanced' }
       #agencies.accordion-body.collapse
         .accordion-inner
-          Agency list
+          =label_tag 'search[source_agency_id]', 'Primary Agency'
+          =select_tag 'search[source_agency_id]', options_from_collection_for_select(Agency.all, :id, :name, search_params[:source_agency_id]), 
+            class: 'span12', data: {placeholder: 'All Agencies'}, :include_blank => true 
+        
+          =label_tag 'search[funding_agency_id]', 'Funding Agency'
+          =select_tag 'search[funding_agency_id]', options_from_collection_for_select(Agency.all, :id, :name, search_params[:funding_agency_id]), 
+            class: 'span12', data: {placeholder: 'All Agencies'}, :include_blank => true 
+          
+          =label_tag 'search[agency_ids]', 'Other Agencies'
+          =select_tag 'search[agency_ids]', options_from_collection_for_select(Agency.all, :id, :name, search_params[:agency_ids]), multiple: true, 
+            class: 'span12', data: {placeholder: 'All Agencies'}
           
     .accordion-group
       .accordion-heading
         = link_to 'Contacts', '#contacts', class: 'accordion-toggle', data: { toggle: 'collapse', parent: '#advanced' }
       #contacts.accordion-body.collapse
         .accordion-inner
-          Contacts list
-              
+          =label_tag 'search[primary_contact_id]', 'Primary Contact'
+          =select_tag 'search[primary_contact_id]', options_from_collection_for_select(Person.all, :id, :contact_string, search_params[:primary_contact_id]),
+            class: 'span12', data: {placeholder: 'All Contacts'}, :include_blank => true 
+          =label_tag 'search[contact_ids]', 'Contacts'
+          =select_tag 'search[contact_ids]', options_from_collection_for_select(Person.all, :id, :contact_string, search_params[:contact_ids]), multiple: true,
+            class: 'span12', data: {placeholder: 'All Contacts'}
+            
+:javascript
+  $("#agencies select, #contacts select").select2({allowClear: true});              

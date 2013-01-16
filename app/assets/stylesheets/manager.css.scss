@@ -2,6 +2,13 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+#flashes {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  min-width: 300px;
+}
+
 .section-nav .nav {
   width: 250px;
   top: 50px;
