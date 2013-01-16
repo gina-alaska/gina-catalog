@@ -1,0 +1,12 @@
+.row-fluid
+  .span12
+    = form_for [:manager, @catalog_collection] do |f|
+      .row-fluid
+        .field.span3
+          = f.label :name
+          = f.text_field :name
+        .field.span9
+          = f.label :description
+          = f.text_area :description, cols: "80", rows: "6", class: "span9"
+
+        = f.submit class: 'btn btn-primary pull-right'
