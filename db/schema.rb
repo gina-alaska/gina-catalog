@@ -127,6 +127,7 @@ ActiveRecord::Schema.define(:version => 20130115204024) do
   create_table "catalog_collections", :force => true do |t|
     t.string   "name"
     t.text     "description"
+    t.integer  "setup_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end

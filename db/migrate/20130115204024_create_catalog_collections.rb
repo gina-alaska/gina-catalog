@@ -3,6 +3,7 @@ class CreateCatalogCollections < ActiveRecord::Migration
     create_table :catalog_collections do |t|
       t.string :name
       t.text :description
+      t.integer :setup_id
 
       t.timestamps
     end

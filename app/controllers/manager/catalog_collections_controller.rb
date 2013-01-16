@@ -1,24 +1,25 @@
 class Manager::CatalogCollectionsController < ManagerController
-  
+
   def index
-    @catalog_collection = CatalogCollection.all
+    @catalog_collections = @setup.catalog_collections
 
     respond_to do |format|
       format.html
-      format.json
+      format.json { render json: @catalog_collection }
     end
   end
 
   def show
-    @catalog_collection = CatalogCollection.where(id: params[:id]).first
+    @catalog_collection = @setup.catalog_collections.find(params[:id])
   end
 
   def new
-    @catalog_collection = CatalogCollection.new
+    @catalog_collection = @setup.catalog_collections.build
   end
 
   def create
     @catalog_collection = CatalogCollection.new(params[:catalog_collection])
+    @setup.catalog_collections << @catalog_collection
 
     respond_to do |format|
       if @catalog_collection.save
@@ -32,11 +33,11 @@ class Manager::CatalogCollectionsController < ManagerController
   end
 
   def edit
-    @catalog_collection = CatalogCollection.where(id: params[:id]).first
+    @catalog_collection = @setup.catalog_collections.find(params[:id])
   end
 
   def update
-    @catalog_collection = CatalogCollection.where(id: params[:id]).first
+    @catalog_collection = @setup.catalog_collections.find(params[:id])
 
     respond_to do |format|
       if @catalog_collection.update_attributes(params[:catalog_collection])
@@ -51,7 +52,7 @@ class Manager::CatalogCollectionsController < ManagerController
   end
 
   def destroy
-    @catalog_collection = CatalogCollection.where(id: params[:id]).first
+    @catalog_collection = @setup.catalog_collections.find(params[:id])
     @catalog_collection.destroy
 
     respond_to do |format|
