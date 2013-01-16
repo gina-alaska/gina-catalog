@@ -5,6 +5,7 @@ class Catalog < ActiveRecord::Base
   belongs_to :owner, :class_name => 'User'
   belongs_to :primary_contact, :class_name => 'Person'
   belongs_to :data_source
+  belongs_to :catalog_collection
   
   has_many :download_urls
   has_one :repo
