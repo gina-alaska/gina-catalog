@@ -19,6 +19,11 @@
   /     = link_to catalog_url(item, :format => 'zip'), catalog_url(item, :format => 'zip'), :target => :_blank
   /     .spacer
 
+  - unless item.catalog_collection.nil? or  item.catalog_collection.empty?
+    %dt Collection
+    %dd= render :partial => '/shared/catalogs/collection', collection: item.catalog_collection
+    %br
+
   - unless item.links.nil? or  item.links.empty?
     %dt Links
     %dd= render :partial => '/shared/catalogs/link', collection: item.links
