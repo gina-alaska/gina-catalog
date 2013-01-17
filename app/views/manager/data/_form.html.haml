@@ -1,7 +1,7 @@
 .row-fluid
   .section-nav.span4
     %ul.nav.nav-list.affix{ data: { spy: 'affix' } }
-      - sections = %w{ general contacts agencies tags links locations downloads sds actions }
+      - sections = %w{ general contacts agencies tags collection links locations downloads sds actions }
       - sections.each do |section|
         %li{class: (section == sections.first ? 'active' : '')}
           = link_to section.humanize, "##{section}"
@@ -23,6 +23,10 @@
       %section#tags
         %h2 Tags
         = render 'tag_fields', f: f
+
+      %section#collection
+        %h2 Collection
+        = render 'collection_fields', f: f
 
       %section#links 
         %h2 Links

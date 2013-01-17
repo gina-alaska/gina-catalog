@@ -1,0 +1,10 @@
+.row-fluid
+  .span12
+    = f.label "Associate Record With:", class: 'control-label'
+    = f.select :catalog_collections, options_from_collection_for_select(@setup.catalog_collections.all, :id, :name, @catalog.catalog_collections.map(&:id)), {}, multiple: true, class: 'span12'
+    
+:javascript
+  $('##{@catalog.class.to_s.downcase}_tags').select2({ tags: #{Tag.order('text ASC').all.map(&:text).to_json} });
+  $('##{@catalog.class.to_s.downcase}_geokeywords').select2();
+  $('##{@catalog.class.to_s.downcase}_iso_topics').select2();  
+  $('##{@catalog.class.to_s.downcase}_data_types').select2({ allowClear: true, placeholder: "Select one or more data types" });  
