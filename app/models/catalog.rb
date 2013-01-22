@@ -73,6 +73,9 @@ class Catalog < ActiveRecord::Base
     text :iso_topics do
       iso_topics.map(&:name)
     end
+    text :catalog_collections do
+      catalog_collections.pluck(:name)
+    end
     text :iso_topics_long do
       iso_topics.map(&:long_name)
     end
@@ -101,6 +104,7 @@ class Catalog < ActiveRecord::Base
     integer :person_ids, :references => Person, :multiple => true
     integer :agency_ids, :references => Agency, :multiple => true
     integer :iso_topic_ids, :multiple => true
+    integer :catalog_collection_ids, :multiple => true
     integer :data_type_ids, :multiple => true
     
     boolean :long_term_monitoring
