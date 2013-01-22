@@ -8,7 +8,7 @@ module CatalogConcerns
     
         table_includes = {
           :tags => [], :locations => [], :agencies => [], :source_agency => [], :funding_agency => [], :links => [], 
-          :primary_contact => [:phone_numbers], :people => [:phone_numbers], :data_source => [], :geokeywords => [], 
+          :primary_contact => [:phone_numbers], :people => [:phone_numbers], :data_source => [], :geokeywords => [], :catalog_collections => [], 
           :repo => []
         }
   
@@ -49,6 +49,7 @@ module CatalogConcerns
           with :source_agency_id, search[:source_agency_id] if search[:source_agency_id].present?
           with :funding_agency_id, search[:funding_agency_id] if search[:funding_agency_id].present?
           with :iso_topic_ids, search[:iso_topic_ids] if search[:iso_topic_ids].present?
+          with :catalog_collection_ids, search[:catalog_collection_ids] if search[:catalog_collection_ids].present?
           with :primary_contact_id, search[:primary_contact_id] if search[:primary_contact_id].present?
           with :person_ids, search[:contact_ids] if search[:contact_ids].present?
           with :geokeywords_name, search[:region] if search[:region].present?
