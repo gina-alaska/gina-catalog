@@ -68,5 +68,13 @@
           =select_tag 'search[contact_ids]', options_from_collection_for_select(Person.all, :id, :contact_string, search_params[:contact_ids]), multiple: true,
             class: 'span12', data: {placeholder: 'All Contacts'}
             
+    .accordion-group
+      .accordion-heading
+        = link_to 'Collections', '#collections', class: 'accordion-toggle', data: { toggle: 'collapse', parent: '#advanced' }
+      #collections.accordion-body.collapse
+        .accordion-inner
+          =label_tag 'search[catalog_collection_ids', 'Collections'
+          =select_tag 'search[catalog_collection_ids]', options_from_collection_for_select(@setup.catalog_collections.all, :id, :name, search_params[:catalog_collection_ids]), multiple: true, class: 'span12'
+
 :javascript
   $("select").select2({allowClear: true});              
