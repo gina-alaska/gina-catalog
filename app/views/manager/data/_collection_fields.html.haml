@@ -1,8 +1,7 @@
 .row-fluid
   .span12
     = f.label "Associate This Record With:", class: 'control-label'
-    = f.select :catalog_collections, options_from_collection_for_select(@setup.catalog_collections.all, :id, :name, @catalog.catalog_collection_ids), {}, multiple: true, class: 'span12'
+    = f.collection_select :catalog_collection_ids, @setup.catalog_collections.all, :id, :name, {}, { multiple: true , class: 'span12' }
     
 :javascript
-  $('##{@catalog.class.to_s.downcase}_tags').select2({ tags: #{Tag.order('text ASC').all.map(&:text).to_json} });
-  $('##{@catalog.class.to_s.downcase}_catalog_collections').select2();
+  $('##{@catalog.class.to_s.downcase}_catalog_collection_ids').select2();

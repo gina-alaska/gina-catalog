@@ -53,9 +53,13 @@ class Manager::DataController < ManagerController
   protected
   
   def catalog_params(type)    
-    params[type.downcase.to_sym].slice(:title, :description, :start_date, :end_date, :status, 
+    v = params[type.downcase.to_sym].slice(:title, :description, :start_date, :end_date, :status, 
       :owner_id, :primary_contact_id, :people_ids, :source_agency_id, :funding_agency_id, 
-      :agency_ids, :tags, :geokeywords)      
+      :agency_ids, :tags, :geokeywords, :catalog_collection_ids)
+     
+    v['catalog_collection_ids'] = v['catalog_collection_ids'].map(&:to_i).reject { |i| i == 0 }
+      
+    v
   end
   
   def split_word_list(key, params)
