@@ -5,7 +5,14 @@ class Catalog < ActiveRecord::Base
   belongs_to :owner, :class_name => 'User'
   belongs_to :primary_contact, :class_name => 'Person'
   belongs_to :data_source
-  has_and_belongs_to_many :catalog_collections
+  has_and_belongs_to_many :catalog_collections do
+    def list
+      proxy_association.owner.catalog_collections.collection.join(', ')
+    end
+    def collection
+      proxy_association.owner.catalog_collections.pluck(:name)
+    end
+  end
   
   has_many :download_urls
   has_one :repo

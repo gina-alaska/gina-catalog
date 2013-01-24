@@ -181,9 +181,10 @@ class CatalogsController < ApplicationController
     v = params.slice(
           :title, :description, :agengy_ids, :tags, :source_agency_id, :funding_agency_id, :status,
           :geokeyword_ids, :links_attributes, :locations_attributes, :data_type_ids, :primary_contact_id,
-          :agency_ids, :contact_ids, :iso_topic_ids, :start_date, :end_date, :long_term_monitoring, :person_ids
+          :agency_ids, :contact_ids, :iso_topic_ids, :start_date, :end_date, :long_term_monitoring, :person_ids, :catalog_collection_ids
     )    
     v["tags"] = v["tags"].split(/,\s+/)
+    v['catalog_collection_ids'] = v['catalog_collection_ids'].map(:to_i).compact
     
     v
   end
