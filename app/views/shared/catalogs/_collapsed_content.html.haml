@@ -21,7 +21,7 @@
 
   - unless item.catalog_collections.nil? or  item.catalog_collections.empty?
     %dt Collection
-    %dd= render :partial => '/shared/catalogs/collection', collection: item.catalog_collections
+    %dd= item.catalog_collections.list
     %br
 
   - unless item.links.nil? or  item.links.empty?
