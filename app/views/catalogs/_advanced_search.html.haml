@@ -5,13 +5,19 @@
       = text_field_tag 'search[q]', search_params[:q], placeholder: 'Enter keyword search', class: 'span12'
     .span3
       = submit_tag 'Search', class: 'btn btn-primary btn-block'
+            
+  .row-fluid
+    .span12
+      %h4 Collections
+  .row-fluid
+    .span12
+      =select_tag 'search[catalog_collection_ids]', options_from_collection_for_select(@setup.catalog_collections.all, :id, :name, search_params[:catalog_collection_ids]), multiple: true, class: 'span12'
           
-  %h4 Advanced Options
   #advanced.accordion
     .accordion-group
-      .accordion-heading
-        = link_to 'General', '#general', class: 'accordion-toggle', data: { toggle: 'collapse', parent: '#advanced' }
-      #general.accordion-body.collapse
+      .accordion-heading.h4
+        = link_to 'Advanced', '#options', class: 'accordion-toggle', data: { toggle: 'collapse', parent: '#advanced' }
+      #options.accordion-body.collapse
         .accordion-inner
           = label_tag 'search[type]', 'Record Type'
           = select_tag 'search[type]', options_for_select([['Projects', 'Project'], ['Data', 'Asset']], search_params[:type]), class: 'span12', 
@@ -39,11 +45,6 @@
             = check_box_tag 'search[long_term_monitoring]', 1, search_params[:long_term_monitoring]
             Long Term Monitoring
 
-    .accordion-group
-      .accordion-heading
-        = link_to 'Agencies', '#agencies', class: 'accordion-toggle', data: { toggle: 'collapse', parent: '#advanced' }
-      #agencies.accordion-body.collapse
-        .accordion-inner
           =label_tag 'search[source_agency_id]', 'Primary Agency'
           =select_tag 'search[source_agency_id]', options_from_collection_for_select(Agency.all, :id, :name, search_params[:source_agency_id]), 
             class: 'span12', data: {placeholder: 'All Agencies'}, :include_blank => true 
@@ -56,25 +57,12 @@
           =select_tag 'search[agency_ids]', options_from_collection_for_select(Agency.all, :id, :name, search_params[:agency_ids]), multiple: true, 
             class: 'span12', data: {placeholder: 'All Agencies'}
           
-    .accordion-group
-      .accordion-heading
-        = link_to 'Contacts', '#contacts', class: 'accordion-toggle', data: { toggle: 'collapse', parent: '#advanced' }
-      #contacts.accordion-body.collapse
-        .accordion-inner
           =label_tag 'search[primary_contact_id]', 'Primary Contact'
           =select_tag 'search[primary_contact_id]', options_from_collection_for_select(Person.all, :id, :contact_string, search_params[:primary_contact_id]),
             class: 'span12', data: {placeholder: 'All Contacts'}, :include_blank => true 
           =label_tag 'search[contact_ids]', 'Contacts'
           =select_tag 'search[contact_ids]', options_from_collection_for_select(Person.all, :id, :contact_string, search_params[:contact_ids]), multiple: true,
             class: 'span12', data: {placeholder: 'All Contacts'}
-            
-    .accordion-group
-      .accordion-heading
-        = link_to 'Collections', '#collections', class: 'accordion-toggle', data: { toggle: 'collapse', parent: '#advanced' }
-      #collections.accordion-body.collapse
-        .accordion-inner
-          =label_tag 'search[catalog_collection_ids', 'Collections'
-          =select_tag 'search[catalog_collection_ids]', options_from_collection_for_select(@setup.catalog_collections.all, :id, :name, search_params[:catalog_collection_ids]), multiple: true, class: 'span12'
 
 :javascript
   $("select").select2({allowClear: true});              
