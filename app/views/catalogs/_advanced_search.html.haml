@@ -1,4 +1,5 @@
 = form_tag search_url, style: 'width:100%' do
+  = hidden_field_tag 'search[catalog_collection_ids]', search_params[:catalog_collection_ids], id: "collection_id"
   %h4 Keyword search
   .row-fluid
     .span9
@@ -8,11 +9,13 @@
             
   .row-fluid
     .span12
-      %h4 Collections
-  .row-fluid
-    .span12
-      =select_tag 'search[catalog_collection_ids]', options_from_collection_for_select(@setup.catalog_collections.all, :id, :name, search_params[:catalog_collection_ids]), multiple: true, class: 'span12'
-          
+      %ul.nav.nav-list
+        %li.nav-header Collections
+        -@setup.catalog_collections.each do |coll|
+          %li{class: search_params[:catalog_collection_ids].to_i == coll.id ? "active" : ""}
+            = link_to coll.name, "#", data: {behaviour: "load_collection", target: "#collection_id", value: coll.id}
+      %br
+
   #advanced.accordion
     .accordion-group
       .accordion-heading.h4
