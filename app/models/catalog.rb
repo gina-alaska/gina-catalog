@@ -337,6 +337,10 @@ Title: #{self.title}
     }    
   end
   
+  def to_param
+  	"#{self.id}-#{self.title.truncate(50).parameterize}"
+  end
+
   def to_s
     self.title
   end
