@@ -20,6 +20,7 @@ NSCatalog::Application.routes.draw do
     resources :page_layouts
     resource :setup
     resources :catalog_collections
+    resources :contacts
   end
   
   resources :contact_infos
@@ -47,6 +48,8 @@ NSCatalog::Application.routes.draw do
   resource :catalog do
     post :search
   end
+
+  resources :contacts, only: :create
 
   match '/search' => 'catalogs#search', as: 'search'
      
