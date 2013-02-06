@@ -8,7 +8,8 @@
             .pull-right
               = link_to "Delete", manager_contact_path(contact), method: :delete, confirm: "Are you sure?", class: "btn btn-danger"
             .pull-right{style: "padding-right: 10px;"}
-              = "Sent On: #{contact.created_at.strftime("%c")}"
+              %h5
+                = "Sent On: #{contact.created_at.strftime("%c")}"
             = link_to "#{contact.name}", "#"+"#{contact.id}", class: 'accordion-toggle', data: { toggle: 'collapse', parent: '#contacts' }
           %div{id: [contact.id], class: "accordion-body collapse"}
             .accordion-inner
