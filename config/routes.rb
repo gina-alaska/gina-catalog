@@ -49,7 +49,7 @@ NSCatalog::Application.routes.draw do
     post :search
   end
 
-  resources :contacts, only: :create
+  resources :contacts, only: [:index, :create]
 
   match '/search' => 'catalogs#search', as: 'search'
      

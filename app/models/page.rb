@@ -59,7 +59,6 @@ class Page < ActiveRecord::Base
     context = { :page => self }
     
     pipeline = HTML::Pipeline.new([ ::LiquidFilter ], context)
-    
     pipeline.call(self.content[section.to_s])[:output].to_s.html_safe
   end
   

@@ -1,23 +1,30 @@
 class ContactsController < ApplicationController
-  protect_from_forgery :except => :create
+  include Rack::Recaptcha::Helpers
+
+  def index
+    @page = Page.where(slug: 'contact-us').first
+    @contact = Contact.new
+  end
 
   def create
     contact_email = @setup.contact_email
+    @page = Page.where(slug: 'contact-us').first
 
-    contact = Contact.new(params[:contact])
+    @contact = @setup.contacts.build(params[:contact])
 
-    if @setup.contacts << contact
-      respond_to do |format|
+    respond_to do |format|
+      if recaptcha_valid? and @contact.save
         format.html {
           ContactMailer.contact_email(contact_email, params[:contact]).deliver
           flash[:success] = 'Message Sent.'
           redirect_to root_path
         }
-      end
-    else
-      respond_to do |format|
-        flash[:failure] = 'Error: Message not sent!'
-        redirect_to page_path("contact-us")
+      else
+        @contact.valid?
+        format.html do
+          flash[:error] = 'Recaptcha validation failed!' unless recaptcha_valid?
+          render("index")
+        end
       end
     end
   end

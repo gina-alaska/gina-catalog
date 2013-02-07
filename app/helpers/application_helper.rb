@@ -1,4 +1,6 @@
 module ApplicationHelper
+  include Rack::Recaptcha::Helpers
+  
   def avatar_url(user, size=48)
     default_url = "mm"
     gravatar_id = Digest::MD5.hexdigest(user.email.downcase)
@@ -16,12 +18,16 @@ module ApplicationHelper
   end
   
   def show_flash_messages
+    output = ''
     dismiss = '<a class="close" data-dismiss="alert" href="#">X</a>'.html_safe
-    flash.map do |type,content|
-      content_tag(:div, :class => "alert fade in alert-#{type}") do
-        dismiss + content
+    [:notice, :error, :success].each do |type|
+      next if flash[type].blank?
+      output << content_tag(:div, :class => "alert fade in alert-#{type}") do
+        dismiss + flash[type]
       end
-    end.join(' ').html_safe
+    end
+
+    output.html_safe
   end
   
   def add_js_errors_for(model)

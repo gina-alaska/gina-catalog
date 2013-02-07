@@ -42,13 +42,11 @@ module PagesHelper
         }
       )
     }
-    
     pipeline = HTML::Pipeline.new([
       LiquidFilter,
       HTML::Pipeline::AutolinkFilter,
       HTML::Pipeline::SanitizationFilter
     ], context)
-    
     pipeline.call(page.layout)[:output].to_s.html_safe
   end
   

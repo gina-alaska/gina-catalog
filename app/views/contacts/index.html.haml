@@ -1,0 +1,28 @@
+= render_cms_content(@page, @setup)
+.row-fluid
+  = form_for(@contact, html: { class: 'form-horizontal'}) do |f|
+    = unless @contact.errors.empty?
+      .alert.alert-error
+        %h4 There was an error while trying to send your feedback
+        %ul
+          - @contact.errors.full_messages.each do |msg|
+            %li= msg
+    .control-group
+      = f.label :name, class: 'control-label'
+      .controls
+        = f.text_field :name, class: "span12"
+    .control-group
+      =f.label :email, class: 'control-label'
+      .controls
+        = f.text_field :email, class: "span12"
+    .control-group
+      =f.label :message, class: 'control-label'
+      .controls
+        = f.text_area :message, {rows: 4, cols: 80, class: "span12"}
+    .row-fluid
+      .span2
+      .span10
+        = recaptcha_tag(:challenge).html_safe
+    .row-fluid
+      .span12
+        = submit_tag "Send Message", type: 'submit', class: "btn btn-primary"
