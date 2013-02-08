@@ -19,10 +19,10 @@
       =f.label :message, class: 'control-label'
       .controls
         = f.text_area :message, {rows: 4, cols: 80, class: "span12"}
-    .row-fluid
-      .span2
-      .span10
-        = recaptcha_tag(:challenge).html_safe
+      -#    .row-fluid
+      -#      .span2
+      -#      .span10
+      -#        = recaptcha_tag(:challenge).html_safe
     .row-fluid
       .span12
         = submit_tag "Send Message", type: 'submit', class: "btn btn-primary"

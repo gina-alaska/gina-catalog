@@ -13,7 +13,7 @@ class ContactsController < ApplicationController
     @contact = @setup.contacts.build(params[:contact])
 
     respond_to do |format|
-      if recaptcha_valid? and @contact.save
+      if @contact.save
         format.html {
           ContactMailer.contact_email(contact_email, params[:contact]).deliver
           flash[:success] = 'Message Sent.'
@@ -22,7 +22,6 @@ class ContactsController < ApplicationController
       else
         @contact.valid?
         format.html do
-          flash[:error] = 'Recaptcha validation failed!' unless recaptcha_valid?
           render("index")
         end
       end
