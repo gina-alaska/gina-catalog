@@ -1,6 +1,4 @@
 module ApplicationHelper
-  include Rack::Recaptcha::Helpers
-  
   def avatar_url(user, size=48)
     default_url = "mm"
     gravatar_id = Digest::MD5.hexdigest(user.email.downcase)

@@ -1,6 +1,4 @@
 class ContactsController < ApplicationController
-  include Rack::Recaptcha::Helpers
-
   def index
     @page = Page.where(slug: 'contact-us').first
     @contact = Contact.new
