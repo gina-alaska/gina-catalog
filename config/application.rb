@@ -62,5 +62,8 @@ module NSCatalog
                                   ## because it already inserts Rack::Cache in production
 
     config.middleware.insert_after 'Rack::Cache', 'Dragonfly::Middleware', :media
+    # ReCaptcha Config
+    config.gem 'rack-recaptcha', :lib => 'rack/recaptcha'
+    config.middleware.use Rack::Recaptcha, :public_key => '6Lflq9wSAAAAAPbPGomf3Tjc5CX99NVUTRst6q_E', :private_key => '6Lflq9wSAAAAAEDKQJ464PvTlg_AzmHJpWZNs-2u'
   end
 end

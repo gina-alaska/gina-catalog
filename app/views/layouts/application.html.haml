@@ -5,6 +5,7 @@
   = render "layouts/#{theme}/head"  
   = javascript_include_tag "application", data: {'turbolinks-track' => ''}
   = stylesheet_link_tag 'application', data: {'turbolinks-track' => ''}
+  = csrf_meta_tag
 %body
   .container
     #header= render "layouts/#{theme}/header"
