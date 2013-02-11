@@ -10,6 +10,7 @@ public/javascripts/cached
 *.git
 public/javascripts/extjs3/
 public/javascripts/oldapp/
+public/assets
 vendor/nssi-prod
 vendor/cms/public/system
 repos_tmp
