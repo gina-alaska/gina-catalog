@@ -4,9 +4,18 @@ module PagesHelper
       page: page, 
       setup: setup,
       whitelist: HTML::Pipeline::SanitizationFilter::WHITELIST.merge(
+        :elements => %w(
+          h1 h2 h3 h4 h5 h6 h7 h8 br b i strong em a pre code img tt
+          div ins del sup sub p ol ul table blockquote dl dt dd
+          kbd q samp var hr ruby rt rp li tr td th form input textarea span
+        ),
         :attributes => {
           'a' => ['href', 'class', 'data-slide'],
+          'form' => ['action', 'method', 'class'],
+          'input' => ['type', 'name', 'value', 'class'],
+          'textarea' => ['rows', 'cols', 'name', 'class'],
           'img' => ['src', 'alt'],
+          'span' => ['class'],
           'div' => ['itemscope', 'itemtype', 'style'],
           :all => ['abbr', 'accept', 'accept-charset',
                     'accesskey', 'action', 'align', 'alt', 'axis',
@@ -25,16 +34,19 @@ module PagesHelper
                     'start', 'summary', 'tabindex', 'target',
                     'title', 'type', 'usemap', 'valign', 'value',
                     'vspace', 'width', 'itemprop', 'id', 'class']
+        },
+        :protocols => {
+          'a'   => {'href' => ['http', 'https', 'mailto', :relative, 'github-windows', 'github-mac']},
+          'img' => {'src'  => ['http', 'https', :relative]},
+          'form' => { 'action' => ['http', 'https', :relative]}
         }
       )
     }
-    
     pipeline = HTML::Pipeline.new([
       LiquidFilter,
       HTML::Pipeline::AutolinkFilter,
       HTML::Pipeline::SanitizationFilter
     ], context)
-    
     pipeline.call(page.layout)[:output].to_s.html_safe
   end
   

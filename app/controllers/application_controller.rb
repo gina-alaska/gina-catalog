@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   
   helper_method :current_user
   helper_method :user_signed_in?
+  helper_method :current_setup
 
   protected
   
@@ -15,6 +16,8 @@ class ApplicationController < ActionController::Base
       redirect_to new_manager_setup_path
     end
   end
+
+  alias_method :current_setup, :fetch_setup
 
   private  
   
