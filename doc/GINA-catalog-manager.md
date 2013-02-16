@@ -5,7 +5,7 @@ _Collections List_
 
 To list the collections in the system in a page with links to the search, use the following Liquid/HTML code:
 
-<ul>
+`<ul>
 {% for collection in setup.catalog_collections %}
   <li>
     <a href="/search?search[catalog_collection_ids]={{collection.id}}">
@@ -13,5 +13,5 @@ To list the collections in the system in a page with links to the search, use th
     </a>
   </li>
 {% endfor %}
-</ul>
+</ul>`
 
