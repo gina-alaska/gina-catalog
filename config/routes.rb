@@ -21,6 +21,8 @@ NSCatalog::Application.routes.draw do
     resource :setup
     resources :catalog_collections
     resources :contacts
+    resources :users
+    resources :roles
   end
   
   resources :contact_infos
