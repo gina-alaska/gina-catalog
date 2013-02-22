@@ -1,5 +1,5 @@
 class Manager::DataController < ManagerController
-  before_filter :fetch_record, :except => [:index, :create, :new]
+  before_filter :fetch_record, :except => [:index, :create, :new, :toggle_collection]
   
   include CatalogConcerns::Search
   
@@ -47,7 +47,30 @@ class Manager::DataController < ManagerController
         }
       end
     end
-    
+  end
+
+  def toggle_collection
+    rec_list = params[:check_list].split(",")
+    rec_list.each do |record_id|
+      record = Catalog.find(record_id)
+      rec_coll = record.catalog_collections.where(id: params[:coll_id]).first
+
+      if rec_coll.nil?
+        collection = CatalogCollection.find(params[:coll_id])
+        record.catalog_collections << collection
+        record.save!
+      else
+        record.catalog_collections.delete( rec_coll )
+      end
+    end
+
+    respond_to do |format|
+      format.html {
+        if request.xhr?
+          render :nothing => true
+        end
+      }
+    end
   end
   
   protected

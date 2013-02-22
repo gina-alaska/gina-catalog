@@ -8,11 +8,24 @@
       = link_to new_manager_datum_path, class: 'btn btn-success pull-right' do
         %i.icon-plus.icon-white
         New Record
+      %ul.nav
+        %li.dropdown
+          %a{ id: "collections", href: "#", class: "dropdown-toggle", data: {toggle: "dropdown"} }
+            Toggle Collection
+            %b.caret
+          %ul.dropdown-menu
+            -@setup.catalog_collections.each do |coll|
+              %li
+                %a{ id: coll.id, href: "#", class: "navbar-text", onclick: "CollToggle(#{coll.id})"}
+                  = coll.name
 
-%br/
+= paginate @catalogs
 %table.table.table-bordered.table-striped.table-condensed
   %thead
     %tr
+      %th
+        = link_to("#", id: "check-toggle", class: "btn btn-mini", title: "Toggle Check-Boxes", onclick: "CheckToggle()") do
+          %i.icon-search.icon-arrow-down
       %th Title
       %th Type
       %th Status
@@ -24,6 +37,10 @@
   %tbody
     - @catalogs.each do |item|
       %tr
+        %td{style:"text-align:center; padding:0;"}
+          %label{for: "coll_check_#{item.id}", style: "display:block; padding-bottom: 50px;"}
+            = check_box_tag "coll_check[#{item.id}]", item.id
+        
         %td
           = link_to item.title.truncate(70), manager_datum_path(item)
           - unless item.short_description.nil?
@@ -34,6 +51,11 @@
             %small.muted
               %b Tags:
               = item.tags.list
+          - unless item.catalog_collections.count == 0
+            %br/
+            %small.muted
+              %b Collections:
+              = item.catalog_collections.list
         %td= item.type.humanize
         %td= item.status.try(:humanize)
         %td= item.start_date.try(:year)
@@ -43,3 +65,43 @@
         %td= item.long_term_monitoring ? 'Yes' : 'No'
 
 = paginate @catalogs
+
+:javascript
+  function CheckToggle()
+    {
+    $('input:checkbox').attr("checked", function()
+      {
+      if ($(this).attr("checked"))
+        {
+        $(this).prop("checked", false);
+        }
+      else
+        {
+        $(this).prop("checked", true);
+        }
+      });
+    };
+
+  function CollToggle(coll_id)
+    {  
+    check_list = [];
+    $('input:checkbox').attr("checked", function()
+      {
+      if ($(this).attr("checked"))
+        {
+        check_list.push($(this).val());
+        }
+      });
+    $.ajax(
+      {
+      url: "/manager/colltoggle",
+      data:
+        {
+        check_list: check_list.join(','),
+        coll_id: coll_id
+        },
+      complete: function(){
+        location.reload();
+      }
+      });
+    };

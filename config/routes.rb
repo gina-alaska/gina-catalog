@@ -4,6 +4,7 @@ NSCatalog::Application.routes.draw do
   end
   
   match '/manager' => 'manager#dashboard', as: 'manager'
+  match '/manager/colltoggle' => 'manager/data#toggle_collection'
   namespace :manager do
     resources :data
     resources :images
