@@ -1,5 +1,5 @@
 class Manager::DataController < ManagerController
-  before_filter :fetch_record, :except => [:index, :create, :new]
+  before_filter :fetch_record, :except => [:index, :create, :new, :toggle_collection]
   
   include CatalogConcerns::Search
   
