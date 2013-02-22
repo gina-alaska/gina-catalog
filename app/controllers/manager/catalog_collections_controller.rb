@@ -61,5 +61,19 @@ class Manager::CatalogCollectionsController < ManagerController
       format.json { head :no_content }
     end
   end
+  
+
+  def add
+    @catalog_collection = @setup.catalog_collections.includes(:catalogs).find(params[:id])
+    @catalog_collection.catalogs << Catalog.where(id: params[:catalog_ids])
+
+    respond_to do |format|
+      format.html {
+        if request.xhr?
+          render :nothing => true
+        end
+      }
+    end
+  end
 
 end

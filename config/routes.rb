@@ -19,7 +19,11 @@ NSCatalog::Application.routes.draw do
     end
     resources :page_layouts
     resource :setup
-    resources :catalog_collections
+    resources :catalog_collections do
+      member do
+        put :add
+      end
+    end
     resources :contacts
     resources :users
     resources :roles

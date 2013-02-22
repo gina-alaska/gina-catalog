@@ -47,7 +47,6 @@ class Manager::DataController < ManagerController
         }
       end
     end
-    
   end
   
   protected

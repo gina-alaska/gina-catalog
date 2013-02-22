@@ -5,7 +5,7 @@ class Catalog < ActiveRecord::Base
   belongs_to :owner, :class_name => 'User'
   belongs_to :primary_contact, :class_name => 'Person'
   belongs_to :data_source
-  has_and_belongs_to_many :catalog_collections do
+  has_and_belongs_to_many :catalog_collections, uniq: true do
     def list
       proxy_association.owner.catalog_collections.collection.join(', ')
     end
