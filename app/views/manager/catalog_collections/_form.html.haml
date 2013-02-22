@@ -7,6 +7,29 @@
           = f.text_field :name
         .field.span9
           = f.label :description
-          = f.text_area :description, cols: "80", rows: "6", class: "span9"
+          = f.text_area :description, cols: "80", rows: "4", class: "span12"
 
         = f.submit class: 'btn btn-primary pull-right'
+.row-fluid
+  .span12
+    %table.table.table-bordered.table-striped.table-condensed
+      %th Records
+      %th Actions
+      -@records.each do |rec|
+        %tr
+          %td.span9
+            = rec.title
+          %td.span3
+            = link_to "Remove Record", "#", confirm: "Are you sure?", class: "btn btn-danger", onclick: "RemoveColl('#{remove_manager_catalog_collection_path(@catalog_collection.id)}', #{rec.id})"
+
+
+:javascript
+  function RemoveColl(path, rec_id){
+    $.ajax({
+      url: path+"?record="+rec_id,
+      type: 'GET',
+      complete: function(){
+        location.reload();
+      }
+    });
+  };
