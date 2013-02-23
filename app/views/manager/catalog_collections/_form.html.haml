@@ -20,16 +20,4 @@
           %td.span9
             = rec.title
           %td.span3
-            = link_to "Remove Record", "#", confirm: "Are you sure?", class: "btn btn-danger", onclick: "RemoveColl('#{remove_manager_catalog_collection_path(@catalog_collection.id)}', #{rec.id})"
-
-
-:javascript
-  function RemoveColl(path, rec_id){
-    $.ajax({
-      url: path+"?record="+rec_id,
-      type: 'GET',
-      complete: function(){
-        location.reload();
-      }
-    });
-  };
+            = link_to "Remove Record", remove_manager_catalog_collection_path(@catalog_collection, 'catalog_ids' => [rec.id]), confirm: "Are you sure?", class: "btn btn-danger", method: :delete, remote: true

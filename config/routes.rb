@@ -22,7 +22,7 @@ NSCatalog::Application.routes.draw do
     resources :catalog_collections do
       member do
         put :add
-        get :remove
+        delete :remove
       end
     end
     resources :contacts

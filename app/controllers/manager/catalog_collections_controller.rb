@@ -79,15 +79,11 @@ class Manager::CatalogCollectionsController < ManagerController
 
   def remove
     @catalog_collection = CatalogCollection.find(params[:id])
-    @catalog_record = Catalog.find(params[:record])
-    @catalog_collection.catalogs.delete(@catalog_record)
+    @catalog_records = Catalog.where(id: params[:catalog_ids])
+    @catalog_collection.catalogs.delete(@catalog_records)
 
     respond_to do |format|
-      format.html {
-        if request.xhr?
-          render :nothing => true
-        end
-      }
+      format.js
     end
   end
 end
