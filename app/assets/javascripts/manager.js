@@ -11,8 +11,10 @@
 //= require 'markitup'
 //= require 'manager/pages'
 //= require_self
-
 $(document).ready(function() {
+  $('#catalog-items [data-toggle="collapse"] input,a,label').on('click', function(evt) {
+    evt.stopPropagation();
+  });
   $('[data-action="expand-all"]').on('click', function() {
     $($(this).data('target')).collapse('show');
   });

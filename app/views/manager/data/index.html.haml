@@ -25,11 +25,11 @@
 
 
 = paginate @catalogs
-%table.table.table-bordered.table-striped.table-condensed
+%table.table.table-bordered.table-striped.table-condensed#catalog-items
   %thead
     %tr
       %th
-        = link_to("#", id: "check-toggle", class: "btn btn-mini", title: "Toggle Check-Boxes", onclick: "CheckToggle()") do
+        %button#check-toggle.btn.btn-mini{data: { action: 'toggle-checkbox', target: '.item-checkbox' } }
           %i.icon-search.icon-arrow-down
       %th Title
       %th Type
@@ -42,7 +42,7 @@
       %tr{data: { toggle: 'collapse', target: "#row_#{dom_id(item)}" }}
         %td{style:"text-align:center; padding:0;"}
           %label{for: "coll_check_#{item.id}", style: "display:block; min-height:50px;"}
-            = check_box_tag "coll_check[#{item.id}]", item.id
+            = check_box_tag "coll_check[#{item.id}]", item.id, nil, class: 'item-checkbox'
         
         %td
           = link_to item.title.truncate(150).humanize, manager_datum_path(item)
@@ -70,41 +70,30 @@
 = paginate @catalogs
 
 :javascript
-  function CheckToggle()
-    {
-    $('input:checkbox').attr("checked", function()
-      {
-      if ($(this).attr("checked"))
-        {
-        $(this).prop("checked", false);
-        }
-      else
-        {
-        $(this).prop("checked", true);
-        }
+  $(document).ready(function() {
+    $('[data-action="toggle-checkbox"]').on('click', function() {
+      $($(this).data('target')).attr("checked", function() {
+        $(this).prop("checked", !$(this).attr("checked"));
       });
-    };
+    });
+  })
 
-  function CollToggle(coll_id)
-    {  
+  function CollToggle(coll_id) {  
     check_list = [];
-    $('input:checkbox').attr("checked", function()
-      {
-      if ($(this).attr("checked"))
-        {
+    $('input:checkbox').attr("checked", function() {
+      if ($(this).attr("checked")) {
         check_list.push($(this).val());
-        }
-      });
-    $.ajax(
-      {
+      }
+    });
+    
+    $.ajax({
       url: "#{manager_catalog_collections_path}/" + coll_id + '/add',
       type: 'PUT',
-      data:
-        {
+      data: {
         "catalog_ids[]": check_list
-        },
+      },
       complete: function(){
         location.reload();
       }
-      });
-    };
+    });
+  };
