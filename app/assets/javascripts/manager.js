@@ -11,3 +11,12 @@
 //= require 'markitup'
 //= require 'manager/pages'
 //= require_self
+
+$(document).ready(function() {
+  $('[data-action="expand-all"]').on('click', function() {
+    $($(this).data('target')).collapse('show');
+  });
+  $('[data-action="collapse-all"]').on('click', function() {
+    $($(this).data('target')).collapse('hide');
+  });
+})

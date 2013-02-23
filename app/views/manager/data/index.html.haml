@@ -1,23 +1,28 @@
 .navbar.navbar-static-top
   .navbar-inner
-    = form_tag manager_data_path, method: 'GET', class: 'navbar-form form-search' do
+    = link_to new_manager_datum_path, class: 'btn btn-success' do
+      %i.icon-plus.icon-white
+      New Record
+    = link_to '#', data: { action: 'expand-all', target: '.collapse' }, class: 'btn' do
+      %i.icon-plus-sign
+      Expand All
+    = link_to '#', data: { action: 'collapse-all', target: '.collapse' }, class: 'btn' do
+      %i.icon-minus-sign
+      Collapse All
+    %a.btn{ id: "collections", href: "#", class: "dropdown-toggle", data: {toggle: "dropdown"} }
+      Add to collection
+      %b.caret
+    %ul.dropdown-menu
+      -@setup.catalog_collections.each do |coll|
+        %li
+          %a{ id: coll.id, href: "#", class: "navbar-text", onclick: "CollToggle(#{coll.id})"}
+            = coll.name
+
+    = form_tag manager_data_path, method: 'GET', class: 'navbar-form form-search pull-right' do        
       .input-append
-        = text_field_tag 'search[q]', @search[:q], class: 'search-query span8', placeholder: "Search"
+        = text_field_tag 'search[q]', @search[:q], class: 'search-query span4', placeholder: "Search"
         = submit_tag 'Search', class: 'btn btn-primary'
-        
-      = link_to new_manager_datum_path, class: 'btn btn-success pull-right' do
-        %i.icon-plus.icon-white
-        New Record
-      %ul.nav
-        %li.dropdown
-          %a{ id: "collections", href: "#", class: "dropdown-toggle", data: {toggle: "dropdown"} }
-            Add to collection
-            %b.caret
-          %ul.dropdown-menu
-            -@setup.catalog_collections.each do |coll|
-              %li
-                %a{ id: coll.id, href: "#", class: "navbar-text", onclick: "CollToggle(#{coll.id})"}
-                  = coll.name
+
 
 = paginate @catalogs
 %table.table.table-bordered.table-striped.table-condensed
@@ -32,37 +37,35 @@
       %th Start year
       %th End year
       %th Source agency
-      %th Primary contact
-      %th Long Term
   %tbody
     - @catalogs.each do |item|
-      %tr
+      %tr{data: { toggle: 'collapse', target: "#row_#{dom_id(item)}" }}
         %td{style:"text-align:center; padding:0;"}
-          %label{for: "coll_check_#{item.id}", style: "display:block; padding-bottom: 50px;"}
+          %label{for: "coll_check_#{item.id}", style: "display:block; min-height:50px;"}
             = check_box_tag "coll_check[#{item.id}]", item.id
         
         %td
-          = link_to item.title.truncate(70), manager_datum_path(item)
-          - unless item.short_description.nil?
-            %br/
-            %small= item.short_description.try(:humanize)
-          - if item.tags.size > 0
-            %br/
-            %small.muted
-              %b Tags:
-              = item.tags.list
-          - if item.catalog_collections.size > 0
-            %br/
-            %small.muted
-              %b Collections:
-              = item.catalog_collections.list
+          = link_to item.title.truncate(150).humanize, manager_datum_path(item)
+          .collapse{id: "row_#{dom_id(item)}"}
+            %small
+              %dl.dl-horizontal
+                - unless item.short_description.nil?
+                  %dt Description:
+                  %dd= item.short_description.try(:humanize)
+                - if item.tags.size > 0
+                  %dt Tags:
+                  %dd= item.tags.list
+                - if item.catalog_collections.size > 0
+                  %dt Collections:
+                  %dd= item.catalog_collections.list
+                - if item.primary_contact
+                  %dt Primary Contact:
+                  %dd= item.primary_contact
         %td= item.type.humanize
         %td= item.status.try(:humanize)
         %td= item.start_date.try(:year)
         %td= item.end_date.try(:year)
         %td= item.source_agency
-        %td= item.primary_contact
-        %td= item.long_term_monitoring ? 'Yes' : 'No'
 
 = paginate @catalogs
 
