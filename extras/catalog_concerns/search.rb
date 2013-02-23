@@ -40,6 +40,7 @@ module CatalogConcerns
           data_accessor_for(Project).include=table_includes
           data_accessor_for(Asset).include=table_includes
           fulltext search[:q]
+          with :setup_ids, current_setup.id
           with :id, catalog_ids unless catalog_ids.nil? or catalog_ids.empty?
           with :status, search[:status] if search[:status].present?
           with :long_term_monitoring, ((search[:long_term_monitoring].to_i > 0) ? true : false) if search.include? :long_term_monitoring

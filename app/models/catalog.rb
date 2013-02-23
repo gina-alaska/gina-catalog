@@ -1,10 +1,14 @@
 class Catalog < ActiveRecord::Base
   #The exception to the db name rule, since this is a collection of multiple types of items
   self.table_name = 'catalog'
+  self.inheritance_column = :_type_disabled
 
   belongs_to :owner, :class_name => 'User'
   belongs_to :primary_contact, :class_name => 'Person'
   belongs_to :data_source
+  
+  has_and_belongs_to_many :setups, uniq: true
+  
   has_and_belongs_to_many :catalog_collections, uniq: true do
     def list
       proxy_association.owner.catalog_collections.collection.join(', ')
@@ -101,6 +105,7 @@ class Catalog < ActiveRecord::Base
     string :status
     string :type
     string :uuid
+    integer :setup_ids, :multiple => true
     integer :id
     integer :owner_id
     integer :primary_contact_id
