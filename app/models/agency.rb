@@ -17,6 +17,7 @@ class Agency < ActiveRecord::Base
   # has_many :projects, :through => :project_agencies
   has_and_belongs_to_many :catalogs, join_table: :catalog_agencies
 
+  default_scope order('name ASC')
   scope :active, :conditions => { :active => true }, :order => 'name asc'
   
   validates_presence_of     :name

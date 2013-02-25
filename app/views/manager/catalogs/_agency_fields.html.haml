@@ -1,13 +1,13 @@
 .row-fluid
   .span12
     = f.label :source_agency_id, class: 'control-label'
-    = f.select :source_agency_id, options_from_collection_for_select(Agency.all, :id, :name, @catalog.source_agency_id), {}, class: 'span12'
+    = f.collection_select :source_agency_id, Agency.all, :id, :name, { prompt: 'Select a source agency' }, { class: 'span12' }
 
     = f.label :funding_agency_id, class: 'control-label'
-    = f.select :funding_agency_id, options_from_collection_for_select(Agency.all, :id, :name, @catalog.funding_agency_id), {}, class: 'span12'    
+    = f.collection_select :funding_agency_id, Agency.all, :id, :name, { prompt: 'Select a funding agency'}, { class: 'span12' }
 
     = f.label :agencies, 'Other Agencies', class: 'control-label'
-    = f.select :agencies, options_from_collection_for_select(Agency.all, :id, :name, @catalog.agencies.map(&:id)), {}, multiple: true, class: 'span12'
+    = f.collection_select :agencies, Agency.all, :id, :name, {}, { multiple: true, class: 'span12' }
     
     :javascript
       $('##{@catalog.class.to_s.downcase}_source_agency_id').select2();

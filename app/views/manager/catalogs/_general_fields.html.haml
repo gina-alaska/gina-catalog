@@ -21,8 +21,12 @@
     .control-group
       = f.label :status, class: 'control-label'
       .controls
-        = f.select :status, options_for_select(@catalog.class::STATUSES, @catalog.status), {}
+        = f.select :status, @catalog.class::STATUSES, { selected: @catalog.status, prompt: 'Please select a status' }
     .control-group
       = f.label :owner_id, class: 'control-label'
       .controls
-        = f.select :owner_id, options_from_collection_for_select(User.all, :id, :fullname, @catalog.owner_id), {}
+        = f.collection_select :owner_id, User.order('first_name ASC').all, :id, :fullname, { selected: @catalog.owner_id || current_user.id }
+    .control-group
+      = f.label :type, class: 'control-label'
+      .controls
+        = f.select :type, [['Project', 'Project'], ['Data','Asset']], { selected: @catalog.type, prompt: 'Select a record type' }

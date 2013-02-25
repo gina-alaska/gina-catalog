@@ -11,6 +11,8 @@ class Catalog < ActiveRecord::Base
   scope :restricted, :joins => :license, :conditions => { :licenses => { :downloadable => false } }
 
   validates_presence_of :title
+  validates_presence_of :type
+  validates_presence_of :owner_id
   #validates_presence_of :license_id
 
   #after_create :setup_path
@@ -117,7 +119,9 @@ class Catalog < ActiveRecord::Base
     end
     
     string :status
-    string :type
+    string :record_type do
+      type
+    end
     string :uuid
     integer :setup_ids, :multiple => true
     integer :id
