@@ -39,7 +39,7 @@ gem 'ancestry', '~> 1.2.4'
 gem 'bootstrap-sass', '~> 2.3.0.1'
 
 # Use unicorn as the web server
-# gem 'unicorn'
+gem 'unicorn'
 
 # Deploy with Capistrano
 # gem 'capistrano'
