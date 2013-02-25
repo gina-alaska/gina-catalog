@@ -15,6 +15,7 @@ class Manager::CatalogCollectionsController < ManagerController
 
   def new
     @catalog_collection = @setup.catalog_collections.build
+    @records = @catalog_collection.catalogs
   end
 
   def create
