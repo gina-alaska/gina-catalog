@@ -12,13 +12,13 @@
 //= require 'manager/pages'
 //= require_self
 $(document).ready(function() {
-  $('#catalog-items [data-toggle="collapse"] input,a,label').on('click', function(evt) {
-    evt.stopPropagation();
+  $(document).on('click', '#catalog-items tr[data-toggle="collapse"] label, #catalog-items tr[data-toggle="collapse"] > a, #catalog-items tr[data-toggle="collapse"] > input[type="checkbox"], #catalog-items tr[data-toggle="collapse"] > input', function(e) {
+    e.stopPropagation();
   });
-  $('[data-action="expand-all"]').on('click', function() {
+  $(document).on('click', '[data-action="expand-all"]', function() {
     $($(this).data('target')).collapse('show');
   });
-  $('[data-action="collapse-all"]').on('click', function() {
+  $(document).on('click', '[data-action="collapse-all"]', function() {
     $($(this).data('target')).collapse('hide');
   });
 })
