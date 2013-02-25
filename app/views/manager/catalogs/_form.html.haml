@@ -7,7 +7,7 @@
           = link_to section.humanize, "##{section}"
       
   .span8
-    = form_for @catalog, url: manager_datum_path(@catalog), method: @catalog.new_record? ? :post : :put, html: { class: 'form' } do |f|
+    = form_for [:manager, @catalog], html: { class: 'form' } do |f|
       %section#general
         %h2 General
         = render 'general_fields', f: f
@@ -45,7 +45,7 @@
         = render 'sds_fields', f: f
       
       %section#actions.form-actions
-        = link_to manager_datum_path(@catalog), class: 'btn btn-inverse' do
+        = link_to [:manager, @catalog], class: 'btn btn-inverse' do
           %i.icon-arrow-left.icon-white
           Back
           

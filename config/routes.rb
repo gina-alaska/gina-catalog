@@ -6,7 +6,7 @@ NSCatalog::Application.routes.draw do
   match '/manager' => 'manager#dashboard', as: 'manager'
   match '/manager/colltoggle' => 'manager/data#toggle_collection'
   namespace :manager do
-    resources :data
+    resources :catalogs
     resources :images
     resources :pages do
       get :upload_image, :on => :member

@@ -1,6 +1,6 @@
 .navbar.navbar-static-top
   .navbar-inner
-    = link_to new_manager_datum_path, class: 'btn btn-success' do
+    = link_to new_manager_catalogs_path, class: 'btn btn-success' do
       %i.icon-plus.icon-white
       New Record
     = link_to '#', data: { action: 'expand-all', target: '.collapse' }, class: 'btn' do
@@ -18,7 +18,7 @@
           %a{ id: coll.id, href: "#", class: "navbar-text", onclick: "CollToggle(#{coll.id})"}
             = coll.name
 
-    = form_tag manager_data_path, method: 'GET', class: 'navbar-form form-search pull-right' do        
+    = form_tag manager_catalogs_path, method: 'GET', class: 'navbar-form form-search pull-right' do        
       .input-append
         = text_field_tag 'search[q]', @search[:q], class: 'search-query span4', placeholder: "Search"
         = submit_tag 'Search', class: 'btn btn-primary'
@@ -45,7 +45,7 @@
             = check_box_tag "coll_check[#{item.id}]", item.id, nil, class: 'item-checkbox'
         
         %td
-          = link_to item.title.truncate(150).humanize, manager_datum_path(item)
+          = link_to item.title.truncate(150).humanize, [:manager, item]
           .collapse{id: "row_#{dom_id(item)}"}
             %small
               %dl.dl-horizontal
