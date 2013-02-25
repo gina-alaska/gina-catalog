@@ -1,7 +1,7 @@
 require 'html/pipeline'
 
 class Page < ActiveRecord::Base
-  attr_accessible :content, :layout, :slug, :title, :sections, :page_layout_id, :page_layout, :parent_id
+  attr_accessible :content, :layout, :slug, :title, :sections, :page_layout_id, :page_layout, :parent_id, :redirect
   
   acts_as_nested_set
   before_save :rebuild_slug
