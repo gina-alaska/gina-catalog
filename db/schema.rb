@@ -546,6 +546,7 @@ ActiveRecord::Schema.define(:version => 20130223003217) do
     t.integer  "lft"
     t.integer  "rgt"
     t.integer  "depth"
+    t.string   "redirect"
   end
 
   create_table "pages_setups", :id => false, :force => true do |t|
