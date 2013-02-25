@@ -1,7 +1,21 @@
 class Catalog < ActiveRecord::Base
+  STATUSES = %w(Complete Ongoing Unknown Funded)
+  
   #The exception to the db name rule, since this is a collection of multiple types of items
   self.table_name = 'catalog'
   self.inheritance_column = :_type_disabled
+
+  delegate :downloadable, :to => :license
+
+  scope :public, :joins => :license, :conditions => { :licenses => { :downloadable => true } }
+  scope :restricted, :joins => :license, :conditions => { :licenses => { :downloadable => false } }
+
+  validates_presence_of :title
+  #validates_presence_of :license_id
+
+  #after_create :setup_path
+  
+  after_create :create_repo!
 
   belongs_to :owner, :class_name => 'User'
   belongs_to :primary_contact, :class_name => 'Person'

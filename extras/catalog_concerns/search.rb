@@ -26,7 +26,7 @@ module CatalogConcerns
           direction ||= :asc
         end
 
-        results = Sunspot.search(Project, Asset) do
+        results = Catalog.search(include: table_includes) do
           # adjust_solr_params do |params|
           #   # Force solar to do an 'OR'ish search, at least 1 "optional" word is required in each  
           #   # ocean marine sea    ~> ocean OR marine OR sea
@@ -37,8 +37,6 @@ module CatalogConcerns
           #   params[:pf] = [:title, :description]
           # end
 
-          data_accessor_for(Project).include=table_includes
-          data_accessor_for(Asset).include=table_includes
           fulltext search[:q]
           with :setup_ids, current_setup.id
           with :id, catalog_ids unless catalog_ids.nil? or catalog_ids.empty?

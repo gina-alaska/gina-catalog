@@ -52,7 +52,7 @@ class Manager::DataController < ManagerController
   protected
   
   def catalog_params(type)    
-    v = params[type.downcase.to_sym].slice(:title, :description, :start_date, :end_date, :status, 
+    v = params[:catalog].slice(:title, :description, :start_date, :end_date, :status, 
       :owner_id, :primary_contact_id, :people_ids, :source_agency_id, :funding_agency_id, 
       :agency_ids, :tags, :geokeywords, :catalog_collection_ids)
      
