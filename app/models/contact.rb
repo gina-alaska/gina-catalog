@@ -4,6 +4,8 @@ class Contact < ActiveRecord::Base
   belongs_to :setups
   validates_presence_of :name, :email, :message
   validate :check_for_spam
+  
+  default_scope order('name ASC')
 
   def check_for_spam
   	if spam?

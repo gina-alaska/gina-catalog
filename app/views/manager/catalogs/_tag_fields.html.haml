@@ -12,14 +12,6 @@
     = f.label :data_types, class: 'control-label'
     = f.select :data_types, options_from_collection_for_select(DataType.all, :id, :name, @catalog.data_types.map(&:id)), { include_blank: true },  multiple: true, class: 'span12'
     
-    = f.label :long_term_monitoring, class: 'control-label'
-    %label.radio.span3
-      = f.radio_button :long_term_monitoring, true
-      Yes
-    %label.radio.span3
-      = f.radio_button :long_term_monitoring, false
-      No
-      
 :javascript
   $('##{@catalog.class.to_s.downcase}_tags').select2({ tags: #{Tag.order('text ASC').all.map(&:text).to_json} });
   $('##{@catalog.class.to_s.downcase}_geokeywords').select2();

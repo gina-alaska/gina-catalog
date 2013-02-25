@@ -5,6 +5,7 @@ class Setup < ActiveRecord::Base
   has_and_belongs_to_many :carousel_images, class_name: 'Image', join_table: 'carousel_images_setups'
   has_and_belongs_to_many :pages
   has_and_belongs_to_many :page_layouts
+  has_and_belongs_to_many :catalogs
   has_many :catalog_collections
   has_many :contacts
   

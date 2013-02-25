@@ -1,10 +1,30 @@
 class Catalog < ActiveRecord::Base
+  STATUSES = %w(Complete Ongoing Unknown Funded)
+  
   #The exception to the db name rule, since this is a collection of multiple types of items
   self.table_name = 'catalog'
+  self.inheritance_column = :_type_disabled
+
+  delegate :downloadable, :to => :license
+
+  scope :public, :joins => :license, :conditions => { :licenses => { :downloadable => true } }
+  scope :restricted, :joins => :license, :conditions => { :licenses => { :downloadable => false } }
+
+  validates_presence_of :title
+  validates_presence_of :type
+  validates_presence_of :owner_id
+  #validates_presence_of :license_id
+
+  #after_create :setup_path
+  
+  after_create :create_repo!
 
   belongs_to :owner, :class_name => 'User'
   belongs_to :primary_contact, :class_name => 'Person'
   belongs_to :data_source
+  
+  has_and_belongs_to_many :setups, uniq: true
+  
   has_and_belongs_to_many :catalog_collections, uniq: true do
     def list
       proxy_association.owner.catalog_collections.collection.join(', ')
@@ -99,8 +119,11 @@ class Catalog < ActiveRecord::Base
     end
     
     string :status
-    string :type
+    string :record_type do
+      type
+    end
     string :uuid
+    integer :setup_ids, :multiple => true
     integer :id
     integer :owner_id
     integer :primary_contact_id

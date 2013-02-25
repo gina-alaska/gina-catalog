@@ -7,7 +7,13 @@
           = link_to section.humanize, "##{section}"
       
   .span8
-    = form_for @catalog, url: manager_datum_path(@catalog), method: @catalog.new_record? ? :post : :put, html: { class: 'form' } do |f|
+    = form_for [:manager, @catalog], html: { class: 'form' } do |f|
+      - unless @catalog.errors.full_messages.empty?
+        .alert.alert-error
+          %h4 Errors prevents this record from being saved
+          %ul
+            - @catalog.errors.full_messages.each do |err|
+              %li= err
       %section#general
         %h2 General
         = render 'general_fields', f: f
@@ -45,7 +51,7 @@
         = render 'sds_fields', f: f
       
       %section#actions.form-actions
-        = link_to manager_datum_path(@catalog), class: 'btn btn-inverse' do
+        = link_to [:manager, @catalog], class: 'btn btn-inverse' do
           %i.icon-arrow-left.icon-white
           Back
           
@@ -55,7 +61,7 @@
 / refresh because of select2 moving things around on the page
 :javascript
   $(document).ready(function() {
-    $('[data-spy="scroll"]).each(function() {
+    $('[data-spy="scroll"]').each(function() {
       $(this).delay(500).scrollspy('refresh');
     })
   })

@@ -26,7 +26,7 @@ module CatalogConcerns
           direction ||= :asc
         end
 
-        results = Sunspot.search(Project, Asset) do
+        Catalog.search(include: table_includes) do
           # adjust_solr_params do |params|
           #   # Force solar to do an 'OR'ish search, at least 1 "optional" word is required in each  
           #   # ocean marine sea    ~> ocean OR marine OR sea
@@ -37,14 +37,13 @@ module CatalogConcerns
           #   params[:pf] = [:title, :description]
           # end
 
-          data_accessor_for(Project).include=table_includes
-          data_accessor_for(Asset).include=table_includes
           fulltext search[:q]
+          with :setup_ids, current_setup.id
           with :id, catalog_ids unless catalog_ids.nil? or catalog_ids.empty?
           with :status, search[:status] if search[:status].present?
           with :long_term_monitoring, ((search[:long_term_monitoring].to_i > 0) ? true : false) if search.include? :long_term_monitoring
           with :archived_at_year, nil unless search[:archived]
-          with :type, search[:type] if search[:type].present?
+          with :record_type, search[:type] if search[:type].present?
           with :agency_ids, search[:agency_ids] if search[:agency_ids].present?
           with :source_agency_id, search[:source_agency_id] if search[:source_agency_id].present?
           with :funding_agency_id, search[:funding_agency_id] if search[:funding_agency_id].present?
@@ -69,8 +68,6 @@ module CatalogConcerns
       
           order_by(field, direction) if field and direction
         end
-   
-        results
       end
     end
   end
