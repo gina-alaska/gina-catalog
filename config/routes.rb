@@ -5,7 +5,7 @@ NSCatalog::Application.routes.draw do
   
   match '/manager' => 'manager#dashboard', as: 'manager'
   namespace :manager do
-    resources :data
+    resources :catalogs
     resources :images
     resources :pages do
       get :upload_image, :on => :member

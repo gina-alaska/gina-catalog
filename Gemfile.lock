@@ -45,7 +45,7 @@ GEM
     awesome_nested_set (2.1.5)
       activerecord (>= 3.0.0)
     bluecloth (2.2.0)
-    bootstrap-sass (2.2.2.0)
+    bootstrap-sass (2.3.0.1)
       sass (~> 3.2)
     builder (3.0.4)
     charlock_holmes (0.6.9)
@@ -186,7 +186,7 @@ GEM
     ruby-openid (2.2.0)
     sanitize (2.0.3)
       nokogiri (>= 1.4.4, < 1.6)
-    sass (3.2.3)
+    sass (3.2.6)
     sass-rails (3.2.5)
       railties (~> 3.2.0)
       sass (>= 3.1.10)
@@ -232,7 +232,7 @@ DEPENDENCIES
   ancestry (~> 1.2.4)
   awesome_nested_set
   bluecloth
-  bootstrap-sass (~> 2.2.2.0)
+  bootstrap-sass (~> 2.3.0.1)
   coffee-rails (~> 3.2.0)
   compass-rails
   dragonfly
