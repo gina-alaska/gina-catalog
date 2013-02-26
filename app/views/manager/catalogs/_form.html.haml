@@ -36,11 +36,33 @@
 
       %section#links 
         %h2 Links
-        = render 'link_fields', f: f
+        .links
+          .header.row-fluid
+            .span2 Category
+            .span4 Display Text
+            .span4 URL
+            .span2.actions Actions
+          .body
+            = f.fields_for :links do |link_builder|
+              = render partial: 'link_fields', locals: { f: link_builder }
+          .clearfix{style:"margin-top:3px;"}
+            = link_to_add_fields "<i class='icon-plus icon-white'></i> Add Link".html_safe, f, :links, { class: 'btn btn-success pull-right' }
+            / = link_to '#', class: 'btn btn-success pull-right' do
+            /   %i.icon-plus.icon-white
+            /   Add link
     
       %section#locations
         %h2 Locations
-        = render 'location_fields', f: f
+        .locations
+          .header.row-fluid
+            .span4 Name
+            .span6 WKT
+            .span2.actions Actions
+          .body
+            = f.fields_for :locations do |location|
+              = render partial: 'location_fields', locals: { f: location }
+          .clearfix{style:"margin-top:3px;"}
+            = link_to_add_fields "<i class='icon-plus icon-white'></i> Add Location".html_safe, f, :locations, { class: 'btn btn-success pull-right' }
 
       %section#downloads
         %h2 Downloads/Files
