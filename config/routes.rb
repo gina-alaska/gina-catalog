@@ -27,6 +27,7 @@ NSCatalog::Application.routes.draw do
     end
     resources :contacts
     resources :users
+    resources :people
     resources :roles
   end
   
