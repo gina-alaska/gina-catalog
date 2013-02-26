@@ -17,6 +17,7 @@ NSCatalog::Application.routes.draw do
     
     resources :page_layouts
     resource :setup
+    resources :agencies
     resources :catalog_collections do
       member do
         put :add
