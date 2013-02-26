@@ -24,6 +24,12 @@
       $('#page_slug').slugify('#page_title');
 
     .row-fluid
+      .span12
+        .control-group
+          = f.label "Redirect to URL", class: 'control-label'
+          .controls
+            = f.text_field :redirect, class: 'span12'
+    .row-fluid
       .span6
         .control-group
           = f.label :parent_id, class: 'control-label'
