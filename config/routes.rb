@@ -1,15 +1,12 @@
 NSCatalog::Application.routes.draw do
-  resources :pages, only: :show do
-    get :not_found, on: :collection
-  end
-  
-  match '/manager' => 'manager#dashboard', as: 'manager'
   namespace :manager do
     resources :catalogs
     resources :images
+    
     resources :pages do
       get :upload_image, :on => :member
       post :add, :on => :member
+      
       resources :images, :only => [] do
         member do
           post :add
@@ -17,6 +14,7 @@ NSCatalog::Application.routes.draw do
         end
       end
     end
+    
     resources :page_layouts
     resource :setup
     resources :catalog_collections do
@@ -29,6 +27,11 @@ NSCatalog::Application.routes.draw do
     resources :users
     resources :roles
   end
+  match '/manager' => 'manager#dashboard', as: 'manager'
+
+  resources :pages, only: :show do
+    get :not_found, on: :collection
+  end  
   
   resources :contact_infos
 

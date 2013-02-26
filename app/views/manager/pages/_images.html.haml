@@ -22,5 +22,5 @@
                   %h5= link_to_unless image.link_to_url.empty?, image.title, image.link_to_url
                   %p= image.description
               .btn-group{style:"text-align:center;"}
-                = link_to 'Edit', edit_manager_image_path(image), class: 'btn'
+                = link_to 'Edit', edit_manager_image_path(image), class: 'btn', target: :_blank
                 = link_to 'Remove', remove_manager_page_image_path(page, image), method: "POST", data: { confirm: 'Are you sure?' }, class: 'btn', remote: true

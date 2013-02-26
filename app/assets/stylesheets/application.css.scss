@@ -17,12 +17,12 @@ $navbarBackgroundHighlight: lighten($navbarBackground, 10%);
 $navbarLinkBackgroundHover: darken($navbarBackground, 10%);
 
 @import "bootstrap";
+@import "fileupload/bootstrap-fileupload";
 @import "catalogs";
 @import "catalog_collection";
 @import "manager";
 @import "markitup";
 @import "markitup-html";
-@import "jquery.fileupload-ui";
 @import 'select2/select2';
 
 .row-fluid .select2-container.span12 {

@@ -45,12 +45,21 @@ class Manager::ImagesController < ManagerController
   def create
     @image = Image.new(params[:image])
     @setup.images << @image
+    
+    unless params[:page][:id].empty?
+      @page = current_setup.pages.find(params[:page][:id])
+    end
 
     respond_to do |format|
       if @image.save
         format.html { 
           flash[:success] = 'Image was successfully created.'
-          redirect_back_or_default manager_images_path 
+          if @page.nil?
+            redirect_to manager_images_path 
+          else
+            @page.images << @image
+            redirect_to edit_manager_page_path(@page)
+          end
         }
         format.json { render json: @image, status: :created, location: [:manager, @image] }
       else
