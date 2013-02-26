@@ -3,6 +3,4 @@
   .span6= f.text_field :wkt, class: 'span12'
   .span2.actions
     = f.hidden_field :id
-    = link_to '#', class: 'btn' do
-      %i.icon-globe
     = link_to_remove_fields '<i class="icon-trash icon-white"></i>'.html_safe, f
