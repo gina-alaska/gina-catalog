@@ -1,21 +1,8 @@
-.links
-  .header.row-fluid
-    .span2 Category
-    .span4 Display Text
-    .span4 URL
-    .span2.actions Actions
-  .body
-    = f.fields_for :links do |link_builder|
-      .link.row-fluid
-        .span2
-          = link_builder.select :category, options_for_select(Link::CATEGORIES, link_builder.object.category), {}, class: 'span12'
-        .span4= link_builder.text_field :display_text, class: 'span12'
-        .span4= link_builder.text_field :url, class: 'span12'
-        .span2.actions
-          = link_builder.hidden_field :id
-          = link_to '#', class: 'btn btn-danger' do
-            %i.icon-trash.icon-white
-  .clearfix{style:"margin-top:3px;"}
-    = link_to '#', class: 'btn btn-success pull-right' do
-      %i.icon-plus.icon-white
-      Add link
+.link.row-fluid.fields
+  .span2
+    = f.select :category, Link::CATEGORIES, {}, { class: 'span12' }
+  .span4= f.text_field :display_text, class: 'span12'
+  .span4= f.text_field :url, class: 'span12'
+  .span2.actions
+    = f.hidden_field :id
+    = link_to_remove_fields '<i class="icon-trash icon-white"></i>'.html_safe, f

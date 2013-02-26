@@ -8,54 +8,34 @@
         - image.errors.full_messages.each do |msg|
           %li= msg
   
-  .control-group
-    = f.label :title, class: 'control-label'
-    .controls
-      = f.text_field :title
+  = hidden_field :page, :id
+  .row-fluid
+    .span12
+      .control-group
+        = f.label :title, class: 'control-label'
+        .controls
+          = f.text_field :title, class: 'span12'
 
-  .control-group
-    = f.label :description, class: 'control-label'
-    .controls
-      = f.text_field :description
+      .control-group
+        = f.label :description, class: 'control-label'
+        .controls
+          = f.text_area :description, class: 'span12', rows: 3
     
-  .control-group
-    = f.label :link_to_url, class: 'control-label'
-    .controls
-      = f.text_field :link_to_url
+      .control-group
+        = f.label :link_to_url, class: 'control-label'
+        .controls
+          = f.text_field :link_to_url, class: 'span12'
     
-  .control-group
-    = f.label :file, class: 'control-label'
-    .controls
-      - if image.file
-        = image_tag image.file.thumb('300x300').url
-        %br/
-      = f.file_field :file
-    
-  .buttons
-    = link_to 'Submit image', '#', class: 'btn btn-primary', id: 'upload-image-button'
-:javascript
-  $(document).ready(function() {
-    // Initialize the jQuery File Upload widget:
-    $('#upload_image_form').fileupload({
-      dataType: 'json',
-      add: function(e, data) {
-        $('#upload-image-button').on('click', function() {
-          data.submit();
-        });
-      },
-      submit: function (e, data) {
-        data.context = $('#upload-image-button').text('Uploading....');
-      },
-      fail: function(e, data) {
-        alert("Error while uploading image")
-      },
-      done: function(e, data) {
-        $('#upload_image_form').each(function() { this.reset(); })
-        #{render '/manager/images/refresh_image_list.js.erb'}
-        $('#image_chooser_modal a[href="#thumbnail-list"]').tab('show');
-      },
-      always: function (e, data) {
-        data.context.text('Submit image');
-      }
-    });
-  });
+      .control-group
+        = f.label :file, class: 'control-label'
+        .controls
+          .fileupload{ class: (f.object.new_record? ? 'fileupload-new' : 'fileupload-exists'), data: { provides: 'fileupload' } }
+            .fileupload-preview.thumbnail.fileupload-exists{style:'max-width:75%'}
+              = image_tag image.file.thumb('300x300').url if image.file
+            %div
+              %span.btn.btn-file
+                %span.fileupload-new Select image
+                %span.fileupload-exists Change
+                = f.file_field :file
+      .form-actions
+        = f.submit class: 'btn btn-primary pull-right', id: 'upload-image-button'

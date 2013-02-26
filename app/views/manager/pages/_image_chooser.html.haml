@@ -15,7 +15,6 @@
           - else
             %ul
               - images.each do |image|
-                
                 %li.thumbnail
                   .image
                     - if image.file.nil?
@@ -29,6 +28,6 @@
                     = link_to 'Add', add_manager_page_image_path(page, image), method: 'POST', class: 'btn', remote: true
                     = link_to 'Edit', '#', class: 'btn'
         #upload-image.tab-pane
-          = render 'manager/images/form', image: page.images.build
+          = render 'manager/images/form', image: page.images.build, page: page
   .modal-footer
     %button.btn{data: { dismiss: 'modal' }} Close

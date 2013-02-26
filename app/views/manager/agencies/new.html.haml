@@ -1,0 +1,9 @@
+.navbar.navbar-static-top
+  .navbar-inner
+    %ul.nav
+      %li
+        = link_to manager_agencies_path do
+          %i.icon-arrow-left
+          Back
+%h2 New Agency
+= render 'form', agencies: @agencies
