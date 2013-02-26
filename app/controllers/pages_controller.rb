@@ -5,7 +5,11 @@ class PagesController < ApplicationController
   # GET /pages/1.json
   def show
     respond_to do |format|
-      format.html # show.html.erb
+      format.html {
+        if @page.redirect?
+          redirect_to @page.redirect
+        end
+      }
       format.json { render json: @page }
     end
   end
