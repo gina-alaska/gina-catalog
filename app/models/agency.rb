@@ -26,7 +26,7 @@ class Agency < ActiveRecord::Base
   
   validates_presence_of     :acronym
   validates_uniqueness_of   :acronym
-  validates_length_of       :acronym, :maximum => 80
+  validates_length_of       :acronym, :maximum => 15
   
   validates_length_of       :description, :maximum => 255, :allow_nil => true
   validates_inclusion_of    :category, :in => CATEGORIES, :message => " please select one of following: #{Agency::CATEGORIES.join(', ')}"
