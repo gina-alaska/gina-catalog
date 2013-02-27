@@ -29,4 +29,4 @@ db/data
 /data
 .powder
 .DS_Store
-.pid
+*.pid
