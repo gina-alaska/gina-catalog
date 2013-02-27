@@ -30,7 +30,7 @@ class Manager::PageLayoutsController < ManagerController
   # POST /setups/page_layouts.json
   def create
     @page_layout = @setup.layouts.build(params[:page_layout])
-    @setup.page_layouts << @page_layout
+    @setup.layouts << @page_layout
 
     respond_to do |format|
       if @page_layout.save
