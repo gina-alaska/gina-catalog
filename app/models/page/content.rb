@@ -1,7 +1,7 @@
 require 'html/pipeline'
 
 class Page::Content < ActiveRecord::Base
-  attr_accessible :content, :layout, :slug, :title, :sections, :page_layout_id, :page_layout, :parent_id, :redirect
+  attr_accessible :content, :layout, :slug, :title, :sections, :page_layout_id, :page_layout, :parent_id, :redirect, :description
   
   acts_as_nested_set
   before_save :rebuild_slug
@@ -16,6 +16,10 @@ class Page::Content < ActiveRecord::Base
   belongs_to :page_layout, class_name: 'Page::Layout'
   
   accepts_nested_attributes_for :images
+  
+  validates_presence_of :slug
+  validates_presence_of :title
+  validates_length_of :description, maximum: 255
   
   liquid_methods :title, :slug, :images
   

@@ -21,7 +21,7 @@
       .controls
         = f.text_field :slug, value: page.slug_without_path, class: 'span12'
     :javascript
-      $('#page_slug').slugify('#page_title');
+      $('#page_content_slug').slugify('#page_content_title');
 
     .row-fluid
       .span12
@@ -40,6 +40,12 @@
           = f.label :page_layout_id, 'Layout', class: 'control-label'
           .controls
             = f.collection_select :page_layout_id, @setup.layouts, :id, :name, {}, { class: 'span12' }
+    .row-fluid
+      .span12
+        .control-group
+          = f.label :description, class: 'control-label'
+          .controls
+            = f.text_area :description, class: 'span12', rows: 3
       
       
   #page_tabs.tabbable

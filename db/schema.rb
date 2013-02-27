@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130227011037) do
+ActiveRecord::Schema.define(:version => 20130227225503) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -527,6 +527,7 @@ ActiveRecord::Schema.define(:version => 20130227011037) do
     t.integer  "rgt"
     t.integer  "depth"
     t.string   "redirect"
+    t.string   "description"
   end
 
   create_table "page_images", :force => true do |t|
