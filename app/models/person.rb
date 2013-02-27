@@ -49,14 +49,14 @@ class Person < ActiveRecord::Base
   
   def work_phone
     self.phone_numbers.each do |pn|
-      return pn if pn.name == 'work'
+      return pn.digits if pn.name == 'work'
     end
     nil
   end
 
   def work_phone=(digits)
-    pn = self.work_phone
-    pn = self.phone_numbers.build({ :name => 'work' }) if !pn
+    pn = self.phone_numbers.where(name: 'work').first
+    pn = self.phone_numbers.build({ :name => 'work' }) if pn.nil?
     pn.digits = digits
 
     pn.save!
@@ -64,14 +64,14 @@ class Person < ActiveRecord::Base
 
   def alt_phone
     self.phone_numbers.each do |pn|
-      return pn if pn.name == 'alt'
+      return pn.digits if pn.name == 'alt'
     end
     nil
   end
 
   def alt_phone=(digits)
-    pn = self.alt_phone
-    pn = self.phone_numbers.build({ :name => 'alt' }) if !pn
+    pn = self.phone_numbers.where(name: 'alt').first
+    pn = self.phone_numbers.build({ :name => 'alt' }) if pn.nil?
     pn.digits = digits
 
     pn.save!
@@ -79,14 +79,14 @@ class Person < ActiveRecord::Base
 
   def mobile_phone
     self.phone_numbers.each do |pn|
-      return pn if pn.name == 'mobile'
+      return pn.digits if pn.name == 'mobile'
     end
     nil
   end
   
   def mobile_phone=(digits)
-    pn = self.mobile_phone
-    pn = self.phone_numbers.build({ :name => 'mobile' }) if !pn
+    pn = self.phone_numbers.where(name: 'mobile').first
+    pn = self.phone_numbers.build({ :name => 'mobile' }) if pn.nil?
     pn.digits = digits
 
     pn.save!
