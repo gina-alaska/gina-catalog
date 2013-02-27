@@ -58,7 +58,7 @@ class Manager::ImagesController < ManagerController
             redirect_to manager_images_path 
           else
             @page.images << @image
-            redirect_to edit_manager_page_path(@page)
+            redirect_to edit_manager_page_content_path(@page)
           end
         }
         format.json { render json: @image, status: :created, location: [:manager, @image] }
@@ -107,7 +107,7 @@ class Manager::ImagesController < ManagerController
       respond_to do |format|
         format.html {
           flash[:success] = "Added image"
-          redirect_to edit_manager_page_path(@page)
+          redirect_to edit_manager_page_content_path(@page)
         }
         format.js
       end
@@ -115,7 +115,7 @@ class Manager::ImagesController < ManagerController
       respond_to do |format|
         format.html {
           flash[:error] = "Unable to add image"
-          redirect_to edit_manager_page_path(@page)
+          redirect_to edit_manager_page_content_path(@page)
         }
         format.js
       end
@@ -128,7 +128,7 @@ class Manager::ImagesController < ManagerController
       respond_to do |format|
         format.html {
           flash[:success] = "Added image"
-          redirect_to edit_manager_page_path(@page)
+          redirect_to edit_manager_page_content_path(@page)
         }
         format.js
       end
@@ -136,7 +136,7 @@ class Manager::ImagesController < ManagerController
       respond_to do |format|
         format.html {
           flash[:error] = "Unable to add image"
-          redirect_to edit_manager_page_path(@page)
+          redirect_to edit_manager_page_content_path(@page)
         }
         format.js
       end

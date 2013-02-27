@@ -3,7 +3,7 @@ NSCatalog::Application.routes.draw do
     resources :catalogs
     resources :images
     
-    resources :pages, as: 'page_content' do
+    resources :page_contents do
       get :upload_image, :on => :member
       post :add, :on => :member
       
@@ -14,6 +14,8 @@ NSCatalog::Application.routes.draw do
         end
       end
     end
+    
+    resources :page_snippets
     
     resources :page_layouts
     resource :setup

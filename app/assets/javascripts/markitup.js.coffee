@@ -55,5 +55,7 @@
 		$(div).markItUp(@defaults)		
 
 $(document).ready ->
-	MarkItUp.markItUp("textarea.editor")
+  # $('textarea[data-markitup="html"]').markItUp(MarkItUp.)
+  MarkItUp.markItUp("textarea.editor")
+  MarkItUp.markItUp('textarea[data-markitup="html"]');
 	# $('textarea.editor').markItUp(markitup_settings);
