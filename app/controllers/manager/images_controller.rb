@@ -146,7 +146,7 @@ class Manager::ImagesController < ManagerController
   protected
   
   def fetch_page
-    @page = @setup.pages.find(params[:page_id])
+    @page = @setup.pages.find(params[:page_content_id])
   end
   
   def fetch_image

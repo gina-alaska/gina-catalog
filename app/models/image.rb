@@ -3,8 +3,8 @@ class Image < ActiveRecord::Base
   image_accessor :file
   
   has_and_belongs_to_many :setups
-  has_many :page_images
-  has_many :pages, :through => :page_images
+  has_many :page_images, class_name: 'Page::Image'
+  has_many :pages, :through => :page_images, class_name: 'Page::Content'
   
   validates_length_of :description, :maximum => 255
   
@@ -21,8 +21,6 @@ class Image < ActiveRecord::Base
       'link_to_url' => self.link_to_url,
       'thumb' => ::ImageTagDrop.new(self),
       'tag' => "<img src=\"#{self.file.thumb('640x480#').url}\" alt=\"#{self.title}\" />"
-      
-      
     }
   end
 end

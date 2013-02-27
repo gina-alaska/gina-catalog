@@ -3,7 +3,7 @@ class Manager::PagesController < ManagerController
   
   def new
     @page = @setup.pages.build
-    @page.page_layout = @setup.page_layouts.where(default: true).first
+    @page.page_layout = @setup.layouts.where(default: true).first
     @page.parent = @setup.pages.find(params[:parent]) if params[:parent]
   end
   
@@ -21,7 +21,7 @@ class Manager::PagesController < ManagerController
   end
   
   def create
-    @page = @setup.pages.build(params[:page])
+    @page = @setup.pages.build(params[:page_content])
     @setup.pages << @page
     
     if @page.save
@@ -41,7 +41,7 @@ class Manager::PagesController < ManagerController
   end
   
   def update
-    if @page.update_attributes(params[:page])
+    if @page.update_attributes(params[:page_content])
       respond_to do |format|
         format.html {
           flash[:success] = "#{@page.title} page updated"
