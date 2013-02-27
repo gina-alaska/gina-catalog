@@ -1,0 +1,2 @@
+class PageSnippet < Page
+end

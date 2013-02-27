@@ -1,0 +1,39 @@
+= form_for [:manager, @person] do |f|
+  - unless @person.errors.full_messages.empty?
+    .alert.alert-error
+      %h4 Errors prevents this record from being saved
+      %ul
+        - @person.errors.full_messages.each do |err|
+          %li= err
+  .row-fluid
+    .field.span12
+      = f.label :salutation
+      = f.text_field :salutation, class: "span2"
+
+      = f.label :first_name
+      = f.text_field :first_name, class: "span8"
+
+      = f.label :last_name
+      = f.text_field :last_name, class: "span8"
+
+      = f.label :suffix
+      = f.text_field :suffix, class: "span2"
+
+      = f.label :email
+      = f.text_field :email, class: "span12"
+
+      = f.label :url
+      = f.text_field :url, class: "span12"
+
+      = f.label :work_phone
+      = f.text_field :work_phone, class: "span4"
+
+      = f.label :mobile_phone
+      = f.text_field :mobile_phone, class: "span4"
+
+      = f.label :alt_phone
+      = f.text_field :alt_phone, class: "span4"
+  .row-fluid
+    .span12
+      .form-actions
+        = f.submit class: 'btn btn-primary pull-right'
