@@ -4,7 +4,9 @@ class Setup < ActiveRecord::Base
   has_and_belongs_to_many :images
   has_and_belongs_to_many :pages, class_name: 'Page::Content', join_table: 'pages_setups'
   has_and_belongs_to_many :layouts, class_name: 'Page::Layout', join_table: 'page_layouts_setups'
+  has_and_belongs_to_many :snippets, class_name: 'Page::Snippet'
   has_and_belongs_to_many :catalogs
+  
   has_many :catalog_collections
   has_many :contacts
   
