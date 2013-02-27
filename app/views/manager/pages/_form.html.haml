@@ -39,7 +39,7 @@
         .control-group
           = f.label :page_layout_id, 'Layout', class: 'control-label'
           .controls
-            = f.select :page_layout_id, options_from_collection_for_select(@setup.page_layouts, :id, :name, page.page_layout.try(:id)), class: 'span12'
+            = f.collection_select :page_layout_id, @setup.layouts, :id, :name, {}, { class: 'span12' }
       
       
   #page_tabs.tabbable
@@ -56,7 +56,7 @@
         - if name == 'images'
           = render 'images', page: page
         - else
-          = text_area_tag "page[content][#{name}]", content, class: 'editor span12', style:"border: none;", rows: 10
+          = text_area_tag "page_content[content][#{name}]", content, class: 'editor span12', style:"border: none;", rows: 10
     
   .form-actions
     = link_to manager_path, class: 'btn' do 

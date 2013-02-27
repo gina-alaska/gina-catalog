@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130223003217) do
+ActiveRecord::Schema.define(:version => 20130227011037) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -513,27 +513,7 @@ ActiveRecord::Schema.define(:version => 20130223003217) do
     t.string  "salt",       :null => false
   end
 
-  create_table "page_images", :force => true do |t|
-    t.integer  "image_id"
-    t.integer  "page_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  create_table "page_layouts", :force => true do |t|
-    t.string   "name"
-    t.text     "content"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-    t.boolean  "default"
-  end
-
-  create_table "page_layouts_setups", :id => false, :force => true do |t|
-    t.integer "setup_id"
-    t.integer "page_layout_id"
-  end
-
-  create_table "pages", :force => true do |t|
+  create_table "page_contents", :force => true do |t|
     t.string   "title"
     t.string   "slug"
     t.string   "sections"
@@ -549,9 +529,36 @@ ActiveRecord::Schema.define(:version => 20130223003217) do
     t.string   "redirect"
   end
 
+  create_table "page_images", :force => true do |t|
+    t.integer  "image_id"
+    t.integer  "content_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "page_layouts", :force => true do |t|
+    t.string   "name"
+    t.text     "content"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.boolean  "default"
+  end
+
+  create_table "page_layouts_setups", :id => false, :force => true do |t|
+    t.integer "setup_id"
+    t.integer "layout_id"
+  end
+
+  create_table "page_snippets", :force => true do |t|
+    t.string   "slug"
+    t.text     "content"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "pages_setups", :id => false, :force => true do |t|
     t.integer "setup_id"
-    t.integer "page_id"
+    t.integer "content_id"
   end
 
   create_table "people", :force => true do |t|
