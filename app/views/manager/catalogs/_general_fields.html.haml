@@ -12,11 +12,11 @@
     .control-group
       = f.label :start_date, class: 'control-label'
       .controls
-        = f.text_field :start_date
+        = f.text_field :start_date, id: 'datepicker'
     .control-group
       = f.label :end_date, class: 'control-label'
       .controls
-        = f.text_field :end_date
+        = f.text_field :end_date, id: 'datepicker'
   .span6
     .control-group
       = f.label :status, class: 'control-label'
@@ -30,3 +30,10 @@
       = f.label :type, class: 'control-label'
       .controls
         = f.select :type, [['Project', 'Project'], ['Data','Asset']], { selected: @catalog.type, prompt: 'Select a record type' }
+
+:javascript
+  $(function() {
+    $("#datepicker").datepicker({
+      dateFormat: "yy-mm-dd"
+    })
+  })
