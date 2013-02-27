@@ -8,7 +8,6 @@
 //= require 'jquery-file-upload/jquery.iframe-transport'
 //= require 'jquery-file-upload/tmpl.min'
 //= require 'select2/select2.min'
-//= require bootstrap-datepicker
 //= require_self
 
 $(document).ready(function(){

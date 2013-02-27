@@ -12,11 +12,11 @@
     .control-group
       = f.label :start_date, class: 'control-label'
       .controls
-        = f.text_field :start_date, data: {behaviour: 'datepicker'}
+        = f.text_field :start_date, data: {behaviour: 'datepicker', date_format: 'yyyy-mm-dd'}, value: @catalog.start_date.nil? ? "" : @catalog.start_date.to_date
     .control-group
       = f.label :end_date, class: 'control-label'
       .controls
-        = f.text_field :end_date, id: 'datepicker'
+        = f.text_field :end_date, data: {behaviour: 'datepicker', date_format: 'yyyy-mm-dd'}, value: @catalog.end_date.nil? ? "" : @catalog.end_date.to_date
   .span6
     .control-group
       = f.label :status, class: 'control-label'
