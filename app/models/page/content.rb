@@ -67,7 +67,8 @@ class Page::Content < ActiveRecord::Base
       'title' => self.title,
       'slug' => self.slug,
       'content' => ::PageContentDrop.new(self),
-      'images' => self.images
+      'images' => self.images,
+      'children' => self.children
     }
   end
 end

@@ -15,7 +15,7 @@ module PagesHelper
           'form' => ['action', 'method', 'class'],
           'input' => ['type', 'name', 'value', 'class'],
           'textarea' => ['rows', 'cols', 'name', 'class'],
-          'img' => ['src', 'alt'],
+          'img' => ['src', 'alt', 'data-src'],
           'span' => ['class'],
           'div' => ['itemscope', 'itemtype', 'style'],
           :all => ['abbr', 'accept', 'accept-charset',
