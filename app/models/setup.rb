@@ -18,7 +18,8 @@ class Setup < ActiveRecord::Base
   	{ 
   		'title' => self.title,
   		'by_line' => self.by_line,
-  		'catalog_collections' => self.catalog_collections
+  		'catalog_collections' => self.catalog_collections,
+      'page' => SetupSubpageDrop.new(self)
   	}
   end
 end
