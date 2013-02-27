@@ -56,12 +56,9 @@ NSCatalog::Application.routes.draw do
   resources :agencies
   resources :people
 
-  resource :catalog do
-    post :search
-  end
-
   resources :contacts, only: [:index, :create]
-
+  resources :catalogs
+  
   match '/search' => 'catalogs#search', as: 'search'
      
   # Omniauth pure
