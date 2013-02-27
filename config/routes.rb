@@ -3,7 +3,7 @@ NSCatalog::Application.routes.draw do
     resources :catalogs
     resources :images
     
-    resources :pages do
+    resources :pages, as: 'page_content' do
       get :upload_image, :on => :member
       post :add, :on => :member
       
