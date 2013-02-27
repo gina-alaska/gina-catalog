@@ -9,6 +9,6 @@ class ManagerController < ApplicationController
   protected
   
   def fetch_manager_pages
-    @manager_pages = { :pages => 'Pages', :page_layouts => 'Layouts', :setups => 'Settings' }
+    @manager_pages = { :page_contents => 'Pages', :page_snippets => 'Snippets', :page_layouts => 'Layouts', :setups => 'Settings' }
   end
 end

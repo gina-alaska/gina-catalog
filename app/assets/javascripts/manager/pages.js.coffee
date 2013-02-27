@@ -1,4 +1,4 @@
-$('document').ready ->
+$('document').ready ->  
   $("#add_new_page").submit (e) ->
     e.preventDefault()
   

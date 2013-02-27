@@ -1,4 +1,4 @@
-class Manager::PagesController < ManagerController
+class Manager::PageContentsController < ManagerController
   before_filter :fetch_page, :except => [:new, :create]
   
   def new
@@ -28,14 +28,16 @@ class Manager::PagesController < ManagerController
       respond_to do |format|
         format.html {
           flash[:success] = "#{@page.title} page created"
-          redirect_to manager_path
+          if params["commit"] == "Save"
+            redirect_to edit_manager_page_content_path(@page)
+          else
+            redirect_to manager_path
+          end
         }
       end
     else
       respond_to do |format|
-        format.html {
-          render action: 'new'
-        }
+        format.html { render action: 'new' }
       end      
     end
   end
@@ -46,7 +48,7 @@ class Manager::PagesController < ManagerController
         format.html {
           flash[:success] = "#{@page.title} page updated"
           if params["commit"] == "Save"
-            redirect_to edit_manager_page_path(@page)
+            redirect_to edit_manager_page_content_path(@page)
           else
             redirect_to manager_path
           end
@@ -54,9 +56,7 @@ class Manager::PagesController < ManagerController
       end
     else
       respond_to do |format|
-        format.html {
-          render action: 'edit'
-        }
+        format.html { render action: 'edit' }
       end      
     end
   end

@@ -556,6 +556,8 @@ ActiveRecord::Schema.define(:version => 20130227011037) do
     t.datetime "updated_at", :null => false
   end
 
+  add_index "page_snippets", ["slug"], :name => "index_page_snippets_on_slug"
+
   create_table "pages_setups", :id => false, :force => true do |t|
     t.integer "setup_id"
     t.integer "content_id"
@@ -687,6 +689,15 @@ ActiveRecord::Schema.define(:version => 20130227011037) do
     t.datetime "updated_at",    :null => false
     t.string   "contact_email"
   end
+
+  create_table "setups_snippets", :id => false, :force => true do |t|
+    t.integer "setup_id"
+    t.integer "snippet_id"
+  end
+
+  add_index "setups_snippets", ["setup_id", "setup_id"], :name => "index_setups_snippets_on_setup_id_and_setup_id"
+  add_index "setups_snippets", ["setup_id"], :name => "index_setups_snippets_on_setup_id"
+  add_index "setups_snippets", ["snippet_id"], :name => "index_setups_snippets_on_snippet_id"
 
   create_table "site_urls", :force => true do |t|
     t.string   "url"
