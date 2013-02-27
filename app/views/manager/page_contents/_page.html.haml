@@ -1,0 +1,17 @@
+.group{style:"padding-left:#{page.depth * 20}px"}
+  .row-fluid
+    .span8.title
+      = link_to edit_manager_page_content_path(page), class: 'edit' do
+        %i{class: (page.slug == 'home' ? 'icon-home' : (page.leaf? ? 'icon-file' : 'icon-folder-open') )}
+        = page.title
+    .span4.actions
+      = link_to edit_manager_page_content_path(page), class: 'btn' do
+        %i.icon-edit    
+      = link_to new_manager_page_content_path(parent: page.id), class: 'btn' do
+        %i.icon-plus-sign
+      = link_to page_path(page.slug), class: 'btn' do
+        %i.icon-eye-open    
+      = link_to manager_page_content_path(page), method: 'DELETE', class: 'btn btn-danger', data: { confirm: 'Are you sure?' } do
+        %i.icon-trash.icon-white
+= render partial: '/manager/page_contents/page', collection: page.children unless page.children.empty?
+        

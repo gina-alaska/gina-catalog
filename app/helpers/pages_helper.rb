@@ -1,13 +1,14 @@
 module PagesHelper
-  def render_cms_content(page, setup)
-    context = {
+  def pipeline_context(page, setup)
+    {
       page: page, 
       setup: setup,
+      snippets: PageSnippetDrop.new(setup),
       whitelist: HTML::Pipeline::SanitizationFilter::WHITELIST.merge(
         :elements => %w(
           h1 h2 h3 h4 h5 h6 h7 h8 br b i strong em a pre code img tt
           div ins del sup sub p ol ul table blockquote dl dt dd
-          kbd q samp var hr ruby rt rp li tr td th form input textarea span
+          kbd q samp var hr ruby rt rp li tr td th form input textarea span small
         ),
         :attributes => {
           'a' => ['href', 'class', 'data-slide'],
@@ -41,16 +42,24 @@ module PagesHelper
           'form' => { 'action' => ['http', 'https', :relative]}
         }
       )
-    }
+    }    
+  end
+  
+  def render_cms_content(page, setup)
     pipeline = HTML::Pipeline.new([
       LiquidFilter,
       HTML::Pipeline::AutolinkFilter,
       HTML::Pipeline::SanitizationFilter
-    ], context)
+    ], pipeline_context(page, setup))
     pipeline.call(page.layout)[:output].to_s.html_safe
   end
   
-  def render_liquid_content(layout, page, setup)
-    Liquid::Template.parse(layout.content).render({ 'page' => page, 'setup' => setup})
+  def render_snippet_content(snippet, setup)
+    pipeline = HTML::Pipeline.new([
+      LiquidFilter,
+      HTML::Pipeline::AutolinkFilter,
+      HTML::Pipeline::SanitizationFilter
+    ], pipeline_context(nil, setup))
+    pipeline.call(snippet.content)[:output].to_s.html_safe
   end
 end
