@@ -15,7 +15,7 @@ NSCatalog::Application.routes.draw do
       end
     end
     
-    resources :snippets
+    resources :page_snippets
     
     resources :page_layouts
     resource :setup

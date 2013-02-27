@@ -3,6 +3,7 @@ module PagesHelper
     context = {
       page: page, 
       setup: setup,
+      snippets: PageSnippetDrop.new(setup),
       whitelist: HTML::Pipeline::SanitizationFilter::WHITELIST.merge(
         :elements => %w(
           h1 h2 h3 h4 h5 h6 h7 h8 br b i strong em a pre code img tt
