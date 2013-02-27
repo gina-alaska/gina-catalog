@@ -12,7 +12,7 @@
     .control-group
       = f.label :start_date, class: 'control-label'
       .controls
-        = f.text_field :start_date, id: 'datepicker'
+        = f.text_field :start_date, data: {behaviour: 'datepicker'}
     .control-group
       = f.label :end_date, class: 'control-label'
       .controls
@@ -32,8 +32,6 @@
         = f.select :type, [['Project', 'Project'], ['Data','Asset']], { selected: @catalog.type, prompt: 'Select a record type' }
 
 :javascript
-  $(function() {
-    $("#datepicker").datepicker({
-      dateFormat: "yy-mm-dd"
-    })
+  $(document).ready( function(){
+    $('[data-behaviour~=datepicker]').datepicker()
   })
