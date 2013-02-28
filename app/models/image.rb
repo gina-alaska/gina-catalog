@@ -14,10 +14,10 @@ class Image < ActiveRecord::Base
     self.file.url
   end
   
-  def link_to_url
-    url = super
+  def url
+    url = self.link_to_url
     if url.nil? or url.empty?
-      "/#{self.file.url}"
+      "#{self.file.url}"
     else
       url
     end
@@ -27,7 +27,7 @@ class Image < ActiveRecord::Base
     {
       'title' => self.title,
       'description' => self.description,
-      'link_to_url' => self.link_to_url,
+      'link_to_url' => self.url,
       'thumb' => ::ImageTagDrop.new(self),
       'tag' => "<img src=\"#{self.file.png.thumb('640x480#').url}\" alt=\"#{self.title}\" />"
     }
