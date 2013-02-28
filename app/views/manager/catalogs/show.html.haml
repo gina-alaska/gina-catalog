@@ -23,7 +23,7 @@
   %table.table-bordered.tabled-stripped.table-condensed.pull-right.span5
     %thead
       %tr
-        %td{colspan:3,style:'padding:0'}
+        %td{colspan:2,style:'padding:0'}
           .navbar.navbar-static-top
             .navbar-inner
               .brand Files
@@ -39,18 +39,18 @@
                   
       - if @catalog.repo.files.empty?
         %tr
-          %td.lead{colspan:3} No files have been uploaded
+          %td.lead{colspan:2} No files have been uploaded
       -else
         %tr
           %th Name
           %th Size
-          %th Actions
+          / %th Actions
     %tbody
       - @catalog.repo.files.each do |file|
         %tr
           %td= file[:name]
           %td= number_to_human_size file[:size]
-          %td
+          / %td
         
 = render '/shared/catalogs/catalog', catalog: @catalog
 
