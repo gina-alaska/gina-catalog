@@ -1,11 +1,20 @@
 class Manager::AgenciesController < ManagerController
 
   def index
-    @agencies = Agency.all
+    page = params[:page] || 1
+    limit = 30
+    @search = search_params
+
+    search = Agency.search do
+      fulltext search_params[:q] if search_params[:q]
+      paginate per_page:(limit), page:(page)
+    end
+
+    @agencies = search.results
 
     respond_to do |format|
       format.html
-      format.json { render json: @catalog_collection }
+      format.json { render json: @agencies }
     end
   end
 
@@ -63,5 +72,11 @@ class Manager::AgenciesController < ManagerController
       format.html { redirect_to manager_agencies_path }
       format.json { head :no_content }
     end
+  end
+
+  protected
+
+  def search_params
+    params[:search] || {}
   end
 end

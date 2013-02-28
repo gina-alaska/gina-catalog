@@ -1,7 +1,16 @@
 class Manager::PeopleController < ManagerController
 
   def index
-    @people = Person.all
+    page = params[:page] || 1
+    limit = 30
+    @search = search_params
+
+    search = Person.search do
+      fulltext search_params[:q] if search_params[:q]
+      paginate per_page:(limit), page:(page)
+    end
+
+    @people = search.results
 
     respond_to do |format|
       format.html
@@ -63,5 +72,11 @@ class Manager::PeopleController < ManagerController
       format.html { redirect_to manager_people_path }
       format.json { head :no_content }
     end
+  end
+
+  protected
+
+  def search_params
+    params[:search] || {}
   end
 end
