@@ -1,9 +1,12 @@
 NSCatalog::Application.routes.draw do
   namespace :manager do
     resources :catalogs do
+      resources :repos
       member do
         put :publish
         put :unpublish
+        post :upload
+        get :download
       end
     end
     resources :images
@@ -45,8 +48,6 @@ NSCatalog::Application.routes.draw do
   resources :contact_infos
 
   resources :use_agreements
-
-  resources :repos
 
   resources :data_types
 

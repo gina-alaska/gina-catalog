@@ -17,7 +17,7 @@ class Image < ActiveRecord::Base
   def link_to_url
     url = super
     if url.nil? or url.empty?
-      self.file.url
+      "/#{self.file.url}"
     else
       url
     end

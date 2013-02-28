@@ -9,7 +9,9 @@
       = link_to edit_manager_catalog_path(@catalog), class: 'btn' do
         %i.icon-edit
         Edit
+      
       = link_to 'Publish', publish_manager_catalog_path(@catalog), method: :put, class: 'btn' unless @catalog.published?
+      
       = link_to 'Un-Publish', unpublish_manager_catalog_path(@catalog), method: :put, class: 'btn' if @catalog.published?
       
       = link_to '#', class: 'btn btn-danger', data: { confirm: 'Are you sure?' } do
@@ -17,4 +19,60 @@
         Delete
 %br/
 
+- if @catalog.repo
+  %table.table-bordered.tabled-stripped.table-condensed.pull-right.span5
+    %thead
+      %tr
+        %td{colspan:3,style:'padding:0'}
+          .navbar.navbar-static-top
+            .navbar-inner
+              .brand Files
+              .btn-group.pull-right
+                - if @catalog.repo.archive_available?(:zip)
+                  = link_to download_manager_catalog_path(@catalog), class: 'btn' do
+                    %i.icon-download
+                    Download
+                  
+                %button.btn.btn-primary{data: { toggle:'modal', target:'#file_upload_modal' }}
+                  %i.icon-upload.icon-white
+                  Add File
+                  
+      - if @catalog.repo.files.empty?
+        %tr
+          %td.lead{colspan:3} No files have been uploaded
+      -else
+        %tr
+          %th Name
+          %th Size
+          %th Actions
+    %tbody
+      - @catalog.repo.files.each do |file|
+        %tr
+          %td= file[:name]
+          %td= number_to_human_size file[:size]
+          %td
+        
 = render '/shared/catalogs/catalog', catalog: @catalog
+
+= form_for [:manager, @catalog, @catalog.repo], html: { class: 'modal hide fade', id: 'file_upload_modal' } do |f|
+  .modal-header
+    %button.close{data: { dismiss:'modal' }} &times;
+    %h3 File upload form
+  .modal-body
+    %p Select a file to upload
+    
+    .fileupload.fileupload-new{data:{provides:'fileupload'}}
+      .input-append
+        .uneditable-input.span5
+          %i.icon-file.fileupload-exists
+          %span.fileupload-preview
+        %span.btn.btn-file
+          %span.fileupload-new Select file
+          %span.fileupload-exists Change
+          = f.file_field 'file'
+        %a.btn.fileupload-exists{href:'#',data:{dismiss:'fileupload'}} Remove
+      / %span.help-block
+      /   If uploading a zip file the contents will be automatically expanded and added to the current archive
+  .modal-footer
+    = link_to 'Cancel', '#', 'data-dismiss' => 'modal', class: 'btn'
+    = submit_tag 'Upload', class: 'btn btn-primary'
