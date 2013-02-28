@@ -4,6 +4,6 @@ class ImageTagDrop < Liquid::Drop
   end
   
   def before_method(size)
-    @image.file.thumb(size).png.url
+    @image.file.png.thumb(size).url
   end
 end
