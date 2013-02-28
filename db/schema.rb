@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130227225503) do
+ActiveRecord::Schema.define(:version => 20130228005543) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -334,6 +334,7 @@ ActiveRecord::Schema.define(:version => 20130227225503) do
     t.string   "file_uid"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.string   "file_name"
   end
 
   create_table "images_setups", :id => false, :force => true do |t|

@@ -20,7 +20,7 @@
                     - if image.file.nil?
                       %p.lead Broken image
                     - else
-                      = image_tag image.file.thumb('300x300#').url, alt: image.title
+                      = image_tag image.file.png.thumb('300x300#').url, alt: image.title
                     .caption 
                       %strong= link_to_unless image.link_to_url.empty?, image.title, image.link_to_url
                       %p= image.description
