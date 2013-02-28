@@ -227,7 +227,7 @@ Title: #{self.title}
   end
 
   def archive
-    self.archived_at = Time.now
+    self.archived_at = Time.zone.now
     save!
   end
 
@@ -243,8 +243,8 @@ Title: #{self.title}
   def publish(current_user)
     return true if self.published?
 
-    self.published_at = Time.now
-    self.published_by = current_user.id
+    self.published_at = Time.zone.now
+    # self.published_by = current_user.id
     save
   end
 
@@ -252,7 +252,7 @@ Title: #{self.title}
     return true unless self.published?
 
     self.published_at = nil
-    self.published_by = nil
+    # self.published_by = nil
     save
   end
 

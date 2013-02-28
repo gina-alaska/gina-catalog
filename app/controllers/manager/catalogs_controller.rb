@@ -77,6 +77,38 @@ class Manager::CatalogsController < ManagerController
     end
   end
   
+  def unpublish
+    respond_to do |format|
+      if @catalog.unpublish
+        format.html {
+          flash[:success] = 'Successfully published record'
+          redirect_to [:manager, @catalog]
+        }
+      else
+        format.html {
+          flash[:error] = 'Unable to publish record'
+          redirect_to [:manager, @catalog]
+        }
+      end
+    end
+  end
+  
+  def publish
+    respond_to do |format|
+      if @catalog.publish(current_user)
+        format.html {
+          flash[:success] = 'Successfully published record'
+          redirect_to [:manager, @catalog]
+        }
+      else
+        format.html {
+          flash[:error] = 'Unable to publish record'
+          redirect_to [:manager, @catalog]
+        }
+      end
+    end
+  end
+  
   protected
   
   def catalog_params

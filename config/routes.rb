@@ -1,6 +1,11 @@
 NSCatalog::Application.routes.draw do
   namespace :manager do
-    resources :catalogs
+    resources :catalogs do
+      member do
+        put :publish
+        put :unpublish
+      end
+    end
     resources :images
     
     resources :page_contents do
