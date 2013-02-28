@@ -5,7 +5,8 @@
         %i.icon-file
         = snippet.slug
     .span4.actions
-      = link_to edit_manager_page_snippet_path(snippet), class: 'btn' do
-        %i.icon-edit    
-      = link_to manager_page_snippet_path(snippet), method: 'DELETE', class: 'btn btn-danger', data: { confirm: 'Are you sure?' } do
-        %i.icon-trash.icon-white        
+      .btn-group
+        = link_to edit_manager_page_snippet_path(snippet), class: 'btn' do
+          %i.icon-edit    
+        = link_to manager_page_snippet_path(snippet), method: 'DELETE', class: 'btn btn-danger', data: { confirm: 'Are you sure?' } do
+          %i.icon-trash.icon-white        
