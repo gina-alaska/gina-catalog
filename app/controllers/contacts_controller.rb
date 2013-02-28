@@ -1,14 +1,14 @@
 class ContactsController < ApplicationController
   def index
-    @page = Page.where(slug: 'contact-us').first
+    @page = current_setup.pages.where(slug: 'contact-us').first
     @contact = Contact.new
   end
 
   def create
-    contact_email = @setup.contact_email
-    @page = Page.where(slug: 'contact-us').first
+    contact_email = current_setup.contact_email
+    @page = current_setup.pages.where(slug: 'contact-us').first
 
-    @contact = @setup.contacts.build(params[:contact])
+    @contact = current_setup.contacts.build(params[:contact])
 
     respond_to do |format|
       if @contact.save

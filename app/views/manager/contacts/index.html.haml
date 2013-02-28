@@ -1,21 +1,18 @@
-.row-fluid
-  .span12
-    %h4 User Feedback
-    #contacts.accordion
-      - @contacts.each do |contact|
-        .accordion-group
-          .accordion-heading.h4
-            .pull-right
-              = link_to "Delete", manager_contact_path(contact), method: :delete, confirm: "Are you sure?", class: "btn btn-danger"
-            .pull-right{style: "padding-right: 10px;"}
-              %h5
-                = "Sent On: #{contact.created_at.strftime("%c")}"
-            = link_to "#{contact.name}", "#"+"#{contact.id}", class: 'accordion-toggle', data: { toggle: 'collapse', parent: '#contacts' }
-          %div{id: [contact.id], class: "accordion-body collapse"}
-            .accordion-inner
-              .span12
-                .well.well-small
-                  = mail_to contact.email
-                .well
-                  = contact.message
+%h4 User Feedback
+#contacts.accordion
+  - @contacts.each do |contact|
+    .accordion-group
+      .accordion-heading
+        .pull-right{style:"padding: 3px 3px;"}
+          %strong= "Sent On: #{contact.created_at.strftime("%c")}"
+          = link_to "Delete", manager_contact_path(contact), method: :delete, confirm: "Are you sure?", class: "btn btn-danger"
+        = link_to "#{contact.name}", "##{dom_id(contact)}", class: 'accordion-toggle', data: { toggle: 'collapse', parent: '#contacts' }
+      .accordion-body.collapse{id: dom_id(contact)}
+        .accordion-inner
+          %address
+            %strong= contact.name
+            %br/
+            = mail_to contact.email
+                
+          %p= contact.message
 
