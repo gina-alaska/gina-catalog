@@ -11,7 +11,7 @@
                   = link_to download_manager_catalog_path(catalog), class: 'btn' do
                     %i.icon-download
                     Download
-                - if current_user.is_an_admin?
+                - if current_user and current_user.is_an_admin?
                   %button.btn.btn-primary{data: { toggle:'modal', target:'#file_upload_modal' }}
                     %i.icon-upload.icon-white
                     Add File
@@ -30,7 +30,7 @@
           %td= file[:name]
           %td= number_to_human_size file[:size]
           / %td
-  - if current_user.is_an_admin?
+  - if current_user and current_user.is_an_admin?
     = form_for [:manager, catalog, catalog.repo], html: { class: 'modal hide fade', id: 'file_upload_modal' } do |f|
       .modal-header
         %button.close{data: { dismiss:'modal' }} &times;
