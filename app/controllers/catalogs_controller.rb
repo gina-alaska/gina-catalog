@@ -52,9 +52,6 @@ class CatalogsController < ApplicationController
       @total = 0
     end
     
-    logger.info @results.count
-    logger.info @results.inspect
-    
     respond_to do |format|
       format.json
       format.js
