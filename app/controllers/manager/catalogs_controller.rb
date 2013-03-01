@@ -119,6 +119,22 @@ class Manager::CatalogsController < ManagerController
     end
   end
   
+  def destroy
+    respond_to do |format|
+      if @catalog.archive
+        format.html { 
+          flash[:success] = "#{@catalog} has been archived"
+          redirect_to manager_catalogs_path
+        }
+      else
+        format.html { 
+          flash[:error] = "Error while trying to archive #{@catalog}"
+          redirect_to @catalog
+        }
+      end
+    end
+  end
+  
   protected
   
   def catalog_params
