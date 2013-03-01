@@ -26,12 +26,12 @@ class CatalogsController < ApplicationController
   end
   
   def download
-    @catalog = Catalog.where(:id => params[:id]).first
-    
-    respond_to do |format|
-      format.json {
-        render json: { use_agreement: @catalog.use_agreement, request_contact_info: @catalog.request_contact_info? }
-      }
+    if @catalog.repo.archive_available?(:zip)
+      send_file @catalog.repo.archive_filenames[:zip], :filename => @catalog.to_param + '.zip'
+    else
+      respond_to do |format|
+        format.html { render 'public/404', :status => 404 }
+      end
     end
   end
 
