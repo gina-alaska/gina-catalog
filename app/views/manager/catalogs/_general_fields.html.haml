@@ -12,11 +12,11 @@
     .control-group
       = f.label :start_date, class: 'control-label'
       .controls
-        = f.text_field :start_date, id: 'datepicker'
+        = f.text_field :start_date, placeholder: 'YYYY-MM-DD', data: {behaviour: 'datepicker', date_format: 'yyyy-mm-dd'}, value: @catalog.start_date.try(:to_date)
     .control-group
       = f.label :end_date, class: 'control-label'
       .controls
-        = f.text_field :end_date, id: 'datepicker'
+        = f.text_field :end_date, placeholder: 'YYYY-MM-DD', data: { behaviour: 'datepicker', date_format: 'yyyy-mm-dd'}, value: @catalog.end_date.try(:to_date)
   .span6
     .control-group
       = f.label :status, class: 'control-label'
@@ -32,8 +32,6 @@
         = f.select :type, [['Project', 'Project'], ['Data','Asset']], { selected: @catalog.type, prompt: 'Select a record type' }
 
 :javascript
-  $(function() {
-    $("#datepicker").datepicker({
-      dateFormat: "yy-mm-dd"
-    })
+  $(document).ready( function(){
+    $('[data-behaviour~=datepicker]').datepicker()
   })

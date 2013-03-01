@@ -7,6 +7,7 @@
 //= require 'select2/select2.min'
 //= require 'markitup'
 //= require 'manager/pages'
+//= require bootstrap-datepicker
 //= require_self
 
 $(document).ready(function() {
