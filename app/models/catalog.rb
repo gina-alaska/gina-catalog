@@ -109,6 +109,11 @@ class Catalog < ActiveRecord::Base
     text :data_types do
       data_types.map(&:name)
     end
+    string :agency_types, :multiple => true do
+      types = [source_agency.try(:category), funding_agency.try(:category)]
+      types += agencies.collect(&:category)
+      types.uniq.compact
+    end
     
     text :source_url do 
       source_url.try(:gsub, 'http://', '').try(:split, '/')
@@ -374,7 +379,7 @@ Title: #{self.title}
   def to_s
     self.title
   end
-  
+
   protected
 
   def build_source_url

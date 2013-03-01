@@ -53,6 +53,7 @@ module CatalogConcerns
           with :person_ids, search[:contact_ids] if search[:contact_ids].present?
           with :geokeywords_name, search[:region] if search[:region].present?
           with :data_types, search[:data_types] if search[:data_types].present?
+          with :agency_types, search[:agency_types] if search[:agency_types].present?
   
           with(:published_at).less_than(Time.zone.now) unless current_user and current_user.is_an_admin?
       
