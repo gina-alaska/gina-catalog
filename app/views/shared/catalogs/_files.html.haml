@@ -12,13 +12,13 @@
                     = link_to download_manager_catalog_path(catalog), class: 'btn' do
                       %i.icon-download
                       Download
-                  - else
-                    = link_to download_catalog_path(catalog), class: 'btn' do
-                      %i.icon-download
-                      Download
                   %button.btn.btn-primary{data: { toggle:'modal', target:'#file_upload_modal' }}
                     %i.icon-upload.icon-white
                     Add File
+                - elsif catalog.repo.archive_available?(:zip)
+                  = link_to download_catalog_path(catalog), class: 'btn' do
+                    %i.icon-download
+                    Download
                   
       - if catalog.repo.files.empty?
         %tr
