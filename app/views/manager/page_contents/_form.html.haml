@@ -73,4 +73,6 @@
       = f.submit 'Save and Close', class: 'btn btn-primary'
 
 = render 'image_chooser', page: page unless page.new_record?
+= render 'insert_image_chooser', page: page
+
 / = render 'manager/page_layouts/new_page', page: page

@@ -39,7 +39,13 @@
 			{name:'Ol', openWith:'<ol>\n', closeWith:'</ol>\n' },
 			{name:'Li', openWith:'<li>', closeWith:'</li>' },
 			{separator:'---------------' },
-			{name:'Picture', key:'P', replaceWith:'<img src="[![Source:!:http://]!]" alt="[![Alternative text]!]" />' },
+			{
+         name:'Picture'
+         key:'P'
+         className:'pictures' 
+         beforeInsert: () => 
+           $('#insert_image_chooser_modal').modal()
+      },
 			{name:'Link', key:'L', openWith:'<a href="[![Link:!:http://]!]"(!( title="[![Title]!]")!)>', closeWith:'</a>', placeHolder:'Your text to link...' },
 			{separator:'---------------' },
 			{
