@@ -174,8 +174,8 @@ Title: #{self.catalog.title}
   def archive_filenames
     dest = NSCatalog::Application.config.archive_path
     { 
-      :zip => File.join(dest, "#{self.slug}.zip"), 
-      :tar_gz => File.join(dest, "#{self.slug}.tar.gz")
+      :zip => File.join(dest, "#{self.catalog.to_param}.zip"), 
+      :tar_gz => File.join(dest, "#{self.catalog.to_param}.tar.gz")
     }
   end
   
@@ -184,7 +184,7 @@ Title: #{self.catalog.title}
   end
   
   def create_archive(treeish, opts={})
-    opts[:prefix] ||= "#{self.repohex}/"
+    opts[:prefix] ||= "#{self.catalog.to_param}/"
     
     FileUtils.mkdir_p(File.dirname(archive_filenames[:zip]))
     
