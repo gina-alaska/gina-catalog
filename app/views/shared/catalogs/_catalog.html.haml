@@ -7,14 +7,14 @@
 
 - if catalog.published? or (current_user and current_user.is_an_admin?)
   .row-fluid
-    .span8
+    .span7
       = render '/shared/catalogs/status', item: catalog
       %dl
         %dt Description
         %dd
           :markdown
             #{catalog.description}
-    .span4
+    .span5
       = render '/shared/catalogs/files', catalog: catalog  
       
   = render '/shared/catalogs/collapsed_content', item: catalog, collapse: collapse

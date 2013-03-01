@@ -36,7 +36,7 @@ class Manager::CatalogsController < ManagerController
   
   def download
     if @catalog.repo.archive_available?(:zip)
-      send_file @catalog.repo.archive_filenames[:zip]
+      send_file @catalog.repo.archive_filenames[:zip], :filename => @catalog.to_param + '.zip'
     else
       respond_to do |format|
         format.html { render 'public/404', :status => 404 }
