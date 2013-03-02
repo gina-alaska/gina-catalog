@@ -44,10 +44,6 @@
           = select_tag 'search[region]', options_from_collection_for_select(Geokeyword.all, :name, :name, search_params[:region]), class: 'span12', 
             data: {placeholder: 'All regions'}, include_blank: true
 
-          = label_tag 'search[long_term_monitoring]', class: 'checkbox' do
-            = check_box_tag 'search[long_term_monitoring]', 1, search_params[:long_term_monitoring]
-            Long Term Monitoring
-
           =label_tag 'search[source_agency_id]', 'Primary Agency'
           =select_tag 'search[source_agency_id]', options_from_collection_for_select(Agency.all, :id, :name, search_params[:source_agency_id]), 
             class: 'span12', data: {placeholder: 'All Agencies'}, :include_blank => true 
