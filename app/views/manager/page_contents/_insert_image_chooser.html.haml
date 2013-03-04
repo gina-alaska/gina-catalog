@@ -9,26 +9,30 @@
     - else
       %ul{ style: 'margin: 0;' }
         - images.each do |image|
-          %li.thumbnail.pull-left{ style: 'width: 30%; margin-left: 10px; margin-top: 10px;' }
-            .image
-              - if image.file.nil?
-                %p.lead Broken image
-              - else
-                = image_tag image.file.png.thumb('300x200#').url, alt: image.title
+          %li.pull-left{ style: 'width: 30%; margin-left: 10px; margin-top: 10px;' }
+            .thumbnail
+              .image
+                - if image.file.nil?
+                  %p.lead Broken image
+                - else
+                  = image_tag image.file.png.thumb('300x200#').url, alt: image.title
+              .caption
+                = image.title
             .buttons{style:"text-align:center;"}
               .btn-group
-                = link_to '200x200', '#', class: 'btn btn-small', data: { behavior: 'add', src: image.file.png.thumb('200x200').url }
-                = link_to '640x480', '#', class: 'btn btn-small', data: { behavior: 'add', src: image.file.png.thumb('640x480').url }
-                = link_to '1024x768', '#', class: 'btn btn-small', data: { behavior: 'add', src: image.file.png.thumb('1024x768').url }
-                = link_to 'Fullsize', '#', class: 'btn btn-small', data: { behavior: 'add', src: image.file.png.url }
+                = link_to '200x200', '#', class: 'btn btn-small', data: { behavior: 'add', src: image.file.png.thumb('200x200').url,alt: image.title }
+                = link_to '640x480', '#', class: 'btn btn-small', data: { behavior: 'add', src: image.file.png.thumb('640x480').url,alt: image.title }
+                = link_to '1024x768', '#', class: 'btn btn-small', data: { behavior: 'add', src: image.file.png.thumb('1024x768').url, alt: image.title }
+                = link_to 'Fullsize', '#', class: 'btn btn-small', data: { behavior: 'add', src: image.file.png.url, alt: image.title }
   .modal-footer
     %button.btn{data: { dismiss: 'modal' }} Close
 :javascript
   $('#insert_image_chooser_modal a[data-behavior="add"]').click(function() {
   	src = $(this).data("src");
+    alt = $(this).data("alt");
     
   	$.markItUp( 
-  		{ replaceWith:'<img src="'+src+'" />' }
+  		{ replaceWith:'<img src="'+src+'" alt="'+alt+'" />' }
   	);
     $('#insert_image_chooser_modal').modal('hide');
   	return false;
