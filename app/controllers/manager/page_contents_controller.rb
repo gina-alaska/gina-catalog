@@ -61,6 +61,14 @@ class Manager::PageContentsController < ManagerController
     end
   end
   
+  def preview
+    @page.attributes = params[:page_content]
+    
+    respond_to do |format|
+      format.html { render '/pages/show' }
+    end
+  end
+  
   def destroy
     if @page.destroy
       respond_to do |format|

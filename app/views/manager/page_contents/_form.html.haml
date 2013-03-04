@@ -1,4 +1,4 @@
-= form_for [:manager, page] do |f|
+= form_for [:manager, page], html: { id: 'page_content_form' } do |f|
   - if page.errors.any?
     #error_explanation.alert.alert-error
       %h4
@@ -69,10 +69,23 @@
       %i.icon-arrow-left
       Back
     .pull-right
+      = link_to_function 'Preview', 'preview_page()', class: 'btn'
       = f.submit 'Save', class: 'btn btn-primary'
       = f.submit 'Save and Close', class: 'btn btn-primary'
 
 = render 'image_chooser', page: page unless page.new_record?
 = render 'insert_image_chooser', page: page
 
+
+:javascript 
+  function preview_page() {
+    var form = $('#page_content_form'),
+        action = form.attr('action'); 
+    form.attr('action', action + '/preview'); 
+    form.attr('target', '_blank');
+    form.submit();
+    //Reset form back to normal so later saves work correctly
+    form.attr('action', action);
+    form.attr('target', '');
+  }
 / = render 'manager/page_layouts/new_page', page: page

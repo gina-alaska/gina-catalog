@@ -14,6 +14,7 @@ NSCatalog::Application.routes.draw do
     resources :page_contents do
       get :upload_image, :on => :member
       post :add, :on => :member
+      put :preview, :on => :member
       
       resources :images, :only => [] do
         member do
