@@ -1,6 +1,6 @@
 .images.row-fluid
   %ul.thumbnails.carousel
-    - @setup.carousel_images.each do |image|
+    - current_setup.carousel_images.each do |image|
       %li.span4{style:'position: relative'}
         = render 'image', image: image
         .buttons

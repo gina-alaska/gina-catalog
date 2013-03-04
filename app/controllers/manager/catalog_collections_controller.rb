@@ -1,7 +1,7 @@
 class Manager::CatalogCollectionsController < ManagerController
 
   def index
-    @catalog_collections = @setup.catalog_collections
+    @catalog_collections = current_setup.catalog_collections
 
     respond_to do |format|
       format.html
@@ -10,16 +10,16 @@ class Manager::CatalogCollectionsController < ManagerController
   end
 
   def show
-    @catalog_collection = @setup.catalog_collections.find(params[:id])
+    @catalog_collection = current_setup.catalog_collections.find(params[:id])
   end
 
   def new
-    @catalog_collection = @setup.catalog_collections.build
+    @catalog_collection = current_setup.catalog_collections.build
   end
 
   def create
     @catalog_collection = CatalogCollection.new(params[:catalog_collection])
-    @setup.catalog_collections << @catalog_collection
+    current_setup.catalog_collections << @catalog_collection
 
     respond_to do |format|
       if @catalog_collection.save
@@ -33,11 +33,11 @@ class Manager::CatalogCollectionsController < ManagerController
   end
 
   def edit
-    @catalog_collection = @setup.catalog_collections.find(params[:id])
+    @catalog_collection = current_setup.catalog_collections.find(params[:id])
   end
 
   def update
-    @catalog_collection = @setup.catalog_collections.find(params[:id])
+    @catalog_collection = current_setup.catalog_collections.find(params[:id])
 
     respond_to do |format|
       if @catalog_collection.update_attributes(params[:catalog_collection])
@@ -52,7 +52,7 @@ class Manager::CatalogCollectionsController < ManagerController
   end
 
   def destroy
-    @catalog_collection = @setup.catalog_collections.find(params[:id])
+    @catalog_collection = current_setup.catalog_collections.find(params[:id])
     @catalog_collection.destroy
 
     respond_to do |format|
@@ -64,7 +64,7 @@ class Manager::CatalogCollectionsController < ManagerController
   
 
   def add
-    @catalog_collection = @setup.catalog_collections.includes(:catalogs).find(params[:id])
+    @catalog_collection = current_setup.catalog_collections.includes(:catalogs).find(params[:id])
     @catalog_collection.catalogs << Catalog.where(id: params[:catalog_ids])
 
     respond_to do |format|

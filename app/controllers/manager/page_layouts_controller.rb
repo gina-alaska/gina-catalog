@@ -2,7 +2,7 @@ class Manager::PageLayoutsController < ManagerController
   # GET /setups/page_layouts/1
   # GET /setups/page_layouts/1.json
   def show
-    @page_layout = @setup.layouts.find(params[:id])
+    @page_layout = current_setup.layouts.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -13,7 +13,7 @@ class Manager::PageLayoutsController < ManagerController
   # GET /setups/page_layouts/new
   # GET /setups/page_layouts/new.json
   def new
-    @page_layout = @setup.layouts.new
+    @page_layout = current_setup.layouts.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -23,14 +23,14 @@ class Manager::PageLayoutsController < ManagerController
 
   # GET /setups/page_layouts/1/edit
   def edit
-    @page_layout = @setup.layouts.find(params[:id])
+    @page_layout = current_setup.layouts.find(params[:id])
   end
 
   # POST /setups/page_layouts
   # POST /setups/page_layouts.json
   def create
-    @page_layout = @setup.layouts.build(params[:page_layout])
-    @setup.layouts << @page_layout
+    @page_layout = current_setup.layouts.build(params[:page_layout])
+    current_setup.layouts << @page_layout
 
     respond_to do |format|
       if @page_layout.save
@@ -46,7 +46,7 @@ class Manager::PageLayoutsController < ManagerController
   # PUT /setups/page_layouts/1
   # PUT /setups/page_layouts/1.json
   def update
-    @page_layout = @setup.layouts.find(params[:id])
+    @page_layout = current_setup.layouts.find(params[:id])
 
     respond_to do |format|
       if @page_layout.update_attributes(params[:page_layout])
@@ -62,7 +62,7 @@ class Manager::PageLayoutsController < ManagerController
   # DELETE /setups/page_layouts/1
   # DELETE /setups/page_layouts/1.json
   def destroy
-    @page_layout = @setup.page_layouts.find(params[:id])
+    @page_layout = current_setup.page_layouts.find(params[:id])
     @page_layout.destroy
 
     respond_to do |format|

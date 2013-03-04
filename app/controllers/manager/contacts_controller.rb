@@ -1,7 +1,7 @@
 class Manager::ContactsController < ManagerController
 
   def index
-    @contacts = @setup.contacts
+    @contacts = current_setup.contacts
 
     respond_to do |format|
       format.html
@@ -10,7 +10,7 @@ class Manager::ContactsController < ManagerController
   end
 
   def show
-    @contact = @setup.contacts.where( id: params[:id] ).first
+    @contact = current_setup.contacts.where( id: params[:id] ).first
     
     respond_to do |format|
       format.html
@@ -18,7 +18,7 @@ class Manager::ContactsController < ManagerController
   end
 
   def destroy
-    @contact = @setup.contacts.where( id: params[:id] ).first
+    @contact = current_setup.contacts.where( id: params[:id] ).first
     @contact.destroy
 
     respond_to do |format|

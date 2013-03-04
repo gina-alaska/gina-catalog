@@ -11,7 +11,7 @@
     .span12
       %ul.nav.nav-list
         %li.nav-header Collections
-        -@setup.catalog_collections.each do |coll|
+        -current_setup.catalog_collections.each do |coll|
           %li{class: search_params[:catalog_collection_ids].to_i == coll.id ? "active" : ""}
             = link_to coll.name, "#", data: {behaviour: "load_collection", target: "#collection_id", value: coll.id}
       %br

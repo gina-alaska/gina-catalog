@@ -2,9 +2,9 @@ class Manager::PageContentsController < ManagerController
   before_filter :fetch_page, :except => [:new, :create]
   
   def new
-    @page = @setup.pages.build
-    @page.page_layout = @setup.layouts.where(default: true).first
-    @page.parent = @setup.pages.find(params[:parent]) if params[:parent]
+    @page = current_setup.pages.build
+    @page.page_layout = current_setup.layouts.where(default: true).first
+    @page.parent = current_setup.pages.find(params[:parent]) if params[:parent]
   end
   
   def edit
@@ -21,8 +21,8 @@ class Manager::PageContentsController < ManagerController
   end
   
   def create
-    @page = @setup.pages.build(params[:page_content])
-    @setup.pages << @page
+    @page = current_setup.pages.build(params[:page_content])
+    current_setup.pages << @page
     
     if @page.save
       respond_to do |format|
@@ -96,6 +96,6 @@ class Manager::PageContentsController < ManagerController
   protected
   
   def fetch_page
-    @page = @setup.pages.find(params[:id])
+    @page = current_setup.pages.find(params[:id])
   end
 end

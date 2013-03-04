@@ -5,7 +5,7 @@ class Manager::ImagesController < ManagerController
   # GET /manager/images
   # GET /manager/images.json
   def index
-    @images = @setup.images
+    @images = current_setup.images
 
     respond_to do |format|
       format.html # index.html.erb
@@ -16,7 +16,7 @@ class Manager::ImagesController < ManagerController
   # GET /manager/images/1
   # GET /manager/images/1.json
   def show
-    @image = @setup.images.find(params[:id])
+    @image = current_setup.images.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -27,7 +27,7 @@ class Manager::ImagesController < ManagerController
   # GET /manager/images/new
   # GET /manager/images/new.json
   def new
-    @image = @setup.images.build
+    @image = current_setup.images.build
 
     respond_to do |format|
       format.html # new.html.erb
@@ -37,14 +37,14 @@ class Manager::ImagesController < ManagerController
 
   # GET /manager/images/1/edit
   def edit
-    @image = @setup.images.find(params[:id])
+    @image = current_setup.images.find(params[:id])
   end
 
   # POST /manager/images
   # POST /manager/images.json
   def create
     @image = Image.new(params[:image])
-    @setup.images << @image
+    current_setup.images << @image
     
     unless params[:page][:id].empty?
       @page = current_setup.pages.find(params[:page][:id])
@@ -72,7 +72,7 @@ class Manager::ImagesController < ManagerController
   # PUT /manager/images/1
   # PUT /manager/images/1.json
   def update
-    @image = @setup.images.find(params[:id])
+    @image = current_setup.images.find(params[:id])
 
     respond_to do |format|
       if @image.update_attributes(params[:image])
@@ -92,7 +92,7 @@ class Manager::ImagesController < ManagerController
   # DELETE /manager/images/1
   # DELETE /manager/images/1.json
   def destroy
-    @image = @setup.images.find(params[:id])
+    @image = current_setup.images.find(params[:id])
     @image.destroy
 
     respond_to do |format|
@@ -146,10 +146,10 @@ class Manager::ImagesController < ManagerController
   protected
   
   def fetch_page
-    @page = @setup.pages.find(params[:page_content_id])
+    @page = current_setup.pages.find(params[:page_content_id])
   end
   
   def fetch_image
-    @image = @setup.images.find(params[:id])
+    @image = current_setup.images.find(params[:id])
   end
 end
