@@ -9,6 +9,7 @@ module PagesHelper
           h1 h2 h3 h4 h5 h6 h7 h8 br b i strong em a pre code img tt
           div ins del sup sub p ol ul table blockquote dl dt dd
           kbd q samp var hr ruby rt rp li tr td th form input textarea span small
+          style
         ),
         :attributes => {
           'a' => ['href', 'class', 'data-slide'],
@@ -18,6 +19,7 @@ module PagesHelper
           'img' => ['src', 'alt', 'data-src'],
           'span' => ['class'],
           'div' => ['itemscope', 'itemtype', 'style'],
+          'style' => ['type'],
           :all => ['abbr', 'accept', 'accept-charset',
                     'accesskey', 'action', 'align', 'alt', 'axis',
                     'border', 'cellpadding', 'cellspacing', 'char',
