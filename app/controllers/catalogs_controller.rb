@@ -4,59 +4,6 @@ class CatalogsController < ApplicationController
   #caches_action :search
 
   include CatalogConcerns::Search
-  before_filter :authenticate_manager!, :only => [:create, :update, :publish]
-
-  def create
-    if(params[:type].downcase == 'project') 
-      @item = Project.new(catalog)
-    else
-      @item = Asset.new(catalog)
-    end
-    
-    if @item.save
-      respond_to do |format|
-        format.json {
-          render :json => {
-            :success => true,
-            :catalog => @item
-          }
-        }
-      end
-    else
-      respond_to do |format|
-        format.json {
-          render :json => {
-            :success => false,
-            :errors => @item.errors.full_messages
-          }
-        }
-      end
-    end
-  end
-
-  def update
-    @item = Catalog.where(:id => params[:id]).includes(:agencies, :tags, :geokeywords).first
-    
-    if @item.update_attributes(catalog)    
-      respond_to do |format|
-        format.json { 
-          render :json => {
-            :success => true,
-            :catalog => @item
-          }
-        }
-      end
-    else
-      respond_to do |format|
-        format.json { 
-          render :json => {
-            :success => false,
-            :errors => @item.errors.full_messages
-          }
-        }
-      end      
-    end
-  end
 
   def show
     @item = Catalog.includes(:locations, :source_agency, :agencies, :data_source, :links, :tags, :geokeywords)
@@ -79,18 +26,22 @@ class CatalogsController < ApplicationController
   end
   
   def download
-    @catalog = Catalog.where(:id => params[:id]).first
-    
-    respond_to do |format|
-      format.json {
-        render json: { use_agreement: @catalog.use_agreement, request_contact_info: @catalog.request_contact_info? }
-      }
+    if @catalog.repo.archive_available?(:zip)
+      send_file @catalog.repo.archive_filenames[:zip]
+    else
+      respond_to do |format|
+        format.html { render 'public/404', :status => 404 }
+      end
     end
   end
 
   def search
+    @agencies = Agency.select([:name,:id]).collect{|a| [a.name, a.id]}.group_by{|a| a.first.first }
+     #Agency.all #.group_by{|a| a.name[0]}
+  
     @search_params = params[:search] || {}
     @search_params['order_by'] ||= 'title_sort-ascending'
+
     @search = solr_search(@search_params, params[:page], params[:limit])
     
     if @search.respond_to? :results
@@ -138,49 +89,5 @@ class CatalogsController < ApplicationController
     respond_to do |format|
       format.json
     end
-  end
-
-  def publish
-    @item = Catalog.where(:id => params[:id]).first
-
-    if (@item.published_at.nil? || @item.published_at > Time.now.utc) 
-      @item.published_at = Time.now.utc
-    else
-      @item.published_at = nil
-    end
-
-    if(@item.save)
-      respond_to do |format|
-        format.json { 
-          render :json => {
-            :success => true,
-            :catalog => @item
-          }
-        }
-      end
-    else
-      respond_to do |format|
-        format.json { 
-          render :json => {
-            :success => false,
-            :errors => @item.errors.full_messages
-          }
-        }
-      end      
-    end
-
-  end
-
-  protected
-  
-  def catalog
-    v = params.slice(
-          :title, :description, :agengy_ids, :tags, :source_agency_id, :funding_agency_id, :status,
-          :geokeyword_ids, :links_attributes, :locations_attributes, :data_type_ids, :primary_contact_id,
-          :agency_ids, :contact_ids, :iso_topic_ids, :start_date, :end_date, :long_term_monitoring, :person_ids
-    )    
-    v["tags"] = v["tags"].split(/,\s+/)
-    
-    v
   end
 end

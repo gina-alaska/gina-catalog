@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130111032459) do
+ActiveRecord::Schema.define(:version => 20130228005543) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -124,6 +124,19 @@ ActiveRecord::Schema.define(:version => 20130111032459) do
     t.integer "catalog_id"
   end
 
+  create_table "catalog_collections", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.integer  "setup_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  create_table "catalog_collections_catalogs", :id => false, :force => true do |t|
+    t.integer "catalog_id"
+    t.integer "catalog_collection_id"
+  end
+
   create_table "catalog_people", :id => false, :force => true do |t|
     t.integer "person_id"
     t.integer "catalog_id"
@@ -151,6 +164,13 @@ ActiveRecord::Schema.define(:version => 20130111032459) do
     t.datetime "updated_at"
   end
 
+  create_table "catalogs_setups", :id => false, :force => true do |t|
+    t.integer "catalog_id"
+    t.integer "setup_id"
+  end
+
+  add_index "catalogs_setups", ["setup_id"], :name => "index_catalogs_setups_on_setup_id"
+
   create_table "contact_infos", :force => true do |t|
     t.integer  "catalog_id"
     t.string   "name"
@@ -159,6 +179,15 @@ ActiveRecord::Schema.define(:version => 20130111032459) do
     t.string   "usage_description"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "contacts", :force => true do |t|
+    t.integer  "setup_id"
+    t.string   "name"
+    t.string   "email"
+    t.text     "message"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "content_types", :force => true do |t|
@@ -305,6 +334,7 @@ ActiveRecord::Schema.define(:version => 20130111032459) do
     t.string   "file_uid"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.string   "file_name"
   end
 
   create_table "images_setups", :id => false, :force => true do |t|
@@ -484,9 +514,26 @@ ActiveRecord::Schema.define(:version => 20130111032459) do
     t.string  "salt",       :null => false
   end
 
+  create_table "page_contents", :force => true do |t|
+    t.string   "title"
+    t.string   "slug"
+    t.string   "sections"
+    t.text     "content"
+    t.string   "layout"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.integer  "page_layout_id"
+    t.integer  "parent_id"
+    t.integer  "lft"
+    t.integer  "rgt"
+    t.integer  "depth"
+    t.string   "redirect"
+    t.string   "description"
+  end
+
   create_table "page_images", :force => true do |t|
     t.integer  "image_id"
-    t.integer  "page_id"
+    t.integer  "content_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -501,27 +548,21 @@ ActiveRecord::Schema.define(:version => 20130111032459) do
 
   create_table "page_layouts_setups", :id => false, :force => true do |t|
     t.integer "setup_id"
-    t.integer "page_layout_id"
+    t.integer "layout_id"
   end
 
-  create_table "pages", :force => true do |t|
-    t.string   "title"
+  create_table "page_snippets", :force => true do |t|
     t.string   "slug"
-    t.string   "sections"
     t.text     "content"
-    t.string   "layout"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
-    t.integer  "page_layout_id"
-    t.integer  "parent_id"
-    t.integer  "lft"
-    t.integer  "rgt"
-    t.integer  "depth"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
+
+  add_index "page_snippets", ["slug"], :name => "index_page_snippets_on_slug"
 
   create_table "pages_setups", :id => false, :force => true do |t|
     t.integer "setup_id"
-    t.integer "page_id"
+    t.integer "content_id"
   end
 
   create_table "people", :force => true do |t|
@@ -648,7 +689,17 @@ ActiveRecord::Schema.define(:version => 20130111032459) do
     t.string   "logo_uid"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+    t.string   "contact_email"
   end
+
+  create_table "setups_snippets", :id => false, :force => true do |t|
+    t.integer "setup_id"
+    t.integer "snippet_id"
+  end
+
+  add_index "setups_snippets", ["setup_id", "setup_id"], :name => "index_setups_snippets_on_setup_id_and_setup_id"
+  add_index "setups_snippets", ["setup_id"], :name => "index_setups_snippets_on_setup_id"
+  add_index "setups_snippets", ["snippet_id"], :name => "index_setups_snippets_on_snippet_id"
 
   create_table "site_urls", :force => true do |t|
     t.string   "url"

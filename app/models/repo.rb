@@ -132,17 +132,29 @@ Title: #{self.catalog.title}
     opts[:to] = self.clone_path unless opts.include? :to
     files = [files] unless files.is_a? Array
   
+    @commit_msgs = []
     clone_repo do |repo, git|
       files.each do |f|
-        filename = File.join(opts[:to], File.basename(f))
-  
-        FileUtils.mkdir_p(File.dirname(filename))
-        FileUtils.cp(f, filename)
-  
-        git.add({ :timeout => false }, filename)
-        @commit_msgs << "Adding #{File.basename(filename)} to #{opts[:to].gsub(repo.clone_path, "#{repo.hex}/")}"
+        if f.original_filename
+          filename = f.original_filename
+        else
+          filename = File.basename(f)
+        end
+        destination = File.join(opts[:to], filename)
+        
+        FileUtils.mkdir_p(File.dirname(destination))
+        
+        if f.tempfile
+          FileUtils.cp(f.tempfile, destination)
+        else
+          FileUtils.cp(f, destination)
+        end
+        
+        git.add({ :timeout => false }, destination)
+        @commit_msgs << "Adding #{filename} to #{opts[:to].gsub(repo.clone_path, "#{repo.repohex}/")}"
       end
     end
+    @commit_msgs
   end
   
   ## ARCHIVE
@@ -162,8 +174,8 @@ Title: #{self.catalog.title}
   def archive_filenames
     dest = NSCatalog::Application.config.archive_path
     { 
-      :zip => File.join(dest, "#{self.slug}.zip"), 
-      :tar_gz => File.join(dest, "#{self.slug}.tar.gz")
+      :zip => File.join(dest, "#{self.catalog.to_param}.zip"), 
+      :tar_gz => File.join(dest, "#{self.catalog.to_param}.tar.gz")
     }
   end
   
@@ -172,7 +184,7 @@ Title: #{self.catalog.title}
   end
   
   def create_archive(treeish, opts={})
-    opts[:prefix] ||= "#{self.repohex}/"
+    opts[:prefix] ||= "#{self.catalog.to_param}/"
     
     FileUtils.mkdir_p(File.dirname(archive_filenames[:zip]))
     

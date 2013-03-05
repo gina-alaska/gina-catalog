@@ -16,12 +16,16 @@ module ApplicationHelper
   end
   
   def show_flash_messages
+    output = ''
     dismiss = '<a class="close" data-dismiss="alert" href="#">X</a>'.html_safe
-    flash.map do |type,content|
-      content_tag(:div, :class => "alert alert-#{type}") do
-        dismiss + content
+    [:notice, :error, :success].each do |type|
+      next if flash[type].blank?
+      output << content_tag(:div, :class => "alert fade in alert-#{type}") do
+        dismiss + flash[type]
       end
-    end.join(' ').html_safe
+    end
+
+    output.html_safe
   end
   
   def add_js_errors_for(model)
@@ -48,5 +52,17 @@ module ApplicationHelper
     end
 
     regions
+  end
+  
+  def link_to_remove_fields(name, f)
+    f.hidden_field(:_destroy) + link_to_function(name, "remove_fields(this)", class: 'btn btn-danger')
+  end
+  
+  def link_to_add_fields(name, f, association, html_options = {})
+    new_object = f.object.class.reflect_on_association(association).klass.new
+    fields = f.fields_for(association, new_object, :child_index => "new_#{association}") do |builder|
+      render(association.to_s.singularize + "_fields", :f => builder)
+    end
+    link_to_function(name, "add_fields(this, \"#{association}\", \"#{escape_javascript(fields)}\")", html_options)
   end
 end

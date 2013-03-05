@@ -1,0 +1,7 @@
+.row-fluid
+  .span12
+    = f.label "Associate This Record With:", class: 'control-label'
+    = f.collection_select :catalog_collection_ids, current_setup.catalog_collections.all, :id, :name, {}, { multiple: true , class: 'span12' }
+    
+:javascript
+  $('##{@catalog.class.to_s.downcase}_catalog_collection_ids').select2();

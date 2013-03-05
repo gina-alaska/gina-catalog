@@ -1,0 +1,24 @@
+.row-fluid
+  .span12
+    = form_for [:manager, @catalog_collection] do |f|
+      .row-fluid
+        .field.span3
+          = f.label :name
+          = f.text_field :name
+        .field.span9
+          = f.label :description
+          = f.text_area :description, cols: "80", rows: "4", class: "span12"
+
+        = f.submit class: 'btn btn-primary pull-right'
+- unless @catalog_collection.catalogs.empty?
+  .row-fluid
+    .span12
+      %table.table.table-bordered.table-striped.table-condensed
+        %th Records
+        %th Actions
+        - @catalog_collection.catalogs.each do |rec|
+          %tr
+            %td.span9
+              = rec.title
+            %td.span3
+              = link_to "Remove Record", remove_manager_catalog_collection_path(@catalog_collection, 'catalog_ids' => [rec.id]), confirm: "Are you sure?", class: "btn btn-danger", method: :delete, remote: true

@@ -1,10 +1,38 @@
 class Catalog < ActiveRecord::Base
+  STATUSES = %w(Complete Ongoing Unknown Funded)
+  
   #The exception to the db name rule, since this is a collection of multiple types of items
   self.table_name = 'catalog'
+  self.inheritance_column = :_type_disabled
+
+  delegate :downloadable, :to => :license
+
+  scope :public, :joins => :license, :conditions => { :licenses => { :downloadable => true } }
+  scope :restricted, :joins => :license, :conditions => { :licenses => { :downloadable => false } }
+
+  validates_presence_of :title
+  validates_presence_of :type
+  validates_presence_of :owner_id
+  #validates_presence_of :license_id
+
+  #after_create :setup_path
+  
+  after_create :create_repo!
 
   belongs_to :owner, :class_name => 'User'
   belongs_to :primary_contact, :class_name => 'Person'
   belongs_to :data_source
+  
+  has_and_belongs_to_many :setups, uniq: true
+  
+  has_and_belongs_to_many :catalog_collections, uniq: true do
+    def list
+      proxy_association.owner.catalog_collections.collection.join(', ')
+    end
+    def collection
+      proxy_association.owner.catalog_collections.pluck(:name)
+    end
+  end
   
   has_many :download_urls
   has_one :repo
@@ -72,11 +100,19 @@ class Catalog < ActiveRecord::Base
     text :iso_topics do
       iso_topics.map(&:name)
     end
+    text :catalog_collections do
+      catalog_collections.pluck(:name)
+    end
     text :iso_topics_long do
       iso_topics.map(&:long_name)
     end
     text :data_types do
       data_types.map(&:name)
+    end
+    string :agency_types, :multiple => true do
+      types = [source_agency.try(:category), funding_agency.try(:category)]
+      types += agencies.collect(&:category)
+      types.uniq.compact
     end
     
     text :source_url do 
@@ -88,8 +124,11 @@ class Catalog < ActiveRecord::Base
     end
     
     string :status
-    string :type
+    string :record_type do
+      type
+    end
     string :uuid
+    integer :setup_ids, :multiple => true
     integer :id
     integer :owner_id
     integer :primary_contact_id
@@ -100,6 +139,7 @@ class Catalog < ActiveRecord::Base
     integer :person_ids, :references => Person, :multiple => true
     integer :agency_ids, :references => Agency, :multiple => true
     integer :iso_topic_ids, :multiple => true
+    integer :catalog_collection_ids, :multiple => true
     integer :data_type_ids, :multiple => true
     
     boolean :long_term_monitoring
@@ -192,7 +232,7 @@ Title: #{self.title}
   end
 
   def archive
-    self.archived_at = Time.now
+    self.archived_at = Time.zone.now
     save!
   end
 
@@ -208,8 +248,8 @@ Title: #{self.title}
   def publish(current_user)
     return true if self.published?
 
-    self.published_at = Time.now
-    self.published_by = current_user.id
+    self.published_at = Time.zone.now
+    # self.published_by = current_user.id
     save
   end
 
@@ -217,7 +257,7 @@ Title: #{self.title}
     return true unless self.published?
 
     self.published_at = nil
-    self.published_by = nil
+    # self.published_by = nil
     save
   end
 
@@ -232,20 +272,27 @@ Title: #{self.title}
   ##
   def tags=(tags)
     # self.tags.clear unless self.new_record?
-
+    if tags.kind_of? String
+      tags = tags.split(/,\s*/).uniq.compact
+    end
+    
+    ids = []
     unless tags.nil? or tags.empty?
       tags.each do |t|
         text = t.respond_to?(:text) ? t.text : t
 
         next if text.size < 3
-        tag = Tag.find_or_create_by_text(text)
-        self.tags << tag unless self.tags.include? tag
+        ids << Tag.find_or_create_by_text(text).id
       end
-    end
+      self.tag_ids = ids
+    end    
   end
   
   def geokeywords=(keywords) 
     # self.geokeywords.clear unless self.new_record?
+    if keywords.kind_of? String
+      keywords = keywords.split(/,\s*/).uniq.compact
+    end
     
     ids = []
     unless keywords.nil? or keywords.empty?
@@ -265,9 +312,7 @@ Title: #{self.title}
   end
 
   def short_description
-    return nil if self.description.nil?
-    #self.synopsis.text.gsub(/^(.{200}[\w.]*)(.*)/) {$2.empty? ? $1 : $1 + '...'}
-    self.description.slice(0..150)
+    self.description.try(:split, "\n").try(:first).try(:truncate, 150)
   end
 
   def as_json(opts = {})
@@ -327,10 +372,14 @@ Title: #{self.title}
     }    
   end
   
+  def to_param
+  	"#{self.id}-#{self.title.truncate(50).parameterize}"
+  end
+
   def to_s
     self.title
   end
-  
+
   protected
 
   def build_source_url

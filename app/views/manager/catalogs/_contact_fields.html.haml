@@ -1,0 +1,10 @@
+.row-fluid
+  .span12
+    = f.label :primary_contact_id, class: 'control-label'
+    = f.collection_select :primary_contact_id, Person.all, :id, :full_name, { prompt: 'Select a primary contact' }, { class: 'span12' }
+      
+    = f.label :person_ids, 'Other Contacts', class: 'control-label'
+    = f.collection_select :person_ids, Person.all, :id, :full_name, {}, { multiple: true, class: 'span12' }
+    :javascript
+      $("##{@catalog.class.to_s.downcase}_primary_contact_id").select2();
+      $("##{@catalog.class.to_s.downcase}_person_ids").select2();

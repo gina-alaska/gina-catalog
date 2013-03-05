@@ -1,0 +1,10 @@
+.row-fluid
+  .span12
+    = f.label :use_agreement_id, class: 'control-label'
+    = f.select :use_agreement_id, options_from_collection_for_select(UseAgreement.all, :id, :title, @catalog.use_agreement_id), { include_blank: true }, { class: 'span12' }
+    = f.label class: 'control-label' do
+      = f.check_box :request_contact_info
+      Ask for contact info
+    = f.label class: 'control-label' do
+      = f.check_box :require_contact_info
+      Contact info required

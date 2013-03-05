@@ -1,19 +1,20 @@
 - collapse ||= false
-%dl.project
-  %h4.title= catalog.title
+- if !catalog.published?
+  %h4.alert.alert-warning
+    This catalog record is pending review by the system moderators, once complete this record will available for public viewing
 
-  - if !catalog.published?
-    .alert.alert-warning
-      %h4
-        =" This #{catalog.kind} is pending review by the system moderators After a moderator has reviewed the project, it will become available for public viewing"
-        
-  - if catalog.published? or (current_user and current_user.is_an_admin?)
-    = render '/shared/catalogs/status', item: catalog
+%h4.title= catalog.title
 
-  
-    %dt Description
-    %dd
-      :markdown
-        #{catalog.description}
-    
-    = render '/shared/catalogs/collapsed_content', item: catalog, collapse: collapse
+- if catalog.published? or (current_user and current_user.is_an_admin?)
+  .row-fluid
+    .span7
+      = render '/shared/catalogs/status', item: catalog
+      %dl
+        %dt Description
+        %dd
+          :markdown
+            #{catalog.description}
+    .span5
+      = render '/shared/catalogs/files', catalog: catalog  
+      
+  = render '/shared/catalogs/collapsed_content', item: catalog, collapse: collapse

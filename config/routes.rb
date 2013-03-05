@@ -1,15 +1,21 @@
 NSCatalog::Application.routes.draw do
-  resources :pages, only: :show do
-    get :not_found, on: :collection
-  end
-  
-  match '/manager' => 'manager#dashboard', as: 'manager'
   namespace :manager do
-    resources :data
+    resources :catalogs do
+      resources :repos
+      member do
+        put :publish
+        put :unpublish
+        post :upload
+        get :download
+      end
+    end
     resources :images
-    resources :pages do
+    
+    resources :page_contents do
       get :upload_image, :on => :member
       post :add, :on => :member
+      put :preview, :on => :member
+      
       resources :images, :only => [] do
         member do
           post :add
@@ -17,15 +23,32 @@ NSCatalog::Application.routes.draw do
         end
       end
     end
+    
+    resources :page_snippets
+    
     resources :page_layouts
     resource :setup
+    resources :agencies
+    resources :catalog_collections do
+      member do
+        put :add
+        delete :remove
+      end
+    end
+    resources :contacts
+    resources :users
+    resources :people
+    resources :roles
   end
+  match '/manager' => 'manager#dashboard', as: 'manager'
+
+  resources :pages, only: :show do
+    get :not_found, on: :collection
+  end  
   
   resources :contact_infos
 
   resources :use_agreements
-
-  resources :repos
 
   resources :data_types
 
@@ -43,9 +66,9 @@ NSCatalog::Application.routes.draw do
   resources :agencies
   resources :people
 
-  resource :catalog do
-    post :search
-  end
+  resources :contacts, only: [:index, :create]
+  resources :catalogs
+  
   match '/search' => 'catalogs#search', as: 'search'
      
   # Omniauth pure

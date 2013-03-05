@@ -8,7 +8,7 @@ module CatalogConcerns
     
         table_includes = {
           :tags => [], :locations => [], :agencies => [], :source_agency => [], :funding_agency => [], :links => [], 
-          :primary_contact => [:phone_numbers], :people => [:phone_numbers], :data_source => [], :geokeywords => [], 
+          :primary_contact => [:phone_numbers], :people => [:phone_numbers], :data_source => [], :geokeywords => [], :catalog_collections => [], 
           :repo => []
         }
   
@@ -26,7 +26,7 @@ module CatalogConcerns
           direction ||= :asc
         end
 
-        results = Sunspot.search(Project, Asset) do
+        Catalog.search(include: table_includes) do
           # adjust_solr_params do |params|
           #   # Force solar to do an 'OR'ish search, at least 1 "optional" word is required in each  
           #   # ocean marine sea    ~> ocean OR marine OR sea
@@ -37,20 +37,23 @@ module CatalogConcerns
           #   params[:pf] = [:title, :description]
           # end
 
-          data_accessor_for(Project).include=table_includes
-          data_accessor_for(Asset).include=table_includes
           fulltext search[:q]
+          with :setup_ids, current_setup.id
           with :id, catalog_ids unless catalog_ids.nil? or catalog_ids.empty?
           with :status, search[:status] if search[:status].present?
           with :long_term_monitoring, ((search[:long_term_monitoring].to_i > 0) ? true : false) if search.include? :long_term_monitoring
           with :archived_at_year, nil unless search[:archived]
-          with :type, search[:type] if search[:type].present?
+          with :record_type, search[:type] if search[:type].present?
           with :agency_ids, search[:agency_ids] if search[:agency_ids].present?
           with :source_agency_id, search[:source_agency_id] if search[:source_agency_id].present?
+          with :funding_agency_id, search[:funding_agency_id] if search[:funding_agency_id].present?
           with :iso_topic_ids, search[:iso_topic_ids] if search[:iso_topic_ids].present?
+          with :catalog_collection_ids, search[:catalog_collection_ids] if search[:catalog_collection_ids].present?
+          with :primary_contact_id, search[:primary_contact_id] if search[:primary_contact_id].present?
           with :person_ids, search[:contact_ids] if search[:contact_ids].present?
           with :geokeywords_name, search[:region] if search[:region].present?
           with :data_types, search[:data_types] if search[:data_types].present?
+          with :agency_types, search[:agency_types] if search[:agency_types].present?
   
           with(:published_at).less_than(Time.zone.now) unless current_user and current_user.is_an_admin?
       
@@ -66,8 +69,6 @@ module CatalogConcerns
       
           order_by(field, direction) if field and direction
         end
-   
-        results
       end
     end
   end

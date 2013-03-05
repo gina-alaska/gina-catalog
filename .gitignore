@@ -10,6 +10,7 @@ public/javascripts/cached
 *.git
 public/javascripts/extjs3/
 public/javascripts/oldapp/
+public/assets
 vendor/nssi-prod
 vendor/cms/public/system
 repos_tmp
@@ -25,5 +26,7 @@ archive/*.tar.gz
 config/initializers/catalog.rb
 repo_clones
 db/data
-data/
+/data
 .powder
+.DS_Store
+*.pid
