@@ -8,7 +8,6 @@
   = csrf_meta_tag
 %body
   = render_snippet_content current_setup.snippets.where(slug: 'theme').first, current_setup
-  
   .container
     #header= render "layouts/#{theme}/header"
     #content

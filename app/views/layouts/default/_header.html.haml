@@ -1,4 +1,4 @@
-.page-header{ style:'padding-bottom:0px; position: relative'}
+.page-header{ style:'position: relative'}
   - if !current_user.nil? and current_user.is_an_admin?
     = link_to 'Manage Site', manager_path, class: 'btn btn-primary', style: 'position: absolute; top: 10px; right: 10px;'
     
@@ -6,7 +6,7 @@
   - if header_snippet
     = render_snippet_content(header_snippet, current_setup)
   - else
-    %h1{style:'margin-bottom:0px;'}
+    %h1
       = current_setup.title
       %small= current_setup.by_line
 
