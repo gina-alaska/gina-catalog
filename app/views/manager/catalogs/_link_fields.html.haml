@@ -1,0 +1,8 @@
+.link.row-fluid.fields
+  .span2
+    = f.select :category, Link::CATEGORIES, {}, { class: 'span12' }
+  .span4= f.text_field :display_text, class: 'span12'
+  .span4= f.text_field :url, class: 'span12'
+  .span2.actions
+    = f.hidden_field :id
+    = link_to_remove_fields '<i class="icon-trash icon-white"></i>'.html_safe, f

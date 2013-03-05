@@ -7,4 +7,18 @@
 //= require 'jquery-file-upload/jquery.fileupload'
 //= require 'jquery-file-upload/jquery.iframe-transport'
 //= require 'jquery-file-upload/tmpl.min'
+//= require 'select2/select2.min'
 //= require_self
+
+$(document).ready(function(){
+  $("[data-behaviour='load_collection']").on("click", function(){
+    var target = $(this).data("target");
+    if($(target).val() == $(this).data("value")) {
+      $(target).val('');
+      $(target).parents("form").submit();
+    } else {
+      $(target).val($(this).data("value"));
+      $(target).parents("form").submit();
+    }
+  })
+})

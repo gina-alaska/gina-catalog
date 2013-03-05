@@ -1,0 +1,91 @@
+= form_for [:manager, page], html: { id: 'page_content_form' } do |f|
+  - if page.errors.any?
+    #error_explanation.alert.alert-error
+      %h4
+        = pluralize(page.errors.count, "error")
+        prohibited this page from being saved:
+      %ul
+        - page.errors.full_messages.each do |msg|
+          %li= msg
+          
+  .control-group
+    = f.label :title, class: 'control-label'
+    .controls
+      = f.text_field :title, class: 'span12'
+      
+  = link_to 'Advanced Options', '#advanced', data: { toggle: 'collapse' }
+  
+  #advanced.collapse
+    .control-group
+      = f.label :slug, class: 'control-label'
+      .controls
+        = f.text_field :slug, value: page.slug_without_path, class: 'span12'
+    :javascript
+      $('#page_content_slug').slugify('#page_content_title');
+
+    .row-fluid
+      .span12
+        .control-group
+          = f.label "Redirect to URL", class: 'control-label'
+          .controls
+            = f.text_field :redirect, class: 'span12'
+    .row-fluid
+      .span6
+        .control-group
+          = f.label :parent_id, class: 'control-label'
+          .controls
+            = f.select :parent_id, nested_set_options(current_setup.pages, page) {|i| "#{'-' * i.level} #{i.title}" }, include_blank: true
+      .span6
+        .control-group
+          = f.label :page_layout_id, 'Layout', class: 'control-label'
+          .controls
+            = f.collection_select :page_layout_id, current_setup.layouts, :id, :name, {}, { class: 'span12' }
+    .row-fluid
+      .span12
+        .control-group
+          = f.label :description, class: 'control-label'
+          .controls
+            = f.text_area :description, class: 'span12', rows: 3
+      
+      
+  #page_tabs.tabbable
+    %ul.nav.nav-tabs
+      - page.sections.each do |section|
+        %li{class:(section == page.sections.first ? 'active' : '')}= link_to section.humanize, "##{section}", data: { toggle: 'tab'}
+      %li{id: 'new_page_tab'}
+        =link_to "#", id: 'new_page_btn', data: {toggle: "modal", target:"#new_page_modal"} do
+          %i.icon-plus
+      
+  #page_content.tab-content
+    - page.content.each do |name,content|
+      .tab-pane{id:name, class:(name == page.sections.first ? 'active' : '')}
+        - if name == 'images'
+          = render 'images', page: page
+        - else
+          = text_area_tag "page_content[content][#{name}]", content, class: 'editor span12', style:"border: none;", rows: 10
+    
+  .form-actions
+    = link_to manager_path, class: 'btn' do 
+      %i.icon-arrow-left
+      Back
+    .pull-right
+      = link_to_function 'Preview', 'preview_page()', class: 'btn'
+      = f.submit 'Save', class: 'btn btn-primary'
+      = f.submit 'Save and Close', class: 'btn btn-primary'
+
+= render 'image_chooser', page: page unless page.new_record?
+= render 'insert_image_chooser', page: page
+
+
+:javascript 
+  function preview_page() {
+    var form = $('#page_content_form'),
+        action = form.attr('action'); 
+    form.attr('action', action + '/preview'); 
+    form.attr('target', '_blank');
+    form.submit();
+    //Reset form back to normal so later saves work correctly
+    form.attr('action', action);
+    form.attr('target', '');
+  }
+/ = render 'manager/page_layouts/new_page', page: page

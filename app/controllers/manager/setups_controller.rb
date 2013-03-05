@@ -2,7 +2,7 @@ class Manager::SetupsController < ManagerController
   before_filter :fetch_setup, except: [:new,:create]
   
   def show
-    if @setup.nil? 
+    if current_setup.nil? 
       redirect_to new_setup_path
       return
     end
@@ -50,7 +50,7 @@ class Manager::SetupsController < ManagerController
   end
   
   def update
-    if @setup.update_attributes(params[:setup])
+    if current_setup.update_attributes(params[:setup])
       respond_to do |format|
         format.html {
           flash[:success] = 'Settings updated'
@@ -63,44 +63,6 @@ class Manager::SetupsController < ManagerController
           render action: 'edit'
         }
       end      
-    end
-  end
-  
-  def add_carousel_image
-    @image = @setup.images.find(params[:image_id])
-    
-    if @image and !@setup.carousel_images.exists?(@image) and @setup.carousel_images << @image
-      respond_to do |format|
-        format.html {
-          flash[:success] = "Added carousel image"
-          redirect_to images_path
-        }
-      end
-    else
-      respond_to do |format|
-        format.html {
-          flash[:error] = "Unable to add carousel image"
-          redirect_to images_path
-        }
-      end
-    end
-  end
-  
-  def remove_carousel_image
-    if @setup.carousel_images.delete(Image.find(params[:image_id]))
-      respond_to do |format|
-        format.html {
-          flash[:success] = "Removed carousel image"
-          redirect_to manager_path
-        }
-      end
-    else
-      respond_to do |format|
-        format.html {
-          flash[:error] = "Unable to remove carousel image"
-          redirect_to manager_path
-        }
-      end
     end
   end
 end

@@ -1,9 +1,13 @@
 .page-header
   - if !current_user.nil? and current_user.is_an_admin?
     = link_to 'Manage Site', manager_path, class: 'btn btn-primary pull-right'
-  %h1
-    = @setup.title
-    %small= @setup.by_line
+  - header_snippet = current_setup.snippets.where(slug: 'header').first
+  - if header_snippet
+    = render_snippet_content(header_snippet, current_setup)
+  - else
+    %h1
+      = current_setup.title
+      %small= current_setup.by_line
 
 .navbar.navbar-inverse.navbar-static-top
   .navbar-inner
@@ -33,7 +37,7 @@
           %i.icon-question-sign.icon-white
           Help
       %li
-        = link_to page_path('contact-us') do
+        = link_to page_path('contacts') do
           %i.icon-envelope.icon-white
           Contact Us
       

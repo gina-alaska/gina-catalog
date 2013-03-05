@@ -24,12 +24,12 @@
     %dd= render item.links
     %br
 
-  %dt Record Information Source
-  %dd= item.data_source.name
-  %br
+  / %dt Record Information Source
+  / %dd= item.data_source.name
+  / %br
     
   %dt Direct Record Link:
   - if item.data_source.name == 'NSSI'
-    %dd= link_to item.data_source.name, item, :target => :_blank
+    %dd= link_to current_setup.title, item, :target => :_blank
   - else
     %dd= link_to item.source_url, item.source_url, :target => :_blank

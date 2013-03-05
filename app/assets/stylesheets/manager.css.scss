@@ -2,6 +2,13 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+#flashes {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  min-width: 300px;
+}
+
 .section-nav .nav {
   width: 250px;
   top: 50px;
@@ -105,17 +112,5 @@
   
   #thumbnail-list {
     padding: 0 0 10px 0;
-  }
-  
-  #upload-image {
-    padding-top: 10px;
-    padding-left: 20px;
-  }
-  
-  .thumbnail {
-    width:250px;
-    display: inline-block;
-    margin-left: 10px;
-    margin-top: 10px;
-  }
+  }  
 }

@@ -5,16 +5,20 @@ class ApplicationController < ActionController::Base
   
   helper_method :current_user
   helper_method :user_signed_in?
+  helper_method :current_setup
 
   protected
   
   def fetch_setup
-    @setup = Setup.includes(:urls).where(site_urls: { :url => request.host }).first
+    @setup ||= Setup.includes(:urls).where(site_urls: { :url => request.host }).first
     
     if @setup.nil? 
       redirect_to new_manager_setup_path
     end
+    @setup
   end
+
+  alias_method :current_setup, :fetch_setup
 
   private  
   

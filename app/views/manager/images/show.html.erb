@@ -17,9 +17,9 @@
 
 <p>
   <b>File uid:</b>
-  <%= image_tag @image.file.thumb('300x300').url, alt: @image.title %>
+  <%= image_tag @image.file.png.thumb('300x300').url, alt: @image.title %>
 </p>
 
 
-<%= link_to 'Edit', edit_image_path(@image) %> |
-<%= link_to 'Back', images_path %>
+<%= link_to 'Edit', edit_manager_image_path(@image) %> |
+<%= link_to 'Back', manager_images_path %>

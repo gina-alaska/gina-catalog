@@ -5,7 +5,11 @@ class PagesController < ApplicationController
   # GET /pages/1.json
   def show
     respond_to do |format|
-      format.html # show.html.erb
+      format.html {
+        if @page.redirect?
+          redirect_to @page.redirect
+        end
+      }
       format.json { render json: @page }
     end
   end
@@ -17,7 +21,7 @@ class PagesController < ApplicationController
   protected
   
   def fetch_page
-    @page = @setup.pages.where(slug: params[:slug]).first
+    @page = current_setup.pages.where(slug: params[:slug]).first
     if @page.nil?
       redirect_to page_path('404-not-found')
     end

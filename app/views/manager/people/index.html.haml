@@ -1,0 +1,33 @@
+= paginate @people
+%table.table.table-bordered.table-striped.table-condensed
+  %thead
+    %tr
+      %td{colspan:4, style: 'padding:0;'}
+        .navbar.navbar-static-top
+          .navbar-inner
+            = form_tag manager_people_path, method: 'GET', class: 'navbar-form form-search pull-right' do        
+              .input-append
+                = text_field_tag 'search[q]', @search[:q], class: 'search-query span4', placeholder: "Search"
+                = submit_tag 'Search', class: 'btn btn-primary'
+            .brand Contacts
+            = link_to new_manager_person_path, class: 'btn btn-success' do
+              %i.icon-plus.icon-white
+              New Contact
+    %tr
+      %th First Name
+      %th Last Name
+      %th Work Phone
+      %th Actions
+  %tbody
+    - @people.each do |item|
+      %tr
+        %td= item.first_name
+        %td= item.last_name
+        - if item.work_phone.nil?
+          %td
+        - else
+          %td= item.work_phone
+        %td
+          = link_to "Edit", edit_manager_person_path(item.id), class: 'btn btn-primary'
+          -# = link_to "Delete", manager_person_path(item.id), method: :delete, confirm: "Are you sure?", class: 'btn btn-danger'
+= paginate @people

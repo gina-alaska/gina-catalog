@@ -1,18 +1,27 @@
 .navbar.navbar-static-top{style:"margin-bottom:5px;"}
   .navbar-inner
     .brand Available Images
-    = link_to 'Upload image', new_image_path, class: 'btn btn-success pull-right'
+    = link_to 'Upload image', new_manager_image_path, class: 'btn btn-success pull-right'
       
 = flashes
 
 %div{style:"padding: 0 5px 0 5px;"}
-  %ul.thumbnails
-    - @images.each do |image|
-      %li.span3
-        .thumbnail
-          = image_tag image.file.thumb('300x150#').url, alt: image.title
-          %h5= link_to_unless image.link_to_url.empty?, image.title, image.link_to_url
-          %p= image.description
-          .buttons{style:"text-align:center;"}
-            = link_to 'Edit', edit_manager_image_path(image), class: 'btn'
-            = link_to 'Delete', [:manager, image], method: "DELETE", data: { confirm: 'Are you sure?' }, class: 'btn'
+  - if @images.count == 0
+    %p.lead{style:"padding: 15px;"} No images available
+  - else
+    %ul.thumbnails
+      - @images.each do |image|
+        %li
+          .thumbnail
+            .image
+              - if image.file.nil?
+                %p.lead Broken image
+              - else
+                = image_tag image.file.png.thumb('286x200#').url, alt: image.title
+              .caption 
+                %strong= link_to_unless image.link_to_url.empty?, image.title, image.link_to_url
+                %p= image.description
+          = link_to 'Edit', edit_manager_image_path(image), class: 'btn'
+          = link_to manager_image_path(image), method: :delete, class: 'btn btn-danger', 'data-confirm' => 'Are you sure?' do
+            %i.icon-trash.icon-white
+            Delete
