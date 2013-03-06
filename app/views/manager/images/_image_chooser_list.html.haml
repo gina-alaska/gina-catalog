@@ -1,0 +1,28 @@
+#insert_image_chooser_modal.modal.hide.fade{tabindex:"-1", role:"dialog",style:"width:960px; margin-left:-480px;"}
+  .modal-header
+    %button.close{type:'button', data: { dismiss: 'modal' }} &times;
+    %h3 Choose an Image
+  .modal-body{ style: "padding: 10px 0;"}
+    - images = current_setup.images.order('created_at DESC')
+    - if images.count == 0
+      %p.lead{style:"padding: 15px;"} No images available
+    - else
+      %ul{ style: 'margin: 0;' }
+        - images.each do |image|
+          %li.pull-left{ style: 'width: 30%; margin-left: 10px; margin-top: 10px;' }
+            .thumbnail
+              .image
+                - if image.file.nil?
+                  %p.lead Broken image
+                - else
+                  = image_tag image.file.png.thumb('300x200#').url, alt: image.title
+              .caption
+                = image.title
+            .buttons{style:"text-align:center;"}
+              .btn-group
+                = link_to '200x200', '#', class: 'btn btn-small', data: { behavior: 'add', src: image.file.png.thumb('200x200').url,alt: image.title }
+                = link_to '640x480', '#', class: 'btn btn-small', data: { behavior: 'add', src: image.file.png.thumb('640x480').url,alt: image.title }
+                = link_to '1024x768', '#', class: 'btn btn-small', data: { behavior: 'add', src: image.file.png.thumb('1024x768').url, alt: image.title }
+                = link_to 'Fullsize', '#', class: 'btn btn-small', data: { behavior: 'add', src: image.file.png.url, alt: image.title }
+  .modal-footer
+    %button.btn{data: { dismiss: 'modal' }} Close
