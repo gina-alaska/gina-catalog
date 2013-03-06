@@ -27,6 +27,40 @@
   }
 }
 
+.carousel-caption { margin: 0; }
+
+.carousel.right {
+  .carousel-caption {
+    position: absolute;
+    top: 0;
+    bottom:0;
+    right: 0;
+    left: auto;
+    width: 350px;
+    padding: 20px;
+    color: #fff;
+    background: rgba(0,0,0,0.7);
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.4);
+  }
+  
+  .carousel-control {
+    top: 45%;
+    opacity: 0.8;
+/*    border: none;*/
+    width: 30px;
+    @include border-radius(0);
+  }
+  
+  .carousel-control.right {
+    right: -18px;
+    font-weight: 200;
+  }
+  .carousel-control.left {
+    left: -18px;
+    font-weight: 200;
+  }
+}
+
 .navbar {
   input[type="submit"].btn {
   }
