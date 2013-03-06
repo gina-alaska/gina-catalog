@@ -34,7 +34,14 @@ class Manager::PageLayoutsController < ManagerController
 
     respond_to do |format|
       if @page_layout.save
-        format.html { redirect_to manager_path, notice: 'Page layout was successfully created.' }
+        format.html {
+          flash[:success] = "#{@page_layout.name} layout successfully created."
+          if params["commit"] == "Save"
+            redirect_to edit_manager_page_layout_path(@page_layout)
+          else
+            redirect_to manager_path
+          end
+        }
         format.json { render json: @page_layout, status: :created, location: @page_layout }
       else
         format.html { render action: "new" }
@@ -50,7 +57,14 @@ class Manager::PageLayoutsController < ManagerController
 
     respond_to do |format|
       if @page_layout.update_attributes(params[:page_layout])
-        format.html { redirect_to manager_path, notice: 'Page layout was successfully updated.' }
+        format.html {
+          flash[:success] = "#{@page_layout.name} layout successfully updated."
+          if params["commit"] == "Save"
+            redirect_to edit_manager_page_layout_path(@page_layout)
+          else
+            redirect_to manager_path
+          end
+        }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
