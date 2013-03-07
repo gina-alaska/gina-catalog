@@ -7,7 +7,7 @@
     = f.collection_select :funding_agency_id, current_setup.agencies, :id, :name, { prompt: 'Select a funding agency'}, { class: 'span12' }
 
     = f.label :agency_ids, 'Other Agencies', class: 'control-label'
-    = f.collection_select :agency_ids, Agency.all, :id, :name, {}, { multiple: true, class: 'span12' }
+    = f.collection_select :agency_ids, current_setup.agencies, :id, :name, {}, { multiple: true, class: 'span12' }
     
     :javascript
       $('##{@catalog.class.to_s.downcase}_source_agency_id').select2();
