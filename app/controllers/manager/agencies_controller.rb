@@ -74,6 +74,40 @@ class Manager::AgenciesController < ManagerController
     end
   end
 
+  def visible
+    @agency = Agency.find(params[:id])
+    @agency.setups << current_setup
+
+    respond_to do |format|
+      format.html {
+        if request.xhr?
+          render partial: "action_buttons", locals: {item: @agency, current_setup: current_setup}
+        else
+          redirect_to manager_agencies_path
+        end
+      }
+      format.js
+    end
+  end
+
+  def hide
+    @agency = Agency.find(params[:id])
+    @agency.setups.delete(current_setup)
+
+    respond_to do |format|
+      format.html {
+        if request.xhr?
+          render partial: "action_buttons", locals: {item: @agency, current_setup: current_setup}
+        else
+          redirect_to manager_agencies_path
+        end
+      }
+      format.js {
+        render 'visible'
+      }
+    end
+  end
+
   protected
 
   def search_params

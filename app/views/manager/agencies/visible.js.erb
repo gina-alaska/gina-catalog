@@ -1,0 +1,2 @@
+var buttons = $('<%= escape_javascript(render partial: "action_buttons", locals: {item: @agency}) %>');
+$("#action_buttons_<%= dom_id(@agency) %>").html(buttons);

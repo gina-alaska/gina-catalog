@@ -28,7 +28,12 @@ NSCatalog::Application.routes.draw do
     
     resources :page_layouts
     resource :setup
-    resources :agencies
+    resources :agencies do
+      member do
+        post :visible
+        post :hide
+      end
+    end
     resources :catalog_collections do
       member do
         put :add
@@ -37,7 +42,12 @@ NSCatalog::Application.routes.draw do
     end
     resources :contacts
     resources :users
-    resources :people
+    resources :people do
+      member do
+        post :visible
+        post :hide
+      end
+    end
     resources :roles
   end
   match '/manager' => 'manager#dashboard', as: 'manager'
