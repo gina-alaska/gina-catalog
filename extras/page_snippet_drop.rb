@@ -4,6 +4,6 @@ class PageSnippetDrop < Liquid::Drop
   end
   
   def before_method(snippet)
-    @setup.snippets.where(slug: snippet).first.try(:content)
+    CmsRenderers.snippet(@setup.snippets.where(slug: snippet).first, @setup)
   end
 end
