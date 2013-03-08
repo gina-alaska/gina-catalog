@@ -28,6 +28,7 @@
         - else
           %td= item.work_phone
         %td
-          = link_to "Edit", edit_manager_person_path(item.id), class: 'btn btn-primary'
-          -# = link_to "Delete", manager_person_path(item.id), method: :delete, confirm: "Are you sure?", class: 'btn btn-danger'
+          .span1.actions
+            .btn-group{id:"action_buttons_#{dom_id(item)}"}
+              = render partial: "action_buttons", locals: {item: item}
 = paginate @people
