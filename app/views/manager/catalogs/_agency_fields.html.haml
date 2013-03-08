@@ -6,10 +6,10 @@
     = f.label :funding_agency_id, class: 'control-label'
     = f.collection_select :funding_agency_id, current_setup.agencies, :id, :name, { prompt: 'Select a funding agency'}, { class: 'span12' }
 
-    = f.label :agencies, 'Other Agencies', class: 'control-label'
-    = f.collection_select :agencies, current_setup.agencies, :id, :name, {}, { multiple: true, class: 'span12' }
+    = f.label :agency_ids, 'Other Agencies', class: 'control-label'
+    = f.collection_select :agency_ids, Agency.all, :id, :name, {}, { multiple: true, class: 'span12' }
     
     :javascript
       $('##{@catalog.class.to_s.downcase}_source_agency_id').select2();
       $('##{@catalog.class.to_s.downcase}_funding_agency_id').select2();
-      $('##{@catalog.class.to_s.downcase}_agencies').select2();
+      $('##{@catalog.class.to_s.downcase}_agency_ids').select2();
