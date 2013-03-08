@@ -8,6 +8,8 @@ class Person < ActiveRecord::Base
   has_many :addresses, :dependent => :destroy
   
   has_many :phone_numbers
+
+  has_and_belongs_to_many :setups, join_table: 'persons_setups'
   
   validates_presence_of   :first_name
   validates_presence_of   :last_name

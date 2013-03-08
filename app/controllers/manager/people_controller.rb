@@ -74,6 +74,40 @@ class Manager::PeopleController < ManagerController
     end
   end
 
+  def visible
+    @person = Person.find(params[:id])
+    @person.setups << current_setup
+
+    respond_to do |format|
+      format.html {
+        if request.xhr?
+          render partial: "action_buttons", locals: {item: @person}
+        else
+          redirect_to manager_person_spath
+        end
+      }
+      format.js
+    end
+  end
+
+  def hide
+    @person = Person.find(params[:id])
+    @person.setups.delete(current_setup)
+
+    respond_to do |format|
+      format.html {
+        if request.xhr?
+          render partial: "action_buttons", locals: {item: @person}
+        else
+          redirect_to manager_person_path
+        end
+      }
+      format.js {
+        render 'visible'
+      }
+    end
+  end
+
   protected
 
   def search_params

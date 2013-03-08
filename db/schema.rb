@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130228005543) do
+ActiveRecord::Schema.define(:version => 20130307204627) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -43,6 +43,15 @@ ActiveRecord::Schema.define(:version => 20130228005543) do
     t.string   "adiwg_code"
     t.string   "adiwg_path"
   end
+
+  create_table "agencies_setups", :id => false, :force => true do |t|
+    t.integer "agency_id"
+    t.integer "setup_id"
+  end
+
+  add_index "agencies_setups", ["agency_id", "setup_id"], :name => "index_agencies_setups_on_agency_id_and_setup_id"
+  add_index "agencies_setups", ["agency_id"], :name => "index_agencies_setups_on_agency_id"
+  add_index "agencies_setups", ["setup_id"], :name => "index_agencies_setups_on_setup_id"
 
   create_table "agency_people", :force => true do |t|
     t.integer  "person_id"
@@ -582,6 +591,15 @@ ActiveRecord::Schema.define(:version => 20130228005543) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "persons_setups", :id => false, :force => true do |t|
+    t.integer "person_id"
+    t.integer "setup_id"
+  end
+
+  add_index "persons_setups", ["person_id"], :name => "index_persons_setups_on_people_id"
+  add_index "persons_setups", ["setup_id", "person_id"], :name => "index_persons_setups_on_setup_id_and_people_id"
+  add_index "persons_setups", ["setup_id"], :name => "index_persons_setups_on_setup_id"
 
   create_table "phone_numbers", :force => true do |t|
     t.integer  "person_id"
