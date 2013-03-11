@@ -111,14 +111,7 @@ class Manager::AgenciesController < ManagerController
   end
 
   def all_visible
-    agencies = params[:agencies_ids]
-
-    unless agencies.nil?
-      agencies.each do |agency|
-        change = Agency.find(agency)
-        change.setups << current_setup
-      end
-    end
+    current_setup.agencies << Agency.where(id: params[:agencies_ids])
 
     respond_to do |format|
       format.html {
@@ -132,14 +125,8 @@ class Manager::AgenciesController < ManagerController
   end
 
   def all_hidden
-    agencies = params[:agencies_ids]
-
-    unless agencies.nil?
-      agencies.each do |agency|
-        change = Agency.find(agency)
-        change.setups.delete(current_setup)
-      end
-    end
+    agency_records = Agency.where(id: params[:agencies_ids])
+    current_setup.agencies.delete(agency_records)
 
     respond_to do |format|
       format.html {

@@ -111,14 +111,7 @@ class Manager::PeopleController < ManagerController
   end
 
   def all_visible
-    people = params[:people_ids]
-
-    unless people.nil?
-      people.each do |person|
-        change = Person.find(person)
-        change.setups << current_setup
-      end
-    end
+    current_setup.agencies << Person.where(id: params[:people_ids])
 
     respond_to do |format|
       format.html {
@@ -132,14 +125,8 @@ class Manager::PeopleController < ManagerController
   end
 
   def all_hidden
-    people = params[:people_ids]
-
-    unless people.nil?
-      people.each do |person|
-        change = Person.find(person)
-        change.setups.delete(current_setup)
-      end
-    end
+    people_records = Person.where(id: params[:people_ids])
+    current_setup.persons.delete(people_records)
 
     respond_to do |format|
       format.html {
