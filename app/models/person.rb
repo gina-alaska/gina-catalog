@@ -9,7 +9,7 @@ class Person < ActiveRecord::Base
   
   has_many :phone_numbers
 
-  has_and_belongs_to_many :setups, join_table: 'persons_setups'
+  has_and_belongs_to_many :setups, join_table: 'persons_setups', uniq: true
   
   validates_presence_of   :first_name
   validates_presence_of   :last_name
