@@ -2,7 +2,8 @@ class Manager::AgenciesController < ManagerController
 
   def index
     page = params[:page] || 1
-    limit = 30
+    limit = params["limit"].nil? ? 30 : params["limit"]
+    limit = 30000 if limit == "all"
     @search = search_params
 
     search = Agency.search do
@@ -28,6 +29,7 @@ class Manager::AgenciesController < ManagerController
 
   def create
     @agency = Agency.new(params[:agency])
+    @agency.setups << current_setup
 
     if @agency.save!
       respond_to do |format|
@@ -104,6 +106,48 @@ class Manager::AgenciesController < ManagerController
       }
       format.js {
         render 'visible'
+      }
+    end
+  end
+
+  def all_visible
+    agencies = params[:agencies_ids]
+
+    unless agencies.nil?
+      agencies.each do |agency|
+        change = Agency.find(agency)
+        change.setups << current_setup
+      end
+    end
+
+    respond_to do |format|
+      format.html {
+        if request.xhr?
+          render nothing: true
+        else
+          redirect_to manager_agencies_path
+        end
+      }
+    end
+  end
+
+  def all_hidden
+    agencies = params[:agencies_ids]
+
+    unless agencies.nil?
+      agencies.each do |agency|
+        change = Agency.find(agency)
+        change.setups.delete(current_setup)
+      end
+    end
+
+    respond_to do |format|
+      format.html {
+        if request.xhr?
+          render nothing: true
+        else
+          redirect_to manager_agencies_path
+        end
       }
     end
   end
