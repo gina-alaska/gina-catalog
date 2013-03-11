@@ -29,13 +29,9 @@ NSCatalog::Application.routes.draw do
     resource :setup
 
     resources :agencies do
-      member do
-        post :visible
-        post :hide
-      end
       collection do
-        post :all_visible
-        post :all_hidden
+        post :visible
+        post :hidden
       end
     end
 
