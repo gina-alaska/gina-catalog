@@ -77,65 +77,26 @@ class Manager::AgenciesController < ManagerController
   end
 
   def visible
-    @agency = Agency.find(params[:id])
-    @agency.setups << current_setup
+    @agencies = Agency.where(id: params[:agencies_ids])
+    current_setup.agencies << @agencies
 
     respond_to do |format|
       format.html {
-        if request.xhr?
-          render partial: "action_buttons", locals: {item: @agency, current_setup: current_setup}
-        else
-          redirect_to manager_agencies_path
-        end
+        redirect_to manager_agencies_path
       }
-      format.js
+      format.js { render 'visible' }
     end
   end
 
-  def hide
-    @agency = Agency.find(params[:id])
-    @agency.setups.delete(current_setup)
+  def hidden
+    @agencies = Agency.where(id: params[:agencies_ids])
+    current_setup.agencies.delete(@agencies)
 
     respond_to do |format|
       format.html {
-        if request.xhr?
-          render partial: "action_buttons", locals: {item: @agency, current_setup: current_setup}
-        else
-          redirect_to manager_agencies_path
-        end
+        redirect_to manager_agencies_path
       }
-      format.js {
-        render 'visible'
-      }
-    end
-  end
-
-  def all_visible
-    current_setup.agencies << Agency.where(id: params[:agencies_ids])
-
-    respond_to do |format|
-      format.html {
-        if request.xhr?
-          render nothing: true
-        else
-          redirect_to manager_agencies_path
-        end
-      }
-    end
-  end
-
-  def all_hidden
-    agency_records = Agency.where(id: params[:agencies_ids])
-    current_setup.agencies.delete(agency_records)
-
-    respond_to do |format|
-      format.html {
-        if request.xhr?
-          render nothing: true
-        else
-          redirect_to manager_agencies_path
-        end
-      }
+      format.js { render 'visible' }
     end
   end
 
