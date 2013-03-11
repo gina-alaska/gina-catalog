@@ -2,7 +2,8 @@ class Manager::PeopleController < ManagerController
 
   def index
     page = params[:page] || 1
-    limit = 30
+    limit = params["limit"].nil? ? 30 : params["limit"]
+    limit = 30000 if limit == "all"
     @search = search_params
 
     search = Person.search do
@@ -28,6 +29,7 @@ class Manager::PeopleController < ManagerController
 
   def create
     @person = Person.new(params[:person])
+    @person.setups << current_setup
 
     if @person.save!
       respond_to do |format|
@@ -104,6 +106,48 @@ class Manager::PeopleController < ManagerController
       }
       format.js {
         render 'visible'
+      }
+    end
+  end
+
+  def all_visible
+    people = params[:people_ids]
+
+    unless people.nil?
+      people.each do |person|
+        change = Person.find(person)
+        change.setups << current_setup
+      end
+    end
+
+    respond_to do |format|
+      format.html {
+        if request.xhr?
+          render nothing: true
+        else
+          redirect_to manager_people_path
+        end
+      }
+    end
+  end
+
+  def all_hidden
+    people = params[:people_ids]
+
+    unless people.nil?
+      people.each do |person|
+        change = Person.find(person)
+        change.setups.delete(current_setup)
+      end
+    end
+
+    respond_to do |format|
+      format.html {
+        if request.xhr?
+          render nothing: true
+        else
+          redirect_to manager_people_path
+        end
       }
     end
   end
