@@ -2,7 +2,7 @@
 %table.table.table-bordered.table-striped.table-condensed
   %thead
     %tr
-      %td{colspan:3, style: 'padding:0;'}
+      %td{colspan:4, style: 'padding:0;'}
         .navbar.navbar-static-top
           .navbar-inner
             = form_tag manager_agencies_path, method: 'GET', class: 'navbar-form form-search pull-right' do        
@@ -11,21 +11,78 @@
                 = submit_tag 'Search', class: 'btn btn-primary'
             .brand Agencies
             .btn-group
+              %button#check-toggle.btn{data: { action: 'toggle-checkbox', target: '.item-checkbox' }, title: "Toggle Checkboxes" }
+                %i.icon-check
+              = link_to '#', class: "btn dropdown-toggle", data: { toggle: "dropdown" }, title: "Display" do
+                %i.icon-list
+                %b.caret
+              %ul.dropdown-menu
+                %li
+                  =link_to manager_agencies_path(limit: "30"), method: :get do
+                    30
+                %li
+                  =link_to manager_agencies_path(limit: "100"), method: :get do
+                    100
+                %li
+                  =link_to manager_agencies_path(limit: "all"), method: :get do
+                    All
+            .btn-group
+              = link_to_function '<i class="icon-eye-open icon-white"></i>'.html_safe, "ChangeVis('visible', getChecked('input:checkbox'));", class: 'btn btn-info', title: "Show Selected"
+              = link_to_function '<i class="icon-eye-close icon-white"></i>'.html_safe, "ChangeVis('hidden', getChecked('input:checkbox'));", class: 'btn btn-danger', title: "Hide Selected"
+            .btn-group
               = link_to new_manager_agency_path, class: 'btn btn-success' do
                 %i.icon-plus.icon-white
                 New Agency
     %tr
+      %th{style:'width:25px;'}
       %th Name
       %th Category
       %th Actions
   %tbody
     - @agencies.each do |item|
       %tr
+        %td{style:"text-align:center; padding:0;"}
+          %label{for: "agency_check_#{item.id}", style: "display:block; min-height:40px;"}
+            = check_box_tag "agency_check[#{item.id}]", item.id, nil, class: 'item-checkbox'
         %td= item.name
         %td= item.category
         %td
           .span1.actions
             .btn-group{id:"action_buttons_#{dom_id(item)}"}
               = render partial: "action_buttons", locals: {item: item}
-              -# = link_to "Delete", manager_agency_path(item.id), method: :delete, confirm: "Are you sure?", class: 'btn btn-danger'
 = paginate @agencies
+
+:javascript
+  $(document).ready(function() {
+    $('[data-action="toggle-checkbox"]').on('click', function() {
+      $($(this).data('target')).attr("checked", function() {
+        $(this).prop("checked", !$(this).attr("checked"));
+      });
+    });
+  });
+  
+  function getChecked(selector) {
+    check_list = [];
+    $(selector).attr("checked", function() {
+      if ($(this).attr("checked")) {
+        check_list.push($(this).val());
+      }
+    });
+    return check_list;
+  }
+
+  function ChangeVis(type, ids) {  
+    if (type == "visible")
+      { resource = '#{visible_manager_agencies_path}' }
+    else 
+      { resource = '#{hidden_manager_agencies_path}' }
+    
+    $.ajax({
+      url: resource,
+      type: 'POST',
+      dataType: 'script',
+      data: {
+        "agencies_ids[]": ids
+      }
+    });
+  };
