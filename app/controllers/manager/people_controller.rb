@@ -2,7 +2,8 @@ class Manager::PeopleController < ManagerController
 
   def index
     page = params[:page] || 1
-    limit = 30
+    limit = params["limit"].nil? ? 30 : params["limit"]
+    limit = 30000 if limit == "all"
     @search = search_params
 
     search = Person.search do
@@ -28,6 +29,7 @@ class Manager::PeopleController < ManagerController
 
   def create
     @person = Person.new(params[:person])
+    @person.setups << current_setup
 
     if @person.save!
       respond_to do |format|
@@ -71,6 +73,30 @@ class Manager::PeopleController < ManagerController
       flash[:success] = "Contact for #{@person.first_name} #{@person.last_name} was successfully deleted."
       format.html { redirect_to manager_people_path }
       format.json { head :no_content }
+    end
+  end
+
+  def visible
+    @people = Person.where(id: params[:people_ids])
+    current_setup.persons << @people
+
+    respond_to do |format|
+      format.html {
+        redirect_to manager_people_path
+      }
+      format.js { render 'visible' }
+    end
+  end
+
+  def hidden
+    @people = Person.where(id: params[:people_ids])
+    current_setup.persons.delete(@people)
+
+    respond_to do |format|
+      format.html {
+        redirect_to manager_people_path
+      }
+      format.js { render 'visible' }
     end
   end
 

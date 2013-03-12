@@ -1,6 +1,31 @@
-// Place all the styles related to the Setups controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+@import "compass";
+
+$primaryColor: #135a6d;
+/*$primaryColor: #357;*/
+
+$navbarInverseBackground: $primaryColor;
+$navbarInverseBackgroundHighlight: lighten($primaryColor, 10%);
+$navbarInverseContrastColor: contrast-color($primaryColor, #1F1F1F, #DFDFDF);
+$navbarInverseLinkColor: $navbarInverseContrastColor;
+$navbarInverseLinkColorHover: darken($navbarInverseContrastColor, 10%);
+$navbarInverseLinkBackgroundHover: darken($primaryColor, 10%);
+$navbarInverseSearchBackground: #FFF;
+
+$navbarLinkColor: #3f3f3f;
+$navbarLinkColorHover: darken($navbarLinkColor, 10%);
+$navbarBackground: #EFEFEF;
+$navbarBackgroundHighlight: lighten($navbarBackground, 10%);
+$navbarLinkBackgroundHover: darken($navbarBackground, 10%);
+
+@import "bootstrap";
+@import "fileupload/bootstrap-fileupload";
+@import "catalogs";
+@import "catalog_collection";
+@import "markitup";
+@import "markitup-html";
+@import 'select2/select2';
+@import 'bootstrap-datepicker';
+@import 'pages';
 
 #flashes {
   position: absolute;

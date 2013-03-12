@@ -2,7 +2,7 @@
 %table.table.table-bordered.table-striped.table-condensed
   %thead
     %tr
-      %td{colspan:4, style: 'padding:0;'}
+      %td{colspan:5, style: 'padding:0;'}
         .navbar.navbar-static-top
           .navbar-inner
             = form_tag manager_people_path, method: 'GET', class: 'navbar-form form-search pull-right' do        
@@ -10,10 +10,31 @@
                 = text_field_tag 'search[q]', @search[:q], class: 'search-query span4', placeholder: "Search"
                 = submit_tag 'Search', class: 'btn btn-primary'
             .brand Contacts
-            = link_to new_manager_person_path, class: 'btn btn-success' do
-              %i.icon-plus.icon-white
-              New Contact
+            .btn-group
+              %button#check-toggle.btn{data: { action: 'toggle-checkbox', target: '.item-checkbox' }, title: "Toggle Checkboxes" }
+                %i.icon-check
+              = link_to '#', class: "btn dropdown-toggle", data: { toggle: "dropdown" }, title: "Display" do
+                %i.icon-list
+                %b.caret
+              %ul.dropdown-menu
+                %li
+                  =link_to manager_people_path(limit: "30"), method: :get do
+                    30
+                %li
+                  =link_to manager_people_path(limit: "100"), method: :get do
+                    100
+                %li
+                  =link_to manager_people_path(limit: "all"), method: :get do
+                    All
+            .btn-group
+              = link_to_function '<i class="icon-eye-open icon-white"></i>'.html_safe, "ChangeVis('visible', getChecked('input:checkbox'));", class: 'btn btn-info', title: "Show Selected"
+              = link_to_function '<i class="icon-eye-close icon-white"></i>'.html_safe, "ChangeVis('hidden', getChecked('input:checkbox'));", class: 'btn btn-danger', title: "Hide Selected"
+            .btn-group
+              = link_to new_manager_person_path, class: 'btn btn-success' do
+                %i.icon-plus.icon-white
+                New Contact
     %tr
+      %th{style:'width:25px;'}
       %th First Name
       %th Last Name
       %th Work Phone
@@ -21,6 +42,9 @@
   %tbody
     - @people.each do |item|
       %tr
+        %td{style:"text-align:center; padding:0;"}
+          %label{for: "agency_check_#{item.id}", style: "display:block; min-height:40px;"}
+            = check_box_tag "agency_check[#{item.id}]", item.id, nil, class: 'item-checkbox'
         %td= item.first_name
         %td= item.last_name
         - if item.work_phone.nil?
@@ -28,6 +52,42 @@
         - else
           %td= item.work_phone
         %td
-          = link_to "Edit", edit_manager_person_path(item.id), class: 'btn btn-primary'
-          -# = link_to "Delete", manager_person_path(item.id), method: :delete, confirm: "Are you sure?", class: 'btn btn-danger'
+          .span1.actions
+            .btn-group{id:"action_buttons_#{dom_id(item)}"}
+              = render partial: "action_buttons", locals: {item: item}
 = paginate @people
+
+:javascript
+  $(document).ready(function() {
+    $('[data-action="toggle-checkbox"]').on('click', function() {
+      $($(this).data('target')).attr("checked", function() {
+        $(this).prop("checked", !$(this).attr("checked"));
+      });
+    });
+  })
+
+  function getChecked(selector) {
+    check_list = [];
+    $(selector).attr("checked", function() {
+      if ($(this).attr("checked")) {
+        check_list.push($(this).val());
+      }
+    });
+    return check_list;
+  }
+
+  function ChangeVis(type, ids) {  
+    if (type == "visible")
+      { resource = '#{visible_manager_people_path}' }
+    else 
+      { resource = '#{hidden_manager_people_path}' }
+    
+    $.ajax({
+      url: resource,
+      type: 'POST',
+      dataType: 'script',
+      data: {
+        "people_ids[]": ids
+      }
+    });
+  };

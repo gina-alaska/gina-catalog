@@ -28,7 +28,8 @@ class Image < ActiveRecord::Base
       'title' => self.title,
       'description' => self.description,
       'link_to_url' => self.url,
-      'thumb' => ::ImageTagDrop.new(self),
+      'thumb' => ::ImageTagDrop.new(self.file),
+      'grayscale' => ::ProcessImageTagDrop.new(self.file, :grayscale),
       'tag' => "<img src=\"#{self.file.png.thumb('640x480#').url}\" alt=\"#{self.title}\" />"
     }
   end

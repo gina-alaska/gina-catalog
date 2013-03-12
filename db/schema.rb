@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130228005543) do
+ActiveRecord::Schema.define(:version => 20130312203138) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -43,6 +43,15 @@ ActiveRecord::Schema.define(:version => 20130228005543) do
     t.string   "adiwg_code"
     t.string   "adiwg_path"
   end
+
+  create_table "agencies_setups", :id => false, :force => true do |t|
+    t.integer "agency_id"
+    t.integer "setup_id"
+  end
+
+  add_index "agencies_setups", ["agency_id", "setup_id"], :name => "index_agencies_setups_on_agency_id_and_setup_id"
+  add_index "agencies_setups", ["agency_id"], :name => "index_agencies_setups_on_agency_id"
+  add_index "agencies_setups", ["setup_id"], :name => "index_agencies_setups_on_setup_id"
 
   create_table "agency_people", :force => true do |t|
     t.integer  "person_id"
@@ -381,6 +390,20 @@ ActiveRecord::Schema.define(:version => 20130228005543) do
     t.spatial  "geom",       :limit => {:srid=>4326, :type=>"geometry"}
   end
 
+  create_table "membership_roles", :force => true do |t|
+    t.integer  "membership_id"
+    t.integer  "role_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  create_table "memberships", :force => true do |t|
+    t.string   "email"
+    t.integer  "setup_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "metadata_messages", :force => true do |t|
     t.integer  "granule_file_id"
     t.text     "text"
@@ -581,7 +604,17 @@ ActiveRecord::Schema.define(:version => 20130228005543) do
     t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "group"
   end
+
+  create_table "persons_setups", :id => false, :force => true do |t|
+    t.integer "person_id"
+    t.integer "setup_id"
+  end
+
+  add_index "persons_setups", ["person_id"], :name => "index_persons_setups_on_people_id"
+  add_index "persons_setups", ["setup_id", "person_id"], :name => "index_persons_setups_on_setup_id_and_people_id"
+  add_index "persons_setups", ["setup_id"], :name => "index_persons_setups_on_setup_id"
 
   create_table "phone_numbers", :force => true do |t|
     t.integer  "person_id"
