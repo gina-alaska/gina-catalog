@@ -1,2 +1,4 @@
-var buttons = $('<%= escape_javascript(render partial: "action_buttons", locals: {item: @agency}) %>');
-$("#action_buttons_<%= dom_id(@agency) %>").html(buttons);
+<% @agencies.each do |agency| %>
+var buttons = $('<%= escape_javascript(render partial: "action_buttons", locals: {item: agency}) %>');
+$("#action_buttons_<%= dom_id(agency) %>").html(buttons);
+<% end %>

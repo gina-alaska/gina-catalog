@@ -25,31 +25,35 @@ NSCatalog::Application.routes.draw do
     end
     
     resources :page_snippets
-    
     resources :page_layouts
     resource :setup
+
     resources :agencies do
-      member do
+      collection do
         post :visible
-        post :hide
+        post :hidden
       end
     end
+
     resources :catalog_collections do
       member do
         put :add
         delete :remove
       end
     end
+
     resources :contacts
     resources :users
+    resources :roles
+
     resources :people do
-      member do
+      collection do
         post :visible
-        post :hide
+        post :hidden
       end
     end
-    resources :roles
   end
+  
   match '/manager' => 'manager#dashboard', as: 'manager'
 
   resources :pages, only: :show do

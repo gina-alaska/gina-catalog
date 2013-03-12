@@ -12,7 +12,7 @@ class Agency < ActiveRecord::Base
 
   has_many :agency_people
   has_many :people, :through => :agency_people  
-  has_and_belongs_to_many :setups, join_table: 'agencies_setups'
+  has_and_belongs_to_many :setups, join_table: 'agencies_setups', uniq: true
   
   # has_many :catalog_agencies, :dependent => :destroy
   # has_many :projects, :through => :project_agencies

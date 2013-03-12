@@ -2,7 +2,8 @@ class Manager::AgenciesController < ManagerController
 
   def index
     page = params[:page] || 1
-    limit = 30
+    limit = params["limit"].nil? ? 30 : params["limit"]
+    limit = 30000 if limit == "all"
     @search = search_params
 
     search = Agency.search do
@@ -28,6 +29,7 @@ class Manager::AgenciesController < ManagerController
 
   def create
     @agency = Agency.new(params[:agency])
+    @agency.setups << current_setup
 
     if @agency.save!
       respond_to do |format|
@@ -75,36 +77,26 @@ class Manager::AgenciesController < ManagerController
   end
 
   def visible
-    @agency = Agency.find(params[:id])
-    @agency.setups << current_setup
+    @agencies = Agency.where(id: params[:agencies_ids])
+    current_setup.agencies << @agencies
 
     respond_to do |format|
       format.html {
-        if request.xhr?
-          render partial: "action_buttons", locals: {item: @agency, current_setup: current_setup}
-        else
-          redirect_to manager_agencies_path
-        end
+        redirect_to manager_agencies_path
       }
-      format.js
+      format.js { render 'visible' }
     end
   end
 
-  def hide
-    @agency = Agency.find(params[:id])
-    @agency.setups.delete(current_setup)
+  def hidden
+    @agencies = Agency.where(id: params[:agencies_ids])
+    current_setup.agencies.delete(@agencies)
 
     respond_to do |format|
       format.html {
-        if request.xhr?
-          render partial: "action_buttons", locals: {item: @agency, current_setup: current_setup}
-        else
-          redirect_to manager_agencies_path
-        end
+        redirect_to manager_agencies_path
       }
-      format.js {
-        render 'visible'
-      }
+      format.js { render 'visible' }
     end
   end
 

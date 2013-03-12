@@ -2,7 +2,8 @@ class Manager::PeopleController < ManagerController
 
   def index
     page = params[:page] || 1
-    limit = 30
+    limit = params["limit"].nil? ? 30 : params["limit"]
+    limit = 30000 if limit == "all"
     @search = search_params
 
     search = Person.search do
@@ -28,6 +29,7 @@ class Manager::PeopleController < ManagerController
 
   def create
     @person = Person.new(params[:person])
+    @person.setups << current_setup
 
     if @person.save!
       respond_to do |format|
@@ -75,36 +77,26 @@ class Manager::PeopleController < ManagerController
   end
 
   def visible
-    @person = Person.find(params[:id])
-    @person.setups << current_setup
+    @people = Person.where(id: params[:people_ids])
+    current_setup.persons << @people
 
     respond_to do |format|
       format.html {
-        if request.xhr?
-          render partial: "action_buttons", locals: {item: @person}
-        else
-          redirect_to manager_person_spath
-        end
+        redirect_to manager_people_path
       }
-      format.js
+      format.js { render 'visible' }
     end
   end
 
-  def hide
-    @person = Person.find(params[:id])
-    @person.setups.delete(current_setup)
+  def hidden
+    @people = Person.where(id: params[:people_ids])
+    current_setup.persons.delete(@people)
 
     respond_to do |format|
       format.html {
-        if request.xhr?
-          render partial: "action_buttons", locals: {item: @person}
-        else
-          redirect_to manager_person_path
-        end
+        redirect_to manager_people_path
       }
-      format.js {
-        render 'visible'
-      }
+      format.js { render 'visible' }
     end
   end
 
