@@ -26,8 +26,17 @@ class ApplicationController < ActionController::Base
     @current_user ||= User.find_by_id(session[:user_id]) if session[:user_id]  
   end
   
+  def current_member
+    current_user.memberships.where(setup_id: current_setup).first || Membership.new(user: current_user) if user_signed_in?
+  end
+  
   def user_signed_in?
     return true if current_user 
+  end
+  
+  def user_is_a_member?
+    return true if user_signed_in? and current_user.is_an_admin?
+    return true if user_signed_in? and current_member
   end
     
   def authenticate_user!
@@ -36,39 +45,21 @@ class ApplicationController < ActionController::Base
 
       flash[:error] = 'You must sign in before accessing this page!'
       redirect_to signin_path
+    else
+      flash[:error] = 'You do not have permission to access this page'
+      redirect_to root_url
     end
   end 
-
-  def authenticate_manager!
-    if !current_user || !(current_user.is_an_admin? || current_user.is_a_manager?)
-      if !current_user
-        authenticate_user!
-      else
-        flash[:error] = 'You do not have permission to access this page'
-        redirect_to root_url
-      end
-    end      
-  end
   
   def authenticate_sds_manager!
     if !current_user || !(current_user.is_an_admin? || current_user.is_a_sds_manager?)
-      if !current_user
-        authenticate_user!
-      else
-        flash[:error] = 'You do not have permission to access this page'
-        redirect_to root_url
-      end
+      authenticate_user!
     end      
   end
 
   def authenticate_admin!
     if !current_user || !(current_user.is_an_admin?)
-      if !current_user
-        authenticate_user!
-      else
-        flash[:error] = 'You do not have permission to access this page'
-        redirect_to root_url
-      end
+      authenticate_user!
     end      
   end
   

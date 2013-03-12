@@ -3,7 +3,9 @@ require 'digest/sha1'
 class User < ActiveRecord::Base
   has_many :user_roles
   has_many :roles, :through => :user_roles
+  has_many :permissions, :through => :roles
   has_many :services
+  has_many :memberships, :primary_key => :email, :foreign_key => :email 
   
   belongs_to :agency
 
@@ -83,13 +85,14 @@ class User < ActiveRecord::Base
         return true if self.roles.index { |i| i.name == check }
       end
       return false
-=begin
-    # No permission systems implemented yet
     elsif match = matches_dynamic_perm_check?(method_id)
-      permission = Permission.find_by_name(match.captures.first)
+      permission = Permission.where(name: match.captures.first).first
       return true if permission and permissions.include? permission
       return false
-=end
+    elsif match = matches_dynamic_perm_group_check?(method_id)
+      permission = Permission.where(group: match.captures.first).first
+      return true if permission
+      return false
     else
       super
     end
@@ -108,6 +111,10 @@ class User < ActiveRecord::Base
   end
 
   private
+
+  def matches_dynamic_perm_group_check?(method_id)
+    /^access_([a-zA-Z]\w*)\?$/.match(method_id.to_s)
+  end
 
   def matches_dynamic_perm_check?(method_id)
     /^can_([a-zA-Z]\w*)\?$/.match(method_id.to_s)
