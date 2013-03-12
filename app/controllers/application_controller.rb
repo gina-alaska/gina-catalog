@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   before_filter :fetch_setup
   
   helper_method :current_user
+  helper_method :current_member
   helper_method :user_signed_in?
   helper_method :current_setup
 
