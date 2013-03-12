@@ -47,13 +47,9 @@ NSCatalog::Application.routes.draw do
     resources :roles
 
     resources :people do
-      member do
-        post :visible
-        post :hide
-      end
       collection do
-        post :all_visible
-        post :all_hidden
+        post :visible
+        post :hidden
       end
     end
   end
