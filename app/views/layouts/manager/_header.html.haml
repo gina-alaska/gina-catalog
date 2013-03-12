@@ -4,18 +4,38 @@
     %ul.nav.pull-right
       %li
         = link_to 'View website', root_path
-      %li.dropdown
-        %a{:href=>"#", :class=>"dropdown-toggle", "data-toggle"=>"dropdown"}
-          Manage 
-          %b.caret
-        %ul.dropdown-menu
-          %li= link_to 'Site Pages', manager_path
-          %li= link_to 'Data Records', manager_catalogs_path
-          %li= link_to 'Collections', manager_catalog_collections_path
-          %li= link_to 'Agencies', manager_agencies_path
-          %li= link_to 'Users', manager_users_path
-          %li= link_to 'Contacts', manager_people_path
-          %li= link_to 'User Roles', manager_roles_path
-          %li= link_to 'User Feedback', manager_contacts_path
-          %li= link_to 'Images', manager_images_path
+      - if current_member.can_manage_cms?
+        %li.dropdown
+          %a{:href=>"#", :class=>"dropdown-toggle", "data-toggle"=>"dropdown"}
+            CMS 
+            %b.caret
+          %ul.dropdown-menu
+            %li= link_to 'Site Pages', manager_path
+            %li= link_to 'User Feedback', manager_contacts_path
+            %li= link_to 'Images', manager_images_path
+      - if current_member.can_manage_catalog?
+        %li.dropdown
+          %a{:href=>"#", :class=>"dropdown-toggle", "data-toggle"=>"dropdown"}
+            Catalog 
+            %b.caret
+          %ul.dropdown-menu
+            %li= link_to 'Data Records', manager_catalogs_path
+            %li= link_to 'Collections', manager_catalog_collections_path
+            %li= link_to 'Agencies', manager_agencies_path
+            %li= link_to 'Contacts', manager_people_path
+      - if current_member.can_manage_site?
+        %li.dropdown
+          %a{:href=>"#", :class=>"dropdown-toggle", "data-toggle"=>"dropdown"}
+            Site 
+            %b.caret
+          %ul.dropdown-menu
+            %li= link_to 'Users', manager_users_path
+            %li= link_to 'User Roles', manager_roles_path
+      - if current_member.can_manage_members?
+        %li.dropdown
+          %a{:href=>"#", :class=>"dropdown-toggle", "data-toggle"=>"dropdown"}
+            Members
+            %b.caret
+          %ul.dropdown-menu
+            %li= link_to '#'
       %li= link_to 'Logout', logout_path
