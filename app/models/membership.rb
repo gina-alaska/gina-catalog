@@ -1,5 +1,6 @@
 class Membership < ActiveRecord::Base
-  attr_accessible :email, :setup
+  attr_accessible :email, :setup, :user
+  
   has_many :membership_roles
   has_many :roles, :through => :membership_roles
   has_many :permissions, :through => :roles
@@ -8,16 +9,22 @@ class Membership < ActiveRecord::Base
   
   def method_missing(method_id, *args)
     if match = matches_dynamic_role_check?(method_id)
+      return true if self.user.try(:is_an_admin?)
+      
       tokenize_roles(match.captures.first).each do |check|
         return true if self.roles.index { |i| i.name == check }
       end
       return false
     elsif match = matches_dynamic_perm_check?(method_id)
-      permission = Permission.where(name: match.captures.first).first
-      return true if permission and permissions.include? permission
+      return true if self.user.try(:is_an_admin?)
+      
+      permission = permissions.where(name: match.captures.first).first
+      return true if permission
       return false
     elsif match = matches_dynamic_perm_group_check?(method_id)
-      permission = Permission.where(group: match.captures.first).first
+      return true if self.user.try(:is_an_admin?)
+      
+      permission = permissions.where(group: match.captures.first).first
       return true if permission
       return false
     else
