@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   has_many :roles, :through => :user_roles
   has_many :permissions, :through => :roles
   has_many :services
+  has_many :memberships, :primary_key => :email, :foreign_key => :email 
   
   belongs_to :agency
 
