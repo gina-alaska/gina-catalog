@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130312201213) do
+ActiveRecord::Schema.define(:version => 20130312203138) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -388,6 +388,20 @@ ActiveRecord::Schema.define(:version => 20130312201213) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.spatial  "geom",       :limit => {:srid=>4326, :type=>"geometry"}
+  end
+
+  create_table "membership_roles", :force => true do |t|
+    t.integer  "membership_id"
+    t.integer  "role_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  create_table "memberships", :force => true do |t|
+    t.string   "email"
+    t.integer  "setup_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "metadata_messages", :force => true do |t|
