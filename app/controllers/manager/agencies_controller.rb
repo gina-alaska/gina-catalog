@@ -1,6 +1,5 @@
 class Manager::AgenciesController < ManagerController
-  before_filter :authenticate_view_agencies!, only: [:index, :visible, :hidden]
-  before_filter :authenticate_edit_agencies!, only: [:new, :edit, :create, :update, :destroy]
+  before_filter :authenticate_manage_agencies!
   
   def index
     page = params[:page] || 1
@@ -103,14 +102,8 @@ class Manager::AgenciesController < ManagerController
   end
 
   protected
-  def authenticate_view_agencies!
-    unless user_is_a_member? and current_member.permissions.has_any?(:toggle_agencies, :edit_agencies)
-      authenticate_user!
-    end      
-  end
-  
-  def authenticate_edit_agencies!
-    unless user_is_a_member? and current_member.can_edit_agencies?
+  def authenticate_manage_agencies!
+    unless user_is_a_member? and current_member.can_manage_agencies?
       authenticate_user!
     end      
   end
