@@ -27,10 +27,9 @@
                   =link_to manager_people_path(limit: "all"), method: :get do
                     All
             .btn-group
-              = link_to "#", method: :post, class: 'btn btn-success', title: "Show Selected", remote: true, onclick: "ChangeVis('visible')" do
-                %i.icon-eye-open.icon-white  
-              = link_to "#", method: :post, class: 'btn btn-danger', title: "Hide Selected", remote: true, onclick: "ChangeVis('hide')" do
-                %i.icon-eye-close.icon-white  
+              = link_to_function '<i class="icon-eye-open icon-white"></i>'.html_safe, "ChangeVis('visible', getChecked('input:checkbox'));", class: 'btn btn-info', title: "Show Selected"
+              = link_to_function '<i class="icon-eye-close icon-white"></i>'.html_safe, "ChangeVis('hidden', getChecked('input:checkbox'));", class: 'btn btn-danger', title: "Hide Selected"
+            .btn-group
               = link_to new_manager_person_path, class: 'btn btn-success' do
                 %i.icon-plus.icon-white
                 New Contact
@@ -67,27 +66,28 @@
     });
   })
 
-  function ChangeVis(type) {  
+  function getChecked(selector) {
     check_list = [];
-    $('input:checkbox').attr("checked", function() {
+    $(selector).attr("checked", function() {
       if ($(this).attr("checked")) {
         check_list.push($(this).val());
       }
     });
+    return check_list;
+  }
 
+  function ChangeVis(type, ids) {  
     if (type == "visible")
-      { resource = '#{all_visible_manager_people_path}' }
+      { resource = '#{visible_manager_people_path}' }
     else 
-      { resource = '#{all_hidden_manager_people_path}' }
+      { resource = '#{hidden_manager_people_path}' }
     
     $.ajax({
       url: resource,
       type: 'POST',
+      dataType: 'script',
       data: {
-        "people_ids[]": check_list
-      },
-      complete: function(){
-        location.reload();
+        "people_ids[]": ids
       }
     });
   };

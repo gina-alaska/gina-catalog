@@ -77,65 +77,26 @@ class Manager::PeopleController < ManagerController
   end
 
   def visible
-    @person = Person.find(params[:id])
-    @person.setups << current_setup
+    @people = Person.where(id: params[:people_ids])
+    current_setup.persons << @people
 
     respond_to do |format|
       format.html {
-        if request.xhr?
-          render partial: "action_buttons", locals: {item: @person}
-        else
-          redirect_to manager_person_spath
-        end
+        redirect_to manager_people_path
       }
-      format.js
+      format.js { render 'visible' }
     end
   end
 
-  def hide
-    @person = Person.find(params[:id])
-    @person.setups.delete(current_setup)
+  def hidden
+    @people = Person.where(id: params[:people_ids])
+    current_setup.persons.delete(@people)
 
     respond_to do |format|
       format.html {
-        if request.xhr?
-          render partial: "action_buttons", locals: {item: @person}
-        else
-          redirect_to manager_person_path
-        end
+        redirect_to manager_people_path
       }
-      format.js {
-        render 'visible'
-      }
-    end
-  end
-
-  def all_visible
-    current_setup.agencies << Person.where(id: params[:people_ids])
-
-    respond_to do |format|
-      format.html {
-        if request.xhr?
-          render nothing: true
-        else
-          redirect_to manager_people_path
-        end
-      }
-    end
-  end
-
-  def all_hidden
-    people_records = Person.where(id: params[:people_ids])
-    current_setup.persons.delete(people_records)
-
-    respond_to do |format|
-      format.html {
-        if request.xhr?
-          render nothing: true
-        else
-          redirect_to manager_people_path
-        end
-      }
+      format.js { render 'visible' }
     end
   end
 
