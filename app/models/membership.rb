@@ -1,9 +1,21 @@
 class Membership < ActiveRecord::Base
   attr_accessible :email, :setup, :user
   
-  has_many :membership_roles
+  has_many :membership_roles, uniq: true
   has_many :roles, :through => :membership_roles
-  has_many :permissions, :through => :roles
+  has_many :permissions, :through => :roles do
+    def has_any?(*perms)
+      # if user is an admin they have access to everything!
+      return true if proxy_association.owner.user.is_an_admin?
+      where(name: perms).uniq.all.size > 0
+    end
+    
+    def has_all?(*perms)
+      # if user is an admin they have access to everything!
+      return true if proxy_association.owner.user.is_an_admin?
+      where(name: perms).uniq.all.size == perms.count      
+    end
+  end
   belongs_to :user, :primary_key => :email, :foreign_key => :email
   belongs_to :setup
   
