@@ -4,6 +4,20 @@
     = f.text_field :name, class: 'span12'
     = f.label :description
     = f.text_field :description, class: 'span12'
+    %table.table-bordered.table-striped.table-condensed
+      %thead
+        %tr
+          %td{colspan:2, style: 'padding:0;'}
+            %h5{style: 'padding-left:10px;'} Permissions
+      - @permissions.each do |permission|
+        %tr
+          %td{width: "30", style:"text-align:center; padding:0;"}
+            - if @role.permissions.include?(permission)
+              = check_box_tag permission.name, permission.id, true
+            - else
+              = check_box_tag permission.name, permission.id
+          %td
+            = f.label permission.name
     .form-actions
       .pull-right
         = link_to 'Cancel', manager_roles_path, class: 'btn'
