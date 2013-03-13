@@ -4,7 +4,7 @@
     %ul.nav.pull-right
       %li
         = link_to 'View website', root_path
-      - if current_member.can_manage_cms?
+      - if current_member.access_cms?
         %li.dropdown
           %a{:href=>"#", :class=>"dropdown-toggle", "data-toggle"=>"dropdown"}
             CMS 
@@ -12,7 +12,7 @@
           %ul.dropdown-menu
             %li= link_to 'Site Pages', manager_path
             %li= link_to 'Images', manager_images_path
-      - if current_member.can_manage_catalog?
+      - if current_member.access_catalog?
         %li.dropdown
           %a{:href=>"#", :class=>"dropdown-toggle", "data-toggle"=>"dropdown"}
             Catalog 
@@ -22,7 +22,7 @@
             %li= link_to 'Collections', manager_catalog_collections_path
             %li= link_to 'Agencies', manager_agencies_path
             %li= link_to 'Contacts', manager_people_path
-      - if current_member.can_manage_site?
+      - if current_member.access_site_admin?
         %li.dropdown
           %a{:href=>"#", :class=>"dropdown-toggle", "data-toggle"=>"dropdown"}
             Site 
@@ -31,7 +31,7 @@
             %li= link_to 'User Feedback', manager_contacts_path
             %li= link_to 'Users', manager_users_path
             %li= link_to 'User Roles', manager_roles_path
-      - if current_member.can_manage_members?
+      - if current_member.access_members?
         %li.dropdown
           %a{:href=>"#", :class=>"dropdown-toggle", "data-toggle"=>"dropdown"}
             Members
