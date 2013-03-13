@@ -6,7 +6,7 @@ class AddInitialPermissions < ActiveRecord::Migration
   },{
     name: 'manage_site', group: 'site_admin', description: 'User can site settings'
   },{
-    name: 'manage_members', group: 'site_admin', description: 'User can invite/edit members'
+    name: 'manage_members', group: 'members', description: 'User can invite/edit members'
   },{
     name: 'publish_catalog', group: 'catalog', description: 'User can publish catalog records'
   }]
