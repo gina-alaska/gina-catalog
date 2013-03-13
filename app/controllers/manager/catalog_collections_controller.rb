@@ -1,4 +1,5 @@
 class Manager::CatalogCollectionsController < ManagerController
+  before_filter :authenticate_manage_catalog!
 
   def index
     @catalog_collections = current_setup.catalog_collections
