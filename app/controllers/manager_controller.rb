@@ -20,7 +20,7 @@ class ManagerController < ApplicationController
   end
   
   def authenticate_manage_catalog!
-    unless user_is_a_member? and current_member.can_manage_catalog?
+    unless user_is_a_member? and current_member.access_catalog?
       authenticate_user!
     end      
   end

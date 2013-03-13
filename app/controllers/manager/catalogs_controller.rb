@@ -1,5 +1,9 @@
 class Manager::CatalogsController < ManagerController
+  before_filter :authenticate_manage_catalog!
+  before_filter :authenticate_edit_records!, only: [:edit, :new, :create, :update]
+  before_filter :authenticate_publish_records!, only: [:unpublish, :publish]
   before_filter :fetch_record, :except => [:index, :create, :new, :toggle_collection]
+  
   
   include CatalogConcerns::Search
   
@@ -136,6 +140,18 @@ class Manager::CatalogsController < ManagerController
   end
   
   protected
+  
+  def authenticate_edit_records!
+    unless user_is_a_member? and current_member.can_manage_catalog?
+      authenticate_user!
+    end
+  end  
+  
+  def authenticate_publish_records!
+    unless user_is_a_member? and current_member.can_publish_catalog?
+      authenticate_user!
+    end
+  end
   
   def catalog_params
     v = params[:catalog].slice(:title, :description, :start_date, :end_date, :status, 
