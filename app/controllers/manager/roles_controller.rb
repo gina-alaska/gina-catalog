@@ -5,21 +5,11 @@ class Manager::RolesController < ManagerController
   
   def new
     @role = Role.new
-    @permissions = Permission.all
   end
   
   def create
     @role = current_setup.roles.build(role_params)
     
-    # @permissions = Permission.all
-    # 
-    # @permissions.each do |permission|
-    #   form ||= params[permission.name]
-    #   unless form.nil?
-    #     @role.permissions << permission
-    #   end
-    # end
-
     respond_to do |format|
       if @role.save
         format.html do
@@ -37,18 +27,6 @@ class Manager::RolesController < ManagerController
   
   def update
     @role = fetch_role
-    # roleperm = @role.permissions
-    # @permissions = Permission.all
-    # 
-    # @permissions.each do |permission|
-    #   form ||= params[permission.name]
-    #   if form.nil? and roleperm.include?(permission)
-    #     @role.permissions.delete(permission)
-    #   end
-    #   unless form.nil? and !roleperm.include?(permission)
-    #     @role.permissions << permission
-    #   end
-    # end
     
     respond_to do |format|
       if @role.update_attributes(role_params)
@@ -68,7 +46,6 @@ class Manager::RolesController < ManagerController
   
   def edit
     @role = fetch_role
-    @permissions = Permission.all
   end
   
   def destroy
