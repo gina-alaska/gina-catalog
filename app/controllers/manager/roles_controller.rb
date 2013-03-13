@@ -10,14 +10,15 @@ class Manager::RolesController < ManagerController
   
   def create
     @role = current_setup.roles.build(role_params)
-    @permissions = Permission.all
     
-    @permissions.each do |permission|
-      form ||= params[permission.name]
-      unless form.nil?
-        @role.permissions << permission
-      end
-    end
+    # @permissions = Permission.all
+    # 
+    # @permissions.each do |permission|
+    #   form ||= params[permission.name]
+    #   unless form.nil?
+    #     @role.permissions << permission
+    #   end
+    # end
 
     respond_to do |format|
       if @role.save
@@ -36,18 +37,18 @@ class Manager::RolesController < ManagerController
   
   def update
     @role = fetch_role
-    roleperm = @role.permissions
-    @permissions = Permission.all
-
-    @permissions.each do |permission|
-      form ||= params[permission.name]
-      if form.nil? and roleperm.include?(permission)
-        @role.permissions.delete(permission)
-      end
-      unless form.nil? and !roleperm.include?(permission)
-        @role.permissions << permission
-      end
-    end
+    # roleperm = @role.permissions
+    # @permissions = Permission.all
+    # 
+    # @permissions.each do |permission|
+    #   form ||= params[permission.name]
+    #   if form.nil? and roleperm.include?(permission)
+    #     @role.permissions.delete(permission)
+    #   end
+    #   unless form.nil? and !roleperm.include?(permission)
+    #     @role.permissions << permission
+    #   end
+    # end
     
     respond_to do |format|
       if @role.update_attributes(role_params)
@@ -88,7 +89,7 @@ class Manager::RolesController < ManagerController
   protected
   
   def role_params
-    params[:role].slice(:name, :description)
+    rparams = params[:role].slice(:name, :description, :permission_ids)
   end
   
   def fetch_role
