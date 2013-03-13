@@ -1,10 +1,22 @@
-.row-fluid
-  = form_for role, url: role.new_record? ? manager_roles_path : manager_role_path(role) do |f|
-    = f.label :name
-    = f.text_field :name, class: 'span12'
-    = f.label :description
-    = f.text_field :description, class: 'span12'
-    .form-actions
-      .pull-right
-        = link_to 'Cancel', manager_roles_path, class: 'btn'
-        = f.submit class: 'btn btn-primary'
+= form_for [:manager, @role], html: { class: 'form-horizontal' } do |f|
+  .control-group
+    = f.label :name, class: 'control-label'
+    .controls
+      = f.text_field :name, class: 'span12'
+  .control-group
+    = f.label :description, class: 'control-label'
+    .controls
+      = f.text_field :description, class: 'span12'
+
+  %fielset
+    %legend Permissions
+    .control-group
+      .controls
+        - Permission.all.each do |permission|
+          %label.checkbox
+            = check_box_tag 'role[permission_ids][]', permission.id, @role.permissions.include?(permission)
+            = permission.description
+  .form-actions
+    .pull-right
+      = link_to 'Cancel', manager_roles_path, class: 'btn'
+      = f.submit class: 'btn btn-primary'
