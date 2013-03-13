@@ -11,8 +11,9 @@ class Setup < ActiveRecord::Base
   
   has_many :catalog_collections
   has_many :contacts
-  
   has_many :urls, class_name: 'SiteUrl', dependent: :destroy
+  has_many :memberships
+  has_many :roles
   
   liquid_methods :title, :by_line, :catalog_collections
 
