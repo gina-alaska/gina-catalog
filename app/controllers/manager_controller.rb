@@ -18,4 +18,28 @@ class ManagerController < ApplicationController
       authenticate_user!
     end      
   end
+  
+  def authenticate_manage_catalog!
+    unless user_is_a_member? and current_member.can_manage_catalog?
+      authenticate_user!
+    end      
+  end
+  
+  def authenticate_manage_cms!
+    unless user_is_a_member? and current_member.can_manage_cms?
+      authenticate_user!
+    end      
+  end
+  
+  def authenticate_manage_site!
+    unless user_is_a_member? and current_member.can_manage_site?
+      authenticate_user!
+    end      
+  end
+  
+  def authenticate_manage_members!
+    unless user_is_a_member? and current_member.can_manage_members?
+      authenticate_user!
+    end      
+  end
 end

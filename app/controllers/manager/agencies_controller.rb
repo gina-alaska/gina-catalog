@@ -1,5 +1,5 @@
 class Manager::AgenciesController < ManagerController
-  before_filter :authenticate_manage_agencies!
+  before_filter :authenticate_manage_catalog!
   
   def index
     page = params[:page] || 1
@@ -102,12 +102,6 @@ class Manager::AgenciesController < ManagerController
   end
 
   protected
-  def authenticate_manage_agencies!
-    unless user_is_a_member? and current_member.can_manage_agencies?
-      authenticate_user!
-    end      
-  end
-
   def search_params
     params[:search] || {}
   end
