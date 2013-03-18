@@ -1,5 +1,5 @@
 class Membership < ActiveRecord::Base
-  attr_accessible :email, :setup, :user
+  attr_accessible :email, :setup, :user, :role_ids
   
   has_many :membership_roles, uniq: true
   has_many :roles, :through => :membership_roles
@@ -18,6 +18,8 @@ class Membership < ActiveRecord::Base
   end
   belongs_to :user, :primary_key => :email, :foreign_key => :email
   belongs_to :setup
+  
+  validates :email, uniqueness: true
   
   def method_missing(method_id, *args)
     if match = matches_dynamic_role_check?(method_id)

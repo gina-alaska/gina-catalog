@@ -45,6 +45,7 @@ NSCatalog::Application.routes.draw do
     resources :contacts
     resources :users
     resources :roles
+    resources :memberships
 
     resources :people do
       collection do
