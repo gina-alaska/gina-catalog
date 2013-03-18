@@ -1,0 +1,11 @@
+.navbar.navbar-static-top
+  .navbar-inner
+    %ul.nav
+      %li
+        = link_to manager_memberships_path do
+          %i.icon-arrow-left
+          Back
+%h3 Invite a New Member
+.row-fluid
+  .span12
+    = render 'form', membership: @membership

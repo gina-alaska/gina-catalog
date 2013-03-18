@@ -1,5 +1,5 @@
 class Membership < ActiveRecord::Base
-  attr_accessible :email, :setup, :user
+  attr_accessible :email, :setup, :user, :role_ids
   
   has_many :membership_roles, uniq: true
   has_many :roles, :through => :membership_roles
