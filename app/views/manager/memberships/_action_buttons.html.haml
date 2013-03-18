@@ -1,7 +1,5 @@
-.span12
-  .row-fluid
-    .span1
-      = link_to edit_manager_membership_path(item.id), class: 'btn', title: "Edit" do
-        %i.icon-edit    
-    .span1
-      = link_to "Remove", manager_membership_path(item.id), method: :delete, class: 'btn btn-danger', confirm: "Are you sure?"
+.btn-group
+  = link_to edit_manager_membership_path(item.id), class: 'btn', title: "Edit" do
+    %i.icon-edit    
+  = link_to manager_membership_path(item.id), method: :delete, class: 'btn btn-danger', confirm: "Are you sure?" do
+    %i.icon-trash.icon-white

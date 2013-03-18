@@ -13,7 +13,7 @@
   .control-group
     = label_tag "Additional message text", nil, class: 'control-label'
     .controls
-      = text_area_tag "add_text", nil, rows: 6, cols: 40, class: "span6"
+      = text_area_tag "add_text", params[:add_text], rows: 6, cols: 40, class: "span6"
 
   %fieldset
     %legend Member Roles
