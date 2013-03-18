@@ -23,6 +23,12 @@
     .controls
       = f.text_field :contact_email, class: 'span12'
 
+  .control-group
+    = f.label "Default Invite Text", class: 'control-label'
+    .controls
+      = f.text_area :default_invite, rows: 6, cols: 40, class: 'span12'
+
+  .form-actions
   .form-actions
     = link_to manager_path, class: 'btn' do
       %i.icon-arrow-left

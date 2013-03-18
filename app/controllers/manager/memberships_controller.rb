@@ -9,10 +9,12 @@ class Manager::MembershipsController < ManagerController
 
   def create
     @membership = current_setup.memberships.build(membership_params)
+    @site_title = current_setup.title
     
     respond_to do |format|
       if @membership.save
         format.html do
+          InviteMailer.invite_email(current_setup.default_invite, current_setup.contact_email, @site_title, @membership.email, params["add_text"], manager_url).deliver
           flash[:success] = "Created new membership for #{@membership.email}."
           redirect_to manager_memberships_path
         end
@@ -49,7 +51,7 @@ class Manager::MembershipsController < ManagerController
 
   def destroy
     @membership = current_setup.memberships.find(params[:id])
-    
+
     if @membership.destroy
       flash[:success] = "Deleted membership for #{@membership.email}"
     else        
