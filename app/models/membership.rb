@@ -19,6 +19,8 @@ class Membership < ActiveRecord::Base
   belongs_to :user, :primary_key => :email, :foreign_key => :email
   belongs_to :setup
   
+  validates :email, uniqueness: true
+  
   def method_missing(method_id, *args)
     if match = matches_dynamic_role_check?(method_id)
       return true if self.user.try(:is_an_admin?)
