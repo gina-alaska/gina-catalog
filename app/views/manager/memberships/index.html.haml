@@ -1,0 +1,21 @@
+%table.table.table-bordered.table-striped.table-condensed
+  %thead
+    %tr
+      %td{colspan:2, style: 'padding:0;'}
+        .navbar.navbar-static-top
+          .navbar-inner
+            = form_tag new_manager_membership_path, method: 'GET', class: 'navbar-form form-search pull-right' do
+              .input-append
+                = text_field_tag :email, nil, class: 'search-query span4', placeholder: "Email"
+                = submit_tag 'Invite', class: 'btn btn-primary'
+            .brand Memberships
+    %tr
+      %th Email
+      %th.span1 Actions
+  %tbody
+    - @memberships.each do |item|
+      %tr
+        %td= item.email
+        %td.span1
+          .actions
+            = render partial: "action_buttons", locals: {item: item}
