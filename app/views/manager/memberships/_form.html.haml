@@ -9,6 +9,12 @@
     = f.label :email, class: 'control-label'
     .controls
       = f.text_field :email, class: "span6"
+
+  .control-group
+    = label_tag "Additional message text", nil, class: 'control-label'
+    .controls
+      = text_area_tag "add_text", nil, rows: 6, cols: 40, class: "span6"
+
   %fieldset
     %legend Member Roles
     .control-group
