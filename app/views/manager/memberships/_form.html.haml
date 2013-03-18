@@ -10,10 +10,11 @@
     .controls
       = f.text_field :email, class: "span6"
 
-  .control-group
-    = label_tag "Additional message text", nil, class: 'control-label'
-    .controls
-      = text_area_tag "add_text", params[:add_text], rows: 6, cols: 40, class: "span6"
+  - if @membership.new_record?
+    .control-group
+      = label_tag "Additional message text", nil, class: 'control-label'
+      .controls
+        = text_area_tag "add_text", params[:add_text], rows: 6, cols: 40, class: "span6"
 
   %fieldset
     %legend Member Roles
