@@ -11,11 +11,11 @@
             .brand Memberships
     %tr
       %th Email
-      %th Actions
+      %th.span1 Actions
   %tbody
     - @memberships.each do |item|
       %tr
         %td= item.email
-        %td
-          .span1.actions
+        %td.span1
+          .actions
             = render partial: "action_buttons", locals: {item: item}
