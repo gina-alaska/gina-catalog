@@ -1,4 +1,6 @@
 class Manager::RolesController < ManagerController
+  before_filter :authenticate_manage_site!
+
   def index
     @roles = current_setup.roles.all
   end

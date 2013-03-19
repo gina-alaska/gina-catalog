@@ -1,4 +1,6 @@
 class Manager::MembershipsController < ManagerController
+  before_filter :authenticate_manage_members!
+
 	def index
     @memberships = current_setup.memberships.all
   end
