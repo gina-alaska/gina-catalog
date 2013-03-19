@@ -1,4 +1,5 @@
 class Manager::PageContentsController < ManagerController
+  before_filter :authenticate_manage_cms!
   before_filter :fetch_page, :except => [:new, :create]
   
   def new
