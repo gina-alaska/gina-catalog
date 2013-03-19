@@ -14,7 +14,7 @@ dirs.each do |d|
   
   raise "Unable to find #{d} in #{source}" unless File.exists?(from)
 
-  `ln -sf #{from} #{to}`
+  `ln -sf #{from} #{root_path}`
 end
 
 
