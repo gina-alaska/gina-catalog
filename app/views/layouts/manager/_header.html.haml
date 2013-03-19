@@ -10,7 +10,7 @@
             CMS 
             %b.caret
           %ul.dropdown-menu
-            %li= link_to 'Pages', manager_path
+            %li= link_to 'Pages', manager_page_contents_path
             %li= link_to 'Images', manager_images_path
             %li= link_to 'Feedback', manager_contacts_path
       - if current_member.access_catalog?
