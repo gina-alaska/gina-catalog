@@ -6,7 +6,7 @@
           %i.icon-arrow-left
           Back
     .btn-group.pull-right
-      -if current_member.can_edit_records?
+      -if current_member.can_manage_catalog?
         = link_to edit_manager_catalog_path(@catalog), class: 'btn' do
           %i.icon-edit
           Edit
