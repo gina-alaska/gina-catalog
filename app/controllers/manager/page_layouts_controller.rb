@@ -40,7 +40,7 @@ class Manager::PageLayoutsController < ManagerController
           if params["commit"] == "Save"
             redirect_to edit_manager_page_layout_path(@page_layout)
           else
-            redirect_to manager_path
+            redirect_to manager_page_contents_path(tab: "page_layouts")
           end
         }
         format.json { render json: @page_layout, status: :created, location: @page_layout }
@@ -63,7 +63,7 @@ class Manager::PageLayoutsController < ManagerController
           if params["commit"] == "Save"
             redirect_to edit_manager_page_layout_path(@page_layout)
           else
-            redirect_to manager_path
+            redirect_to manager_page_contents_path(tab: "page_layouts")
           end
         }
         format.json { head :no_content }
