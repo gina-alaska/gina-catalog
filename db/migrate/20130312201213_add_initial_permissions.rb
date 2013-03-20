@@ -1,14 +1,12 @@
 class AddInitialPermissions < ActiveRecord::Migration
   PERMS = [{
-    name: 'manage_cms', group: 'cms', description: 'User can create/edit cms content'
+    name: 'manage_cms', group: 'cms', description: 'Create/Edit CMS content'
   },{
-    name: 'manage_catalog', group: 'catalog', description: 'User can manage catalog content'
+    name: 'manage_catalog', group: 'catalog', description: 'Create/Edit catalog records'
   },{
-    name: 'manage_site', group: 'site_admin', description: 'User can site settings'
+    name: 'publish_catalog', group: 'catalog', description: 'Publish catalog records'
   },{
-    name: 'manage_members', group: 'site_admin', description: 'User can invite/edit members'
-  },{
-    name: 'publish_catalog', group: 'catalog', description: 'User can publish catalog records'
+    name: 'manage_members', group: 'permissions', description: 'Invite members and assign roles'
   }]
   
   def up

@@ -1,5 +1,5 @@
 class Manager::MembershipsController < ManagerController
-  before_filter :authenticate_manage_members!
+  before_filter :authenticate_access_permissions!
 
 	def index
     @memberships = current_setup.memberships.all
@@ -68,6 +68,12 @@ class Manager::MembershipsController < ManagerController
   end
 
   protected
+  
+  def authenticate_manage_members!
+    unless user_is_a_member? and current_member.can_manage_members?
+      authenticate_user!
+    end      
+  end
   
   def membership_params
     mparams = params[:membership].slice(:email, :role_ids)

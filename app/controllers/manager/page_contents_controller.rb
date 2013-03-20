@@ -1,5 +1,5 @@
 class Manager::PageContentsController < ManagerController
-  before_filter :authenticate_manage_cms!
+  before_filter :authenticate_access_cms!
   before_filter :fetch_page, :except => [:new, :create, :index]
 
   def index
