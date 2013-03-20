@@ -1,5 +1,5 @@
 class Manager::ContactsController < ManagerController
-  before_filter :authenticate_manage_catalog!
+  before_filter :authenticate_manage_cms!
 
   def index
     @contacts = current_setup.contacts
