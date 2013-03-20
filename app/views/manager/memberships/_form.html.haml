@@ -23,7 +23,7 @@
         - current_setup.roles.all.each do |role|
           %label.checkbox
             = check_box_tag 'membership[role_ids][]', role.id, @membership.roles.include?(role)
-            = role.description
+            = "#{role.name} - #{role.description}"
   .row-fluid
     .span12
       .form-actions
