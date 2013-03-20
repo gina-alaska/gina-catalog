@@ -1,5 +1,5 @@
 class Manager::PageSnippetsController < ManagerController
-  before_filter :authenticate_manage_cms!
+  before_filter :authenticate_access_cms!
   
   def new
     @snippet = current_setup.snippets.build

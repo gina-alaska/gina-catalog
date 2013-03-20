@@ -25,7 +25,7 @@
             %li= link_to 'Collections', manager_catalog_collections_path
             %li= link_to 'Agencies', manager_agencies_path
             %li= link_to 'Contacts', manager_people_path
-      - if current_member.access_site_admin?
+      - if current_member.access_permissions?
         %li.dropdown
           %a{:href=>"#", :class=>"dropdown-toggle", "data-toggle"=>"dropdown"}
             Settings 
