@@ -77,7 +77,7 @@ class Manager::PageLayoutsController < ManagerController
   # DELETE /setups/page_layouts/1
   # DELETE /setups/page_layouts/1.json
   def destroy
-    @page_layout = current_setup.page_layouts.find(params[:id])
+    @page_layout = current_setup.layouts.find(params[:id])
     @page_layout.destroy
 
     respond_to do |format|
