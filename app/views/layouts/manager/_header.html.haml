@@ -31,10 +31,9 @@
             Permissions 
             %b.caret
           %ul.dropdown-menu
-            - if current_member.can_manage_members?
-              %li= link_to 'Members', manager_memberships_path
+            %li= link_to 'Invite more people!', new_manager_membership_path
+            %li= link_to 'Current Members', manager_memberships_path
             %li= link_to 'Roles', manager_roles_path
             %li= link_to 'Users (ADMIN VIEW)', manager_users_path if current_user.is_an_admin?
       
-      %li= link_to 'Invite more people!', new_manager_membership_path if current_member.can_manage_members?
       %li= link_to 'Logout', logout_path
