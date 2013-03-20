@@ -1,5 +1,6 @@
 class Manager::CatalogsController < ManagerController
   before_filter :authenticate_manage_catalog!
+  before_filter :authenticate_manage_cms!
   before_filter :authenticate_edit_records!, only: [:edit, :new, :create, :update]
   before_filter :authenticate_publish_records!, only: [:unpublish, :publish]
   before_filter :fetch_record, :except => [:index, :create, :new, :toggle_collection]

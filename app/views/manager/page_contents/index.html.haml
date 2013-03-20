@@ -1,0 +1,11 @@
+%br/
+.pull-left{ style: 'font-size: 18px; padding: 10px 10px 0 0;' } Site Manager
+.tabbable
+  %ul.nav.nav-tabs
+    - @manager_pages.each do |slug,title|
+      %li{class: (@manager_pages.keys.first == slug ? 'active' : '')}
+        = link_to title, "##{slug}", data: { toggle: 'tab' }
+.tab-content
+  - @manager_pages.each do |slug,title|    
+    .tab-pane{id:slug, class: (@manager_pages.keys.first == slug ? 'active' : '')}
+      = render "/manager/#{slug}/dashboard", setup: current_setup

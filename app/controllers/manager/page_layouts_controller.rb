@@ -1,4 +1,5 @@
 class Manager::PageLayoutsController < ManagerController
+  before_filter :authenticate_manage_cms!
   # GET /setups/page_layouts/1
   # GET /setups/page_layouts/1.json
   def show
