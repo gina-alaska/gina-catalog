@@ -1,4 +1,5 @@
 class Manager::PeopleController < ManagerController
+  before_filter :authenticate_manage_catalog!
 
   def index
     page = params[:page] || 1
