@@ -6,9 +6,10 @@
           %i.icon-arrow-left
           Back
     .btn-group.pull-right
-      = link_to edit_manager_catalog_path(@catalog), class: 'btn' do
-        %i.icon-edit
-        Edit
+      -if current_member.can_edit_records?
+        = link_to edit_manager_catalog_path(@catalog), class: 'btn' do
+          %i.icon-edit
+          Edit
       
       -if current_member.can_publish_catalog?
         = link_to 'Publish', publish_manager_catalog_path(@catalog), method: :put, class: 'btn' unless @catalog.published?
