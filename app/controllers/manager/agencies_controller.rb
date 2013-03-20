@@ -1,5 +1,5 @@
 class Manager::AgenciesController < ManagerController
-  before_filter :authenticate_manage_catalog!
+  before_filter :authenticate_access_catalog!
   
   def index
     page = params[:page] || 1

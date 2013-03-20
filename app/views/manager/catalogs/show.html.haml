@@ -10,9 +10,10 @@
         %i.icon-edit
         Edit
       
-      = link_to 'Publish', publish_manager_catalog_path(@catalog), method: :put, class: 'btn' unless @catalog.published?
+      -if current_member.can_publish_catalog?
+        = link_to 'Publish', publish_manager_catalog_path(@catalog), method: :put, class: 'btn' unless @catalog.published?
       
-      = link_to 'Un-Publish', unpublish_manager_catalog_path(@catalog), method: :put, class: 'btn' if @catalog.published?
+        = link_to 'Un-Publish', unpublish_manager_catalog_path(@catalog), method: :put, class: 'btn' if @catalog.published?
       
       = link_to manager_catalog_path(@catalog), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure?' } do
         %i.icon-trash

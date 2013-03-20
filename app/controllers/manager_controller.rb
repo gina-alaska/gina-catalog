@@ -14,31 +14,25 @@ class ManagerController < ApplicationController
   end
 
   def authenticate_manager!
-    unless user_is_a_member? and current_member.permissions.has_any?(:manage_agencies, :manage_cms, :manage_site)
+    unless user_is_a_member? and (current_member.access_catalog? or current_member.access_cms? or current_member.access_permissions?)
       authenticate_user!
     end      
   end
   
-  def authenticate_manage_catalog!
+  def authenticate_access_catalog!
     unless user_is_a_member? and current_member.access_catalog?
       authenticate_user!
     end      
   end
   
-  def authenticate_manage_cms!
-    unless user_is_a_member? and current_member.can_manage_cms?
+  def authenticate_access_cms!
+    unless user_is_a_member? and current_member.access_cms?
       authenticate_user!
     end      
   end
   
-  def authenticate_manage_site!
-    unless user_is_a_member? and current_member.can_manage_site?
-      authenticate_user!
-    end      
-  end
-  
-  def authenticate_manage_members!
-    unless user_is_a_member? and current_member.can_manage_members?
+  def authenticate_access_permissions!
+    unless user_is_a_member? and current_member.access_permissions?
       authenticate_user!
     end      
   end
