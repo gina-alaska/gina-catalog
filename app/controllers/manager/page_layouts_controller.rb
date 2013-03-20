@@ -81,7 +81,9 @@ class Manager::PageLayoutsController < ManagerController
     @page_layout.destroy
 
     respond_to do |format|
-      format.html { redirect_to manager_path }
+      format.html {
+        redirect_to edit_manager_page_layout_path(@page_layout)
+      }
       format.json { head :no_content }
     end
   end

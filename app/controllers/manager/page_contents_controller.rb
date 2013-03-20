@@ -78,14 +78,14 @@ class Manager::PageContentsController < ManagerController
       respond_to do |format|
         format.html {
           flash[:success] = "#{@page.title} page deleted"
-          redirect_to manager_path
+          redirect_to manager_page_contents_path
         }
       end
     else
       respond_to do |format|
         format.html {
           flash[:success] = "Unable to delete #{@page.title}"
-          redirect_to manager_path
+          redirect_to manager_page_contents_path
         }
       end
     end
