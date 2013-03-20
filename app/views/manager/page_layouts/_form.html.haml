@@ -17,7 +17,7 @@
     = f.text_area :content, class: 'editor span12', style: 'border:1px solid #dfdfdf;'
     
   .form-actions
-    = link_to manager_path, class: 'btn' do
+    = link_to manager_page_contents_path(tab: "page_layouts"), class: 'btn' do
       %i.icon-arrow-left
       Back
     .pull-right

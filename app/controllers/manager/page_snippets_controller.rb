@@ -16,7 +16,7 @@ class Manager::PageSnippetsController < ManagerController
           if params[:commit] == 'Save'
             redirect_to edit_manager_page_snippet_path(@snippet)
           else
-            redirect_to manager_path
+            redirect_to manager_page_contents_path(tab: "page_snippets")
           end
         }
       else
@@ -38,7 +38,7 @@ class Manager::PageSnippetsController < ManagerController
           if params[:commit] == 'Save'
             redirect_to edit_manager_page_snippet_path(@snippet)
           else
-            redirect_to manager_path
+            redirect_to manager_page_contents_path(tab: "page_snippets")
           end
         }
       else
