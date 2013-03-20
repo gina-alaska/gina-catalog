@@ -34,7 +34,7 @@ class Manager::SetupsController < ManagerController
       respond_to do |format|
         format.html {
           flash[:success] = 'First time setup completed!'
-          redirect_to manager_path
+          redirect_to manager_page_contents_path(tab: "setups")
         }
       end
     else
@@ -54,7 +54,7 @@ class Manager::SetupsController < ManagerController
       respond_to do |format|
         format.html {
           flash[:success] = 'Settings updated'
-          redirect_to manager_path
+          redirect_to manager_page_contents_path(tab: "setups")
         }
       end
     else
