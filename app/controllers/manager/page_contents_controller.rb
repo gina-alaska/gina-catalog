@@ -35,7 +35,7 @@ class Manager::PageContentsController < ManagerController
           if params["commit"] == "Save"
             redirect_to edit_manager_page_content_path(@page)
           else
-            redirect_to manager_path
+            redirect_to manager_page_contents_path
           end
         }
       end
@@ -54,7 +54,7 @@ class Manager::PageContentsController < ManagerController
           if params["commit"] == "Save"
             redirect_to edit_manager_page_content_path(@page)
           else
-            redirect_to manager_path
+            redirect_to manager_page_contents_path
           end
         }
       end
