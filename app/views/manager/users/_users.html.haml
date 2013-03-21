@@ -14,6 +14,5 @@
         %td= user.agency.try(:name_with_acronym)
         %td= user.roles.map(&:name).join(', ')
         %td.actions
-          = link_to manager_user_path(user), class: 'btn' do
+          = link_to manager_user_path(user), class: 'btn', title: "Edit" do
             %i.icon-edit
-            Edit

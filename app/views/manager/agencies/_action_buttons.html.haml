@@ -1,9 +1,9 @@
 = link_to edit_manager_agency_path(item.id), class: 'btn', title: "Edit" do
   %i.icon-edit    
 - if item.setups.include?(current_setup)
-  = link_to_function '<i class="icon-eye-open icon-white"></i>'.html_safe, "ChangeVis('hidden', [#{ item.id}]);", class: 'btn btn-info', title: "Hide Selected"
+  = link_to_function '<i class="icon-eye-open icon-white"></i>'.html_safe, "ChangeVis('hidden', [#{ item.id}]);", class: 'btn btn-info', title: "Hide Agency"
 - else
-  = link_to_function '<i class="icon-eye-close icon-white"></i>'.html_safe, "ChangeVis('visible', [#{item.id}]);", class: 'btn btn-danger', title: "Show Selected"
+  = link_to_function '<i class="icon-eye-close icon-white"></i>'.html_safe, "ChangeVis('visible', [#{item.id}]);", class: 'btn btn-danger', title: "Show Agency"
   / = link_to visible_manager_agency_path(item.id), method: :post, class: 'btn btn-danger', title: "Show", remote: true do
   /   %i.icon-eye-close.icon-white    
   / = link_to "Delete", manager_agency_path(item.id), method: :delete, confirm: "Are you sure?", class: 'btn btn-danger'
