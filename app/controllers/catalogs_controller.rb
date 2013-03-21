@@ -42,6 +42,9 @@ class CatalogsController < ApplicationController
     @search_params = params[:search] || {}
     @search_params['order_by'] ||= 'title_sort-ascending'
 
+    advanced_opts = @search_params.reject { |k,v| v.nil? or ['q', 'catalog_collection_ids'].include?(k) }
+    @is_advanced = advanced_opts.keys.size > 0
+
     @search = solr_search(@search_params, params[:page], params[:limit])
     
     if @search.respond_to? :results
