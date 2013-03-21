@@ -6,13 +6,13 @@
         = page.title
     .span4.actions
       .btn-group
-        = link_to edit_manager_page_content_path(page), class: 'btn' do
+        = link_to edit_manager_page_content_path(page), class: 'btn', title: "Edit" do
           %i.icon-edit    
-        = link_to new_manager_page_content_path(parent: page.id), class: 'btn' do
+        = link_to new_manager_page_content_path(parent: page.id), class: 'btn', title: "New Sub-Page" do
           %i.icon-plus-sign
-        = link_to page_path(page.slug), class: 'btn' do
+        = link_to page_path(page.slug), class: 'btn', title: "View Page" do
           %i.icon-eye-open    
-        = link_to manager_page_content_path(page), method: 'DELETE', class: 'btn btn-danger', data: { confirm: 'Are you sure?' } do
+        = link_to manager_page_content_path(page), method: 'DELETE', class: 'btn btn-danger', data: { confirm: 'Are you sure?' }, title: "Delete Page" do
           %i.icon-trash.icon-white
 = render partial: '/manager/page_contents/page', collection: page.children unless page.children.empty?
         

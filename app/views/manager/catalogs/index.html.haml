@@ -6,11 +6,11 @@
         .navbar.navbar-static-top
           .navbar-inner
             .btn-group
-              %button#check-toggle.btn{data: { action: 'toggle-checkbox', target: '.item-checkbox' } }
+              %button#check-toggle.btn{data: { action: 'toggle-checkbox', target: '.item-checkbox' }, title: "Toggle CheckBoxes" }
                 %i.icon-check
-              %button.btn{data: { action: 'expand-all', target: '.collapse' }}
+              %button.btn{data: { action: 'expand-all', target: '.collapse' }, title: "Expand All"}
                 %i.icon-plus-sign
-              %button.btn{data: { action: 'collapse-all', target: '.collapse' }}
+              %button.btn{data: { action: 'collapse-all', target: '.collapse' }, title: "Collapse All"}
                 %i.icon-minus-sign
   
             .btn-group

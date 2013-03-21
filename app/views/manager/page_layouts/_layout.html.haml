@@ -8,7 +8,7 @@
           (default)
     .span4.actions
       .btn-group
-        = link_to edit_manager_page_layout_path(layout), class: 'btn' do
+        = link_to edit_manager_page_layout_path(layout), class: 'btn', title: "Edit" do
           %i.icon-edit    
-        = link_to manager_page_layout_path(layout), method: 'DELETE', class: 'btn btn-danger', data: { confirm: 'Are you sure?' } do
+        = link_to manager_page_layout_path(layout), method: 'DELETE', class: 'btn btn-danger', data: { confirm: 'Are you sure?' }, title: "Delete Layout" do
           %i.icon-trash.icon-white

@@ -21,7 +21,7 @@
               .caption 
                 %strong= link_to_unless image.link_to_url.empty?, image.title, image.link_to_url
                 %p= image.description
-          = link_to 'Edit', edit_manager_image_path(image), class: 'btn'
-          = link_to manager_image_path(image), method: :delete, class: 'btn btn-danger', 'data-confirm' => 'Are you sure?' do
+          = link_to edit_manager_image_path(image), class: 'btn', title: "Edit" do
+            %i.icon-edit
+          = link_to manager_image_path(image), method: :delete, class: 'btn btn-danger', 'data-confirm' => 'Are you sure?', title: "Delete Image" do
             %i.icon-trash.icon-white
-            Delete
