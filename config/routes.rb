@@ -1,4 +1,8 @@
 NSCatalog::Application.routes.draw do
+  namespace :admin do
+    resources :setups
+  end
+  
   namespace :manager do
     resources :catalogs do
       resources :repos
