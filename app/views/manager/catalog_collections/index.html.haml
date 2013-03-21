@@ -18,5 +18,8 @@
         %td= item.name
         %td= item.description
         %td
-          = link_to "Edit", edit_manager_catalog_collection_path(item.id), class: 'btn btn-primary'
-          = link_to "Delete", manager_catalog_collection_path(item.id), method: :delete, confirm: "Are you sure?", class: 'btn btn-danger'
+          .btn-group
+            = link_to edit_manager_catalog_collection_path(item.id), class: 'btn', title: "Edit" do
+              %i.icon-edit
+            = link_to manager_catalog_collection_path(item.id), method: :delete, confirm: "Are you sure?", class: 'btn btn-danger', title: "Delete Collection" do
+              %i.icon-trash.icon-white
