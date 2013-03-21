@@ -1,35 +1,16 @@
 - theme = NSCatalog::Application.config.theme
-!!!5
+!!! 5
 %html
-  %head
-    = render "layouts/#{theme}/head"
-    = javascript_include_tag 'admin'
-    = stylesheet_link_tag 'admin', :media => 'all'
-  %body{"data-spy"=>"scroll", "data-target" => ".subnav", "data-offset" => 100}
-    #header
-      .navbar.navbar-fixed-top.navbar-inverse
-        .navbar-inner
-          .container
-            = link_to 'Catalog Admin', admin_path, class: 'brand'
-            = render 'layouts/admin_menu'
-    .visible-desktop.spacer{style: "margin-top: 50px;"}
-    #content.container
-      = show_flash_messages
-      .row
-        .span2
-          %ul.nav.nav-list.well
-            %li.nav-header Menu
-            %li
-              = link_to admin_assets_path do
-                %i.icon-barcode
-                Data Records            
-            %li
-              = link_to admin_roles_path do 
-                %i.icon-briefcase
-                Roles
-            %li
-              = link_to admin_users_path do
-                %i.icon-user
-                Users
-        .span10
-          = yield
+%head
+  = render "layouts/#{theme}/head"  
+  = javascript_include_tag "manager", data: {'turbolinks-track' => ''}
+  = stylesheet_link_tag 'manager', data: {'turbolinks-track' => ''}
+  = csrf_meta_tag
+%body{ data: { spy: 'scroll', target: '.section-nav', offset: 150 }}
+  .container
+    #header= render "layouts/manager/header"
+    #content
+      #flashes= show_flash_messages
+      = yield
+    #footer= render "layouts/#{theme}/footer"
+  = render "layouts/#{theme}/analytics" unless Rails.env == 'development'

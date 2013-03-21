@@ -59,7 +59,7 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate_admin!
-    if !current_user || !(current_user.is_an_admin?)
+    if !current_user || !current_user.is_an_admin?
       authenticate_user!
     end      
   end
