@@ -6,7 +6,6 @@
       = text_field_tag 'search[q]', search_params[:q], placeholder: 'Enter keyword search', class: 'span12'
     .span3
       = submit_tag 'Search', class: 'btn btn-primary btn-block'
-            
   .row-fluid
     .span12
       %ul.nav.nav-list
@@ -20,7 +19,7 @@
     .accordion-group
       .accordion-heading.h4
         = link_to 'Advanced', '#options', class: 'accordion-toggle', data: { toggle: 'collapse', parent: '#advanced' }
-      #options.accordion-body.collapse
+      #options.accordion-body.collapse{ class: @is_advanced ? 'in' : '' }
         .accordion-inner
           = label_tag 'search[type]', 'Record Type'
           = select_tag 'search[type]', options_for_select([['Projects', 'Project'], ['Data', 'Asset']], search_params[:type]), class: 'span12', 
