@@ -1,0 +1,19 @@
+= form_for [:admin, @geokeyword], html: { class: 'form-horizontal' } do |f|
+  - if @geokeyword.errors.count > 0
+    .alert.alert-error
+      %h4 An error prevented this region from being saved
+      %ul
+        - @geokeyword.errors.full_messages.each do |msg|
+          %li= msg
+          
+  .control-group
+    = f.label :name, class: 'control-label'
+    .controls
+      = f.text_field :name, class: 'span12'
+      
+  .form-actions
+    .pull-right
+      = link_to admin_geokeywords_path, class: 'btn' do
+        %i.icon-arrow-left
+        Back
+      = f.submit 'Save region', class: 'btn btn-primary'

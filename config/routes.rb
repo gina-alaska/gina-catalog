@@ -2,6 +2,7 @@ NSCatalog::Application.routes.draw do
   namespace :admin do
     resources :setups
     resources :users
+    resources :geokeywords
   end
   
   namespace :manager do
