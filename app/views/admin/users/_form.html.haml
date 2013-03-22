@@ -1,4 +1,4 @@
-= form_for [:manager, user], html: { class: 'form-horizontal' } do |f|
+= form_for [:admin, user], html: { class: 'form-horizontal' } do |f|
   %h3 User Form
   .control-group
     = f.label :agency, class: 'control-label'
@@ -14,7 +14,7 @@
             = role.name.humanize
   %fieldset.form-actions
     .pull-right
-      = link_to 'Cancel', manager_users_path, class: 'btn'
+      = link_to 'Cancel', admin_users_path, class: 'btn'
       = f.submit class: 'btn btn-primary'
 :javascript
   $('#user_agency_id').select2();
