@@ -8,7 +8,7 @@
   = csrf_meta_tag
 %body{ data: { spy: 'scroll', target: '.section-nav', offset: 150 }}
   .container
-    #header= render "layouts/manager/header"
+    #header= render "layouts/admin/header"
     #content
       #flashes= show_flash_messages
       = yield
