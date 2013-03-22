@@ -1,0 +1,25 @@
+%table.table.table-bordered.table-striped.table-condensed
+  %thead
+    %tr
+      %th{colspan:3, style: 'padding:0;'}
+        .navbar.navbar-static-top
+          .navbar-inner
+            .brand Regions
+            = link_to new_admin_geokeyword_path, class: 'btn btn-success pull-right' do
+              %i.icon-plus.icon-white
+              New Region
+    %tr
+      %th Name
+      %th Records
+      %th.span1 Actions
+  %tbody
+    - @geokeywords.each do |geokeyword|
+      %tr
+        %td= geokeyword.name
+        %td= geokeyword.catalogs.count
+        %td
+          .btn-group
+            = link_to edit_admin_geokeyword_path(geokeyword), class: 'btn', title: 'Edit' do
+              %i.icon-edit
+            = link_to admin_geokeyword_path(geokeyword), method: :delete, title: 'Delete', data: { confirm: 'Are you sure?  This will be applied to all catalogs' }, class: 'btn btn-danger' do
+              %i.icon-trash.icon-white
