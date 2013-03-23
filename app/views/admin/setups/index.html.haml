@@ -11,7 +11,7 @@
                 New Setup
     %tr
       %th Title
-      %th URL
+      %th URL's
       %th Contact Email
       %th Actions
   %tbody
@@ -20,10 +20,12 @@
         %td
           = setup.title
         %td
-          = setup.url
+          = setup.urls.collect(&:url).join(",")
         %td
           = setup.contact_email
         %td
-          = link_to admin_setup_path(setup.id), method: :delete, confirm: "Are you sure?", class: 'btn btn-danger', title: "Delete Setup" do
-            %i.icon-trash.icon-white
-
+          .btn-group
+            = link_to edit_admin_setup_path(setup.id), class: 'btn', title: "Edit" do
+              %i.icon-edit
+            = link_to admin_setup_path(setup.id), method: :delete, confirm: "Are you sure?", class: 'btn btn-danger', title: "Delete Setup" do
+              %i.icon-trash.icon-white
