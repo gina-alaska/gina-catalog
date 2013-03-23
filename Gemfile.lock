@@ -5,6 +5,12 @@ GIT
     turbolinks (0.6.1)
       coffee-rails
 
+GIT
+  remote: git://github.com/ryanb/nested_form.git
+  revision: 6232dd853c273bec50d5f44e0a0dc3ff3802a535
+  specs:
+    nested_form (0.3.1)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -252,6 +258,7 @@ DEPENDENCIES
   jquery-rails
   kaminari
   liquid
+  nested_form!
   omniauth
   omniauth-openid
   pdfkit
