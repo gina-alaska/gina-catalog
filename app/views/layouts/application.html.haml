@@ -14,3 +14,4 @@
     %div{id: (@page.nil? ? 'content' : "#{@page.slug.parameterize}-page") }
       = show_flash_messages
       = yield
+    #footer= render_snippet_content current_setup.snippets.where(slug: 'footer').first, current_setup
