@@ -1,5 +1,5 @@
 class Setup < ActiveRecord::Base
-  attr_accessible :logo_uid, :primary_color, :title, :by_line, :contact_email, :default_invite
+  attr_accessible :logo_uid, :primary_color, :title, :by_line, :contact_email, :default_invite, :urls_attributes
   
   has_and_belongs_to_many :images
   has_and_belongs_to_many :pages, class_name: 'Page::Content', join_table: 'pages_setups'
@@ -15,6 +15,8 @@ class Setup < ActiveRecord::Base
   has_many :memberships
   has_many :roles
   
+  accepts_nested_attributes_for :urls, reject_if: proc { |url| url['url'].blank? }, allow_destroy: true
+
   liquid_methods :title, :by_line, :catalog_collections
 
   def to_liquid

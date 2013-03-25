@@ -1,4 +1,10 @@
 NSCatalog::Application.routes.draw do
+  namespace :admin do
+    resources :setups
+    resources :users
+    resources :geokeywords
+  end
+  
   namespace :manager do
     resources :catalogs do
       resources :repos
@@ -43,7 +49,6 @@ NSCatalog::Application.routes.draw do
     end
 
     resources :contacts
-    resources :users
     resources :roles
     resources :memberships
 

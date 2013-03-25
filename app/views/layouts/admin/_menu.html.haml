@@ -1,0 +1,9 @@
+- if current_user and current_user.is_an_admin?
+  %li.dropdown
+    %a{:href=>"#", :class=>"dropdown-toggle", "data-toggle"=>"dropdown"}
+      ADMIN 
+      %b.caret
+    %ul.dropdown-menu
+      %li= link_to 'Users Accounts', admin_users_path
+      %li= link_to 'Sites', admin_setups_path
+      %li= link_to 'Regions', admin_geokeywords_path

@@ -8,6 +8,7 @@
 //= require 'markitup'
 //= require 'manager/pages'
 //= require bootstrap-datepicker
+//= require jquery_nested_form
 //= require_self
 
 $(document).ready(function() {
