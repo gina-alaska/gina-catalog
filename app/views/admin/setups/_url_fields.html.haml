@@ -1,0 +1,6 @@
+.control-group
+  = f.label :url, "URL ", class: 'control-label'
+  .controls
+    .input-append
+      = f.text_field :url, class: 'span8'
+      = f.link_to_remove "Remove URL", class: 'btn btn-danger'

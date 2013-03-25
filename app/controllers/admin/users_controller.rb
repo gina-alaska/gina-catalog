@@ -1,4 +1,4 @@
-class Manager::UsersController < ManagerController
+class Admin::UsersController < AdminController
   def index
     if params[:q] and !params[:q].empty?
       search = User.search do
@@ -26,7 +26,7 @@ class Manager::UsersController < ManagerController
       if @user.save
         format.html do
           flash[:success] = "Updated settings for #{@user.fullname}"
-          redirect_to manager_users_path
+          redirect_to admin_users_path
         end
       end
     end
