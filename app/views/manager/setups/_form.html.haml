@@ -28,7 +28,11 @@
     .controls
       = f.text_area :default_invite, rows: 6, cols: 40, class: 'span12'
 
-  .form-actions
+  .control-group
+    = f.label "Google Analytics Account", class: 'control-label'
+    .controls
+      = f.text_field :analytics_account, class: 'span12'
+
   .form-actions
     = link_to manager_page_contents_path(tab: "setups"), class: 'btn' do
       %i.icon-arrow-left
