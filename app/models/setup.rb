@@ -1,5 +1,6 @@
 class Setup < ActiveRecord::Base
-  attr_accessible :logo_uid, :primary_color, :title, :by_line, :contact_email, :default_invite, :urls_attributes
+  attr_accessible :logo_uid, :primary_color, :title, :by_line, :contact_email, 
+        :default_invite, :urls_attributes, :analytics_account
   
   has_and_belongs_to_many :images
   has_and_belongs_to_many :pages, class_name: 'Page::Content', join_table: 'pages_setups'
