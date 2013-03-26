@@ -7,7 +7,7 @@
             .navbar-inner
               .brand Files
               .btn-group.pull-right
-                - if current_user and current_user.is_an_admin?
+                - if current_user and current_user.can_manage_catalog?
                   - if catalog.repo.archive_available?(:zip)
                     = link_to download_manager_catalog_path(catalog), class: 'btn' do
                       %i.icon-download
@@ -34,7 +34,7 @@
           %td= file[:name]
           %td= number_to_human_size file[:size]
           / %td
-  - if current_user and current_user.is_an_admin?
+  - if current_user and current_user.can_manage_catalog?
     = form_for [:manager, catalog, catalog.repo], html: { class: 'modal hide fade', id: 'file_upload_modal' } do |f|
       .modal-header
         %button.close{data: { dismiss:'modal' }} &times;
