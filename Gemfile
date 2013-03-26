@@ -26,6 +26,7 @@ gem 'liquid'
 gem 'dragonfly'
 gem 'awesome_nested_set'
 gem 'nested_form', github: 'ryanb/nested_form'
+gem 'jquery-ui-rails'
 
 #gem 'nofxx-georuby'
 #broke in rails 3.1
