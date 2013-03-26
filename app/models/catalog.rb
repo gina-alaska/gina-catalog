@@ -1,5 +1,7 @@
 class Catalog < ActiveRecord::Base
   STATUSES = %w(Complete Ongoing Unknown Funded)
+
+  attr_accessible :links_attributes, :locations_attributes, :download_urls_attributes, :catalog_collection_ids, :title, :description, :start_date, :end_date, :status, :owner_id, :primary_contact_id, :person_ids, :source_agency_id, :funding_agency_id, :data_type_ids, :iso_topic_ids, :agency_ids, :tags, :geokeyword_ids, :type
   
   #The exception to the db name rule, since this is a collection of multiple types of items
   self.table_name = 'catalog'
@@ -76,7 +78,9 @@ class Catalog < ActiveRecord::Base
   before_create :set_data_source
   # before_create :repohex
   
-  accepts_nested_attributes_for :links, :locations, :download_urls
+  accepts_nested_attributes_for :download_urls, allow_destroy: true
+  accepts_nested_attributes_for :links, allow_destroy: true
+  accepts_nested_attributes_for :locations, allow_destroy: true
   
   #Adding solr indexing
   searchable do

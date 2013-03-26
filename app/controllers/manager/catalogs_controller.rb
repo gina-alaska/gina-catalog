@@ -158,7 +158,7 @@ class Manager::CatalogsController < ManagerController
     v = params[:catalog].slice(:title, :description, :start_date, :end_date, :status, 
       :owner_id, :primary_contact_id, :person_ids, :source_agency_id, :funding_agency_id, :data_type_ids,
       :iso_topic_ids, :agency_ids, :tags, :geokeyword_ids, :catalog_collection_ids, :type, :links_attributes,
-      :locations_attributes)
+      :locations_attributes, :download_urls_attributes)
     
     
     v['catalog_collection_ids'] = clean_param_ids(v['catalog_collection_ids'])
