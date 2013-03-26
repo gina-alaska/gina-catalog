@@ -44,7 +44,7 @@ class CatalogsController < ApplicationController
     advanced_opts = @search_params.reject { |k,v| v.blank? or ['q', 'catalog_collection_ids'].include?(k) }
     @is_advanced = advanced_opts.keys.size > 0
     
-    if @search_params['q'].blank? and @search_params['catalog_collection_ids'].blank?
+    if @search_params['q'].blank?
       @search_params['order_by'] ||= 'title_sort-ascending'
     end
     
