@@ -1,0 +1,6 @@
+.location.row-fluid.fields
+  .span4= f.text_field :name, class: 'span12'
+  .span6= f.text_field :url, class: 'span12'
+  .span2.actions
+    = link_to_remove_fields '<i class="icon-trash icon-white"></i>'.html_safe, f
+  
