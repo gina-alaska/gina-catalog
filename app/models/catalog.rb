@@ -78,9 +78,9 @@ class Catalog < ActiveRecord::Base
   before_create :set_data_source
   # before_create :repohex
   
-  accepts_nested_attributes_for :download_urls, reject_if:  proc { |download| download['url'].blank? }, allow_destroy: true
-  accepts_nested_attributes_for :links, allow_destroy: true, reject_if:  proc { |link| link['url'].blank? }, allow_destroy: true
-  accepts_nested_attributes_for :locations, allow_destroy: true, reject_if:  proc { |location| location['name'].blank? }, allow_destroy: true
+  accepts_nested_attributes_for :download_urls, reject_if:  proc { |download| download['url'].blank? and download['name'].blank? }, allow_destroy: true
+  accepts_nested_attributes_for :links, reject_if:  proc { |link| link['url'].blank? }, allow_destroy: true
+  accepts_nested_attributes_for :locations, reject_if:  proc { |location| location['name'].blank? and location['wkt'].blank? }, allow_destroy: true
   
   #Adding solr indexing
   searchable do
