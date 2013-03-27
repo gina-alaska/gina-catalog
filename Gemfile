@@ -25,7 +25,7 @@ gem 'html-pipeline'
 gem 'liquid'
 gem 'dragonfly'
 gem 'awesome_nested_set'
-gem 'nested_form', github: 'ryanb/nested_form'
+gem 'nested_form', git: 'http://github.com/ryanb/nested_form.git'
 gem 'jquery-ui-rails'
 
 #gem 'nofxx-georuby'
