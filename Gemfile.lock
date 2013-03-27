@@ -1,8 +1,8 @@
 GIT
-  remote: git://github.com/rails/turbolinks.git
-  revision: 00b997127a036470053b2360845dbd8c930e74c2
+  remote: https://github.com/rails/turbolinks.git
+  revision: 61a1ee56c3bfb44f53ee8e8012aa01bb67389c89
   specs:
-    turbolinks (0.6.1)
+    turbolinks (1.1.0)
       coffee-rails
 
 GIT
