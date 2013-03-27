@@ -1,15 +1,15 @@
 GIT
+  remote: http://github.com/ryanb/nested_form.git
+  revision: 731b5b0b83d5eff051ccae65d2eb8c79960bc725
+  specs:
+    nested_form (0.3.1)
+
+GIT
   remote: https://github.com/rails/turbolinks.git
   revision: 61a1ee56c3bfb44f53ee8e8012aa01bb67389c89
   specs:
     turbolinks (1.1.0)
       coffee-rails
-
-GIT
-  remote: git://github.com/ryanb/nested_form.git
-  revision: 6232dd853c273bec50d5f44e0a0dc3ff3802a535
-  specs:
-    nested_form (0.3.1)
 
 GEM
   remote: http://rubygems.org/
