@@ -1,16 +1,49 @@
 class CatalogMap
-  contructor: (el) ->
-    setupMap(el)
+  constructor: (@el) ->
+    @btnHandlers = {}
     
+    @setupMap(@el)
+    @setupToolbar()
+    
+    $(@el).data('map', this)
+  # end constructor
+  
+  addBtnHandler: (name, func) =>
+    @btnHandlers[name] = func
+  #end addBtnHandler
+  
+  setupToolbar: ->
+    @addBtnHandler('zoomToMaxExtent', @zoomToDefaultBounds)
+      
+    @btns = $(@el).find('.navbar a.btn')
+    @btns.on 'click', (evt) =>
+      evt.preventDefault()  
+      action = $(evt.currentTarget).data('action')
+      if @btnHandlers[action]
+        @btnHandlers[action]()
+  # end setupToolbar
+  
   setupMap: (el) ->
-    @config = $(el).data()
-    @map = new OpenLayers.Map(el, {
-      projection: @config['projection']
-    })
-    Gina.Layers.inject(@map, @config['layers']);
-    var bounds = new OpenLayers.Bounds(-19959236.823047, 6398696.5109183, -14206280.326993, 12269060.282403);
-    @map.zoomToExtent(bounds, true);
+    @data_config = $(el).data()
+    @config = Gina.Projections.get('EPSG:3338');
+    @config['projection'] = @data_config['projection']
+    @config['displayProjection'] = @data_config['displayProjection']
     
-$('div[data-openlayers]').each -> 
-  el = $(this).attr('id');
-  CatalogMap.new(el);
+    @map = new OpenLayers.Map(@data_config['openlayers'], @config)
+    console.log(@data_config['layers'])
+    Gina.Layers.inject(@map, @data_config['layers']);
+    # @zoomToDefaultBounds()
+    @map.zoomToMaxExtent()
+  #end setupMap
+  
+  zoomToDefaultBounds: =>
+    bounds = new OpenLayers.Bounds(@config['bounds']);
+    # @map.zoomToExtent(bounds , true);
+    @map.zoomToMaxExtent()
+  #end zoomToDefaultBounds  
+#end CatalogMap
+
+$(document).ready ->
+  $('div[data-openlayers]').each -> 
+    el = $(this).attr('id');
+    new CatalogMap(this);
