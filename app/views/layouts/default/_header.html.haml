@@ -14,37 +14,8 @@
   .navbar-inner
     %ul.nav
       - current_setup.pages.roots.where(main_menu: true).each do |page|
-        %li{ class:!request.path.match(page.slug).nil? ? 'active' : '' }
+        %li{ class:(!request.path.match(page.slug).nil? or (page.slug == "home" and request.path == "/")) ? 'active' : '' }
           = link_to page_path(page.slug) do
             = page.title
-      /%li{class:(current_page?(root_url) ? 'active' : '')}
-      /  = link_to root_url do 
-      /    %i.icon-home
-      /    Home
-      /%li{class:(current_page?(search_path) ? 'active' : '')}
-      /  = link_to search_path do
-      /    %i.icon-file
-      /    Data
-      /%li
-      /  = link_to page_path('maps') do
-      /    %i.icon-map-marker
-      /    Maps
-      /%li
-      /  = link_to page_path('partners') do
-      /    %i.icon-user
-      /    Partners
-      /%li
-      /  = link_to page_path('about') do
-      /    %i.icon-info-sign
-      /    About
-      /%li
-      /  = link_to page_path('help') do
-      /    %i.icon-question-sign
-      /    Help
-      /%li
-      /  = link_to page_path('contacts') do
-      /    %i.icon-envelope
-      /    Contact Us
-      
     = form_tag search_path, class: 'navbar-search pull-right' do
       = text_field_tag 'search[q]', nil, placeholder: "Quick Search", class: 'search-query'
