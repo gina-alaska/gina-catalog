@@ -52,4 +52,5 @@
     // console.log(search_result_features); 
     layer.addFeatures(search_result_features);
     map.addLayer(layer);
+    map.zoomToExtent(layer.getDataExtent());
   });
