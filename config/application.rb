@@ -23,6 +23,7 @@ module NSCatalog
     config.assets.enabled = true
     config.assets.version = '1.0'
     config.assets.paths << "#{Rails.root}/vendor/assets/jquery"
+    config.assets.paths << "#{Rails.root}/vendor/assets/javascripts"
 
     # Custom directories with classes and modules you want to be autoloadable.
     config.autoload_paths += %W(#{config.root}/extras)

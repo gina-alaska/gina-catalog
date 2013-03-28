@@ -3,8 +3,8 @@
 %html
 %head
   = render "layouts/#{theme}/head"  
-  = javascript_include_tag "application", data: {'turbolinks-track' => ''}
-  = stylesheet_link_tag 'application', data: {'turbolinks-track' => ''}
+  = javascript_include_tag "application", "http://glink.gina.alaska.edu/cdn/libs/OpenLayers-2.12/OpenLayers.js"
+  = stylesheet_link_tag 'application'
   = csrf_meta_tag
   = render "layouts/#{theme}/analytics" unless current_setup.analytics_account.nil? or Rails.env == 'development'
 %body
@@ -14,4 +14,4 @@
     %div{id: (@page.nil? ? 'content' : "#{@page.slug.parameterize}-page") }
       = show_flash_messages
       = yield
-    #footer= render_snippet_content current_setup.snippets.where(slug: 'footer').first, current_setup
+'    #footer= render_snippet_content current_setup.snippets.where(slug: 'footer').first, current_setup

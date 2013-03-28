@@ -2,6 +2,22 @@
   .row-fluid
     .span4.sidebar
       = render 'advanced_search', search_params: @search_params
+      
+      #map{style: 'border: 1px solid #cfcfcf;' }
+        .navbar.navbar-static-top
+          .navbar-inner
+            .btn-group
+              = link_to '#', class: 'btn' do
+                %i.icon-move
+              = link_to '#', class: 'btn' do
+                %i.icon-globe
+            .btn-group
+              = link_to '#', class: 'btn' do
+                %i.icon-map-marker
+              = link_to '#', class: 'btn' do
+                %i.icon-pencil
+            
+        #map_canvas{ data: { openlayers: true, projection: 'EPSG:3857', layers: 'TILE.EPSG:3857.BDL' }, style: 'width:100%; height:300px;' }
     .span8.search
       - if @results.empty?
         %p.lead No search results
@@ -11,3 +27,8 @@
             = render result, collapse: (@results.count > 1)
           .buttons
             = link_to 'View', catalog_path(result), class: 'btn btn-primary'
+
+:javascript
+  var map = new OpenLayers.Map('map_canvas', {
+    projection: 'EPSG:3857'
+  });
