@@ -8,6 +8,8 @@
 //= require 'jquery-file-upload/jquery.iframe-transport'
 //= require 'jquery-file-upload/tmpl.min'
 //= require 'select2/select2.min'
+//= require 'gina-map-layers/gina-openlayers'
+//= require 'maps'
 //= require_self
 
 $(document).ready(function(){
