@@ -1,7 +1,9 @@
 require 'html/pipeline'
 
 class Page::Content < ActiveRecord::Base
-  attr_accessible :content, :layout, :slug, :title, :sections, :page_layout_id, :page_layout, :parent_id, :redirect, :description, :main_menu
+  ICONS = ["icon-home","icon-file","icon-map-marker","icon-user","icon-info-sign","icon-question-sign","icon-envelope"]
+
+  attr_accessible :content, :layout, :slug, :title, :sections, :page_layout_id, :page_layout, :parent_id, :redirect, :description, :main_menu, :menu_icon
   
   acts_as_nested_set
   before_save :rebuild_slug
