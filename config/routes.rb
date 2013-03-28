@@ -62,11 +62,8 @@ NSCatalog::Application.routes.draw do
   end
   
   match '/manager' => 'manager#dashboard', as: 'manager'
+  match '/search' => 'catalogs#search', as: 'search'
 
-  resources :pages, only: :show do
-    get :not_found, on: :collection
-  end  
-  
   resources :contact_infos
 
   resources :use_agreements
@@ -75,7 +72,7 @@ NSCatalog::Application.routes.draw do
 
   resources :iso_topics
 
-  resources :feedback
+  resources :feedbacks
   resources :geokeywords
 
   resources :videos
@@ -89,8 +86,7 @@ NSCatalog::Application.routes.draw do
 
   resources :contacts, only: [:index, :create]
   resources :catalogs
-  
-  match '/search' => 'catalogs#search', as: 'search'
+
      
   # Omniauth pure
   match "/login" => redirect('/auth/gina')
@@ -164,8 +160,12 @@ NSCatalog::Application.routes.draw do
   #   end
 
   match '/preferences(.:format)' => 'users#preferences'
-  match '/login' => 'sessions#new'
-  match '/logout' => 'sessions#destroy'
+#  match '/login' => 'sessions#new'
+#  match '/logout' => 'sessions#destroy'
+
+  resources :pages, only: :show do
+    get :not_found, on: :collection
+  end  
   
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.

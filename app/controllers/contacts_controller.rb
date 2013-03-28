@@ -1,12 +1,12 @@
 class ContactsController < ApplicationController
   def index
-    @page = current_setup.pages.where(slug: 'contact-us').first
+    @page = current_setup.pages.where(slug: 'contacts').first
     @contact = Contact.new
   end
 
   def create
     contact_email = current_setup.contact_email
-    @page = current_setup.pages.where(slug: 'contact-us').first
+    @page = current_setup.pages.where(slug: 'contacts').first
 
     @contact = current_setup.contacts.build(params[:contact])
 

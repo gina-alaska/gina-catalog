@@ -1,4 +1,9 @@
-class FeedbackController < ApplicationController
+class FeedbacksController < ApplicationController
+  def index
+    @page = current_setup.pages.where(slug: 'feedbacks').first
+    @contact = Contact.new
+  end
+
   def create
     FeedbackMailer.comments_email(params[:comment], current_user).deliver
 
