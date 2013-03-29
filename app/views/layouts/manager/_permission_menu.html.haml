@@ -1,0 +1,10 @@
+.navbar.navbar-static-top
+  .navbar-inner
+    - if controller.class.const_defined?(:PAGETITLE)
+      .brand= "Permissions: #{controller.class::PAGETITLE}"
+    - else
+      .brand= "Permissions"
+    %ul.nav.pull-right
+      %li= link_to 'Invite more people!', new_manager_membership_path
+      %li= link_to 'Current Members', manager_memberships_path
+      %li= link_to 'Roles', manager_roles_path
