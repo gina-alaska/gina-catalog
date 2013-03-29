@@ -25,21 +25,19 @@ class CatalogMap
   
   setupMap: (el) ->
     @data_config = $(el).data()
-    @config = Gina.Projections.get('EPSG:3338');
+    @config = Gina.Projections.get(@data_config['projection']);
     @config['projection'] = @data_config['projection']
     @config['displayProjection'] = @data_config['displayProjection']
     
     @map = new OpenLayers.Map(@data_config['openlayers'], @config)
-    console.log(@data_config['layers'])
     Gina.Layers.inject(@map, @data_config['layers']);
-    # @zoomToDefaultBounds()
-    @map.zoomToMaxExtent()
+    @zoomToDefaultBounds()
   #end setupMap
   
   zoomToDefaultBounds: =>
-    bounds = new OpenLayers.Bounds(@config['bounds']);
-    # @map.zoomToExtent(bounds , true);
-    @map.zoomToMaxExtent()
+    bounds = new OpenLayers.Bounds(-168.67373199615875, 56.046343829256664, -134.76560087596793, 70.81655788845131);
+    bounds.transform('EPSG:4326', @data_config['projection']);
+    @map.zoomToExtent(bounds , true);
   #end zoomToDefaultBounds  
 #end CatalogMap
 

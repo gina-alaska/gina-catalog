@@ -8,16 +8,14 @@
       
       #map{ data: {                                       |
         openlayers: 'map_canvas',                         |
-        projection: 'EPSG:3338',                          |
+        projection: 'EPSG:3572',                          |
         displayProjection: 'EPSG:4326',                   |
-        layers: ['TILE.EPSG:3338.BDL', 'TILE.EPSG:3338.OSM_OVERLAY'] |
+        layers: ['TILE.EPSG:3572.BDL', 'TILE.EPSG:3572.OSM_OVERLAY'] |
         }, |
         style: 'border: 1px solid #cfcfcf;' }
         .navbar.navbar-static-top
           .navbar-inner
             .btn-group
-              = link_to '#', data: { action: 'pan' }, class: 'btn' do
-                %i.icon-move
               = link_to '#', data: { action: 'zoomToMaxExtent' }, class: 'btn' do
                 %i.icon-globe
             .btn-group
@@ -38,8 +36,7 @@
               - next if loc.wkt.nil? or loc.wkt.blank?
               :javascript
                 var f = wktReader.read("#{loc.wkt}");
-                f.geometry.transform('EPSG:4326', 'EPSG:3338');
-                console.log(f.geometry.toString())
+                f.geometry.transform('EPSG:4326', 'EPSG:3572');
                 search_result_features.push(f);
             
           .buttons
@@ -48,9 +45,10 @@
   $(document).ready(function() {
     var map = $('#map').data('map').map;
     map.addControl(new OpenLayers.Control.MousePosition({ displayProjection: 'EPSG:4326', numDigits: 3 }));
-    var layer = new OpenLayers.Layer.Vector('Search Results');   
-    // console.log(search_result_features); 
-    layer.addFeatures(search_result_features);
-    map.addLayer(layer);
-    map.zoomToExtent(layer.getDataExtent());
+    if (search_result_features.length > 0) {
+      var layer = new OpenLayers.Layer.Vector('Search Results');   
+      layer.addFeatures(search_result_features);
+      map.addLayer(layer);
+      map.zoomToExtent(layer.getDataExtent());
+    }
   });
