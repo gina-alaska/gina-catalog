@@ -1,6 +1,9 @@
 class Manager::RolesController < ManagerController
   before_filter :authenticate_access_permissions!
 
+  SUBMENU = '/layouts/manager/permission_menu'
+  PAGETITLE = 'Roles'
+  
   def index
     @roles = current_setup.roles.all
   end

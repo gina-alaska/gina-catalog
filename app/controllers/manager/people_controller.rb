@@ -1,6 +1,9 @@
 class Manager::PeopleController < ManagerController
   before_filter :authenticate_access_catalog!
 
+  SUBMENU = '/layouts/manager/catalog_menu'
+  PAGETITLE = 'Contacts'
+  
   def index
     page = params[:page] || 1
     limit = params["limit"].nil? ? 30 : params["limit"]
