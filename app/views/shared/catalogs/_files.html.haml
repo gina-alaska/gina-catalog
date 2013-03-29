@@ -7,7 +7,7 @@
             .navbar-inner
               .brand Files
               .btn-group.pull-right
-                - if current_user and current_user.can_manage_catalog?
+                - if current_member and current_member.can_manage_catalog?
                   - if catalog.repo.archive_available?(:zip)
                     = link_to download_manager_catalog_path(catalog), class: 'btn' do
                       %i.icon-download
