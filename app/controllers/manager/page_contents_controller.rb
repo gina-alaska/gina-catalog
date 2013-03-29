@@ -2,6 +2,9 @@ class Manager::PageContentsController < ManagerController
   before_filter :authenticate_access_cms!
   before_filter :fetch_page, :except => [:new, :create, :index, :sort]
 
+  SUBMENU = '/layouts/manager/cms_menu'
+  PAGETITLE = 'Pages'
+
   def index
   end
   
