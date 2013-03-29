@@ -1,0 +1,10 @@
+.navbar.navbar-static-top
+  .navbar-inner
+    - if controller.class.const_defined?(:PAGETITLE)
+      .brand= "CMS: #{controller.class::PAGETITLE}"
+    - else
+      .brand= "CMS"
+    %ul.nav.pull-right
+      %li= link_to 'Pages', manager_page_contents_path
+      %li= link_to 'Images', manager_images_path
+      %li= link_to 'Feedback', manager_contacts_path

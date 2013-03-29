@@ -5,6 +5,8 @@ class Manager::CatalogsController < ManagerController
   before_filter :authenticate_publish_records!, only: [:unpublish, :publish]
   before_filter :fetch_record, :except => [:index, :create, :new, :toggle_collection]
   
+  SUBMENU = '/layouts/manager/catalog_menu'
+  PAGETITLE = 'Data Records'
   
   include CatalogConcerns::Search
   

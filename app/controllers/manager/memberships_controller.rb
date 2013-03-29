@@ -1,6 +1,9 @@
 class Manager::MembershipsController < ManagerController
   before_filter :authenticate_access_permissions!
 
+  SUBMENU = '/layouts/manager/permission_menu'
+  PAGETITLE = 'Memberships'
+  
 	def index
     @memberships = current_setup.memberships.all
   end
