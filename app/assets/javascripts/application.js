@@ -9,7 +9,7 @@
 //= require 'jquery-file-upload/tmpl.min'
 //= require 'select2/select2.min'
 //= require 'gina-map-layers/gina-openlayers'
-//= require 'gina-map-layers/projections/epsg_3338'
+//= require 'gina-map-layers/projections/all'
 //= require 'projections'
 //= require 'maps'
 //= require_self
