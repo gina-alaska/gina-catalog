@@ -5,7 +5,7 @@
   .row-fluid{style:'position:relative;'}
     .span4.sidebar
       = render 'advanced_search', search_params: @search_params
-      
+    
       #map{ data: {                                       |
         openlayers: 'map_canvas',                         |
         projection: 'EPSG:3572',                          |
@@ -23,7 +23,7 @@
                 %i.icon-map-marker
               = link_to '#', data: { action: 'drawPolygon' }, class: 'btn' do
                 %i.icon-pencil
-            
+          
         #map_canvas{ style: 'width:100%; height:300px;' }             
     .span8
       .search{ style: 'position: absolute; top:0; bottom: 0px; overflow: auto;' }
@@ -36,11 +36,11 @@
               - result.locations.each do |loc|
                 - next if loc.wkt.nil? or loc.wkt.blank?
                 :javascript
-                  var f = wktReader.read("#{loc.wkt}");
+                  var f = wktReader.read("#{loc.center.try(:as_text)}");
                   f.geometry.transform('EPSG:4326', 'EPSG:3572');
                   f.attributes = { record_id: '#{dom_id(result, :record)}' }
                   search_result_features.push(f);
-          
+      
             .buttons
               = link_to 'View', catalog_path(result), class: 'btn btn-primary'
   :javascript
@@ -52,13 +52,13 @@
         layer.addFeatures(search_result_features);
         map.addLayer(layer);
         map.zoomToExtent(layer.getDataExtent());
-      
+    
         var select = new OpenLayers.Control.SelectFeature(layer, {
           autoActivate: true,
           onSelect: function(feature) {
             var el = $('#' + feature.attributes.record_id);
             var parent = el.parent();
-            
+          
             var cur_scroll = parent.scrollTop();
             parent.animate({
               scrollTop: cur_scroll + el.offset().top - 110
