@@ -1,4 +1,10 @@
 GIT
+  remote: http://github.com/ryanb/nested_form.git
+  revision: 731b5b0b83d5eff051ccae65d2eb8c79960bc725
+  specs:
+    nested_form (0.3.1)
+
+GIT
   remote: https://github.com/rails/turbolinks.git
   revision: 61a1ee56c3bfb44f53ee8e8012aa01bb67389c89
   specs:
@@ -104,6 +110,9 @@ GEM
     jquery-rails (2.1.4)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
+    jquery-ui-rails (4.0.2)
+      jquery-rails
+      railties (>= 3.1.0)
     json (1.7.6)
     kaminari (0.14.1)
       actionpack (>= 3.0.0)
@@ -250,8 +259,10 @@ DEPENDENCIES
   haml
   html-pipeline
   jquery-rails
+  jquery-ui-rails
   kaminari
   liquid
+  nested_form!
   omniauth
   omniauth-openid
   pdfkit
