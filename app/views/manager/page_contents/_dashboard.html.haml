@@ -9,7 +9,7 @@
         %i.icon-plus.icon-white
         New Page
     #sorting.pull-right.btn-group{style: 'display:none;'}
-      = link_to '#', class: 'btn btn-warning', id: 'cancel-sort-btn' do
+      = link_to manager_page_contents_path, class: 'btn btn-warning', data: {confirm: "Are you sure?"} do
         %i.icon-remove.icon-white
         Cancel
       = link_to '#', class: 'btn btn-primary', id: 'finish-sort-btn' do
@@ -40,11 +40,3 @@
     var results = $('#page-content-list').nestedSortable('toHierarchy');
     $.post('#{sort_manager_page_contents_path}', { pages: results });
   });
-
-  $('#cancel-sort-btn').on('click', function() {
-    var r = confirm("Are you sure?");
-    if (r==true)
-    {
-    location.reload();
-    }
-  })
