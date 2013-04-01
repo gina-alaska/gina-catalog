@@ -9,6 +9,9 @@
         %i.icon-plus.icon-white
         New Page
     #sorting.pull-right.btn-group{style: 'display:none;'}
+      = link_to manager_page_contents_path, class: 'btn btn-warning', data: {confirm: "Are you sure?"} do
+        %i.icon-remove.icon-white
+        Cancel
       = link_to '#', class: 'btn btn-primary', id: 'finish-sort-btn' do
         %i.icon-ok.icon-white
         Finish Page Reorder
