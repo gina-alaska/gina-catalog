@@ -3,15 +3,15 @@
     .brand Pages
     #not-sorting.pull-right.btn-group
       = link_to '#', class: 'btn', id: 'sort-btn' do
-        %i.icon-th-list
-        Sort
+        %i.icon-random
+        Reorder Pages
       = link_to new_manager_page_content_path, class: 'btn btn-success' do
         %i.icon-plus.icon-white
         New Page
     #sorting.pull-right.btn-group{style: 'display:none;'}
       = link_to '#', class: 'btn btn-primary', id: 'finish-sort-btn' do
         %i.icon-ok.icon-white
-        Finished Sorting
+        Finish Page Reorder
 %ol#page-content-list.page-list.sortable
   - current_setup.pages.roots.each do |page|
     - # shouldn't be necessary

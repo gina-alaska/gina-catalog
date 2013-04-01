@@ -35,7 +35,7 @@ class Manager::PageContentsController < ManagerController
     
     respond_to do |format|
       format.js {
-        flash[:success] = 'Successfully sorted pages'
+        flash[:success] = 'Successfully reordered the pages'
         render :text => 'location.reload();'
       }
     end
