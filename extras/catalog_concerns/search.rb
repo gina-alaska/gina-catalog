@@ -9,7 +9,7 @@ module CatalogConcerns
         table_includes = {
           :tags => [], :locations => [], :agencies => [], :source_agency => [], :funding_agency => [], :links => [], 
           :primary_contact => [:phone_numbers], :people => [:phone_numbers], :data_source => [], :geokeywords => [], :catalog_collections => [], 
-          :repo => []
+          :repo => [], :data_types => []
         }
   
         catalog_ids = search[:ids] unless search[:ids].nil? or search[:ids].empty?
