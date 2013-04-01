@@ -1,5 +1,9 @@
 class Manager::ContactsController < ManagerController
+  before_filter :authenticate_access_cms!
 
+  SUBMENU = '/layouts/manager/cms_menu'
+  PAGETITLE = 'User Feedback'
+  
   def index
     @contacts = current_setup.contacts
 

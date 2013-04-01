@@ -1,6 +1,10 @@
 class Manager::ImagesController < ManagerController
+  before_filter :authenticate_access_cms!
   before_filter :fetch_page, :only => [:add, :remove]
   before_filter :fetch_image, :except => [:index, :new, :create]
+
+  SUBMENU = '/layouts/manager/cms_menu'
+  PAGETITLE = 'Images'
 
   # GET /manager/images
   # GET /manager/images.json

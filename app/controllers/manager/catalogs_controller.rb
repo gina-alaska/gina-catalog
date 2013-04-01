@@ -1,5 +1,12 @@
 class Manager::CatalogsController < ManagerController
+  before_filter :authenticate_access_catalog!
+#  before_filter :authenticate_access_cms!
+  before_filter :authenticate_edit_records!, only: [:edit, :new, :create, :update]
+  before_filter :authenticate_publish_records!, only: [:unpublish, :publish]
   before_filter :fetch_record, :except => [:index, :create, :new, :toggle_collection]
+  
+  SUBMENU = '/layouts/manager/catalog_menu'
+  PAGETITLE = 'Data Records'
   
   include CatalogConcerns::Search
   
@@ -137,15 +144,31 @@ class Manager::CatalogsController < ManagerController
   
   protected
   
+  def authenticate_edit_records!
+    unless user_is_a_member? and current_member.can_manage_catalog?
+      authenticate_user!
+    end
+  end  
+  
+  def authenticate_publish_records!
+    unless user_is_a_member? and current_member.can_publish_catalog?
+      authenticate_user!
+    end
+  end
+  
   def catalog_params
     v = params[:catalog].slice(:title, :description, :start_date, :end_date, :status, 
-      :owner_id, :primary_contact_id, :people_ids, :source_agency_id, :funding_agency_id, 
-      :agency_ids, :tags, :geokeywords, :catalog_collection_ids, :type, :links_attributes, :locations_attributes)
+      :owner_id, :primary_contact_id, :person_ids, :source_agency_id, :funding_agency_id, :data_type_ids,
+      :iso_topic_ids, :agency_ids, :tags, :geokeyword_ids, :catalog_collection_ids, :type, :links_attributes,
+      :locations_attributes, :download_urls_attributes)
     
     
     v['catalog_collection_ids'] = clean_param_ids(v['catalog_collection_ids'])
     v['agency_ids'] = clean_param_ids(v['agency_ids'])
-    # v['people_ids'] = clean_param_ids(v['people_ids'])
+    v['geokeyword_ids'] = clean_param_ids(v['geokeyword_ids'])
+    v['data_type_ids'] = clean_param_ids(v['data_type_ids'])
+    v['iso_topic_ids'] = clean_param_ids(v['iso_topic_ids'])
+    v['person_ids'] = clean_param_ids(v['person_ids'])
     
       
     v

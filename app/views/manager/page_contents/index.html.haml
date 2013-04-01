@@ -1,0 +1,12 @@
+- params['tab'] = "page_contents" if params['tab'].nil?
+%br/
+.pull-left{ style: 'font-size: 18px; padding: 10px 10px 0 0;' } Site Manager
+.tabbable
+  %ul.nav.nav-tabs
+    - @manager_pages.each do |slug,title|
+      %li{class: (params['tab'] == slug.to_s ? 'active' : '')}
+        = link_to title, "##{slug}", data: { toggle: 'tab' }
+.tab-content
+  - @manager_pages.each do |slug,title|    
+    .tab-pane{id:slug, class: (params['tab'] == slug.to_s ? 'active' : '')}
+      = render "/manager/#{slug}/dashboard", setup: current_setup

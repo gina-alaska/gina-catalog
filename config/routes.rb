@@ -1,4 +1,10 @@
 NSCatalog::Application.routes.draw do
+  namespace :admin do
+    resources :setups
+    resources :geokeywords
+    resources :users
+  end
+  
   namespace :manager do
     resources :catalogs do
       resources :repos
@@ -15,6 +21,7 @@ NSCatalog::Application.routes.draw do
       get :upload_image, :on => :member
       post :add, :on => :member
       put :preview, :on => :member
+      post :sort, :on => :collection
       
       resources :images, :only => [] do
         member do
@@ -25,27 +32,38 @@ NSCatalog::Application.routes.draw do
     end
     
     resources :page_snippets
-    
     resources :page_layouts
     resource :setup
-    resources :agencies
+
+    resources :agencies do
+      collection do
+        post :visible
+        post :hidden
+      end
+    end
+
     resources :catalog_collections do
       member do
         put :add
         delete :remove
       end
     end
-    resources :contacts
-    resources :users
-    resources :people
-    resources :roles
-  end
-  match '/manager' => 'manager#dashboard', as: 'manager'
 
-  resources :pages, only: :show do
-    get :not_found, on: :collection
-  end  
+    resources :contacts
+    resources :roles
+    resources :memberships
+
+    resources :people do
+      collection do
+        post :visible
+        post :hidden
+      end
+    end
+  end
   
+  match '/manager' => 'manager#dashboard', as: 'manager'
+  match '/search' => 'catalogs#search', as: 'search'
+
   resources :contact_infos
 
   resources :use_agreements
@@ -54,7 +72,7 @@ NSCatalog::Application.routes.draw do
 
   resources :iso_topics
 
-  resources :feedback
+  resources :feedbacks
   resources :geokeywords
 
   resources :videos
@@ -68,8 +86,7 @@ NSCatalog::Application.routes.draw do
 
   resources :contacts, only: [:index, :create]
   resources :catalogs
-  
-  match '/search' => 'catalogs#search', as: 'search'
+
      
   # Omniauth pure
   match "/login" => redirect('/auth/gina')
@@ -143,8 +160,12 @@ NSCatalog::Application.routes.draw do
   #   end
 
   match '/preferences(.:format)' => 'users#preferences'
-  match '/login' => 'sessions#new'
-  match '/logout' => 'sessions#destroy'
+#  match '/login' => 'sessions#new'
+#  match '/logout' => 'sessions#destroy'
+
+  resources :pages, only: :show do
+    get :not_found, on: :collection
+  end  
   
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.

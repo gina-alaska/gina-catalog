@@ -1,8 +1,13 @@
 class Manager::AgenciesController < ManagerController
-
+  before_filter :authenticate_access_catalog!
+  
+  SUBMENU = '/layouts/manager/catalog_menu'
+  PAGETITLE = 'Agencies'
+  
   def index
     page = params[:page] || 1
-    limit = 30
+    limit = params["limit"].nil? ? 30 : params["limit"]
+    limit = 30000 if limit == "all"
     @search = search_params
 
     search = Agency.search do
@@ -28,6 +33,7 @@ class Manager::AgenciesController < ManagerController
 
   def create
     @agency = Agency.new(params[:agency])
+    @agency.setups << current_setup
 
     if @agency.save!
       respond_to do |format|
@@ -74,8 +80,31 @@ class Manager::AgenciesController < ManagerController
     end
   end
 
-  protected
+  def visible
+    @agencies = Agency.where(id: params[:agencies_ids])
+    current_setup.agencies << @agencies
 
+    respond_to do |format|
+      format.html {
+        redirect_to manager_agencies_path
+      }
+      format.js { render 'visible' }
+    end
+  end
+
+  def hidden
+    @agencies = Agency.where(id: params[:agencies_ids])
+    current_setup.agencies.delete(@agencies)
+
+    respond_to do |format|
+      format.html {
+        redirect_to manager_agencies_path
+      }
+      format.js { render 'visible' }
+    end
+  end
+
+  protected
   def search_params
     params[:search] || {}
   end

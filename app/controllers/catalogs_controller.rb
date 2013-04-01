@@ -40,15 +40,20 @@ class CatalogsController < ApplicationController
      #Agency.all #.group_by{|a| a.name[0]}
   
     @search_params = params[:search] || {}
-    @search_params['order_by'] ||= 'title_sort-ascending'
 
-    @search = solr_search(@search_params, params[:page], params[:limit])
+    advanced_opts = @search_params.reject { |k,v| v.blank? or ['q', 'catalog_collection_ids'].include?(k) }
+    @is_advanced = advanced_opts.keys.size > 0
     
+    if @search_params['q'].blank?
+      @search_params['order_by'] ||= 'title_sort-ascending'
+    end
+    
+    @search = solr_search(@search_params, params[:page], params[:limit])
     if @search.respond_to? :results
       @results = @search.results
       @total = @search.total
     else
-      @results = @search
+      @results = Array.wrap(@search)
       @total = 0
     end
     

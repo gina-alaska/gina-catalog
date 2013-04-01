@@ -35,19 +35,23 @@
           = f.label :parent_id, class: 'control-label'
           .controls
             = f.select :parent_id, nested_set_options(current_setup.pages, page) {|i| "#{'-' * i.level} #{i.title}" }, include_blank: true
-      .span6
         .control-group
           = f.label :page_layout_id, 'Layout', class: 'control-label'
           .controls
             = f.collection_select :page_layout_id, current_setup.layouts, :id, :name, {}, { class: 'span12' }
-    .row-fluid
-      .span12
+        %label.checkbox
+          =f.check_box :main_menu
+          Show in Main Menu
+        .control-group
+          = f.label :menu_icon, 'Menu Icon', class: 'control-label'
+          .controls
+            = f.select :menu_icon, Page::Content::ICONS, {}, class: 'menu-icons span12'
+      .span6
         .control-group
           = f.label :description, class: 'control-label'
           .controls
-            = f.text_area :description, class: 'span12', rows: 3
-      
-      
+            = f.text_area :description, class: 'span12', rows: 9
+
   #page_tabs.tabbable
     %ul.nav.nav-tabs
       - page.sections.each do |section|
@@ -65,7 +69,7 @@
           = text_area_tag "page_content[content][#{name}]", content, class: 'editor span12', style:"border: none;", rows: 10
     
   .form-actions
-    = link_to manager_path, class: 'btn' do 
+    = link_to manager_page_contents_path, class: 'btn' do 
       %i.icon-arrow-left
       Back
     .pull-right
@@ -77,7 +81,16 @@
 = render 'insert_image_chooser', page: page
 
 
-:javascript 
+:javascript
+  function format_menu_icon_select(item) {
+    return "<i class='" + $(item.element).val() + "'></i>&nbsp;" + item.text
+  }
+
+  $('select.menu-icons').select2({
+    formatResult: format_menu_icon_select,
+    formatSelection: format_menu_icon_select,
+    escapeMarkup: function(m) { return m; }
+  })
   function preview_page() {
     var form = $('#page_content_form'),
         action = form.attr('action'); 

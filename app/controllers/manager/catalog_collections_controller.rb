@@ -1,5 +1,9 @@
 class Manager::CatalogCollectionsController < ManagerController
+  before_filter :authenticate_access_catalog!
 
+  SUBMENU = '/layouts/manager/catalog_menu'
+  PAGETITLE = 'Collections'
+  
   def index
     @catalog_collections = current_setup.catalog_collections
 

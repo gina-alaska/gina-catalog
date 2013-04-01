@@ -1,0 +1,15 @@
+!!! 5
+
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}
+    :css
+      label { font-weight: bold; }
+  %body
+    %p Welcome to the site. Please select the following link to start.
+    %p
+      = @default
+    %p
+      = link_to @url, @url
+    %p
+      = @add_text

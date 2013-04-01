@@ -6,7 +6,7 @@ module NSCatalog
     config.repos_path    = "#{config.root}/repos"
     config.repos_tmp     = "#{config.root}/tmp/repos"
 
-    require "#{config.root}/extras/grack/lib/git_http"
+    require "#{config.root}/extras/gitrack/lib/git_http"
     config.middleware.use GitHttp::Middleware, {
       :project_root => "#{config.repos_path}",
       :uri_root => '/repos',

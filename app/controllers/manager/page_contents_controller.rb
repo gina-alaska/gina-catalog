@@ -1,5 +1,12 @@
 class Manager::PageContentsController < ManagerController
-  before_filter :fetch_page, :except => [:new, :create]
+  before_filter :authenticate_access_cms!
+  before_filter :fetch_page, :except => [:new, :create, :index, :sort]
+
+  SUBMENU = '/layouts/manager/cms_menu'
+  PAGETITLE = 'Pages'
+
+  def index
+  end
   
   def new
     @page = current_setup.pages.build
@@ -8,6 +15,30 @@ class Manager::PageContentsController < ManagerController
   end
   
   def edit
+  end
+  
+  def sort
+    left_page = nil
+    Page::Content.transaction do
+      params[:pages].dup.each do |k, item|
+        page = current_setup.pages.find(item['id'])        
+        unless left_page.nil?
+          page.move_to_right_of left_page
+        end
+        left_page = page
+        
+        if item['children']
+          sort_children(page, item['children'])
+        end
+      end
+    end
+    
+    respond_to do |format|
+      format.js {
+        flash[:success] = 'Successfully reordered the pages'
+        render :text => 'location.reload();'
+      }
+    end
   end
   
   def add
@@ -31,7 +62,7 @@ class Manager::PageContentsController < ManagerController
           if params["commit"] == "Save"
             redirect_to edit_manager_page_content_path(@page)
           else
-            redirect_to manager_path
+            redirect_to manager_page_contents_path
           end
         }
       end
@@ -50,7 +81,7 @@ class Manager::PageContentsController < ManagerController
           if params["commit"] == "Save"
             redirect_to edit_manager_page_content_path(@page)
           else
-            redirect_to manager_path
+            redirect_to manager_page_contents_path
           end
         }
       end
@@ -74,14 +105,14 @@ class Manager::PageContentsController < ManagerController
       respond_to do |format|
         format.html {
           flash[:success] = "#{@page.title} page deleted"
-          redirect_to manager_path
+          redirect_to manager_page_contents_path
         }
       end
     else
       respond_to do |format|
         format.html {
           flash[:success] = "Unable to delete #{@page.title}"
-          redirect_to manager_path
+          redirect_to manager_page_contents_path
         }
       end
     end
@@ -94,6 +125,26 @@ class Manager::PageContentsController < ManagerController
   end
   
   protected
+  
+  def sort_children(parent, items)
+    left_page = nil
+    
+    items.each do |k, i|
+      page = current_setup.pages.find(i['id'])
+      
+      if left_page.nil?
+        page.move_to_child_of parent if page.parent != parent
+        left_page = page
+      else
+        page.move_to_right_of left_page
+        left_page = page
+      end
+      
+      if i['children']
+        sort_children(page, i['children'])
+      end
+    end
+  end
   
   def fetch_page
     @page = current_setup.pages.find(params[:id])

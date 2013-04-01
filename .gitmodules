@@ -1,6 +1,3 @@
-[submodule "app/assets/javascripts/gina-map-layers"]
-	path = app/assets/javascripts/gina-map-layers
-	url = git@github.com:gina-alaska/gina-map-layers.git
-[submodule "app/assets/javascripts/extjs-openlayers"]
-	path = app/assets/javascripts/extjs-openlayers
-	url = git@github.com:gina-alaska/extjs-openlayers.git
+[submodule "vendor/assets/javascripts/gina-map-layers"]
+	path = vendor/assets/javascripts/gina-map-layers
+	url = https://github.com/gina-alaska/gina-map-layers.git

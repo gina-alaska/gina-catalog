@@ -30,3 +30,4 @@ db/data
 .powder
 .DS_Store
 *.pid
+/uploads

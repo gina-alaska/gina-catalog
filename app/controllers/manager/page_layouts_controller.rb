@@ -1,4 +1,5 @@
 class Manager::PageLayoutsController < ManagerController
+  before_filter :authenticate_access_cms!
   # GET /setups/page_layouts/1
   # GET /setups/page_layouts/1.json
   def show
@@ -34,7 +35,14 @@ class Manager::PageLayoutsController < ManagerController
 
     respond_to do |format|
       if @page_layout.save
-        format.html { redirect_to manager_path, notice: 'Page layout was successfully created.' }
+        format.html {
+          flash[:success] = "#{@page_layout.name} layout successfully created."
+          if params["commit"] == "Save"
+            redirect_to edit_manager_page_layout_path(@page_layout)
+          else
+            redirect_to manager_page_contents_path(tab: "page_layouts")
+          end
+        }
         format.json { render json: @page_layout, status: :created, location: @page_layout }
       else
         format.html { render action: "new" }
@@ -50,7 +58,14 @@ class Manager::PageLayoutsController < ManagerController
 
     respond_to do |format|
       if @page_layout.update_attributes(params[:page_layout])
-        format.html { redirect_to manager_path, notice: 'Page layout was successfully updated.' }
+        format.html {
+          flash[:success] = "#{@page_layout.name} layout successfully updated."
+          if params["commit"] == "Save"
+            redirect_to edit_manager_page_layout_path(@page_layout)
+          else
+            redirect_to manager_page_contents_path(tab: "page_layouts")
+          end
+        }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -62,11 +77,13 @@ class Manager::PageLayoutsController < ManagerController
   # DELETE /setups/page_layouts/1
   # DELETE /setups/page_layouts/1.json
   def destroy
-    @page_layout = current_setup.page_layouts.find(params[:id])
+    @page_layout = current_setup.layouts.find(params[:id])
     @page_layout.destroy
 
     respond_to do |format|
-      format.html { redirect_to manager_path }
+      format.html {
+        redirect_to edit_manager_page_layout_path(@page_layout)
+      }
       format.json { head :no_content }
     end
   end

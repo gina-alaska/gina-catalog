@@ -1,18 +1,23 @@
-.group{style:"padding-left:#{page.depth * 20}px"}
-  .row-fluid
+%li{id: dom_id(page, :list)}
+  .row-fluid.group
     .span8.title
       = link_to edit_manager_page_content_path(page), class: 'edit' do
         %i{class: (page.slug == 'home' ? 'icon-home' : (page.leaf? ? 'icon-file' : 'icon-folder-open') )}
         = page.title
+        - if page.main_menu
+          %i.icon-flag
     .span4.actions
       .btn-group
-        = link_to edit_manager_page_content_path(page), class: 'btn' do
+        = link_to edit_manager_page_content_path(page), class: 'btn', title: "Edit" do
           %i.icon-edit    
-        = link_to new_manager_page_content_path(parent: page.id), class: 'btn' do
+        = link_to new_manager_page_content_path(parent: page.id), class: 'btn', title: "New Sub-Page" do
           %i.icon-plus-sign
-        = link_to page_path(page.slug), class: 'btn' do
+        = link_to page_path(page.slug), class: 'btn', title: "View Page" do
           %i.icon-eye-open    
-        = link_to manager_page_content_path(page), method: 'DELETE', class: 'btn btn-danger', data: { confirm: 'Are you sure?' } do
+        = link_to manager_page_content_path(page), method: 'DELETE', class: 'btn btn-danger', data: { confirm: 'Are you sure?' }, title: "Delete Page" do
           %i.icon-trash.icon-white
-= render partial: '/manager/page_contents/page', collection: page.children unless page.children.empty?
-        
+          
+  - unless page.children.empty?
+    %ol.page-list-child{style:'padding-left:20px;'}
+      = render partial: '/manager/page_contents/page', collection: page.children
+      

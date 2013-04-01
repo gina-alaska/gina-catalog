@@ -1,0 +1,12 @@
+%table.table.table-bordered.table-striped.table-condensed
+  %thead
+    %tr
+      %th Email
+      %th.span1 Actions
+  %tbody
+    - @memberships.each do |item|
+      %tr
+        %td= item.email
+        %td.span1
+          .actions
+            = render partial: "action_buttons", locals: {item: item}

@@ -3,13 +3,16 @@
 %html
 %head
   = render "layouts/#{theme}/head"  
-  = javascript_include_tag "application", data: {'turbolinks-track' => ''}
-  = stylesheet_link_tag 'application', data: {'turbolinks-track' => ''}
+  = javascript_include_tag "http://glink.gina.alaska.edu/cdn/libs/proj4js-1.0/lib/proj4js-compressed.js", "http://glink.gina.alaska.edu/cdn/libs/OpenLayers-2.12/OpenLayers.js"
+  = javascript_include_tag "application"
+  = stylesheet_link_tag 'application'
   = csrf_meta_tag
+  = render "layouts/#{theme}/analytics" unless current_setup.analytics_account.nil? or Rails.env == 'development'
 %body
+  = render_snippet_content current_setup.snippets.where(slug: 'theme').first, current_setup
   .container
     #header= render "layouts/#{theme}/header"
-    #content
+    %div{id: (@page.nil? ? 'content' : "#{@page.slug.parameterize}-page") }
       = show_flash_messages
       = yield
-  = render "layouts/#{theme}/analytics" unless Rails.env == 'development'
+    #footer= render_snippet_content current_setup.snippets.where(slug: 'footer').first, current_setup

@@ -2,12 +2,15 @@
 //= require 'jquery_ujs'
 //= require 'jquery.markitup'
 //= require 'jquery.slugify'
+//= require 'jquery.ui.sortable'
+//= require 'nested_sortable'
 //= require 'bootstrap'
 //= require 'fileupload/bootstrap-fileupload'
 //= require 'select2/select2.min'
 //= require 'markitup'
 //= require 'manager/pages'
 //= require bootstrap-datepicker
+//= require jquery_nested_form
 //= require_self
 
 $(document).ready(function() {

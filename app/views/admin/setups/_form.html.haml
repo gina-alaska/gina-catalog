@@ -1,0 +1,30 @@
+= nested_form_for [:admin, setup], html: { class: 'form-horizontal' } do |f|
+  - if setup.errors.any?
+    #error_explanation.alert.alert-error
+      %h4
+        = pluralize(setup.errors.count, "error")
+        prohibited this setup from being saved:
+      %ul
+        - setup.errors.full_messages.each do |msg|
+          %li= msg
+          
+  .control-group
+    = f.label :title, class: 'control-label'
+    .controls
+      = f.text_field :title, class: 'span9'
+  
+  .control-group
+    = f.label :by_line, class: 'control-label'
+    .controls
+      = f.text_field :by_line, class: 'span9'
+
+  %b Associated URLs
+  .pull-right
+    = f.link_to_add "Add a URL", :urls, :data => { :target => "#url_fields" }, class: "btn btn-success"
+  %br
+  %br
+  #url_fields
+    = f.fields_for :urls
+
+  .form-actions
+    = f.submit class: 'btn btn-primary pull-right'

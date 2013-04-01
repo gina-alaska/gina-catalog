@@ -1,4 +1,6 @@
 class Manager::PageSnippetsController < ManagerController
+  before_filter :authenticate_access_cms!
+  
   def new
     @snippet = current_setup.snippets.build
   end
@@ -14,7 +16,7 @@ class Manager::PageSnippetsController < ManagerController
           if params[:commit] == 'Save'
             redirect_to edit_manager_page_snippet_path(@snippet)
           else
-            redirect_to manager_path
+            redirect_to manager_page_contents_path(tab: "page_snippets")
           end
         }
       else
@@ -36,12 +38,24 @@ class Manager::PageSnippetsController < ManagerController
           if params[:commit] == 'Save'
             redirect_to edit_manager_page_snippet_path(@snippet)
           else
-            redirect_to manager_path
+            redirect_to manager_page_contents_path(tab: "page_snippets")
           end
         }
       else
         format.html { render 'edit' }
       end
+    end
+  end
+
+  def destroy
+    @snippet = current_setup.snippets.find(params[:id])
+    @snippet.destroy
+
+    respond_to do |format|
+      format.html {
+        redirect_to manager_page_contents_path(tab: "page_snippets")
+      }
+      format.json { head :no_content }
     end
   end
 end

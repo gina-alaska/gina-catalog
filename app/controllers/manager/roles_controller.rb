@@ -1,6 +1,11 @@
 class Manager::RolesController < ManagerController
+  before_filter :authenticate_access_permissions!
+
+  SUBMENU = '/layouts/manager/permission_menu'
+  PAGETITLE = 'Roles'
+  
   def index
-    @roles = Role.all
+    @roles = current_setup.roles.all
   end
   
   def new
@@ -8,7 +13,7 @@ class Manager::RolesController < ManagerController
   end
   
   def create
-    @role = Role.new(role_params)
+    @role = current_setup.roles.build(role_params)
     
     respond_to do |format|
       if @role.save
@@ -66,10 +71,10 @@ class Manager::RolesController < ManagerController
   protected
   
   def role_params
-    params[:role].slice(:name, :description)
+    rparams = params[:role].slice(:name, :description, :permission_ids)
   end
   
   def fetch_role
-    Role.find(params[:id])
+    current_setup.roles.find(params[:id])
   end
 end

@@ -1,0 +1,6 @@
+- if current_member.access_cms?
+  %li= link_to 'CMS', manager_page_contents_path
+- if current_member.access_catalog?
+  %li= link_to 'Catalog', manager_catalogs_path
+- if current_member.access_permissions?
+  %li= link_to 'Permissions', manager_memberships_path
