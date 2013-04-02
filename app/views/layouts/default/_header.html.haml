@@ -14,6 +14,7 @@
   .navbar-inner
     %ul.nav
       - current_setup.pages.roots.where(main_menu: true).each do |page|
+        - next unless page.public?
         %li{ class:(!request.path.match(page.slug).nil? or (page.slug == "home" and request.path == "/")) ? 'active' : '' }
           = link_to page_path(page.slug) do
             %i{class:page.menu_icon}

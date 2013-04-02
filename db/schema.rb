@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130328195851) do
+ActiveRecord::Schema.define(:version => 20130402184706) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -543,8 +543,8 @@ ActiveRecord::Schema.define(:version => 20130328195851) do
     t.string   "sections"
     t.text     "content"
     t.string   "layout"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
     t.integer  "page_layout_id"
     t.integer  "parent_id"
     t.integer  "lft"
@@ -554,6 +554,7 @@ ActiveRecord::Schema.define(:version => 20130328195851) do
     t.string   "description"
     t.boolean  "main_menu"
     t.string   "menu_icon"
+    t.boolean  "draft",          :default => false
   end
 
   create_table "page_images", :force => true do |t|
