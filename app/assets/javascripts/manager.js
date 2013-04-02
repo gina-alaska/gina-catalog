@@ -11,6 +11,11 @@
 //= require 'manager/pages'
 //= require bootstrap-datepicker
 //= require jquery_nested_form
+//= require 'gina-map-layers/gina-openlayers'
+//= require 'gina-map-layers/projections/all'
+//= require 'projections'
+//= require 'maps'
+//= require 'location_editor'
 //= require_self
 
 $(document).ready(function() {

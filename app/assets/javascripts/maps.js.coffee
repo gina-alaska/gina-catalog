@@ -15,16 +15,17 @@ class CatalogMap
   setupToolbar: ->
     @addBtnHandler('zoomToMaxExtent', @zoomToDefaultBounds)
       
-    @btns = $(@el).find('.navbar a.btn')
+    @btns = $(@el).find('.navbar a.btn, .navbar button.btn')
     @btns.on 'click', (evt) =>
       evt.preventDefault()  
       action = $(evt.currentTarget).data('action')
       if @btnHandlers[action]
-        @btnHandlers[action]()
+        @btnHandlers[action]($(evt.currentTarget));
   # end setupToolbar
   
   setupMap: (el) ->
     @data_config = $(el).data()
+    @data_config['displayProjection'] = @data_config['displayProjection'] || 'EPSG:4326'
     @config = Gina.Projections.get(@data_config['projection']);
     @config['projection'] = @data_config['projection']
     @config['displayProjection'] = @data_config['displayProjection']
