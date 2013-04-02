@@ -88,11 +88,81 @@
           
         = f.submit class: 'btn btn-primary pull-right'
     
+#location_editor.modal.hide.fade
+  .modal-header
+    %button.close{ type: 'button', data: { dismiss: 'modal' } } &times;
+    %h3 Location Editor
+  #map.modal-body{ style: 'padding: 0;', data: { openlayers: 'map_canvas', projection: 'EPSG:3572', layers: 'TILE.EPSG:3572.*' } }
+    .navbar.navbar-static-top
+      .navbar-inner
+        .btn-group{ data: { toggle: 'buttons-radio' } }
+          %button.btn{ data: { action: 'draw', type: 'polygon' } }
+            Polygon
+          %button.btn{ data: { action: 'draw', type: 'point' } }
+            Point
+        .btn-group
+          %button.btn{ data: { action: 'clear' } }
+            Clear
+          %button.btn{ data: { action: 'reset' } }
+            Reset
+    #map_canvas{style: "width:100%; height: 400px;" }
+  .modal-footer
+    = link_to '#', class: 'btn', data: { dismiss: 'modal' } do
+      Cancel
+    = link_to '#', class: 'btn btn-primary', data: { action: 'update-location' } do
+      Update location
+    
 
 / refresh because of select2 moving things around on the page
 :javascript
   $(document).ready(function() {
     $('[data-spy="scroll"]').each(function() {
       $(this).delay(500).scrollspy('refresh');
-    })
+    });
+    
+    var input, feature, active_draw_button;
+    var catalog_map = $('#map').data('map');
+    var map = catalog_map.map;
+    
+    var editor = new LocationEditor(map);
+    catalog_map.addBtnHandler('clear', function() { editor.clear(); });
+    catalog_map.addBtnHandler('reset', function() { editor.addFeature(); });
+    catalog_map.addBtnHandler('draw', function(el) { editor.drawFeature($(el).data('type')); });
+    
+    var mouse_position = new OpenLayers.Control.MousePosition({ 
+      displayProjection: 'EPSG:4326', numDigits: 3, prefix: 'Mouse: '
+    });
+    map.addControl(mouse_position);
+    
+    $('#location_editor').on('shown', function() {
+      map.updateSize();
+    });
+    
+    $(document).on('click', '[data-action="edit-location"]', function(evt) {
+      evt.preventDefault();
+      
+      input = $($(this).data('target'));
+      var feature = editor.addFeature(input);      
+      $('#location_editor').modal('show');
+      
+      if(feature) {
+        switch(feature.geometry.CLASS_NAME) {
+          case 'OpenLayers.Geometry.Polygon':
+            active_draw_button = $('#location_editor button[data-type="polygon"]').button('toggle');
+            break;
+          case 'OpenLayers.Geometry.Point':
+            active_draw_button = $('#location_editor button[data-type="point"]').button('toggle');
+            break;
+        }
+      } else {
+        $('#location_editor button.active[data-action="draw"]').removeClass('active');
+      }
+    });
+    
+    $(document).on('click', '.btn[data-action="update-location"]', function(evt) {
+      evt.preventDefault();
+      input.val(editor.getWKT());      
+      $('#location_editor').modal('hide');
+    });    
   })
+  
