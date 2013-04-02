@@ -87,30 +87,30 @@
           Back
           
         = f.submit class: 'btn btn-primary pull-right'
-    
-#location_editor.modal.hide.fade
-  .modal-header
-    %button.close{ type: 'button', data: { dismiss: 'modal' } } &times;
-    %h3 Location Editor
-  #map.modal-body{ style: 'padding: 0;', data: { openlayers: 'map_canvas', projection: 'EPSG:3572', layers: 'TILE.EPSG:3572.*' } }
-    .navbar.navbar-static-top
-      .navbar-inner
-        .btn-group{ data: { toggle: 'buttons-radio' } }
-          %button.btn{ data: { action: 'draw', type: 'polygon' } }
-            Polygon
-          %button.btn{ data: { action: 'draw', type: 'point' } }
-            Point
-        .btn-group
-          %button.btn{ data: { action: 'clear' } }
-            Clear
-          %button.btn{ data: { action: 'reset' } }
-            Reset
-    #map_canvas{style: "width:100%; height: 400px;" }
-  .modal-footer
-    = link_to '#', class: 'btn', data: { dismiss: 'modal' } do
-      Cancel
-    = link_to '#', class: 'btn btn-primary', data: { action: 'update-location' } do
-      Update location
+
+/ #location_editor.modal.hide.fade
+/   .modal-header
+/     %button.close{ type: 'button', data: { dismiss: 'modal' } } &times;
+/     %h3 Location Editor
+/   #map.modal-body{ style: 'position: relative; padding: 0; height:400px;', data: { openlayers: 'map_canvas', projection: 'EPSG:3572', layers: 'TILE.EPSG:3572.*' } }
+/     .navbar.navbar-static-top
+/       .navbar-inner
+/         .btn-group{ data: { toggle: 'buttons-radio' } }
+/           %button.btn{ data: { action: 'draw', type: 'polygon' } }
+/             Polygon
+/           %button.btn{ data: { action: 'draw', type: 'point' } }
+/             Point
+/         .btn-group
+/           %button.btn{ data: { action: 'clear' } }
+/             Clear
+/           %button.btn{ data: { action: 'reset' } }
+/             Reset  
+/     #map_canvas{style: "width:100%; height: 359px;" }
+/   .modal-footer
+/     = link_to '#', class: 'btn', data: { dismiss: 'modal' } do
+/       Cancel
+/     = link_to '#', class: 'btn btn-primary', data: { action: 'update-location' } do
+/       Update location
     
 
 / refresh because of select2 moving things around on the page

@@ -1,19 +1,19 @@
 - theme = NSCatalog::Application.config.theme
 !!! 5
 %html
-%head
-  = render "layouts/#{theme}/head"  
-  = javascript_include_tag "http://glink.gina.alaska.edu/cdn/libs/proj4js-1.0/lib/proj4js-compressed.js", "http://glink.gina.alaska.edu/cdn/libs/OpenLayers-2.12/OpenLayers.js"  
-  = javascript_include_tag "manager", data: {'turbolinks-track' => ''}
-  = stylesheet_link_tag 'manager', data: {'turbolinks-track' => ''}
-  = csrf_meta_tag
-%body{ data: { spy: 'scroll', target: '.section-nav', offset: 150 }}
-  .container
-    #header
-      = render "layouts/manager/header"
-      = render controller.class::SUBMENU if controller.class.const_defined?(:SUBMENU)
-    #content
-      #flashes= show_flash_messages
-      = yield
-    #footer= render "layouts/#{theme}/footer"
-  = render "layouts/#{theme}/analytics" unless Rails.env == 'development'
+  %head
+    = render "layouts/#{theme}/head"  
+    = javascript_include_tag "http://glink.gina.alaska.edu/cdn/libs/proj4js-1.0/lib/proj4js-compressed.js", "http://glink.gina.alaska.edu/cdn/libs/OpenLayers-2.12/OpenLayers.js"  
+    = javascript_include_tag "manager", data: {'turbolinks-track' => ''}
+    = stylesheet_link_tag 'manager', data: {'turbolinks-track' => ''}
+    = csrf_meta_tag
+  %body{ data: { spy: 'scroll', target: '.section-nav', offset: 150 }}
+    .container
+      #header
+        = render "layouts/manager/header"
+        = render controller.class::SUBMENU if controller.class.const_defined?(:SUBMENU)
+      #content
+        #flashes= show_flash_messages
+        = yield
+      #footer= render "layouts/#{theme}/footer"
+    = render "layouts/#{theme}/analytics" unless Rails.env == 'development'
