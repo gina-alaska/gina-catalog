@@ -4,8 +4,10 @@
       = link_to edit_manager_page_content_path(page), class: 'edit' do
         %i{class: (page.slug == 'home' ? 'icon-home' : (page.leaf? ? 'icon-file' : 'icon-folder-open') )}
         = page.title
-        - if page.main_menu
-          %i.icon-flag
+        - unless page.main_menu
+          .label.label-info Hidden
+        - if page.draft
+          .label.label-warning Draft
     .span4.actions
       .btn-group
         = link_to edit_manager_page_content_path(page), class: 'btn', title: "Edit" do

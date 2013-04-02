@@ -3,7 +3,7 @@ require 'html/pipeline'
 class Page::Content < ActiveRecord::Base
   ICONS = ["icon-home","icon-file","icon-map-marker","icon-user","icon-info-sign","icon-question-sign","icon-envelope","icon-search","icon-star","icon-star-empty","icon-ok","icon-remove","icon-flag","icon-book","icon-bookmark","icon-print","icon-camera","icon-list","icon-picture","icon-exclamation-sign","icon-gift","icon-leaf","icon-fire","icon-calendar","icon-folder-close","icon-folder-open","icon-globe","icon-wrench","icon-briefcase"]
 
-  attr_accessible :content, :layout, :slug, :title, :sections, :page_layout_id, :page_layout, :parent_id, :redirect, :description, :main_menu, :menu_icon
+  attr_accessible :content, :layout, :slug, :title, :sections, :page_layout_id, :page_layout, :parent_id, :redirect, :description, :main_menu, :menu_icon, :draft
   
   acts_as_nested_set
   before_save :rebuild_slug
@@ -29,6 +29,8 @@ class Page::Content < ActiveRecord::Base
   #   self.slug
   # end
   
+  scope :public, where(draft: false)
+
   def rebuild_slug
     parent_slugs = self.ancestors.collect { |p| p.slug.split('/').last } << self.slug_without_path
     self.slug = parent_slugs.join('/')
@@ -46,7 +48,11 @@ class Page::Content < ActiveRecord::Base
     
     s
   end
-  
+
+  def public?
+    !self.draft
+  end
+
   def layout
     self.page_layout.content
   end
@@ -75,7 +81,8 @@ class Page::Content < ActiveRecord::Base
       'content' => ::PageContentDrop.new(self),
       'description' => self.description,
       'images' => self.images,
-      'children' => self.children
+      'children' => self.children.public,
+      'public' => self.public?
     }
   end
 end
