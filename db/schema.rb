@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130402184706) do
+ActiveRecord::Schema.define(:version => 20130402234052) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -552,7 +552,7 @@ ActiveRecord::Schema.define(:version => 20130402184706) do
     t.integer  "depth"
     t.string   "redirect"
     t.string   "description"
-    t.boolean  "main_menu"
+    t.boolean  "main_menu",      :default => true
     t.string   "menu_icon"
     t.boolean  "draft",          :default => false
   end
