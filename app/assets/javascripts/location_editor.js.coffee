@@ -22,6 +22,8 @@ class @LocationEditor
     else
       @feature = null
       
+    @feature
+      
   clear: =>
     @vector.removeAllFeatures()
     @feature = null
@@ -36,7 +38,6 @@ class @LocationEditor
         height = 0.5 * @map.getExtent().getHeight()
         
         radius = if width < height then width else height
-        console.log(radius)
         geom = OpenLayers.Geometry.Polygon.createRegularPolygon(center_geom, radius, 4)
       when 'point'
         geom = center_geom

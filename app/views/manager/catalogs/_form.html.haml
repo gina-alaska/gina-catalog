@@ -95,7 +95,7 @@
   #map.modal-body{ style: 'padding: 0;', data: { openlayers: 'map_canvas', projection: 'EPSG:3572', layers: 'TILE.EPSG:3572.*' } }
     .navbar.navbar-static-top
       .navbar-inner
-        .btn-group
+        .btn-group{ data: { toggle: 'buttons-radio' } }
           %button.btn{ data: { action: 'draw', type: 'polygon' } }
             Polygon
           %button.btn{ data: { action: 'draw', type: 'point' } }
@@ -110,7 +110,7 @@
     = link_to '#', class: 'btn', data: { dismiss: 'modal' } do
       Cancel
     = link_to '#', class: 'btn btn-primary', data: { action: 'update-location' } do
-      Save changes
+      Update location
     
 
 / refresh because of select2 moving things around on the page
@@ -120,7 +120,7 @@
       $(this).delay(500).scrollspy('refresh');
     });
     
-    var input, feature;
+    var input, feature, active_draw_button;
     var catalog_map = $('#map').data('map');
     var map = catalog_map.map;
     
@@ -142,9 +142,21 @@
       evt.preventDefault();
       
       input = $($(this).data('target'));
-      editor.addFeature(input);
-      
+      var feature = editor.addFeature(input);      
       $('#location_editor').modal('show');
+      
+      if(feature) {
+        switch(feature.geometry.CLASS_NAME) {
+          case 'OpenLayers.Geometry.Polygon':
+            active_draw_button = $('#location_editor button[data-type="polygon"]').button('toggle');
+            break;
+          case 'OpenLayers.Geometry.Point':
+            active_draw_button = $('#location_editor button[data-type="point"]').button('toggle');
+            break;
+        }
+      } else {
+        $('#location_editor button.active[data-action="draw"]').removeClass('active');
+      }
     });
     
     $(document).on('click', '.btn[data-action="update-location"]', function(evt) {
