@@ -18,6 +18,7 @@ $navbarBackgroundHighlight: lighten($navbarBackground, 10%);
 $navbarLinkBackgroundHover: darken($navbarBackground, 10%);*/
 
 @import "bootstrap";
+@import "font-awesome";
 @import "fileupload/bootstrap-fileupload";
 @import "catalogs";
 @import "catalog_collection";
