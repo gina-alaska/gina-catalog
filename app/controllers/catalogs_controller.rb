@@ -48,6 +48,10 @@ class CatalogsController < ApplicationController
       @search_params['order_by'] ||= 'title_sort-ascending'
     end
     
+    unless current_user and current_member.can_manage_cms?
+      @search_params[:published_only] = true
+    end
+    
     @search = solr_search(@search_params, params[:page], params[:limit])
     if @search.respond_to? :results
       @results = @search.results
@@ -56,6 +60,7 @@ class CatalogsController < ApplicationController
       @results = Array.wrap(@search)
       @total = 0
     end
+    
     
     respond_to do |format|
       format.json
