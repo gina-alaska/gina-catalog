@@ -1,13 +1,13 @@
 %li{id: dom_id(page, :list)}
   .row-fluid.group
     .span8.title
+      %i{class: (page.slug == 'home' ? 'icon-home' : (page.leaf? ? 'icon-file' : 'icon-folder-open') )}
       = link_to edit_manager_page_content_path(page), class: 'edit' do
-        %i{class: (page.slug == 'home' ? 'icon-home' : (page.leaf? ? 'icon-file' : 'icon-folder-open') )}
         = page.title
-        - unless page.main_menu
-          .label.label-info Hidden
-        - if page.draft
-          .label.label-warning Draft
+      - unless page.main_menu
+        .label.label-info Hidden
+      - if page.draft
+        .label.label-warning Draft
     .span4.actions
       .btn-group
         = link_to edit_manager_page_content_path(page), class: 'btn', title: "Edit" do
