@@ -55,7 +55,7 @@ module CatalogConcerns
           with :data_types, search[:data_types] if search[:data_types].present?
           with :agency_types, search[:agency_types] if search[:agency_types].present?
   
-          with(:published_at).less_than(Time.zone.now) unless current_user and current_user.is_an_admin?
+          with(:published_at).less_than(Time.zone.now) if search[:published_only]
       
           with(:start_date_year).greater_than(search[:start_date_after]) if search[:start_date_after].present?
 
