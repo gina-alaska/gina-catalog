@@ -8,11 +8,11 @@
   = stylesheet_link_tag 'application'
   = csrf_meta_tag
   = render "layouts/#{theme}/analytics" unless current_setup.analytics_account.nil? or Rails.env == 'development'
-%body
-  = render_snippet_content current_setup.snippets.where(slug: 'theme').first, current_setup
-  .container
-    #header= render "layouts/#{theme}/header"
-    %div{id: (@page.nil? ? 'content' : "#{@page.slug.parameterize}-page") }
-      = show_flash_messages
-      = yield
-    #footer= render_snippet_content current_setup.snippets.where(slug: 'footer').first, current_setup
+  %body
+    = render_snippet_content current_setup.snippets.where(slug: 'theme').first, current_setup
+    .container
+      #header= render "layouts/#{theme}/header"
+      %div{id: (@page.nil? ? 'content' : "#{@page.slug.parameterize}-page") }
+        = show_flash_messages
+        = yield
+      #footer= render_snippet_content current_setup.snippets.where(slug: 'footer').first, current_setup

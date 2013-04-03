@@ -2,6 +2,11 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+body > .container {
+  @include box-shadow(0px 2px 5px #000);
+  
+}
+
 .row-fluid .select2-container.span12 {
   margin-left: 0;
 }
@@ -88,6 +93,20 @@ input[type="submit"].btn-block {
   h1 {
     margin: 0px;
   }
+  
+  ul.nav {
+    margin: 5px 5px;
+  }
+  
+  ul.nav > li > a {
+    color: #333;
+  }
+  ul.nav > li.active > a {
+    color: #fff;
+  } 
+  
+  border-bottom:1px solid #efefef;
+  @include box-shadow(0px 2px 5px -5px #000);
 }
 
 .left-well, .right-well, .center-well {

@@ -61,6 +61,7 @@ group :assets do
   gem 'coffee-rails', '~> 3.2.0'
   gem 'compass-rails'
   gem 'uglifier'
+  gem 'font-awesome-rails'
 end
 
 group :production do
