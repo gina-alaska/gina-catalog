@@ -15,7 +15,7 @@
         = link_to new_manager_page_content_path(parent: page.id), class: 'btn', title: "New Sub-Page" do
           %i.icon-plus-sign
         = link_to page_path(page.slug), class: 'btn', title: "View Page" do
-          %i.icon-eye-open    
+          %i.icon-share
         = link_to manager_page_content_path(page), method: 'DELETE', class: 'btn btn-danger', data: { confirm: 'Are you sure?' }, title: "Delete Page" do
           %i.icon-trash.icon-white
           
