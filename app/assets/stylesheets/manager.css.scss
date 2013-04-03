@@ -26,8 +26,13 @@ $navbarLinkBackgroundHover: darken($navbarBackground, 10%);
 @import "markitup-html";
 @import 'select2/select2';
 @import 'bootstrap-datepicker';
-@import 'pages';
 @import 'maps';
+
+body > .container {
+  @include box-shadow(0px 2px 5px #000);
+  
+  .content { padding: 0 5px; }
+}
 
 #flashes {
   position: absolute;
@@ -53,6 +58,8 @@ $navbarLinkBackgroundHover: darken($navbarBackground, 10%);
     border: 0;
   }
 }
+
+.tabbable .nav { margin-bottom: 0px; }
 
 //.pages li > a {
 //  padding: 10px;

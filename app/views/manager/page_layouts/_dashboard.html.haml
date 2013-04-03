@@ -5,9 +5,6 @@
       %i.icon-plus.icon-white
       New Layout
 
-.page-list
-  .row-fluid.header
-    .span9.title Title
-    .span3.actions Actions
+%ol.page-list
   - setup.layouts.each do |layout|
     =render 'manager/page_layouts/layout', layout: layout
