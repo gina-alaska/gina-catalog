@@ -1,6 +1,9 @@
 class Manager::PageSnippetsController < ManagerController
   before_filter :authenticate_access_cms!
   
+  PAGETITLE = 'Pages'
+  SUBMENU = '/layouts/manager/cms_menu'
+  
   def new
     @snippet = current_setup.snippets.build
   end
