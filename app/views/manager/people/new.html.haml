@@ -5,5 +5,7 @@
         = link_to manager_people_path do
           %i.icon-arrow-left
           Back
-%h2 New Contact
-= render 'form', person: @person
+%h3 New Contact
+.row-fluid
+  .span12.content
+    = render 'form', person: @person

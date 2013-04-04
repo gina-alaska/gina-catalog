@@ -5,5 +5,7 @@
         = link_to manager_catalog_collections_path do
           %i.icon-arrow-left
           Back
-%h2 New Collection
-= render 'form', catalog_collection: @catalog_collection
+%h3 New Collection
+.row-fluid
+  .span12.content
+    = render 'form', catalog_collection: @catalog_collection

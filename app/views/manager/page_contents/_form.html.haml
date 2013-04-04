@@ -14,8 +14,7 @@
       = f.text_field :title, class: 'span12'
       
   = link_to 'Advanced Options', '#advanced', data: { toggle: 'collapse' }
-  
-  #advanced.collapse
+  %fieldset#advanced.collapse
     .control-group
       = f.label :slug, class: 'control-label'
       .controls

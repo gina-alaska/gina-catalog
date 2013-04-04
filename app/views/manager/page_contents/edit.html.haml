@@ -1,2 +1,4 @@
-%h2= "Editing #{@page.title}"
-= render 'form', page: @page
+%h3= "Editing #{@page.title}"
+.row-fluid
+  .span12.content
+    = render 'form', page: @page
