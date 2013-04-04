@@ -6,4 +6,6 @@
           %i.icon-arrow-left
           Back
 %h2= "Edit Agency #{@agency.name}"
-= render 'form', agency: @agency
+.row-fluid
+  .span12.content
+    = render 'form', agency: @agency

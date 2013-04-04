@@ -1,18 +1,19 @@
-#contacts.accordion
-  - @contacts.each do |contact|
-    .accordion-group
-      .accordion-heading
-        .pull-right{style:"padding: 3px 3px;"}
-          %strong= "Sent On: #{contact.created_at.strftime("%c")}"
-          = link_to manager_contact_path(contact), method: :delete, confirm: "Are you sure?", class: "btn btn-danger", title: "Delete Message" do
-            %i.icon-trash.icon-white
-        = link_to "#{contact.name}", "##{dom_id(contact)}", class: 'accordion-toggle', data: { toggle: 'collapse', parent: '#contacts' }
-      .accordion-body.collapse{id: dom_id(contact)}
-        .accordion-inner
-          %address
-            %strong= contact.name
-            %br/
-            = mail_to contact.email
+.content
+  #contacts.accordion
+    - @contacts.each do |contact|
+      .accordion-group
+        .accordion-heading
+          .pull-right{style:"padding: 3px 3px;"}
+            %strong= "Sent On: #{contact.created_at.strftime("%c")}"
+            = link_to manager_contact_path(contact), method: :delete, confirm: "Are you sure?", class: "btn btn-danger", title: "Delete Message" do
+              %i.icon-trash.icon-white
+          = link_to "#{contact.name}", "##{dom_id(contact)}", class: 'accordion-toggle', data: { toggle: 'collapse', parent: '#contacts' }
+        .accordion-body.collapse{id: dom_id(contact)}
+          .accordion-inner
+            %address
+              %strong= contact.name
+              %br/
+              = mail_to contact.email
                 
-          %p= contact.message
+            %p= contact.message
 

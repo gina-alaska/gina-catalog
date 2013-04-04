@@ -11,7 +11,7 @@
   - else
     %ul.thumbnails
       - @images.each do |image|
-        %li
+        %li{style: "max-width:30%;"}
           .thumbnail
             .image
               - if image.file.nil?
