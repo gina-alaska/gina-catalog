@@ -1,8 +1,8 @@
 %li{id: dom_id(snippet, :list)}
   .row-fluid.group
     .span8.title
+      %i.icon-file
       = link_to edit_manager_page_snippet_path(snippet), class: 'edit' do
-        %i.icon-file
         = snippet.slug
     .span4.actions
       .btn-group
