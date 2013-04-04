@@ -1,4 +1,5 @@
-= paginate @catalogs
+.center-paging
+  = paginate @catalogs
 %table.table.table-bordered.table-striped.table-condensed#catalog-items
   %thead
     %tr
@@ -70,7 +71,8 @@
         %td= item.end_date.try(:year)
         %td= item.source_agency
 
-= paginate @catalogs
+.center-paging
+  = paginate @catalogs
 
 :javascript
   $(document).ready(function() {
