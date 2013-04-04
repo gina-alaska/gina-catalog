@@ -1,5 +1,9 @@
 class Manager::PageLayoutsController < ManagerController
   before_filter :authenticate_access_cms!
+
+  PAGETITLE = 'Pages'
+  SUBMENU = '/layouts/manager/cms_menu'
+  
   # GET /setups/page_layouts/1
   # GET /setups/page_layouts/1.json
   def show
