@@ -1,8 +1,8 @@
 %li{id: dom_id(layout, :list)}
   .row-fluid.group
     .span8.title
+      %i.icon-file
       = link_to edit_manager_page_layout_path(layout), class: 'edit' do
-        %i.icon-file
         = layout.name
         - if layout.default?
           (default)
