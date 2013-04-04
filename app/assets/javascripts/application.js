@@ -26,7 +26,31 @@ $(document).ready(function(){
       $(target).val($(this).data("value"));
       $(target).parents("form").submit();
     }
-  })
+  });
+  
+  $(document).on('click', '[data-action="scroll"]', function(evt) {
+    evt.preventDefault();
+    var target = $(evt.currentTarget).attr('href');
+    if(!target) { target = $(evt.currentTarget).data('target'); }
+    
+    if (target) { 
+      var parent = $('body');
+      var cur_scroll = parent.scrollTop();
+      parent.animate({
+        scrollTop: $(target).offset().top
+      });
+    }
+  });
+  
+  $('a.goto-top').hide();
+  $(window).scroll(function() {
+    var pos = $(window).scrollTop();
+    if(pos > 50) { 
+      $('a.goto-top').fadeIn();
+    } else {
+      $('a.goto-top').fadeOut();
+    }
+  });
 })
 
 $.fn.animateHighlight = function(highlightColor, duration) {

@@ -9,6 +9,7 @@
   = csrf_meta_tag
   = render "layouts/#{theme}/analytics" unless current_setup.analytics_account.nil? or Rails.env == 'development'
   %body
+    #top
     = render_snippet_content current_setup.snippets.where(slug: 'theme').first, current_setup
     .container
       #header= render "layouts/#{theme}/header"
@@ -16,3 +17,6 @@
         = show_flash_messages
         = yield
       #footer= render_snippet_content current_setup.snippets.where(slug: 'footer').first, current_setup
+    = link_to '#top', class: 'goto-top', data: { action: 'scroll' } do
+      %i.icon-arrow-up
+      Top

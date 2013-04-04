@@ -29,3 +29,11 @@ $navbarLinkBackgroundHover: darken($navbarBackground, 10%);*/
 @import url(http://fonts.googleapis.com/css?family=Quando);
 
 .content { padding: 0 10px; }
+a.goto-top { 
+  position: fixed; bottom: 10px; right: 10px;
+  padding: 25px;
+  border: 1px solid #000;
+  background-color: rgba(0,0,0, 0.8);
+  color: white;
+  @include border-radius(10px);
+}
