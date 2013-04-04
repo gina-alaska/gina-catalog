@@ -38,7 +38,7 @@ gem "haml"
 gem 'grit', '>= 2.4.1'
 gem 'pdfkit'
 gem 'ancestry', '~> 1.2.4'
-gem 'bootstrap-sass', '~> 2.3.0.1'
+gem 'bootstrap-sass', '~> 2.3.1.0'
 
 # Use unicorn as the web server
 gem 'unicorn'
