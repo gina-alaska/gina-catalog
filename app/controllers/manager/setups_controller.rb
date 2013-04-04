@@ -1,6 +1,9 @@
 class Manager::SetupsController < ManagerController
   before_filter :fetch_setup, except: [:new,:create]
   
+  PAGETITLE = 'Pages'
+  SUBMENU = '/layouts/manager/cms_menu'
+  
   def show
     if current_setup.nil? 
       redirect_to new_setup_path
