@@ -49,10 +49,10 @@ class Admin::GeokeywordsController < AdminController
     @geokeyword = Geokeyword.find(params[:id])
     
     respond_to do |format|
-      if @geokeyword.destroy
+      if @geokeyword.catalogs.count == 0 and @geokeyword.destroy
         flash[:success] = "Deleted #{@geokeyword.name}"
       else
-        flash[:error] = "Unable to delete #{@geokeyword.name}"
+        flash[:error] = "Unable to delete #{@geokeyword.name}, make sure it doesn't belong to any catalog records"
       end
       format.html {
         redirect_to admin_geokeywords_path

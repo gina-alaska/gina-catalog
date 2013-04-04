@@ -11,17 +11,20 @@
   - else
     %ul.thumbnails
       - @images.each do |image|
-        %li
-          .thumbnail
+        %li{style: "width:31%;"}
+          .thumbnail{style: "position: relative; padding-bottom: 20px;"}
             .image
               - if image.file.nil?
                 %p.lead Broken image
               - else
                 = image_tag image.file.png.thumb('286x200#').url, alt: image.title
-              .caption 
+              .caption
                 %strong= link_to_unless image.link_to_url.empty?, image.title, image.link_to_url
-                %p= image.description
-          = link_to edit_manager_image_path(image), class: 'btn', title: "Edit" do
-            %i.icon-edit
-          = link_to manager_image_path(image), method: :delete, class: 'btn btn-danger', 'data-confirm' => 'Are you sure?', title: "Delete Image" do
-            %i.icon-trash.icon-white
+                %p{ style: 'height: 50px; overflow: auto;' }= image.description
+            .btn-group{style:'position: absolute;  bottom:5px;'}
+              = link_to edit_manager_image_path(image), class: 'btn', title: "Edit" do
+                %i.icon-edit
+                Edit
+              = link_to manager_image_path(image), method: :delete, class: 'btn btn-danger', 'data-confirm' => 'Are you sure?', title: "Delete Image" do
+                %i.icon-trash.icon-white
+                Delete
