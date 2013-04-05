@@ -1,6 +1,6 @@
 class Setup < ActiveRecord::Base
   attr_accessible :logo_uid, :primary_color, :title, :by_line, :contact_email, 
-        :default_invite, :urls_attributes, :analytics_account
+        :default_invite, :urls_attributes, :analytics_account, :twitter_url, :github_url, :facebook_url
   
   has_and_belongs_to_many :images
   has_and_belongs_to_many :pages, class_name: 'Page::Content', join_table: 'pages_setups'
@@ -25,7 +25,10 @@ class Setup < ActiveRecord::Base
   		'title' => self.title,
   		'by_line' => self.by_line,
   		'catalog_collections' => self.catalog_collections,
-      'page' => SetupSubpageDrop.new(self)
+      'page' => SetupSubpageDrop.new(self),
+      'twitter_url' => self.twitter_url,
+      'github_url' => self.github_url,
+      'facebook_url' => self.facebook_url
   	}
   end
 end
