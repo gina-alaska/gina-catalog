@@ -1,4 +1,5 @@
-= paginate @agencies
+.center-paging
+  = paginate @agencies
 %table.table.table-bordered.table-striped.table-condensed
   %thead
     %tr
@@ -50,7 +51,8 @@
           .span1.actions
             .btn-group{id:"action_buttons_#{dom_id(item)}"}
               = render partial: "action_buttons", locals: {item: item}
-= paginate @agencies
+.center-paging
+  = paginate @agencies
 
 :javascript
   $(document).ready(function() {
