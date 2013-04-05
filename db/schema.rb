@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130402234052) do
+ActiveRecord::Schema.define(:version => 20130405005025) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -729,6 +729,9 @@ ActiveRecord::Schema.define(:version => 20130402234052) do
     t.string   "contact_email"
     t.text     "default_invite"
     t.text     "analytics_account"
+    t.string   "twitter_url"
+    t.string   "github_url"
+    t.string   "facebook_url"
   end
 
   create_table "setups_snippets", :id => false, :force => true do |t|
