@@ -26,7 +26,9 @@ class Setup < ActiveRecord::Base
   		'by_line' => self.by_line,
   		'catalog_collections' => self.catalog_collections,
       'page' => SetupSubpageDrop.new(self),
-      'twitter_url' => self.twitter_url
+      'twitter_url' => self.twitter_url,
+      'github_url' => self.github_url,
+      'facebook_url' => self.facebook_url
   	}
   end
 end

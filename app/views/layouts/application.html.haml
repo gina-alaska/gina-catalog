@@ -1,15 +1,18 @@
 - theme = NSCatalog::Application.config.theme
 !!! 5
 %html
-%head
-  = render "layouts/#{theme}/head"  
-  = javascript_include_tag "http://glink.gina.alaska.edu/cdn/libs/proj4js-1.0/lib/proj4js-compressed.js", "http://glink.gina.alaska.edu/cdn/libs/OpenLayers-2.12/OpenLayers.js"
-  = javascript_include_tag "application"
-  = stylesheet_link_tag 'application'
-  = csrf_meta_tag
-  = render "layouts/#{theme}/analytics" unless current_setup.analytics_account.nil? or Rails.env == 'development'
+  %head
+    = render "layouts/#{theme}/head"  
+    = javascript_include_tag "http://glink.gina.alaska.edu/cdn/libs/proj4js-1.0/lib/proj4js-compressed.js", "http://glink.gina.alaska.edu/cdn/libs/OpenLayers-2.12/OpenLayers.js"
+    = javascript_include_tag "application"
+    = stylesheet_link_tag 'application'
+    = csrf_meta_tag
+    = render "layouts/#{theme}/analytics" unless current_setup.analytics_account.nil? or Rails.env == 'development'
   %body
     #top
+    - if !current_user.nil? and (current_user.access_cms? or current_user.access_catalog? or current_user.access_site_admin?)
+      = link_to 'Manage Site', manager_path, class: 'btn btn-primary', style: 'position: absolute; top: 10px; right: 10px;'
+    
     = render_snippet_content current_setup.snippets.where(slug: 'theme').first, current_setup
     .container
       #header= render "layouts/#{theme}/header"
