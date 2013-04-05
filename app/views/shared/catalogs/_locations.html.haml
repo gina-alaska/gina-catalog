@@ -1,4 +1,4 @@
-- unless item.locations.where('name is not null and length(name) > 0').count > 0
+- if item.locations.where('name is not null and length(name) > 0').count > 0
   %dt Locations
   %dd= item.locations.where('name is not null and length(name) > 0').collect(&:name).compact.join(', ')
   %br

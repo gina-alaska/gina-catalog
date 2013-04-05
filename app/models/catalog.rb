@@ -67,7 +67,7 @@ class Catalog < ActiveRecord::Base
   has_and_belongs_to_many :people, :join_table => 'catalog_people'
 
   has_many :links, :as => :asset, :dependent => :destroy
-  has_many :locations, :as => :asset, :dependent => :destroy
+  has_many :locations, foreign_key: 'asset_id', :dependent => :destroy
   has_many :contact_infos, :dependent => :destroy
 
   scope :published, lambda { where('published_at <= ?', Time.now.utc) }
@@ -382,6 +382,14 @@ Title: #{self.title}
 
   def to_s
     self.title
+  end
+
+  def geometry_collection
+    locs = self.locations.collect do |location|
+      location.wkt
+    end
+
+    "GEOMETRYCOLLECTION(#{locs.join(',')})"
   end
 
   protected
