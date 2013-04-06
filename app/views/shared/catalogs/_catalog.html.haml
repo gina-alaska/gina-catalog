@@ -17,5 +17,30 @@
               #{catalog.description}
       .span5
         = render '/shared/catalogs/files', catalog: catalog  
-  
+        #map{ data: {                                       |
+          openlayers: 'map_canvas',                         |
+          projection: 'EPSG:3572',                          |
+          displayProjection: 'EPSG:4326',                   |
+          layers: ['TILE.EPSG:3572.BDL', 'TILE.EPSG:3572.OSM_OVERLAY'] |
+          }, |
+          style: 'border: 1px solid #cfcfcf;' }
+          #map_canvas{ style: 'width:100%; height:300px;' }             
     = render '/shared/catalogs/collapsed_content', item: catalog, collapse: collapse
+:javascript
+  var wktReader = new OpenLayers.Format.WKT();
+
+  $(document).ready(function() {
+    var map = $('#map').data('map').map;
+    map.addControl(new OpenLayers.Control.MousePosition({ displayProjection: 'EPSG:4326', numDigits: 3 }));
+
+    var features = wktReader.read("#{catalog.geometry_collection}");
+    $(features).each(function(k,f) {
+      f.geometry.transform('EPSG:4326', 'EPSG:3572');
+    })
+
+    var layer = new OpenLayers.Layer.Vector('Locations');   
+    layer.addFeatures(features);
+    map.addLayer(layer);
+    map.zoomToExtent(layer.getDataExtent());
+  });
+
