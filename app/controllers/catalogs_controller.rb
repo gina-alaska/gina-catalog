@@ -40,6 +40,8 @@ class CatalogsController < ApplicationController
      #Agency.all #.group_by{|a| a.name[0]}
   
     @search_params = params[:search] || {}
+    @limit = params[:limit] || 30
+    @pagenum = params[:page] || 1
 
     advanced_opts = @search_params.reject { |k,v| v.blank? or ['q', 'catalog_collection_ids'].include?(k) }
     @is_advanced = advanced_opts.keys.size > 0
@@ -52,7 +54,7 @@ class CatalogsController < ApplicationController
       @search_params[:published_only] = true
     end
     
-    @search = solr_search(@search_params, params[:page], params[:limit])
+    @search = solr_search(@search_params, @pagenum, @limit)
     if @search.respond_to? :results
       @results = @search.results
       @total = @search.total

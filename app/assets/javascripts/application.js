@@ -17,6 +17,14 @@
 
 
 $(document).ready(function(){
+  $(document).on("click", '[data-behaviour="stash"]', function(evt) {
+    evt.preventDefault();
+    var target = $(this).data("target");
+    var value = $(this).data("value");
+    $(target).val(value);
+    $(target).parents("form").submit();
+  });
+  
   $("[data-behaviour='load_collection']").on("click", function(){
     var target = $(this).data("target");
     if($(target).val() == $(this).data("value")) {
