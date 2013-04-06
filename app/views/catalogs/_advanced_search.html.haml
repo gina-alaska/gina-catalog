@@ -8,6 +8,23 @@
       = submit_tag 'Search', class: 'btn btn-primary btn-block'
   .row-fluid
     .span12
+      .nav.dropdown
+        = link_to '#', class: "btn dropdown-toggle", data: { toggle: "dropdown" } do
+          %b.caret
+          %i.icon-list
+          Records to display per page
+        %ul.dropdown-menu
+          %li
+            =link_to search_path(limit: "10"), method: :get do
+              10 Records
+          %li
+            =link_to search_path(limit: "30"), method: :get do
+              30 Records
+          %li
+            =link_to search_path(limit: "50"), method: :get do
+              50 Records
+  .row-fluid
+    .span12
       %ul.nav.nav-list
         %li.nav-header Collections
         -current_setup.catalog_collections.each do |coll|
