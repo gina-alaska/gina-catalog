@@ -1,7 +1,9 @@
 class Location < ActiveRecord::Base
   set_rgeo_factory_for_column(:geom, RGeo::Geographic.simple_mercator_factory(:srid => 4326))
 
-  belongs_to :asset, :polymorphic => true
+  belongs_to :asset, class_name: 'Catalog'
+
+   #, :polymorphic => true
 
   # def geom_coords
   #   geom.try(:text_representation)
