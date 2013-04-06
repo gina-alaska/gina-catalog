@@ -4,7 +4,7 @@
 .content
   .row-fluid
     .span4.sidebar
-      = render 'advanced_search', search_params: @search_params
+      = render 'advanced_search', search_params: @search_params, results: @results
     
       #map{ data: {                                       |
         openlayers: 'map_canvas',                         |

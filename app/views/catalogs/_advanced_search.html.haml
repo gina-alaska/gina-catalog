@@ -1,5 +1,7 @@
 = form_tag search_url, style: 'width:100%' do
   = hidden_field_tag 'search[catalog_collection_ids]', search_params[:catalog_collection_ids], id: "collection_id"
+  = hidden_field_tag 'limit', @limit, id: 'limit'
+  
   %h4 Keyword search
   .row-fluid
     .span9
@@ -7,22 +9,23 @@
     .span3
       = submit_tag 'Search', class: 'btn btn-primary btn-block'
   .row-fluid
-    .span12
-      .nav.dropdown
-        = link_to '#', class: "btn dropdown-toggle", data: { toggle: "dropdown" } do
-          %b.caret
-          %i.icon-list
-          Records to display per page
+    .span6
+      %p{ style: 'padding-top: 5px;' }= display_result_info(@results, @pagenum, @limit, @total)
+    .span6
+      .nav.dropdown{style:'color:#000;'}
+        = link_to '#', class: "btn btn-block dropdown-toggle", data: { 'loading-text' => 'Loading...', toggle: "dropdown" } do
+          = "Limit: #{@limit}"
+          %i.caret
         %ul.dropdown-menu
           %li
-            =link_to search_path(limit: "10"), method: :get do
-              10 Records
-          %li
-            =link_to search_path(limit: "30"), method: :get do
+            =link_to search_path(limit: "30"), data: { behaviour: 'stash', target: '#limit', value: 30 }, method: :get do
               30 Records
           %li
-            =link_to search_path(limit: "50"), method: :get do
-              50 Records
+            =link_to search_path(limit: "100"), data: { behaviour: 'stash', target: '#limit', value: 100 }, method: :get do
+              100 Records
+          %li
+            =link_to search_path(limit: "500"), data: { behaviour: 'stash', target: '#limit', value: 500 }, method: :get do
+              500 Records
   .row-fluid
     .span12
       %ul.nav.nav-list
