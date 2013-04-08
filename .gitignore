@@ -31,3 +31,4 @@ db/data
 .DS_Store
 *.pid
 /uploads
+.zeus.sock
