@@ -31,4 +31,35 @@ class Setup < ActiveRecord::Base
       'facebook_url' => self.facebook_url
   	}
   end
+  
+  def self.clone_from(setup, site = {})
+    raise 'Need default url for the new setup' unless site.include? :default_url
+    
+    new_site = Setup.new(title: site[:title], by_line: site[:by_line])
+    new_site.urls.build(url: site[:default_url])
+    new_site.save!
+    
+    @layout_map = {}
+    setup.layouts.each do |l|
+      layout = l.dup
+      layout.save!
+      new_site.layouts << layout
+      @layout_map[l.id] = layout
+    end
+    
+    setup.snippets.each do |p|
+      snippet = p.dup
+      snippet.save!
+      new_site.snippets << snippet
+    end
+    
+    setup.pages.roots.each do |p|
+      page = p.dup
+      page.page_layout = @layout_map[p.page_layout.id]
+      page.save!      
+      new_site.pages << page
+    end
+    
+    new_site
+  end
 end
