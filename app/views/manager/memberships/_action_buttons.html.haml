@@ -1,4 +1,6 @@
 .btn-group
+  = link_to resend_invite_manager_membership_path(item.id), class: 'btn', title: "Resend Invite" do
+    %i.icon-envelope    
   = link_to edit_manager_membership_path(item.id), class: 'btn', title: "Edit" do
     %i.icon-edit    
   = link_to manager_membership_path(item.id), method: :delete, class: 'btn btn-danger', confirm: "Are you sure?", title: "Delete Membership" do

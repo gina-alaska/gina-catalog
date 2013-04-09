@@ -51,7 +51,9 @@ NSCatalog::Application.routes.draw do
 
     resources :contacts
     resources :roles
-    resources :memberships
+    resources :memberships do
+      get :resend_invite, on: :member
+    end
 
     resources :people do
       collection do
