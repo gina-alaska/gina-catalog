@@ -14,7 +14,8 @@ class Catalog < ActiveRecord::Base
 
   validates_presence_of :title
   validates_presence_of :type
-  validates_presence_of :owner_id
+  # validates_presence_of :owner_id
+  
   #validates_presence_of :license_id
 
   #after_create :setup_path
@@ -24,6 +25,7 @@ class Catalog < ActiveRecord::Base
   belongs_to :owner, :class_name => 'User'
   belongs_to :primary_contact, :class_name => 'Person'
   belongs_to :data_source
+  belongs_to :owner_setup, :class_name => 'Setup'
   
   has_and_belongs_to_many :setups, uniq: true
   
@@ -132,6 +134,8 @@ class Catalog < ActiveRecord::Base
       type
     end
     string :uuid
+    
+    integer :owner_setup_id
     integer :setup_ids, :multiple => true
     integer :id
     integer :owner_id
@@ -390,6 +394,15 @@ Title: #{self.title}
     end
 
     "GEOMETRYCOLLECTION(#{locs.join(',')})"
+  end
+  
+  def self.assign_owner_setups
+    Catalog.includes(:setups).where(owner_setup_id:nil).each do |c|
+      if c.owner_setup.nil?
+        c.owner_setup = c.setups.first
+        c.save
+      end
+    end
   end
 
   protected
