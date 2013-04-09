@@ -395,6 +395,15 @@ Title: #{self.title}
 
     "GEOMETRYCOLLECTION(#{locs.join(',')})"
   end
+  
+  def self.assign_owner_setups
+    Catalog.includes(:setups).where(owner_setup_id:nil).each do |c|
+      if c.owner_setup.nil?
+        c.owner_setup = c.setups.first
+        c.save
+      end
+    end
+  end
 
   protected
 
