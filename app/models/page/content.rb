@@ -3,7 +3,7 @@ require 'html/pipeline'
 class Page::Content < ActiveRecord::Base
   ICONS = ["icon-home","icon-file","icon-map-marker","icon-user","icon-info-sign","icon-question-sign","icon-envelope","icon-search","icon-star","icon-star-empty","icon-ok","icon-remove","icon-flag","icon-book","icon-bookmark","icon-print","icon-camera","icon-list","icon-picture","icon-exclamation-sign","icon-gift","icon-leaf","icon-fire","icon-calendar","icon-folder-close","icon-folder-open","icon-globe","icon-wrench","icon-briefcase"]
 
-  attr_accessible :content, :layout, :slug, :title, :sections, :page_layout_id, :page_layout, :parent_id, :redirect, :description, :main_menu, :menu_icon, :draft
+  attr_accessible :content, :layout, :slug, :title, :sections, :page_layout_id, :page_layout, :parent_id, :redirect, :description, :main_menu, :menu_icon, :draft, :updated_by_id
   
   acts_as_nested_set
   before_save :rebuild_slug
@@ -16,6 +16,7 @@ class Page::Content < ActiveRecord::Base
   has_many :images, :through => :page_images
   
   belongs_to :page_layout, class_name: 'Page::Layout'
+  belongs_to :updated_by, class_name: 'User'
   
   accepts_nested_attributes_for :images
   

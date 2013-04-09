@@ -1,4 +1,7 @@
-%h3= "Editing #{@page.title}"
+%h3.content
+  = "Editing #{@page.title}"
+  %small
+    = "Last updated at #{@page.updated_at} by #{@page.updated_by.try(:fullname)}."
 .row-fluid
   .span12.content
     = render 'form', page: @page
