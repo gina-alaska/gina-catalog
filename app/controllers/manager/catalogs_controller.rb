@@ -18,7 +18,7 @@ class Manager::CatalogsController < ManagerController
     @search = params[:search] || {}
     @search[:order_by] ||= 'title_sort-ascending'
     if @search.keys.count > 0
-      search = solr_search(@search, @page, @limit)
+      search = solr_search(@search, @page, @limit, true)
       @catalogs = search.results
     else
       @catalogs = Catalog.order('title ASC').page(@page).per(@limit)
@@ -53,6 +53,7 @@ class Manager::CatalogsController < ManagerController
   
   def create
     @catalog = Catalog.new(catalog_params)
+    @catalog.owner_setup = current_setup
     @catalog.setups << current_setup
     
     if @catalog.save

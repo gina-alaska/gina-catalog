@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130408235540) do
+ActiveRecord::Schema.define(:version => 20130409191056) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -126,6 +126,7 @@ ActiveRecord::Schema.define(:version => 20130408235540) do
     t.integer  "use_agreement_id"
     t.boolean  "request_contact_info", :default => false
     t.boolean  "require_contact_info", :default => false
+    t.integer  "owner_setup_id"
   end
 
   create_table "catalog_agencies", :id => false, :force => true do |t|
