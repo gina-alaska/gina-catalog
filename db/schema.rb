@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130405005025) do
+ActiveRecord::Schema.define(:version => 20130408235540) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -555,6 +555,7 @@ ActiveRecord::Schema.define(:version => 20130405005025) do
     t.boolean  "main_menu",      :default => true
     t.string   "menu_icon"
     t.boolean  "draft",          :default => false
+    t.integer  "updated_by_id"
   end
 
   create_table "page_images", :force => true do |t|
