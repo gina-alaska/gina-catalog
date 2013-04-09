@@ -3,7 +3,7 @@ module CatalogConcerns
     extend ActiveSupport::Concern
     
     module InstanceMethods
-      def solr_search(search, page=1, limit=10000)    
+      def solr_search(search, page=1, limit=10000, manager=false)    
         return [] if search.nil? or search.keys.empty?
     
         table_includes = {
@@ -38,7 +38,12 @@ module CatalogConcerns
           # end
 
           fulltext search[:q]
-          with :setup_ids, current_setup.id
+          
+          if manager
+            with :owner_setup_id, current_setup.id
+          else
+            with :setup_ids, current_setup.id
+          end
           with :id, catalog_ids unless catalog_ids.nil? or catalog_ids.empty?
           with :status, search[:status] if search[:status].present?
           with :long_term_monitoring, ((search[:long_term_monitoring].to_i > 0) ? true : false) if search.include? :long_term_monitoring

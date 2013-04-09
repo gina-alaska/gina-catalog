@@ -60,6 +60,12 @@ class Setup < ActiveRecord::Base
       new_site.pages << page
     end
     
+    setup.roles.each do |r|
+      role = r.dup
+      r.save!
+      new_site.roles << r
+    end
+    
     new_site
   end
 end
