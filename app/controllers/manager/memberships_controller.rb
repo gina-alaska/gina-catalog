@@ -17,7 +17,7 @@ class Manager::MembershipsController < ManagerController
     @site_title = current_setup.title
     
     respond_to do |format|
-      if @membership.save
+      if !current_setup.contact_email.blank? and @membership.save
         format.html do
           InviteMailer.invite_email(current_setup.default_invite, current_setup.contact_email, @site_title, @membership.email, params["add_text"], manager_url).deliver
           flash[:success] = "Created new membership for #{@membership.email}."
@@ -25,7 +25,11 @@ class Manager::MembershipsController < ManagerController
         end
       else
         format.html do
-          flash[:error] = 'Error while trying to create membership'
+          if current_setup.contact_email.blank?
+            flash[:error] = 'No contact email, please edit the site setup and add one.'
+          else
+            flash[:error] = 'Error while trying to create membership'
+          end
           render 'new'
         end
       end
