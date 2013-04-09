@@ -3,7 +3,7 @@ GINA Catalog
 
 New home for the GINA Catalog code base, this is a rewrite of the main interface used by the NSSI catalog to integrate some CMS capabilities with the current NSSI Catalog infrastructure.
 
-Current site available from http://catalog.northslope.org
+Current site available from http://portal.gina.alaska.edu
 
 Install Instructions
 --------------------
