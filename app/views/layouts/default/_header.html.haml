@@ -6,7 +6,7 @@
     %h1
       = current_setup.title
       %small= current_setup.by_line
-  = form_tag search_path, class: 'navbar-search quick-search' do
+  = form_tag search_path, class: 'navbar-search quick-search', id: 'data_quick_search' do
     = text_field_tag 'search[q]', nil, placeholder: "Quick Search", class: 'search-query'
 
 %ul.nav.nav-pills
