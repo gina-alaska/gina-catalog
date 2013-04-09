@@ -54,6 +54,7 @@ class Manager::PageContentsController < ManagerController
   def create
     @page = current_setup.pages.build(params[:page_content])
     current_setup.pages << @page
+    @page.updated_by = current_user
     
     if @page.save
       respond_to do |format|
@@ -74,6 +75,8 @@ class Manager::PageContentsController < ManagerController
   end
   
   def update
+    @page.updated_by = current_user
+
     if @page.update_attributes(params[:page_content])
       respond_to do |format|
         format.html {
