@@ -74,6 +74,19 @@ class Manager::MembershipsController < ManagerController
     end
   end
 
+  def resend_invite
+    @membership = current_setup.memberships.find(params[:id])
+    @site_title = current_setup.title
+    
+    respond_to do |format|
+      format.html do
+        InviteMailer.invite_email(current_setup.default_invite, current_setup.contact_email, @site_title, @membership.email, "", manager_url).deliver
+        flash[:success] = "Sent another invite to #{@membership.email}."
+        redirect_to manager_memberships_path
+      end
+    end
+  end
+
   protected
   
   def authenticate_manage_members!
