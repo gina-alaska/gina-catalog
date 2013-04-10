@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130409191056) do
+ActiveRecord::Schema.define(:version => 20130410020115) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -157,6 +157,17 @@ ActiveRecord::Schema.define(:version => 20130409191056) do
     t.integer "catalog_id"
   end
 
+  create_table "catalogs_contacts", :force => true do |t|
+    t.integer  "catalog_id"
+    t.integer  "person_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "catalogs_contacts", ["catalog_id"], :name => "index_catalogs_contacts_on_catalog_id"
+  add_index "catalogs_contacts", ["person_id", "catalog_id"], :name => "index_catalogs_contacts_on_person_id_and_catalog_id"
+  add_index "catalogs_contacts", ["person_id"], :name => "index_catalogs_contacts_on_person_id"
+
   create_table "catalogs_data_types", :id => false, :force => true do |t|
     t.integer "catalog_id"
     t.integer "data_type_id"
@@ -174,7 +185,7 @@ ActiveRecord::Schema.define(:version => 20130409191056) do
     t.datetime "updated_at"
   end
 
-  create_table "catalogs_setups", :id => false, :force => true do |t|
+  create_table "catalogs_setups", :force => true do |t|
     t.integer "catalog_id"
     t.integer "setup_id"
   end

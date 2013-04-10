@@ -45,6 +45,7 @@ class Catalog < ActiveRecord::Base
   belongs_to :source_agency, :class_name => 'Agency'
   belongs_to :funding_agency, :class_name => 'Agency'
   has_and_belongs_to_many :agencies, :join_table => 'catalog_agencies'
+  #has_and_belongs_to_many :people, :join_table => 'catalogs_contacts'
   has_and_belongs_to_many :geokeywords, :order => 'name ASC' do
     def list
       proxy_association.owner.geokeywords.collection.join(', ')
@@ -67,6 +68,9 @@ class Catalog < ActiveRecord::Base
   end
 
   has_and_belongs_to_many :people, :join_table => 'catalog_people'
+
+  has_many :catalogs_contacts, uniq: true, dependent: :destroy
+  has_many :contacts, class_name: 'Person', through: :catalogs_contacts, uniq: true
 
   has_many :links, :as => :asset, :dependent => :destroy
   has_many :locations, foreign_key: 'asset_id', :dependent => :destroy

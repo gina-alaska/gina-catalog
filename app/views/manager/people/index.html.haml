@@ -66,6 +66,9 @@
         $(this).prop("checked", !$(this).attr("checked"));
       });
     });
+    $('.btn[data-loading-text]').on('ajax:before', function(evt) {
+      $(this).button('loading');
+    });
   })
 
   function getChecked(selector) {

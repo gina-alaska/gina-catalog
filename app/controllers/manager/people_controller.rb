@@ -77,6 +77,7 @@ class Manager::PeopleController < ManagerController
       flash[:success] = "Contact for #{@person.first_name} #{@person.last_name} was successfully deleted."
       format.html { redirect_to manager_people_path }
       format.json { head :no_content }
+      format.js
     end
   end
 

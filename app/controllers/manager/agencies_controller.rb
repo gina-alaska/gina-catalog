@@ -77,6 +77,7 @@ class Manager::AgenciesController < ManagerController
       flash[:success] = "Agency #{@agency.name} was successfully deleted."
       format.html { redirect_to manager_agencies_path }
       format.json { head :no_content }
+      format.js
     end
   end
 
@@ -105,6 +106,7 @@ class Manager::AgenciesController < ManagerController
   end
 
   protected
+
   def search_params
     params[:search] || {}
   end

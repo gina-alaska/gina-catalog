@@ -10,7 +10,10 @@ class Person < ActiveRecord::Base
   has_many :phone_numbers
 
   has_and_belongs_to_many :setups, join_table: 'persons_setups', uniq: true
-  
+  #has_and_belongs_to_many :catalogs, join_table: 'catalogs_contacts', uniq: true
+  has_many :catalogs_contacts, uniq: true, dependent: :destroy
+  has_many :catalogs, :through => :catalogs_contacts
+
   validates_presence_of   :first_name
   validates_presence_of   :last_name
 #  validates_associated    :phone_numbers, :addresses
