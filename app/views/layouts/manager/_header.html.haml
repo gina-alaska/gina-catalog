@@ -1,7 +1,9 @@
-.navbar.navbar-inverse.navbar-static-top
-  .navbar-inner
-    .brand= current_setup.title
-    %ul.nav.pull-right
+.row-fluid
+  .span12.portal-manager-header
+    %h2.pull-left
+      = "#{current_setup.title}"
+      %small Portal Manager
+    %ul.nav.nav-pills.pull-right
       %li
         = link_to 'View website', root_path
       %li
@@ -9,5 +11,5 @@
 
       = render 'layouts/manager/menu'
       = render 'layouts/admin/menu'
-        
+    
       %li= link_to 'Logout', logout_path

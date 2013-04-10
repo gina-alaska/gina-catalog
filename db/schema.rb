@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130409191056) do
+ActiveRecord::Schema.define(:version => 20130409233400) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -174,7 +174,7 @@ ActiveRecord::Schema.define(:version => 20130409191056) do
     t.datetime "updated_at"
   end
 
-  create_table "catalogs_setups", :id => false, :force => true do |t|
+  create_table "catalogs_setups", :force => true do |t|
     t.integer "catalog_id"
     t.integer "setup_id"
   end

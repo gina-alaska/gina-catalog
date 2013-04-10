@@ -27,7 +27,9 @@ class Catalog < ActiveRecord::Base
   belongs_to :data_source
   belongs_to :owner_setup, :class_name => 'Setup'
   
-  has_and_belongs_to_many :setups, uniq: true
+  has_many :catalogs_setups, uniq: true
+  has_many :setups, :through => :catalogs_setups, uniq: true
+  #has_and_belongs_to_many :setups, uniq: true
   
   has_and_belongs_to_many :catalog_collections, uniq: true do
     def list

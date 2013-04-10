@@ -4,6 +4,7 @@ class Manager::CatalogsController < ManagerController
   before_filter :authenticate_edit_records!, only: [:edit, :new, :create, :update]
   before_filter :authenticate_publish_records!, only: [:unpublish, :publish]
   before_filter :fetch_record, :except => [:index, :create, :new, :toggle_collection]
+  before_filter :restrict_to_current_setup, :except => [:index, :create, :new, :toggle_collection, :show]
   
   SUBMENU = '/layouts/manager/catalog_menu'
   PAGETITLE = 'Data Records'
@@ -189,5 +190,12 @@ class Manager::CatalogsController < ManagerController
   
   def fetch_record
     @catalog = Catalog.includes(:tags, :links, :locations, :agencies, :geokeywords, :people).find(params[:id])
+  end
+  
+  def restrict_to_current_setup
+    if fetch_record.owner_setup != current_setup
+      flash[:warning] = "This record can only be managed from the #{@catalog.owner_setup.title} portal"
+      redirect_to manager_catalog_path(@catalog)
+    end
   end
 end
