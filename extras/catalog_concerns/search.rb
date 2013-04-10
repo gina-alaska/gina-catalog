@@ -55,7 +55,7 @@ module CatalogConcerns
           with :iso_topic_ids, search[:iso_topic_ids] if search[:iso_topic_ids].present?
           with :catalog_collection_ids, search[:catalog_collection_ids] if search[:catalog_collection_ids].present?
           with :primary_contact_id, search[:primary_contact_id] if search[:primary_contact_id].present?
-          with :person_ids, search[:contact_ids] if search[:contact_ids].present?
+          with :contact_ids, search[:contact_ids] if search[:contact_ids].present?
           with :geokeywords_name, search[:region] if search[:region].present?
           with :data_types, search[:data_types] if search[:data_types].present?
           with :agency_types, search[:agency_types] if search[:agency_types].present?

@@ -148,7 +148,7 @@ class Catalog < ActiveRecord::Base
     integer :data_source_id
     integer :source_agency_id
     integer :funding_agency_id
-    integer :person_ids, :references => Person, :multiple => true
+    integer :contact_ids, :references => Person, :multiple => true
     integer :agency_ids, :references => Agency, :multiple => true
     integer :iso_topic_ids, :multiple => true
     integer :catalog_collection_ids, :multiple => true
