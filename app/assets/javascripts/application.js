@@ -17,6 +17,12 @@
 
 
 $(document).ready(function(){
+  setTimeout(function() { 
+    $('.carousel').carousel({
+      interval: $('.carousel').data('interval')
+    }); 
+  }, $('.carousel').data('start-delay') || 5000);
+  
   $(document).on("click", '[data-behaviour="stash"]', function(evt) {
     evt.preventDefault();
     var target = $(this).data("target");

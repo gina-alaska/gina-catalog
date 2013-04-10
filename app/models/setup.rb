@@ -6,9 +6,13 @@ class Setup < ActiveRecord::Base
   has_and_belongs_to_many :pages, class_name: 'Page::Content', join_table: 'pages_setups'
   has_and_belongs_to_many :layouts, class_name: 'Page::Layout', join_table: 'page_layouts_setups'
   has_and_belongs_to_many :snippets, class_name: 'Page::Snippet'
-  has_and_belongs_to_many :catalogs
   has_and_belongs_to_many :persons, join_table: 'persons_setups'
   has_and_belongs_to_many :agencies, join_table: 'agencies_setups'
+
+
+  has_many :catalogs_setups, uniq: true
+  has_many :catalogs, through: :catalog_setups
+#  has_and_belongs_to_many :catalogs
   
   has_many :catalog_collections
   has_many :contacts

@@ -1,14 +1,13 @@
-.center-paging
-  = paginate @catalogs
-%table.table.table-bordered.table-striped.table-condensed#catalog-items
+%table.table.table-striped.table-condensed#catalog-items
   %thead
     %tr
-      %td{colspan:7,style:'padding:0;'}
+      %td{colspan:8,style:'padding:0;'}
         .navbar.navbar-static-top
           .navbar-inner
             .btn-group
               %button#check-toggle.btn{data: { action: 'toggle-checkbox', target: '.item-checkbox' }, title: "Toggle CheckBoxes" }
                 %i.icon-check
+            .btn-group
               %button.btn{data: { action: 'expand-all', target: '.collapse' }, title: "Expand All"}
                 %i.icon-plus-sign
               %button.btn{data: { action: 'collapse-all', target: '.collapse' }, title: "Collapse All"}
@@ -29,9 +28,12 @@
                 %i.icon-plus.icon-white
                 New Record
             
-            = form_tag manager_catalogs_path, method: 'GET', class: 'navbar-form form-search pull-right' do        
-              .input-append
-                = text_field_tag 'search[q]', @search[:q], class: 'search-query span5', placeholder: "Search"
+            = form_tag manager_catalogs_path, method: 'GET', class: 'navbar-form form-search pull-right' do
+              = hidden_field_tag 'search[editable]', @search[:editable] || 'false', id: 'search_editable'
+              .input-prepend.input-append
+                %button.btn{ type: "button", class: @search[:editable] == 'true' ? 'active' : '', data: { toggle: 'button', action: 'editable-only', target: '#search_editable' }, title: 'Show editable records only' }
+                  %i.icon-edit              
+                = text_field_tag 'search[q]', @search[:q], class: 'span5', placeholder: "Search"
                 = submit_tag 'Search', class: 'btn btn-primary'
     %tr
       %th{style:'width:25px;'}
@@ -41,6 +43,7 @@
       %th Start year
       %th End year
       %th Source agency
+      %th Editable?
   %tbody
     - @catalogs.each do |item|
       %tr{data: { toggle: 'collapse', target: "#row_#{dom_id(item)}" }}
@@ -70,6 +73,11 @@
         %td= item.start_date.try(:year)
         %td= item.end_date.try(:year)
         %td= item.source_agency
+        %td
+          - if item.owner_setup.id == current_setup.id 
+            Yes
+          - else
+            %abbr{ title: "This record is shared from the #{item.owner_setup.try(:title)} portal"} No
 
 .center-paging
   = paginate @catalogs
@@ -81,6 +89,21 @@
         $(this).prop("checked", !$(this).attr("checked"));
       });
     });
+    
+    $('[data-action="editable-only"]').on('click', function(evt) {
+      if( $(this).attr('data-toggle') == 'button' ) {
+        evt.stopPropagation();
+        var target = $(this).data('target');
+        $(this).toggleClass('active');
+      
+        if( $(this).hasClass('active') ) {
+          $(target).val('true');
+        } else {
+          $(target).val('false');
+        }
+        $(target).parents('form').submit();
+      }
+    })
   })
 
   function CollToggle(coll_id) {  

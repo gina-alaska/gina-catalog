@@ -19,7 +19,7 @@ class CmsRenderers
             'textarea' => ['rows', 'cols', 'name', 'class'],
             'img' => ['src', 'alt', 'data-src'],
             'span' => ['class'],
-            'div' => ['itemscope', 'itemtype', 'style'],
+            'div' => ['itemscope', 'itemtype', 'style', 'data-interval', 'data-start-delay'],
             'style' => ['type'],
             :all => ['abbr', 'accept', 'accept-charset',
                       'accesskey', 'action', 'align', 'alt', 'axis',
