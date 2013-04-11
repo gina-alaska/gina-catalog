@@ -65,4 +65,49 @@ module ApplicationHelper
     end
     link_to_function(name, "add_fields(this, \"#{association}\", \"#{escape_javascript(fields)}\")", html_options)
   end
+  
+  def build_result_layer(map, results)
+    output = <<-EOJS
+      var features, layer = new OpenLayers.Layer.Vector('Search Results'),
+          wktReader = new OpenLayers.Format.WKT();
+    EOJS
+    
+    @results.each do |result|
+      next if result.geometry_center_collection.empty?
+      
+      output << <<-EOJS
+      features = wktReader.read('#{result.geometry_center_collection}');
+      if (features.length > 0) {
+        $(features).each(function(k,f) {
+          f.geometry.transform('EPSG:4326', 'EPSG:3572');
+          f.attributes = { record_id: '#{dom_id(result, :record)}', type: '#{result.type}' }
+        });
+        layer.addFeatures(features);
+      }
+      EOJS
+    end
+    
+    output << <<-EOJS
+    #{map}.addLayer(layer);
+    #{map}.zoomToExtent(layer.getDataExtent());
+
+    var select = new OpenLayers.Control.SelectFeature(layer, {
+      autoActivate: true,
+      onSelect: function(feature) {
+        var el = $('#' + feature.attributes.record_id);
+        var parent = $('body');
+      
+        var cur_scroll = parent.scrollTop();
+        parent.animate({
+          scrollTop: el.offset().top
+        });
+        el.effect("highlight", {}, 1500);
+      }
+    });
+    #{map}.addControl(select);
+    EOJS
+    
+    output.html_safe
+  end
+    
 end

@@ -1,23 +1,15 @@
-.search {
-  .result {
-    border: 1px solid #CFCFCF;
-    background-color: #EFEFEF;
-    @include border-radius(5px);
-    margin-top: 10px;
-
-    .content {
-      padding: 5px 10px;
-    }
-    
-    .pointer {
-      cursor: pointer;
-    }
-    
-    .buttons {
-      padding: 5px;
-      text-align: right;
-      border-top: 1px solid #CFCFCF;
-    }
+.search table.results {
+  td {
+    padding: 5px;
+  }
+  
+  .title {
+    margin: 0;
+    margin-bottom: 5px;
+  }
+  
+  .status, .description {
+    margin-left: 10px;
   }
 }
 
