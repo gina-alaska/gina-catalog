@@ -43,11 +43,11 @@ class CatalogsController < ApplicationController
     @limit = params[:limit] || 30
     @pagenum = params[:page] || 1
 
-    advanced_opts = @search_params.reject { |k,v| v.blank? or ['q', 'catalog_collection_ids'].include?(k) }
+    advanced_opts = @search_params.reject { |k,v| v.blank? or ['q', 'catalog_collection_ids', 'order_by'].include?(k) }
     @is_advanced = advanced_opts.keys.size > 0
     
-    if @search_params['q'].blank?
-      @search_params['order_by'] ||= 'title_sort-ascending'
+    if @search_params['q'].nil? or @search_params['q'].blank?
+      @search_params[:order_by] = 'title_sort-ascending'
     end
     
     unless current_user and current_member.can_manage_cms?
