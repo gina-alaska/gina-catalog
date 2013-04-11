@@ -37,3 +37,9 @@ a.goto-top {
   color: white;
   @include border-radius(10px);
 }
+
+.nav .dropdown-toggle .caret {
+  border-top-color: #000;
+  border-bottom-color: #000;
+  margin-top: 8px;
+}
