@@ -1,12 +1,18 @@
 - collapse ||= false
 - if catalog.published? or (current_user and current_member.can_manage_catalog?)
   %tr
-    %td{id: dom_id(catalog, :record)}
+    %td.result{id: dom_id(catalog, :record)}
       %h5.title
+        = link_to "##{dom_id(catalog, :description)}", data: { toggle: "collapse" } do
+          %i.icon-caret-down.collapse-icon
+          = catalog.title.try(:truncate,80)
         - if !catalog.published?
-          %i.icon-warning{ title: 'Catalog record is not public' }
-        = link_to catalog.title.try(:truncate,80), "##{dom_id(catalog, :description)}", data: { toggle: "collapse" }
+          %i.icon-warning-sign{ title: 'Catalog record is not public' }
+          
       .collapse{id: dom_id(catalog, :description)}
+        - if !catalog.published?
+          .alert.alert-warning
+            This record has not been published
         .description
           :markdown
             #{catalog.description.try(:html_safe)}

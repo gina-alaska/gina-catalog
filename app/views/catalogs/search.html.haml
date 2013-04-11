@@ -43,3 +43,13 @@
       map.addControl(new OpenLayers.Control.MousePosition({ displayProjection: 'EPSG:4326', numDigits: 3 }));
       #{ build_result_layer('map', @results) }        
     });
+    $('.collapse').on('show', function() {
+      var icon = $(this).parents('.result').find('i.collapse-icon');
+      icon.removeClass('icon-caret-down');
+      icon.addClass('icon-caret-up');
+    });
+    $('.collapse').on('hide', function() {
+      var icon = $(this).parents('.result').find('i.collapse-icon');
+      icon.removeClass('icon-caret-up');
+      icon.addClass('icon-caret-down');
+    });
