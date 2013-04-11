@@ -4,7 +4,7 @@ module CatalogsHelper
     enditem = [startitem + limit.to_i - 1, total].min
     
     if total > 0
-      "Display #{startitem}-#{enditem} of #{total}"
+      "Showing #{startitem}-#{enditem} of #{total}"
     else
       "No results displayed"
     end
