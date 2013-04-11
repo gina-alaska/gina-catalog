@@ -395,11 +395,23 @@ Title: #{self.title}
   end
 
   def geometry_collection
-    locs = self.locations.collect do |location|
-      location.wkt
+    locs = self.locations.collect(&:wkt).compact
+    
+    if locs.count > 0
+      "GEOMETRYCOLLECTION(#{locs.join(',')})"
+    else
+      ''
     end
-
-    "GEOMETRYCOLLECTION(#{locs.join(',')})"
+  end
+  
+  def geometry_center_collection
+    locs = self.locations.collect { |l| l.center.try(:as_text) }.compact
+    
+    if locs.count > 0
+      "GEOMETRYCOLLECTION(#{locs.join(',')})"
+    else
+      ''
+    end
   end
   
   def self.assign_owner_setups

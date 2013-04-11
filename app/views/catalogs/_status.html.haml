@@ -15,8 +15,12 @@
     .span3
       %strong End Date:
       = item.end_date.strftime('%Y/%m/%d')  
-- unless item.data_types.empty?
   .row-fluid
     .span12
-      %strong Data Types:
-      = item.data_types.collect(&:name).join(', ')
+      - unless item.data_types.empty?
+        %strong Data Types:
+        = item.data_types.collect(&:name).join(', ')
+        %br/
+      - unless item.tags.empty?
+        %strong Tags:
+        = item.tags.list
