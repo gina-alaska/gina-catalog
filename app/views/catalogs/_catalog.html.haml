@@ -1,16 +1,25 @@
 - collapse ||= false
-%dl.catalog
-  %h4.title= catalog.title
-  - if !catalog.published?
-    .alert.alert-warning
-      %h4 This data record is pending review by the system moderators
-      After a moderator has reviewed the project, it will become available for public viewing
-  - if catalog.published? or (current_user and current_user.is_an_admin?)
-    = render 'catalogs/status', item: catalog
-
-    %dt Description
-    %dd
-      :markdown
-        #{catalog.description}
-        
-    = render 'catalogs/collapsed_content', item: catalog, collapse: collapse
+- if catalog.published? or (current_user and current_member.can_manage_catalog?)
+  %tr
+    %td.result{id: dom_id(catalog, :record)}
+      %h5.title
+        = link_to "##{dom_id(catalog, :description)}", data: { toggle: "collapse" } do
+          %i.icon-caret-down.collapse-icon
+          = catalog.title.try(:truncate,80)
+        - if !catalog.published?
+          %i.icon-warning-sign{ title: 'Catalog record is not public' }
+          
+      .collapse{id: dom_id(catalog, :description)}
+        - if !catalog.published?
+          .alert.alert-warning
+            This record has not been published
+        .description
+          :markdown
+            #{catalog.description.try(:html_safe)}
+          /.try(:truncate, 200)}
+        .status
+          = render 'status', item: catalog
+        .btn-group.pull-right
+          = link_to catalog, class: 'btn btn-primary' do
+            %i.icon-eye-open
+            View
