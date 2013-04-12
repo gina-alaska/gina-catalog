@@ -1,4 +1,5 @@
 class Manager::UseAgreementsController < ManagerController
+  before_filter :authenticate_access_catalog!
 
   SUBMENU = '/layouts/manager/catalog_menu'
   PAGETITLE = 'Use Agreements'
