@@ -27,7 +27,7 @@ class Manager::UseAgreementsController < ManagerController
 
     if @agreement.save
       respond_to do |format|
-        flash[:success] = "Use agreement #{@agreement.title} was successfully created."
+        flash[:success] = "Successfully created #{@agreement.title}."
         format.html { redirect_to manager_use_agreements_path }
       end
     else
@@ -47,7 +47,7 @@ class Manager::UseAgreementsController < ManagerController
 
     if @agreement.update_attributes(params[:use_agreement])
       respond_to do |format|
-        flash[:success] = "Use agreement #{@agreement.title} was successfully updated."
+        flash[:success] = "Successfully updated #{@agreement.title}."
         format.html { redirect_to manager_use_agreements_path }
         format.json { head :nocontent }
       end
@@ -65,9 +65,9 @@ class Manager::UseAgreementsController < ManagerController
 
     respond_to do |format|
       if @agreement.catalogs.count == 0
-        flash[:success] = "Use agreement #{@agreement.title} was successfully deleted."
+        flash[:success] = "Successfully deleted #{@agreement.title}."
       else
-        flash[:error] = "Use agreement #{@agreement.title} is associated and was not deleted!"
+        flash[:error] = "#{@agreement.title} is assigned to catalog records and cannot be deleted."
       end
       format.html { redirect_to manager_use_agreements_path }
       format.json { head :no_content }
