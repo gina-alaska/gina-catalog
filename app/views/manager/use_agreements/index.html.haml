@@ -11,10 +11,12 @@
       %tr
         %th Title
         %th Required?
+        %th.span2 Records
         %th.span1 Actions
     %tbody
       - @agreements.each do |item|
         %tr
           %td= link_to "#{item.title}", edit_manager_use_agreement_path(item)
           %td= item.required? ? 'Yes' : 'No'
+          %td= item.catalogs.count
           %td= render "action_buttons", item: item
