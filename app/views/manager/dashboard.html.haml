@@ -1,2 +1,36 @@
-.brand
-  Manager Dashboard
+.content
+  .row-fluid
+    .span12
+      = "Total Downloads = #{@total_downloads.count}"
+  .row-fluid
+    .span6
+      %table.table.table-bordered.table-striped.table-condensed
+        %head
+          %tr
+            %td{colspan: 3} Latest Accessed
+          %tr
+            %th Data Record
+            %th Name
+            %th Email
+        - @latest_access.each do |item|
+          %tr
+            %td
+              = Catalog.find(item.catalog_id).title
+            %td
+              = item.name
+            %td
+              = item.email
+    .span6
+      %table.table.table-bordered.table-striped.table-condensed
+        %head
+          %tr
+            %td{colspan: 2} Top Downloads
+          %tr
+            %th Data Record
+            %th Count
+        - @top_downloads.each do |item|
+          %tr
+            %td
+              = Catalog.find(item.catalog_id).title
+            %td
+              = item.download_count
