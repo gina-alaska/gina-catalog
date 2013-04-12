@@ -1,0 +1,11 @@
+.row-fluid
+  .span12
+    %h4.pull-left
+      - if controller.class.const_defined?(:PAGETITLE)
+        .brand= "Catalog: #{controller.class::PAGETITLE}"
+      - else
+        .brand= "Catalog"
+    %ul.nav.pull-right.nav-pills
+      %li= link_to 'Home', manager_path
+      %li= link_to 'Use Agreements', manager_use_agreements_path
+      %li= link_to 'Contact Info', manager_people_path
