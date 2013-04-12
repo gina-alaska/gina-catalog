@@ -25,7 +25,7 @@ class Manager::UseAgreementsController < ManagerController
   def create
     @agreement = current_setup.use_agreements.build(params[:use_agreement])
 
-    if @agreement.save!
+    if @agreement.save
       respond_to do |format|
         flash[:success] = "Use agreement #{@agreement.title} was successfully created."
         format.html { redirect_to manager_use_agreements_path }
