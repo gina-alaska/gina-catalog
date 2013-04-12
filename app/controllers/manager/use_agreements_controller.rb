@@ -61,10 +61,14 @@ class Manager::UseAgreementsController < ManagerController
 
   def destroy
     @agreement = UseAgreement.find(params[:id])
-    @agreement.destroy
+    @agreement.destroy if @agreement.catalogs.count == 0
 
     respond_to do |format|
-      flash[:success] = "Use agreement #{@agreement.title} was successfully deleted."
+      if @agreement.catalogs.count == 0
+        flash[:success] = "Use agreement #{@agreement.title} was successfully deleted."
+      else
+        flash[:error] = "Use agreement #{@agreement.title} is associated and was not deleted!"
+      end
       format.html { redirect_to manager_use_agreements_path }
       format.json { head :no_content }
       format.js
