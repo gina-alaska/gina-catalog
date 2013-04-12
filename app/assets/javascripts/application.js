@@ -1,3 +1,4 @@
+//= require turbolinks
 //= require 'jquery'
 //= require 'jquery_ujs'
 //= require 'jquery.markitup'
@@ -15,8 +16,8 @@
 //= require 'projections'
 //= require 'maps'
 //= require 'catalogs'
+//= require 'analytics'
 //= require_self
-//= require turbolinks
 
 
 var initialize_page = function(){
