@@ -1,0 +1,22 @@
+.content
+  %table.table.table-condensed.table-bordered.table-striped{style: 'margin-top: 5px;' }
+    %thead
+      %tr
+        %td{colspan: 4}
+          .pull-right
+            .btn-group
+              = link_to new_manager_use_agreement_path, class: 'btn btn-success' do
+                %i.icon-plus.icon-white
+                  New Use Agreement
+      %tr
+        %th Title
+        %th Required?
+        %th.span2 Records
+        %th.span1 Actions
+    %tbody
+      - @agreements.each do |item|
+        %tr
+          %td= link_to "#{item.title}", edit_manager_use_agreement_path(item)
+          %td= item.required? ? 'Yes' : 'No'
+          %td= item.catalogs.count
+          %td= render "action_buttons", item: item
