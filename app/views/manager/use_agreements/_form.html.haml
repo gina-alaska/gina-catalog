@@ -1,0 +1,25 @@
+= form_for [:manager, @agreement] do |f|
+  - unless @agreement.errors.full_messages.empty?
+    .alert.alert-error
+      %h4 Errors prevents this record from being saved
+      %ul
+        - @agreement.errors.full_messages.each do |err|
+          %li= err
+  .row-fluid
+    .field.span12
+      = f.label :title
+      = f.text_field :title, class: "span3"
+
+      = f.label :content
+      = f.text_area :content, class: "span8"
+
+  .row-fluid
+    .span11.offset1
+      %label.checkbox
+        = f.check_box :required
+        Required
+   
+  .row-fluid
+    .span12
+      .form-actions
+        = f.submit class: 'btn btn-primary pull-right'

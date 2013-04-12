@@ -1,0 +1,24 @@
+.content
+  %table.table.table-condensed{style: "border-top: none;"}
+    %tr
+      %td{style: "border-top: none;"}
+        .pull-right
+          .btn-group
+            = link_to new_manager_use_agreement_path, class: 'btn btn-success' do
+              %i.icon-plus.icon-white
+                New Use Agreement
+    #agreements.accordion
+      - @agreements.each do |item|
+        %tr
+          %td{style: "border-top: none;"}
+            .accordion-group
+              .accordion-heading
+                .pull-right{style:"padding: 3px 3px;"}
+                  = "Required" if item.required
+                  = "Not Required" unless item.required
+                  = render partial: "action_buttons", locals: {item: item}
+                = link_to "#{item.title}", "##{dom_id(item)}", class: 'accordion-toggle', data: { toggle: 'collapse', parent: '#agreements' }
+              .accordion-body.collapse{id: dom_id(item)}
+                .accordion-inner
+                  %p
+                    = item.content

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130410020115) do
+ActiveRecord::Schema.define(:version => 20130412194602) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -854,6 +854,7 @@ ActiveRecord::Schema.define(:version => 20130410020115) do
     t.boolean  "required",   :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "setup_id"
   end
 
   create_table "user_roles", :force => true do |t|

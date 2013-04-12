@@ -1,0 +1,11 @@
+.navbar.navbar-static-top
+  .navbar-inner
+    %ul.nav
+      %li
+        = link_to manager_use_agreements_path do
+          %i.icon-arrow-left
+          Back
+%h3= "Edit Use Agreement #{@agreement.title}"
+.row-fluid
+  .span12.content
+    = render 'form', agreement: @agreement
