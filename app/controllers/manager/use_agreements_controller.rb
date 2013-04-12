@@ -1,7 +1,7 @@
 class Manager::UseAgreementsController < ManagerController
 
-  SUBMENU = '/layouts/manager/dashboard_menu'
-  PAGETITLE = 'SDS'
+  SUBMENU = '/layouts/manager/catalog_menu'
+  PAGETITLE = 'Use Agreements'
 
   def index
     @agreements = UseAgreement.all
