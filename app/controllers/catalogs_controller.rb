@@ -51,8 +51,6 @@ class CatalogsController < ApplicationController
     else
       @search_params.delete(:order_by)
     end
-    logger.info '=-=-=-=-=-=-=-=-=-'
-    logger.info @search_params[:order_by]
     
     unless current_user and current_member.can_manage_cms?
       @search_params[:published_only] = true
