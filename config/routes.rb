@@ -87,7 +87,9 @@ NSCatalog::Application.routes.draw do
   resources :people
 
   resources :contacts, only: [:index, :create]
-  resources :catalogs
+  resources :catalogs do
+    get :download
+  end
 
      
   # Omniauth pure

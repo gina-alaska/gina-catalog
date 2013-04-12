@@ -20,7 +20,7 @@ gem 'uuidtools'
 gem 'kaminari'
 gem 'RedCloth'
 gem 'bluecloth'
-gem 'turbolinks', git: 'https://github.com/rails/turbolinks.git'
+gem 'turbolinks'
 gem 'html-pipeline'
 gem 'liquid'
 gem 'dragonfly'
@@ -74,6 +74,7 @@ gem 'sunspot_rails'
 group :development do
   #gem 'sunspot_solr'
   gem 'progress_bar'
+  gem 'chrome_logger' , :require => 'chrome_logger/railtie'
 end
 
 gem 'jquery-rails'
