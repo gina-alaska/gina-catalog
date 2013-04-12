@@ -42,7 +42,12 @@ class CatalogMap
   #end zoomToDefaultBounds  
 #end CatalogMap
 
-$(document).ready ->
+map_init = ->
   $('div[data-openlayers]').each -> 
     el = $(this).attr('id');
     new CatalogMap(this);
+
+$(document).ready ->
+  map_init();
+  $(document).on 'page:load', map_init
+  

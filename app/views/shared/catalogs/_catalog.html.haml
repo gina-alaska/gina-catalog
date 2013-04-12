@@ -4,7 +4,8 @@
     %h5.alert.alert-warning
       %i.icon-warning-sign
       This catalog record has not been published
-
+  .result{ data: { wkt: catalog.geometry_collection } }
+  
   %h4.title= catalog.title
 
   - if catalog.published? or (current_member and current_member.can_manage_catalog?)
@@ -26,22 +27,5 @@
           layers: ['TILE.EPSG:3572.BDL', 'TILE.EPSG:3572.OSM_OVERLAY'] |
           }, |
           style: 'border: 1px solid #cfcfcf;' }
-          #map_canvas{ style: 'width:100%; height:300px;' }             
-:javascript
-  var wktReader = new OpenLayers.Format.WKT();
-
-  $(document).ready(function() {
-    var map = $('#map').data('map').map;
-    map.addControl(new OpenLayers.Control.MousePosition({ displayProjection: 'EPSG:4326', numDigits: 3 }));
-
-    var features = wktReader.read("#{catalog.geometry_collection}");
-    $(features).each(function(k,f) {
-      f.geometry.transform('EPSG:4326', 'EPSG:3572');
-    })
-
-    var layer = new OpenLayers.Layer.Vector('Locations');   
-    layer.addFeatures(features);
-    map.addLayer(layer);
-    map.zoomToExtent(layer.getDataExtent());
-  });
+          #map_canvas{ style: 'width:100%; height:300px;' }
 
