@@ -22,9 +22,9 @@
         = render '/shared/catalogs/files', catalog: catalog  
         #map{ data: {                                       |
           openlayers: 'map_canvas',                         |
-          projection: 'EPSG:3572',                          |
+          projection: 'EPSG:3338',                          |
           displayProjection: 'EPSG:4326',                   |
-          layers: ['TILE.EPSG:3572.BDL', 'TILE.EPSG:3572.OSM_OVERLAY'] |
+          layers: ['TILE.EPSG:3338.*'] |
           }, |
           style: 'border: 1px solid #cfcfcf;' }
           #map_canvas{ style: 'width:100%; height:300px;' }

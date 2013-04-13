@@ -15,6 +15,7 @@
 //= require 'gina-map-layers/projections/all'
 //= require 'projections'
 //= require 'maps'
+//= require 'catalogs'
 //= require 'location_editor'
 //= require_self
 

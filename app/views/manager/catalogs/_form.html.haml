@@ -92,7 +92,7 @@
   .modal-header
     %button.close{ type: 'button', data: { dismiss: 'modal' } } &times;
     %h3 Location Editor
-  #map.modal-body{ style: 'position: relative; padding: 0; height:400px;', data: { openlayers: 'map_canvas', projection: 'EPSG:3572', layers: 'TILE.EPSG:3572.*' } }
+  #map.modal-body{ style: 'position: relative; padding: 0; height:400px;', data: { openlayers: 'map_canvas', projection: 'EPSG:3338', layers: 'TILE.EPSG:3338.*' } }
     .navbar.navbar-static-top
       .navbar-inner
         .btn-group{ data: { toggle: 'buttons-radio' } }
@@ -129,11 +129,6 @@
     catalog_map.addBtnHandler('reset', function() { editor.addFeature(); });
     catalog_map.addBtnHandler('draw', function(el) { editor.drawFeature($(el).data('type')); });
     
-    var mouse_position = new OpenLayers.Control.MousePosition({ 
-      displayProjection: 'EPSG:4326', numDigits: 3, prefix: 'Mouse: '
-    });
-    map.addControl(mouse_position);
-    
     $('#location_editor').on('shown', function() {
       map.updateSize();
     });
@@ -163,6 +158,6 @@
       evt.preventDefault();
       input.val(editor.getWKT());      
       $('#location_editor').modal('hide');
-    });    
+    });
   })
   

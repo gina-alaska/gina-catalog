@@ -19,13 +19,11 @@ class Catalog
         el.effect("highlight", {}, 1500)
     })
     
-    @map.addControls([
-      select, 
-      new OpenLayers.Control.MousePosition({ displayProjection: @map.displayProjection, numDigits: 3 })
-    ])
+    @map.addControl(select)
     
   loadFeatures: =>
-    return unless $('#map').data('map')
+    geoms = $('[data-wkt]');
+    return unless geoms.length > 0 and $('#map').data('map') 
     
     @map = $('#map').data('map').map
     return unless @map
@@ -33,7 +31,7 @@ class Catalog
     @addLayer()    
     wktReader = new OpenLayers.Format.WKT()
     
-    $('[data-wkt]').each (k, result) =>
+    geoms.each (k, result) =>
       return unless $(result).data('wkt')
     
       features = wktReader.read($(result).data('wkt'));

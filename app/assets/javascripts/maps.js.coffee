@@ -28,9 +28,13 @@ class CatalogMap
     @data_config['displayProjection'] = @data_config['displayProjection'] || 'EPSG:4326'
     @config = Gina.Projections.get(@data_config['projection']);
     @config['projection'] = @data_config['projection']
-    @config['displayProjection'] = @data_config['displayProjection']
+    @config['displayProjection'] = @data_config['displayProjection'] || 'EPSG:4326'
     
     @map = new OpenLayers.Map(@data_config['openlayers'], @config)
+    @map.addControls([
+      new OpenLayers.Control.LayerSwitcher(),
+      new OpenLayers.Control.MousePosition({ displayProjection: @map.displayProjection, numDigits: 3 })
+    ])
     Gina.Layers.inject(@map, @data_config['layers']);
     @zoomToDefaultBounds()
   #end setupMap
