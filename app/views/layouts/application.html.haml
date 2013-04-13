@@ -9,6 +9,7 @@
     = render "layouts/#{theme}/analytics" unless current_setup.analytics_account.nil? or Rails.env == 'development'
     = csrf_meta_tag
   %body
+    .spinner-container
     #top
     - if !current_user.nil? and (current_user.access_cms? or current_user.access_catalog? or current_user.access_site_admin?)
       = link_to 'Manage Site', manager_path, class: 'btn btn-primary', style: 'position: absolute; top: 10px; right: 10px;'

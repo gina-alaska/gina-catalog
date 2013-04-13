@@ -95,10 +95,10 @@ $(document).on('click', '[data-action="scroll"]', function(evt) {
   }
 });
 $(document).on('page:fetch', function() {
-  $('body').spin('large');
+  $('.spinner-container').spin('large');
 });
 $(document).on('page:receive', function() {
-  $('body').spin(false)
+  $('.spinner-container').spin(false)
 });
 
 $(window).scroll(function() {
