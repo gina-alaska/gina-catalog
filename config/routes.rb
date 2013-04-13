@@ -17,6 +17,7 @@ NSCatalog::Application.routes.draw do
     end
     resources :images
     resources :use_agreements
+    resources :contact_infos
     
     resources :page_contents do
       get :upload_image, :on => :member
