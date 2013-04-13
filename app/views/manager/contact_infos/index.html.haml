@@ -1,0 +1,24 @@
+.content
+  .btn-group.pull-right
+    = link_to_prev_page @contact_infos, class: 'btn' do
+      %i.icon-angle-left
+    %button.btn
+      %span= display_result_info(@contact_infos, @page, @limit, @total)
+    = link_to_next_page @contact_infos, class: 'btn' do
+      %i.icon-angle-right
+  %table.table.table-bordered.table-striped.table-condensed
+    %thead
+      %tr
+        %th Date
+        %th Name
+        %th Email
+        %th Phone
+        %th Usage Description
+    %tbody
+      - @contact_infos.each do |item|
+        %tr
+          %td= item.created_at.strftime("%c")
+          %td= item.name
+          %td= item.email
+          %td= item.phone_number
+          %td= item.usage_description
