@@ -9,7 +9,7 @@ class Manager::ContactInfosController < ManagerController
     @limit = params["limit"].nil? ? 30 : params["limit"]
     @total = @contact_infos.count
 
-    @contact_infos = @contact_infos.order("created_at DESC").page(params["page"]).per(@limit)
+    @contact_infos = @contact_infos.order("created_at DESC").page(@page).per(@limit)
 
     respond_to do |format|
       format.html
