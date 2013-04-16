@@ -39,12 +39,17 @@ module CatalogConcerns
 
           fulltext search[:q]
           
-          with :owner_setup_id, current_setup.id if search[:editable] == 'true'
-          with :use_agreement_id, current_setup.id if search[:sds] == 'true'
-          
-          unless search[:editable] == 'true' or search[:sds] == 'true'
+          if search[:editable] == 'true'
+            with :owner_setup_id, current_setup.id 
+          else
             with :setup_ids, current_setup.id
           end
+          
+          with :sds, true if search[:sds] == 'true'
+          
+          # unless search[:editable] == 'true' or search[:sds] == 'true'
+          #   with :setup_ids, current_setup.id
+          # end
 
           with :id, catalog_ids unless catalog_ids.nil? or catalog_ids.empty?
           with :status, search[:status] if search[:status].present?

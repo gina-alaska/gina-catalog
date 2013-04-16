@@ -158,6 +158,9 @@ class Catalog < ActiveRecord::Base
     integer :data_type_ids, :multiple => true
     
     boolean :long_term_monitoring
+    boolean :sds do
+      self.use_agreement_id? or self.request_contact_info? or self.require_contact_info?
+    end
     
     integer :archived_at_year do
       archived_at.try(:year)
