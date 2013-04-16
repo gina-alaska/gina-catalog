@@ -74,7 +74,6 @@ gem 'sunspot_rails'
 group :development do
   #gem 'sunspot_solr'
   gem 'progress_bar'
-  gem 'chrome_logger' , :require => 'chrome_logger/railtie'
 end
 
 gem 'jquery-rails'
