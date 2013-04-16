@@ -30,10 +30,14 @@
             
             = form_tag manager_catalogs_path, method: 'GET', class: 'navbar-form form-search pull-right' do
               = hidden_field_tag 'search[editable]', @search[:editable] || 'false', id: 'search_editable'
+              = hidden_field_tag 'search[sds]', @search[:sds] || 'false', id: 'search_sds'
               .input-prepend.input-append
-                %button.btn{ type: "button", class: @search[:editable] == 'true' ? 'active' : '', data: { toggle: 'button', action: 'editable-only', target: '#search_editable' }, title: 'Show editable records only' }
-                  %i.icon-edit              
-                = text_field_tag 'search[q]', @search[:q], class: 'span5', placeholder: "Search"
+                .btn-group
+                  %button.btn{ type: "button", class: @search[:editable] == 'true' ? 'active' : '', data: { toggle: 'button', action: 'editable-only', target: '#search_editable' }, title: 'Show editable records only' }
+                    %i.icon-edit              
+                  %button.btn{ type: "button", class: @search[:sds] == 'true' ? 'active' : '', data: { toggle: 'button', action: 'sds-only', target: '#search_sds' }, title: 'Show SDS records only' }
+                    %i.icon-hdd              
+                = text_field_tag 'search[q]', @search[:q], class: 'span4', placeholder: "Search"
                 = submit_tag 'Search', class: 'btn btn-primary'
     %tr
       %th{style:'width:25px;'}
@@ -91,6 +95,20 @@
     });
     
     $('[data-action="editable-only"]').on('click', function(evt) {
+      if( $(this).attr('data-toggle') == 'button' ) {
+        evt.stopPropagation();
+        var target = $(this).data('target');
+        $(this).toggleClass('active');
+      
+        if( $(this).hasClass('active') ) {
+          $(target).val('true');
+        } else {
+          $(target).val('false');
+        }
+        $(target).parents('form').submit();
+      }
+    })
+    $('[data-action="sds-only"]').on('click', function(evt) {
       if( $(this).attr('data-toggle') == 'button' ) {
         evt.stopPropagation();
         var target = $(this).data('target');

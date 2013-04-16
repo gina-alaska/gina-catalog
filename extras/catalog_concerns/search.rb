@@ -40,11 +40,17 @@ module CatalogConcerns
           fulltext search[:q]
           
           if search[:editable] == 'true'
-            with :owner_setup_id, current_setup.id
+            with :owner_setup_id, current_setup.id 
           else
             with :setup_ids, current_setup.id
           end
           
+          with :sds, true if search[:sds] == 'true'
+          
+          # unless search[:editable] == 'true' or search[:sds] == 'true'
+          #   with :setup_ids, current_setup.id
+          # end
+
           with :id, catalog_ids unless catalog_ids.nil? or catalog_ids.empty?
           with :status, search[:status] if search[:status].present?
           with :long_term_monitoring, ((search[:long_term_monitoring].to_i > 0) ? true : false) if search.include? :long_term_monitoring
