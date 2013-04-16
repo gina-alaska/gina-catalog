@@ -33,9 +33,9 @@
               = hidden_field_tag 'search[sds]', @search[:sds] || 'false', id: 'search_sds'
               .input-prepend.input-append
                 .btn-group
-                  %button.btn{ type: "button", class: @search[:editable] == 'true' ? 'active' : '', data: { toggle: 'button', action: 'editable-only', target: '#search_editable' }, title: 'Show editable records only' }
+                  %button.btn{ type: "button", class: @search[:editable] == 'true' ? 'active' : '', data: { toggle: 'button', action: 'button-toggle', target: '#search_editable' }, title: 'Show editable records only' }
                     %i.icon-edit              
-                  %button.btn{ type: "button", class: @search[:sds] == 'true' ? 'active' : '', data: { toggle: 'button', action: 'sds-only', target: '#search_sds' }, title: 'Show SDS records only' }
+                  %button.btn{ type: "button", class: @search[:sds] == 'true' ? 'active' : '', data: { toggle: 'button', action: 'button-toggle', target: '#search_sds' }, title: 'Show SDS records only' }
                     %i.icon-hdd              
                 = text_field_tag 'search[q]', @search[:q], class: 'span4', placeholder: "Search"
                 = submit_tag 'Search', class: 'btn btn-primary'
@@ -94,7 +94,7 @@
       });
     });
     
-    $('[data-action="editable-only"]').on('click', function(evt) {
+    $('[data-action="button-toggle"]').on('click', function(evt) {
       if( $(this).attr('data-toggle') == 'button' ) {
         evt.stopPropagation();
         var target = $(this).data('target');
@@ -107,21 +107,7 @@
         }
         $(target).parents('form').submit();
       }
-    })
-    $('[data-action="sds-only"]').on('click', function(evt) {
-      if( $(this).attr('data-toggle') == 'button' ) {
-        evt.stopPropagation();
-        var target = $(this).data('target');
-        $(this).toggleClass('active');
-      
-        if( $(this).hasClass('active') ) {
-          $(target).val('true');
-        } else {
-          $(target).val('false');
-        }
-        $(target).parents('form').submit();
-      }
-    })
+    });
   })
 
   function CollToggle(coll_id) {  
