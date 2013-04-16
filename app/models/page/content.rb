@@ -42,6 +42,14 @@ class Page::Content < ActiveRecord::Base
     self.read_attribute(:slug).try(:split, '/').try(:last)
   end
   
+  def slug_with_root
+    if self.slug[0] != ?/
+      "/#{self.slug}" 
+    else
+      self.slug
+    end
+  end
+  
   def sections
     s = super
     

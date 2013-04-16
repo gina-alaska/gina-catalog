@@ -7,22 +7,22 @@
     - if images.count == 0
       %p.lead{style:"padding: 15px;"} No images available
     - else
-      %ul{ style: 'margin: 0;' }
+      %ul.nav{ style: 'margin: 0;' }
         - images.each do |image|
           %li.pull-left{ style: 'width: 30%; margin-left: 10px; margin-top: 10px;' }
-            .thumbnail
+            .thumbnail{ style: 'position: relative; height: 280px;'}
               .image
                 - if image.file.nil?
                   %p.lead Broken image
                 - else
                   = image_tag image.file.png.thumb('300x200#').url, alt: image.title
-              .caption
+              .caption{style: 'overflow: auto;'}
                 = image.title
-            .buttons{style:"text-align:center;"}
-              .btn-group
-                = link_to '200x200', '#', class: 'btn btn-small', data: { behavior: 'add', src: image.file.png.thumb('200x200').url,alt: image.title }
-                = link_to '640x480', '#', class: 'btn btn-small', data: { behavior: 'add', src: image.file.png.thumb('640x480').url,alt: image.title }
-                = link_to '1024x768', '#', class: 'btn btn-small', data: { behavior: 'add', src: image.file.png.thumb('1024x768').url, alt: image.title }
-                = link_to 'Fullsize', '#', class: 'btn btn-small', data: { behavior: 'add', src: image.file.png.url, alt: image.title }
+              .buttons{style:"text-align:center; position: absolute; bottom: 5px;"}
+                .btn-group
+                  = link_to '200x200', '#', class: 'btn btn-small', data: { behavior: 'add', src: image.file.png.thumb('200x200').url,alt: image.title }
+                  = link_to '640x480', '#', class: 'btn btn-small', data: { behavior: 'add', src: image.file.png.thumb('640x480').url,alt: image.title }
+                  = link_to '1024x768', '#', class: 'btn btn-small', data: { behavior: 'add', src: image.file.png.thumb('1024x768').url, alt: image.title }
+                  = link_to 'Fullsize', '#', class: 'btn btn-small', data: { behavior: 'add', src: image.file.png.url, alt: image.title }
   .modal-footer
     %button.btn{data: { dismiss: 'modal' }} Close
