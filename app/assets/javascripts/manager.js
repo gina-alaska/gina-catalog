@@ -17,6 +17,7 @@
 //= require 'maps'
 //= require 'catalogs'
 //= require 'location_editor'
+//= require 'ace_editor'
 //= require_self
 
 $(document).ready(function() {

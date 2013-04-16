@@ -1,12 +1,1 @@
 = render '/manager/images/image_chooser_list'
-:javascript
-  $('#insert_image_chooser_modal a[data-behavior="add"]').click(function() {
-  	src = $(this).data("src");
-    alt = $(this).data("alt");
-    
-  	$.markItUp( 
-  		{ replaceWith:'<img src="'+src+'" alt="'+alt+'" />' }
-  	);
-    $('#insert_image_chooser_modal').modal('hide');
-  	return false;
-  }); 

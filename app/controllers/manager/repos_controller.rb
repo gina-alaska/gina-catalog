@@ -19,6 +19,7 @@ class Manager::ReposController < ManagerController
     respond_to do |format|
       format.html {
         flash[:success] = @catalog.repo.add(file)
+        @catalog.repo.async_create_archive        
         redirect_to [:manager, @catalog]
       }
     end
