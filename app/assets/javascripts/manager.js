@@ -41,3 +41,7 @@ function add_fields(link, association, content) {
   var regexp = new RegExp("new_" + association, "g")
   $(link).parent().before(content.replace(regexp, new_id));
 }
+
+$(document).on('click', '[data-disabled]', function(evt) {
+  evt.preventDefault();
+});

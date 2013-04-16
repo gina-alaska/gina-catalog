@@ -70,7 +70,7 @@ $smallColor: contrast-color($primaryColor, #333, #999);
 body > .container {
   @include box-shadow(0px 2px 5px #000);
   
-  .content { padding: 0 5px; }
+  .content { padding: 5px 5px; }
 }
 
 #flashes {
