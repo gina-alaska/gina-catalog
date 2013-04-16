@@ -142,6 +142,7 @@ class Catalog < ActiveRecord::Base
     string :uuid
     
     integer :owner_setup_id
+    integer :use_agreement_id
     integer :setup_ids, :multiple => true
     integer :id
     integer :owner_id
