@@ -78,19 +78,32 @@ class Manager::PageContentsController < ManagerController
     @page.updated_by = current_user
 
     if @page.update_attributes(params[:page_content])
+      msg = "#{@page.title} page updated"
+      
       respond_to do |format|
         format.html {
-          flash[:success] = "#{@page.title} page updated"
+          flash[:success] = msg
           if params["commit"] == "Save"
             redirect_to edit_manager_page_content_path(@page)
           else
             redirect_to manager_page_contents_path
           end
         }
+        format.js {
+          if params["commit"] == "Save"
+            flash.now[:success] = msg
+          else
+            flash[:success] = msg
+            @redirect_to = manager_page_contents_path
+          end
+        }
       end
     else
       respond_to do |format|
         format.html { render action: 'edit' }
+        format.js { 
+          flash.now[:error] = @page.errors.full_messages
+        }
       end      
     end
   end

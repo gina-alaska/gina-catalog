@@ -11,7 +11,7 @@ class ManagerController < ApplicationController
     @top_downloads = ContactInfo.select("catalog_id, count(*) as download_count").group("catalog_id")
     @top_downloads = @top_downloads.order('download_count DESC').limit(10) 
     
-    @latest_access = ContactInfo.where('created_at > ?', 1.month.ago).order('created_at DESC').limit(50)
+    @latest_access = ContactInfo.where('contact_infos.created_at > ?', 1.month.ago).order('contact_infos.created_at DESC').limit(50)
     
     @total_downloads = ContactInfo
     
