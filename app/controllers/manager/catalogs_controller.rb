@@ -43,7 +43,7 @@ class Manager::CatalogsController < ManagerController
   end
   
   def download
-    if @catalog.repo.archive_available?(:zip)
+    if @catalog.repo and @catalog.repo.archive_available?(:zip)
       send_file @catalog.repo.archive_filenames[:zip]
     else
       respond_to do |format|

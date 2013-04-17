@@ -26,6 +26,8 @@ class CatalogsController < ApplicationController
   end
   
   def download
+    @catalog = Catalog.find(params[:id])
+    
     if @catalog.repo and @catalog.repo.archive_available?(:zip)
       send_file @catalog.repo.archive_filenames[:zip]
     else
