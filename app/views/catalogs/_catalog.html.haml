@@ -21,7 +21,7 @@
           = render 'status', item: catalog
       .btn-group.pull-right
         - if catalog.downloadable?
-          = link_to catalog_download_path(catalog), class: 'btn' do
+          = link_to download_catalog_path(catalog), class: 'btn' do
             %i.icon-cloud-download
             Download
           
