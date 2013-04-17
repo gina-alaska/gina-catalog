@@ -83,11 +83,10 @@ $(document).on('page:change', function() {
 
 $(document).on('click', '[data-action="scroll"]', function(evt) {
   evt.preventDefault();
-  var target = $(evt.currentTarget).attr('href');
-  if(!target) { target = $(evt.currentTarget).data('target'); }
-  
+  var target = $(this).attr('href');
+  if(!target) { target = $(this).data('target'); }
   if (target) { 
-    var parent = $('body');
+    var parent = $('body,html');
     var cur_scroll = parent.scrollTop();
     parent.animate({
       scrollTop: $(target).offset().top
