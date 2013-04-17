@@ -1,6 +1,8 @@
 <% [:notice, :error, :success, :warning].each do |type| %>
   <% next if flash[type].blank? %>
-  new FlashMessage('<%= type %>', '<%= flash[type] %>');
+  <% Array.wrap(flash[type]).each do |msg| %>
+    new FlashMessage('<%= type %>', '<%= msg %>');
+  <% end %>
 <% end %>
 <% if @redirect_to %>
   top.location = "<%= @redirect_to %>";
