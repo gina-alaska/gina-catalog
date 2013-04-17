@@ -56,6 +56,8 @@
             = check_box_tag "coll_check[#{item.id}]", item.id, nil, class: 'item-checkbox'
         
         %td
+          - unless item.locations.blank?
+            %i.icon-globe
           = link_to item.title.truncate(150).humanize, [:manager, item]
           .collapse{id: "row_#{dom_id(item)}"}
             %small
