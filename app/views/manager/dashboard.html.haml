@@ -16,7 +16,8 @@
           %tr
             %td
               %span{title: "#{item.catalog.title}"}
-                = item.catalog.title.truncate(150).humanize
+                = link_to manager_catalog_path(item.catalog.id) do
+                  = item.catalog.title.truncate(150).humanize
             %td
               = item.name
             %td
@@ -33,6 +34,7 @@
           %tr
             %td
               %span{title: "#{item.catalog.title}"}
-                = item.catalog.title.truncate(150).humanize
+                = link_to manager_catalog_path(item.catalog.id) do
+                  = item.catalog.title.truncate(150).humanize
             %td
               = item.download_count
