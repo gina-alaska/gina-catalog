@@ -18,6 +18,7 @@
 //= require 'catalogs'
 //= require 'location_editor'
 //= require 'ace_editor'
+//= require 'flash_message'
 //= require_self
 
 $(document).ready(function() {

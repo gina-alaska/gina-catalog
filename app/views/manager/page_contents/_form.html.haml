@@ -76,9 +76,9 @@
       %label.checkbox
         = f.check_box :draft
         .label.label-warning Make Draft
-      = link_to_function 'Preview', 'preview_page()', class: 'btn'
-      = f.submit 'Save', class: 'btn btn-primary'
-      = f.submit 'Save and Close', class: 'btn btn-primary'
+      / = link_to_function 'Preview', 'preview_page()', class: 'btn'
+      = f.submit 'Save', class: 'btn btn-primary', data: { 'disable-with' => "Saving..." }
+      = f.submit 'Save and Close', class: 'btn btn-primary', data: { 'disable-with' => "Saving..." }
 
 = render 'image_chooser', page: page unless page.new_record?
 = render 'insert_image_chooser', page: page
@@ -181,9 +181,11 @@
         action = form.attr('action'); 
     form.attr('action', action + '/preview'); 
     form.attr('target', '_blank');
+    form.data('remote', false);
     form.submit();
     //Reset form back to normal so later saves work correctly
     form.attr('action', action);
     form.attr('target', '');
+    form.data('remote', true);
   }
 / = render 'manager/page_layouts/new_page', page: page

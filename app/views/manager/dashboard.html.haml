@@ -15,7 +15,7 @@
         - @latest_access.each do |item|
           %tr
             %td
-              = Catalog.find(item.catalog_id).title
+              = item.catalog.title
             %td
               = item.name
             %td
@@ -31,6 +31,6 @@
         - @top_downloads.each do |item|
           %tr
             %td
-              = Catalog.find(item.catalog_id).title
+              = item.catalog.title
             %td
               = item.download_count
