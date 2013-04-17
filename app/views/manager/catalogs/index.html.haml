@@ -40,6 +40,10 @@
                 = text_field_tag 'search[q]', @search[:q], class: 'span4', placeholder: "Search"
                 = submit_tag 'Search', class: 'btn btn-primary'
     %tr
+      %td{colspan: 8, style: "text-align: center;"}
+        %i.icon-globe &nbsp;Has Location
+        %i.icon-exclamation-sign &nbsp;Not Published
+    %tr
       %th{style:'width:25px;'}
       %th Title
       %th Type
@@ -58,6 +62,8 @@
         %td
           - unless item.locations.blank?
             %i.icon-globe
+          - if item.published_at.blank?
+            %i.icon-exclamation-sign
           = link_to item.title.truncate(150).humanize, [:manager, item]
           .collapse{id: "row_#{dom_id(item)}"}
             %small
