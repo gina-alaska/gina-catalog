@@ -90,7 +90,7 @@ NSCatalog::Application.routes.draw do
 
   resources :contacts, only: [:index, :create]
   resources :catalogs do
-    get :download
+    get :download, on: :member
   end
 
      
