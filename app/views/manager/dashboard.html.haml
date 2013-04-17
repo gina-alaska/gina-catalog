@@ -15,7 +15,8 @@
         - @latest_access.each do |item|
           %tr
             %td
-              = Catalog.find(item.catalog_id).title
+              %span{title: "#{item.catalog.title}"}
+                = item.catalog.title.truncate(150).humanize
             %td
               = item.name
             %td
@@ -31,6 +32,7 @@
         - @top_downloads.each do |item|
           %tr
             %td
-              = Catalog.find(item.catalog_id).title
+              %span{title: "#{item.catalog.title}"}
+                = item.catalog.title.truncate(150).humanize
             %td
               = item.download_count
