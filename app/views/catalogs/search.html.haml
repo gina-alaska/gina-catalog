@@ -50,6 +50,10 @@
                 %li
                   =link_to search_path(limit: "500"), data: { behaviour: 'stash', target: '#limit', value: 500 }, method: :get do
                     500 Records
+        .row-fluid
+          .span12{style: "text-align: center;"}
+            %i.icon-warning-sign &nbsp;Not Published
+            %i.icon-globe &nbsp;Has Location
         %table.table.table-striped.table-condensed.results
           %tbody
             - if @results.empty?
