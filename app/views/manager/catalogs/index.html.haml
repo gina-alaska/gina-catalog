@@ -1,7 +1,7 @@
 %table.table.table-striped.table-condensed#catalog-items
   %thead
     %tr
-      %td{colspan:8,style:'padding:0;'}
+      %td{colspan:9,style:'padding:0;'}
         .navbar.navbar-static-top
           .navbar-inner
             .btn-group
@@ -48,6 +48,9 @@
       %th End year
       %th Source agency
       %th Editable?
+      %th
+        %span{title: "Number of Downloads"}
+          DLs
   %tbody
     - @catalogs.each do |item|
       %tr{data: { toggle: 'collapse', target: "#row_#{dom_id(item)}" }}
@@ -82,6 +85,7 @@
             Yes
           - else
             %abbr{ title: "This record is shared from the #{item.owner_setup.try(:title)} portal"} No
+        %td=item.contact_infos.count
 
 .center-paging
   = paginate @catalogs
