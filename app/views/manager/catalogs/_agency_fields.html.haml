@@ -1,15 +1,15 @@
 .row-fluid
   .span12
     = f.label :source_agency_id, class: 'control-label'
-    = f.collection_select :source_agency_id, current_setup.agencies, :id, :name, { prompt: 'Select a source agency' }, { class: 'full' }
+    = f.collection_select :source_agency_id, current_setup.agencies, :id, :name, {include_blank: true}, { class: 'full' }
 
     = f.label :funding_agency_id, class: 'control-label'
-    = f.collection_select :funding_agency_id, current_setup.agencies, :id, :name, { prompt: 'Select a funding agency'}, { class: 'full' }
+    = f.collection_select :funding_agency_id, current_setup.agencies, :id, :name, {include_blank: true}, { class: 'full' }
 
     = f.label :agency_ids, 'Other Agencies', class: 'control-label'
     = f.collection_select :agency_ids, current_setup.agencies, :id, :name, {}, { multiple: true, class: 'full' }
     
     :javascript
-      $('##{@catalog.class.to_s.downcase}_source_agency_id').select2();
-      $('##{@catalog.class.to_s.downcase}_funding_agency_id').select2();
+      $('##{@catalog.class.to_s.downcase}_source_agency_id').select2({placeholder: 'Select a source agency', allowClear: true});
+      $('##{@catalog.class.to_s.downcase}_funding_agency_id').select2({placeholder: 'Select a funding source agency', allowClear: true});
       $('##{@catalog.class.to_s.downcase}_agency_ids').select2();
