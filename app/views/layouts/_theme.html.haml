@@ -1,0 +1,102 @@
+- @page_background = '#dadada';
+- @container_background = '#fff';
+:css
+  body { background: #{current_setup.theme.page_bg}; }
+  .container { background: #{current_setup.theme.content_bg}; }
+
+  #header {
+    background: #{current_setup.theme.header_bg};
+    color: #{current_setup.theme.header_title_color};
+    font-family: 'Quando', serif; 
+  }
+
+  #header small {
+    color: #{current_setup.theme.header_byline_color};
+  }
+
+  #header ul.nav {
+    background: #{current_setup.theme.menu_bg};
+    margin:0;
+    padding:10px 5px;
+  }
+
+  #header ul.nav > li > a {
+    margin:0 2px;
+    color: #{current_setup.theme.menu_link_color};
+  }
+  #header ul.nav > li > a:hover {
+    background: #{current_setup.theme.menu_hover_bg};
+    color: #{current_setup.theme.menu_hover_link_color}
+  }
+
+  #header ul.nav > li.active > a {
+    background: #{current_setup.theme.menu_active_bg};
+    color: #{current_setup.theme.menu_active_link_color}
+  }
+
+  #footer { 
+    border-top: none;
+    padding: 0; 
+    margin-top: 100px; 
+  }
+  #footer .copyright {
+    min-height: 160px;
+    margin-top: 20px;
+    color: #DDD;
+    padding-top: 25px;
+    background: #252528;
+  }
+  #footer {
+    text-align: center;
+  }
+  #footer .partners {
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  #footer .partners a {
+    margin: 0 20px;
+  }
+  #footer .partners img { 
+    filter: url(/assets/filters.svg#grayscale); /* Firefox 3.5+ */
+    filter: gray; /* IE6-9 */
+    -webkit-filter: grayscale(1); /* Google Chrome & Safari 6+ */
+    opacity: 0.5;
+  }
+
+  #footer .partners img:hover {
+    filter: none;
+    -webkit-filter: grayscale(0);
+    opacity: 1;
+  }
+
+  #home-page .body {
+    margin: 0 auto 30px auto; 
+    text-align: left; 
+    color:#3f3f3f;
+    font style: normal; 
+  }
+
+  .carousel-caption a {
+    color: #ffcc66;
+  }
+  .carousel-caption a:hover {
+    color: #5c85ff;
+  }
+
+  .home-btn {
+    background: #{current_setup.theme.home_btn_bg};
+    color: #{current_setup.theme.home_btn_link_color};
+  }
+
+  .home-btn:hover {
+    background: #{current_setup.theme.home_btn_hover_bg};
+    color: #{current_setup.theme.home_btn_hover_link_color};
+    border: #{current_setup.theme.home_btn_hover_border};
+  }
+
+  .social_icons a {
+    color: #{current_setup.theme.social_icons_link_color}
+  }
+  .social_icons a:hover {
+    color: #{current_setup.theme.social_icons_hover_link_color}
+  }

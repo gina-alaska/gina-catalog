@@ -21,6 +21,8 @@ class Setup < ActiveRecord::Base
   has_many :roles
   has_many :use_agreements
   
+  belongs_to :theme
+  
   accepts_nested_attributes_for :urls, reject_if: proc { |url| url['url'].blank? }, allow_destroy: true
 
   liquid_methods :title, :by_line, :catalog_collections
