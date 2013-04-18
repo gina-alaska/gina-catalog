@@ -5,9 +5,11 @@
       %h5.title
         = link_to "##{dom_id(catalog, :description)}", data: { toggle: "collapse" } do
           %i.icon-chevron-down.collapse-icon
-          = catalog.title.try(:truncate,80)
+          = catalog.title.try(:truncate,78)
         - if !catalog.published?
           %i.icon-warning-sign{ title: 'Catalog record is not public' }
+        - unless catalog.locations.blank?
+          %i.icon-globe{ title: 'Catalog record has location information' }
       .description
         :markdown
           #{catalog.description.try(:truncate, 300).try(:html_safe)}
