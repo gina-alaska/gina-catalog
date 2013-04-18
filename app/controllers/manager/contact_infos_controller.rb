@@ -1,7 +1,7 @@
 class Manager::ContactInfosController < ManagerController
 
   SUBMENU = '/layouts/manager/dashboard_menu'
-  PAGETITLE = 'Contact Information'
+  PAGETITLE = 'Download Log'
 
   def index
     @contact_infos = ContactInfo
