@@ -8,7 +8,7 @@
           = catalog.title.try(:truncate,78)
         - if !catalog.published?
           %i.icon-warning-sign{ title: 'Catalog record is not public' }
-        - unless catalog.locations.blank?
+        - unless catalog.geometry_collection.blank?
           %i.icon-globe{ title: 'Catalog record has location information' }
       .description
         :markdown
