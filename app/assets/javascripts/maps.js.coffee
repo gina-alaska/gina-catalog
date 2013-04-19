@@ -37,6 +37,7 @@ class CatalogMap
     ])
     Gina.Layers.inject(@map, @data_config['layers']);
     @zoomToDefaultBounds()
+    @ready()
   #end setupMap
   
   zoomToDefaultBounds: =>
@@ -44,14 +45,23 @@ class CatalogMap
     bounds.transform('EPSG:4326', @data_config['projection']);
     @map.zoomToExtent(bounds , true);
   #end zoomToDefaultBounds  
+
+  ready: =>
+    setTimeout(=>
+      @map.updateSize()
+      $.event.trigger({
+        type: 'openlayers:ready',
+        map: @map
+      })
+    , 200)
 #end CatalogMap
 
 map_init = ->
   $('div[data-openlayers]').each -> 
     el = $(this).attr('id');
-    new CatalogMap(this);
+    map = new CatalogMap(this);
+
 
 $(document).ready ->
   map_init();
   $(document).on 'page:load', map_init
-  

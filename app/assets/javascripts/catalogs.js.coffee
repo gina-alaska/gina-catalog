@@ -1,6 +1,7 @@
 class Catalog
-  constructor: ->
-    
+  constructor: (@map) ->
+    @loadFeatures()
+
   addLayer: =>
     @layer = new OpenLayers.Layer.Vector('Search Results')
     
@@ -25,7 +26,7 @@ class Catalog
     geoms = $('[data-wkt]');
     return unless geoms.length > 0 and $('#map').data('map') 
     
-    @map = $('#map').data('map').map
+    # @map = $('#map').data('map').map
     return unless @map
     
     @addLayer()    
@@ -41,13 +42,24 @@ class Catalog
           f.attributes = { record_id: $(result).attr('id'), type: $(result).data('type') }
           
         @layer.addFeatures(features)
-      
-    @map.zoomToExtent(@layer.getDataExtent())
-          
+    
+
+    @map.updateSize()
+
+    dextent = @layer.getDataExtent();
+    zoom = @map.getZoomForExtent(dextent)
+
+    if zoom > 5
+      zoom = 5
+
+    center = dextent.getCenterLonLat()
+
+    #@map.zoomToExtent(@layer.getDataExtent())
+
+    @map.setCenter(center)
+    @map.zoomTo(zoom)
   setup: ->
 #end class Catalog
 
-$(document).on 'ready', ->
-  catalog = new Catalog()
-  catalog.loadFeatures()
-  $(document).on 'page:load', catalog.loadFeatures
+$(document).on 'openlayers:ready', (evt) -> 
+  new Catalog(evt.map)
