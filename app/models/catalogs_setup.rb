@@ -7,6 +7,6 @@ class CatalogsSetup < ActiveRecord::Base
   after_destroy :reindex_catalog
 
   def reindex_catalog
-    catalog.index!
+    catalog.index
   end
 end
