@@ -267,7 +267,7 @@ Title: #{self.title}
     "#{self.id}-#{self.type}"
   end
 
-  def publish(current_user)
+  def publish(current_user = nil)
     return true if self.published?
 
     self.published_at = Time.zone.now

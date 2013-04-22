@@ -39,10 +39,11 @@ module CatalogConcerns
 
           fulltext search[:q]
           
-          if search[:editable] == 'true'
+          any_of do
             with :owner_setup_id, current_setup.id 
-          else
-            with :setup_ids, current_setup.id
+            unless search[:editable] == 'true'
+              with :setup_ids, current_setup.id
+            end
           end
           
           with :sds, true if search[:sds] == 'true'
