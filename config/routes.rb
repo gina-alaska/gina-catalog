@@ -18,6 +18,7 @@ NSCatalog::Application.routes.draw do
     resources :images
     resources :use_agreements
     resources :contact_infos
+    resources :themes
     
     resources :page_contents do
       get :upload_image, :on => :member

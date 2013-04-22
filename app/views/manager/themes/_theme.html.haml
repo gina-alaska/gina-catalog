@@ -1,0 +1,4 @@
+.control-group
+  %label.control-label Active theme
+  .controls
+    = select_tag 'active_theme', options_from_collection_for_select(@themes, 'id', 'name')

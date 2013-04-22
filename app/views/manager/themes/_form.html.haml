@@ -1,0 +1,77 @@
+= form_for [:manager, theme], html: { class: 'form-horizontal' } do |f|
+  .control-group
+    = f.label :name, class: 'control-label'
+    .controls
+      = f.text_field :name, class: 'span12'
+  .control-group
+    = f.label :page_bg, 'Page background', class: 'control-label'
+    .controls
+      = f.text_field :page_bg, class: 'span12'
+  .control-group
+    = f.label :content_bg, 'Content background', class: 'control-label'
+    .controls
+      = f.text_field :content_bg, class: 'span12'
+  .control-group
+    = f.label :header_bg, 'Header background', class: 'control-label'
+    .controls
+      = f.text_field :header_bg, class: 'span12'
+  .control-group
+    = f.label :header_title_color, class: 'control-label'
+    .controls
+      = f.text_field :header_title_color, class: 'span12'
+  .control-group
+    = f.label :header_byline_color, class: 'control-label'
+    .controls
+      = f.text_field :header_byline_color, class: 'span12'
+  .control-group
+    = f.label :menu_bg, 'Menu background', class: 'control-label'
+    .controls
+      = f.text_field :menu_bg, class: 'span12'
+  .control-group
+    = f.label :menu_link_color, class: 'control-label'
+    .controls
+      = f.text_field :menu_link_color, class: 'span12'
+  .control-group
+    = f.label :menu_active_bg, 'Active menu background', class: 'control-label'
+    .controls
+      = f.text_field :menu_active_bg, class: 'span12'
+  .control-group
+    = f.label :menu_active_link_color, 'Active menu link color', class: 'control-label'
+    .controls
+      = f.text_field :menu_active_link_color, class: 'span12'
+  .control-group
+    = f.label :menu_hover_bg, 'Hover menu background', class: 'control-label'
+    .controls
+      = f.text_field :menu_hover_bg, class: 'span12'
+  .control-group
+    = f.label :menu_hover_link_color, 'Hover menu link color', class: 'control-label'
+    .controls
+      = f.text_field :menu_hover_link_color, class: 'span12'
+  .control-group
+    = f.label :home_btn_bg, 'Home button background', class: 'control-label'
+    .controls
+      = f.text_field :home_btn_bg, class: 'span12'
+  .control-group
+    = f.label :home_btn_link_color, 'Home button link color', class: 'control-label'
+    .controls
+      = f.text_field :home_btn_link_color, class: 'span12'
+  .control-group
+    = f.label :home_btn_hover_bg, 'Hover home button background', class: 'control-label'
+    .controls
+      = f.text_field :home_btn_hover_bg, class: 'span12'
+  .control-group
+    = f.label :home_btn_hover_border, 'Hover home button border', class: 'control-label'
+    .controls
+      = f.text_field :home_btn_hover_border, class: 'span12'
+  .control-group
+    = f.label :home_btn_hover_link_color, 'Hover home button link color', class: 'control-label'
+    .controls
+      = f.text_field :home_btn_hover_link_color, class: 'span12'
+  .control-group
+    = f.label :social_icons_link_color, class: 'control-label'
+    .controls
+      = f.text_field :social_icons_link_color, class: 'span12'
+  .control-group
+    = f.label :social_icons_hover_link_color, 'Hover social icons hover link color', class: 'control-label'
+    .controls
+      = f.text_field :social_icons_hover_link_color, class: 'span12'

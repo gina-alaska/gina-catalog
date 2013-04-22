@@ -844,6 +844,7 @@ ActiveRecord::Schema.define(:version => 20130417224525) do
 
   create_table "themes", :force => true do |t|
     t.string   "name"
+    t.integer  "owner_setup_id"
     t.string   "page_bg"
     t.string   "content_bg"
     t.string   "header_bg"
