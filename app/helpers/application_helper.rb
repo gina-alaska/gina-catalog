@@ -110,4 +110,7 @@ module ApplicationHelper
     output.html_safe
   end
     
+  def ddtext(string)
+    string.blank? ? "&nbsp;".html_safe : string
+  end
 end
