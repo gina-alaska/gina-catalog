@@ -21,4 +21,4 @@
             %td.span9
               = rec.title
             %td.span3
-              = link_to "Remove Record", remove_manager_catalog_collection_path(@catalog_collection, 'catalog_ids' => [rec.id]), confirm: "Are you sure?", class: "btn btn-danger", method: :delete, remote: true
+              = link_to "Remove Record", remove_manager_collection_path(@catalog_collection, 'catalog_ids' => [rec.id]), confirm: "Are you sure?", class: "btn btn-danger", method: :delete, remote: true

@@ -76,7 +76,7 @@ class User < ActiveRecord::Base
 
   def unauthorize
     return false if self.is_an_admin? or !self.authorized?
-    self.roles.delete(Role.where(:name => 'verified_user'))
+    self.roles.destroy(Role.where(:name => 'verified_user'))
   end
 
   def method_missing(method_id, *args)

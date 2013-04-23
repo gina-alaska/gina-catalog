@@ -49,7 +49,7 @@ NSCatalog::Application.routes.draw do
       end
     end
 
-    resources :catalog_collections do
+    resources :collections do
       member do
         put :add
         delete :remove
