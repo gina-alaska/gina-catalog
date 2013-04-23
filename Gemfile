@@ -26,8 +26,6 @@ gem 'liquid'
 gem 'dragonfly'
 gem 'awesome_nested_set'
 gem 'nested_form', git: 'http://github.com/ryanb/nested_form.git'
-gem 'jquery-ui-rails'
-
 #gem 'nofxx-georuby'
 #broke in rails 3.1
 #gem 'postgis_adapter', :git => 'http://github.com/gina-alaska/postgis_adapter.git'
@@ -38,7 +36,6 @@ gem "haml"
 gem 'grit', '>= 2.4.1'
 gem 'pdfkit'
 gem 'ancestry', '~> 1.2.4'
-gem 'bootstrap-sass', '~> 2.3.1.0'
 
 # Use unicorn as the web server
 gem 'unicorn'
@@ -62,6 +59,8 @@ group :assets do
   gem 'compass-rails'
   gem 'uglifier'
   gem 'font-awesome-rails'
+  gem 'bootstrap-sass', '~> 2.3.1.0'
+  gem 'jquery-ui-rails'
 end
 
 group :production do

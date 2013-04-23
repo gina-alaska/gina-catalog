@@ -6,6 +6,7 @@ class Manager::PageContentsController < ManagerController
   PAGETITLE = 'Pages'
 
   def index
+    fetch_cms_pages
   end
   
   def new

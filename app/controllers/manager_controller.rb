@@ -2,8 +2,7 @@ class ManagerController < ApplicationController
   before_filter :authenticate_manager!
   
   before_filter :fetch_setup
-  before_filter :fetch_manager_pages
-  
+    
   SUBMENU = '/layouts/manager/dashboard_menu'
   PAGETITLE = 'Home'
 
@@ -24,8 +23,11 @@ class ManagerController < ApplicationController
   
   protected
   
-  def fetch_manager_pages
-    @manager_pages = { :page_contents => 'Pages', :page_snippets => 'Snippets', :page_layouts => 'Layouts', :setups => 'Settings' }
+  def fetch_cms_pages
+    @manager_pages = { 
+      :page_contents => 'Pages', :page_snippets => 'Snippets', :page_layouts => 'Layouts', 
+      :setups => 'Settings', :themes => 'Themes' } 
+    @available_themes = Theme.where('owner_setup_id IS NULL or owner_setup_id = ?', current_setup.id)     
   end
 
   def authenticate_manager!

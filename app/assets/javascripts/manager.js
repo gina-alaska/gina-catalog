@@ -10,6 +10,7 @@
 //= require 'markitup'
 //= require 'manager/pages'
 //= require bootstrap-datepicker
+//= require 'bootstrap-colorpicker/bootstrap-colorpicker'
 //= require jquery_nested_form
 //= require 'gina-map-layers/gina-openlayers'
 //= require 'gina-map-layers/projections/all'

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130415225447) do
+ActiveRecord::Schema.define(:version => 20130417224525) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -745,6 +745,7 @@ ActiveRecord::Schema.define(:version => 20130415225447) do
     t.string   "twitter_url"
     t.string   "github_url"
     t.string   "facebook_url"
+    t.integer  "theme_id"
   end
 
   create_table "setups_snippets", :id => false, :force => true do |t|
@@ -842,10 +843,29 @@ ActiveRecord::Schema.define(:version => 20130415225447) do
   add_index "tasks", ["performed"], :name => "tasks_index_tasks_on_performed"
 
   create_table "themes", :force => true do |t|
-    t.string   "name",        :limit => 80
-    t.string   "description"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string   "name"
+    t.integer  "owner_setup_id"
+    t.string   "page_bg"
+    t.string   "content_bg"
+    t.string   "header_bg"
+    t.string   "header_title_color"
+    t.string   "header_byline_color"
+    t.string   "menu_bg"
+    t.string   "menu_link_color"
+    t.string   "menu_active_bg"
+    t.string   "menu_active_link_color"
+    t.string   "menu_hover_bg"
+    t.string   "menu_hover_link_color"
+    t.string   "home_btn_bg"
+    t.string   "home_btn_link_color"
+    t.string   "home_btn_hover_bg"
+    t.string   "home_btn_hover_border"
+    t.string   "home_btn_hover_link_color"
+    t.string   "social_icons_link_color"
+    t.string   "social_icons_hover_link_color"
+    t.boolean  "locked",                        :default => false
+    t.datetime "created_at",                                       :null => false
+    t.datetime "updated_at",                                       :null => false
   end
 
   create_table "use_agreements", :force => true do |t|
