@@ -1,5 +1,5 @@
 = form_tag search_url, style: 'width:100%' do
-  = hidden_field_tag 'search[catalog_collection_ids]', search_params[:catalog_collection_ids], id: "collection_id"
+  = hidden_field_tag 'search[collection_ids]', search_params[:collection_ids], id: "collection_id"
   = hidden_field_tag 'limit', @limit, id: 'limit'
   
   %h4 Keyword search
@@ -12,8 +12,8 @@
     .span12
       %ul.nav.nav-list
         %li.nav-header Collections
-        -current_setup.catalog_collections.each do |coll|
-          %li{class: search_params[:catalog_collection_ids].to_i == coll.id ? "active" : ""}
+        -current_setup.collections.each do |coll|
+          %li{class: search_params[:collection_ids].to_i == coll.id ? "active" : ""}
             = link_to coll.name, "#", data: {behaviour: "load_collection", target: "#collection_id", value: coll.id}
       %br
 

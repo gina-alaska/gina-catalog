@@ -161,11 +161,11 @@ class Manager::CatalogsController < ManagerController
   def catalog_params
     v = params[:catalog].slice(:title, :description, :start_date, :end_date, :status, 
       :owner_id, :primary_contact_id, :contact_ids, :source_agency_id, :funding_agency_id, :data_type_ids,
-      :iso_topic_ids, :agency_ids, :tags, :geokeyword_ids, :catalog_collection_ids, :type, :links_attributes,
+      :iso_topic_ids, :agency_ids, :tags, :geokeyword_ids, :collection_ids, :type, :links_attributes,
       :locations_attributes, :download_urls_attributes, :use_agreement_id, :request_contact_info, :require_contact_info)
     
     
-    v['catalog_collection_ids'] = clean_param_ids(v['catalog_collection_ids'])
+    v['collection_ids'] = clean_param_ids(v['collection_ids'])
     v['agency_ids'] = clean_param_ids(v['agency_ids'])
     v['geokeyword_ids'] = clean_param_ids(v['geokeyword_ids'])
     v['data_type_ids'] = clean_param_ids(v['data_type_ids'])
