@@ -2,7 +2,7 @@ class Catalog < ActiveRecord::Base
   STATUSES = %w(Complete Ongoing Unknown Funded)
 
   attr_accessible :links_attributes, :locations_attributes, :download_urls_attributes, 
-    :catalog_collection_ids, :title, :description, :start_date, :end_date, :status, :owner_id, 
+    :collection_ids, :title, :description, :start_date, :end_date, :status, :owner_id, 
     :primary_contact_id, :contact_ids, :source_agency_id, :funding_agency_id, :data_type_ids, 
     :iso_topic_ids, :agency_ids, :tags, :geokeyword_ids, :type, :use_agreement_id, :request_contact_info, 
     :require_contact_info
@@ -34,6 +34,17 @@ class Catalog < ActiveRecord::Base
   has_many :catalogs_setups, uniq: true
   has_many :setups, :through => :catalogs_setups, uniq: true
   #has_and_belongs_to_many :setups, uniq: true
+  
+  has_many :catalogs_collections, uniq: true
+  has_many :collections, :through => :catalogs_collections do
+    def list
+      proxy_association.owner.collections.names.join(', ')
+    end
+    
+    def names
+      proxy_association.owner.collections.pluck(:name)
+    end
+  end
   
   has_and_belongs_to_many :catalog_collections, uniq: true do
     def list
@@ -98,6 +109,9 @@ class Catalog < ActiveRecord::Base
   searchable do
     text :title, { :boost => 2.0, :stored => true }
     text :description
+    text :type, { :boost => 2.0, :stored => true } do
+      type == 'Asset' ? 'Data' : type
+    end
     text :tags do
       tags.map(&:text)
     end
@@ -116,8 +130,8 @@ class Catalog < ActiveRecord::Base
     text :iso_topics do
       iso_topics.map(&:name)
     end
-    text :catalog_collections do
-      catalog_collections.pluck(:name)
+    text :collections do
+      collections.names
     end
     text :iso_topics_long do
       iso_topics.map(&:long_name)
@@ -125,6 +139,7 @@ class Catalog < ActiveRecord::Base
     text :data_types do
       data_types.map(&:name)
     end
+    
     string :agency_types, :multiple => true do
       types = [source_agency.try(:category), funding_agency.try(:category)]
       types += agencies.collect(&:category)
@@ -158,7 +173,7 @@ class Catalog < ActiveRecord::Base
     integer :contact_ids, :references => Person, :multiple => true
     integer :agency_ids, :references => Agency, :multiple => true
     integer :iso_topic_ids, :multiple => true
-    integer :catalog_collection_ids, :multiple => true
+    integer :collection_ids, :multiple => true
     integer :data_type_ids, :multiple => true
     
     boolean :long_term_monitoring
