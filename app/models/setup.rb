@@ -12,6 +12,7 @@ class Setup < ActiveRecord::Base
 
   has_many :catalogs_setups, uniq: true
   has_many :catalogs, through: :catalogs_setups
+  has_many :owned_catalogs, class_name: 'Catalog', foreign_key: 'catalogs'
 #  has_and_belongs_to_many :catalogs
   
   has_many :catalog_collections
@@ -20,6 +21,9 @@ class Setup < ActiveRecord::Base
   has_many :memberships
   has_many :roles
   has_many :use_agreements
+  
+  belongs_to :theme
+  has_many :themes, foreign_key: 'owner_setup_id'
   
   accepts_nested_attributes_for :urls, reject_if: proc { |url| url['url'].blank? }, allow_destroy: true
 

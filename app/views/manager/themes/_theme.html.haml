@@ -1,0 +1,19 @@
+%li{id: dom_id(theme, :list)}
+  .row-fluid.group
+    .span8.title
+      %i.icon-file
+      = link_to edit_manager_theme_path(theme), class: 'edit' do
+        = theme.name
+      - if current_setup.theme.id == theme.id
+        %i.icon-certificate{ title: 'Active!' }
+    .span4.actions
+      .btn-group
+        = link_to edit_manager_theme_path(theme), class: 'btn', title: "Edit" do
+          %i.icon-edit    
+          
+        - if current_setup.theme.id != theme.id
+          = link_to activate_manager_theme_path(theme), method: 'PUT', class: 'btn btn-info', title: 'Activate' do
+            %i.icon-certificate
+        - unless theme.locked
+          = link_to manager_theme_path(theme), method: 'DELETE', class: 'btn btn-danger', data: { confirm: 'Are you sure?' }, title: "Delete" do
+            %i.icon-trash.icon-white        

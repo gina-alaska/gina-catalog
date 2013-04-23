@@ -8,6 +8,7 @@
     = stylesheet_link_tag 'application', 'data-turbolinks-track' => true
     = render "layouts/#{theme}/analytics" unless current_setup.analytics_account.nil? or Rails.env == 'development'
     = csrf_meta_tag
+    = render 'layouts/theme'
   %body
     .spinner-container
     #top

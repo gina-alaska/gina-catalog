@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  page_bg: MyString
+  content_bg: MyString
+  header_bg: MyString
+  header_textcolor: MyString
+  menu_bg: MyString
+  menu_linkcolor: MyString
+  menu_active_bg: MyString
+  menu_active_linkcolor: MyString
+  menu_hover_bg: MyString
+  menu_hover_linkcolor: MyString
+  header_color: MyString
+
+two:
+  name: MyString
+  page_bg: MyString
+  content_bg: MyString
+  header_bg: MyString
+  header_textcolor: MyString
+  menu_bg: MyString
+  menu_linkcolor: MyString
+  menu_active_bg: MyString
+  menu_active_linkcolor: MyString
+  menu_hover_bg: MyString
+  menu_hover_linkcolor: MyString
+  header_color: MyString
