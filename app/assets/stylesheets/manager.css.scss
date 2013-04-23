@@ -14,6 +14,7 @@ $smallColor: contrast-color($primaryColor, #333, #999);
 @import "markitup-html";
 @import 'select2/select2';
 @import 'bootstrap-datepicker';
+@import 'bootstrap-colorpicker/bootstrap-colorpicker';
 @import 'maps';
 
 .ace {
@@ -131,10 +132,6 @@ ol.page-list {
 }
 
 .page-list .group {
-  
-  //&:nth-child(odd) {
-//    background-color: #eee;
-//  }
   border: 1px solid #efefef;
   @include border-radius(5px);
   @include background-image(linear-gradient(top, #ffffff 0%,#f6f6f6 47%,#efefef 100%)); 

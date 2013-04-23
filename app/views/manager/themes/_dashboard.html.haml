@@ -5,15 +5,26 @@
       = link_to new_manager_theme_path, class: 'btn btn-success' do
         %i.icon-plus.icon-white
         New Themes
-.row-fluid
-  .span12
-    .content
-      .form-horizontal.control-group
-        %label.control-label Active theme
-        .controls
-          = select_tag 'active_theme', options_from_collection_for_select(@available_themes, 'id', 'name', current_setup.theme.id)
-          = link_to '#', class: 'btn' do
-            Customize
-            %i.icon-arrow-right
+%ol.page-list
+  - @available_themes.each do |theme|
+    = render '/manager/themes/theme', theme: theme
     
-      = render 'manager/themes/form', theme: current_setup.theme
+/ .row-fluid
+/   .span12
+/     .content
+/       .form-horizontal.control-group
+/         %label.control-label Active theme
+/         .controls
+/           = select_tag 'active_theme', options_from_collection_for_select(@available_themes, 'id', 'name', current_setup.theme.id)
+/           = link_to '#active_theme', class: 'btn', data: { action: 'edit-theme', base: manager_themes_path } do
+/             Customize
+/             %i.icon-arrow-right
+/ :javascript
+/   $(document).on('click', '[data-action="edit-theme"]', function(evt) {
+/     evt.preventDefault();
+/     
+/     var base_url = $(this).data('base');
+/     var target = $(this).attr('href');
+/     
+/     top.location = base_url + '/' + $(target).val() + '/edit';
+/   })

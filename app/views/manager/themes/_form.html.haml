@@ -1,77 +1,69 @@
-= form_for [:manager, theme], html: { class: 'form-horizontal' } do |f|
+= form_for [:manager, theme], html: { class: '' } do |f|
+  - if theme.errors.count > 0
+    .alert.alert-error
+      %ul
+        - theme.errors.full_messages.each do |msg|
+          %li= msg
+          
   .control-group
     = f.label :name, class: 'control-label'
     .controls
       = f.text_field :name, class: 'span12'
-  .control-group
-    = f.label :page_bg, 'Page background', class: 'control-label'
-    .controls
-      = f.text_field :page_bg, class: 'span12'
-  .control-group
-    = f.label :content_bg, 'Content background', class: 'control-label'
-    .controls
-      = f.text_field :content_bg, class: 'span12'
-  .control-group
-    = f.label :header_bg, 'Header background', class: 'control-label'
-    .controls
-      = f.text_field :header_bg, class: 'span12'
-  .control-group
-    = f.label :header_title_color, class: 'control-label'
-    .controls
-      = f.text_field :header_title_color, class: 'span12'
-  .control-group
-    = f.label :header_byline_color, class: 'control-label'
-    .controls
-      = f.text_field :header_byline_color, class: 'span12'
-  .control-group
-    = f.label :menu_bg, 'Menu background', class: 'control-label'
-    .controls
-      = f.text_field :menu_bg, class: 'span12'
-  .control-group
-    = f.label :menu_link_color, class: 'control-label'
-    .controls
-      = f.text_field :menu_link_color, class: 'span12'
-  .control-group
-    = f.label :menu_active_bg, 'Active menu background', class: 'control-label'
-    .controls
-      = f.text_field :menu_active_bg, class: 'span12'
-  .control-group
-    = f.label :menu_active_link_color, 'Active menu link color', class: 'control-label'
-    .controls
-      = f.text_field :menu_active_link_color, class: 'span12'
-  .control-group
-    = f.label :menu_hover_bg, 'Hover menu background', class: 'control-label'
-    .controls
-      = f.text_field :menu_hover_bg, class: 'span12'
-  .control-group
-    = f.label :menu_hover_link_color, 'Hover menu link color', class: 'control-label'
-    .controls
-      = f.text_field :menu_hover_link_color, class: 'span12'
-  .control-group
-    = f.label :home_btn_bg, 'Home button background', class: 'control-label'
-    .controls
-      = f.text_field :home_btn_bg, class: 'span12'
-  .control-group
-    = f.label :home_btn_link_color, 'Home button link color', class: 'control-label'
-    .controls
-      = f.text_field :home_btn_link_color, class: 'span12'
-  .control-group
-    = f.label :home_btn_hover_bg, 'Hover home button background', class: 'control-label'
-    .controls
-      = f.text_field :home_btn_hover_bg, class: 'span12'
-  .control-group
-    = f.label :home_btn_hover_border, 'Hover home button border', class: 'control-label'
-    .controls
-      = f.text_field :home_btn_hover_border, class: 'span12'
-  .control-group
-    = f.label :home_btn_hover_link_color, 'Hover home button link color', class: 'control-label'
-    .controls
-      = f.text_field :home_btn_hover_link_color, class: 'span12'
-  .control-group
-    = f.label :social_icons_link_color, class: 'control-label'
-    .controls
-      = f.text_field :social_icons_link_color, class: 'span12'
-  .control-group
-    = f.label :social_icons_hover_link_color, 'Hover social icons hover link color', class: 'control-label'
-    .controls
-      = f.text_field :social_icons_hover_link_color, class: 'span12'
+  .row-fluid
+    .span6
+      %fieldset
+        %legend Site background
+        - %w{ page_bg content_bg }.each do |name|
+          .control-group
+            = f.label name, name.gsub('bg', 'background').humanize, class: 'control-label'
+            .controls
+              .input-append.color{ data: { color: f.object.send(name), 'color-format' => 'rgba' } }
+                = f.text_field name, class: 'span12'
+                %span.add-on{ style: "background-color: #{f.object.send(name)}" }
+      %fieldset
+        %legend Header
+        - %w{ header_bg header_title_color header_byline_color }.each do |name|
+          .control-group
+            = f.label name, name.gsub('bg', 'background').gsub('header_', '').humanize, class: 'control-label'
+            .controls
+              .input-append.color{ data: { color: f.object.send(name), 'color-format' => 'rgba' } }
+                = f.text_field name, class: 'span12'
+                %span.add-on{ style: "background-color: #{f.object.send(name)}" }
+      %fieldset
+        %legend Main Menu
+        - %w{ menu_bg menu_link_color menu_active_bg menu_active_link_color menu_hover_bg menu_hover_link_color }.each do |name|
+          .control-group
+            = f.label name, name.gsub('bg', 'background').gsub('menu_', '').humanize, class: 'control-label'
+            .controls
+              .input-append.color{ data: { color: f.object.send(name), 'color-format' => 'rgba' } }
+                = f.text_field name, class: 'span12'
+                %span.add-on{ style: "background-color: #{f.object.send(name)}" }
+    .span6
+      %fieldset
+        %legend Home button
+        - %w{ home_btn_bg home_btn_link_color home_btn_hover_bg home_btn_hover_link_color home_btn_hover_border }.each do |name|
+          .control-group
+            = f.label name, name.gsub('bg', 'background').gsub('home_btn_', '').humanize, class: 'control-label'
+            .controls
+              .input-append.color{ data: { color: f.object.send(name), 'color-format' => 'rgba' } }
+                = f.text_field name, class: 'span12'
+                %span.add-on{ style: "background-color: #{f.object.send(name)}" }    
+      %fieldset
+        %legend Social Icons
+        - %w{ social_icons_link_color social_icons_hover_link_color }.each do |name|
+          .control-group
+            = f.label name, name.gsub('bg', 'background').gsub('social_icons_', '').humanize, class: 'control-label'
+            .controls
+              .input-append.color{ data: { color: f.object.send(name), 'color-format' => 'rgba' } }
+                = f.text_field name, class: 'span12'
+                %span.add-on{ style: "background-color: #{f.object.send(name)}" }    
+  .form-actions
+    = link_to manager_page_contents_path, class: 'btn' do
+      %i.icon-arrow-left
+      Back
+  
+    .pull-right
+      = f.submit 'Save', class: 'btn btn-primary'
+      
+:javascript
+  $(".color").colorpicker()

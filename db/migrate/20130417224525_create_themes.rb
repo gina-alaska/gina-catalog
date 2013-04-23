@@ -43,7 +43,7 @@ class CreateThemes < ActiveRecord::Migration
       t.home_btn_bg             = 'rgba(110, 13, 37, 0.8)'
       t.home_btn_link_color     = '#fff'
       t.home_btn_hover_bg       = 'rgba(110, 13, 37, 1)'
-      t.home_btn_hover_border   = '4px solid rgba(100, 3, 27, 1)'
+      t.home_btn_hover_border   = 'rgba(100, 3, 27, 1)'
       t.home_btn_hover_link_color= '#fff'
       t.social_icons_link_color = '#fff'
       t.social_icons_hover_link_color = '#0288CC'

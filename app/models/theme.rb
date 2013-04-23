@@ -1,5 +1,9 @@
 class Theme < ActiveRecord::Base
-  attr_accessible :content_bg, :header_bg, :header_color, :header_textcolor, :menu_active_bg, :menu_active_linkcolor, :menu_bg, :menu_hover_bg, :menu_hover_linkcolor, :menu_linkcolor, :name, :page_bg
+  attr_accessible :name, :page_bg, :content_bg, :header_bg, :header_title_color, :header_byline_color,
+    :menu_bg, :menu_link_color, :menu_active_bg, :menu_active_link_color, 
+    :menu_hover_bg, :menu_hover_link_color, :home_btn_bg, :home_btn_link_color, 
+    :home_btn_hover_bg, :home_btn_hover_link_color, :home_btn_hover_border,
+    :social_icons_link_color, :social_icons_hover_link_color
   
-  belongs_to :owner_setup_id, class_name: "Setup"
+  belongs_to :owner_setup, class_name: "Setup"
 end
