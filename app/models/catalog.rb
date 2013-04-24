@@ -36,7 +36,7 @@ class Catalog < ActiveRecord::Base
   #has_and_belongs_to_many :setups, uniq: true
   
   has_many :catalogs_collections, uniq: true
-  has_many :collections, :through => :catalogs_collections do
+  has_many :collections, :through => :catalogs_collections, uniq: true do
     def list
       proxy_association.owner.collections.names.join(', ')
     end

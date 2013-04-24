@@ -4,7 +4,7 @@ class Collection < ActiveRecord::Base
   belongs_to :setup
   
   has_many :catalogs_collections, uniq: true
-  has_many :catalogs, :through => :catalogs_collections
+  has_many :catalogs, :through => :catalogs_collections, uniq: true
 
   validates_presence_of :name
   liquid_methods :name, :id
