@@ -42,7 +42,7 @@ class Catalog < ActiveRecord::Base
     end
     
     def names
-      proxy_association.owner.collections.pluck(:name)
+      proxy_association.owner.collections.order('name ASC').pluck(:name)
     end
   end
   

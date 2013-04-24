@@ -7,7 +7,5 @@ class Collection < ActiveRecord::Base
   has_many :catalogs, :through => :catalogs_collections, uniq: true
 
   validates_presence_of :name
-  liquid_methods :name, :id
-  
-  default_scope order('name ASC')
+  liquid_methods :name, :id  
 end

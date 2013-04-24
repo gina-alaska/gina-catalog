@@ -11,6 +11,6 @@
   .span12
     %h4 Collections
     %ul.nav.nav-tabs.nav-stacked.collection-list
-      -current_setup.collections.each do |coll|
+      -current_setup.collections.order('name ASC').each do |coll|
         %li{class: search_params[:collection_id].to_i == coll.id ? "active" : ""}
           = link_to coll.name, "/search?search[collection_id]=#{coll.id}", data: {behaviour: "load_collection", target: "#collection_id", value: coll.id}
