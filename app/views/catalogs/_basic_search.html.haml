@@ -1,4 +1,4 @@
-= hidden_field_tag 'search[collection_ids]', @search_params[:collection_ids], id: "collection_id"
+= hidden_field_tag 'search[collection_id]', @search_params[:collection_id], id: "collection_id"
 = hidden_field_tag 'limit', @limit, id: 'limit'
 
 %h4 Keyword search
@@ -12,5 +12,5 @@
     %h4 Collections
     %ul.nav.nav-tabs.nav-stacked.collection-list
       -current_setup.collections.each do |coll|
-        %li{class: search_params[:collection_ids].to_i == coll.id ? "active" : ""}
-          = link_to coll.name, "#", data: {behaviour: "load_collection", target: "#collection_id", value: coll.id}
+        %li{class: search_params[:collection_id].to_i == coll.id ? "active" : ""}
+          = link_to coll.name, "/search?search[collection_id]=#{coll.id}", data: {behaviour: "load_collection", target: "#collection_id", value: coll.id}
