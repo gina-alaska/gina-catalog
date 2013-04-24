@@ -45,7 +45,7 @@ class CatalogsController < ApplicationController
     @limit = params[:limit] || 30
     @pagenum = params[:page] || 1
 
-    advanced_opts = @search_params.reject { |k,v| v.blank? or ['q', 'collection_ids', 'order_by'].include?(k) }
+    advanced_opts = @search_params.reject { |k,v| v.blank? or ['q', 'collection_id', 'order_by'].include?(k) }
     @is_advanced = advanced_opts.keys.size > 0
     
     if (@search_params['q'].nil? or @search_params['q'].blank?)
