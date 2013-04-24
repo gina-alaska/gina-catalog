@@ -34,28 +34,15 @@
     color: #{current_setup.theme.menu_active_link_color}
   }
 
-  #footer { 
-    border-top: none;
-    padding: 0; 
-    margin-top: 100px; 
-  }
-  #footer .copyright {
-    min-height: 160px;
-    margin-top: 20px;
-    color: #DDD;
-    padding-top: 25px;
-    background-color: #252528;
-  }
   #footer {
-    text-align: center;
+    color: #{current_setup.theme.footer_text_color};
+    background-color: #{current_setup.theme.footer_bg};
   }
+  
   #footer .partners {
-    text-align: center;
-    margin-bottom: 16px;
+    background-color: #{current_setup.theme.footer_partners_bg};
   }
-  #footer .partners a {
-    margin: 0 20px;
-  }
+
   #footer .partners img { 
     filter: url(/assets/filters.svg#grayscale); /* Firefox 3.5+ */
     filter: gray; /* IE6-9 */
@@ -67,13 +54,6 @@
     filter: none;
     -webkit-filter: grayscale(0);
     opacity: 1;
-  }
-
-  #home-page .body {
-    margin: 0 auto 30px auto; 
-    text-align: left; 
-    color:#3f3f3f;
-    font style: normal; 
   }
 
   .carousel-caption a {

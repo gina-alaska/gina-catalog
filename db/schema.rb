@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130423195258) do
+ActiveRecord::Schema.define(:version => 20130424195728) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -881,6 +881,9 @@ ActiveRecord::Schema.define(:version => 20130423195258) do
     t.boolean  "locked",                        :default => false
     t.datetime "created_at",                                       :null => false
     t.datetime "updated_at",                                       :null => false
+    t.string   "footer_bg"
+    t.string   "footer_text_color"
+    t.string   "footer_partners_bg"
   end
 
   create_table "use_agreements", :force => true do |t|
