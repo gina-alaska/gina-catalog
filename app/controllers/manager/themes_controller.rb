@@ -4,6 +4,12 @@ class Manager::ThemesController < ManagerController
   def index
   end
   
+  def new
+    @theme = Theme.where(name: 'Default').first
+    @theme = @theme.dup
+    @theme.name = ""
+  end
+  
   def edit
     @theme = Theme.find(params[:id])
     if @theme.locked
@@ -23,7 +29,7 @@ class Manager::ThemesController < ManagerController
           current_setup.save!
           
           flash[:success] = "Created new theme #{@theme.name}"
-          redirect_to manager_page_contents_path
+          redirect_to manager_page_contents_path(tab: 'themes')
         }
       end
     else
