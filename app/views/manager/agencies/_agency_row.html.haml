@@ -1,0 +1,20 @@
+%td{style:"text-align:center; padding:0;"}
+  %label{for: "agency_check_#{item.id}", style: "display:block; min-height:40px;"}
+    = check_box_tag "agency_check[#{item.id}]", item.id, nil, class: 'item-checkbox'
+%td= item.name
+%td= item.acronym
+%td= item.description
+%td= item.category
+%td= item.setups.include?(current_setup) ? "Yes" : "No"
+%td.span2
+  .actions
+    .btn-group{id:"action_buttons_#{dom_id(item)}"}
+      = link_to edit_manager_agency_path(item.id), class: 'btn', title: "Edit" do
+        %i.icon-edit    
+      - if item.setups.include?(current_setup)
+        = link_to_function '<i class="icon-eye-close icon-white"></i>'.html_safe, "ChangeVis('hidden', [#{ item.id}]);", class: 'btn btn-danger', title: "Hide Agency"
+      - else
+        = link_to_function '<i class="icon-eye-open icon-white"></i>'.html_safe, "ChangeVis('visible', [#{item.id}]);", class: 'btn btn-info', title: "Show Agency"
+      - if item.catalogs.count == 0
+        = link_to manager_agency_path(item.id), method: :delete, confirm: "Are you sure?", class: 'btn btn-danger', title: 'Remove Agency', remote: true, 'data-loading-text'=> '<i class="icon-spinner icon-spin"></i>' do
+          %i.icon-trash
