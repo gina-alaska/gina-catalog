@@ -95,7 +95,7 @@ class Manager::AgenciesController < ManagerController
 
   def hidden
     @agencies = Agency.where(id: params[:agencies_ids])
-    current_setup.agencies.delete(@agencies)
+    current_setup.agencies.destroy(@agencies)
 
     respond_to do |format|
       format.html {

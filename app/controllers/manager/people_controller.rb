@@ -95,7 +95,7 @@ class Manager::PeopleController < ManagerController
 
   def hidden
     @people = Person.where(id: params[:people_ids])
-    current_setup.persons.delete(@people)
+    current_setup.persons.destroy(@people)
 
     respond_to do |format|
       format.html {
