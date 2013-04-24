@@ -18,14 +18,16 @@
             :markdown
               #{catalog.description}
         = render '/shared/catalogs/collapsed_content', item: catalog, collapse: collapse
+        
       .span5
-        = render '/shared/catalogs/files', catalog: catalog  
         #map{ data: {                                       |
           openlayers: 'map_canvas',                         |
           projection: 'EPSG:3338',                          |
           displayProjection: 'EPSG:4326',                   |
-          layers: ['TILE.EPSG:3338.*'] |
+          layers: ['TILE.EPSG:3338.OSM','TILE.EPSG:3338.BDL','TILE.EPSG:3338.TOPO'] |
           }, |
           style: 'border: 1px solid #cfcfcf;' }
           #map_canvas{ style: 'width:100%; height:300px;' }
 
+        %br/
+        = render '/shared/catalogs/files', catalog: catalog

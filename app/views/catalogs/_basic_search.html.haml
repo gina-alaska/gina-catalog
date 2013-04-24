@@ -1,0 +1,16 @@
+= hidden_field_tag 'search[collection_ids]', @search_params[:collection_ids], id: "collection_id"
+= hidden_field_tag 'limit', @limit, id: 'limit'
+
+%h4 Keyword search
+.row-fluid
+  .span9
+    = text_field_tag 'search[q]', @search_params[:q], placeholder: 'Enter keyword search', class: 'span12'
+  .span3
+    = submit_tag 'Search', class: 'btn btn-primary btn-block'
+.row-fluid
+  .span12
+    %h4 Collections
+    %ul.nav.nav-tabs.nav-stacked
+      -current_setup.collections.each do |coll|
+        %li{class: search_params[:collection_ids].to_i == coll.id ? "active" : ""}
+          = link_to coll.name, "#", data: {behaviour: "load_collection", target: "#collection_id", value: coll.id}

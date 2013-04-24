@@ -33,7 +33,7 @@ class CatalogMap
     @map = new OpenLayers.Map(@data_config['openlayers'], @config)
     @map.addControls([
       new OpenLayers.Control.LayerSwitcher(),
-      new OpenLayers.Control.MousePosition({ displayProjection: @map.displayProjection, numDigits: 3 })
+      new OpenLayers.Control.MousePosition({ displayProjection: @map.displayProjection, numDigits: 3, prefix: 'Mouse: ' })
     ])
     Gina.Layers.inject(@map, @data_config['layers']);
     @zoomToDefaultBounds()

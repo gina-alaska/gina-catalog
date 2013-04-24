@@ -9,7 +9,7 @@
 //= require 'jquery-file-upload/jquery.fileupload'
 //= require 'jquery-file-upload/jquery.iframe-transport'
 //= require 'jquery-file-upload/tmpl.min'
-//= require 'select2/select2.min'
+//= require 'select2/select2'
 //= require 'gina-map-layers/gina-openlayers'
 //= require 'gina-map-layers/projections/all'
 //= require 'spin'
@@ -27,9 +27,9 @@ var initialize_page = function(){
     }); 
   }, $('.carousel').data('start-delay') || 5000);
   
-  
-  
-  $("[data-behaviour='load_collection']").on("click", function(){
+  $("[data-behaviour='load_collection']").on("click", function(evt){
+    evt.preventDefault();
+    
     var target = $(this).data("target");
     if($(target).val() == $(this).data("value")) {
       $(target).val('');
@@ -49,6 +49,7 @@ var initialize_page = function(){
   
   // $(document).on('ready', add_search_features);
   // $(document).on('page:change', add_search_features);
+  $('select[data-ui="select2"]').select2({ allowClear: true })
   
   $('.collapse').on('show', function() {
     var icon = $(this).parents('.result').find('i.collapse-icon');
@@ -77,10 +78,6 @@ $(document).on("click", '[data-behaviour="stash"]', function(evt) {
   $(target).parents("form").submit();
 });
 
-$(document).on('page:change', function() {
-  
-});
-
 $(document).on('click', '[data-action="scroll"]', function(evt) {
   evt.preventDefault();
   var target = $(this).attr('href');
@@ -93,6 +90,7 @@ $(document).on('click', '[data-action="scroll"]', function(evt) {
     });
   }
 });
+
 $(document).on('page:fetch', function() {
   $('.spinner-container').spin('large');
 });

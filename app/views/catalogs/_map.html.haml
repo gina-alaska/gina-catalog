@@ -1,0 +1,19 @@
+#map{ data: {                                       |
+  openlayers: 'map_canvas',                         |
+  projection: 'EPSG:3338',                          |
+  displayProjection: 'EPSG:4326',                   |
+  layers: ['TILE.EPSG:3338.OSM', 'TILE.EPSG:3338.BDL', 'TILE.EPSG:3338.TOPO'] |
+  }, |
+  style: 'border: 1px solid #cfcfcf;' }
+  .navbar.navbar-static-top
+    .navbar-inner
+      .btn-group
+        = link_to '#', data: { action: 'zoomToMaxExtent' }, class: 'btn' do
+          %i.icon-globe
+      / .btn-group
+      /   = link_to '#', data: { action: 'placeMarker' }, class: 'btn' do
+      /     %i.icon-map-marker
+      /   = link_to '#', data: { action: 'drawPolygon' }, class: 'btn' do
+      /     %i.icon-pencil
+    
+  #map_canvas{ style: 'width:100%; height:300px;' }     

@@ -5,7 +5,7 @@
       
   .span3
     %strong Type:
-    = item.class == Project ? 'Project' : 'Data'
+    = item.type == 'Project' ? 'Project' : 'Data'
 
   - unless item.start_date.nil?
     .span3

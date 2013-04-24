@@ -1,27 +1,13 @@
 .content
   .row-fluid
     .span4.sidebar
-      = render 'advanced_search', search_params: @search_params, results: @results
-    
-      #map{ data: {                                       |
-        openlayers: 'map_canvas',                         |
-        projection: 'EPSG:3338',                          |
-        displayProjection: 'EPSG:4326',                   |
-        layers: ['TILE.EPSG:3338.TOPO', 'TILE.EPSG:3338.*'] |
-        }, |
-        style: 'border: 1px solid #cfcfcf;' }
-        .navbar.navbar-static-top
-          .navbar-inner
-            .btn-group
-              = link_to '#', data: { action: 'zoomToMaxExtent' }, class: 'btn' do
-                %i.icon-globe
-            / .btn-group
-            /   = link_to '#', data: { action: 'placeMarker' }, class: 'btn' do
-            /     %i.icon-map-marker
-            /   = link_to '#', data: { action: 'drawPolygon' }, class: 'btn' do
-            /     %i.icon-pencil
-          
-        #map_canvas{ style: 'width:100%; height:300px;' }             
+      = form_tag search_url, method: 'GET', style: 'width:100%' do
+        = render 'basic_search', search_params: @search_params, results: @results
+        %br/
+        = render 'map'
+        %br/
+        = render 'advanced_search', search_params: @search_params, results: @results
+                
     .span8
       .search
         .row-fluid.header

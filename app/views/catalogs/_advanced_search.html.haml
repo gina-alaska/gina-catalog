@@ -1,71 +1,51 @@
-= form_tag search_url, style: 'width:100%' do
-  = hidden_field_tag 'search[collection_ids]', search_params[:collection_ids], id: "collection_id"
-  = hidden_field_tag 'limit', @limit, id: 'limit'
-  
-  %h4 Keyword search
-  .row-fluid
-    .span9
-      = text_field_tag 'search[q]', search_params[:q], placeholder: 'Enter keyword search', class: 'span12'
-    .span3
-      = submit_tag 'Search', class: 'btn btn-primary btn-block'
-  .row-fluid
-    .span12
-      %ul.nav.nav-list
-        %li.nav-header Collections
-        -current_setup.collections.each do |coll|
-          %li{class: search_params[:collection_ids].to_i == coll.id ? "active" : ""}
-            = link_to coll.name, "#", data: {behaviour: "load_collection", target: "#collection_id", value: coll.id}
-      %br
+#advanced.accordion
+  .accordion-group
+    .accordion-heading.h4
+      = link_to 'Advanced', '#options', class: 'accordion-toggle', data: { toggle: 'collapse', parent: '#advanced' }
+    #options.accordion-body.collapse{ class: @is_advanced ? 'in' : '' }
+      .accordion-inner{style:'margin-bottom: 10px; padding: 5px 5px 25px 5px;'}
+        = label_tag 'search[type]', 'Record Type'
+        = select_tag 'search[type]', options_for_select([['Projects', 'Project'], ['Data', 'Asset']], search_params[:type]), class: 'span12', 
+          data: {placeholder: 'Projects and Data', ui: 'select2' }, include_blank: true
 
-  #advanced.accordion
-    .accordion-group
-      .accordion-heading.h4
-        = link_to 'Advanced', '#options', class: 'accordion-toggle', data: { toggle: 'collapse', parent: '#advanced' }
-      #options.accordion-body.collapse{ class: @is_advanced ? 'in' : '' }
-        .accordion-inner
-          = label_tag 'search[type]', 'Record Type'
-          = select_tag 'search[type]', options_for_select([['Projects', 'Project'], ['Data', 'Asset']], search_params[:type]), class: 'span12', 
-            data: {placeholder: 'Projects and Data'}, include_blank: true
+        = label_tag 'search[data_types]', 'Data Type'
+        = select_tag 'search[data_types]', options_from_collection_for_select(DataType.all, :name, :name, search_params[:data_types]), class: 'span12',
+          data: {placeholder: 'All types', ui: 'select2'}, include_blank: true
 
-          = label_tag 'search[data_types]', 'Data Type'
-          = select_tag 'search[data_types]', options_from_collection_for_select(DataType.all, :name, :name, search_params[:data_types]), class: 'span12',
-            data: {placeholder: 'All types'}, include_blank: true
+        = label_tag 'search[status]', 'Status'
+        = select_tag 'search[status]', options_for_select(Project::STATUSES + Asset::STATUSES, search_params[:status]), class: 'span12', 
+          data: {placeholder: 'Any', ui: 'select2'}, include_blank: true
 
-          = label_tag 'search[status]', 'Status'
-          = select_tag 'search[status]', options_for_select(Project::STATUSES + Asset::STATUSES, search_params[:status]), class: 'span12', 
-            data: {placeholder: 'Any'}, include_blank: true
+        = label_tag 'search[start_date_afer]', 'Starts after'
+        = number_field_tag 'search[start_date_afer]', search_params[:start_date_afer], min: 1900, max: Time.zone.now.year, class: 'span12', placeholder: 'YYYY'
+            
+        = label_tag 'search[end_date_before]', 'Ends before'
+        = number_field_tag 'search[end_date_before]', search_params[:end_date_before], min: 1900, max: Time.zone.now.year, class: 'span12', placeholder: 'YYYY'
+            
+        = label_tag 'search[region]', 'Region'
+        = select_tag 'search[region]', options_from_collection_for_select(Geokeyword.all, :name, :name, search_params[:region]), class: 'span12', 
+          data: {placeholder: 'All regions', ui: 'select2'}, include_blank: true
 
-          = label_tag 'search[start_date_afer]', 'Starts after'
-          = number_field_tag 'search[start_date_afer]', search_params[:start_date_afer], min: 1900, max: Time.zone.now.year, class: 'span12', placeholder: 'YYYY'
-              
-          = label_tag 'search[end_date_before]', 'Ends before'
-          = number_field_tag 'search[end_date_before]', search_params[:end_date_before], min: 1900, max: Time.zone.now.year, class: 'span12', placeholder: 'YYYY'
-              
-          = label_tag 'search[region]', 'Region'
-          = select_tag 'search[region]', options_from_collection_for_select(Geokeyword.all, :name, :name, search_params[:region]), class: 'span12', 
-            data: {placeholder: 'All regions'}, include_blank: true
-
-          =label_tag 'search[source_agency_id]', 'Primary Agency'
-          =select_tag 'search[source_agency_id]', options_from_collection_for_select(current_setup.agencies, :id, :name_with_acronym, search_params[:source_agency_id]), 
-            class: 'span12', data: {placeholder: 'All Agencies'}, :include_blank => true 
+        =label_tag 'search[source_agency_id]', 'Primary Agency'
+        =select_tag 'search[source_agency_id]', options_from_collection_for_select(current_setup.agencies, :id, :name_with_acronym, search_params[:source_agency_id]), 
+          class: 'span12', data: {placeholder: 'All Agencies', ui: 'select2'}, :include_blank => true 
+      
+        =label_tag 'search[funding_agency_id]', 'Funding Agency'
+        =select_tag 'search[funding_agency_id]', options_from_collection_for_select(current_setup.agencies, :id, :name_with_acronym, search_params[:funding_agency_id]), 
+          class: 'span12', data: {placeholder: 'All Agencies', ui: 'select2'}, :include_blank => true 
         
-          =label_tag 'search[funding_agency_id]', 'Funding Agency'
-          =select_tag 'search[funding_agency_id]', options_from_collection_for_select(current_setup.agencies, :id, :name_with_acronym, search_params[:funding_agency_id]), 
-            class: 'span12', data: {placeholder: 'All Agencies'}, :include_blank => true 
-          
-          =label_tag 'search[agency_ids]', 'Other Agencies'
-          =select_tag 'search[agency_ids]', options_from_collection_for_select(current_setup.agencies, :id, :name_with_acronym, search_params[:agency_ids]), multiple: true, 
-            class: 'span12', data: {placeholder: 'All Agencies'}
+        =label_tag 'search[agency_ids]', 'Other Agencies'
+        =select_tag 'search[agency_ids]', options_from_collection_for_select(current_setup.agencies, :id, :name_with_acronym, search_params[:agency_ids]), multiple: true, 
+          class: 'span12', data: {placeholder: 'All Agencies', ui: 'select2'}
 
-          =label_tag 'search[agency_types]', 'Agency Type'
-          =select_tag 'search[agency_types]', options_for_select(Agency::CATEGORIES, search_params[:agency_types]), class: 'span12', data: {placeholder: 'All Agency Types'}, :include_blank => true
-          
-          =label_tag 'search[primary_contact_id]', 'Primary Contact'
-          =select_tag 'search[primary_contact_id]', options_from_collection_for_select(current_setup.persons, :id, :contact_string, search_params[:primary_contact_id]),
-            class: 'span12', data: {placeholder: 'All Contacts'}, :include_blank => true 
-          =label_tag 'search[contact_ids]', 'Contacts'
-          =select_tag 'search[contact_ids]', options_from_collection_for_select(current_setup.persons, :id, :contact_string, search_params[:contact_ids]), multiple: true,
-            class: 'span12', data: {placeholder: 'All Contacts'}
-
-:javascript
-  $("select").select2({allowClear: true});              
+        =label_tag 'search[agency_types]', 'Agency Type'
+        =select_tag 'search[agency_types]', options_for_select(Agency::CATEGORIES, search_params[:agency_types]), class: 'span12', data: {placeholder: 'All Agency Types', ui: 'select2'}, :include_blank => true
+        
+        =label_tag 'search[primary_contact_id]', 'Primary Contact'
+        =select_tag 'search[primary_contact_id]', options_from_collection_for_select(current_setup.persons, :id, :contact_string, search_params[:primary_contact_id]),
+          class: 'span12', data: {placeholder: 'All Contacts', ui: 'select2'}, :include_blank => true 
+        =label_tag 'search[contact_ids]', 'Contacts'
+        =select_tag 'search[contact_ids]', options_from_collection_for_select(current_setup.persons, :id, :contact_string, search_params[:contact_ids]), multiple: true,
+          class: 'span12', data: {placeholder: 'All Contacts', ui: 'select2'}
+      .form-actions{style:'margin-bottom: 0;'}
+        = submit_tag 'Apply', class: 'btn btn-primary pull-right'

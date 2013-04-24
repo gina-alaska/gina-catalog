@@ -11,6 +11,8 @@
         - unless catalog.geometry_collection.blank?
           %i.icon-globe{ title: 'Catalog record has location information' }
       .description
+        - unless catalog.collections.list.blank?
+          %b= catalog.collections.list
         :markdown
           #{catalog.description.try(:truncate, 300).try(:html_safe)}
         /.try(:truncate, 200)}
