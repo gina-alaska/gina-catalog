@@ -92,7 +92,8 @@ class Page::Content < ActiveRecord::Base
       'description' => self.description,
       'images' => self.images,
       'children' => self.children.public,
-      'public' => self.public?
+      'public' => self.public?,
+      'show_in_menu' => self.main_menu
     }
   end
 end
