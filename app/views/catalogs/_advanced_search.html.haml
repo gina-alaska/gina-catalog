@@ -5,7 +5,7 @@
     #options.accordion-body.collapse{ class: @is_advanced ? 'in' : '' }
       .accordion-inner{style:'margin-bottom: 10px; padding: 5px 5px 25px 5px;'}
         = label_tag 'search[type]', 'Record Type'
-        = select_tag 'search[type]', options_for_select([['Projects', 'Project'], ['Data', 'Asset']], search_params[:type]), class: 'span12', 
+        = select_tag 'search[type]', options_for_select([['Projects', 'Project'], ['Data', 'Data']], search_params[:type]), class: 'span12', 
           data: {placeholder: 'Projects and Data', ui: 'select2' }, include_blank: true
 
         = label_tag 'search[data_types]', 'Data Type'

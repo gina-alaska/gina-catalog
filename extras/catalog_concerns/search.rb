@@ -56,7 +56,14 @@ module CatalogConcerns
           with :status, search[:status] if search[:status].present?
           with :long_term_monitoring, ((search[:long_term_monitoring].to_i > 0) ? true : false) if search.include? :long_term_monitoring
           with :archived_at_year, nil unless search[:archived]
-          with :record_type, search[:type] if search[:type].present?
+          if search[:type].present?
+            if search[:type] == 'Data'
+              #work around for legacy data
+              with :record_type, 'Asset' 
+            else
+              with :record_type, search[:type] 
+            end
+          end
           with :agency_ids, search[:agency_ids] if search[:agency_ids].present?
           with :source_agency_id, search[:source_agency_id] if search[:source_agency_id].present?
           with :funding_agency_id, search[:funding_agency_id] if search[:funding_agency_id].present?
