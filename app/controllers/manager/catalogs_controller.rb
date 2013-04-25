@@ -16,7 +16,6 @@ class Manager::CatalogsController < ManagerController
   def index
     @page = params[:page] || 1
     @limit = 50
-    @pagenum = params[:page] || 1
 
     @search = params[:search] || {}
     @search[:order_by] ||= 'title_sort-ascending'
