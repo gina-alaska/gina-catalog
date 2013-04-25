@@ -15,7 +15,10 @@
           
   .control-group
     .controls
-      = f.text_area :content, class: 'span12', style:"border: none;", rows: 10, data: { markitup: 'html' }
+      / ACE Editor
+      %div.ace{ data: { editor: 'ace' } }
+        = render '/shared/ace/toolbar'
+        = f.text_area :content, class: 'span12', style:"border: none;", rows: 10
       
   .form-actions
     = link_to manager_page_contents_path(tab: "page_snippets"), class: 'btn' do 
@@ -25,15 +28,6 @@
       = f.submit 'Save', class: 'btn btn-primary'
       = f.submit 'Save and Close', class: 'btn btn-primary'
 
-= render '/manager/images/image_chooser_list'
-:javascript
-  $('#insert_image_chooser_modal a[data-behavior="add"]').click(function() {
-  	src = $(this).data("src");
-    alt = $(this).data("alt");
-    
-  	$.markItUp( 
-  		{ replaceWith:'<img src="'+src+'" alt="'+alt+'" />' }
-  	);
-    $('#insert_image_chooser_modal').modal('hide');
-  	return false;
-  }); 
+= render '/shared/ace/image_chooser', page: @snippet
+= render '/shared/ace/link_chooser', page: @snippet
+= render '/shared/ace/javascript', page: @snippet
