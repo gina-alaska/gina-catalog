@@ -59,18 +59,30 @@ class Manager::PageContentsController < ManagerController
     
     if @page.save
       respond_to do |format|
+        flash[:success] = "#{@page.title} page created"
         format.html {
-          flash[:success] = "#{@page.title} page created"
           if params["commit"] == "Save"
             redirect_to edit_manager_page_content_path(@page)
           else
             redirect_to manager_page_contents_path
           end
         }
+        format.js {
+          if params["commit"] == "Save"
+            @redirect_to = edit_manager_page_content_path(@page)
+          else
+            @redirect_to = manager_page_contents_path
+          end
+          render '/shared/form_response'          
+        }
       end
     else
       respond_to do |format|
         format.html { render action: 'new' }
+        format.js {       
+          flash.now[:error] = @page.errors.full_messages
+          render '/shared/form_response'
+        }
       end      
     end
   end
@@ -97,6 +109,7 @@ class Manager::PageContentsController < ManagerController
             flash[:success] = msg
             @redirect_to = manager_page_contents_path
           end
+          render '/shared/form_response'
         }
       end
     else
@@ -104,6 +117,7 @@ class Manager::PageContentsController < ManagerController
         format.html { render action: 'edit' }
         format.js { 
           flash.now[:error] = @page.errors.full_messages
+          render '/shared/form_response'
         }
       end      
     end
