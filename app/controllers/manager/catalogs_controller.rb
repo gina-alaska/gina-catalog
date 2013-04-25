@@ -16,13 +16,16 @@ class Manager::CatalogsController < ManagerController
   def index
     @page = params[:page] || 1
     @limit = 50
+
     @search = params[:search] || {}
     @search[:order_by] ||= 'title_sort-ascending'
     if @search.keys.count > 0
       search = solr_search(@search, @page, @limit, true)
       @catalogs = search.results
+      @total = search.total
     else
       @catalogs = Catalog.order('title ASC').page(@page).per(@limit)
+      @total = Catalog.all.count
     end
     
     respond_with @catalogs
