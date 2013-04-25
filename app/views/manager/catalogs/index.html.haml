@@ -88,7 +88,14 @@
         %td=item.contact_infos.count
 
 .center-paging
-  = paginate @catalogs
+  .btn-group
+    = link_to_prev_page @catalogs, params: {search: @search}, class: 'btn' do
+      %i.icon-angle-left
+    %button.btn
+      %span= display_result_info(@catalogs, @pagenum, @limit, @total)
+    = link_to_next_page @catalogs, params: {search: @search}, class: 'btn' do
+      %i.icon-angle-right
+/  = paginate @catalogs
 
 :javascript
   $(document).ready(function() {
