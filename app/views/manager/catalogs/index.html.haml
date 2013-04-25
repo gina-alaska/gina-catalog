@@ -88,7 +88,17 @@
         %td=item.contact_infos.count
 
 .center-paging
-  = paginate @catalogs
+  .btn-group
+    = link_to_first_page @catalogs, params: { search: @search }, class: 'btn' do
+      %i.icon-double-angle-left
+    = link_to_prev_page @catalogs, params: {search: @search}, class: 'btn' do
+      %i.icon-angle-left
+    %button.btn
+      %span= display_result_info(@catalogs, @page, @limit, @total)
+    = link_to_next_page @catalogs, params: {search: @search}, class: 'btn' do
+      %i.icon-angle-right
+    = link_to_last_page @catalogs, params: { search: @search }, class: 'btn' do
+      %i.icon-double-angle-right
 
 :javascript
   $(document).ready(function() {
