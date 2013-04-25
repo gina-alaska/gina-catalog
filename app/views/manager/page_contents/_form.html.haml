@@ -65,9 +65,11 @@
         - if name == 'images'
           = render 'images', page: page
         - else
+          / ACE Editor
           %div.ace{ data: { editor: 'ace' } }
-            = render 'editor_toolbar'
-            = text_area_tag "page_content[content][#{name}]", content, style:"display: none;"
+            = render '/shared/ace/toolbar'
+            = text_area_tag "page_content[content][#{name}]", content
+            
   .form-actions.form-inline{style:'margin-top: 0;'}
     = link_to manager_page_contents_path, class: 'btn' do 
       %i.icon-arrow-left
@@ -81,92 +83,12 @@
       = f.submit 'Save and Close', class: 'btn btn-primary', data: { 'disable-with' => "Saving..." }
 
 = render 'image_chooser', page: page unless page.new_record?
-= render 'insert_image_chooser', page: page
 
-#link_chooser.modal.hide.fade
-  .modal-header
-    %button.close{type:'button', data: { dismiss: 'modal' }} &times;
-    %h3 Add Link
-  .modal-body
-    .tabbable.tabs-left
-      %ul.nav.nav-tabs
-        %li.active= link_to 'Choose page', '#page-list', data: { toggle: 'tab' }
-        %li= link_to 'Enter URL', '#enter-url', data: { toggle: 'tab' }
-      .tab-content
-        #page-list.active.tab-pane
-          %form#choose-page.form-inline
-            .control-group
-              %label.control-label Select a page:
-              .controls
-                - opts = awesome_set_options(current_setup.pages.roots, :slug_with_root) { |i| "#{'-'*i.level} #{i.title}"}
-                = select_tag 'url', options_for_select(opts), prompt: 'Select a page'
-            .control-group.offset1
-              %label.checkbox
-                = check_box_tag 'target', '_blank'
-                Open new window?
-                
-            = submit_tag 'Add Link', class: 'btn btn-primary pull-right'
-        #enter-url.tab-pane
-          %form#add-link-form.form-inline
-            .control-group
-              %label.control-label Enter URL:
-              .controls
-                = text_field_tag 'url', '', placeholder: 'http://example.com', class: 'span12'
-            .control-group.offset1
-              %label.checkbox
-                = check_box_tag 'target', '_blank'
-                Open new window?
-                
-            = submit_tag 'Add Link', class: 'btn btn-primary pull-right'
-        
+= render '/shared/ace/image_chooser', page: page
+= render '/shared/ace/link_chooser', page: page
+= render '/shared/ace/javascript', page: page
+
 :javascript
-  var editors = new AceEditor('[data-editor="ace"]');
-
-  editors.addHandler('link', function(editor, btn, ace) {
-    $('#link_chooser').modal();  
-    $('#link_chooser').on('hidden', function() {
-      // Reset these forms
-      $('#choose-page')[0].reset();
-      $('#add-link-form')[0].reset();
-      $('#link_chooser form').unbind('submit');
-      $('#link_chooser a:first').tab('show');
-    });
-    
-    $('#link_chooser form').on('submit', function(evt) {
-      evt.preventDefault();
-      var url = $(this).find('[name="url"]').val();
-      var target = '';
-      
-      if( $(this).find('[name="target"]').is(':checked') ) {
-        target = $('[name="target"]').val();
-      }
-      $('#link_chooser').modal('hide');
-      
-      var link = '<a href="'+url+'" target="'+target+'">';
-      ace.wrapSelectionWithTags(editor, link, "</a>")
-    });
-  });
-  
-  editors.addHandler('picture', function(editor, btn, ace) {
-    $('#insert_image_chooser_modal').modal();
-    
-    var addImage = function() {
-      var src = $(this).data("src");
-      var alt = $(this).data("alt");
-      var tag = '<img src="'+src+'" alt="'+alt+'" />';
-      
-      ace.wrapSelectionWithTags(editor, tag);
-      $('#insert_image_chooser_modal').modal('hide');
-    }
-    
-    $('#insert_image_chooser_modal').on('hidden', function() {
-      $('#insert_image_chooser_modal a[data-behavior="add"]').unbind('click', addImage);
-    });
-    
-    $('#insert_image_chooser_modal a[data-behavior="add"]').on('click', addImage);
-  });
-
-  
   function format_menu_icon_select(item) {
     return "<i class='" + $(item.element).val() + "'></i>&nbsp;" + item.text
   }
