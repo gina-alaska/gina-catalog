@@ -11,19 +11,20 @@
     .span8
       .search
         .row-fluid.header
-          .span3
-            %h4 Search results
-          .span7{style:'padding-top: 2px; color:#000;'}
+          .span12{style:'padding-top: 2px; color:#000; text-align:center;'}
             .btn-group
+              = link_to_first_page @results, params: { search: @search_params }, class: 'btn' do
+                %i.icon-double-angle-left
               = link_to_prev_page @results, params: { search: @search_params }, class: 'btn' do
                 %i.icon-angle-left
               %button.btn
                 %span= display_result_info(@results, @pagenum, @limit, @total)
               = link_to_next_page @results, params: { search: @search_params }, class: 'btn' do
                 %i.icon-angle-right
-          .span2
-            .nav.dropdown{style:'padding-top: 2px; color:#000;'}
-              = link_to '#', class: "btn btn-block dropdown-toggle", data: { 'loading-text' => 'Loading...', toggle: "dropdown" } do
+              = link_to_last_page @results, params: { search: @search_params }, class: 'btn' do
+                %i.icon-double-angle-right
+            .nav.dropdown{style:'padding-top: 2px; color:#000; display: inline-block;'}
+              = link_to '#', class: "btn dropdown-toggle", data: { 'loading-text' => 'Loading...', toggle: "dropdown" } do
                 = "Limit: #{@limit}"
                 %i.caret
               %ul.dropdown-menu

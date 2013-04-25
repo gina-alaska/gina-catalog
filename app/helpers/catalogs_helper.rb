@@ -10,6 +10,23 @@ module CatalogsHelper
     end
   end
   
+  def link_to_first_page(scope, options = {}, &block)
+    # options = name if name.is_a? Hash
+    
+    disable_class = options.delete(:disable_class) || 'disabled'
+    params = options.delete(:params) || {}
+    param_name = options.delete(:param_name) || Kaminari.config.param_name
+
+    if scope.first_page?
+      options[:class] ||= ''
+      options[:data] ||= {}
+      options[:class] << " #{disable_class}"
+      options[:data][:disabled] = true
+    end    
+    
+    link_to params.merge(param_name => 1), options.reverse_merge(:rel => 'previous'), &block
+  end
+  
   def link_to_prev_page(scope, options = {}, &block)
     # options = name if name.is_a? Hash
     
@@ -43,4 +60,22 @@ module CatalogsHelper
     
     link_to params.merge(param_name => (scope.current_page + 1)), options.reverse_merge(:rel => 'previous'), &block
   end
+
+  def link_to_last_page(scope, options = {}, &block)
+    # options = name if name.is_a? Hash
+    
+    disable_class = options.delete(:disable_class) || 'disabled'
+    params = options.delete(:params) || {}
+    param_name = options.delete(:param_name) || Kaminari.config.param_name
+
+    if scope.last_page?
+      options[:class] ||= ''
+      options[:data] ||= {}
+      options[:class] << " #{disable_class}"
+      options[:data][:disabled] = true
+    end
+    
+    link_to params.merge(param_name => scope.num_pages), options.reverse_merge(:rel => 'previous'), &block
+  end  
+  
 end
