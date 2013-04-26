@@ -2,16 +2,9 @@
 = hidden_field_tag 'search[tags]', @search_params[:tags], id: "search_tags"
 = hidden_field_tag 'limit', @limit, id: 'limit'
 
-%h4 Keyword search
-.row-fluid
-  .span9
+.control-group
+  %label.control-label
+    %b Keyword Search
+  .controls
     = text_field_tag 'search[q]', @search_params[:q], placeholder: 'Enter keyword search', class: 'span12'
-  .span3
-    = submit_tag 'Search', class: 'btn btn-primary btn-block'
-.row-fluid
-  .span12
-    %h4 Collections
-    %ul.nav.nav-tabs.nav-stacked.collection-list
-      -current_setup.collections.order('name ASC').each do |coll|
-        %li{class: search_params[:collection_id].to_i == coll.id ? "active" : ""}
-          = link_to coll.name, "/search?search[collection_id]=#{coll.id}", data: {behaviour: "load_collection", target: "#search_collection_id", value: coll.id}
+

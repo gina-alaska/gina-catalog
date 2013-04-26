@@ -1,22 +1,23 @@
 .content
   .row-fluid
-    .span4.sidebar
+    .span4{ style: 'padding-top: 3px;'}
       = form_tag search_url, method: 'GET', style: 'width:100%' do
         = render 'basic_search', search_params: @search_params, results: @results
-        %br/
-        = render 'map'
+        = render 'search_buttons',  search_params: @search_params, results: @results
         %br/
         = render 'advanced_search', search_params: @search_params, results: @results
+        = render 'collection_search', search_params: @search_params, results: @results
+        %br/
+        %div
+          %label 
+            Legend:
+            %i.icon-warning-sign &nbsp;Not Published
+            %i.icon-globe &nbsp;Has Location
                 
     .span8
       .search
-        .row-fluid.header
-          .span12{style: 'text-align:center'}
-            = render 'pagetoolbar', results: @results, total: @total, page: @pagenum, limit: @limit, params: @search_params
-        .row-fluid
-          .span12{style: "text-align: center;"}
-            %i.icon-warning-sign &nbsp;Not Published
-            %i.icon-globe &nbsp;Has Location
+        %div{style: 'margin-bottom: 10px; margin-top: 5px;'}
+          = render 'map'
         %table.table.table-striped.table-condensed.results
           %tbody
             - if @results.empty?
@@ -25,7 +26,5 @@
                   %p.lead No search results
             - @results.each do |result|
               = render result
-        .row-fluid
-          .span12{style: 'text-align:center'}
-            = render 'pagetoolbar', results: @results, total: @total, page: @pagenum, limit: @limit, params: @search_params
-  
+        %div{style: 'text-align:center'}
+          = render 'pagetoolbar', results: @results, total: @total, page: @pagenum, limit: @limit, params: @search_params

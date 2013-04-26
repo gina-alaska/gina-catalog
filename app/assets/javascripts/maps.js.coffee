@@ -15,7 +15,7 @@ class CatalogMap
   setupToolbar: ->
     @addBtnHandler('zoomToMaxExtent', @zoomToDefaultBounds)
       
-    @btns = $(@el).find('.navbar a.btn, .navbar button.btn')
+    @btns = $(@el).find('.btn[data-action]')
     @btns.on 'click', (evt) =>
       evt.preventDefault()  
       action = $(evt.currentTarget).data('action')
