@@ -10,8 +10,6 @@ $smallColor: contrast-color($primaryColor, #333, #999);
 @import "fileupload/bootstrap-fileupload";
 @import "catalogs";
 @import "catalog_collection";
-@import "markitup";
-@import "markitup-html";
 @import 'select2/select2';
 @import 'bootstrap-datepicker';
 @import 'bootstrap-colorpicker/bootstrap-colorpicker';
