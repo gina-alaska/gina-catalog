@@ -14,6 +14,7 @@ class Manager::PageSnippetsController < ManagerController
     
     respond_to do |format|
       if @snippet.save
+        flash[:success] = 'Successfully created snippet'
         format.html {
           flash[:success] = 'Successfully created snippet'
           if params[:commit] == 'Save'
@@ -22,8 +23,20 @@ class Manager::PageSnippetsController < ManagerController
             redirect_to manager_page_contents_path(tab: "page_snippets")
           end
         }
+        format.js {
+          if params["commit"] == "Save"
+            @redirect_to = edit_manager_page_snippet_path(@snippet)
+          else
+            @redirect_to = manager_page_contents_path(tab: "page_snippets")
+          end
+          render '/shared/form_response'          
+        }
       else
         format.html { render 'new' }
+        format.js {       
+          flash.now[:error] = @snippet.errors.full_messages
+          render '/shared/form_response'
+        }
       end
     end
   end
@@ -36,16 +49,30 @@ class Manager::PageSnippetsController < ManagerController
     @snippet = current_setup.snippets.find(params[:id])
     respond_to do |format|
       if @snippet.update_attributes(params[:page_snippet])
+        msg = 'Successfully updated snippet'
         format.html {
-          flash[:success] = 'Successfully updated snippet'
+          flash[:success] = msg
           if params[:commit] == 'Save'
             redirect_to edit_manager_page_snippet_path(@snippet)
           else
             redirect_to manager_page_contents_path(tab: "page_snippets")
           end
         }
+        format.js {
+          if params["commit"] == "Save"
+            flash.now[:success] = msg
+          else
+            flash[:success] = msg
+            @redirect_to = manager_page_contents_path(tab: "page_snippets")
+          end
+          render '/shared/form_response'
+        }
       else
         format.html { render 'edit' }
+        format.js {       
+          flash.now[:error] = @snippet.errors.full_messages
+          render '/shared/form_response'
+        }
       end
     end
   end
