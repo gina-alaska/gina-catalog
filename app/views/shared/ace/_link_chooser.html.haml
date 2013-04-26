@@ -1,0 +1,35 @@
+#link_chooser.modal.hide.fade
+  .modal-header
+    %button.close{type:'button', data: { dismiss: 'modal' }} &times;
+    %h3 Add Link
+  .modal-body
+    .tabbable.tabs-left
+      %ul.nav.nav-tabs
+        %li.active= link_to 'Choose page', '#page-list', data: { toggle: 'tab' }
+        %li= link_to 'Enter URL', '#enter-url', data: { toggle: 'tab' }
+      .tab-content
+        #page-list.active.tab-pane
+          %form#choose-page.form-inline
+            .control-group
+              %label.control-label Select a page:
+              .controls
+                - opts = awesome_set_options(current_setup.pages.roots, :slug_with_root) { |i| "#{'-'*i.level} #{i.title}"}
+                = select_tag 'url', options_for_select(opts), prompt: 'Select a page'
+            .control-group.offset1
+              %label.checkbox
+                = check_box_tag 'target', '_blank'
+                Open new window?
+                
+            = submit_tag 'Add Link', class: 'btn btn-primary pull-right'
+        #enter-url.tab-pane
+          %form#add-link-form.form-inline
+            .control-group
+              %label.control-label Enter URL:
+              .controls
+                = text_field_tag 'url', '', placeholder: 'http://example.com', class: 'span12'
+            .control-group.offset1
+              %label.checkbox
+                = check_box_tag 'target', '_blank'
+                Open new window?
+                
+            = submit_tag 'Add Link', class: 'btn btn-primary pull-right'

@@ -1,7 +1,6 @@
 //= require turbolinks
 //= require 'jquery'
 //= require 'jquery_ujs'
-//= require 'jquery.markitup'
 //= require 'jquery.slugify'
 //= require 'jquery.ui.effect-highlight'
 //= require 'bootstrap'
