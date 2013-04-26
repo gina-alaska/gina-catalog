@@ -14,42 +14,43 @@
       = f.text_field :title, class: 'span12'
       
   = link_to 'Advanced Options', '#advanced', data: { toggle: 'collapse' }
-  %fieldset#advanced.collapse
-    .control-group
-      = f.label :slug, class: 'control-label'
-      .controls
-        = f.text_field :slug, value: page.slug_without_path, class: 'span12'
-    :javascript
-      $('#page_content_slug').slugify('#page_content_title');
+  #advanced.collapse
+    %fieldset
+      .control-group
+        = f.label :slug, class: 'control-label'
+        .controls
+          = f.text_field :slug, value: page.slug_without_path, class: 'span12'
+      :javascript
+        $('#page_content_slug').slugify('#page_content_title');
 
-    .row-fluid
-      .span12
-        .control-group
-          = f.label "Redirect to URL", class: 'control-label'
-          .controls
-            = f.text_field :redirect, class: 'span12'
-    .row-fluid
-      .span6
-        .control-group
-          = f.label :parent_id, class: 'control-label'
-          .controls
-            = f.select :parent_id, nested_set_options(current_setup.pages, page) {|i| "#{'-' * i.level} #{i.title}" }, include_blank: true
-        .control-group
-          = f.label :page_layout_id, 'Layout', class: 'control-label'
-          .controls
-            = f.collection_select :page_layout_id, current_setup.layouts, :id, :name, {}, { class: 'span12' }
-        %label.checkbox
-          =f.check_box :main_menu
-          Show in Main Menu
-        .control-group
-          = f.label :menu_icon, 'Menu Icon', class: 'control-label'
-          .controls
-            = f.select :menu_icon, Page::Content::ICONS, {include_blank: true}, class: 'menu-icons span12'
-      .span6
-        .control-group
-          = f.label :description, class: 'control-label'
-          .controls
-            = f.text_area :description, class: 'span12', rows: 10
+      .row-fluid
+        .span12
+          .control-group
+            = f.label "Redirect to URL", class: 'control-label'
+            .controls
+              = f.text_field :redirect, class: 'span12'
+      .row-fluid
+        .span6
+          .control-group
+            = f.label :parent_id, class: 'control-label'
+            .controls
+              = f.select :parent_id, nested_set_options(current_setup.pages, page) {|i| "#{'-' * i.level} #{i.title}" }, include_blank: true
+          .control-group
+            = f.label :page_layout_id, 'Layout', class: 'control-label'
+            .controls
+              = f.collection_select :page_layout_id, current_setup.layouts, :id, :name, {}, { class: 'span12' }
+          %label.checkbox
+            =f.check_box :main_menu
+            Show in Main Menu
+          .control-group
+            = f.label :menu_icon, 'Menu Icon', class: 'control-label'
+            .controls
+              = f.select :menu_icon, Page::Content::ICONS, {include_blank: true}, class: 'menu-icons span12'
+        .span6
+          .control-group
+            = f.label :description, class: 'control-label'
+            .controls
+              = f.text_area :description, class: 'span12', rows: 10
 
   #page_tabs.tabbable
     %ul.nav.nav-tabs
