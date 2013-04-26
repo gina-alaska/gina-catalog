@@ -8,17 +8,21 @@
         - @page_layout.errors.full_messages.each do |msg|
           %li= msg
           
-  = f.label :name
-  = f.text_field :name, class: 'span12'
-  = f.label :default
-  = f.select :default, [['No', false], ['Yes', true]], class: 'span12'
-  = f.label :content
+  .control-group
+    = f.label :name, class: 'control-label'
+    .controls
+      = f.text_field :name, class: 'span12'
+  .control-group
+    = f.label :default, class: 'control-label'
+    .controls
+      = f.select :default, [['No', false], ['Yes', true]], class: 'span12'
+
   / ACE Editor
-  %div.ace{ data: { editor: 'ace' } }
+  %div.ace.bordered{ data: { editor: 'ace' } }
     = render '/shared/ace/toolbar'
     = f.text_area :content, class: 'span12', style:"border: none;", rows: 10
   
-  .form-actions
+  .form-actions{style:'margin-top: 0;'}
     = link_to manager_page_contents_path(tab: "page_layouts"), class: 'btn' do
       %i.icon-arrow-left
       Back
