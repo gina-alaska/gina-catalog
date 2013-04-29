@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130424195728) do
+ActiveRecord::Schema.define(:version => 20130429211804) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -761,6 +761,10 @@ ActiveRecord::Schema.define(:version => 20130424195728) do
     t.string   "github_url"
     t.string   "facebook_url"
     t.integer  "theme_id"
+    t.integer  "parent_id"
+    t.integer  "lft"
+    t.integer  "rgt"
+    t.integer  "depth"
   end
 
   create_table "setups_snippets", :id => false, :force => true do |t|
