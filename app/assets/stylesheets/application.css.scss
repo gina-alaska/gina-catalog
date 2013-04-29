@@ -26,6 +26,8 @@ $navbarLinkBackgroundHover: darken($navbarBackground, 10%);*/
 @import 'bootstrap-datepicker';
 @import 'pages';
 @import 'maps';
+@import 'select2-fixes';
+
 @import url(http://fonts.googleapis.com/css?family=Quando);
 
 .content { padding: 0 10px; }

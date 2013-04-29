@@ -1,6 +1,6 @@
 .row-fluid
   .section-nav.span4
-    %ul.nav.nav-list.affix{ data: { spy: 'affix' } }
+    %ul.manager-edit-navigation.nav.nav-list{ data: { spy: 'affix', 'offset-top' => 100 }}
       - sections = %w{ general contacts agencies tags collections links locations sds downloads actions }
       - sections.each do |section|
         %li{class: (section == sections.first ? 'active' : '')}
@@ -14,27 +14,27 @@
           %ul
             - @catalog.errors.full_messages.each do |err|
               %li= err
-      %section#general
+      #general
         %h2 General
         = render 'general_fields', f: f
         
-      %section#contacts
+      #contacts
         %h2 Contacts
         = render 'contact_fields', f: f
     
-      %section#agencies
+      #agencies
         %h2 Agencies
         = render 'agency_fields', f: f
     
-      %section#tags
+      #tags
         %h2 Tags
         = render 'tag_fields', f: f
 
-      %section#collections
+      #collections
         %h2 Collections
         = render 'collection_fields', f: f
 
-      %section#links 
+      #links 
         .pull-right
           = f.link_to_add :links, :data => { :target => "#links" }, class: "btn btn-success" do
             %i.icon-plus.icon-white
@@ -49,7 +49,7 @@
           .links
             = f.fields_for :links
     
-      %section#locations
+      #locations
         .pull-right
           = f.link_to_add :locations, :data => { :target => "#locations" }, class: "btn btn-success" do
             %i.icon-plus.icon-white
@@ -63,11 +63,11 @@
           .locations
             = f.fields_for :locations
 
-      %section#sds
+      #sds
         %h2 Secure Data System
         = render 'sds_fields', f: f
       
-      %section#downloads
+      #downloads
         .pull-right
           = f.link_to_add :download_urls, :data => { :target => "#downloads" }, class: "btn btn-success" do
             %i.icon-plus.icon-white
@@ -81,7 +81,7 @@
           .downloads
             = f.fields_for :download_urls
 
-      %section#actions.form-actions
+      #actions.form-actions
         = link_to [:manager, @catalog], class: 'btn btn-inverse' do
           %i.icon-arrow-left.icon-white
           Back

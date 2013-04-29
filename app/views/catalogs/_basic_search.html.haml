@@ -3,8 +3,6 @@
 = hidden_field_tag 'limit', @limit, id: 'limit'
 
 .control-group
-  %label.control-label
-    %b Keyword Search
   .controls
     = text_field_tag 'search[q]', @search_params[:q], placeholder: 'Enter keyword search', class: 'span12'
 
