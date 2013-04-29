@@ -11,13 +11,23 @@ class Catalog
       autoActivate: true,
       onSelect: (feature) =>
         el = $('#' + feature.attributes.record_id)
-        parent = $('body')
+        parent = $('body,html')
 
         cur_scroll = parent.scrollTop()
         parent.animate({
           scrollTop: el.offset().top
         })
-        el.effect("highlight", {}, 1500)
+        
+        #save this for later reset
+        bgcolor = el.css('backgroundColor');
+        
+        el.animate({
+          backgroundColor: '#ffff99'
+        }, 500).delay(15000).animate({
+          backgroundColor: bgcolor
+        }, 500)
+        # el.effect("highlight", { }, 10000)
+        # .delay(10000).effect("highlight", { mode: 'hide' }, 1500)
     })
     
     @map.addControl(select)
