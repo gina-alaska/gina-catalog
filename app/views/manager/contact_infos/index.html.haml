@@ -1,24 +1,43 @@
 .content
   .btn-group.pull-right
+    = link_to_first_page @contact_infos, class: 'btn' do
+      %i.icon-double-angle-left
     = link_to_prev_page @contact_infos, class: 'btn' do
       %i.icon-angle-left
     %button.btn
       %span= display_result_info(@contact_infos, @page, @limit, @total)
     = link_to_next_page @contact_infos, class: 'btn' do
       %i.icon-angle-right
+    = link_to_last_page @contact_infos, class: 'btn' do
+      %i.icon-double-angle-right
+
+  = form_tag manager_contact_infos_path, method: 'GET', class: 'navbar-form form-search' do
+    .input-prepend.input-append
+      = text_field_tag "start_date", @start_date, placeholder: 'Start YYYY-MM-DD', data: {behaviour: 'datepicker', date_format: 'yyyy-mm-dd'} do
+        Start
+      = text_field_tag "end_date", @end_date, placeholder: 'End YYYY-MM-DD', data: { behaviour: 'datepicker', date_format: 'yyyy-mm-dd'} do
+        End
+      = submit_tag 'Search', class: 'btn btn-primary'
   %table.table.table-bordered.table-striped.table-condensed
     %thead
       %tr
-        %th Date
+        %th.span2 Date
         %th Name
         %th Email
-        %th Phone
         %th Usage Description
+        %th Data Record
     %tbody
       - @contact_infos.each do |item|
         %tr
-          %td= item.created_at.strftime("%c")
+          %td= item.created_at.strftime("%F")
           %td= item.name
           %td= item.email
-          %td= item.phone_number
           %td= item.usage_description
+          %td= link_to item.catalog.title, [:manager, item.catalog]
+
+:javascript
+  $(document).ready( function(){
+    $('[data-behaviour~=datepicker]').datepicker().on('changeDate', function(ev){
+      $(this).datepicker('hide'); 
+    })
+  })
