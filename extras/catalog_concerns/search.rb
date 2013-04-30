@@ -42,7 +42,7 @@ module CatalogConcerns
           any_of do
             with :owner_setup_id, current_setup.id 
             unless search[:editable] == 'true'
-              with :setup_ids, current_setup.id
+              with :setup_ids, current_setup.self_and_descendants.pluck(:id)
             end
           end
           
