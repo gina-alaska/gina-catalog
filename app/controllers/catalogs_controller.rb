@@ -58,8 +58,12 @@ class CatalogsController < ApplicationController
       @search_params[:published_only] = true
     end
     
-    @search = solr_search(@search_params, @pagenum, @limit)
+    @search = solr_search(@search_params, @pagenum, @limit, :collection_ids)
     if @search.respond_to? :results
+      @collection_facets = @search.facet(:collection_ids).rows.inject({}) do |c,v|
+        c[v.value] = v.count
+        c
+      end
       @results = @search.results
       @total = @search.total
     else

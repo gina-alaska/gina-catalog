@@ -16,6 +16,7 @@
 //= require 'maps'
 //= require 'catalogs'
 //= require 'analytics'
+//= require 'turbolinks-fixes'
 //= require_self
 
 
@@ -48,7 +49,7 @@ var initialize_page = function(){
   
   // $(document).on('ready', add_search_features);
   // $(document).on('page:change', add_search_features);
-  $('select[data-ui="select2"]').select2({ allowClear: true })
+  $('select[data-ui="select2"]').select2({ allowClear: true, width:'copy' })
   
   $('.collapse').on('show', function() {
     var icon = $(this).parents('.result').find('i.collapse-icon');

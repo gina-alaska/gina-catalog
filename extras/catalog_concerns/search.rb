@@ -3,13 +3,13 @@ module CatalogConcerns
     extend ActiveSupport::Concern
     
     module InstanceMethods
-      def solr_search(search, page=1, limit=10000, manager=false)    
+      def solr_search(search, page=1, limit=10000, facet_list = false)    
         return [] if search.nil? or search.keys.empty?
     
         table_includes = {
           :tags => [], :locations => [], :agencies => [], :source_agency => [], :funding_agency => [], :links => [], 
           :primary_contact => [:phone_numbers], :people => [:phone_numbers], :data_source => [], :geokeywords => [], :catalog_collections => [], 
-          :repo => [], :data_types => []
+          :repo => [], :data_types => [], :collections => []
         }
   
         catalog_ids = search[:ids] unless search[:ids].nil? or search[:ids].empty?
@@ -86,6 +86,10 @@ module CatalogConcerns
           with(:end_date_year).less_than(search[:end_date_before]) if search[:end_date_before].present?
 
           paginate per_page:(limit), page:(page)
+      
+          if facet_list
+            facet facet_list
+          end
       
           order_by(field, direction) if field and direction
         end

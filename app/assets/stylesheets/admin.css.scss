@@ -12,7 +12,7 @@ $navbarInverseBrand: white;
 @import 'bootstrap';
 @import "bootstrap-responsive";
 @import 'select2/select2';
-
+@import 'select2-fixes';
 @import 'fix_bootstrap';
 
 .form-text {
@@ -111,7 +111,6 @@ $navbarInverseBrand: white;
 }*/
 
 .asset-form {
-  .select2-container { margin-left: 0; }
   section {
     padding-top: 40px;
   }

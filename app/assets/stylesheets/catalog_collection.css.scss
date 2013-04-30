@@ -5,3 +5,21 @@
 .collection-button {
   margin-left: 5px;
 }
+
+ul.nav-tabs.nav-stacked.collection-list {
+  border: 1px solid #efefef;
+  @include border-radius(5px);
+  
+  li > a {
+    border: none;
+    border-bottom: 1px solid #efefef;
+  }
+  
+  li:last-child > a {
+    border-bottom: none;
+  }
+  
+  li.active a:hover {
+    background-color: #eee;
+  }
+}

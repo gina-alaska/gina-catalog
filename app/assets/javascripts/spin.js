@@ -342,6 +342,8 @@ $('#el').spin('flower', 'red');
       direction: 1, // 1: clockwise, -1: counterclockwise
       speed: 1.3, // Rounds per second
       trail: 100, // Afterglow percentage
+      shadow: true,
+      color: '#aaa',
       top: 250
     }
   }

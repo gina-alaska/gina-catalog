@@ -9,17 +9,3 @@
     %i.icon-angle-right
   = link_to_last_page results, params: { search: params }, class: 'btn' do
     %i.icon-double-angle-right
-.nav.dropdown{style:'padding-top: 2px; color:#000; display: inline-block;'}
-  = link_to '#', class: "btn dropdown-toggle", data: { 'loading-text' => 'Loading...', toggle: "dropdown" } do
-    = "Limit: #{@limit}"
-    %i.caret
-  %ul.dropdown-menu
-    %li
-      =link_to search_path(limit: "30"), data: { behaviour: 'stash', target: '#limit', value: 30 }, method: :get do
-        30 Records
-    %li
-      =link_to search_path(limit: "100"), data: { behaviour: 'stash', target: '#limit', value: 100 }, method: :get do
-        100 Records
-    %li
-      =link_to search_path(limit: "500"), data: { behaviour: 'stash', target: '#limit', value: 500 }, method: :get do
-        500 Records

@@ -5,7 +5,7 @@
 //= require 'nested_sortable'
 //= require 'bootstrap'
 //= require 'fileupload/bootstrap-fileupload'
-//= require 'select2/select2.min'
+//= require 'select2/select2'
 //= require 'manager/pages'
 //= require bootstrap-datepicker
 //= require 'bootstrap-colorpicker/bootstrap-colorpicker'
