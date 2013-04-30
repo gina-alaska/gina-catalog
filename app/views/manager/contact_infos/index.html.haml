@@ -18,9 +18,9 @@
                   %i.icon-double-angle-right
 
               = form_tag manager_contact_infos_path, method: 'GET', class: 'navbar-form form-search pull-left' do
-                = text_field_tag "start_date", @start_date, placeholder: 'Start YYYY-MM-DD', data: {behaviour: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span2" do
+                = text_field_tag "start_date", @start_date, placeholder: 'YYYY-MM-DD', data: {behaviour: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span2" do
                   Start
-                = text_field_tag "end_date", @end_date, placeholder: 'End YYYY-MM-DD', data: { behaviour: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span2" do
+                = text_field_tag "end_date", @end_date, placeholder: 'YYYY-MM-DD', data: { behaviour: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span2" do
                   End
                 = submit_tag 'Date Search', class: 'btn btn-primary'
       %tr
