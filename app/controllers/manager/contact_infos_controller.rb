@@ -10,8 +10,9 @@ class Manager::ContactInfosController < ManagerController
     @start_date = params["start_date"]
     @end_date = params["end_date"]
 
-    @total = @contact_infos.created_between(@start_date, @end_date).count
-    @contact_infos = @contact_infos.created_between(@start_date, @end_date).order("created_at DESC").page(@page).per(@limit)
+    @contact_infos = @contact_infos.created_between(@start_date, @end_date)
+    @total = @contact_infos.count
+    @contact_infos = @contact_infos.order("created_at DESC").page(@page).per(@limit)
 
     respond_to do |format|
       format.html
