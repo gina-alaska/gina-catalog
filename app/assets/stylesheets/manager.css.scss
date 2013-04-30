@@ -14,6 +14,7 @@ $smallColor: contrast-color($primaryColor, #333, #999);
 @import 'bootstrap-datepicker';
 @import 'bootstrap-colorpicker/bootstrap-colorpicker';
 @import 'maps';
+@import 'select2-fixes';
 
 .ace {
   border: 1px solid #dfdfdf;
@@ -56,6 +57,10 @@ $smallColor: contrast-color($primaryColor, #333, #999);
   .dropdown-menu a:hover {
     color: #fff;
   }
+}
+
+.manager-edit-navigation.affix {
+  top: 5px;
 }
 
 .portal-manager-header {
@@ -214,3 +219,4 @@ ol.page-list {
 .center-paging {
   text-align: center;
 }
+

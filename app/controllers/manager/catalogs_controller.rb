@@ -20,7 +20,7 @@ class Manager::CatalogsController < ManagerController
     @search = params[:search] || {}
     @search[:order_by] ||= 'title_sort-ascending'
     if @search.keys.count > 0
-      search = solr_search(@search, @page, @limit, true)
+      search = solr_search(@search, @page, @limit)
       @catalogs = search.results
       @total = search.total
     else

@@ -1,7 +1,10 @@
 #advanced.accordion
   .accordion-group
     .accordion-heading.h4
-      = link_to 'Advanced Filters', '#options', class: 'accordion-toggle', data: { toggle: 'collapse', parent: '#advanced' }
+      = link_to '#options', class: 'accordion-toggle', data: { toggle: 'collapse', parent: '#advanced' } do
+        %i.icon-chevron-down
+        Advanced Filters
+        
     #options.accordion-body.collapse{ class: @is_advanced ? 'in' : '' }
       .accordion-inner{style:'margin-bottom: 10px; padding: 5px 5px 25px 5px;'}
         = label_tag 'search[type]', 'Record Type'

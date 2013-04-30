@@ -3,6 +3,9 @@
   %tr
     %td.result{id: dom_id(catalog, :record), data: { wkt: catalog.geometry_center_collection } }
       %h5.title
+        - unless catalog.source_agency.nil?
+          %b= catalog.source_agency.try(:name_with_acronym)
+          %br/
         = link_to "##{dom_id(catalog, :description)}", data: { toggle: "collapse" } do
           %i.icon-chevron-down.collapse-icon
           = catalog.title.try(:truncate,78)
@@ -11,8 +14,6 @@
         - unless catalog.geometry_collection.blank?
           %i.icon-globe{ title: 'Catalog record has location information' }
       .description
-        - unless catalog.collections.list.blank?
-          %b= catalog.collections.list
         :markdown
           #{catalog.description.try(:truncate, 300).try(:html_safe)}
         /.try(:truncate, 200)}
@@ -23,11 +24,22 @@
             This record has not been published
         .status
           = render 'status', item: catalog
-      .btn-group.pull-right
-        - if catalog.downloadable?
-          = link_to download_catalog_path(catalog), class: 'btn' do
-            %i.icon-cloud-download
-            Download
+          
+          - unless catalog.collections.list.blank?
+            %b Collections: 
+            = catalog.collections.list
+      
+      .pull-right
+        - if current_member and current_member.can_manage_catalog?
+          - if catalog.owner_setup == current_setup
+            = link_to edit_manager_catalog_path(catalog), class: 'btn', target: :_blank do
+              %i.icon-edit
+              Edit
+        .btn-group
+          - if catalog.downloadable?
+            = link_to download_catalog_path(catalog), class: 'btn' do
+              %i.icon-cloud-download
+              Download
           
         = link_to catalog, class: 'btn btn-primary' do
           Full Record

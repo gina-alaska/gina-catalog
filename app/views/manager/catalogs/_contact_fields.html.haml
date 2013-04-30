@@ -1,10 +1,10 @@
 .row-fluid
   .span12
     = f.label :primary_contact_id, class: 'control-label'
-    = f.collection_select :primary_contact_id, current_setup.persons, :id, :full_name, {include_blank: true}, { class: 'primary-contact-select2 full'}
+    = f.collection_select :primary_contact_id, current_setup.persons, :id, :full_name, {include_blank: true}, { class: 'primary-contact-select2 span12'}
       
     = f.label :contact_ids, 'Other Contacts', class: 'control-label'
-    = f.collection_select :contact_ids, current_setup.persons, :id, :full_name, {}, { multiple: true, class: 'contact-select2 full' }
+    = f.collection_select :contact_ids, current_setup.persons, :id, :full_name, {}, { multiple: true, class: 'contact-select2 span12' }
     :javascript
-      $(".primary-contact-select2").select2({placeholder: 'Select a primary contact', allowClear: true});
-      $(".contact-select2").select2();
+      $(".primary-contact-select2").select2({placeholder: 'Select a primary contact', allowClear: true, width: 'copy'});
+      $(".contact-select2").select2({ width: 'copy' });

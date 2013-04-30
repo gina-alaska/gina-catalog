@@ -1,22 +1,26 @@
-.content
+%div{ style: 'position: relative;'}
+  = render 'map'
+.content{ style: 'padding-top: 350px;', data: { 'scroll-offset'=> 350 } }
   .row-fluid
-    .span4.sidebar
+    .span4
       = form_tag search_url, method: 'GET', style: 'width:100%' do
-        = render 'basic_search', search_params: @search_params, results: @results
+        
+        = render 'collection_search', search_params: @search_params, results: @results
         %br/
-        = render 'map'
+        = render 'basic_search', search_params: @search_params, results: @results
+        = render 'search_buttons',  search_params: @search_params, results: @results
         %br/
         = render 'advanced_search', search_params: @search_params, results: @results
+        %div
+          %label 
+            Legend:
+            %i.icon-warning-sign &nbsp;Not Published
+            %i.icon-globe &nbsp;Has Location
                 
     .span8
       .search
-        .row-fluid.header
-          .span12{style: 'text-align:center'}
-            = render 'pagetoolbar', results: @results, total: @total, page: @pagenum, limit: @limit, params: @search_params
-        .row-fluid
-          .span12{style: "text-align: center;"}
-            %i.icon-warning-sign &nbsp;Not Published
-            %i.icon-globe &nbsp;Has Location
+        / data-spy="affix" data-offset-top="200"
+        /data: { spy: 'affix', 'offset-top' => 120 }, 
         %table.table.table-striped.table-condensed.results
           %tbody
             - if @results.empty?
@@ -25,7 +29,5 @@
                   %p.lead No search results
             - @results.each do |result|
               = render result
-        .row-fluid
-          .span12{style: 'text-align:center'}
-            = render 'pagetoolbar', results: @results, total: @total, page: @pagenum, limit: @limit, params: @search_params
-  
+        %div{style: 'text-align:center'}
+          = render 'pagetoolbar', results: @results, total: @total, page: @pagenum, limit: @limit, params: @search_params
