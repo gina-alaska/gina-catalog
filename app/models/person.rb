@@ -60,11 +60,11 @@ class Person < ActiveRecord::Base
   end
 
   def work_phone=(digits)
-    pn = self.phone_numbers.where(name: 'work').first
+    pn = self.phone_numbers.where(name: 'work').first unless self.new_record?
     pn = self.phone_numbers.build({ :name => 'work' }) if pn.nil?
     pn.digits = digits
 
-    pn.save!
+    # pn.save!
   end
 
   def alt_phone
@@ -75,11 +75,11 @@ class Person < ActiveRecord::Base
   end
 
   def alt_phone=(digits)
-    pn = self.phone_numbers.where(name: 'alt').first
+    pn = self.phone_numbers.where(name: 'alt').first unless self.new_record?
     pn = self.phone_numbers.build({ :name => 'alt' }) if pn.nil?
     pn.digits = digits
 
-    pn.save!
+    # pn.save!
   end
 
   def mobile_phone
@@ -90,11 +90,11 @@ class Person < ActiveRecord::Base
   end
   
   def mobile_phone=(digits)
-    pn = self.phone_numbers.where(name: 'mobile').first
+    pn = self.phone_numbers.where(name: 'mobile').first unless self.new_record?
     pn = self.phone_numbers.build({ :name => 'mobile' }) if pn.nil?
     pn.digits = digits
 
-    pn.save!
+    #pn.save!
   end
 
   def as_json(*opts)
