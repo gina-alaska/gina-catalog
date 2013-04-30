@@ -1,13 +1,11 @@
 //= require 'jquery'
 //= require 'jquery_ujs'
-//= require 'jquery.markitup'
 //= require 'jquery.slugify'
 //= require 'jquery.ui.sortable'
 //= require 'nested_sortable'
 //= require 'bootstrap'
 //= require 'fileupload/bootstrap-fileupload'
 //= require 'select2/select2'
-//= require 'markitup'
 //= require 'manager/pages'
 //= require bootstrap-datepicker
 //= require 'bootstrap-colorpicker/bootstrap-colorpicker'

@@ -1,6 +1,6 @@
 .row-fluid
   .span12
-    = f.label :source_agency_id, class: 'control-label'
+    = f.label :source_agency_id, 'Primary Agency', class: 'control-label'
     = f.collection_select :source_agency_id, current_setup.agencies, :id, :name_with_acronym, {include_blank: true}, { class: 'span12' }
 
     = f.label :funding_agency_id, class: 'control-label'

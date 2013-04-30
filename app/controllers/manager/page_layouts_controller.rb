@@ -39,17 +39,29 @@ class Manager::PageLayoutsController < ManagerController
 
     respond_to do |format|
       if @page_layout.save
+        flash[:success] = "#{@page_layout.name} layout successfully created."
         format.html {
-          flash[:success] = "#{@page_layout.name} layout successfully created."
           if params["commit"] == "Save"
             redirect_to edit_manager_page_layout_path(@page_layout)
           else
             redirect_to manager_page_contents_path(tab: "page_layouts")
           end
         }
+        format.js {
+          if params["commit"] == "Save"
+            @redirect_to = edit_manager_page_layout_path(@page_layout)
+          else
+            @redirect_to = manager_page_contents_path(tab: "page_layouts")
+          end
+          render '/shared/form_response'          
+        }
         format.json { render json: @page_layout, status: :created, location: @page_layout }
       else
         format.html { render action: "new" }
+        format.js {       
+          flash.now[:error] = @page_layout.errors.full_messages
+          render '/shared/form_response'
+        }
         format.json { render json: @page_layout.errors, status: :unprocessable_entity }
       end
     end
@@ -62,17 +74,31 @@ class Manager::PageLayoutsController < ManagerController
 
     respond_to do |format|
       if @page_layout.update_attributes(params[:page_layout])
+        msg="#{@page_layout.name} layout successfully updated."
         format.html {
-          flash[:success] = "#{@page_layout.name} layout successfully updated."
+          flash[:success] = msg
           if params["commit"] == "Save"
             redirect_to edit_manager_page_layout_path(@page_layout)
           else
             redirect_to manager_page_contents_path(tab: "page_layouts")
           end
         }
+        format.js {
+          if params["commit"] == "Save"
+            flash.now[:success] = msg
+          else
+            flash[:success] = msg
+            @redirect_to = manager_page_contents_path(tab: "page_layouts")
+          end
+          render '/shared/form_response'
+        }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
+        format.js {       
+          flash.now[:error] = @page_layout.errors.full_messages
+          render '/shared/form_response'
+        }
         format.json { render json: @page_layout.errors, status: :unprocessable_entity }
       end
     end

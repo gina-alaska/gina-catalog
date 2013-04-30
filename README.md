@@ -26,5 +26,5 @@ External JS Libraries
 * http://twitter.github.com/bootstrap/
 * http://jasny.github.com/bootstrap/
 * jquery.slugify
-* GINA Map Layers
-* Markitup
+* GINA Map Layers (http://github.com/gina-alaska/gina-map-layers)
+* AceEditor (http://ace.ajax.org)
