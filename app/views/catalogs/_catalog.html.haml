@@ -35,6 +35,7 @@
             = link_to edit_manager_catalog_path(catalog), class: 'btn', target: :_blank do
               %i.icon-edit
               Edit
+              
         .btn-group
           - if catalog.downloadable?
             = link_to download_catalog_path(catalog), class: 'btn' do
