@@ -1,6 +1,6 @@
 class Admin::SetupsController < AdminController
   def index
-    @setups = Setup.all
+    @setups = Setup.roots
   end
 
   def new

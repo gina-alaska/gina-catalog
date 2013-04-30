@@ -1,0 +1,15 @@
+%li
+  .row-fluid.group
+    .span10.title
+      %i.icon-cog
+      = link_to edit_admin_setup_path(setup.id) do
+        = "#{setup.title} :: #{setup.by_line}"
+    .span2.actions
+      .btn-group
+        = link_to edit_admin_setup_path(setup.id), class: 'btn', title: "Edit" do
+          %i.icon-edit
+        = link_to admin_setup_path(setup.id), method: :delete, confirm: "Are you sure?", class: 'btn btn-danger', title: "Delete Setup" do
+          %i.icon-trash.icon-white
+  - unless setup.children.empty?
+    %ol.page-list-child{style:'padding-left:10px;'}
+      = render partial: 'setup', collection: setup.children
