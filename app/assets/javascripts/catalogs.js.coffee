@@ -13,9 +13,9 @@ class Catalog
         el = $('#' + feature.attributes.record_id)
         parent = $('body')
 
-        cur_scroll = parent.scrollTop()
+        padding = el.parents('[data-scroll-offset]').data('scroll-offset')
         parent.animate({
-          scrollTop: el.offset().top
+          scrollTop: el.offset().top - padding
         })
         el.effect("highlight", {}, 1500)
     })

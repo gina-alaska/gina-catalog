@@ -1,4 +1,4 @@
-%h5 Collections
+/ %label Collections
 %ul.nav.nav-tabs.nav-stacked.collection-list{style:'max-height:250px; overflow: auto;'}
   -current_setup.collections.order('name ASC').each do |coll|
     %li{class: search_params[:collection_id].to_i == coll.id ? "active" : ""}

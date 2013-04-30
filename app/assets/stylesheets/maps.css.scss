@@ -1,5 +1,8 @@
 #map_canvas {
+  width: 100%;
+  height: 100%;
   background-color: #B3C6D4;
+  background-color: #000;
   
   .olControlMousePosition {
     color: #000;
@@ -26,5 +29,27 @@
     margin-left: 5px;
     margin-bottom: 0px;
     color: white;
+  }
+}
+
+#map {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  height: 300px;
+  z-index: 1000000;
+  
+  &.affix-top {
+    z-index: 1000000;
+  }
+  
+  &.affix {
+    position: fixed;
+    z-index: 1000000;
+    top: 0px;    
+    left: auto;
+    right: auto;
+    width: 940px;
   }
 }

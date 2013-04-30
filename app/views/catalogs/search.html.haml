@@ -1,9 +1,9 @@
-.content
+%div{ style: 'position: relative;'}
+  = render 'map'
+.content{ style: 'padding-top: 350px;', data: { 'scroll-offset'=> 350 } }
   .row-fluid
-    .span4{ style: 'padding-top: 3px;'}
+    .span4
       = form_tag search_url, method: 'GET', style: 'width:100%' do
-        %div{ style: 'margin-bottom: 10px; margin-top: 5px;'}
-          = render 'map'
         
         = render 'collection_search', search_params: @search_params, results: @results
         %br/
@@ -19,8 +19,6 @@
                 
     .span8
       .search
-        %div{style: 'text-align:center; margin: 5px 0 5px 0;'}
-          = render 'pagetoolbar', results: @results, total: @total, page: @pagenum, limit: @limit, params: @search_params
         / data-spy="affix" data-offset-top="200"
         /data: { spy: 'affix', 'offset-top' => 120 }, 
         %table.table.table-striped.table-condensed.results
