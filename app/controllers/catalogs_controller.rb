@@ -73,9 +73,9 @@ class CatalogsController < ApplicationController
     
     
     respond_to do |format|
+      format.html
       format.json
       format.js
-      format.html
       format.pdf do
         render :pdf => 'nssi_catalog_search.pdf', :layout => 'pdf.html'
       end

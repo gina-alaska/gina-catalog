@@ -8,4 +8,10 @@ class Collection < ActiveRecord::Base
 
   validates_presence_of :name
   liquid_methods :name, :id  
+  
+  scope :including_descendents, ->(setup) {
+    where(:setup_id => setup.self_and_descendants.pluck(:id))
+  }
+  
+  
 end
