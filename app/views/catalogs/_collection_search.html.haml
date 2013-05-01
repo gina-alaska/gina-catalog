@@ -7,4 +7,10 @@
         .badge.pull-right
           = @collection_facets[coll.id] || 0
           results
-        
+        .collapse{id: "desc_#{dom_id(coll)}"}
+          = coll.description
+
+:javascript
+  $(document).ready(function(){
+    $('.collection-list > .active .collapse').collapse("show");
+  });
