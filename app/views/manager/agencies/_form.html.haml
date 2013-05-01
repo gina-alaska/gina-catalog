@@ -30,3 +30,11 @@
     .span12
       .form-actions
         = f.submit class: 'btn btn-primary pull-right'
+%h5 Associated Catalog Records
+%table.table.table-bordered.table-striped.table-condensed
+  - @agency.catalogs.each do |item|
+    %tr
+      %td.span3
+        =link_to item.title, manager_catalog_path(item)
+      %td
+        = item.description

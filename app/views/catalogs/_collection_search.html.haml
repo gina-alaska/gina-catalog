@@ -8,4 +8,3 @@
       = link_to "/search?search[collection_id]=#{coll.id}", data: {behaviour: "load_collection", target: "#search_collection_id", value: coll.id}, title: coll.description do
         = coll.name
         = " (#{coll.setup.title})" if coll.setup != current_setup
-        
