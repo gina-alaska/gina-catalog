@@ -14,6 +14,11 @@
       = f.text_field :title, class: 'span12'
   
   .control-group
+    = f.label :acronym, class: 'control-label'
+    .controls
+      = f.text_field :acronym, class: 'span12'
+  
+  .control-group
     = f.label :by_line, class: 'control-label'
     .controls
       = f.text_field :by_line, class: 'span12'
@@ -47,6 +52,16 @@
     = f.label "Facebook URL Link", class: 'control-label'
     .controls
       = f.text_field :facebook_url, class: 'span12'
+
+  .control-group
+    = f.label "Metadata - Description", class: 'control-label'
+    .controls
+      = f.text_field :description, class: 'span12'
+
+  .control-group
+    = f.label "Metadata - Keywords", class: 'control-label'
+    .controls
+      = f.text_field :keywords, class: 'span12'
 
   .form-actions
     = link_to manager_page_contents_path(tab: "setups"), class: 'btn' do

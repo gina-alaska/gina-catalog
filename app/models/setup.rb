@@ -2,8 +2,7 @@ class Setup < ActiveRecord::Base
   acts_as_nested_set
   
   attr_accessible :logo_uid, :primary_color, :title, :by_line, :contact_email, 
-        :default_invite, :urls_attributes, :analytics_account, :twitter_url, :github_url, :facebook_url,
-        :parent_id
+        :default_invite, :urls_attributes, :analytics_account, :twitter_url, :github_url, :facebook_url, :parent_id, :acronym, :description, :keywords
   
   has_and_belongs_to_many :images
   has_and_belongs_to_many :pages, class_name: 'Page::Content', join_table: 'pages_setups'
