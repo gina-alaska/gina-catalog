@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130501175901) do
+ActiveRecord::Schema.define(:version => 20130501182222) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -777,6 +777,8 @@ ActiveRecord::Schema.define(:version => 20130501175901) do
     t.integer  "rgt"
     t.integer  "depth"
     t.string   "acronym"
+    t.text     "description"
+    t.text     "keywords"
   end
 
   create_table "setups_snippets", :id => false, :force => true do |t|
