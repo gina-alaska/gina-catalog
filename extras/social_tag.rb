@@ -13,6 +13,14 @@ class SocialTag < Liquid::Tag
 EOHTML
   end
   
+  def twitter_block(setup)
+    return '' if setup.twitter_url.blank?
+    
+    <<-EOHTML
+    <a class="twitter-timeline" href="#{setup.twitter_url}" width="300" height="400" data-widget-id="266284360179781632">Tweets by @uafgina</a>
+    EOHTML
+  end
+  
   def social_icons(setup)
     results = ""
     
@@ -31,12 +39,12 @@ EOHTML
   def render(context)
     setup = context.environments.first['setup']
     case @tag.to_s
+    # when 'twitter_block'
+    #   twitter_block(setup).html_safe
     when 'facebook_block'
       facebook_block(setup).html_safe
     when 'social_icons'
       social_icons(setup).html_safe
-    else
-      social_icons(setup).html_safe      
     end
   end
 end
