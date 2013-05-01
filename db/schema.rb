@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130429211804) do
+ActiveRecord::Schema.define(:version => 20130501175901) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -377,6 +377,17 @@ ActiveRecord::Schema.define(:version => 20130429211804) do
     t.integer "setup_id"
     t.integer "image_id"
   end
+
+  create_table "images_tags", :force => true do |t|
+    t.integer  "image_id"
+    t.integer  "tag_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "images_tags", ["image_id"], :name => "index_images_tags_on_image_id"
+  add_index "images_tags", ["tag_id", "image_id"], :name => "index_images_tags_on_tag_id_and_image_id"
+  add_index "images_tags", ["tag_id"], :name => "index_images_tags_on_tag_id"
 
   create_table "iso_topic_categories", :force => true do |t|
     t.string   "name",           :limit => 50
@@ -765,6 +776,7 @@ ActiveRecord::Schema.define(:version => 20130429211804) do
     t.integer  "lft"
     t.integer  "rgt"
     t.integer  "depth"
+    t.string   "acronym"
   end
 
   create_table "setups_snippets", :id => false, :force => true do |t|
