@@ -1,9 +1,5 @@
-.navbar.navbar-static-top
-  .navbar-inner
-    %ul.nav
-      %li
-        = link_to admin_setups_path do
-          %i.icon-arrow-left
-          Back
-%h2 New Setup
-= render 'form', setup: @setup
+.row-fluid
+  .span12
+    .content
+      %h2 New Setup
+      = render 'form', setup: @setup

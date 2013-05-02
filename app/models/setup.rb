@@ -42,39 +42,47 @@ class Setup < ActiveRecord::Base
   	}
   end
   
-  def self.clone_from(setup, site = {})
-    raise 'Need default url for the new setup' unless site.include? :default_url
-    
-    new_site = Setup.new(title: site[:title], by_line: site[:by_line])
-    new_site.urls.build(url: site[:default_url])
-    new_site.save!
+  def clone(setup = nil)
+    return nil if setup.nil?
     
     @layout_map = {}
     setup.layouts.each do |l|
       layout = l.dup
       layout.save!
-      new_site.layouts << layout
+      self.layouts << layout
       @layout_map[l.id] = layout
     end
     
     setup.snippets.each do |p|
       snippet = p.dup
       snippet.save!
-      new_site.snippets << snippet
+      self.snippets << snippet
     end
     
     setup.pages.roots.each do |p|
       page = p.dup
       page.page_layout = @layout_map[p.page_layout.id]
       page.save!      
-      new_site.pages << page
+      self.pages << page
     end
     
     setup.roles.each do |r|
       role = r.dup
       r.save!
-      new_site.roles << r
+      self.roles << r
     end
+    
+    self.theme = setup.theme
+  end
+  alias_method :clone=, :clone
+  
+  def self.clone(setup, site = {})
+    raise 'Need default url for the new setup' unless site.include? :default_url
+    
+    new_site = Setup.new(title: site[:title], by_line: site[:by_line])
+    new_site.urls.build(url: site[:default_url])
+    new_site.save!
+    new_site.clone_from(setup)
     
     new_site
   end

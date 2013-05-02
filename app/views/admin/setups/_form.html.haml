@@ -25,6 +25,11 @@
       .controls
         = f.select :parent_id, nested_set_options(Setup, setup) { |i| "#{'-' * i.level} #{i.title}" }, { include_blank: true, prompt: 'Select a parent site' }
 
+    - if setup.new_record?
+      .control-group
+        = f.label :clone, 'Template setup', class: 'control-label'
+        .controls
+          = f.select :clone, nested_set_options(Setup, setup) { |i| "#{'-' * i.level} #{i.title}" }, { prompt: 'Copy from?' }
   %fieldset
     %legend 
       Site Domains

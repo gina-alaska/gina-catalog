@@ -11,7 +11,9 @@ class Admin::SetupsController < AdminController
 
   def create
     @setup = Setup.new(params[:setup])
-
+    clone_from = Setup.find(params[:setup][:clone])
+    @setup.clone(clone_from)
+    
     if @setup.save!
       respond_to do |format|
         flash[:success] = "Setup #{@setup.title} was successfully created."
