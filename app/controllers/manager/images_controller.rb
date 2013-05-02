@@ -9,7 +9,17 @@ class Manager::ImagesController < ManagerController
   # GET /manager/images
   # GET /manager/images.json
   def index
-    @images = current_setup.images
+    search_params = params[:search] || {}
+    if search_params.keys.count > 0
+      solr = Image.search do
+        logger.info(search_params.inspect)
+        fulltext search_params[:q]
+      end
+      @images = solr.results
+    else
+      @images = current_setup.images.order('title ASC')
+    end
+    @search = search_params
 
     respond_to do |format|
       format.html # index.html.erb

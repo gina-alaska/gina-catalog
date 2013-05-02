@@ -21,7 +21,7 @@
                 %div{ style: 'height: 68px; overflow: auto;' }
                   %strong= image.title
                   %p= image.description
-                .buttons{style:"margin-top: 3px;"}
+                .buttons{style:""}
                   .btn-group
                     = link_to '200x200', '#', class: 'btn btn-small', data: { behavior: 'add', src: image.file.png.thumb('200x200').url,alt: image.title }
                     = link_to '640x480', '#', class: 'btn btn-small', data: { behavior: 'add', src: image.file.png.thumb('640x480').url,alt: image.title }

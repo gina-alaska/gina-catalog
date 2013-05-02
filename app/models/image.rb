@@ -33,4 +33,10 @@ class Image < ActiveRecord::Base
       'tag' => "<img src=\"#{self.file.png.thumb('640x480#').url}\" alt=\"#{self.title}\" />"
     }
   end
+
+  searchable do
+    text :title, boost: 2.0
+    text :description
+    text :file_name
+  end
 end
