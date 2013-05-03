@@ -1,7 +1,9 @@
 class Manager::ImagesController < ManagerController
   before_filter :authenticate_access_cms!
   before_filter :fetch_page, :only => [:add, :remove]
-  before_filter :fetch_image, :except => [:index, :new, :create]
+  before_filter :fetch_image, :except => [:index, :new, :create, :ace_search]
+
+  include CatalogConcerns::Ace
 
   SUBMENU = '/layouts/manager/cms_menu'
   PAGETITLE = 'Images'
@@ -9,7 +11,17 @@ class Manager::ImagesController < ManagerController
   # GET /manager/images
   # GET /manager/images.json
   def index
-    @images = current_setup.images
+    search_params = params[:search] || {}
+    if search_params.keys.count > 0
+      solr = Image.search do
+        logger.info(search_params.inspect)
+        fulltext search_params[:q]
+      end
+      @images = solr.results
+    else
+      @images = current_setup.images.order('title ASC')
+    end
+    @search = search_params
 
     respond_to do |format|
       format.html # index.html.erb
@@ -104,6 +116,15 @@ class Manager::ImagesController < ManagerController
       format.json { head :no_content }
     end
   end 
+  
+  def ace_search
+    init_ace_editor
+    respond_to do |format|
+      format.js {
+        render '/shared/ace/image_search'
+      }
+    end
+  end
   
   # POST /manager/page/:page_id/image/:id/add
   def add

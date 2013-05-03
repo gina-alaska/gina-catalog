@@ -15,7 +15,11 @@ NSCatalog::Application.routes.draw do
         get :download
       end
     end
-    resources :images
+    resources :images do
+      collection do
+        post :ace_search
+      end
+    end
     resources :use_agreements
     resources :contact_infos
     resources :themes do

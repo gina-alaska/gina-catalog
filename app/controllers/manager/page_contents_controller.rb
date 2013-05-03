@@ -1,6 +1,9 @@
 class Manager::PageContentsController < ManagerController
   before_filter :authenticate_access_cms!
-  before_filter :fetch_page, :except => [:new, :create, :index, :sort]
+  before_filter :fetch_page, :except => [:new, :create, :index, :sort, :list_images]
+
+  include CatalogConcerns::Ace
+  before_filter :init_ace_editor, :only => [:new, :edit]
 
   SUBMENU = '/layouts/manager/cms_menu'
   PAGETITLE = 'Pages'
@@ -13,9 +16,11 @@ class Manager::PageContentsController < ManagerController
     @page = current_setup.pages.build
     @page.page_layout = current_setup.layouts.where(default: true).first
     @page.parent = current_setup.pages.find(params[:parent]) if params[:parent]
+    # @search = search_params
   end
   
   def edit
+    # @search = search_params
   end
   
   def sort
@@ -179,5 +184,9 @@ class Manager::PageContentsController < ManagerController
   
   def fetch_page
     @page = current_setup.pages.find(params[:id])
+  end
+
+  def search_params
+    params[:search] || {}
   end
 end
