@@ -1,6 +1,6 @@
 class Manager::PageContentsController < ManagerController
   before_filter :authenticate_access_cms!
-  before_filter :fetch_page, :except => [:new, :create, :index, :sort]
+  before_filter :fetch_page, :except => [:new, :create, :index, :sort, :list_images]
 
   SUBMENU = '/layouts/manager/cms_menu'
   PAGETITLE = 'Pages'
@@ -150,6 +150,24 @@ class Manager::PageContentsController < ManagerController
   end
   
   def upload_image
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def list_images
+    search_params = params[:search] || {}
+    if search_params.keys.count > 0
+      solr = Image.search do
+        logger.info(search_params.inspect)
+        fulltext search_params[:q]
+      end
+      @images = solr.results
+    else
+      @images = current_setup.images.order('title ASC')
+    end
+    @search = search_params
+
     respond_to do |format|
       format.js
     end
