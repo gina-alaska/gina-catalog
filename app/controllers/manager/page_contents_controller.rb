@@ -14,10 +14,12 @@ class Manager::PageContentsController < ManagerController
     @page.page_layout = current_setup.layouts.where(default: true).first
     @page.parent = current_setup.pages.find(params[:parent]) if params[:parent]
     @search = search_params
+    @images = current_setup.images
   end
   
   def edit
     @search = search_params
+    @images = current_setup.images
   end
   
   def sort

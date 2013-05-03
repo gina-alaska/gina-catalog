@@ -1,9 +1,9 @@
-- images = current_setup.images.order('title ASC')
-- if images.count == 0
+/ - images = current_setup.images.order('title ASC')
+- if @images.empty?
   %p.lead{style:"padding: 15px;"} No images available
 - else
   %ul.nav{ style: 'margin: 0;' }
-    - images.each do |image|
+    - @images.each do |image|
       %li.pull-left.thumbnail{ style: 'width: 46%; margin-left: 10px; margin-top: 10px;' }
         .row-fluid
           .span3
