@@ -3,11 +3,11 @@
     %button.close{type:'button', data: { dismiss: 'modal' }} &times;
     %h3 Choose an Image
     .btn-group{style: "margin: 0;"}
-      = form_tag list_images_manager_page_contents_path, method: 'GET', class: 'navbar-form form-search', remote: true do
+      = form_tag ace_search_manager_images_path, method: 'POST', class: 'navbar-form form-search', remote: true do
         .input-append
-          = text_field_tag 'search[q]', @search[:q], class: 'span12', placeholder: "Search"
+          = text_field_tag 'ace[image]', @ace_search_params[:image], class: 'span12', placeholder: "Search"
           = submit_tag 'Search', class: 'btn btn-primary'
   .modal-body{ style: "padding: 10px 0;"}
-    = render 'modal_image_list'
+    = render '/shared/ace/modal_image_list'
   .modal-footer
     %button.btn{data: { dismiss: 'modal' }} Close

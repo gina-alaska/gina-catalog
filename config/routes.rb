@@ -15,7 +15,11 @@ NSCatalog::Application.routes.draw do
         get :download
       end
     end
-    resources :images
+    resources :images do
+      collection do
+        post :ace_search
+      end
+    end
     resources :use_agreements
     resources :contact_infos
     resources :themes do
@@ -26,7 +30,6 @@ NSCatalog::Application.routes.draw do
     
     resources :page_contents do
       get :upload_image, :on => :member
-      get :list_images, :on => :collection
       post :add, :on => :member
       put :preview, :on => :member
       post :sort, :on => :collection
