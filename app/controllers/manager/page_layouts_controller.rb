@@ -1,6 +1,9 @@
 class Manager::PageLayoutsController < ManagerController
   before_filter :authenticate_access_cms!
 
+  include CatalogConcerns::Ace
+  before_filter :init_ace_editor, :only => [:new, :edit]
+
   PAGETITLE = 'Pages'
   SUBMENU = '/layouts/manager/cms_menu'
   

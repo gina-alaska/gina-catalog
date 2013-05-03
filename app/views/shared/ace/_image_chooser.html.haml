@@ -2,30 +2,12 @@
   .modal-header
     %button.close{type:'button', data: { dismiss: 'modal' }} &times;
     %h3 Choose an Image
+    .btn-group{style: "margin: 0;"}
+      = form_tag ace_search_manager_images_path, method: 'POST', class: 'navbar-form form-search', remote: true do
+        .input-append
+          = text_field_tag 'ace[image]', @ace_search_params[:image], class: 'span12', placeholder: "Search"
+          = submit_tag 'Search', class: 'btn btn-primary'
   .modal-body{ style: "padding: 10px 0;"}
-    - images = current_setup.images.order('title ASC')
-    - if images.count == 0
-      %p.lead{style:"padding: 15px;"} No images available
-    - else
-      %ul.nav{ style: 'margin: 0;' }
-        - images.each do |image|
-          %li.pull-left.thumbnail{ style: 'width: 46%; margin-left: 10px; margin-top: 10px;' }
-            .row-fluid
-              .span3
-                .image
-                  - if image.file.nil?
-                    %p.lead Broken image
-                  - else
-                    = image_tag image.file.png.thumb('150x100#').url, alt: image.title
-              .span9
-                %div{ style: 'height: 68px; overflow: auto;' }
-                  %strong= image.title
-                  %p= image.description
-                .buttons{style:"margin-top: 3px;"}
-                  .btn-group
-                    = link_to '200x200', '#', class: 'btn btn-small', data: { behavior: 'add', src: image.file.png.thumb('200x200').url,alt: image.title }
-                    = link_to '640x480', '#', class: 'btn btn-small', data: { behavior: 'add', src: image.file.png.thumb('640x480').url,alt: image.title }
-                    = link_to '1024x768', '#', class: 'btn btn-small', data: { behavior: 'add', src: image.file.png.thumb('1024x768').url, alt: image.title }
-                    = link_to 'Fullsize', '#', class: 'btn btn-small', data: { behavior: 'add', src: image.file.png.url, alt: image.title }
+    = render '/shared/ace/modal_image_list'
   .modal-footer
     %button.btn{data: { dismiss: 'modal' }} Close

@@ -39,8 +39,8 @@
     }
     
     $('#insert_image_chooser_modal').on('hidden', function() {
-      $('#insert_image_chooser_modal a[data-behavior="add"]').unbind('click', addImage);
+      $(document).unbind('click', addImage);
     });
     
-    $('#insert_image_chooser_modal a[data-behavior="add"]').on('click', addImage);
+    $(document).on('click', '#insert_image_chooser_modal a[data-behavior="add"]', addImage);
   });
