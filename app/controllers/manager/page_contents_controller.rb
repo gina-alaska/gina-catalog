@@ -13,9 +13,11 @@ class Manager::PageContentsController < ManagerController
     @page = current_setup.pages.build
     @page.page_layout = current_setup.layouts.where(default: true).first
     @page.parent = current_setup.pages.find(params[:parent]) if params[:parent]
+    @search = search_params
   end
   
   def edit
+    @search = search_params
   end
   
   def sort
@@ -156,10 +158,8 @@ class Manager::PageContentsController < ManagerController
   end
 
   def list_images
-    search_params = params[:search] || {}
     if search_params.keys.count > 0
       solr = Image.search do
-        logger.info(search_params.inspect)
         fulltext search_params[:q]
       end
       @images = solr.results
@@ -197,5 +197,9 @@ class Manager::PageContentsController < ManagerController
   
   def fetch_page
     @page = current_setup.pages.find(params[:id])
+  end
+
+  def search_params
+    params[:search] || {}
   end
 end
