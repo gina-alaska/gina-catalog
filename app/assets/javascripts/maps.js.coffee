@@ -1,5 +1,5 @@
-map_size = 'normal'
-map_target = null
+map_size = { large: false, fullscreen: false }
+map_size_target = null
 
 class CatalogMap
   constructor: (@el) ->
@@ -8,6 +8,12 @@ class CatalogMap
     @setupMap(@el)
     @setupToolbar()
     
+    if map_size_target 
+      for size, active of map_size when active is true
+        console.log('test')
+        @expandMap(map_size_target, size) 
+    
+    
     $(@el).data('map', this)
   # end constructor
   
@@ -15,25 +21,37 @@ class CatalogMap
     @btnHandlers[name] = func
   #end addBtnHandler
   
-  expandMap: (target, size) ->
-    if target and size
-      map_target = target
-      map_size = size
+  expandMap: (target, size, btn) ->
+    return false unless target?
+    
+    if size?
+      map_size_target = target
+      if $(target).hasClass(size)
+        $(target).removeClass(size)
+        map_size[size] = false
+        for btn in @btns when $(btn).data('action') is 'expand'
+          $(btn).removeClass('active') if $(btn).data('size') == size
+      else
+        $(target).addClass(size)
+        map_size[size] = true
+        for btn in @btns when $(btn).data('action') is 'expand'
+          $(btn).addClass('active') if $(btn).data('size') == size
+        # for btn in $("[data-action='expand']") when $(btn).data('size') is size 
+        #   $(btn).addClass('active') unless $(btn).hasClass('active')
+          
       
-      $(target).toggleClass(size)
-      map_size = null unless $(target).hasClass(size)
+          
   
   setupToolbar: =>
     @addBtnHandler 'zoomToMaxExtent', @zoomToDefaultBounds
-    @addBtnHandler 'expand', (btn) =>
-      @expandMap(btn.data('target'), btn.data('size'))
+    @addBtnHandler 'expand', (evt, btn) =>
+      @expandMap(btn.data('target'), btn.data('size'), btn)
       
     @btns = $(@el).find('.btn[data-action]')
     @btns.on 'click', (evt) =>
-      evt.preventDefault()  
       action = $(evt.currentTarget).data('action')
       if @btnHandlers[action]
-        @btnHandlers[action]($(evt.currentTarget));
+        @btnHandlers[action](evt, $(evt.currentTarget));
   # end setupToolbar
   
   setupMap: (el) ->
@@ -53,16 +71,15 @@ class CatalogMap
     Gina.Layers.inject(@map, @data_config['layers']);
     @zoomToDefaultBounds()
     
-    if map_size and map_target
-      @expandMap(map_target, map_size)
-    
     @ready()
   #end setupMap
   
-  zoomToDefaultBounds: =>
+  zoomToDefaultBounds: (evt) =>
+    evt.preventDefault() if evt?
     bounds = new OpenLayers.Bounds(-168.67373199615875, 56.046343829256664, -134.76560087596793, 70.81655788845131);
     bounds.transform('EPSG:4326', @data_config['projection']);
     @map.zoomToExtent(bounds , true);
+    
   #end zoomToDefaultBounds  
 
   ready: =>
@@ -77,14 +94,14 @@ class CatalogMap
       evt.map.updateSize()
     
     setTimeout(=>
-      $("##{@data_config['openlayers']}").addClass('ready')
+      $("##{@data_config['openlayers']}").addClass('ready')      
       @map.updateSize()
+      
       $.event.trigger({
         type: 'openlayers:ready',
         map: @map
       })
     , 1000)
-        
 #end CatalogMap
 
 map_init = ->

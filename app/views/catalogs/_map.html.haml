@@ -10,12 +10,12 @@
       .pull-right
         = render 'pagetoolbar', results: @results, total: @total, page: @pagenum, limit: @limit, params: @search_params
       .btn-group
-        = link_to '#', data: { action: 'zoomToMaxExtent' }, class: 'btn', title: 'Zoom to default extent' do
+        %button.btn{ data: { action: 'zoomToMaxExtent' }, title: 'Zoom to default extent' }
           %i.icon-globe
       .btn-group
-        = link_to '#', class: 'btn', data: { action: 'expand', target: '.search', size: 'large', toggle:"buttons-checkbox" }, title: 'Make the map larger' do
+        %button.btn{ data: { action: 'expand', target: '.search', size: 'large' }, title: 'Make the map larger' }
           %i.icon-desktop
-        = link_to '#', class: 'btn', data: { action: 'expand', target: '.search', size: 'fullscreen',toggle:"buttons-checkbox" }, title: 'Make the map fullscreen' do
+        %button.btn{ data: { action: 'expand', target: '.search', size: 'fullscreen' }, title: 'Make the map fullscreen' }
           %i.icon-fullscreen
       / .btn-group
       /   = link_to '#', data: { action: 'placeMarker' }, class: 'btn' do
