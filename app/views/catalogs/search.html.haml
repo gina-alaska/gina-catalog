@@ -1,7 +1,7 @@
 .search
-  %div{ style: 'position: relative;'}
-    = render 'map'
-  .content{ style: 'padding-top: 350px;', data: { 'scroll-offset'=> 350 } }
+  = render 'map'
+    
+  .content{ data: { 'scroll-offset-target'=> '#map' } }
     .row-fluid
       .span4
         = form_tag search_url, method: 'GET', style: 'width:100%' do

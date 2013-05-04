@@ -1,3 +1,6 @@
+map_size = 'normal'
+map_target = null
+
 class CatalogMap
   constructor: (@el) ->
     @btnHandlers = {}
@@ -12,8 +15,18 @@ class CatalogMap
     @btnHandlers[name] = func
   #end addBtnHandler
   
-  setupToolbar: ->
-    @addBtnHandler('zoomToMaxExtent', @zoomToDefaultBounds)
+  expandMap: (target, size) ->
+    if target and size
+      map_target = target
+      map_size = size
+      
+      $(target).toggleClass(size)
+      map_size = null unless $(target).hasClass(size)
+  
+  setupToolbar: =>
+    @addBtnHandler 'zoomToMaxExtent', @zoomToDefaultBounds
+    @addBtnHandler 'expand', (btn) =>
+      @expandMap(btn.data('target'), btn.data('size'))
       
     @btns = $(@el).find('.btn[data-action]')
     @btns.on 'click', (evt) =>
@@ -29,6 +42,8 @@ class CatalogMap
     @config = Gina.Projections.get(@data_config['projection']);
     @config['projection'] = @data_config['projection']
     @config['displayProjection'] = @data_config['displayProjection'] || 'EPSG:4326'
+    @config['zoomMethod'] = OpenLayers.Easing.Quad.easeOut
+    @config['zoomDuratoin'] = 5
     
     @map = new OpenLayers.Map(@data_config['openlayers'], @config)
     @map.addControls([
@@ -37,6 +52,10 @@ class CatalogMap
     ])
     Gina.Layers.inject(@map, @data_config['layers']);
     @zoomToDefaultBounds()
+    
+    if map_size and map_target
+      @expandMap(map_target, map_size)
+    
     @ready()
   #end setupMap
   
@@ -47,13 +66,25 @@ class CatalogMap
   #end zoomToDefaultBounds  
 
   ready: =>
+    $("##{@data_config['openlayers']}").on("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", =>
+      $.event.trigger({
+        type: 'openlayers:resize',
+        map: @map
+      })
+    )
+    
+    $(document).on 'openlayers:resize', (evt)=>
+      evt.map.updateSize()
+    
     setTimeout(=>
+      $("##{@data_config['openlayers']}").addClass('ready')
       @map.updateSize()
       $.event.trigger({
         type: 'openlayers:ready',
         map: @map
       })
-    , 200)
+    , 1000)
+        
 #end CatalogMap
 
 map_init = ->
