@@ -69,6 +69,8 @@ class Catalog
       center = dextent.getCenterLonLat()
       @map.zoomTo(zoom)
       @map.panTo(center)
+      
+      # @map.setDefaultBounds(@map.getExtent())
     
     
   setup: ->

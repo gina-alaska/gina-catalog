@@ -10,7 +10,6 @@ class CatalogMap
     
     if map_size_target 
       for size, active of map_size when active is true
-        console.log('test')
         @expandMap(map_size_target, size) 
     
     
@@ -49,12 +48,14 @@ class CatalogMap
       
     @btns = $(@el).find('.btn[data-action]')
     @btns.on 'click', (evt) =>
+      evt.preventDefault()
       action = $(evt.currentTarget).data('action')
       if @btnHandlers[action]
         @btnHandlers[action](evt, $(evt.currentTarget));
   # end setupToolbar
   
   setupMap: (el) ->
+    
     @data_config = $(el).data()
     @data_config['displayProjection'] = @data_config['displayProjection'] || 'EPSG:4326'
     @config = Gina.Projections.get(@data_config['projection']);
@@ -62,6 +63,9 @@ class CatalogMap
     @config['displayProjection'] = @data_config['displayProjection'] || 'EPSG:4326'
     @config['zoomMethod'] = OpenLayers.Easing.Quad.easeOut
     @config['zoomDuratoin'] = 5
+    
+    @default_bounds = new OpenLayers.Bounds(-168.67373199615875, 56.046343829256664, -134.76560087596793, 70.81655788845131);
+    @default_bounds.transform('EPSG:4326', @data_config['projection']);
     
     @map = new OpenLayers.Map(@data_config['openlayers'], @config)
     @map.addControls([
@@ -74,21 +78,21 @@ class CatalogMap
     @ready()
   #end setupMap
   
-  zoomToDefaultBounds: (evt) =>
-    evt.preventDefault() if evt?
-    bounds = new OpenLayers.Bounds(-168.67373199615875, 56.046343829256664, -134.76560087596793, 70.81655788845131);
-    bounds.transform('EPSG:4326', @data_config['projection']);
-    @map.zoomToExtent(bounds , true);
+  setDefaultBounds: (bounds) =>
+    @default_bounds = bounds
+  
+  zoomToDefaultBounds: =>
+    @map.zoomToExtent(@default_bounds , true);
     
   #end zoomToDefaultBounds  
 
   ready: =>
-    $("##{@data_config['openlayers']}").on("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", =>
-      $.event.trigger({
-        type: 'openlayers:resize',
-        map: @map
-      })
-    )
+    $('#map_canvas').on "transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", (evt) =>
+      if $(evt.target).attr('id') == 'map_canvas'
+        $.event.trigger({
+          type: 'openlayers:resize',
+          map: @map
+        })
     
     $(document).on 'openlayers:resize', (evt)=>
       evt.map.updateSize()
