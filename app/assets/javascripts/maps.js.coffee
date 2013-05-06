@@ -37,6 +37,7 @@ class CatalogMap
           $(btn).addClass('active') if $(btn).data('size') == size
         # for btn in $("[data-action='expand']") when $(btn).data('size') is size 
         #   $(btn).addClass('active') unless $(btn).hasClass('active')
+      @resize()
           
       
           
@@ -86,13 +87,16 @@ class CatalogMap
     
   #end zoomToDefaultBounds  
 
+  resize: =>
+    $.event.trigger({
+      type: 'openlayers:resize',
+      map: @map
+    })
+
   ready: =>
     $('#map_canvas').on "transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", (evt) =>
       if $(evt.target).attr('id') == 'map_canvas'
-        $.event.trigger({
-          type: 'openlayers:resize',
-          map: @map
-        })
+        @resize()
     
     $(document).on 'openlayers:resize', (evt)=>
       evt.map.updateSize()
