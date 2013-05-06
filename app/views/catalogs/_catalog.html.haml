@@ -37,11 +37,11 @@
                 %i.icon-edit
                 Edit
 
-          - if catalog.downloadable?
-            .btn-group
-              = link_to download_catalog_path(catalog), class: 'btn' do
-                %i.icon-cloud-download
-                Download
+        - if catalog.downloadable?
+          .btn-group
+            = link_to download_catalog_path(catalog), class: 'btn' do
+              %i.icon-cloud-download
+              Download
           
         .btn-group
           = link_to catalog, class: 'btn btn-primary' do
