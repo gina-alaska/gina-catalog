@@ -1,0 +1,63 @@
+
+#header {
+//  @include box-shadow(0px 2px 5px -2px #AAA);
+  background-color: #EFEFEF;
+  border-bottom: 1px solid #afafaf;
+//  margin-bottom: 8px;
+  
+  h4 {
+    color: #555;
+    @include text-shadow(1px 1px 1px #efefef);
+    margin: 0px;
+    padding: 10px 0 0 5px;
+  }
+  .row-fluid [class*="span"] {
+    min-height: 24px;
+  }
+  .nav {
+    margin-bottom: 0px;
+  }
+  .nav a {
+    line-height: 24px;
+  }
+  .dropdown-menu a {
+    color: #000;
+  }
+  .dropdown-menu a:hover {
+    color: #fff;
+  }
+}
+
+.portal-manager-header {
+  background-color: $primaryColor;
+  h2 {
+    color:  $contrastColor;
+    margin: 5px;
+    small {
+      color: $smallColor;
+    }
+  }
+  .nav {
+    padding: 5px;
+  }
+  .nav a {
+    line-height: 40px;
+    color:  $contrastColor;
+  }
+  a:hover {
+    color: #333;
+  }
+}
+
+body > .container {
+  @include box-shadow(0px 2px 5px #000);
+  
+  .content { padding: 5px 5px; }
+}
+
+#flashes {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  min-width: 300px;
+}
