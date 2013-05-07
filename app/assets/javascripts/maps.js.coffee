@@ -87,11 +87,11 @@ class CatalogMap
   #end zoomToDefaultBounds  
 
   resize: =>
+    @map.updateSize()
     $.event.trigger({
       type: 'openlayers:resize',
       map: @map
     })
-    @map.updateSize()
 
   ready: =>
     $('#map_canvas').on "transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", (evt) =>

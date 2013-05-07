@@ -56,19 +56,19 @@ class Catalog
           
         @layer.addFeatures(features)
         
-      @centerOnData()
+    @centerOnData()
         
   centerOnData: =>
     if @layer.features.length > 0
       dextent = @layer.getDataExtent();
       zoom = @map.getZoomForExtent(dextent)
-
+      center = dextent.getCenterLonLat()
+      
       if zoom > 5
         zoom = 5
 
-      center = dextent.getCenterLonLat()
       @map.zoomTo(zoom)
-      @map.panTo(center)
+      @map.setCenter(center)
       
       # @map.setDefaultBounds(@map.getExtent())
     
