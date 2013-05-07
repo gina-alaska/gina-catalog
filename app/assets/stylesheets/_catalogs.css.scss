@@ -1,13 +1,22 @@
 .search table.results {
   td {
-    padding: 5px;
-    @include transition-property(background);
-    @include transition-duration(0.1s);
-  }
+    padding:0;
+  }  
   
   .title {
     margin: 0;
     margin-bottom: 5px;
+  }
+  
+  .result {
+    padding: 5px 5px 35px 5px;
+    position: relative;
+  }
+  
+  .result:hover {
+    background-color: #eee;
+    @include transition-property(background);
+    @include transition-duration(0s);
   }
   
   .status, .description {
@@ -18,10 +27,16 @@
     background: #ffff99;
   }
   
-  td:hover {
-    background-color: #eee;
-    @include transition-property(background);
-    @include transition-duration(0s);
+  .legend-tag {
+    position: absolute;
+    top:0;
+    right: 0;
+    border-top: none;
+    border-right: none;
+    padding: 3px 10px;
+    text-align: center;
+    @include border-radius(0px);
+    @include border-bottom-left-radius(5px);
   }
 }
 

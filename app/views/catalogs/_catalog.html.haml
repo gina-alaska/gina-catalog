@@ -1,49 +1,53 @@
 - collapse ||= false
 - if catalog.published? or (current_user and current_member.can_manage_catalog?)
   %tr
-    %td.result{id: dom_id(catalog, :record), data: { wkt: catalog.geometry_center_collection } }
-      %h5.title
-        - unless catalog.source_agency.nil?
-          %b= catalog.source_agency.try(:name_with_acronym)
-          %br/
-        = link_to "##{dom_id(catalog, :description)}", data: { toggle: "collapse" } do
-          %i.icon-chevron-down.collapse-icon
-          = catalog.title.try(:truncate,78)
-        - if !catalog.published?
-          %i.icon-warning-sign{ title: 'Catalog record is not public' }
-        - unless catalog.geometry_collection.blank?
-          %i.icon-globe{ title: 'Catalog record has location information' }
-      .description
-        :markdown
-          #{catalog.description.try(:truncate, 300).try(:html_safe)}
-        /.try(:truncate, 200)}
+    %td
+      .result{id: dom_id(catalog, :record), data: { wkt: catalog.geometry_center_collection } }
+        .row-fluid
+          .span10
+            %h5.title
+              = link_to "##{dom_id(catalog, :description)}", data: { toggle: "collapse" } do
+                %i.icon-chevron-down.collapse-icon
+                = catalog.title.try(:truncate,78)
+              - if !catalog.published?
+                %i.icon-warning-sign{ title: 'Catalog record is not public' }
+              - unless catalog.geometry_collection.blank?
+                %i.icon-globe{ title: 'Catalog record has location information' }
+          .span2.legend-tag.alert{ class: catalog.type == 'Project' ? 'alert-warning' : 'alert-info' }
+            %b= catalog.type == 'Project' ? 'Project' : 'Data'
+        .description
+          - unless catalog.source_agency.nil?
+            %b= catalog.source_agency.try(:name_with_acronym)
+          :markdown
+            #{catalog.description.try(:truncate, 300).try(:html_safe)}
+          /.try(:truncate, 200)}
       
-      .collapse{id: dom_id(catalog, :description)}
-        - if !catalog.published?
-          .alert.alert-warning
-            This record has not been published
-        .status
-          = render 'status', item: catalog
+        .collapse{id: dom_id(catalog, :description)}
+          - if !catalog.published?
+            .alert.alert-warning
+              This record has not been published
+          .status
+            = render 'status', item: catalog
           
-          - unless catalog.collections.list.blank?
-            %b Collections: 
-            = catalog.collections.list
+            - unless catalog.collections.list.blank?
+              %b Collections: 
+              = catalog.collections.list
       
-      .pull-right
-        - if current_member and current_member.can_manage_catalog?
-          - if catalog.owner_setup == current_setup
-            .btn-group
-              = link_to edit_manager_catalog_path(catalog), class: 'btn', target: :_blank do
-                %i.icon-edit
-                Edit
+        .pull-right
+          - if current_member and current_member.can_manage_catalog?
+            - if catalog.owner_setup == current_setup
+              .btn-group
+                = link_to edit_manager_catalog_path(catalog), class: 'btn', target: :_blank do
+                  %i.icon-edit
+                  Edit
 
-        - if catalog.downloadable?
-          .btn-group
-            = link_to download_catalog_path(catalog), class: 'btn' do
-              %i.icon-cloud-download
-              Download
+          - if catalog.downloadable?
+            .btn-group
+              = link_to download_catalog_path(catalog), class: 'btn' do
+                %i.icon-cloud-download
+                Download
           
-        .btn-group
-          = link_to catalog, class: 'btn btn-primary' do
-            Full Record
-            %i.icon-arrow-right
+          .btn-group
+            = link_to catalog, class: 'btn btn-primary' do
+              Full Record
+              %i.icon-arrow-right
