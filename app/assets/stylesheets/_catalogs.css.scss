@@ -57,13 +57,13 @@
     bottom:0;
     width: 300px;
     overflow: auto;
+    z-index: 10000;
   }
   &.affix {
     .search-form {
       position: fixed;
       top: 310px;
       bottom: 0;
-      padding-right: 3px;      
     }
     .result-list {
       margin-top: 310px;
