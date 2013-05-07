@@ -39,18 +39,20 @@
 }
 
 .search.affix-top {
-  .content { position: relative; }
+  .result-list { position: relative; }
   position: relative;
 }
 
 .search.affix {
   position: relative;
 }
-.search .content { position: relative; margin-top: 10px; }
+.search .result-list { position: relative; margin-top: 10px; }
 
 .search {
   .search-form {
+    background: #fff;
     position: absolute;
+    padding: 0 10px 10px 5px;
     top:0;
     bottom:0;
     width: 300px;
@@ -63,7 +65,7 @@
       bottom: 0;
       padding-right: 3px;      
     }
-    .content {
+    .result-list {
       margin-top: 310px;
     }
   }
