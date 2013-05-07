@@ -1,11 +1,11 @@
-.row-fluid
+.row-fluid.url-fields
   .span8
     = f.label :url, "URL ", class: 'control-label'
     .controls
       = f.text_field :url, class: 'span12'
   .span2
     %label.checkbox
-      = "Hidden"
-      = f.check_box :hidden
+      = "Default"
+      = f.check_box :default
   .span2
     = f.link_to_remove "Delete", class: 'btn btn-danger'

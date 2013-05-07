@@ -20,7 +20,7 @@ class Setup < ActiveRecord::Base
   has_many :catalog_collections
   has_many :collections
   has_many :contacts
-  has_many :urls, class_name: 'SiteUrl', dependent: :destroy
+  has_many :urls, class_name: 'SiteUrl', dependent: :destroy, order: "id ASC"
   has_many :memberships
   has_many :roles
   has_many :use_agreements

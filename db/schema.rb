@@ -795,7 +795,7 @@ ActiveRecord::Schema.define(:version => 20130506232908) do
     t.integer  "setup_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-    t.boolean  "hidden"
+    t.boolean  "default"
   end
 
   add_index "site_urls", ["url"], :name => "index_site_urls_on_url"
