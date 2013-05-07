@@ -1,4 +1,6 @@
 .search table.results {
+  margin-top: 10px;
+  
   td {
     padding:0;
   }  
@@ -46,27 +48,28 @@
 .search.affix {
   position: relative;
 }
-.search .result-list { position: relative; margin-top: 10px; }
+.search .result-list { position: relative; margin-top: 1px; }
 
 .search {
   .search-form {
+    border-right: 1px solid #efefef;
     background: #fff;
     position: absolute;
-    padding: 0 10px 10px 5px;
+    padding: 10px 8px 10px 5px;
     top:0;
     bottom:0;
     width: 300px;
     overflow: auto;
-    z-index: 10000;
+    z-index: 1;
   }
   &.affix {
     .search-form {
       position: fixed;
-      top: 310px;
+      top: 300px;
       bottom: 0;
     }
     .result-list {
-      margin-top: 310px;
+      margin-top: 300px;
     }
   }
 }
