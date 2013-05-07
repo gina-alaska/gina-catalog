@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130501182222) do
+ActiveRecord::Schema.define(:version => 20130506232908) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -795,6 +795,7 @@ ActiveRecord::Schema.define(:version => 20130501182222) do
     t.integer  "setup_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.boolean  "hidden"
   end
 
   add_index "site_urls", ["url"], :name => "index_site_urls_on_url"

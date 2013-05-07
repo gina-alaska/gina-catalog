@@ -1,6 +1,11 @@
-.control-group
-  = f.label :url, "URL ", class: 'control-label'
-  .controls
-    .input-append
+.row-fluid
+  .span8
+    = f.label :url, "URL ", class: 'control-label'
+    .controls
       = f.text_field :url, class: 'span12'
-      = f.link_to_remove "X", class: 'btn btn-danger'
+  .span2
+    %label.checkbox
+      = "Hidden"
+      = f.check_box :hidden
+  .span2
+    = f.link_to_remove "Delete", class: 'btn btn-danger'
