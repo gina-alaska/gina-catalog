@@ -1,23 +1,22 @@
-.search
+.search{ data: { spy: 'affix', 'offset-top' => 110 } }
   = render 'map'
-    
   .content{ data: { 'scroll-offset-target'=> '#map' } }
     .row-fluid
       .span4
-        = form_tag search_url, method: 'GET', style: 'width:100%' do
-        
-          = render 'collection_search', search_params: @search_params, results: @results
-          %br/
-          = render 'basic_search', search_params: @search_params, results: @results
-          = render 'search_buttons',  search_params: @search_params, results: @results
-          %br/
-          = render 'advanced_search', search_params: @search_params, results: @results
-          %div
-            %label 
-              Legend:
-              %i.icon-warning-sign &nbsp;Not Published
-              %i.icon-globe &nbsp;Has Location
-                
+        .search-form.clearfix
+          = form_tag search_url, method: 'GET' do        
+            = render 'collection_search', search_params: @search_params, results: @results
+            %br/
+            = render 'basic_search', search_params: @search_params, results: @results
+            = render 'search_buttons',  search_params: @search_params, results: @results
+            %br/
+            = render 'advanced_search', search_params: @search_params, results: @results
+            %div
+              %label 
+                Legend:
+                %i.icon-warning-sign &nbsp;Not Published
+                %i.icon-globe &nbsp;Has Location
+              
       .span8
         / data-spy="affix" data-offset-top="200"
         /data: { spy: 'affix', 'offset-top' => 120 }, 

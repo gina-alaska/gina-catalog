@@ -1,5 +1,5 @@
 / %label Collections
-%ul.nav.nav-tabs.nav-stacked.collection-list{style:'max-height:250px; overflow: auto;'}
+%ul.nav.nav-tabs.nav-stacked.collection-list
   - Collection.including_descendents(current_setup).order('name ASC').each do |coll|
     %li.clearfix{class: search_params[:collection_id].to_i == coll.id ? "active" : ""}
       .badge.pull-right{ style: 'margin: 10px 5px 0 0;' }

@@ -15,8 +15,6 @@
   
   .result:hover {
     background-color: #eee;
-    @include transition-property(background);
-    @include transition-duration(0s);
   }
   
   .status, .description {
@@ -37,6 +35,37 @@
     text-align: center;
     @include border-radius(0px);
     @include border-bottom-left-radius(5px);
+  }
+}
+
+.search.affix-top {
+  .content { position: relative; }
+  position: relative;
+}
+
+.search.affix {
+  position: relative;
+}
+.search .content { position: relative; margin-top: 10px; }
+
+.search {
+  .search-form {
+    position: absolute;
+    top:0;
+    bottom:0;
+    width: 300px;
+    overflow: auto;
+  }
+  &.affix {
+    .search-form {
+      position: fixed;
+      top: 310px;
+      bottom: 0;
+      padding-right: 3px;      
+    }
+    .content {
+      margin-top: 310px;
+    }
   }
 }
 

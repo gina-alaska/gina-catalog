@@ -1,6 +1,7 @@
 #map {
   width: 100%;
   height: 300px;
+  z-index: 1000000;
   
   #map_canvas {
     width: 100%;
@@ -37,70 +38,57 @@
   }
   
   .ready {
-    @include transition-property(height);
-    @include transition-duration(0.5s);
+//    @include transition-property(height);
+//    @include transition-duration(0.5s);
   }
 }
 
-.search {
-  position: relative;
-  
+.search.large {
   #map {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    right: 0px;
+    height: 500px;      
+    #map_canvas {
+      height: 460px;
+    }
+  }  
+}
+
+.search.affix {
+  #map {
+    position: fixed;
     z-index: 1000000;
-  
-    &.affix-top {
-      z-index: 1000000;
+    top: 0px;    
+    left: auto;
+    right: auto;
+    width: 940px;
+  }  
+  &.large {
+    .content {
+      margin-top: 510px;
     }
-  
-    &.affix {
-      position: fixed;
-      z-index: 1000000;
-      top: 0px;    
-      left: auto;
-      right: auto;
-      width: 940px;
-    }
+    .search-form {
+      top: 510px;
+    } 
+  }
+}
+
+.search.fullscreen {
+  #map {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right:0;
+    height: auto;
+    width: auto;
+    margin-bottom: 40px;
     
     #map_canvas {
+      width:100%;
+      height: 100%;
     }
   }
   
   .content {
-    padding-top: 310px;
-  }
-  
-  &.large {
-    #map {
-      height: 500px;
-      
-      #map_canvas {
-        height: 460px;
-      }
-    }
-  
-    .content {
-      padding-top: 510px;
-    }
-  }
-  &.fullscreen {
-    #map {
-      position: fixed;
-      top: 0;
-      bottom: 0;
-      height: auto;
-      margin-bottom: 40px;
-      
-      #map_canvas {
-        height: 100%;
-      }
-    }
-  
-    .content {
-      display: none;
-    }
+    display: none;
   }
 }
