@@ -1,6 +1,8 @@
 .search table.results {
   td {
     padding: 5px;
+    @include transition-property(background);
+    @include transition-duration(0.1s);
   }
   
   .title {
@@ -10,6 +12,16 @@
   
   .status, .description {
     margin-left: 10px;
+  }
+  
+  .highlight {
+    background: #ffff99;
+  }
+  
+  td:hover {
+    background-color: #eee;
+    @include transition-property(background);
+    @include transition-duration(0s);
   }
 }
 
@@ -22,4 +34,5 @@
 .collection-list .active a {
   background-color: #2775CB;
   color:#fff;
+  
 }

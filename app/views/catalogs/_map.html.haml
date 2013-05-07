@@ -4,14 +4,19 @@
   displayProjection: 'EPSG:4326',                   |
   layers: ['TILE.EPSG:3572.*'],                   |
   spy: 'affix', 'offset-top' => 110 } }
-  #map_canvas
+  #map_canvas{ style:'padding-bottom: 40px;' }
   .navbar.navbar-static-top
     .navbar-inner
       .pull-right
         = render 'pagetoolbar', results: @results, total: @total, page: @pagenum, limit: @limit, params: @search_params
       .btn-group
-        = link_to '#', data: { action: 'zoomToMaxExtent' }, class: 'btn' do
+        %button.btn{ data: { action: 'zoomToMaxExtent' }, title: 'Zoom to default extent' }
           %i.icon-globe
+      .btn-group
+        %button.btn{ data: { action: 'expand', target: '.search', size: 'large' }, title: 'Make the map larger' }
+          %i.icon-desktop
+        %button.btn{ data: { action: 'expand', target: '.search', size: 'fullscreen' }, title: 'Make the map fullscreen' }
+          %i.icon-fullscreen
       / .btn-group
       /   = link_to '#', data: { action: 'placeMarker' }, class: 'btn' do
       /     %i.icon-map-marker

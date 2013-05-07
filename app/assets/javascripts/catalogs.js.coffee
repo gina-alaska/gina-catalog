@@ -9,11 +9,17 @@ class Catalog
     
     select = new OpenLayers.Control.SelectFeature(@layer, {
       autoActivate: true,
+      onUnselect: () =>
+        if @higlightEl
+          @higlightEl.removeClass('highlight')
+        
       onSelect: (feature) =>
         el = $('#' + feature.attributes.record_id)
         parent = $('body,html')
 
-        padding = el.parents('[data-scroll-offset]').data('scroll-offset')
+        padding = $('#map').height();
+         
+        # .data('scroll-offset')
         parent.animate({
           scrollTop: el.offset().top - padding
         })
@@ -21,16 +27,13 @@ class Catalog
         #save this for later reset
         bgcolor = el.css('backgroundColor');
         
-        el.animate({
-          backgroundColor: '#ffff99'
-        }, 500).delay(15000).animate({
-          backgroundColor: bgcolor
-        }, 500)
-        # el.effect("highlight", { }, 10000)
-        # .delay(10000).effect("highlight", { mode: 'hide' }, 1500)
+        el.addClass('highlight')
+        @higlightEl = el
     })
     
     @map.addControl(select)
+    $(document).on 'openlayers:resize', (evt) =>
+      @centerOnData()
     
   loadFeatures: =>
     geoms = $('[data-wkt]');
@@ -52,22 +55,24 @@ class Catalog
           f.attributes = { record_id: $(result).attr('id'), type: $(result).data('type') }
           
         @layer.addFeatures(features)
+        
+      @centerOnData()
+        
+  centerOnData: =>
+    if @layer.features.length > 0
+      dextent = @layer.getDataExtent();
+      zoom = @map.getZoomForExtent(dextent)
+
+      if zoom > 5
+        zoom = 5
+
+      center = dextent.getCenterLonLat()
+      @map.zoomTo(zoom)
+      @map.panTo(center)
+      
+      # @map.setDefaultBounds(@map.getExtent())
     
-
-    @map.updateSize()
-
-    dextent = @layer.getDataExtent();
-    zoom = @map.getZoomForExtent(dextent)
-
-    if zoom > 5
-      zoom = 5
-
-    center = dextent.getCenterLonLat()
-
-    #@map.zoomToExtent(@layer.getDataExtent())
-
-    @map.setCenter(center)
-    @map.zoomTo(zoom)
+    
   setup: ->
 #end class Catalog
 

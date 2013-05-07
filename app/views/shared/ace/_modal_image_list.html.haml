@@ -18,7 +18,10 @@
               %p= image.description
             .buttons{style:""}
               .btn-group
-                = link_to '200x200', '#', class: 'btn btn-small', data: { behavior: 'add', src: image.file.png.thumb('200x200').url,alt: image.title }
-                = link_to '640x480', '#', class: 'btn btn-small', data: { behavior: 'add', src: image.file.png.thumb('640x480').url,alt: image.title }
-                = link_to '1024x768', '#', class: 'btn btn-small', data: { behavior: 'add', src: image.file.png.thumb('1024x768').url, alt: image.title }
-                = link_to 'Fullsize', '#', class: 'btn btn-small', data: { behavior: 'add', src: image.file.png.url, alt: image.title }
+                - if image.file.nil?
+                  %p.lead Please fix this image before linking
+                - else
+                  = link_to '200x200', '#', class: 'btn btn-small', data: { behavior: 'add', src: image.file.png.thumb('200x200').url,alt: image.title }
+                  = link_to '640x480', '#', class: 'btn btn-small', data: { behavior: 'add', src: image.file.png.thumb('640x480').url,alt: image.title }
+                  = link_to '1024x768', '#', class: 'btn btn-small', data: { behavior: 'add', src: image.file.png.thumb('1024x768').url, alt: image.title }
+                  = link_to 'Fullsize', '#', class: 'btn btn-small', data: { behavior: 'add', src: image.file.png.url, alt: image.title }
