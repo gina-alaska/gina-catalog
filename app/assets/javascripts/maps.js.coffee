@@ -56,7 +56,6 @@ class CatalogMap
   # end setupToolbar
   
   setupMap: (el) ->
-    
     @data_config = $(el).data()
     @data_config['displayProjection'] = @data_config['displayProjection'] || 'EPSG:4326'
     @config = Gina.Projections.get(@data_config['projection']);
@@ -92,14 +91,11 @@ class CatalogMap
       type: 'openlayers:resize',
       map: @map
     })
+    @map.updateSize()
 
   ready: =>
     $('#map_canvas').on "transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", (evt) =>
-      if $(evt.target).attr('id') == 'map_canvas'
-        @resize()
-    
-    $(document).on 'openlayers:resize', (evt)=>
-      evt.map.updateSize()
+      @resize() if $(evt.target).attr('id') == 'map_canvas'
     
     setTimeout(=>
       $("##{@data_config['openlayers']}").addClass('ready')      
