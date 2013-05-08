@@ -32,8 +32,8 @@ class Catalog
     })
     
     @map.addControl(select)
-    $(document).on 'openlayers:resize', (evt) =>
-      @centerOnData()
+    # $(document).on 'openlayers:resize', (evt) =>
+    #   @centerOnData()
     
   loadFeatures: =>
     geoms = $('[data-wkt]');
