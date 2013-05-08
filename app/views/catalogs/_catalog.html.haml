@@ -1,7 +1,7 @@
 - if catalog.published? or (current_user and current_member.can_manage_catalog?)
   %tr
     %td
-      - cache([:search_result, :v2, catalog]) do
+      - cache([:search_result, :v3, catalog]) do
         .result{id: dom_id(catalog, :record), data: { wkt: catalog.geometry_center_collection } }
           .row-fluid
             .span10
