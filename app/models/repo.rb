@@ -46,7 +46,7 @@ Title: #{self.catalog.title}
   end  
   
   def empty?
-    files.count <= 1
+    files.empty?
   end
 
   def files

@@ -3,6 +3,10 @@ class RepoFilelist
     @repo = repo
 
   end
+  
+  def empty?
+    @repo.tree.contents.count <= 1
+  end
 
   def tree
     @repo.tree.contents.collect do |item|
