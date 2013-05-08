@@ -14,10 +14,10 @@ class Catalog
           @higlightEl.removeClass('highlight')
         
       onSelect: (feature) =>
-        el = $('#' + feature.attributes.record_id)
+        el = $('#' + feature.attributes.record_id).parent('td')
         parent = $('body,html')
 
-        padding = $('#map').height();
+        padding = $('#map').height()
          
         # .data('scroll-offset')
         parent.animate({
@@ -25,7 +25,7 @@ class Catalog
         })
         
         #save this for later reset
-        bgcolor = el.css('backgroundColor');
+        bgcolor = el.css('backgroundColor')
         
         el.addClass('highlight')
         @higlightEl = el

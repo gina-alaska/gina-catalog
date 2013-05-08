@@ -13,8 +13,9 @@
                   %i.icon-warning-sign{ title: 'Catalog record is not public' }
                 - unless catalog.geometry_collection.blank?
                   %i.icon-globe{ title: 'Catalog record has location information' }
-            .span2.legend-tag.alert{ class: catalog.type == 'Project' ? 'alert-warning' : 'alert-info' }
-              %b= catalog.type == 'Project' ? 'Project' : 'Data'
+            .span2
+              .legend-tag.alert{ class: catalog.type == 'Project' ? 'alert-warning' : 'alert-info' }
+                %b= catalog.type == 'Project' ? 'Project' : 'Data'
           .description
             - unless catalog.source_agency.nil?
               %b= catalog.source_agency.try(:name_with_acronym)
