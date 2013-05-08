@@ -32,7 +32,7 @@ gem 'nested_form', git: 'http://github.com/ryanb/nested_form.git'
 
 #gem 'spatial_adapter', :git => 'https://github.com/juniorz/spatial_adapter.git'
 
-gem "haml"
+gem "haml-rails"
 gem 'grit', '>= 2.4.1'
 gem 'pdfkit'
 gem 'ancestry', '~> 1.2.4'

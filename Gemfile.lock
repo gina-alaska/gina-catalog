@@ -87,7 +87,13 @@ GEM
       diff-lcs (~> 1.1)
       mime-types (~> 1.15)
       posix-spawn (~> 0.3.6)
-    haml (3.1.7)
+    haml (4.0.2)
+      tilt
+    haml-rails (0.4)
+      actionpack (>= 3.1, < 4.1)
+      activesupport (>= 3.1, < 4.1)
+      haml (>= 3.1, < 4.1)
+      railties (>= 3.1, < 4.1)
     hashie (1.2.0)
     highline (1.6.15)
     hike (1.2.1)
@@ -254,7 +260,7 @@ DEPENDENCIES
   dragonfly
   font-awesome-rails
   grit (>= 2.4.1)
-  haml
+  haml-rails
   html-pipeline
   jquery-rails
   jquery-ui-rails
