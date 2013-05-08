@@ -7,6 +7,7 @@ module CatalogConcerns
         return [] if search.nil? or search.keys.empty?
     
         table_includes = {
+          :repo => []
           # :tags => [], :locations => [], :agencies => [], :source_agency => [], :funding_agency => [], :links => [], 
           # :primary_contact => [:phone_numbers], :people => [:phone_numbers], :data_source => [], :geokeywords => [], :catalog_collections => [], 
           # :repo => [], :data_types => [], :collections => []

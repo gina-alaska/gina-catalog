@@ -11,12 +11,7 @@ class ApplicationController < ActionController::Base
   protected
   
   def fetch_setup
-    @setup ||= Setup.includes(:urls).where(site_urls: { :url => request.host }).first
-    
-    if @setup.nil? 
-      redirect_to new_manager_setup_path
-    end
-    @setup
+    @setup ||= Setup.includes(:urls).where(site_urls: { :url => request.host }).first    
   end
 
   alias_method :current_setup, :fetch_setup
@@ -28,7 +23,7 @@ class ApplicationController < ActionController::Base
   end
   
   def current_member
-    current_user.memberships.where(setup_id: current_setup).first || Membership.new(user: current_user) if user_signed_in?
+    @current_member ||= current_user.memberships.where(setup_id: current_setup).includes(:setup).first || Membership.new(user: current_user) if user_signed_in?
   end
   
   def user_signed_in?

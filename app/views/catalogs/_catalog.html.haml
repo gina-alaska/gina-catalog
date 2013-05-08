@@ -1,7 +1,7 @@
-- cache([:search_result, :v1, catalog]) do
-  - if catalog.published? or (current_user and current_member.can_manage_catalog?)
-    %tr
-      %td
+- if catalog.published? or (current_user and current_member.can_manage_catalog?)
+  %tr
+    %td
+      - cache([:search_result, :v2, catalog]) do
         .result{id: dom_id(catalog, :record), data: { wkt: catalog.geometry_center_collection } }
           .row-fluid
             .span10
@@ -21,33 +21,32 @@
             :markdown
               #{catalog.description.try(:truncate, 300).try(:html_safe)}
             /.try(:truncate, 200)}
-      
+    
           .collapse{id: dom_id(catalog, :description)}
             - if !catalog.published?
               .alert.alert-warning
                 This record has not been published
             .status
               = render 'status', item: catalog
-          
+        
               - unless catalog.collections.list.blank?
                 %b Collections: 
                 = catalog.collections.list
-      
-          .pull-right
-            - if current_member and current_member.can_manage_catalog?
-              - if catalog.owner_setup == current_setup
-                .btn-group
-                  = link_to edit_manager_catalog_path(catalog), class: 'btn', target: :_blank do
-                    %i.icon-edit
-                    Edit
-
-            - if catalog.downloadable?
-              .btn-group
-                = link_to download_catalog_path(catalog), class: 'btn' do
-                  %i.icon-cloud-download
-                  Download
-          
+      .pull-right{ style: 'margin: 0 5px 5px 0;'}
+        - if current_member and current_member.can_manage_catalog?
+          - if catalog.owner_setup == current_setup
             .btn-group
-              = link_to catalog, class: 'btn btn-primary' do
-                Full Record
-                %i.icon-arrow-right
+              = link_to edit_manager_catalog_path(catalog), class: 'btn', target: :_blank do
+                %i.icon-edit
+                Edit
+
+        - if catalog.downloadable?
+          .btn-group
+            = link_to download_catalog_path(catalog), class: 'btn' do
+              %i.icon-cloud-download
+              Download
+    
+        .btn-group
+          = link_to catalog, class: 'btn btn-primary' do
+            Full Record
+            %i.icon-arrow-right
