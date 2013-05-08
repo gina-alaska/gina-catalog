@@ -42,11 +42,12 @@ class Repo < ActiveRecord::Base
   def readme_template
     <<-EOF
 Title: #{self.catalog.title}
+Description: #{self.catalog.description}
     EOF
   end  
   
   def empty?
-    files.empty?
+    !File.exists?(self.path) || RepoFilelist.new(grit).empty?
   end
 
   def files
