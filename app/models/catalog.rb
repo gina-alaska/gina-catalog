@@ -243,7 +243,7 @@ class Catalog < ActiveRecord::Base
   end
   
   def downloadable?(format = :zip)
-    self.repo && self.repo.archive_available?(format)
+    self.repo && self.repo.empty? && self.repo.archive_available?(format)
   end
   
   def repo_exists?
