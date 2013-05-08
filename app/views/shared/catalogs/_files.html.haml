@@ -1,4 +1,4 @@
-- if catalog.repo
+- if catalog.repo and (!catalog.repo.empty? or (current_member and current_member.can_manage_catalog?))
   %table.table-bordered.table-striped.table-condensed{style:'width:100%'}
     %thead
       %tr
