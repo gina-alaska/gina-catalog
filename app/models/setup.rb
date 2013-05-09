@@ -42,6 +42,10 @@ class Setup < ActiveRecord::Base
   	}
   end
   
+  def default_url
+    self.urls.where(default: true).first.try(:url) || self.urls.first.try(:url)
+  end
+  
   def clone(setup = nil)
     return nil if setup.nil?
     
