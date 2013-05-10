@@ -17,6 +17,7 @@
 //= require 'maps'
 //= require 'catalogs'
 //= require 'analytics'
+//= require 'flash_message'
 //= require 'pages'
 //= require 'turbolinks-fixes'
 //= require_self
