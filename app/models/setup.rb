@@ -80,6 +80,10 @@ class Setup < ActiveRecord::Base
   end
   alias_method :clone=, :clone
   
+  def full_title
+    "#{self.title} :: #{self.by_line}"
+  end
+  
   def self.clone(setup, site = {})
     raise 'Need default url for the new setup' unless site.include? :default_url
     
