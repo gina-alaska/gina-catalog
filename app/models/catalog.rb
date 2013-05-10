@@ -268,6 +268,10 @@ Title: #{self.title}
     EOF
   end
 
+  def available_in?(setup)
+    self.setups.exists?(setup) or self.owner_setup == setup or self.owner_setup.ancestors.exists?(setup)
+  end
+
   def archive
     self.archived_at = Time.zone.now
     save!
