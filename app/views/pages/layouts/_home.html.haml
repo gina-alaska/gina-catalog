@@ -2,7 +2,7 @@
   .span5.lead
     = page_content_for(:body)
   .span7
-    = render 'carousel', images: @setup.carousel_images
+    = render 'carousel', images: current_setup.carousel_images
     = render 'news'
 .row-fluid
   .span4
