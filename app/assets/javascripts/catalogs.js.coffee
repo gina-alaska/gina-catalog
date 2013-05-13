@@ -3,7 +3,14 @@ class Catalog
     @loadFeatures()
 
   addLayer: =>
-    @layer = new OpenLayers.Layer.Vector('Search Results')
+    lookup = {
+      'Asset': { fillColor: '#3a87ad', strokeColor: '#3a87ad' },
+      'Project': { fillColor: '#c09853', strokeColor: '#c09853' }
+    }
+    @styleMap = new OpenLayers.StyleMap()
+    @styleMap.addUniqueValueRules("default", "type", lookup)
+    
+    @layer = new OpenLayers.Layer.Vector('Search Results', { styleMap: @styleMap })
     
     @map.addLayer(@layer)
     

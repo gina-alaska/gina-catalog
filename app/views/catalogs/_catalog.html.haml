@@ -1,5 +1,5 @@
-- cache([:search_result, :v3, catalog]) do
-  .result{id: dom_id(catalog, :record), data: { wkt: catalog.geometry_center_collection } }
+- cache([:search_result, :v4, catalog]) do
+  .result{id: dom_id(catalog, :record), data: { wkt: catalog.geometry_center_collection, type: catalog.type } }
     .row-fluid
       .span10
         %h5.title
