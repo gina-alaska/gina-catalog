@@ -43,7 +43,7 @@ class @LocationEditor
         geom = center_geom
         
     #if a feature is already in the map check its type
-    if !@feature or @feature.geometry.CLASS_NAME != geom.CLASS_NAME 
+    if !@feature? or @feature.geometry.CLASS_NAME != geom.CLASS_NAME 
       #if the feature type is the different create the new geom and start drawing!
       @startDrawing(geom)
     

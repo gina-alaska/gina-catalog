@@ -127,7 +127,7 @@
     var editor = new LocationEditor(map);
     catalog_map.addBtnHandler('clear', function() { editor.clear(); });
     catalog_map.addBtnHandler('reset', function() { editor.addFeature(); });
-    catalog_map.addBtnHandler('draw', function(el) { editor.drawFeature($(el).data('type')); });
+    catalog_map.addBtnHandler('draw', function(evt, el) { editor.drawFeature($(el).data('type')); });
     
     $('#location_editor').on('shown', function() {
       map.updateSize();
