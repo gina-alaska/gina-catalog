@@ -30,6 +30,34 @@ $navbarLinkBackgroundHover: darken($navbarBackground, 10%);*/
 
 @import url(http://fonts.googleapis.com/css?family=Quando);
 
+#sitemanager_toolbar {
+  width: 100%;
+  float: left;
+  position: relative;
+  z-index: 5000;
+  
+  .navbar-inner {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  
+  .hide-buttons {
+    margin:0;
+    a {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+  }
+  
+  &.hidden {
+    position: absolute;
+  }
+  
+  &.left {
+    position: absolute;
+  }
+}
+
 .content { padding: 0 10px; }
 a.goto-top { 
   position: fixed; bottom: 10px; right: 10px;
@@ -51,4 +79,11 @@ a.goto-top {
   top: 0px;
   width: 100%;  
   z-index: 2000000;
+}
+
+.navbar .nav li.avatar > a {
+  padding: 0px 10px 0px;
+  .caret {
+    margin-top: 15px;
+  }
 }

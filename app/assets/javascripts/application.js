@@ -3,6 +3,7 @@
 //= require 'jquery_ujs'
 //= require 'jquery.slugify'
 //= require 'jquery.ui.effect-highlight'
+//= require 'jquery.ui.effect-slide'
 //= require 'bootstrap'
 //= require 'jquery-file-upload/jquery.ui.widget'
 //= require 'jquery-file-upload/jquery.fileupload'
@@ -16,6 +17,8 @@
 //= require 'maps'
 //= require 'catalogs'
 //= require 'analytics'
+//= require 'flash_message'
+//= require 'pages'
 //= require 'turbolinks-fixes'
 //= require_self
 

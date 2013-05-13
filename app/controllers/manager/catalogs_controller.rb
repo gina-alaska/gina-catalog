@@ -147,6 +147,28 @@ class Manager::CatalogsController < ManagerController
     end
   end
   
+  def share
+    @catalog = Catalog.find(params[:id])
+    @setup = Setup.find(params[:setup_id])
+    
+    membership = current_user.memberships.where(setup_id: @setup.id).first
+    
+    if membership and membership.can_manage_catalog?
+      @catalog.setups << @setup
+      if @catalog.save
+        flash.now[:success] = "Added catalog record to #{@setup.full_title}"
+      else
+        flash.now[:error] = "Error while trying to add catalog record to #{@setup.full_title}"
+      end
+    else
+      flash.now[:error] = "You do not have permission to do that"
+    end
+    
+    respond_to do |format|
+      format.js
+    end
+  end
+  
   protected
   
   def authenticate_edit_records!

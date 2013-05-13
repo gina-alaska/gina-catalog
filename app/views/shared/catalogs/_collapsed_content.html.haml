@@ -39,3 +39,14 @@
   /   %dd= link_to item.data_source.name, catalog_path(item), :target => :_blank
   / - else
   /   %dd= link_to item, item, :target => :_blank
+  
+  %dt Source Portal
+  %dd
+    = link_to "//#{item.owner_setup.default_url}" do
+      = item.owner_setup.full_title
+  %br
+  
+  %dt Direct Record Link
+  %dd
+    = link_to catalogs_url(item) do
+      = item.to_param

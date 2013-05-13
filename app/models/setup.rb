@@ -42,6 +42,10 @@ class Setup < ActiveRecord::Base
   	}
   end
   
+  def default_url
+    self.urls.where(default: true).first.try(:url) || self.urls.first.try(:url)
+  end
+  
   def clone(setup = nil)
     return nil if setup.nil?
     
@@ -75,6 +79,10 @@ class Setup < ActiveRecord::Base
     self.theme = setup.theme
   end
   alias_method :clone=, :clone
+  
+  def full_title
+    "#{self.title} :: #{self.by_line}"
+  end
   
   def self.clone(setup, site = {})
     raise 'Need default url for the new setup' unless site.include? :default_url

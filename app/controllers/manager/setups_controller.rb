@@ -50,6 +50,7 @@ class Manager::SetupsController < ManagerController
   end
   
   def edit
+    @setup = current_setup
   end
   
   def update

@@ -11,11 +11,16 @@ class ApplicationController < ActionController::Base
   protected
   
   def fetch_setup
-    @setup ||= Setup.includes(:urls).where(site_urls: { :url => request.host }).first    
+    @current_setup ||= Setup.includes(:urls).where(site_urls: { :url => request.host }).first    
   end
-
   alias_method :current_setup, :fetch_setup
 
+  def member_portals
+    return [] unless user_signed_in?
+    @member_portals ||= current_user.memberships.collect(&:setup)
+  end
+  helper_method :member_portals
+  
   private  
   
   def current_user  

@@ -1,0 +1,9 @@
+<% [:notice, :error, :success, :warning].each do |type| %>
+  <% next if flash.now[type].blank? %>
+  <% Array.wrap(flash.now[type]).each do |msg| %>
+    new FlashMessage('<%= type %>', '<%= msg %>');
+  <% end %>
+<% end %>
+
+var content = $('<%= escape_javascript(render("/catalogs/catalog", catalog: @catalog)) %>')
+$('#<%= dom_id(@catalog, :result_row) %>').html(content);
