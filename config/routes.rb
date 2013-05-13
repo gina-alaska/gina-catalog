@@ -13,6 +13,7 @@ NSCatalog::Application.routes.draw do
         put :unpublish
         post :upload
         get :download
+        put :share
       end
     end
     resources :images do

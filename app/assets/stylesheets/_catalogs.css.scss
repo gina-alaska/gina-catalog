@@ -84,3 +84,12 @@
   color:#fff;
   
 }
+
+
+#flashes {
+  position: fixed;
+  top: 5px;
+  right: 5px;
+  min-width: 300px;
+  z-index: 3000000;
+}

@@ -9,7 +9,7 @@
         %li= link_to 'Upload Image', '#upload-image', data: { toggle: 'tab' }
       .tab-content
         #thumbnail-list.tab-pane.active.image-list
-          - images = @setup.images.order('created_at DESC') - @page.images
+          - images = current_setup.images.order('created_at DESC') - @page.images
           - if images.count == 0
             %p.lead{style:"padding: 15px;"} No images available
           - else
