@@ -4,7 +4,7 @@
     %h5.alert.alert-warning
       %i.icon-warning-sign
       This catalog record has not been published
-  .result{ data: { wkt: catalog.geometry_collection } }
+  .result{ data: { wkt: catalog.geometry_collection, type: catalog.type } }
   
   %h4.title= catalog.title
 
