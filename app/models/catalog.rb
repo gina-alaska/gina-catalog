@@ -11,7 +11,7 @@ class Catalog < ActiveRecord::Base
   self.table_name = 'catalog'
   self.inheritance_column = :_type_disabled
 
-  delegate :downloadable, :to => :license
+  # delegate :downloadable, :to => :license
 
   scope :public, :joins => :license, :conditions => { :licenses => { :downloadable => true } }
   scope :restricted, :joins => :license, :conditions => { :licenses => { :downloadable => false } }
@@ -242,8 +242,20 @@ class Catalog < ActiveRecord::Base
     end
   end
   
-  def downloadable?(format = :zip)
-    self.repo && !self.repo.empty? && self.repo.archive_available?(format)
+  def sds?
+    !self.use_agreement.nil? or self.request_contact_info? or self.require_contact_info?
+  end
+  
+  def remote_download?
+    self.download_urls.count > 0
+  end
+  
+  def local_download?
+    self.repo && !self.repo.empty? && self.repo.archive_available?(:zip)
+  end
+  
+  def downloadable?
+    self.remote_download? or self.local_download?
   end
   
   def repo_exists?

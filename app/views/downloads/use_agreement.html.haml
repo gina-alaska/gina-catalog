@@ -1,0 +1,13 @@
+%h3= @catalog.use_agreement.title
+.use_agreement
+  :markdown
+    #{@catalog.use_agreement.content}
+
+%div{ style: "margin-top: 10px; text-align: center;" }
+  - if @catalog.request_contact_info?
+    %p
+      = link_to next_catalog_download_path(@catalog, :use_agreement => true), method: :post, class: 'btn btn-primary btn-large btn-block' do
+        Submit Contact Information
+  
+  - if !@catalog.require_contact_info? or @authorized
+    = render 'download_urls', download_urls: @catalog.download_urls

@@ -1,0 +1,6 @@
+- download_urls.each do |url|
+  %p
+    = link_to url.url, class: 'btn btn-primary btn-large btn-block' do
+      Click here to download: 
+      %br/
+      = url.name
