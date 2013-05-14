@@ -96,14 +96,14 @@
     .navbar.navbar-static-top
       .navbar-inner
         .btn-group{ data: { toggle: 'buttons-radio' } }
-          %button.btn{ data: { action: 'draw', type: 'polygon' } }
+          %button.btn{ data: { "openlayers-action" => 'draw', type: 'polygon' } }
             Polygon
-          %button.btn{ data: { action: 'draw', type: 'point' } }
+          %button.btn{ data: { "openlayers-action" => 'draw', type: 'point' } }
             Point
         .btn-group
-          %button.btn{ data: { action: 'clear' } }
+          %button.btn{ data: { "openlayers-action" => 'clear' } }
             Clear
-          %button.btn{ data: { action: 'reset' } }
+          %button.btn{ data: { "openlayers-action" => 'reset' } }
             Reset  
     #map_canvas{style: "width:100%; height: 359px;" }
   .modal-footer
@@ -133,7 +133,7 @@
       map.updateSize();
     });
     
-    $(document).on('click', '[data-action="edit-location"]', function(evt) {
+    $(document).on('click', '[data-openlayers-action="edit-location"]', function(evt) {
       evt.preventDefault();
       
       input = $($(this).data('target'));
@@ -150,11 +150,11 @@
             break;
         }
       } else {
-        $('#location_editor button.active[data-action="draw"]').removeClass('active');
+        $('#location_editor button.active[data-openlayers-action="draw"]').removeClass('active');
       }
     });
     
-    $(document).on('click', '.btn[data-action="update-location"]', function(evt) {
+    $(document).on('click', '.btn[data-openlayers-action="update-location"]', function(evt) {
       evt.preventDefault();
       input.val(editor.getWKT());      
       $('#location_editor').modal('hide');
