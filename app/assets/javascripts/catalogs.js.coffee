@@ -1,6 +1,30 @@
 class Catalog
   constructor: (@map) ->
+    @initListeners()
     @loadFeatures()
+    
+  initListeners: =>
+    $(document).on('click', "[data-openlayers-action='select-features']", @selectResultFeatures)
+
+  selectResultFeatures: (evt) =>
+    evt.preventDefault()
+    target = $(evt.currentTarget).data('target')
+    features = $(target).data("features")
+    @selectControl.unselectAll()
+    
+    bounds = features[0].geometry.getBounds().clone()
+
+    @selectControl.multiple = true
+    @selectControl.multipleSelect()
+    
+    for feature in features
+      bounds.extend(feature.geometry.getBounds())
+      @selectControl.select(feature) 
+      
+    @selectControl.multiple = false
+    @selectControl.multipleSelect()
+    # @selectControl.multipleSelect(false)
+    @zoomToBounds(bounds)
 
   addLayer: =>
     lookup = {
@@ -14,7 +38,7 @@ class Catalog
     
     @map.addLayer(@layer)
     
-    select = new OpenLayers.Control.SelectFeature(@layer, {
+    @selectControl = new OpenLayers.Control.SelectFeature(@layer, {
       autoActivate: true,
       onUnselect: () =>
         if @higlightEl
@@ -38,7 +62,7 @@ class Catalog
         @higlightEl = el
     })
     
-    @map.addControl(select)
+    @map.addControl(@selectControl)
     # $(document).on 'openlayers:resize', (evt) =>
     #   @centerOnData()
     
@@ -62,22 +86,24 @@ class Catalog
           f.attributes = { record_id: $(result).attr('id'), type: $(result).data('type') }
           
         @layer.addFeatures(features)
+        #save features back to dom object for later use to interact with the map
+        $(result).data('features', features)
         
     @centerOnData()
         
   centerOnData: =>
     if @layer.features.length > 0
-      dextent = @layer.getDataExtent();
-      zoom = @map.getZoomForExtent(dextent)
-      center = dextent.getCenterLonLat()
-      
-      if zoom > 5
-        zoom = 5
+      @zoomToBounds(@layer.getDataExtent())
+  
+  zoomToBounds: (bounds, maxZoom = 6) =>
+    zoom = @map.getZoomForExtent(bounds)
+    center = bounds.getCenterLonLat()
+    
+    if zoom > maxZoom
+      zoom = maxZoom
 
-      @map.zoomTo(zoom)
-      @map.setCenter(center)
-      
-      # @map.setDefaultBounds(@map.getExtent())
+    @map.zoomTo(zoom)
+    @map.setCenter(center)
     
     
   setup: ->

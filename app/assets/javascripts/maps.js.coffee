@@ -28,12 +28,12 @@ class CatalogMap
       if $(target).hasClass(size)
         $(target).removeClass(size)
         map_size[size] = false
-        for btn in @btns when $(btn).data('action') is 'expand'
+        for btn in @btns when $(btn).data('openlayers-action') is 'expand'
           $(btn).removeClass('active') if $(btn).data('size') == size
       else
         $(target).addClass(size)
         map_size[size] = true
-        for btn in @btns when $(btn).data('action') is 'expand'
+        for btn in @btns when $(btn).data('openlayers-action') is 'expand'
           $(btn).addClass('active') if $(btn).data('size') == size
         # for btn in $("[data-action='expand']") when $(btn).data('size') is size 
         #   $(btn).addClass('active') unless $(btn).hasClass('active')
@@ -47,10 +47,10 @@ class CatalogMap
     @addBtnHandler 'expand', (evt, btn) =>
       @expandMap(btn.data('target'), btn.data('size'), btn)
       
-    @btns = $(@el).find('.btn[data-action]')
+    @btns = $(@el).find('.btn[data-openlayers-action]')
     @btns.on 'click', (evt) =>
       evt.preventDefault()
-      action = $(evt.currentTarget).data('action')
+      action = $(evt.currentTarget).data('openlayers-action')
       if @btnHandlers[action]
         @btnHandlers[action](evt, $(evt.currentTarget));
   # end setupToolbar
@@ -103,7 +103,8 @@ class CatalogMap
       
       $.event.trigger({
         type: 'openlayers:ready',
-        map: @map
+        map: @map,
+        mapInstance: this
       })
     , 1000)
 #end CatalogMap
