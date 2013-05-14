@@ -1,4 +1,8 @@
-%h3 Contact Information Form
+- if @catalog.require_contact_info?
+  .alert.alert-info
+    %h4 Your contact information is required before the download can begin
+    
+%h4 Contact Information Form
 = form_for @contact_info, url: next_catalog_download_path(@catalog), method: 'POST' do |f|
   - if @contact_info.errors.count > 0
     .alert.alert-error

@@ -3,10 +3,11 @@ class DownloadsController < ApplicationController
   
   def show
     @catalog = fetch_catalog
+    logger.info next_step(cookies.signed[:sds_step])
     
     respond_to do |format|
       if @catalog.downloadable?
-        if @catalog.sds?
+        if @catalog.sds? or @catalog.remote_download?
           # format.html {
           #   flash[:notice] = "Secure downloads are currently offline"
           #   redirect_to catalog_path(@catalog)
@@ -35,6 +36,8 @@ class DownloadsController < ApplicationController
   end
 
   def use_agreement
+    @authorized = true unless @catalog.require_contact_info?
+    
     if ask_for_use_agreement?
       render 'use_agreement'
     else
@@ -58,17 +61,12 @@ class DownloadsController < ApplicationController
   end
 
   def download
-    if validate_step(STEP[:use_agreement]) and validate_step(STEP[:contact_info])
-      reset
-      if @catalog.remote_download?
-        @authorized = true
-        render 'use_agreement'
-      else
-        offer_file
-      end
+    reset
+    if @catalog.remote_download?
+      @authorized = true
+      render 'use_agreement'
     else
-      flash[:error] = "Please complete all the download steps"
-      redirect_to catalog_download_path(@catalog)
+      offer_file
     end
   end
 
@@ -97,13 +95,6 @@ class DownloadsController < ApplicationController
   STEP = { :use_agreement => 1, :contact_info => 2, :download => 3 }
   
   def render_next_sds_step(current = cookies.signed[:sds_step])
-    unless validate_step(current)
-      reset 
-      current = 0
-    end
-      
-    current ||= 0
-    
     case next_step(current)
     when STEP[:use_agreement]
       use_agreement
@@ -152,7 +143,7 @@ class DownloadsController < ApplicationController
   end
 
   def validate_step(step)
-    return false if cookies.signed[:sds_catalog_id] != @catalog.id
+    return false if cookies.signed[:sds_catalog_id] and cookies.signed[:sds_catalog_id] != @catalog.id
   
     case step
     when STEP[:use_agreement]
@@ -164,7 +155,9 @@ class DownloadsController < ApplicationController
     end
   end
 
-  def next_step(current)
+  def next_step(current = 0)
+    current = 0 if current.nil?
+    
     return STEP[:use_agreement] if current < STEP[:use_agreement] and ask_for_use_agreement?
     return STEP[:contact_info] if current < STEP[:contact_info] and ask_for_contact_info?
     return STEP[:download] 

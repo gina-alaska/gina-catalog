@@ -243,7 +243,7 @@ class Catalog < ActiveRecord::Base
   end
   
   def sds?
-    !self.use_agreement.nil? or self.request_contact_info? or self.require_contact_info?
+    self.remote_download? or !self.use_agreement.nil? or self.request_contact_info? or self.require_contact_info?
   end
   
   def remote_download?
