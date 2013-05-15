@@ -43,7 +43,8 @@
     - if catalog.published? and available_portals.count > 0
       .btn-group
         = link_to '#', class: 'btn dropdown-toggle', data: { toggle: 'dropdown' } do
-          Add to portal...
+          %i.icon-share
+          Share...
           %b.caret
         %ul.dropdown-menu
           - available_portals.each do |p|
