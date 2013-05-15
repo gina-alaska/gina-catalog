@@ -1,23 +1,16 @@
-- if @catalog.require_contact_info?
-  %br/
-  - if @authorized
-    .alert.alert-success
-      %h4 Your download has been authorized
-  - else
-    .alert.alert-info
-      %h4 Your contact information is required before the download can begin
-    
 - if @catalog.use_agreement
   %p.use_agreement
     :markdown
       #{@catalog.use_agreement.content}
 - elsif @catalog.remote_download? and @authorized
   - if @catalog.download_urls.count > 1
+    %br/
     .alert.alert-info
       %h4 There are multiple files available for download, please select the packages you wish to download
   - else
+    %br/
     .alert.alert-info
-      %h3 This data setup is not available locally
+      %h3 This download is not available locally
       %p You will automatically be redirected to the remote data location in 5 seconds...
       %p Use the button below you are not automatically redirected
       
@@ -28,6 +21,14 @@
     
 
 %div{ style: "margin-top: 10px;" }
+  - if @catalog.require_contact_info?
+    - if @authorized
+      .alert.alert-success
+        %h4 Your download has been authorized
+    - else
+      .alert.alert-info
+        %h4 Your contact information is required before the download can begin
+    
   - if @catalog.request_contact_info? or @catalog.require_contact_info?
     %p
       = link_to next_catalog_download_path(@catalog, :use_agreement => true), method: :post, class: 'btn btn-primary btn-large btn-block' do
