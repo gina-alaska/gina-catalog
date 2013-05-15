@@ -4,7 +4,8 @@ class Catalog
     @loadFeatures()
     
   initListeners: =>
-    $(document).on('click', "[data-openlayers-action='select-features']", @selectResultFeatures)
+    $("[data-openlayers-action='select-features']").on('click', @selectResultFeatures)
+    # $(document).on('page:fetch').unbind('click', @selectResultFeatures)
 
   selectResultFeatures: (evt) =>
     evt.preventDefault()
@@ -31,10 +32,25 @@ class Catalog
       'Asset': { fillColor: '#3a87ad', strokeColor: '#3a87ad' },
       'Project': { fillColor: '#c09853', strokeColor: '#c09853' }
     }
-    @styleMap = new OpenLayers.StyleMap()
+    @styleMap = new OpenLayers.StyleMap({
+      default: new OpenLayers.Style({
+        graphicZIndex: 1,
+        pointRadius: 6,
+        fillColor: '#3a87ad', 
+        fillOpacity: 0.8,
+        strokeColor: '#3a87ad',
+        strokeOpacity: 1,
+        strokeWidth: 1
+      }),
+      select: new OpenLayers.Style({
+        fillColor: '#00f',
+        strokeColor: '#00f',
+        graphicZIndex: 2
+      })
+    })
     @styleMap.addUniqueValueRules("default", "type", lookup)
     
-    @layer = new OpenLayers.Layer.Vector('Search Results', { styleMap: @styleMap })
+    @layer = new OpenLayers.Layer.Vector('Search Results', { styleMap: @styleMap, rendererOptions: {zIndexing: true} })
     
     @map.addLayer(@layer)
     
