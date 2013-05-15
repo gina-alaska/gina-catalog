@@ -39,9 +39,6 @@ class CatalogMap
         #   $(btn).addClass('active') unless $(btn).hasClass('active')
       @resize()
           
-      
-          
-  
   setupToolbar: =>
     @addBtnHandler 'zoomToMaxExtent', @zoomToDefaultBounds
     @addBtnHandler 'expand', (evt, btn) =>
@@ -82,7 +79,7 @@ class CatalogMap
     @default_bounds = bounds
   
   zoomToDefaultBounds: =>
-    @map.zoomToExtent(@default_bounds , true);
+    @map.zoomToExtent(@default_bounds, true);
     
   #end zoomToDefaultBounds  
 

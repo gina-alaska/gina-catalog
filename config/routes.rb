@@ -100,9 +100,12 @@ NSCatalog::Application.routes.draw do
 
   resources :contacts, only: [:index, :create]
   resources :catalogs do
-    get :download, on: :member
+    resource :download, :only => [:show] do
+       get :next
+       post :next
+    end
   end
-
+  match '/sds/:catalog_id' => "downloads#show"
      
   # Omniauth pure
   match "/login" => redirect('/auth/gina')

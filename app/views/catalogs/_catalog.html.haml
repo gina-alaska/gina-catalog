@@ -33,16 +33,18 @@
           
 .pull-right{ style: 'margin: 0 5px 5px 0;'}
   - unless catalog.geometry_center_collection.blank?
-    = link_to '#', class: 'btn', data: { "openlayers-action" => "select-features", target: "##{dom_id(catalog, :record)}" } do
-      %i.icon-search
-      Zoom To
+    .btn-group
+      = link_to '#', class: 'btn', data: { "openlayers-action" => "select-features", target: "##{dom_id(catalog, :record)}" } do
+        %i.icon-search
+        Zoom To
       
   - if user_signed_in?
     - available_portals = member_portals# - catalog.setups - current_setup.ancestors
     - if catalog.published? and available_portals.count > 0
       .btn-group
         = link_to '#', class: 'btn dropdown-toggle', data: { toggle: 'dropdown' } do
-          Add to portal...
+          %i.icon-share
+          Share...
           %b.caret
         %ul.dropdown-menu
           - available_portals.each do |p|
@@ -64,7 +66,7 @@
 
   - if catalog.downloadable?
     .btn-group
-      = link_to download_catalog_path(catalog), class: 'btn' do
+      = link_to catalog_download_path(catalog), class: 'btn', remote: true do
         %i.icon-cloud-download
         Download
   .btn-group
