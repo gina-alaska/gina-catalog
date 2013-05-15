@@ -32,6 +32,11 @@
           = catalog.collections.list
           
 .pull-right{ style: 'margin: 0 5px 5px 0;'}
+  - unless catalog.geometry_center_collection.blank?
+    = link_to '#', class: 'btn', data: { "openlayers-action" => "select-features", target: "##{dom_id(catalog, :record)}" } do
+      %i.icon-search
+      Zoom To
+      
   - if user_signed_in?
     - available_portals = member_portals# - catalog.setups - current_setup.ancestors
     - if catalog.published? and available_portals.count > 0
