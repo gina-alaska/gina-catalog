@@ -12,6 +12,9 @@
         %button.btn{ data: { "openlayers-action" => 'zoomToMaxExtent' }, title: 'Zoom to default extent' }
           %i.icon-globe
       .btn-group
+        %button.btn{ data: { "openlayers-action" => 'drawAOI' }, title: 'Select AOI' }
+          %i.icon-pencil
+      .btn-group
         %button.btn{ data: { "openlayers-action" => 'expand', target: '.search', size: 'large' }, title: 'Make the map larger' }
           %i.icon-desktop
         %button.btn{ data: { "openlayers-action" => 'expand', target: '.search', size: 'fullscreen' }, title: 'Make the map fullscreen' }

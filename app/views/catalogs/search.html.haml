@@ -32,3 +32,11 @@
                   %td{ id: dom_id(result, :result_row) }= render result
         %div{style: 'text-align:center'}
           = render 'pagetoolbar', results: @results, total: @total, page: @pagenum, limit: @limit, params: @search_params
+:javascript
+  $(document).on('openlayers:aoidraw', function(evt) {
+    $('#search_aoi').val('');
+  })
+  $(document).on('openlayers:aoidrawn', function(evt) {
+    console.log(evt.wkt);
+    $('#search_aoi').val(evt.wkt);
+  })

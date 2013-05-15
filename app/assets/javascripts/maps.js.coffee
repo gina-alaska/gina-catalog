@@ -43,6 +43,7 @@ class CatalogMap
           
   
   setupToolbar: =>
+    @addBtnHandler 'drawAOI', @drawAOI
     @addBtnHandler 'zoomToMaxExtent', @zoomToDefaultBounds
     @addBtnHandler 'expand', (evt, btn) =>
       @expandMap(btn.data('target'), btn.data('size'), btn)
@@ -77,6 +78,47 @@ class CatalogMap
     
     @ready()
   #end setupMap
+  
+  drawAOI: (evt, btn) =>
+    unless @aoiLayer?
+      @aoiLayer = new OpenLayers.Layer.Vector("AOI Search", {           
+        displayInLayerSwitcher: false
+      })
+      @map.addLayer(@aoiLayer)
+      
+    unless @aoiDrawControl
+      @aoiDrawControl = new OpenLayers.Control.DrawFeature(@aoiLayer,
+        OpenLayers.Handler.RegularPolygon, {
+          autoActivate: false,
+          featureAdded: (feature) =>
+            @aoiDrawControl.deactivate()
+            feature.geometry.transform(@config['projection'], @config['displayProjection'])
+            $.event.trigger({
+              type: 'openlayers:aoidrawn',
+              wkt: feature.geometry.toString(),
+              map: @map,
+              mapInstance: this
+            })
+          handlerOptions: {
+            sides: 4,
+            irregular: true
+          }
+        }
+      )
+      @aoiDrawControl.events.register 'activate', btn, ->
+        $(this).addClass('active')
+      @aoiDrawControl.events.register 'deactivate', btn, ->
+        $(this).removeClass('active')
+      
+      @map.addControl(@aoiDrawControl)
+    
+    @aoiLayer.removeAllFeatures()
+    $.event.trigger({
+      type: 'openlayers:aoidraw',
+      map: @map,
+      mapInstance: this
+    })
+    @aoiDrawControl.activate()
   
   setDefaultBounds: (bounds) =>
     @default_bounds = bounds
