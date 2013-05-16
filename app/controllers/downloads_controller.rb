@@ -1,5 +1,6 @@
 class DownloadsController < ApplicationController
   layout 'downloads'
+  STEP = { :use_agreement => 1, :contact_info => 2, :download => 3 }
   
   def show
     @catalog = fetch_catalog
@@ -36,7 +37,10 @@ class DownloadsController < ApplicationController
   end
 
   def use_agreement
-    @authorized = true unless @catalog.require_contact_info?
+    unless @catalog.require_contact_info?
+      save_contact_info
+      @authorized = true 
+    end
     
     if ask_for_use_agreement?
       render 'use_agreement'
@@ -47,20 +51,16 @@ class DownloadsController < ApplicationController
 
   def contact_info
     if ask_for_contact_info?
-      @contact_info = contact_info_from_cookie
-      @contact_info ||= ContactInfo.new
-      
+      save_contact_info
       render 'contact_info'
     else
       render_next_sds_step(STEP[:contact_info]) 
     end
-    # render_next_sds_step(STEP[:contact_info]) unless ask_for_contact_info?
-  
-    # @contact_info = contact_info_from_cookie
-    # @contact_info ||= ContactInfo.new
   end
 
   def download
+    save_contact_info
+    
     reset
     if @catalog.remote_download?
       @authorized = true
@@ -74,9 +74,14 @@ class DownloadsController < ApplicationController
     @catalog = fetch_catalog
     
     if params.include? :contact_info
-      save_contact_info
+      if save_contact_info(true)
+        render_next_sds_step STEP[:contact_info]    
+      else
+        render 'contact_info' 
+      end
     elsif params.include? :use_agreement
       save_use_agreement
+      redirect_to catalog_download_path(@catalog)
     else
       redirect_to catalog_download_path(@catalog)
     end
@@ -86,13 +91,12 @@ class DownloadsController < ApplicationController
   
   def offer_file
     if @catalog.local_download?
+      save_contact_info
       send_file @catalog.repo.archive_filenames[:zip]
     else
       render 'public/404', :status => 404
     end
   end
-  
-  STEP = { :use_agreement => 1, :contact_info => 2, :download => 3 }
   
   def render_next_sds_step(current = cookies.signed[:sds_step])
     case next_step(current)
@@ -115,27 +119,25 @@ class DownloadsController < ApplicationController
     @catalog.request_contact_info or @catalog.require_contact_info
   end
 
-  def save_contact_info
-    info_params = params[:contact_info].slice(:name, :email, :phone_number, :usage_description)
-    @contact_info = ContactInfo.new(info_params)
+  def save_contact_info(run_validations = false)
+    info_params = params[:contact_info].try(:slice, :name, :email, :phone_number, :usage_description)
+    @contact_info = contact_info_from_cookie || ContactInfo.new
+    @contact_info.attributes = info_params unless info_params.nil?
     @contact_info.catalog = @catalog
   
-    if @contact_info.save(validate: @catalog.require_contact_info)
+    if @contact_info.save(validate: (run_validations and @catalog.require_contact_info))
       cookies.signed[:sds_catalog_id] = @catalog.id
       cookies.signed[:contact_info_id] = @contact_info.id
-      render_next_sds_step STEP[:contact_info]    
+      return true
     else
-      render 'contact_info' 
+      return false
     end
   end
 
   def save_use_agreement
     cookies.signed[:sds_catalog_id] = @catalog.id
     cookies.signed[:use_agreement_id] = @catalog.use_agreement_id
-    cookies.signed[:sds_step] = STEP[:use_agreement]
-    
-    # render_next_sds_step STEP[:use_agreement]  
-    redirect_to catalog_download_path(@catalog)
+    cookies.signed[:sds_step] = STEP[:use_agreement]    
   end
 
   def contact_info_from_cookie
