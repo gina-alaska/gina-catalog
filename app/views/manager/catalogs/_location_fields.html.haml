@@ -2,6 +2,6 @@
   .span4= f.text_field :name, class: 'span12'
   .span6= f.text_field :wkt, id: dom_id(f.object, :wkt), class: 'span12'
   .span2.actions
-    = link_to '#', class: 'btn', data: { action: 'edit-location', target: '#' + dom_id(f.object, :wkt) }, title: 'Edit location in map' do
+    = link_to '#', class: 'btn', data: { "openlayers-action" => 'edit-location', target: '#' + dom_id(f.object, :wkt) }, title: 'Edit location in map' do
       %i.icon-globe
     = link_to_remove_fields '<i class="icon-trash icon-white"></i>'.html_safe, f
