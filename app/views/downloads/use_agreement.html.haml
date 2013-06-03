@@ -11,15 +11,8 @@
     %br/
     .alert.alert-info
       %h3 This download is not available locally
-      %p You will automatically be redirected to the remote data location in 5 seconds...
-      %p Use the button below you are not automatically redirected
+      %p Use the button below to go to the remote download site.
       
-      :javascript
-        setTimeout(function() {
-          location = "#{@catalog.download_urls.first.url}"
-        }, 5000)
-    
-
 %div{ style: "margin-top: 10px;" }
   - if @catalog.require_contact_info?
     - if @authorized
