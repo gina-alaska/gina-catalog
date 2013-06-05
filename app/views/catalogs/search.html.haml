@@ -20,7 +20,7 @@
       .span8
         / data-spy="affix" data-offset-top="200"
         /data: { spy: 'affix', 'offset-top' => 120 }, 
-        %table.table.table-striped.table-condensed.results
+        %table.table.table-striped.table-condensed.results{style: 'min-height: 400px;'}
           %tbody
             - if @results.empty?
               %tr
