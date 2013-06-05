@@ -6,6 +6,13 @@
       This catalog record has not been published
   .result{ data: { wkt: catalog.geometry_collection, type: catalog.type } }
   
+  .navbar.navbar-static-top
+    .navbar-inner
+      - if catalog.downloadable?
+        .btn-group
+          = link_to catalog_download_path(catalog), class: 'btn', remote: true do
+            %i.icon-cloud-download
+            Download
   %h4.title= catalog.title
 
   - if catalog.published? or (current_member and current_member.can_manage_catalog?)
