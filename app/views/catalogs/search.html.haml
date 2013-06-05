@@ -5,10 +5,10 @@
       .span4
         .search-form.clearfix
           = form_tag search_url, method: 'GET' do        
-            = render 'collection_search', search_params: @search_params, results: @results
-            %br/
             = render 'basic_search', search_params: @search_params, results: @results
             = render 'search_buttons',  search_params: @search_params, results: @results
+            %br/
+            = render 'collection_search', search_params: @search_params, results: @results
             %br/
             = render 'advanced_search', search_params: @search_params, results: @results
             %div
