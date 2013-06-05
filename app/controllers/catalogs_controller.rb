@@ -61,7 +61,9 @@ class CatalogsController < ApplicationController
     
     
     respond_to do |format|
-      format.html
+      format.html do
+        render layout: "search"
+      end
       format.json
       format.js
       format.pdf do
