@@ -1,4 +1,4 @@
-map_size = { large: false, fullscreen: false }
+map_size = { hidden: false, large: false, fullscreen: false }
 map_size_target = null
 
 class CatalogMap
