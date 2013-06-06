@@ -6,11 +6,12 @@ $(".search-results").html(results);
 var collections = $('<%= escape_javascript(render('collection_search', search_params: @search_params, results: @results)) %>');
 $('.collection-search').html(collections);
 
-var parent = $('body,html');
-var cur_scroll = parent.scrollTop();
-parent.animate({
-  scrollTop: 150
-});
+var parent = $('html, body');
+if ($('html').scrollTop() > 150 || $('body').scrollTop() > 150) {
+  parent.animate({
+    scrollTop: 150
+  });  
+}
 $('.spinner-container').spin(false)
 
 $(document).data('catalog_map').loadFeatures();
