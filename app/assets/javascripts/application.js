@@ -68,6 +68,7 @@ $(document).ready(initialize_page);
 
 $(document).on('click', '[data-disabled]', function(evt) {
   evt.preventDefault();
+  evt.stopPropagation();
 });
 
 $(document).on("click", '[data-behaviour="stash"]', function(evt) {

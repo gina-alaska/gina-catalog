@@ -22,6 +22,8 @@ module CatalogsHelper
       options[:data] ||= {}
       options[:class] << " #{disable_class}"
       options[:data][:disabled] = true
+      #turn off remote if the button should be disabled
+      options[:remote] = false
     end    
     
     link_to params.merge(param_name => 1), options.reverse_merge(:rel => 'previous'), &block
@@ -39,6 +41,8 @@ module CatalogsHelper
       options[:data] ||= {}
       options[:class] << " #{disable_class}"
       options[:data][:disabled] = true
+      #turn off remote if the button should be disabled
+      options[:remote] = false
     end    
     
     link_to params.merge(param_name => (scope.current_page - 1)), options.reverse_merge(:rel => 'previous'), &block
@@ -56,6 +60,8 @@ module CatalogsHelper
       options[:data] ||= {}
       options[:class] << " #{disable_class}"
       options[:data][:disabled] = true
+      #turn off remote if the button should be disabled
+      options[:remote] = false
     end
     
     link_to params.merge(param_name => (scope.current_page + 1)), options.reverse_merge(:rel => 'previous'), &block
@@ -73,6 +79,8 @@ module CatalogsHelper
       options[:data] ||= {}
       options[:class] << " #{disable_class}"
       options[:data][:disabled] = true
+      #turn off remote if the button should be disabled
+      options[:remote] = false
     end
     
     link_to params.merge(param_name => scope.num_pages), options.reverse_merge(:rel => 'previous'), &block
