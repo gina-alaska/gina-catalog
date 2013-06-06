@@ -1,4 +1,3 @@
-//= require turbolinks
 //= require 'jquery'
 //= require 'jquery_ujs'
 //= require 'jquery.slugify'
@@ -16,10 +15,8 @@
 //= require 'projections'
 //= require 'maps'
 //= require 'catalogs'
-//= require 'analytics'
 //= require 'flash_message'
 //= require 'pages'
-//= require 'turbolinks-fixes'
 //= require_self
 
 
@@ -67,7 +64,7 @@ var initialize_page = function(){
 };
 
 $(document).ready(initialize_page);
-$(document).on('page:change', initialize_page);
+// $(document).on('page:change', initialize_page);
 
 $(document).on('click', '[data-disabled]', function(evt) {
   evt.preventDefault();

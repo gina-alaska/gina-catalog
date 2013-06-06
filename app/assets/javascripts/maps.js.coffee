@@ -114,4 +114,4 @@ map_init = ->
 
 $(document).ready ->
   map_init();
-  $(document).on 'page:load', map_init
+  # $(document).on 'page:load', map_init

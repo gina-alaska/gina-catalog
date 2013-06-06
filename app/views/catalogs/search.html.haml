@@ -1,9 +1,9 @@
-.search{ data: { spy: 'affix', 'offset-top' => 110 } }
+.search.affix-top{ data: { spy: 'affix', 'offset-top' => 110 } }
   = render 'map'
   .result-list{ data: { 'scroll-offset-target'=> '#map' } }
     .row-fluid
       .span4
-        .search-form.clearfix
+        .search-form
           = form_tag search_url, method: 'GET' do        
             = render 'basic_search', search_params: @search_params, results: @results
             = render 'collection_search', search_params: @search_params, results: @results

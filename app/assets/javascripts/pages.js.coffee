@@ -43,7 +43,7 @@ updateSitemanagerToolbar = ->
     toggleToolbar(target, btn, dir, false)
 
 bindSitemanagerEventHandlers = ->
-  $(document).on 'page:change', updateSitemanagerToolbar
+  # $(document).on 'page:change', updateSitemanagerToolbar
   $(document).on 'click', '[data-action="hide_toolbar"]', toggleToolbarHandler
   
   sitemanager_toolbar_events_bound = true
