@@ -6,7 +6,7 @@
   #map_canvas{ style:'padding-bottom: 40px;' }
   .navbar.navbar-static-top
     .navbar-inner
-      .pull-right
+      .pull-right.pagetoolbar
         = render 'pagetoolbar', results: @results, total: @total, page: @pagenum, limit: @limit, params: @search_params
       .btn-group
         %button.btn{ data: { "openlayers-action" => 'zoomToMaxExtent' }, title: 'Zoom to default extent' }

@@ -1,10 +1,12 @@
 class Catalog
   constructor: (@map) ->
     @initListeners()
+    @addLayer()    
+    @wktReader = new OpenLayers.Format.WKT()
     @loadFeatures()
     
   initListeners: =>
-    $("[data-openlayers-action='select-features']").on('click', @selectResultFeatures)
+    $(document).on('click', "[data-openlayers-action='select-features']", @selectResultFeatures)
     # $(document).on('page:fetch').unbind('click', @selectResultFeatures)
 
   selectResultFeatures: (evt) =>
@@ -90,13 +92,12 @@ class Catalog
     # @map = $('#map').data('map').map
     return unless @map
     
-    @addLayer()    
-    wktReader = new OpenLayers.Format.WKT()
+    @layer.destroyFeatures()
     
     geoms.each (k, result) =>
       return unless $(result).data('wkt')
     
-      features = wktReader.read($(result).data('wkt'));
+      features = @wktReader.read($(result).data('wkt'));
       if features.length > 0
         $(features).each (k,f) =>
           f.geometry.transform('EPSG:4326', @map.projection);
@@ -127,4 +128,4 @@ class Catalog
 #end class Catalog
 
 $(document).on 'openlayers:ready', (evt) -> 
-  new Catalog(evt.map)
+  $(document).data('catalog_map', new Catalog(evt.map));

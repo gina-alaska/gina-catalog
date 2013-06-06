@@ -70,6 +70,14 @@
     right: auto;
     width: 940px;
   }  
+  &.hidden {
+    .result-list {
+      margin-top: 40px;
+    }
+    .search-form {
+      top: 40px;
+    } 
+  }
   &.large {
     .result-list {
       margin-top: 500px;
