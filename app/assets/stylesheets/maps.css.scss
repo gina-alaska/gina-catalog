@@ -43,6 +43,15 @@
   }
 }
 
+.search.hidden {
+  #map {
+    height: 40px;      
+    #map_canvas {
+      height: 0px;
+    }
+  }  
+}
+
 .search.large {
   #map {
     height: 500px;      
