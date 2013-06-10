@@ -1,5 +1,6 @@
 //= require 'jquery'
 //= require 'jquery_ujs'
+//= require 'jquery.history'
 //= require 'jquery.slugify'
 //= require 'jquery.ui.sortable'
 //= require 'nested_sortable'
@@ -18,6 +19,7 @@
 //= require 'location_editor'
 //= require 'ace_editor'
 //= require 'flash_message'
+//= require 'history'
 //= require_self
 
 $(document).ready(function() {
