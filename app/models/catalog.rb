@@ -71,7 +71,14 @@ class Catalog < ActiveRecord::Base
       proxy_association.owner.geokeywords.collect(&:name).compact
     end
   end
-  has_and_belongs_to_many :iso_topics
+  has_and_belongs_to_many :iso_topics do 
+    def list
+      proxy_association.owner.iso_topics.collection.join(', ')
+    end
+    def collection
+      proxy_association.owner.iso_topics.collect(&:name).compact
+    end
+  end
   has_and_belongs_to_many :data_types
 
   has_and_belongs_to_many :tags, :join_table => 'catalog_tags', :order => 'highlight ASC, text ASC' do
