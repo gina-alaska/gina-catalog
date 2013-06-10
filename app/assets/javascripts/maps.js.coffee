@@ -4,7 +4,7 @@ map_size_target = null
 class CatalogMap
   constructor: (@el) ->
     @btnHandlers = {}
-    
+    @map_state = { target: '.search', size: History.getState().data.map_size || 'normal' }
     @setupMap(@el)
     @setupToolbar()
     
@@ -14,31 +14,45 @@ class CatalogMap
     
     
     $(@el).data('map', this)
+    @loadMapState()
+    
   # end constructor
   
   addBtnHandler: (name, func) =>
     @btnHandlers[name] = func
   #end addBtnHandler
   
-  expandMap: (target, size, btn) ->
+  expandMap: (target, size) ->
     return false unless target?
-    
     if size?
-      map_size_target = target
+      @map_state ||= { target: target, size: 'normal' }
+      
+      @map_state.target = target
+      @map_state.previous_size = @map_state.size
+      
       if $(target).hasClass(size)
-        $(target).removeClass(size)
-        map_size[size] = false
-        for btn in @btns when $(btn).data('openlayers-action') is 'expand'
-          $(btn).removeClass('active') if $(btn).data('size') == size
+        @map_state.size = 'normal'
       else
-        $(target).addClass(size)
-        map_size[size] = true
-        for btn in @btns when $(btn).data('openlayers-action') is 'expand'
-          $(btn).addClass('active') if $(btn).data('size') == size
-        # for btn in $("[data-action='expand']") when $(btn).data('size') is size 
-        #   $(btn).addClass('active') unless $(btn).hasClass('active')
-      @resize()
-          
+        @map_state.size = size
+              
+      @loadMapState()
+
+  loadMapState: (size) =>
+    if size? and size != @map_state.size
+      console.log 'resize'
+      @expandMap(@map_state.target, size)
+    else
+      if $(@map_state.target).hasClass(@map_state.previous_size)
+        $(@map_state.target).removeClass(@map_state.previous_size)
+      
+      $(@map_state.target).addClass(@map_state.size)
+      
+      for btn in @btns when $(btn).data('openlayers-action') is 'expand'
+        $(btn).removeClass('active') if $(btn).data('size') != @map_state.size
+        $(btn).addClass('active') if $(btn).data('size') == @map_state.size
+      
+      @resize()      
+      
   setupToolbar: =>
     @addBtnHandler 'zoomToMaxExtent', @zoomToDefaultBounds
     @addBtnHandler 'expand', (evt, btn) =>
