@@ -9,6 +9,11 @@
   -#  = item.gcmd_themes.collect(&:name).compact.join(', ')
   -#.spacer
 
+  - unless item.iso_topic_ids.empty?
+    %dt ISO Topics
+    %dd= item.iso_topics.list
+    %br
+
   - unless item.tags.empty?
     %dt Tags
     %dd= item.tags.list
