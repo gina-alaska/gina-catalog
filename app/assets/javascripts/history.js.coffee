@@ -1,13 +1,23 @@
-$(document).on 'click', '[data-behavior="search-results-load"]', (e) ->
-  e.preventDefault()
+$(document).on 'click', 'a[data-behavior="search-results-load"]', (evt) ->
+  evt.preventDefault()
   href = $(this).attr('href')
   state = { behavior: 'search-results-load' }
   if $('#map')
     state.map_size = $('#map').data('map').map_state.size
-    
+  
   History.pushState(state, null, href)
 
-statechange = (event) ->
+$(document).submit (evt) ->
+  if $(evt.target).data('behavior') == "search-results-load"
+    url = $(evt.target).attr('action') + '?' + $(evt.target).serialize()
+    evt.preventDefault()
+    state = { behavior: 'search-results-load' }
+    if $('#map')
+      state.map_size = $('#map').data('map').map_state.size
+  
+  History.pushState(state, null, url)
+  
+statechange = (evt) ->
   state = History.getState()
   
   if state.data
