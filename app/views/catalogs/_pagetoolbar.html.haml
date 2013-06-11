@@ -1,11 +1,11 @@
 .btn-group
-  = link_to_first_page results, params: { search: params, limit: limit, page: page }, class: 'btn', remote: true do
+  = link_to_first_page results, params: { search: params, limit: limit, page: page }, class: 'btn', data: { behavior: 'search-results-load' } do
     %i.icon-double-angle-left
-  = link_to_prev_page results, params: { search: params, limit: limit, page: page }, class: 'btn', remote: true do
+  = link_to_prev_page results, params: { search: params, limit: limit, page: page }, class: 'btn', data: { behavior: 'search-results-load' } do
     %i.icon-angle-left
   %button.btn
     %span= display_result_info(results, page, limit, total)
-  = link_to_next_page results, params: { search: params, limit: limit, page: page }, class: 'btn', remote: true do
+  = link_to_next_page results, params: { search: params, limit: limit, page: page }, class: 'btn', data: { behavior: 'search-results-load' } do
     %i.icon-angle-right
-  = link_to_last_page results, params: { search: params, limit: limit, page: page }, class: 'btn', remote: true do
+  = link_to_last_page results, params: { search: params, limit: limit, page: page }, class: 'btn', data: { behavior: 'search-results-load' } do
     %i.icon-double-angle-right

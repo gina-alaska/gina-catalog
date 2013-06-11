@@ -1,6 +1,7 @@
 //= require 'jquery'
 //= require 'jquery_ujs'
 //= require 'jquery.slugify'
+//= require 'jquery.history'
 //= require 'jquery.ui.effect-highlight'
 //= require 'jquery.ui.effect-slide'
 //= require 'bootstrap'
@@ -17,6 +18,7 @@
 //= require 'catalogs'
 //= require 'flash_message'
 //= require 'pages'
+//= require 'history'
 //= require_self
 
 
@@ -92,8 +94,15 @@ $(document).on('click', '[data-action="scroll"]', function(evt) {
   }
 });
 
-$(document).on('ajax:before', function() {
+$(document).on('ajax:beforeSend', function(event, xhr, settings) {
   $('.spinner-container').spin('large');
+  // /* Update the history */
+  // // if (history && history.pushState) {
+  //   console.log(settings);
+  //   History.pushState({ ajax: true }, 'ajax request',  settings.url)
+  //   event.preventDefault();
+  //   xhr.abort();
+  // // }
 });
 
 $(document).on('ajax:complete', function() {

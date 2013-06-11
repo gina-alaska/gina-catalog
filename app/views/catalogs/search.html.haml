@@ -4,7 +4,7 @@
     .row-fluid
       .span4
         .search-form
-          = form_tag search_url, method: 'GET', remote: true, id: 'catalog_search_form' do        
+          = form_tag search_url, method: 'GET', id: 'catalog_search_form', data: { behavior: 'search-results-load' } do        
             = render 'basic_search', search_params: @search_params, results: @results
             = render 'search_buttons',  search_params: @search_params, results: @results
             %br/
