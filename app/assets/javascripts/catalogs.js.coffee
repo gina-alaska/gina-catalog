@@ -45,8 +45,8 @@ class Catalog
         strokeWidth: 1
       }),
       select: new OpenLayers.Style({
-        fillColor: '#00f',
-        strokeColor: '#00f',
+        fillColor: '#f00',
+        strokeColor: '#f00',
         strokeWidth: 2,
         graphicZIndex: 2
       })
