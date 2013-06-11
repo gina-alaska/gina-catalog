@@ -1,9 +1,9 @@
 = link_to edit_manager_person_path(item.id), class: 'btn', title: "Edit" do
   %i.icon-edit    
 - if item.setups.include?(current_setup)
-  = link_to_function '<i class="icon-eye-open icon-white"></i>'.html_safe, "ChangeVis('hidden', [#{ item.id}]);", class: 'btn btn-info', title: "Hide Person"
+  = link_to_function '<i class="icon-eye-close icon-white"></i>'.html_safe, "ChangeVis('hidden', [#{ item.id}]);", class: 'btn btn-danger', title: "Hide"
 - else
-  = link_to_function '<i class="icon-eye-close icon-white"></i>'.html_safe, "ChangeVis('visible', [#{item.id}]);", class: 'btn btn-danger', title: "Show Person"
+  = link_to_function '<i class="icon-eye-open icon-white"></i>'.html_safe, "ChangeVis('visible', [#{item.id}]);", class: 'btn btn-info', title: "Show"
 - if item.catalogs.count == 0
   = link_to manager_person_path(item.id), method: :delete, confirm: "Are you sure?", class: 'btn btn-danger', title: 'Remove Contact', remote: true, 'data-loading-text'=> '<i class="icon-spinner icon-spin"></i>' do
     %i.icon-trash

@@ -1,4 +1,4 @@
 <% @people.each do |person| %>
-var buttons = $('<%= escape_javascript(render partial: "action_buttons", locals: {item: person}) %>');
-$("#action_buttons_<%= dom_id(person) %>").html(buttons);
+var buttons = $('<%= escape_javascript(render partial: "people_row", locals: {item: person}) %>');
+$("#<%= dom_id(person, :people_row) %>").html(buttons);
 <% end %>
