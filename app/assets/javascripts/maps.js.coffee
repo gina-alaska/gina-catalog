@@ -75,7 +75,8 @@ class CatalogMap
     @config['zoomMethod'] = OpenLayers.Easing.Quad.easeOut
     @config['zoomDuratoin'] = 5
     
-    @default_bounds = new OpenLayers.Bounds(-168.67373199615875, 56.046343829256664, -134.76560087596793, 70.81655788845131);
+    # @default_bounds = new OpenLayers.Bounds(-168.67373199615875, 56.046343829256664, -134.76560087596793, 70.81655788845131);
+    @default_bounds = new OpenLayers.Bounds(162.0498, 45, -106.7196, 76);
     @default_bounds.transform('EPSG:4326', @data_config['projection']);
     
     @map = new OpenLayers.Map(@data_config['openlayers'], @config)
@@ -83,6 +84,10 @@ class CatalogMap
       new OpenLayers.Control.LayerSwitcher(),
       new OpenLayers.Control.MousePosition({ displayProjection: @map.displayProjection, numDigits: 3, prefix: 'Mouse: ' })
     ])
+
+    if @data_config['google']
+      @add_google_layers()
+
     Gina.Layers.inject(@map, @data_config['layers']);
     @zoomToDefaultBounds()
     
@@ -103,6 +108,27 @@ class CatalogMap
       type: 'openlayers:resize',
       map: @map
     })
+
+  add_google_layers: =>
+    layers = [
+      new OpenLayers.Layer.Google(
+          "Google Physical",
+          {type: google.maps.MapTypeId.TERRAIN}
+      ),
+      new OpenLayers.Layer.Google(
+          "Google Streets",
+          {numZoomLevels: 20}
+      ),
+      new OpenLayers.Layer.Google(
+          "Google Hybrid",
+          {type: google.maps.MapTypeId.HYBRID, numZoomLevels: 20}
+      ),
+      new OpenLayers.Layer.Google(
+          "Google Satellite",
+          {type: google.maps.MapTypeId.SATELLITE, numZoomLevels: 22}
+      )
+    ]
+    @map.addLayers layers
 
   ready: =>
     $('#map_canvas').on "transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", (evt) =>

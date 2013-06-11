@@ -1,8 +1,9 @@
 #map{ data: {                                       |
   openlayers: 'map_canvas',                         |
-  projection: 'EPSG:3572',                          |
+  projection: 'EPSG:3857',                          |
   displayProjection: 'EPSG:4326',                   |
-  layers: ['TILE.EPSG:3572.*'] } }
+  google: "true",
+  layers: ['TILE.EPSG:3857.*'] } }
   #map_canvas{ style:'padding-bottom: 40px;' }
   .navbar.navbar-static-top
     .navbar-inner
