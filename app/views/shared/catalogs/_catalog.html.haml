@@ -29,9 +29,10 @@
       .span5
         #map{ data: {                                       |
           openlayers: 'map_canvas',                         |
-          projection: 'EPSG:3338',                          |
+          projection: 'EPSG:3857',                          |
           displayProjection: 'EPSG:4326',                   |
-          layers: ['TILE.EPSG:3338.OSM','TILE.EPSG:3338.BDL','TILE.EPSG:3338.TOPO'] } }
+          google: "true",
+          layers: ['TILE.EPSG:3857.*'] } }
           #map_canvas
 
         %br/
