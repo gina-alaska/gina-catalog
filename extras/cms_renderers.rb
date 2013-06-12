@@ -1,9 +1,10 @@
 class CmsRenderers
   class << self
-    def context(page, setup)
+    def context(page, setup, system_content = nil)
       {
         page: page, 
         setup: setup,
+        system_content: system_content,
         snippets: PageSnippetDrop.new(setup),
         whitelist: HTML::Pipeline::SanitizationFilter::WHITELIST.merge(
           :elements => %w(
@@ -52,20 +53,18 @@ class CmsRenderers
       }    
     end
   
-    def page(page, setup)
+    def page(page, setup, system_content = nil)
       pipeline = HTML::Pipeline.new([
         LiquidFilter,
-        HTML::Pipeline::AutolinkFilter,
-        HTML::Pipeline::SanitizationFilter
-      ], self.context(page, setup))
+        HTML::Pipeline::AutolinkFilter
+      ], self.context(page, setup, system_content))
       pipeline.call(page.layout)[:output].to_s.html_safe
     end
   
     def snippet(snippet, setup)
       pipeline = HTML::Pipeline.new([
         LiquidFilter,
-        HTML::Pipeline::AutolinkFilter,
-        HTML::Pipeline::SanitizationFilter
+        HTML::Pipeline::AutolinkFilter
       ], self.context(nil, setup))
       pipeline.call(snippet.content)[:output].to_s.html_safe
     end
