@@ -1,6 +1,6 @@
 namespace :fixdb do
   desc 'run all fixdb tasks'
-  task :all => [:collections, :themes] do
+  task :all => [:collections, :themes, :update_downloads] do
   end
   
   desc 'migrate collections to the new setup'
@@ -27,6 +27,24 @@ namespace :fixdb do
       puts "Fixing theme for #{s.title}"
       s.theme = default
       s.save!
+    end
+  end
+
+  desc 'copy all download links and add them as download_urls'
+  task :update_downloads => :environment do
+    puts "Looking for download links to copy..."
+    
+    Catalog.all.each do |item|
+      curlinks = item.links.where(category: "Download").all
+      next if curlinks.nil?
+
+      curlinks.each do |link|
+        if item.download_urls.where(url: link.url).empty?
+          puts "Creating new download URL: #{link.display_text} - #{link.url}"
+          item.download_urls << DownloadUrl.new(name: link.display_text, url: link.url)
+          item.save
+        end
+      end
     end
   end
 end
