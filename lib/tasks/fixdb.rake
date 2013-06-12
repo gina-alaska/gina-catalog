@@ -34,16 +34,11 @@ namespace :fixdb do
   task :update_downloads => :environment do
     puts "Looking for download links to copy..."
     
-    Catalog.all.each do |item|
-      curlinks = item.links.where(category: "Download").all
-      next if curlinks.nil?
-
-      curlinks.each do |link|
-        if item.download_urls.where(url: link.url).empty?
-          puts "Creating new download URL: #{link.display_text} - #{link.url}"
-          item.download_urls << DownloadUrl.new(name: link.display_text, url: link.url)
-          item.save
-        end
+    Link.where(category: "Download").each do |link|
+      if link.asset.download_urls.where(url: link.url).empty?
+        puts "Creating new download URL for #{link.asset.title}: #{link.display_text} - #{link.url}"
+        link.asset.download_urls << DownloadUrl.new(name: link.display_text, url: link.url)
+        link.save
       end
     end
   end
