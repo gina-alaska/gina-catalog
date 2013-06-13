@@ -42,4 +42,17 @@ namespace :fixdb do
       end
     end
   end
+
+  desc 'copy all links with download text and add them as download_urls'
+  task :download_text => :environment do
+    puts "Looking for links set to download to copy..."
+    
+    Link.where(display_text: "Download").each do |link|
+      if link.asset.download_urls.where(url: link.url).empty?
+        puts "Creating new download URL for #{link.asset.title}: #{link.display_text} - #{link.url}"
+        link.asset.download_urls << DownloadUrl.new(name: link.category, url: link.url)
+        link.save
+      end
+    end
+  end
 end
