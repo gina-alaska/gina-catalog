@@ -147,6 +147,8 @@ GEM
     progress_bar (0.4.0)
       highline (~> 1.6.1)
       options (~> 2.3.0)
+    puma (2.0.1)
+      rack (>= 1.1, < 2.0)
     pygments.rb (0.3.2)
       posix-spawn (~> 0.3.6)
       yajl-ruby (~> 1.1.0)
@@ -276,6 +278,7 @@ DEPENDENCIES
   pdfkit
   pg
   progress_bar
+  puma
   quiet_assets
   rails (= 3.2.13)
   resque
