@@ -1,13 +1,24 @@
 .content
-  .row-fluid
-    .span12
-      = "Total Downloads = #{@total_downloads.count}"
+  .navbar.navbar-static-top
+    .navbar-inner
+      .btn Total Downloads = #{@total_downloads.count}
+      .pull-right
+        = form_tag manager_path, method: 'GET', class: 'navbar-form form-search pull-left' do
+          .input-prepend
+            %span.add-on Start
+            = text_field_tag "start_date", @start_date, placeholder: 'YYYY-MM-DD', data: {behaviour: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span2"
+          .input-prepend
+            %span.add-on End
+            = text_field_tag "end_date", @end_date, placeholder: 'YYYY-MM-DD', data: { behaviour: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span2"
+          = submit_tag 'Date Search', class: 'btn btn-primary'
+          = submit_tag 'Clear', class: 'btn btn-primary'
+
   .row-fluid
     .span6
       %table.table.table-bordered.table-striped.table-condensed
         %head
           %tr
-            %td{colspan: 3} Latest accessed for the previous month:
+            %td{colspan: 3} Latest records accessed:
           %tr
             %th Data Record
             %th Name
@@ -36,3 +47,10 @@
                 = item.catalog.title.truncate(80)
             %td
               = item.download_count
+
+:javascript
+  $(document).ready( function(){
+    $('[data-behaviour~=datepicker]').datepicker().on('changeDate', function(ev){
+      $(this).datepicker('hide'); 
+    })
+  })
