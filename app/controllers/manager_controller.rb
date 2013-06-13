@@ -7,10 +7,18 @@ class ManagerController < ApplicationController
   PAGETITLE = 'Home'
 
   def dashboard
-    @top_downloads = ContactInfo.select("catalog_id, count(*) as download_count").group("catalog_id")
+    @start_date = params["start_date"]
+    @end_date = params["end_date"]
+
+    if params["commit"] == "Clear"
+      @start_date = nil
+      @end_date = nil
+    end
+
+    @top_downloads = ContactInfo.select("catalog_id, count(*) as download_count").created_between(@start_date, @end_date).group("catalog_id")
     @top_downloads = @top_downloads.order('download_count DESC').limit(10) 
     
-    @latest_access = ContactInfo.where('contact_infos.created_at > ?', 1.month.ago).order('contact_infos.created_at DESC').limit(50)
+    @latest_access = ContactInfo.created_between(@start_date, @end_date).order('contact_infos.created_at DESC').limit(50)
     
     @total_downloads = ContactInfo
     
