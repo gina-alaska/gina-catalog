@@ -1,14 +1,13 @@
-- cache([:header, :v1, current_setup]) do
-  %section.title
-    - header_snippet = current_setup.snippets.where(slug: 'header').first
-    - if header_snippet
-      = render_snippet_content(header_snippet, current_setup)
-    - else
-      %h1
-        = current_setup.title
-        %small= current_setup.by_line
-    = form_tag search_path, class: 'navbar-search quick-search', id: 'data_quick_search' do
-      = text_field_tag 'search[q]', nil, placeholder: "Quick Search", class: 'search-query'
+%section.title
+  - header_snippet = current_setup.snippets.where(slug: 'header').first
+  - if header_snippet
+    = render_snippet_content(header_snippet, current_setup)
+  - else
+    %h1
+      = current_setup.title
+      %small= current_setup.by_line
+  = form_tag search_path, class: 'navbar-search quick-search', id: 'data_quick_search' do
+    = text_field_tag 'search[q]', nil, placeholder: "Quick Search", class: 'search-query'
 
 %ul.nav.nav-pills
   - current_setup.pages.roots.where(main_menu: true).each do |page|
