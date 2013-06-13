@@ -50,7 +50,7 @@ state_path 'tmp/pids/puma.state'
 # (“append”) specifies whether the output is appended, the default is
 # “false”.
 #
-# stdout_redirect '/u/apps/lolcat/log/stdout', '/u/apps/lolcat/log/stderr'
+stdout_redirect 'log/puma.stdout.log', 'log/puma.stderr.log', true
 # stdout_redirect '/u/apps/lolcat/log/stdout', '/u/apps/lolcat/log/stderr', true
 
 # Disable request logging.
@@ -75,6 +75,7 @@ state_path 'tmp/pids/puma.state'
 # bind 'unix:///var/run/puma.sock'
 # bind 'unix:///var/run/puma.sock?umask=0777'
 # bind 'ssl://127.0.0.1:9292?key=path_to_key&cert=path_to_cert'
+bind 'tcp://localhost:9292'
 
 # Instead of “bind 'ssl://127.0.0.1:9292?key=path_to_key&cert=path_to_cert'” you
 # can also use the “ssl_bind” option.
