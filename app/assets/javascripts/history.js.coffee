@@ -1,7 +1,10 @@
 $(document).on 'click', 'a[data-behavior="search-results-load"]', (evt) ->
   evt.preventDefault()
+  return false if $(this).data('disabled')
+  
   href = $(this).attr('href')
   state = { behavior: 'search-results-load' }
+  
   if $('#map')
     state.map_size = $('#map').data('map').map_state.size
   
