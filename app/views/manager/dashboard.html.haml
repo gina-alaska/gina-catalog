@@ -1,20 +1,47 @@
 .content
-  .navbar.navbar-static-top
-    .navbar-inner
-      .btn Total Downloads = #{@total_downloads.count}
-      .pull-right
-        = form_tag manager_path, method: 'GET', class: 'navbar-form form-search pull-left' do
-          .input-prepend
-            %span.add-on Start
-            = text_field_tag "start_date", @start_date, placeholder: 'YYYY-MM-DD', data: {behaviour: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span2"
-          .input-prepend
-            %span.add-on End
-            = text_field_tag "end_date", @end_date, placeholder: 'YYYY-MM-DD', data: { behaviour: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span2"
-          = submit_tag 'Date Search', class: 'btn btn-primary'
-          = submit_tag 'Clear', class: 'btn btn-primary'
-
+  = form_tag manager_path, method: 'GET', class: 'form-inline well well-small' do
+    .row-fluid
+      .span5.input-prepend
+        %label.control-label.add-on Start
+        = text_field_tag "start_date", @start_date, placeholder: 'YYYY-MM-DD', data: {behaviour: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span10"
+      .span5.input-prepend
+        %label.control-label.add-on End
+        = text_field_tag "end_date", @end_date, placeholder: 'YYYY-MM-DD', data: { behaviour: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span10"
+      .span2
+        .btn-group
+          = submit_tag 'Clear', class: 'btn'
+          = submit_tag 'Apply', class: 'btn btn-primary'
   .row-fluid
     .span6
+      %table.table.table-bordered.table-striped.table-condensed
+        %thead
+          %tr
+            %th{colspan: 2} Top Downloads
+          %tr
+            %th Data Record
+            %th Count
+        %tbody
+          - @top_downloads.each do |item|
+            %tr
+              %td
+                = link_to manager_catalog_path(item.catalog.id), title: "#{item.catalog.title}" do
+                  = item.catalog.title.truncate(80)
+              %td
+                = item.download_count
+    .span6
+      %table.table.table-bordered.table-striped.table-condensed
+        %thead
+          %tr
+            %th{colspan:2} General Download Information
+        %tbody
+          %tr
+            %td Total Downloads
+            %td= @total_downloads
+          %tr
+            %td Downloads for specified dates
+            %td= @total_records
+  .row-fluid
+    .span12
       %table.table.table-bordered.table-striped.table-condensed
         %head
           %tr
@@ -32,21 +59,6 @@
               = item.name
             %td
               = item.email
-    .span6
-      %table.table.table-bordered.table-striped.table-condensed
-        %head
-          %tr
-            %td{colspan: 2} Top Downloads
-          %tr
-            %th Data Record
-            %th Count
-        - @top_downloads.each do |item|
-          %tr
-            %td
-              = link_to manager_catalog_path(item.catalog.id), title: "#{item.catalog.title}" do
-                = item.catalog.title.truncate(80)
-            %td
-              = item.download_count
 
 :javascript
   $(document).ready( function(){
