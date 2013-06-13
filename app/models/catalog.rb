@@ -146,6 +146,9 @@ class Catalog < ActiveRecord::Base
     text :data_types do
       data_types.map(&:name)
     end
+    text :primary_contact do
+      [primary_contact.first_name, primary_contact.last_name, primary_contact.email] unless primary_contact.nil?
+    end
     
     string :agency_types, :multiple => true do
       types = [source_agency.try(:category), funding_agency.try(:category)]
