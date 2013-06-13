@@ -5,7 +5,7 @@ class CmsRenderers
         page: page, 
         setup: setup,
         system_content: system_content,
-        snippets: PageSnippetDrop.new(setup),
+        snippets: PageSnippetDrop.new(setup, page),
         whitelist: HTML::Pipeline::SanitizationFilter::WHITELIST.merge(
           :elements => %w(
             h1 h2 h3 h4 h5 h6 h7 h8 br b i strong em a pre code img tt
@@ -61,11 +61,11 @@ class CmsRenderers
       pipeline.call(page.layout)[:output].to_s.html_safe
     end
   
-    def snippet(snippet, setup)
+    def snippet(snippet, setup, page = nil)
       pipeline = HTML::Pipeline.new([
         LiquidFilter,
         HTML::Pipeline::AutolinkFilter
-      ], self.context(nil, setup))
+      ], self.context(page, setup))
       pipeline.call(snippet.content)[:output].to_s.html_safe
     end
   end
