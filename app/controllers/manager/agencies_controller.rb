@@ -11,6 +11,7 @@ class Manager::AgenciesController < ManagerController
     @search = search_params
 
     search = Agency.search do
+      with :setup_ids, current_setup.id unless params["show_hidden"]
       fulltext search_params[:q] if search_params[:q]
       paginate per_page:(limit), page:(page)
     end
@@ -84,6 +85,7 @@ class Manager::AgenciesController < ManagerController
   def visible
     @agencies = Agency.where(id: params[:agencies_ids])
     current_setup.agencies << @agencies
+    @agencies.each(&:index) # remove when table refactor is done
 
     respond_to do |format|
       format.html {
@@ -96,6 +98,7 @@ class Manager::AgenciesController < ManagerController
   def hidden
     @agencies = Agency.where(id: params[:agencies_ids])
     current_setup.agencies.destroy(@agencies)
+    @agencies.each(&:index) # remove when table refactor is done
 
     respond_to do |format|
       format.html {
