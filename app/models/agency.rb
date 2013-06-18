@@ -45,6 +45,7 @@ class Agency < ActiveRecord::Base
     
     
     text :description
+    string :description
     
     text :category
     string :category
