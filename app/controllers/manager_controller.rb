@@ -18,7 +18,10 @@ class ManagerController < ApplicationController
     @top_downloads = ContactInfo.select("catalog_id, count(*) as download_count").created_between(@start_date, @end_date).group("catalog_id")
     @top_downloads = @top_downloads.order('download_count DESC').limit(10) 
     
-    @latest_access = ContactInfo.created_between(@start_date, @end_date).order('contact_infos.created_at DESC').limit(50)
+    @latest_access = ContactInfo.created_between(@start_date, @end_date).order('contact_infos.created_at DESC')
+
+    @total_records = @latest_access.count
+    @latest_access = @latest_access.limit(50)
     
     @total_downloads = ContactInfo
     
@@ -27,6 +30,8 @@ class ManagerController < ApplicationController
       @latest_access = @latest_access.joins(:catalog).where(:catalog => { :source_agency_id => current_user.agency_id })
       @total_downloads = @total_downloads.joins(:catalog).where(:catalog => { :source_agency_id => current_user.agency_id })
     end
+
+    @total_downloads = @total_downloads.count
   end
   
   protected
