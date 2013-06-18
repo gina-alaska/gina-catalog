@@ -1,17 +1,20 @@
-- sortable = [['Sort by Name', 'name'], ['Sort by Acronym', 'acronym'], ['Sort by Description', 'description'], ['Sort by Category', 'category']]
+- sortable = [['Sort: Name', 'name'], ['Sort: Acronym', 'acronym'], ['Sort: Description', 'description'], ['Sort: Category', 'category']]
 - sortdir = [['Ascending', 'asc'], ['Descending', 'desc']]
 - limits = [['Limit 30', 30], ['Limit 100', 100], ['All', 99999]]
 %table.table.table-bordered.table-striped.table-condensed
   %thead
     %tr
       %td{colspan:7, style: 'padding:5px;'}
-        = form_tag manager_agencies_path, method: 'GET', style: 'margin-bottom:0px;' do
+        = form_tag manager_agencies_path, method: 'GET', style: 'margin-bottom:0px;', class: 'form-inline' do
           .row-fluid
-            .span5
+            .span4
               .control-group
                 .controls
                   = text_field_tag 'search[q]', @search[:q], class: 'span12', placeholder: "Search"
-            .span3
+            .span2
+              .control-group
+                = select_tag "limit", options_for_select(limits, @limit), class: 'span12'           
+            .span2
               .control-group
                 = select_tag "sort", options_for_select(sortable, @sort), class: 'span12'
             .span2
@@ -25,10 +28,7 @@
                 %label.checkbox
                   = check_box_tag 'search[show_hidden]', 1, @show_hidden
                   Show Hidden
-            .span2
-              .control-group
-                = select_tag "limit", options_for_select(limits, @limit), class: 'span12'
-            .span6
+            .span10
               .btn-group.pull-right
                 = link_to_first_page @agencies, params: { search: @search }, class: 'btn' do
                   %i.icon-double-angle-left
