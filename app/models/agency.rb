@@ -45,6 +45,7 @@ class Agency < ActiveRecord::Base
     
     
     text :description
+    string :description
     
     text :category
     string :category
@@ -52,6 +53,9 @@ class Agency < ActiveRecord::Base
     boolean :active
     
     integer :id
+    integer :setup_ids, multiple: true do
+      self.setups.pluck(:id)
+    end
   end
   
   def name_with_acronym
