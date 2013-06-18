@@ -64,8 +64,19 @@
     - @agencies.each do |item|
       %tr{id:"#{dom_id(item, :agency_row)}"}
         = render partial: "agency_row", locals: {item: item}
-.center-paging
-  = paginate @agencies
+    %tr
+      %td{colspan:7, style: 'padding:5px;'}
+        .btn-group.pull-right
+          = link_to_first_page @agencies, params: { search: @search }, class: 'btn' do
+            %i.icon-double-angle-left
+          = link_to_prev_page @agencies, params: {search: @search}, class: 'btn' do
+            %i.icon-angle-left
+          %button.btn
+            %span= display_result_info(@agencies, @page, @limit, @total)
+          = link_to_next_page @agencies, params: {search: @search, limit: @limit}, class: 'btn' do
+            %i.icon-angle-right
+          = link_to_last_page @agencies, params: { search: @search }, class: 'btn' do
+            %i.icon-double-angle-right   
 
 :javascript
   $(document).ready(function() {
