@@ -5,17 +5,22 @@ class Manager::PeopleController < ManagerController
   PAGETITLE = 'Contacts'
   
   def index
-    page = params[:page] || 1
-    limit = params["limit"].nil? ? 30 : params["limit"]
-    limit = 30000 if limit == "all"
+    @page = page = params[:page] || 1
+    @limit = limit = params["limit"].nil? ? 30 : params["limit"]
+    @sort = sort = params[:sort] || "last_name"
+    @sortdir = sortdir = params[:sort_direction] || "asc"
+    @show_hidden = search_params[:show_hidden]
     @search = search_params
 
-    search = Person.search do
+    @solr_search = Person.search do
+      with :setup_ids, current_setup.id unless search_params[:show_hidden]
       fulltext search_params[:q] if search_params[:q]
+      order_by sort, sortdir.to_sym
       paginate per_page:(limit), page:(page)
     end
 
-    @people = search.results
+    @total = @solr_search.total
+    @people = @solr_search.results
 
     respond_to do |format|
       format.html
