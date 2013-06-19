@@ -89,6 +89,7 @@ class Manager::PeopleController < ManagerController
   def visible
     @people = Person.where(id: params[:people_ids])
     current_setup.persons << @people
+    @people.each(&:index) # remove when table refactor is done
 
     respond_to do |format|
       format.html {
@@ -101,6 +102,7 @@ class Manager::PeopleController < ManagerController
   def hidden
     @people = Person.where(id: params[:people_ids])
     current_setup.persons.destroy(@people)
+    @people.each(&:index) # remove when table refactor is done
 
     respond_to do |format|
       format.html {
