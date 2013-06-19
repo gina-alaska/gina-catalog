@@ -1,39 +1,56 @@
-.center-paging
-  = paginate @people
+- sortable = [['Sort: Last Name', 'last_name'], ['Sort: First Name', 'first_name']]
+- sortdir = [['Ascending', 'asc'], ['Descending', 'desc']]
+- limits = [['Limit 30', 30], ['Limit 100', 100], ['All', 99999]]
 %table.table.table-bordered.table-striped.table-condensed
   %thead
     %tr
-      %td{colspan:6, style: 'padding:0;'}
-        .navbar.navbar-static-top
-          .navbar-inner
-            = form_tag manager_people_path, method: 'GET', class: 'navbar-form form-search pull-right' do        
-              .input-append
-                = text_field_tag 'search[q]', @search[:q], class: 'search-query span4', placeholder: "Search"
-                = submit_tag 'Search', class: 'btn btn-primary'
-            .brand Contacts
-            .btn-group
-              %button#check-toggle.btn{data: { action: 'toggle-checkbox', target: '.item-checkbox' }, title: "Toggle Checkboxes" }
-                %i.icon-check
-              = link_to '#', class: "btn dropdown-toggle", data: { toggle: "dropdown" }, title: "Display" do
-                %i.icon-list
-                %b.caret
-              %ul.dropdown-menu
-                %li
-                  =link_to manager_people_path(limit: "30"), method: :get do
-                    30
-                %li
-                  =link_to manager_people_path(limit: "100"), method: :get do
-                    100
-                %li
-                  =link_to manager_people_path(limit: "all"), method: :get do
-                    All
-            .btn-group
-              = link_to_function '<i class="icon-eye-open icon-white"></i>'.html_safe, "ChangeVis('visible', getChecked('input:checkbox'));", class: 'btn btn-info', title: "Show Selected"
-              = link_to_function '<i class="icon-eye-close icon-white"></i>'.html_safe, "ChangeVis('hidden', getChecked('input:checkbox'));", class: 'btn btn-danger', title: "Hide Selected"
-            .btn-group
-              = link_to new_manager_person_path, class: 'btn btn-success' do
-                %i.icon-plus.icon-white
-                New Contact
+      %td{colspan:6, style: 'padding:5px;'}
+        = form_tag manager_people_path, method: 'GET', style: 'margin-bottom:0px;', class: 'form-inline' do        
+          .row-fluid
+            .span4
+              .control-group
+                .controls
+                  = text_field_tag 'search[q]', @search[:q], class: 'span12', placeholder: "Search"
+            .span2
+              .control-group
+                = select_tag "limit", options_for_select(limits, @limit), class: 'span12'           
+            .span2
+              .control-group
+                = select_tag "sort", options_for_select(sortable, @sort), class: 'span12'
+            .span2
+              .control-group
+                = select_tag "sort_direction", options_for_select(sortdir, @sortdir), class: 'span12'
+            .span2
+              = submit_tag 'Search', class: 'btn btn-primary btn-block'
+          .row-fluid
+            .span2
+              .control-group
+                %label.checkbox
+                  = check_box_tag 'search[show_hidden]', 1, @show_hidden
+                  Show Hidden
+            .span10
+              .btn-group.pull-right
+                = link_to_first_page @people, params: { search: @search }, class: 'btn' do
+                  %i.icon-double-angle-left
+                = link_to_prev_page @people, params: {search: @search}, class: 'btn' do
+                  %i.icon-angle-left
+                %button.btn
+                  %span= display_result_info(@people, @page, @limit, @total)
+                = link_to_next_page @people, params: {search: @search, limit: @limit}, class: 'btn' do
+                  %i.icon-angle-right
+                = link_to_last_page @people, params: { search: @search }, class: 'btn' do
+                  %i.icon-double-angle-right   
+    %tr
+      %td{colspan:6, style: 'padding:5px;'}
+        .btn-group
+          %button#check-toggle.btn{data: { action: 'toggle-checkbox', target: '.item-checkbox' }, title: "Toggle Checkboxes" }
+            %i.icon-check
+          = link_to_function '<i class="icon-eye-open icon-white"></i>'.html_safe, "ChangeVis('visible', getChecked('input:checkbox'));", class: 'btn btn-info', title: "Show Selected"
+          = link_to_function '<i class="icon-eye-close icon-white"></i>'.html_safe, "ChangeVis('hidden', getChecked('input:checkbox'));", class: 'btn btn-danger', title: "Hide Selected"
+        .btn-group.pull-right
+          = link_to new_manager_person_path, class: 'btn btn-success' do
+            %i.icon-plus.icon-white
+            New Contact
     %tr
       %th{style:'width:25px;'}
       %th First Name
@@ -45,8 +62,19 @@
     - @people.each do |item|
       %tr{id:"#{dom_id(item, :people_row)}"}
         = render partial: "people_row", locals: {item: item}
-.center-paging
-  = paginate @people
+    %tr
+      %td{colspan:6, style: 'padding:5px;'}
+        .btn-group.pull-right
+          = link_to_first_page @people, params: { search: @search }, class: 'btn' do
+            %i.icon-double-angle-left
+          = link_to_prev_page @people, params: {search: @search}, class: 'btn' do
+            %i.icon-angle-left
+          %button.btn
+            %span= display_result_info(@people, @page, @limit, @total)
+          = link_to_next_page @people, params: {search: @search, limit: @limit}, class: 'btn' do
+            %i.icon-angle-right
+          = link_to_last_page @people, params: { search: @search }, class: 'btn' do
+            %i.icon-double-angle-right   
 
 :javascript
   $(document).ready(function() {

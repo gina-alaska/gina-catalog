@@ -8,9 +8,7 @@ class Manager::AgenciesController < ManagerController
     @page = page = params[:page] || 1
     @sort = sort = params[:sort] || "name"
     @sortdir = sortdir = params[:sort_direction] || "asc"
-    @limit = params["limit"].nil? ? 30 : params["limit"]
-    @limit = 30000 if @limit == "all"
-    limit  = @limit
+    @limit = limit = params["limit"].nil? ? 30 : params["limit"]
     @show_hidden = search_params[:show_hidden]
     @search = search_params
 
