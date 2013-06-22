@@ -24,6 +24,7 @@ class ManagerController < ApplicationController
     @latest_access = @latest_access.limit(50)
     
     @total_downloads = ContactInfo
+    @uniq_downloads = ContactInfo.select(:catalog_id).uniq.count
     
     unless current_user.is_an_admin?
       @top_downloads = @top_downloads.joins(:catalog).where(:catalog => { :source_agency_id => current_user.agency_id })
