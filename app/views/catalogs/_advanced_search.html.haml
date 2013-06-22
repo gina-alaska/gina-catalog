@@ -34,16 +34,13 @@
           data: {placeholder: 'All regions', ui: 'select2'}, include_blank: true
 
         =label_tag 'search[source_agency_id]', 'Primary Agency'
-        =select_tag 'search[source_agency_id]', options_from_collection_for_select(current_setup.agencies, :id, :name_with_acronym, search_params[:source_agency_id]), 
-          class: 'span12', data: {placeholder: 'All Agencies', ui: 'select2'}, :include_blank => true 
-      
+        = collection_select_for_agencies('search[source_agency_id]', search_params[:source_agency_id], false) 
+
         =label_tag 'search[funding_agency_id]', 'Funding Agency'
-        =select_tag 'search[funding_agency_id]', options_from_collection_for_select(current_setup.agencies, :id, :name_with_acronym, search_params[:funding_agency_id]), 
-          class: 'span12', data: {placeholder: 'All Agencies', ui: 'select2'}, :include_blank => true 
+        = collection_select_for_agencies('search[source_agency_id]', search_params[:funding_agency_id], false) 
         
         =label_tag 'search[agency_ids]', 'Other Agencies'
-        =select_tag 'search[agency_ids]', options_from_collection_for_select(current_setup.agencies, :id, :name_with_acronym, search_params[:agency_ids]), multiple: true, 
-          class: 'span12', data: {placeholder: 'All Agencies', ui: 'select2'}
+        = collection_select_for_agencies('search[source_agency_id]', search_params[:agency_ids], true) 
 
         =label_tag 'search[agency_types]', 'Agency Type'
         =select_tag 'search[agency_types]', options_for_select(Agency::CATEGORIES, search_params[:agency_types]), class: 'span12', data: {placeholder: 'All Agency Types', ui: 'select2'}, :include_blank => true
