@@ -3,10 +3,10 @@
     .row-fluid
       .span5.input-prepend
         %label.control-label.add-on Start
-        = text_field_tag "start_date", @start_date, placeholder: 'YYYY-MM-DD', data: {behaviour: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span10"
+        = text_field_tag "start_date", @start_date.strftime('%F'), placeholder: 'YYYY-MM-DD', data: {behaviour: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span10"
       .span5.input-prepend
         %label.control-label.add-on End
-        = text_field_tag "end_date", @end_date, placeholder: 'YYYY-MM-DD', data: { behaviour: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span10"
+        = text_field_tag "end_date", @end_date.strftime('%F'), placeholder: 'YYYY-MM-DD', data: { behaviour: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span10"
       .span2
         .btn-group
           = submit_tag 'Clear', class: 'btn'
@@ -32,17 +32,18 @@
       %table.table.table-bordered.table-striped.table-condensed
         %thead
           %tr
-            %th{colspan:2} General Download Information
+            %th General Information
+            %th Total
+            %th= "Last #{((@end_date - @start_date) / 86400).to_i} days"
         %tbody
           %tr
             %td Total Downloads
-            %td= @total_downloads
+            %td= @stats[:total_downloads][:alltime]
+            %td= @stats[:total_downloads][:daterange]
           %tr
-            %td Downloads for specified dates
-            %td= @total_records
-          %tr
-            %td Number of Unique Datasets Downloaded
-            %td= @uniq_downloads
+            %td Unique Downloads
+            %td= @stats[:unique_downloads][:alltime]
+            %td= @stats[:unique_downloads][:daterange]
   .row-fluid
     .span12
       %table.table.table-bordered.table-striped.table-condensed
