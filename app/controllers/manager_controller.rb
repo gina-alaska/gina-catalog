@@ -15,23 +15,20 @@ class ManagerController < ApplicationController
       @end_date = nil
     end
 
-    @top_downloads = ContactInfo.select("catalog_id, count(*) as download_count").created_between(@start_date, @end_date).group("catalog_id")
+    @top_downloads = ContactInfo.select("contact_infos.catalog_id, count(*) as download_count").created_between(@start_date, @end_date).group("contact_infos.catalog_id")
     @top_downloads = @top_downloads.order('download_count DESC').limit(10) 
     
     @latest_access = ContactInfo.created_between(@start_date, @end_date).order('contact_infos.created_at DESC')
-
-    @total_records = @latest_access.count
-    @latest_access = @latest_access.limit(50)
     
     @total_downloads = ContactInfo
-    @uniq_downloads = ContactInfo.select(:catalog_id).uniq.count
-    
-    unless current_user.is_an_admin?
-      @top_downloads = @top_downloads.joins(:catalog).where(:catalog => { :source_agency_id => current_user.agency_id })
-      @latest_access = @latest_access.joins(:catalog).where(:catalog => { :source_agency_id => current_user.agency_id })
-      @total_downloads = @total_downloads.joins(:catalog).where(:catalog => { :source_agency_id => current_user.agency_id })
-    end
+    @top_downloads = @top_downloads.joins(:catalog => [:catalogs_setups]).where(:catalogs_setups => { :setup_id => current_setup.id })
+    @latest_access = @latest_access.joins(:catalog => [:catalogs_setups]).where(:catalogs_setups => { :setup_id => current_setup.id })
+    @total_downloads = @total_downloads.joins(:catalog => [:catalogs_setups]).where(:catalogs_setups => { :setup_id => current_setup.id })
 
+    @total_records = @latest_access.count
+    @uniq_downloads = @latest_access.pluck(:catalog_id).uniq.count
+    @latest_access = @latest_access.limit(50)
+    
     @total_downloads = @total_downloads.count
   end
   
