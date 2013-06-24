@@ -39,6 +39,9 @@ class Person < ActiveRecord::Base
     end
       
     integer :id
+    integer :setup_ids, multiple: true do
+      self.setups.pluck(:id)
+    end
   end  
   
   def full_name
