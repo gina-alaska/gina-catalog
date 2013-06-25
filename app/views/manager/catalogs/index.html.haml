@@ -1,7 +1,7 @@
 %table.table.table-striped.table-condensed#catalog-items
   %thead
     %tr
-      %td{colspan:9,style:'padding:0;'}
+      %td{colspan:10,style:'padding:0;'}
         .navbar.navbar-static-top
           .navbar-inner
             .btn-group
@@ -31,12 +31,15 @@
             = form_tag manager_catalogs_path, method: 'GET', class: 'navbar-form form-search pull-right' do
               = hidden_field_tag 'search[editable]', @search[:editable] || 'false', id: 'search_editable'
               = hidden_field_tag 'search[sds]', @search[:sds] || 'false', id: 'search_sds'
+              = hidden_field_tag 'search[unpublished]', @search[:published_at] || 'false', id: 'search_unpublished'
+              .btn-group
+                %button.btn{ type: "button", class: @search[:editable] == 'true' ? 'active' : '', data: { toggle: 'button', action: 'button-toggle', target: '#search_editable' }, title: 'Show editable records only' }
+                  %i.icon-edit              
+                %button.btn{ type: "button", class: @search[:sds] == 'true' ? 'active' : '', data: { toggle: 'button', action: 'button-toggle', target: '#search_sds' }, title: 'Show SDS records only' }
+                  %i.icon-hdd              
+                %button.btn{ type: "button", class: @search[:unpublished] == 'true' ? 'active' : '', data: { toggle: 'button', action: 'button-toggle', target: '#search_unpublished' }, title: 'Show unpublished records only' }
+                  %i.icon-folder-close-alt              
               .input-prepend.input-append
-                .btn-group
-                  %button.btn{ type: "button", class: @search[:editable] == 'true' ? 'active' : '', data: { toggle: 'button', action: 'button-toggle', target: '#search_editable' }, title: 'Show editable records only' }
-                    %i.icon-edit              
-                  %button.btn{ type: "button", class: @search[:sds] == 'true' ? 'active' : '', data: { toggle: 'button', action: 'button-toggle', target: '#search_sds' }, title: 'Show SDS records only' }
-                    %i.icon-hdd              
                 = text_field_tag 'search[q]', @search[:q], class: 'span4', placeholder: "Search"
                 = submit_tag 'Search', class: 'btn btn-primary'
     %tr
@@ -48,6 +51,7 @@
       %th End year
       %th Source agency
       %th Editable?
+      %th Published?
       %th
         %span{title: "Number of Downloads"}
           DLs
@@ -85,6 +89,11 @@
             Yes
           - else
             %abbr{ title: "This record is shared from the #{item.owner_setup.try(:title)} portal"} No
+        %td
+          - if item.published_at.nil?
+            No
+          - else
+            Yes
         %td=item.contact_infos.count
 
 .center-paging
