@@ -7,3 +7,4 @@
 
 var content = $('<%= escape_javascript(render("/catalogs/catalog", catalog: @catalog)) %>')
 $('#<%= dom_id(@catalog, :result_row) %>').html(content);
+$('.spinner-container').spin(false);
