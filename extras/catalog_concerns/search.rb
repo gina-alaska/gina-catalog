@@ -77,6 +77,12 @@ module CatalogConcerns
           with :agency_types, search[:agency_types] if search[:agency_types].present?
   
           with(:published_at).less_than(Time.zone.now) if search[:published_only]
+          if search[:unpublished] == 'true'
+            any_of do
+              with :published_at, nil
+              with(:published_at).greater_than(Time.zone.now)
+            end
+          end
       
           with(:start_date_year).greater_than(search[:start_date_after]) if search[:start_date_after].present?
 
