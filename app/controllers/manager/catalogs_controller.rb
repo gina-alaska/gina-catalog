@@ -154,12 +154,14 @@ class Manager::CatalogsController < ManagerController
     membership = current_user.memberships.where(setup_id: @setup.id).first
     
     if membership and membership.can_manage_catalog?
-      if @catalog.setups.where(id: @setup.id).first
-        unless @catalog.owner_setup == @setup
+      if @catalog.setups.where(id: @setup.id).any?
+        if @catalog.owner_setup == @setup
+          flash.now[:error] = "Cannot be unshared the record from this portal, it is the current owner of the record"          
+        elsif @catalog.owner_setup.ancestors.include?(@setup)
+          flash.now[:error] = "Cannot be unshared the record from this portal, it is automatically shared with all parent portals"
+        else
           @catalog.setups.destroy(@setup.id)
           flash.now[:success] = "Unshared catalog record from portal #{@setup.full_title}"
-        else
-          flash.now[:error] = "This record cannot be unshared, it is automatically shared with all parent portals"
         end
       else
         @catalog.setups << @setup

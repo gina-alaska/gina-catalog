@@ -25,7 +25,7 @@
   - if @catalog.request_contact_info? or @catalog.require_contact_info?
     %p
       = link_to next_catalog_download_path(@catalog, :use_agreement => true), method: :post, class: 'btn btn-primary btn-large btn-block' do
-        Submit Contact Information
+        Submit Contact Information (Optional)
       
   - if @catalog.sds? and @authorized
     = render 'download_urls', download_urls: @catalog.download_urls
