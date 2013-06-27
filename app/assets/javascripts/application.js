@@ -106,7 +106,9 @@ $(document).on('click', '[data-action="help"]', function(evt) {
       scrollTop: $(target).offset().top
     });
   }
-  setTimeout(function(){introJs().start()}, 500);
+  var step = $(this).data("step") || 1
+  setTimeout(function(){
+    introJs().goToStep(step).start()}, 500);
 });
 
 $(document).on('ajax:beforeSend', function(event, xhr, settings) {

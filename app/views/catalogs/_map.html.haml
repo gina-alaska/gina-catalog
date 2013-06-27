@@ -9,9 +9,19 @@
     .navbar-inner
       .pull-right.pagetoolbar
         = render 'pagetoolbar', results: @results, total: @total, page: @pagenum, limit: @limit, params: @search_params
-        = link_to "#top", class: "btn btn-info", data: { action: "help" } do
-          %i.icon-question-sign
-          Help
+        .btn-group
+          = link_to "#top", class: "btn btn-info", data: { action: "help" } do
+            %i.icon-question-sign
+            Help
+          = link_to '#', class: "btn btn-info dropdown-toggle", data: { toggle: "dropdown" } do
+            %i.caret
+          %ul.dropdown-menu
+            %li
+              =link_to "#top", data: { action: 'help', step: 2 } do
+                Limits
+            %li
+              =link_to "#top", data: { action: 'help', step: 5 } do
+                Collections
       .btn-group
         %button.btn{ data: { "openlayers-action" => 'zoomToMaxExtent' }, title: 'Zoom to default extent' }
           %i.icon-globe
