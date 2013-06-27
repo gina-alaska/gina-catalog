@@ -1,7 +1,7 @@
 .row-fluid
   .span4
     .nav.dropdown{style:'margin-bottom:0px; color:#000;'}
-      = link_to '#', class: "btn btn-block dropdown-toggle", data: { 'loading-text' => 'Loading...', toggle: "dropdown" } do
+      = link_to '#', class: "btn btn-block dropdown-toggle", data: { 'loading-text' => 'Loading...', toggle: "dropdown", intro: "Set the number of records displayed per page.", step: 2 } do
         = "Limit: #{@limit}"
         %i.caret
       %ul.dropdown-menu
@@ -15,6 +15,6 @@
           =link_to search_path(limit: "500"), data: { behaviour: 'stash', target: '#limit', value: 500 }, method: :get do
             500 Records
   .span4
-    = link_to 'Clear', '/search', class: 'btn btn-block'
+    = link_to 'Clear', '/search', class: 'btn btn-block', data: { intro: "Clear all search fields.", step: 3 }
   .span4
-    = submit_tag 'Search', class: 'btn btn-primary btn-block'
+    = submit_tag 'Search', class: 'btn btn-primary btn-block', data: { intro: "Search catalog records with choosen parameters.", step: 4 }

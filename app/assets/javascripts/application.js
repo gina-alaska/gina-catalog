@@ -19,6 +19,7 @@
 //= require 'flash_message'
 //= require 'pages'
 //= require 'history'
+//= require 'intro.min'
 //= require_self
 
 
@@ -92,6 +93,20 @@ $(document).on('click', '[data-action="scroll"]', function(evt) {
       scrollTop: $(target).offset().top
     });
   }
+});
+
+$(document).on('click', '[data-action="help"]', function(evt) {
+  evt.preventDefault();
+  var target = $(this).attr('href');
+  if(!target) { target = $(this).data('target'); }
+  if (target) { 
+    var parent = $('body,html');
+    var cur_scroll = parent.scrollTop();
+    parent.animate({
+      scrollTop: $(target).offset().top
+    });
+  }
+  setTimeout(function(){introJs().start()}, 500);
 });
 
 $(document).on('ajax:beforeSend', function(event, xhr, settings) {
