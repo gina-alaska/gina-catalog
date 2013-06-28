@@ -34,7 +34,7 @@
     %tbody
       - @contact_infos.each do |item|
         %tr
-          %td= item.created_at.strftime("%F")
+          %td= item.created_at.strftime("%F %T %z")
           %td= item.name
           %td= item.email
           %td= item.usage_description
