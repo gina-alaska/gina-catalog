@@ -121,10 +121,17 @@ class DownloadsController < ApplicationController
 
   def save_contact_info(run_validations = false)
     info_params = params[:contact_info].try(:slice, :name, :email, :phone_number, :usage_description)
+
     @contact_info = contact_info_from_cookie || ContactInfo.new
     @contact_info.attributes = info_params unless info_params.nil?
     @contact_info.catalog = @catalog
   
+    # Add more information
+    @contact_info.user_ip = request.remote_ip
+    @contact_info.user_agent = request.env['HTTP_USER_AGENT']
+    @contact_info.user_id = current_user.id unless current_user.nil?
+    @contact_info.portal_id = current_setup.id
+    
     if @contact_info.save(validate: (run_validations and @catalog.require_contact_info))
       cookies.signed[:sds_catalog_id] = @catalog.id
       cookies.signed[:contact_info_id] = @contact_info.id
