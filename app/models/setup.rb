@@ -64,10 +64,7 @@ class Setup < ActiveRecord::Base
     end
     
     setup.pages.roots.each do |p|
-      page = p.dup
-      page.page_layout = @layout_map[p.page_layout.id]
-      page.save!      
-      self.pages << page
+      self.clone_page(p, nil, @layout_map)
     end
     
     setup.roles.each do |r|
@@ -79,6 +76,18 @@ class Setup < ActiveRecord::Base
     self.theme = setup.theme
   end
   alias_method :clone=, :clone
+  
+  def clone_page(page, parent_page, layouts)
+    new_page = page.dup
+    new_page.page_layout = layouts[page.page_layout_id]
+    new_page.parent = parent_page
+    new_page.save!
+    self.pages << new_page
+    
+    page.children.each do |child_page|
+      self.clone_page(child_page, new_page, layouts)
+    end
+  end
   
   def full_title
     "#{self.title} :: #{self.by_line}"
