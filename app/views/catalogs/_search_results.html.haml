@@ -1,0 +1,10 @@
+%table.table.table-striped.table-condensed.results{style: 'min-height: 400px;'}
+  %tbody
+    - if @results.empty?
+      %tr
+        %td
+          %p.lead No search results
+    - @results.each do |result|
+      - if result.published? or (current_user and current_member.can_manage_catalog?)
+        %tr
+          %td{ id: dom_id(result, :result_row) }= render result

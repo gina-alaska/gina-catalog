@@ -20,10 +20,10 @@
               = form_tag manager_contact_infos_path, method: 'GET', class: 'navbar-form form-search pull-left' do
                 .input-prepend
                   %span.add-on Start
-                  = text_field_tag "start_date", @start_date, placeholder: 'YYYY-MM-DD', data: {behaviour: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span2"
+                  = text_field_tag "start_date", @start_date.strftime('%F'), placeholder: 'YYYY-MM-DD', data: {behaviour: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span2"
                 .input-prepend
                   %span.add-on End
-                  = text_field_tag "end_date", @end_date, placeholder: 'YYYY-MM-DD', data: { behaviour: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span2"
+                  = text_field_tag "end_date", @end_date.strftime('%F'), placeholder: 'YYYY-MM-DD', data: { behaviour: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span2"
                 = submit_tag 'Date Search', class: 'btn btn-primary'
       %tr
         %th.span2 Date
@@ -34,7 +34,7 @@
     %tbody
       - @contact_infos.each do |item|
         %tr
-          %td= item.created_at.strftime("%F")
+          %td= item.created_at.strftime("%F %T %z")
           %td= item.name
           %td= item.email
           %td= item.usage_description

@@ -1,3 +1,17 @@
-<% cache('all_available_items_js') do -%>
-App.fullCatalogDataset = { total: <%= @results.count -%>, results: <%= raw @results.to_json -%> };
-<% end -%>
+var pagetoolbar = $('<%= escape_javascript(render('pagetoolbar', results: @results, total: @total, page: @pagenum, limit: @limit, params: @search_params)) %>');
+$(".pagetoolbar").html(pagetoolbar);
+var results = $('<%= escape_javascript(render("search_results")) %>');
+$(".search-results").html(results);
+
+var collections = $('<%= escape_javascript(render('collection_search', search_params: @search_params, results: @results)) %>');
+$('.collection-search').html(collections);
+
+var parent = $('html, body');
+if ($('html').scrollTop() > 150 || $('body').scrollTop() > 150) {
+  parent.animate({
+    scrollTop: 150
+  });  
+}
+$('.spinner-container').spin(false)
+
+$(document).data('catalog_map').loadFeatures();

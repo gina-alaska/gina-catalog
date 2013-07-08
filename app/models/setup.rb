@@ -46,39 +46,48 @@ class Setup < ActiveRecord::Base
     self.urls.where(default: true).first.try(:url) || self.urls.first.try(:url)
   end
   
-  def clone(setup = nil)
-    return nil if setup.nil?
+  def clone(source = nil)
+    return nil if source.nil?
     
     @layout_map = {}
-    setup.layouts.each do |l|
+    source.layouts.each do |l|
       layout = l.dup
       layout.save!
       self.layouts << layout
       @layout_map[l.id] = layout
     end
     
-    setup.snippets.each do |p|
+    source.snippets.each do |p|
       snippet = p.dup
       snippet.save!
       self.snippets << snippet
     end
     
-    setup.pages.roots.each do |p|
-      page = p.dup
-      page.page_layout = @layout_map[p.page_layout.id]
-      page.save!      
-      self.pages << page
+    source.pages.roots.each do |p|
+      self.clone_page(p, nil, @layout_map)
     end
     
-    setup.roles.each do |r|
+    source.roles.each do |r|
       role = r.dup
       r.save!
       self.roles << r
     end
     
-    self.theme = setup.theme
+    self.theme = source.theme
   end
   alias_method :clone=, :clone
+  
+  def clone_page(page, parent_page, layouts)
+    new_page = page.dup
+    new_page.page_layout = layouts[page.page_layout_id]
+    new_page.parent = parent_page
+    new_page.save!
+    self.pages << new_page
+    
+    page.children.each do |child_page|
+      self.clone_page(child_page, new_page, layouts)
+    end
+  end
   
   def full_title
     "#{self.title} :: #{self.by_line}"

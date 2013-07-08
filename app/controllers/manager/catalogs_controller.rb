@@ -154,21 +154,32 @@ class Manager::CatalogsController < ManagerController
     membership = current_user.memberships.where(setup_id: @setup.id).first
     
     if membership and membership.can_manage_catalog?
-      @catalog.setups << @setup
-      if @catalog.save
-        flash.now[:success] = "Added catalog record to #{@setup.full_title}"
+      if @catalog.setups.where(id: @setup.id).any?
+        if @catalog.owner_setup == @setup
+          flash.now[:error] = "Cannot be unshared the record from this portal, it is the current owner of the record"          
+        elsif @catalog.owner_setup.ancestors.include?(@setup)
+          flash.now[:error] = "Cannot be unshared the record from this portal, it is automatically shared with all parent portals"
+        else
+          @catalog.setups.destroy(@setup.id)
+          flash.now[:success] = "Unshared catalog record from portal #{@setup.full_title}"
+        end
       else
-        flash.now[:error] = "Error while trying to add catalog record to #{@setup.full_title}"
+        @catalog.setups << @setup
+        if @catalog.save
+          flash.now[:success] = "Shared catalog record to #{@setup.full_title}"
+        else
+          flash.now[:error] = "Error while trying to share catalog record to #{@setup.full_title}"
+        end
       end
     else
-      flash.now[:error] = "You do not have permission to do that"
+      flash.now[:error] = "You do not have permission to share records"
     end
     
     respond_to do |format|
       format.js
     end
   end
-  
+
   protected
   
   def authenticate_edit_records!

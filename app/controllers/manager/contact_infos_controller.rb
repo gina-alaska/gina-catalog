@@ -7,8 +7,8 @@ class Manager::ContactInfosController < ManagerController
     @contact_infos = ContactInfo
     @page = params["page"].nil? ? 1 : params["page"]
     @limit = params["limit"].nil? ? 30 : params["limit"]
-    @start_date = params["start_date"]
-    @end_date = params["end_date"]
+    @start_date = params["start_date"].present? ? Time.zone.parse(params["start_date"]) : 30.days.ago
+    @end_date = params["end_date"].present? ? Time.zone.parse(params["end_date"]) : Time.zone.now
 
     @contact_infos = @contact_infos.created_between(@start_date, @end_date)
     @total = @contact_infos.count

@@ -1,0 +1,7 @@
+<% if @catalog.sds? %>
+  $('<%= escape_javascript(render("download_modal")) %>').modal().on('hidden', function() {
+    $(this).remove();
+  })
+<% else %>
+top.location = "<%= catalog_download_url(@catalog) %>"
+<% end %>

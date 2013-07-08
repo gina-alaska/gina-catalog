@@ -1,0 +1,26 @@
+- if @catalog.require_contact_info?
+  .alert.alert-info
+    %h4 Your contact information is required before the download can begin
+    
+%h4 Contact Information Form
+= form_for @contact_info, url: next_catalog_download_path(@catalog), method: 'POST' do |f|
+  - if @contact_info.errors.count > 0
+    .alert.alert-error
+      %h4 Error while trying to save contact information
+      %ul
+        - @contact_info.errors.full_messages.each do |msg|
+          %li= msg
+  %fieldset
+    .control-group
+      %label.control-label{for: 'contact_info_name'} Name
+      .controls
+        = f.text_field :name, class: 'span12'
+    .control-group
+      %label.control-label{for: 'contact_info_email'} Email
+      .controls
+        = f.text_field :email, class: 'span12'
+    .control-group
+      %label.control-label{for: 'contact_info_usage_description'} Use Description
+      .controls
+        = f.text_area :usage_description, rows: 5, class: 'span12'
+  = submit_tag 'Submit', class: 'btn btn-primary btn-large pull-right'

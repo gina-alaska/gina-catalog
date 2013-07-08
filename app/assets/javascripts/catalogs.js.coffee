@@ -1,10 +1,13 @@
 class Catalog
   constructor: (@map) ->
     @initListeners()
+    @addLayer()    
+    @wktReader = new OpenLayers.Format.WKT()
     @loadFeatures()
     
   initListeners: =>
     $(document).on('click', "[data-openlayers-action='select-features']", @selectResultFeatures)
+    # $(document).on('page:fetch').unbind('click', @selectResultFeatures)
 
   selectResultFeatures: (evt) =>
     evt.preventDefault()
@@ -31,10 +34,26 @@ class Catalog
       'Asset': { fillColor: '#3a87ad', strokeColor: '#3a87ad' },
       'Project': { fillColor: '#c09853', strokeColor: '#c09853' }
     }
-    @styleMap = new OpenLayers.StyleMap()
+    @styleMap = new OpenLayers.StyleMap({
+      default: new OpenLayers.Style({
+        graphicZIndex: 1,
+        pointRadius: 6,
+        fillColor: '#3a87ad', 
+        fillOpacity: 0.8,
+        strokeColor: '#3a87ad',
+        strokeOpacity: 1,
+        strokeWidth: 1
+      }),
+      select: new OpenLayers.Style({
+        fillColor: '#f00',
+        strokeColor: '#f00',
+        strokeWidth: 2,
+        graphicZIndex: 2
+      })
+    })
     @styleMap.addUniqueValueRules("default", "type", lookup)
     
-    @layer = new OpenLayers.Layer.Vector('Search Results', { styleMap: @styleMap })
+    @layer = new OpenLayers.Layer.Vector('Search Results', { styleMap: @styleMap, rendererOptions: {zIndexing: true} })
     
     @map.addLayer(@layer)
     
@@ -73,13 +92,12 @@ class Catalog
     # @map = $('#map').data('map').map
     return unless @map
     
-    @addLayer()    
-    wktReader = new OpenLayers.Format.WKT()
+    @layer.destroyFeatures()
     
     geoms.each (k, result) =>
       return unless $(result).data('wkt')
     
-      features = wktReader.read($(result).data('wkt'));
+      features = @wktReader.read($(result).data('wkt'));
       if features.length > 0
         $(features).each (k,f) =>
           f.geometry.transform('EPSG:4326', @map.projection);
@@ -110,4 +128,4 @@ class Catalog
 #end class Catalog
 
 $(document).on 'openlayers:ready', (evt) -> 
-  new Catalog(evt.map)
+  $(document).data('catalog_map', new Catalog(evt.map));

@@ -1,38 +1,69 @@
 .content
-  .row-fluid
-    .span12
-      = "Total Downloads = #{@total_downloads.count}"
+  = form_tag manager_path, method: 'GET', class: 'form-inline well well-small' do
+    .row-fluid
+      .span5.input-prepend
+        %label.control-label.add-on Start
+        = text_field_tag "start_date", @start_date.strftime('%F'), placeholder: 'YYYY-MM-DD', data: {behaviour: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span10"
+      .span5.input-prepend
+        %label.control-label.add-on End
+        = text_field_tag "end_date", @end_date.strftime('%F'), placeholder: 'YYYY-MM-DD', data: { behaviour: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span10"
+      .span2
+        .btn-group
+          = submit_tag 'Clear', class: 'btn'
+          = submit_tag 'Apply', class: 'btn btn-primary'
   .row-fluid
     .span6
       %table.table.table-bordered.table-striped.table-condensed
-        %head
+        %thead
           %tr
-            %td{colspan: 3} Latest accessed for the previous month:
-          %tr
-            %th Data Record
-            %th Name
-            %th Email
-        - @latest_access.each do |item|
-          %tr
-            %td
-              = link_to manager_catalog_path(item.catalog.id), title: "#{item.catalog.title}" do
-                = item.catalog.title.truncate(80)
-            %td
-              = item.name
-            %td
-              = item.email
-    .span6
-      %table.table.table-bordered.table-striped.table-condensed
-        %head
-          %tr
-            %td{colspan: 2} Top Downloads
+            %th{colspan: 2} Top Downloads
           %tr
             %th Data Record
             %th Count
-        - @top_downloads.each do |item|
+        %tbody
+          - @top_downloads.each do |item|
+            %tr
+              %td
+                = link_to manager_catalog_path(item.catalog.id), title: "#{item.catalog.title}" do
+                  = item.catalog.title.truncate(80)
+              %td
+                = item.download_count
+    .span6
+      %table.table.table-bordered.table-striped.table-condensed
+        %thead
           %tr
+            %th General Information
+            %th Total
+            %th= "Last #{((@end_date - @start_date) / 86400).to_i} days"
+        %tbody
+          %tr
+            %td Total Downloads
+            %td= @stats[:total_downloads][:alltime]
+            %td= @stats[:total_downloads][:daterange]
+          %tr
+            %td Unique Downloads
+            %td= @stats[:unique_downloads][:alltime]
+            %td= @stats[:unique_downloads][:daterange]
+  .row-fluid
+    .span12
+      %table.table.table-bordered.table-striped.table-condensed
+        %head
+          %tr
+            %td{colspan: 3} 50 Latest records accessed:
+          %tr
+            %th Date
+            %th Data Record
+        - @latest_access.each do |item|
+          %tr
+            %td.span3
+              = item.created_at.strftime('%F %T %z')
             %td
               = link_to manager_catalog_path(item.catalog.id), title: "#{item.catalog.title}" do
                 = item.catalog.title.truncate(80)
-            %td
-              = item.download_count
+
+:javascript
+  $(document).ready( function(){
+    $('[data-behaviour~=datepicker]').datepicker().on('changeDate', function(ev){
+      $(this).datepicker('hide'); 
+    })
+  })

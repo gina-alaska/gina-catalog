@@ -5,17 +5,22 @@ class Manager::AgenciesController < ManagerController
   PAGETITLE = 'Agencies'
   
   def index
-    page = params[:page] || 1
-    limit = params["limit"].nil? ? 30 : params["limit"]
-    limit = 30000 if limit == "all"
+    @page = page = params[:page] || 1
+    @sort = sort = params[:sort] || "name"
+    @sortdir = sortdir = params[:sort_direction] || "asc"
+    @limit = limit = params["limit"].nil? ? 30 : params["limit"]
+    @show_hidden = search_params[:show_hidden]
     @search = search_params
 
-    search = Agency.search do
+    @solr_search = Agency.search do
+      with :setup_ids, current_setup.id unless search_params[:show_hidden]
       fulltext search_params[:q] if search_params[:q]
+      order_by sort, sortdir.to_sym
       paginate per_page:(limit), page:(page)
     end
 
-    @agencies = search.results
+    @total = @solr_search.total
+    @agencies = @solr_search.results
 
     respond_to do |format|
       format.html
@@ -84,6 +89,7 @@ class Manager::AgenciesController < ManagerController
   def visible
     @agencies = Agency.where(id: params[:agencies_ids])
     current_setup.agencies << @agencies
+    @agencies.each(&:index) # remove when table refactor is done
 
     respond_to do |format|
       format.html {
@@ -96,6 +102,7 @@ class Manager::AgenciesController < ManagerController
   def hidden
     @agencies = Agency.where(id: params[:agencies_ids])
     current_setup.agencies.destroy(@agencies)
+    @agencies.each(&:index) # remove when table refactor is done
 
     respond_to do |format|
       format.html {

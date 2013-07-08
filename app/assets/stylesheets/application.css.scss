@@ -18,6 +18,7 @@ $navbarBackgroundHighlight: lighten($navbarBackground, 10%);
 $navbarLinkBackgroundHover: darken($navbarBackground, 10%);*/
 
 @import "bootstrap";
+//@import "bootstrap_and_overrides";
 @import "font-awesome";
 @import "fileupload/bootstrap-fileupload";
 @import "catalogs";
@@ -29,6 +30,10 @@ $navbarLinkBackgroundHover: darken($navbarBackground, 10%);*/
 @import 'select2-fixes';
 
 @import url(http://fonts.googleapis.com/css?family=Quando);
+
+body, html {
+  position: relative;
+}
 
 #sitemanager_toolbar {
   width: 100%;
@@ -86,4 +91,14 @@ a.goto-top {
   .caret {
     margin-top: 15px;
   }
+}
+
+#search {
+  .result-list { min-height: 500px; }
+  margin-bottom: 5px;
+
+}
+
+.search table.results .result {
+  padding-bottom:0px; 
 }

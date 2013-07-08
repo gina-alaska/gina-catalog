@@ -21,6 +21,7 @@ gem 'kaminari'
 gem 'RedCloth'
 gem 'bluecloth'
 gem 'turbolinks'
+gem 'jquery-turbolinks'
 gem 'html-pipeline'
 gem 'liquid'
 gem 'dragonfly'
@@ -39,6 +40,7 @@ gem 'ancestry', '~> 1.2.4'
 
 # Use unicorn as the web server
 gem 'unicorn'
+gem 'puma'
 
 # Deploy with Capistrano
 # gem 'capistrano'
@@ -60,6 +62,7 @@ group :assets do
   gem 'uglifier'
   gem 'font-awesome-rails'
   gem 'bootstrap-sass', '~> 2.3.1.0'
+  #gem 'twitter-bootstrap-rails'
   gem 'jquery-ui-rails'
 end
 

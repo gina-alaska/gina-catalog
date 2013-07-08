@@ -1,0 +1,16 @@
+- theme = NSCatalog::Application.config.theme
+!!! 5
+%html
+  %head
+    = javascript_include_tag "downloads"
+    = stylesheet_link_tag 'downloads'
+    /[if IE 7]
+      = stylesheet_link_tag "font-awesome-ie7.min.css", media: "all"
+    = render "layouts/#{theme}/analytics" unless current_setup.analytics_account.nil? or Rails.env == 'development'
+    = csrf_meta_tag
+  %body
+    .spinner-container
+    .container
+      = show_flash_messages
+      = yield
+    

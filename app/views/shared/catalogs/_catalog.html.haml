@@ -1,31 +1,38 @@
 - collapse ||= false
+- if catalog.downloadable?
+  .navbar.navbar-static-top
+    .navbar-inner
+      .btn-group
+        = link_to catalog_download_path(catalog), class: 'btn', remote: true do
+          %i.icon-cloud-download
+          Download
 .content
   - if !catalog.published?
     %h5.alert.alert-warning
       %i.icon-warning-sign
       This catalog record has not been published
   .result{ data: { wkt: catalog.geometry_collection, type: catalog.type } }
-  
-  %h4.title= catalog.title
+    %h4.title= catalog.title
 
-  - if catalog.published? or (current_member and current_member.can_manage_catalog?)
-    .row-fluid
-      .span7
-        = render '/shared/catalogs/status', item: catalog
-        %dl
-          %dt Description
-          %dd
-            :markdown
-              #{catalog.description}
-        = render '/shared/catalogs/collapsed_content', item: catalog, collapse: collapse
-        
-      .span5
-        #map{ data: {                                       |
-          openlayers: 'map_canvas',                         |
-          projection: 'EPSG:3338',                          |
-          displayProjection: 'EPSG:4326',                   |
-          layers: ['TILE.EPSG:3338.OSM','TILE.EPSG:3338.BDL','TILE.EPSG:3338.TOPO'] } }
-          #map_canvas
+    - if catalog.published? or (current_member and current_member.can_manage_catalog?)
+      .row-fluid
+        .span7
+          = render '/shared/catalogs/status', item: catalog
+          %dl
+            %dt Description
+            %dd
+              :markdown
+                #{catalog.description}
+          = render '/shared/catalogs/collapsed_content', item: catalog, collapse: collapse
+          
+        .span5
+          #map{ data: {                                       |
+            openlayers: 'map_canvas',                         |
+            projection: 'EPSG:3857',                          |
+            displayProjection: 'EPSG:4326',                   |
+            google: "true",
+            layers: ['TILE.EPSG:3857.*'] } }
+            #map_canvas
 
-        %br/
-        = render '/shared/catalogs/files', catalog: catalog
+          %br/
+          = render '/shared/catalogs/files', catalog: catalog

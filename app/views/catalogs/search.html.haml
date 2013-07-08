@@ -1,36 +1,37 @@
-.search{ data: { spy: 'affix', 'offset-top' => 110 } }
+.search.affix-top{ data: { spy: 'affix', 'offset-top' => 110 } }
   = render 'map'
-  .result-list{ data: { 'scroll-offset-target'=> '#map' } }
+  .result-list
     .row-fluid
       .span4
-        .search-form.clearfix
-          = form_tag search_url, method: 'GET' do        
-            = render 'collection_search', search_params: @search_params, results: @results
-            %br/
+        .search-form
+          = form_tag search_url, method: 'GET', id: 'catalog_search_form', data: { behavior: 'search-results-load' } do        
             = render 'basic_search', search_params: @search_params, results: @results
             = render 'search_buttons',  search_params: @search_params, results: @results
             %br/
+            .collection-search
+              = render 'collection_search', search_params: @search_params, results: @results
+            %br/
             = render 'advanced_search', search_params: @search_params, results: @results
-            %div
-              %label 
-                Legend:
-                %i.icon-warning-sign &nbsp;Not Published
-                %i.icon-globe &nbsp;Has Location
-              
+          %div
+            %h5
+              Map Legend:
+            %div{ style: "margin-left: 50px;"}
+              %i.icon-circle{style: "color: orange;"}
+              = "- Projects"
+              %br/
+              %i.icon-circle{style: "color: CornflowerBlue;"}
+              = "- Data"
+            %h5
+              Status Icons:
+            %div{ style: "margin-left: 50px;"}
+              %i.icon-warning-sign &nbsp;Not Published
+              %br/
+              %i.icon-globe &nbsp;Has Location
+          
       .span8
-        / data-spy="affix" data-offset-top="200"
-        /data: { spy: 'affix', 'offset-top' => 120 }, 
-        %table.table.table-striped.table-condensed.results
-          %tbody
-            - if @results.empty?
-              %tr
-                %td
-                  %p.lead No search results
-            - @results.each do |result|
-              - if result.published? or (current_user and current_member.can_manage_catalog?)
-                %tr
-                  %td{ id: dom_id(result, :result_row) }= render result
-        %div{style: 'text-align:center'}
+        .search-results
+          = render 'search_results'
+        .pagetoolbar{style: 'text-align:center'}
           = render 'pagetoolbar', results: @results, total: @total, page: @pagenum, limit: @limit, params: @search_params
 :javascript
   $(document).on('openlayers:aoidraw', function(evt) {

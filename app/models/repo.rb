@@ -47,7 +47,7 @@ Description: #{self.catalog.description}
   end  
   
   def empty?
-    !File.exists?(self.path) || RepoFilelist.new(grit).empty?
+    !File.exists?(self.path) || self.files.count <= 1
   end
 
   def files

@@ -11,7 +11,7 @@ class Catalog < ActiveRecord::Base
   self.table_name = 'catalog'
   self.inheritance_column = :_type_disabled
 
-  delegate :downloadable, :to => :license
+  # delegate :downloadable, :to => :license
 
   scope :public, :joins => :license, :conditions => { :licenses => { :downloadable => true } }
   scope :restricted, :joins => :license, :conditions => { :licenses => { :downloadable => false } }
@@ -71,7 +71,14 @@ class Catalog < ActiveRecord::Base
       proxy_association.owner.geokeywords.collect(&:name).compact
     end
   end
-  has_and_belongs_to_many :iso_topics
+  has_and_belongs_to_many :iso_topics do 
+    def list
+      proxy_association.owner.iso_topics.collection.join(', ')
+    end
+    def collection
+      proxy_association.owner.iso_topics.collect(&:name).compact
+    end
+  end
   has_and_belongs_to_many :data_types
 
   has_and_belongs_to_many :tags, :join_table => 'catalog_tags', :order => 'highlight ASC, text ASC' do
@@ -138,6 +145,12 @@ class Catalog < ActiveRecord::Base
     end
     text :data_types do
       data_types.map(&:name)
+    end
+    text :primary_contact do
+      [primary_contact.first_name, primary_contact.last_name, primary_contact.email] unless primary_contact.nil?
+    end
+    text :contacts do
+      contacts.map{|a| [a.first_name, a.last_name, a.email]}
     end
     
     string :agency_types, :multiple => true do
@@ -242,8 +255,20 @@ class Catalog < ActiveRecord::Base
     end
   end
   
-  def downloadable?(format = :zip)
-    self.repo && !self.repo.empty? && self.repo.archive_available?(format)
+  def sds?
+    self.remote_download? or !self.use_agreement.nil? or self.request_contact_info? or self.require_contact_info?
+  end
+  
+  def remote_download?
+    self.download_urls.count > 0
+  end
+  
+  def local_download?
+    self.repo && !self.repo.empty? && self.repo.archive_available?(:zip)
+  end
+  
+  def downloadable?
+    self.remote_download? or self.local_download?
   end
   
   def repo_exists?

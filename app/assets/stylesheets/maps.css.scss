@@ -43,6 +43,15 @@
   }
 }
 
+.search.hidden {
+  #map {
+    height: 40px;      
+    #map_canvas {
+      height: 0px;
+    }
+  }  
+}
+
 .search.large {
   #map {
     height: 500px;      
@@ -55,12 +64,20 @@
 .search.affix {
   #map {
     position: fixed;
-    z-index: 1000000;
+    z-index: 1000;
     top: 0px;    
     left: auto;
     right: auto;
     width: 940px;
   }  
+  &.hidden {
+    .result-list {
+      margin-top: 40px;
+    }
+    .search-form {
+      top: 40px;
+    } 
+  }
   &.large {
     .result-list {
       margin-top: 500px;

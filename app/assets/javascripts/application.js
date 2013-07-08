@@ -1,7 +1,7 @@
-//= require turbolinks
 //= require 'jquery'
 //= require 'jquery_ujs'
 //= require 'jquery.slugify'
+//= require 'jquery.history'
 //= require 'jquery.ui.effect-highlight'
 //= require 'jquery.ui.effect-slide'
 //= require 'bootstrap'
@@ -16,10 +16,9 @@
 //= require 'projections'
 //= require 'maps'
 //= require 'catalogs'
-//= require 'analytics'
 //= require 'flash_message'
 //= require 'pages'
-//= require 'turbolinks-fixes'
+//= require 'history'
 //= require_self
 
 
@@ -30,7 +29,7 @@ var initialize_page = function(){
     }); 
   }, $('.carousel').data('start-delay') || 5000);
   
-  $("[data-behaviour='load_collection']").on("click", function(evt){
+  $(document).on("click", "[data-behaviour='load_collection']", function(evt){
     evt.preventDefault();
     
     var target = $(this).data("target");
@@ -67,10 +66,11 @@ var initialize_page = function(){
 };
 
 $(document).ready(initialize_page);
-$(document).on('page:change', initialize_page);
+// $(document).on('page:change', initialize_page);
 
 $(document).on('click', '[data-disabled]', function(evt) {
   evt.preventDefault();
+  evt.stopPropagation();
 });
 
 $(document).on("click", '[data-behaviour="stash"]', function(evt) {
@@ -94,10 +94,18 @@ $(document).on('click', '[data-action="scroll"]', function(evt) {
   }
 });
 
-$(document).on('page:fetch', function() {
+$(document).on('ajax:beforeSend', function(event, xhr, settings) {
   $('.spinner-container').spin('large');
+  // /* Update the history */
+  // // if (history && history.pushState) {
+  //   console.log(settings);
+  //   History.pushState({ ajax: true }, 'ajax request',  settings.url)
+  //   event.preventDefault();
+  //   xhr.abort();
+  // // }
 });
-$(document).on('page:receive', function() {
+
+$(document).on('ajax:complete', function() {
   $('.spinner-container').spin(false)
 });
 

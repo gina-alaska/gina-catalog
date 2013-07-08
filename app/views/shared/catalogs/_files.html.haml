@@ -1,38 +1,29 @@
 - if catalog.repo and (!catalog.repo.empty? or (current_member and current_member.can_manage_catalog?))
+  %h4 Uploaded Files
   %table.table-bordered.table-striped.table-condensed{style:'width:100%'}
     %thead
-      %tr
-        %td{colspan:2,style:'padding:0'}
-          .navbar.navbar-static-top
-            .navbar-inner
-              .brand Files
-              .btn-group.pull-right
-                - if current_member and current_member.can_manage_catalog?
-                  - if catalog.repo.archive_available?(:zip)
-                    = link_to download_manager_catalog_path(catalog), class: 'btn' do
-                      %i.icon-download
-                      Download
+      - if current_member and current_member.can_manage_catalog?
+        %tr
+          %td{colspan:2,style:'padding:0'}
+            .navbar.navbar-static-top
+              .navbar-inner
+                .brand Files
+                .btn-group.pull-right
                   %button.btn.btn-primary{data: { toggle:'modal', target:'#file_upload_modal' }}
                     %i.icon-upload.icon-white
                     Add File
-                - elsif catalog.repo.files.size > 1 and catalog.repo.archive_available?(:zip)
-                  = link_to download_catalog_path(catalog), class: 'btn' do
-                    %i.icon-download
-                    Download                  
-      - if catalog.repo.files.size > 1
+      - unless catalog.repo.empty?
         %tr{style:'text-align:left'}
           %th Name
-          %th Size
           / %th Actions
     %tbody
-      - if catalog.repo.files.size <= 1
+      - if catalog.repo.empty?
         %tr
           %td.lead{colspan:2, style:'text-align:center'} No files have been uploaded
       - else
         - catalog.repo.files.each do |file|
           %tr
             %td= file[:name]
-            %td= number_to_human_size file[:size]
             / %td
   - if current_member and current_member.can_manage_catalog?
     = form_for [:manager, catalog, catalog.repo], html: { class: 'modal hide fade', id: 'file_upload_modal' } do |f|

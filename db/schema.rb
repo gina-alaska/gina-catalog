@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130506232908) do
+ActiveRecord::Schema.define(:version => 20130628005415) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -215,6 +215,10 @@ ActiveRecord::Schema.define(:version => 20130506232908) do
     t.string   "usage_description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "user_ip"
+    t.integer  "portal_id"
+    t.integer  "user_id"
+    t.text     "user_agent"
   end
 
   create_table "contacts", :force => true do |t|

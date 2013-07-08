@@ -25,18 +25,6 @@ class CatalogsController < ApplicationController
     end
   end
   
-  def download
-    @catalog = Catalog.find(params[:id])
-    
-    if @catalog.repo and @catalog.repo.archive_available?(:zip)
-      send_file @catalog.repo.archive_filenames[:zip]
-    else
-      respond_to do |format|
-        format.html { render 'public/404', :status => 404 }
-      end
-    end
-  end
-
   def search
     @agencies = Agency.select([:name,:id]).collect{|a| [a.name, a.id]}.group_by{|a| a.first.first }
      #Agency.all #.group_by{|a| a.name[0]}
@@ -73,7 +61,9 @@ class CatalogsController < ApplicationController
     
     
     respond_to do |format|
-      format.html
+      format.html do
+        render layout: "search"
+      end
       format.json
       format.js
       format.pdf do
