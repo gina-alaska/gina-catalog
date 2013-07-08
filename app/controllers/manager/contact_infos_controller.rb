@@ -4,7 +4,7 @@ class Manager::ContactInfosController < ManagerController
   PAGETITLE = 'Download Log'
 
   def index
-    @contact_infos = ContactInfo
+    @contact_infos = ContactInfo.joins(:catalog => [:catalogs_setups]).where(:catalogs_setups => { :setup_id => current_setup.id }).uniq
     @page = params["page"].nil? ? 1 : params["page"]
     @limit = params["limit"].nil? ? 30 : params["limit"]
     @start_date = params["start_date"].present? ? Time.zone.parse(params["start_date"]) : 30.days.ago
