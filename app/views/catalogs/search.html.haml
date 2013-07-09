@@ -38,6 +38,8 @@
     $('#search_aoi').val('');
   })
   $(document).on('openlayers:aoidrawn', function(evt) {
-    console.log(evt.wkt);
     $('#search_aoi').val(evt.wkt);
+  })
+  $(document).ready(function() {
+    $('[data-toggle="popover"]').popover();
   })

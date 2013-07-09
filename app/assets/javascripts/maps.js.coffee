@@ -90,25 +90,52 @@ class CatalogMap
       @add_google_layers()
 
     Gina.Layers.inject(@map, @data_config['layers']);
-    @zoomToDefaultBounds()
     
-    @ready()
-  #end setupMap
-  
-  drawAOI: (evt, btn) =>
     unless @aoiLayer?
       @aoiLayer = new OpenLayers.Layer.Vector("AOI Search", {           
         displayInLayerSwitcher: false
       })
       @map.addLayer(@aoiLayer)
       
+    if @data_config['aoiInputField']
+      @addAOI($(@data_config['aoiInputField']).val())
+    
+    @zoomToDefaultBounds()
+    
+    @ready()
+  #end setupMap
+    
+  addAOI:(wkt) =>
+    wktReader = new OpenLayers.Format.WKT()
+    feature = wktReader.read(wkt);
+
+    @aoiLayer.removeAllFeatures()
+    if feature
+      feature.geometry.transform('EPSG:4326', @map.projection);
+      @aoiLayer.addFeatures([feature])
+    
+    
+  drawAOI:(evt, btn) =>
+    @setupAOIControl(evt, btn)
+    @aoiLayer.removeAllFeatures()
+    $.event.trigger({
+      type: 'openlayers:aoidraw',
+      map: @map,
+      mapInstance: this
+    })
+    @aoiDrawControl.activate()    
+  
+  setupAOIControl: (evt, btn) =>      
     unless @aoiDrawControl
       @aoiDrawControl = new OpenLayers.Control.DrawFeature(@aoiLayer,
         OpenLayers.Handler.RegularPolygon, {
           autoActivate: false,
+          documentDrag: true,
           featureAdded: (feature) =>
             @aoiDrawControl.deactivate()
+            
             feature.geometry.transform(@config['projection'], @config['displayProjection'])
+            
             $.event.trigger({
               type: 'openlayers:aoidrawn',
               wkt: feature.geometry.toString(),
@@ -116,6 +143,7 @@ class CatalogMap
               mapInstance: this
             })
           handlerOptions: {
+            documentDrag: true,
             sides: 4,
             irregular: true
           }
@@ -127,14 +155,7 @@ class CatalogMap
         $(this).removeClass('active')
       
       @map.addControl(@aoiDrawControl)
-    
-    @aoiLayer.removeAllFeatures()
-    $.event.trigger({
-      type: 'openlayers:aoidraw',
-      map: @map,
-      mapInstance: this
-    })
-    @aoiDrawControl.activate()
+
   
   setDefaultBounds: (bounds) =>
     @default_bounds = bounds

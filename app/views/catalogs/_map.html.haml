@@ -1,7 +1,8 @@
 #map{ data: {                                       |
   openlayers: 'map_canvas',                         |
   projection: 'EPSG:3857',                          |
-  displayProjection: 'EPSG:4326',                   |
+  display_projection: 'EPSG:4326',                  |
+  aoi_input_field: '#search_aoi',                   |
   google: "true",
   layers: ['TILE.EPSG:3857.*'] } }
   #map_canvas{ style:'padding-bottom: 40px;' }
@@ -13,7 +14,7 @@
         %button.btn{ data: { "openlayers-action" => 'zoomToMaxExtent' }, title: 'Zoom to default extent' }
           %i.icon-globe
       .btn-group
-        %button.btn{ data: { "openlayers-action" => 'drawAOI' }, title: 'Select AOI' }
+        %button.btn{ data: { "openlayers-action" => 'drawAOI' , title: 'Select an area of interest', content: 'Click and drag on the map to select an area of interest', toggle: 'popover', trigger: 'hover', container: '#map',  placement: 'right' } }
           %i.icon-pencil
       .btn-group
         %button.btn{ data: { "openlayers-action" => 'expand', target: '.search', size: 'hidden' }, title: 'Toggle the map' }
