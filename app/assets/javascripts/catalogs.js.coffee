@@ -20,10 +20,15 @@ class Catalog
     @selectControl.multiple = true
     @selectControl.multipleSelect()
     
+    # use @skipHighlight to only scroll to the result the first time it's clicked on
+    @skipHighlight = false
+    
     for feature in features
       bounds.extend(feature.geometry.getBounds())
       @selectControl.select(feature) 
+      @skipHighlight = true
       
+    @skipHighlight = false
     @selectControl.multiple = false
     @selectControl.multipleSelect()
     # @selectControl.multipleSelect(false)
@@ -64,21 +69,22 @@ class Catalog
           @higlightEl.removeClass('highlight')
         
       onSelect: (feature) =>
-        el = $('#' + feature.attributes.record_id).parent('td')
-        parent = $('body,html')
+        unless @skipHighlight
+          el = $('#' + feature.attributes.record_id).parent('td')
+          parent = $('body,html')
 
-        padding = $('#map').height()
+          padding = $('#map').height()
          
-        # .data('scroll-offset')
-        parent.animate({
-          scrollTop: el.offset().top - padding
-        })
+          # .data('scroll-offset')
+          parent.animate({
+            scrollTop: el.offset().top - padding
+          })
         
-        #save this for later reset
-        bgcolor = el.css('backgroundColor')
+          #save this for later reset
+          bgcolor = el.css('backgroundColor')
         
-        el.addClass('highlight')
-        @higlightEl = el
+          el.addClass('highlight')
+          @higlightEl = el
     })
     
     @map.addControl(@selectControl)

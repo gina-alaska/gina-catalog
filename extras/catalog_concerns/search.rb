@@ -15,10 +15,10 @@ module CatalogConcerns
   
         catalog_ids = search[:ids] unless search[:ids].nil? or search[:ids].empty?
     
-        if(!catalog_ids and search[:bbox])
+        if !catalog_ids and search[:bbox] and !search[:bbox].empty?
           # catalog_ids = []
           # catalog_ids += Catalog.geokeyword_intersects(bbox).pluck('catalog.id').uniq
-          catalog_ids = Catalog.location_intersects(search[:bbox]).select('distinct catalog.id').collect(&:id)
+          catalog_ids = Catalog.location_intersects(search[:bbox]).pluck(:id)
           catalog_ids.uniq!
         end
 

@@ -33,3 +33,13 @@
           = render 'search_results'
         .pagetoolbar{style: 'text-align:center'}
           = render 'pagetoolbar', results: @results, total: @total, page: @pagenum, limit: @limit, params: @search_params
+:javascript
+  $(document).on('openlayers:aoidraw', function(evt) {
+    $('#search_aoi').val('');
+  })
+  $(document).on('openlayers:aoidrawn', function(evt) {
+    $('#search_aoi').val(evt.wkt);
+  })
+  $(document).ready(function() {
+    $('[data-toggle="popover"]').popover();
+  })

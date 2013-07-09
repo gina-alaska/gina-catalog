@@ -54,6 +54,7 @@ class CatalogMap
       @resize()      
       
   setupToolbar: =>
+    @addBtnHandler 'drawAOI', @drawAOI
     @addBtnHandler 'zoomToMaxExtent', @zoomToDefaultBounds
     @addBtnHandler 'expand', (evt, btn) =>
       @expandMap(btn.data('target'), btn.data('size'), btn)
@@ -89,10 +90,72 @@ class CatalogMap
       @add_google_layers()
 
     Gina.Layers.inject(@map, @data_config['layers']);
+    
+    unless @aoiLayer?
+      @aoiLayer = new OpenLayers.Layer.Vector("AOI Search", {           
+        displayInLayerSwitcher: false
+      })
+      @map.addLayer(@aoiLayer)
+      
+    if @data_config['aoiInputField']
+      @addAOI($(@data_config['aoiInputField']).val())
+    
     @zoomToDefaultBounds()
     
     @ready()
   #end setupMap
+    
+  addAOI:(wkt) =>
+    wktReader = new OpenLayers.Format.WKT()
+    feature = wktReader.read(wkt);
+
+    @aoiLayer.removeAllFeatures()
+    if feature
+      feature.geometry.transform('EPSG:4326', @map.projection);
+      @aoiLayer.addFeatures([feature])
+    
+    
+  drawAOI:(evt, btn) =>
+    @setupAOIControl(evt, btn)
+    @aoiLayer.removeAllFeatures()
+    $.event.trigger({
+      type: 'openlayers:aoidraw',
+      map: @map,
+      mapInstance: this
+    })
+    @aoiDrawControl.activate()    
+  
+  setupAOIControl: (evt, btn) =>      
+    unless @aoiDrawControl
+      @aoiDrawControl = new OpenLayers.Control.DrawFeature(@aoiLayer,
+        OpenLayers.Handler.RegularPolygon, {
+          autoActivate: false,
+          documentDrag: true,
+          featureAdded: (feature) =>
+            @aoiDrawControl.deactivate()
+            
+            feature.geometry.transform(@config['projection'], @config['displayProjection'])
+            
+            $.event.trigger({
+              type: 'openlayers:aoidrawn',
+              wkt: feature.geometry.toString(),
+              map: @map,
+              mapInstance: this
+            })
+          handlerOptions: {
+            documentDrag: true,
+            sides: 4,
+            irregular: true
+          }
+        }
+      )
+      @aoiDrawControl.events.register 'activate', btn, ->
+        $(this).addClass('active')
+      @aoiDrawControl.events.register 'deactivate', btn, ->
+        $(this).removeClass('active')
+      
+      @map.addControl(@aoiDrawControl)
+
   
   setDefaultBounds: (bounds) =>
     @default_bounds = bounds
