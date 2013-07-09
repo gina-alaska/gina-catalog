@@ -1,12 +1,15 @@
 .content
   = form_tag manager_path, method: 'GET', class: 'form-inline well well-small' do
     .row-fluid
-      .span5.input-prepend
+      .span2.input-prepend
         %label.control-label.add-on Start
         = text_field_tag "start_date", @start_date.strftime('%F'), placeholder: 'YYYY-MM-DD', data: {behaviour: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span10"
-      .span5.input-prepend
+      .span2.input-prepend
         %label.control-label.add-on End
         = text_field_tag "end_date", @end_date.strftime('%F'), placeholder: 'YYYY-MM-DD', data: { behaviour: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span10"
+      .span6.input-prepend
+        %label.control-label.add-on Agency
+        = collection_select_for_agencies("agency", params["agency"], false, "span10")
       .span2
         .btn-group
           = submit_tag 'Clear', class: 'btn'
