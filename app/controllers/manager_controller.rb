@@ -16,6 +16,10 @@ class ManagerController < ApplicationController
     end
 
     @contact_infos = ContactInfo.joins(:catalog => [:catalogs_setups]).where(:catalogs_setups => { :setup_id => current_setup.id }).uniq
+
+    if params["agency"].present?
+      @contact_infos = @contact_infos.where("catalog.source_agency_id = ?", params["agency"])
+    end
     
     @top_downloads = @contact_infos.select("contact_infos.catalog_id, count(*) as download_count").created_between(@start_date, @end_date).group("contact_infos.catalog_id")
     @top_downloads = @top_downloads.order('download_count DESC').limit(10) 
