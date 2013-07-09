@@ -264,7 +264,7 @@
         range or prefix queries that expanded to big boolean queries - built in Solr 
         query parsers no longer create queries with this limitation. 
         An exception is thrown if exceeded.  -->
-    <maxBooleanClauses>2048</maxBooleanClauses>
+    <maxBooleanClauses>5120</maxBooleanClauses>
     <!-- There are two implementations of cache available for Solr,
          LRUCache, based on a synchronized LinkedHashMap, and
          FastLRUCache, based on a ConcurrentHashMap.  FastLRUCache has faster gets
