@@ -18,6 +18,9 @@ class Person < ActiveRecord::Base
   validates :first_name, length: { maximum: 255 }
   validates_presence_of   :last_name
   validates :last_name, length: { maximum: 255 }
+  validates :suffix, length: { maximum: 255 }
+  validates :url, length: { maximum: 255 }
+  validates :email, length: { maximum: 255 }
 #  validates_associated    :phone_numbers, :addresses
   
   searchable do
