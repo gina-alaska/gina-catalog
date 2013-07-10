@@ -17,7 +17,9 @@ class Catalog < ActiveRecord::Base
   scope :restricted, :joins => :license, :conditions => { :licenses => { :downloadable => false } }
 
   validates_presence_of :title
+  validates :title, length: { maximum: 255 }
   validates_presence_of :type
+  validates_presence_of :description
   # validates_presence_of :owner_id
   
   #validates_presence_of :license_id
