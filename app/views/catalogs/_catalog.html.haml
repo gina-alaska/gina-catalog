@@ -70,6 +70,6 @@
         %i.icon-cloud-download
         Download
   .btn-group
-    = link_to catalog, class: 'btn btn-primary' do
+    = link_to catalog, class: 'btn btn-primary', data: { title: "Full Data Record", content: "View all of the details for this record.", trigger: "hover", placement: "top", toggle: "popover", container: "body" } do
       Full Record
       %i.icon-arrow-right
