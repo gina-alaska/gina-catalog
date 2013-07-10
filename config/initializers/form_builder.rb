@@ -9,8 +9,12 @@ class ActionView::Helpers::FormBuilder
       content = content_or_options
     end
  
+    validations = [ActiveModel::Validations::PresenceValidator, ActiveModel::Validations::InclusionValidator]
     required_mark = ''
-    required_mark = ' <span class="required" title="Required Field">*<span>'.html_safe if object.class.validators_on(method).map(&:class).include? ActiveModel::Validations::PresenceValidator
+
+    if object.class.validators_on(method).map(&:class).any? { |item| validations.include?(item) }
+      required_mark = ' <span class="required" title="Required Field">*<span>'.html_safe
+    end
  
     content ||= method.to_s.humanize
     content = content + required_mark
