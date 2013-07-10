@@ -34,7 +34,7 @@
 .pull-right{ style: 'margin: 0 5px 5px 0;'}
   - unless catalog.geometry_center_collection.blank?
     .btn-group
-      = link_to '#', class: 'btn', data: { "openlayers-action" => "select-features", target: "##{dom_id(catalog, :record)}" } do
+      = link_to '#', class: 'btn', data: { "openlayers-action" => "select-features", target: "##{dom_id(catalog, :record)}", title: "Zoom To Record", content: "Zoom to the record location on the map.", trigger: "hover", placement: "top", toggle: "popover", container: "body" } do
         %i.icon-search
         Zoom To
       
