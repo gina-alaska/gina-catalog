@@ -7,6 +7,7 @@ class Collection < ActiveRecord::Base
   has_many :catalogs, :through => :catalogs_collections, uniq: true
 
   validates_presence_of :name
+  validates :name, length: { maximum: 255 }
   liquid_methods :name, :id  
   
   scope :including_descendents, ->(setup) {

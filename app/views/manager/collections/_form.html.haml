@@ -1,3 +1,11 @@
+- unless @catalog_collection.errors.full_messages.empty?
+  .row-fluid
+    .span12
+      .alert.alert-error
+        %h4 Errors prevents this record from being saved
+        %ul
+          - @catalog_collection.errors.full_messages.each do |err|
+            %li= err
 .row-fluid
   .span12
     = form_for [:manager, @catalog_collection] do |f|
