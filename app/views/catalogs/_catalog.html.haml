@@ -1,5 +1,5 @@
-- cache([:search_result, :v4, catalog]) do
-  .result{id: dom_id(catalog, :record), data: { wkt: catalog.geometry_center_collection, type: catalog.type } }
+- cache([:search_result, :v12, catalog]) do
+  .result{id: dom_id(catalog, :record), data: { wkt: catalog.geometry_center_collection, type: catalog.type, title: "Record Details", content: "Click on the record title to see more information.", trigger: "hover", placement: "right", toggle: "popover" } }
     .row-fluid
       .span10
         %h5.title
@@ -7,11 +7,11 @@
             %i.icon-chevron-down.collapse-icon
             = catalog.title.try(:truncate,78)
           - if !catalog.published?
-            %i.icon-warning-sign{ title: 'Catalog record is not public' }
+            %i.icon-warning-sign{ data: { title: 'Catalog Record Not Public', content: "This data record has not been made public yet by the site manager.", trigger: "hover", placement: "top", toggle: "popover", container: "body" }}
           - unless catalog.geometry_collection.blank?
-            %i.icon-globe{ title: 'Catalog record has location information' }
+            %i.icon-globe{ data: { title: 'Geographic Location', content: "This record has a geographic location and can be seen on the map above.", trigger: "hover", placement: "top", toggle: "popover", container: "body" }}
       .span2
-        .legend-tag.alert{ class: catalog.type == 'Project' ? 'alert-warning' : 'alert-info' }
+        .legend-tag.alert{ class: (catalog.type == 'Project' ? 'alert-warning' : 'alert-info'), data: {title: "Record Type Indicator", content: "The record type (Data or Project).", trigger: "hover", placement: "top", toggle: "popover", container: "body" }}
           %b= catalog.type == 'Project' ? 'Project' : 'Data'
     .description
       - unless catalog.source_agency.nil?
@@ -34,7 +34,7 @@
 .pull-right{ style: 'margin: 0 5px 5px 0;'}
   - unless catalog.geometry_center_collection.blank?
     .btn-group
-      = link_to '#', class: 'btn', data: { "openlayers-action" => "select-features", target: "##{dom_id(catalog, :record)}", title: "Zoom To Record", content: "Zoom to the record location on the map.", trigger: "hover", placement: "top", toggle: "popover", container: "body" } do
+      = link_to '#', class: 'btn', data: { "openlayers-action" => "select-features", target: "##{dom_id(catalog, :record)}", title: "Zoom To Record", content: "Zoom to the record location on the map.", trigger: "hover", placement: "bottom", toggle: "popover", container: "body" } do
         %i.icon-search
         Zoom To
       
@@ -66,10 +66,10 @@
 
   - if catalog.downloadable?
     .btn-group
-      = link_to catalog_download_path(catalog), class: 'btn', remote: true, data: { title: "Download Files", content: "Download all of the files that are associated with this record.", trigger: "hover", placement: "top", toggle: "popover", container: "body" } do
+      = link_to catalog_download_path(catalog), class: 'btn', remote: true, data: { title: "Download Files", content: "Download all of the files that are associated with this record.", trigger: "hover", placement: "bottom", toggle: "popover", container: "body" } do
         %i.icon-cloud-download
         Download
   .btn-group
-    = link_to catalog, class: 'btn btn-primary', data: { title: "Full Data Record", content: "View all of the details for this record.", trigger: "hover", placement: "top", toggle: "popover", container: "body" } do
+    = link_to catalog, class: 'btn btn-primary', data: { title: "Full Data Record", content: "View all of the details for this record.", trigger: "hover", placement: "bottom", toggle: "popover", container: "body" } do
       Full Record
       %i.icon-arrow-right
