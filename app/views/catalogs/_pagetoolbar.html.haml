@@ -1,11 +1,11 @@
 .btn-group
-  = link_to_first_page results, params: { search: params, limit: limit, page: page }, class: 'btn', data: { behavior: 'search-results-load', title: 'Jump To First Page', content: "Jump to the first page of records.", trigger: "hover", placement: "top", toggle: "popover", container: "body" } do
+  = link_to_first_page results, params: { search: params, limit: limit, page: page }, class: 'btn', data: { behavior: 'search-results-load', title: 'Jump To First Page', content: "Jump to the first page of records.", trigger: "hover", placement: "top", toggle: "popover", container: "#map" } do
     %i.icon-double-angle-left
-  = link_to_prev_page results, params: { search: params, limit: limit, page: page }, class: 'btn', data: { behavior: 'search-results-load', title: 'Previous Page', content: "Turn to the previous page of records.", trigger: "hover", placement: "top", toggle: "popover", container: "body" } do
+  = link_to_prev_page results, params: { search: params, limit: limit, page: page }, class: 'btn', data: { behavior: 'search-results-load', title: 'Previous Page', content: "Turn to the previous page of records.", trigger: "hover", placement: "top", toggle: "popover", container: "#map" } do
     %i.icon-angle-left
   %button.btn
     %span= display_result_info(results, page, limit, total)
-  = link_to_next_page results, params: { search: params, limit: limit, page: page }, class: 'btn', data: { behavior: 'search-results-load', title: 'Next Page', content: "Turn to the next page of records.", trigger: "hover", placement: "top", toggle: "popover", container: "body" } do
+  = link_to_next_page results, params: { search: params, limit: limit, page: page }, class: 'btn', data: { behavior: 'search-results-load', title: 'Next Page', content: "Turn to the next page of records.", trigger: "hover", placement: "top", toggle: "popover", container: "#map" } do
     %i.icon-angle-right
-  = link_to_last_page results, params: { search: params, limit: limit, page: page }, class: 'btn', data: { behavior: 'search-results-load', title: 'Jump To Last Page', content: "Jump to the last page of records.", trigger: "hover", placement: "top", toggle: "popover", container: "body" } do
+  = link_to_last_page results, params: { search: params, limit: limit, page: page }, class: 'btn', data: { behavior: 'search-results-load', title: 'Jump To Last Page', content: "Jump to the last page of records.", trigger: "hover", placement: "top", toggle: "popover", container: "#map" } do
     %i.icon-double-angle-right

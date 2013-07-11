@@ -1,4 +1,4 @@
-- cache([:search_result, :v12, catalog]) do
+- cache([:search_result, :v13, catalog]) do
   .result{id: dom_id(catalog, :record), data: { wkt: catalog.geometry_center_collection, type: catalog.type, title: "Record Details", content: "Click on the record title to see more information.", trigger: "hover", placement: "right", toggle: "popover" } }
     .row-fluid
       .span10
@@ -7,11 +7,11 @@
             %i.icon-chevron-down.collapse-icon
             = catalog.title.try(:truncate,78)
           - if !catalog.published?
-            %i.icon-warning-sign{ data: { title: 'Catalog Record Not Public', content: "This data record has not been made public yet by the site manager.", trigger: "hover", placement: "top", toggle: "popover", container: "body" }}
+            %i.icon-warning-sign{ data: { title: 'Catalog Record Not Public', content: "This data record has not been made public yet by the site manager.", trigger: "hover", placement: "top", toggle: "popover", container: "##{dom_id(catalog, :record)}" }}
           - unless catalog.geometry_collection.blank?
-            %i.icon-globe{ data: { title: 'Geographic Location', content: "This record has a geographic location and can be seen on the map above.", trigger: "hover", placement: "top", toggle: "popover", container: "body" }}
+            %i.icon-globe{ data: { title: 'Geographic Location', content: "This record has a geographic location and can be seen on the map above.", trigger: "hover", placement: "top", toggle: "popover", container: "##{dom_id(catalog, :record)}" }}
       .span2
-        .legend-tag.alert{ class: (catalog.type == 'Project' ? 'alert-warning' : 'alert-info'), data: {title: "Record Type Indicator", content: "The record type (Data or Project).", trigger: "hover", placement: "top", toggle: "popover", container: "body" }}
+        .legend-tag.alert{ class: (catalog.type == 'Project' ? 'alert-warning' : 'alert-info'), data: {title: "Record Type Indicator", content: "The record type (Data or Project).", trigger: "hover", placement: "top", toggle: "popover", container: "##{dom_id(catalog, :record)}" }}
           %b= catalog.type == 'Project' ? 'Project' : 'Data'
     .description
       - unless catalog.source_agency.nil?
@@ -34,7 +34,7 @@
 .pull-right{ style: 'margin: 0 5px 5px 0;'}
   - unless catalog.geometry_center_collection.blank?
     .btn-group
-      = link_to '#', class: 'btn', data: { "openlayers-action" => "select-features", target: "##{dom_id(catalog, :record)}", title: "Zoom To Record", content: "Zoom to the record location on the map.", trigger: "hover", placement: "bottom", toggle: "popover", container: "body" } do
+      = link_to '#', class: 'btn', data: { "openlayers-action" => "select-features", target: "##{dom_id(catalog, :record)}", title: "Zoom To Record", content: "Zoom to the record location on the map.", trigger: "hover", placement: "bottom", toggle: "popover", container: "##{dom_id(catalog, :record)}" } do
         %i.icon-search
         Zoom To
       
@@ -60,16 +60,16 @@
             
     - if current_member.can_manage_catalog? and catalog.owner_setup == current_setup
       .btn-group
-        = link_to edit_manager_catalog_path(catalog), class: 'btn', target: :_blank do
+        = link_to edit_manager_catalog_path(catalog), class: 'btn', target: :_blank, data: { title: "Edit Record", content: "Edit this record.", trigger: "hover", placement: "bottom", toggle: "popover", container: "##{dom_id(catalog, :record)}" } do
           %i.icon-edit
           Edit
 
   - if catalog.downloadable?
     .btn-group
-      = link_to catalog_download_path(catalog), class: 'btn', remote: true, data: { title: "Download Files", content: "Download all of the files that are associated with this record.", trigger: "hover", placement: "bottom", toggle: "popover", container: "body" } do
+      = link_to catalog_download_path(catalog), class: 'btn', remote: true, data: { title: "Download Files", content: "Download all of the files that are associated with this record.", trigger: "hover", placement: "bottom", toggle: "popover", container: "##{dom_id(catalog, :record)}" } do
         %i.icon-cloud-download
         Download
   .btn-group
-    = link_to catalog, class: 'btn btn-primary', data: { title: "Full Data Record", content: "View all of the details for this record.", trigger: "hover", placement: "bottom", toggle: "popover", container: "body" } do
+    = link_to catalog, class: 'btn btn-primary', data: { title: "Full Data Record", content: "View all of the details for this record.", trigger: "hover", placement: "bottom", toggle: "popover", container: "##{dom_id(catalog, :record)}" } do
       Full Record
       %i.icon-arrow-right
