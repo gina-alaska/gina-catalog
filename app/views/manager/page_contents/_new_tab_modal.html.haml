@@ -1,0 +1,12 @@
+.modal.hide.fade{tabindex:"-1", role:"dialog"}
+  .modal-header
+    %button.close{type:'button', data: { dismiss: 'modal' }} &times;
+    %h3 New tab name?
+  .modal-body
+    = form_tag add_manager_page_content_path(@page), method: 'GET', remote: true do
+      .row-fluid 
+        .span12
+          = text_field_tag 'new_tab_name', '', class: 'span12'
+      .pull-right
+        %a.btn{ href: '#', data: { dismiss: 'modal' }} Cancel
+        = submit_tag 'Add Tag', class: 'btn btn-primary'

@@ -1,0 +1,10 @@
+var tab = $('<%= escape_javascript(render('section_tab', section: params[:new_tab_name], active_class: '')) %>').insertBefore('#new_page_tab');
+$('#page_content').append('<%= escape_javascript(render('content_fields', name: params[:new_tab_name], content: '', page: @page)) %>');
+
+// render the ace initializer javascript
+<%= render 'shared/ace/setup.js', selector: '#' + params[:new_tab_name].underscore + "_tab_pane" %>
+
+// activate the new tab
+$(tab).find('a').tab('show');
+// hide the new tab modal
+$('.modal.in').modal('hide');
