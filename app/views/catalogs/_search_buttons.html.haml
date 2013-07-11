@@ -1,6 +1,6 @@
 .row-fluid
   .span4
-    .nav.dropdown{style:'margin-bottom:0px; color:#000;'}
+    .nav.dropdown{style:'margin-bottom:0px; color:#000;', data: { title: "Limit Results", content: "Limit the number of records displayed on each page.", trigger: "hover", toggle: "popover", placement: "bottom", container: "body" }}
       = link_to '#', class: "btn btn-block dropdown-toggle", data: { 'loading-text' => 'Loading...', toggle: "dropdown" } do
         = "Limit: #{@limit}"
         %i.caret
@@ -15,6 +15,6 @@
           =link_to search_path(limit: "500"), data: { behaviour: 'stash', target: '#limit', value: 500 }, method: :get do
             500 Records
   .span4
-    = link_to 'Clear', '/search', class: 'btn btn-block'
+    = link_to 'Clear', '/search', class: 'btn btn-block', data: { title: "Clear Search Parameters", content: "Clear all search fields and start a new search.", trigger: "hover", toggle: "popover", placement: "bottom", container: "body" }
   .span4
-    = submit_tag 'Search', class: 'btn btn-primary btn-block'
+    = submit_tag 'Search', class: 'btn btn-primary btn-block', data: { title: "Search Records", content: "Search for records in this portal or update a previous search.", trigger: "hover", toggle: "popover", placement: "bottom", container: "body" }
