@@ -27,6 +27,7 @@ gem 'liquid'
 gem 'dragonfly'
 gem 'awesome_nested_set'
 gem 'nested_form', git: 'http://github.com/ryanb/nested_form.git'
+gem 'rcsw', ">= 0.1.1", git: 'http://github.com/gina-alaska/ruby-csw.git'
 #gem 'nofxx-georuby'
 #broke in rails 3.1
 #gem 'postgis_adapter', :git => 'http://github.com/gina-alaska/postgis_adapter.git'

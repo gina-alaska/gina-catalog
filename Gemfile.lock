@@ -1,4 +1,12 @@
 GIT
+  remote: http://github.com/gina-alaska/ruby-csw.git
+  revision: d36b883e2281e9bf944683491621ba6a67f7aae7
+  specs:
+    rcsw (0.1.1)
+      curb
+      libxml-ruby
+
+GIT
   remote: http://github.com/ryanb/nested_form.git
   revision: 731b5b0b83d5eff051ccae65d2eb8c79960bc725
   specs:
@@ -64,6 +72,7 @@ GEM
       sass (~> 3.1)
     compass-rails (1.0.3)
       compass (>= 0.12.2, < 0.14)
+    curb (0.8.4)
     diff-lcs (1.1.3)
     dragonfly (0.9.14)
       multi_json (~> 1.0)
@@ -123,6 +132,7 @@ GEM
       activesupport (>= 3.0.0)
     kgio (2.8.0)
     libv8 (3.3.10.4)
+    libxml-ruby (2.6.0)
     liquid (2.4.1)
     mail (2.5.3)
       i18n (>= 0.4.0)
@@ -281,6 +291,7 @@ DEPENDENCIES
   puma
   quiet_assets
   rails (= 3.2.13)
+  rcsw (>= 0.1.1)!
   resque
   rgeo
   rgeo-activerecord
