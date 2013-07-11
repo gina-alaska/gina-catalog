@@ -1,0 +1,5 @@
+$('<%= escape_javascript(render("new_tab_modal")) %>').modal().on('hidden', function() {
+  $(this).remove();
+}).on('shown', function () {
+  $('#new_tab_name').focus();
+})

@@ -1,0 +1,45 @@
+var editors = new AceEditor('<%= selector.html_safe %>');
+
+editors.addHandler('link', function(editor, btn, ace) {
+  $('#link_chooser').modal();  
+  $('#link_chooser').on('hidden', function() {
+    // Reset these forms
+    $('#choose-page')[0].reset();
+    $('#add-link-form')[0].reset();
+    $('#link_chooser form').unbind('submit');
+    $('#link_chooser a:first').tab('show');
+  });
+  
+  $('#link_chooser form').on('submit', function(evt) {
+    evt.preventDefault();
+    var url = $(this).find('[name="url"]').val();
+    var target = '';
+    
+    if( $(this).find('[name="target"]').is(':checked') ) {
+      target = $('[name="target"]').val();
+    }
+    $('#link_chooser').modal('hide');
+    
+    var link = '<a href="'+url+'" target="'+target+'">';
+    ace.wrapSelectionWithTags(editor, link, "</a>")
+  });
+});
+
+editors.addHandler('picture', function(editor, btn, ace) {
+  $('#insert_image_chooser_modal').modal();
+  
+  var addImage = function() {
+    var src = $(this).data("src");
+    var alt = $(this).data("alt");
+    var tag = '<img src="'+src+'" alt="'+alt+'" />';
+    
+    ace.wrapSelectionWithTags(editor, tag);
+    $('#insert_image_chooser_modal').modal('hide');
+  }
+  
+  $('#insert_image_chooser_modal').on('hidden', function() {
+    $(document).unbind('click', addImage);
+  });
+  
+  $(document).on('click', '#insert_image_chooser_modal a[data-behavior="add"]', addImage);
+});

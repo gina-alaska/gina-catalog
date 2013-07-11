@@ -55,21 +55,14 @@
   #page_tabs.tabbable
     %ul.nav.nav-tabs
       - page.sections.each do |section|
-        %li{class:(section == page.sections.first ? 'active' : '')}= link_to section.humanize, "##{section}", data: { toggle: 'tab'}
-      %li{id: 'new_page_tab'}
-        =link_to "#", id: 'new_page_btn', data: {toggle: "modal", target:"#new_page_modal"} do
+        = render 'section_tab', section: section, active_class: (section == page.sections.first ? 'active' : '')
+      %li#new_page_tab
+        =link_to add_manager_page_content_path(page), remote: true do
           %i.icon-plus
       
   #page_content.tab-content
     - page.content.each do |name,content|
-      .tab-pane{id:name, class:(name == page.sections.first ? 'active' : '')}
-        - if name == 'images'
-          = render 'images', page: page
-        - else
-          / ACE Editor
-          %div.ace{ data: { editor: 'ace' } }
-            = render '/shared/ace/toolbar'
-            = text_area_tag "page_content[content][#{name}]", content
+      = render 'content_fields', name: name, content: content, page: page
             
   .form-actions.form-inline{style:'margin-top: 0;'}
     = link_to manager_page_contents_path, class: 'btn' do 

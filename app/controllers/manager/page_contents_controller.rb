@@ -48,13 +48,14 @@ class Manager::PageContentsController < ManagerController
   end
   
   def add
-    @page.sections = @page.sections << params[:new_page_name] unless @page.sections.include? params[:new_page_name]
-
-    if @page.save
-      render action: 'edit', layout: !request.xhr?
+    # @page.sections = @page.sections << params[:new_page_name] unless @page.sections.include? params[:new_page_name]
+    if params[:new_tab_name]
+      @page.sections = @page.sections << params[:new_tab_name] unless @page.sections.include? params[:new_tab_name]
+      @page.save!
+      render 'add_tab'
     else
-      render action: 'edit', error: "Page could not be added", layout: !request.xhr?
-    end 
+      render 'tab_name_form'
+    end
   end
   
   def create
