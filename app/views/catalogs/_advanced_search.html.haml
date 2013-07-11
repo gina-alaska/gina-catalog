@@ -1,5 +1,5 @@
 #advanced.accordion
-  .accordion-group{ data: { title: "Advanced Filtering", content: "Add additional filters to search.", trigger: "hover", toggle: "popover", placement: "left", container: "body" }}
+  .accordion-group{ data: { title: "Advanced Filtering", content: "Add additional filters to search.", trigger: "hover", toggle: "popover", placement: "top", container: "#advanced" }}
     .accordion-heading.h4
       = link_to '#options', class: 'accordion-toggle', data: { toggle: 'collapse', parent: '#advanced' } do
         %i.icon-chevron-down
@@ -52,4 +52,4 @@
         =select_tag 'search[contact_ids]', options_from_collection_for_select(current_setup.persons, :id, :contact_string, search_params[:contact_ids]), multiple: true,
           class: 'span12', data: {placeholder: 'All Contacts', ui: 'select2'}
       .form-actions{style:'margin-bottom: 0;'}
-        = submit_tag 'Apply', class: 'btn btn-primary pull-right', data: { title: "Apply Filters", content: "Do another search with the chosen filters applied.", toggle: "popover", trigger: "hover", placement: "right", container: "body" }
+        = submit_tag 'Apply', class: 'btn btn-primary pull-right', data: { title: "Apply Filters", content: "Do another search with the chosen filters applied.", toggle: "popover", trigger: "hover", placement: "right", container: "#advanced" }
