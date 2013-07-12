@@ -1,16 +1,25 @@
 .content
-  = form_tag manager_path, method: 'GET', class: 'form-inline well well-small' do
+  = form_tag manager_path, method: 'GET', class: 'well well-small' do
     .row-fluid
-      .span2.input-prepend
-        %label.control-label.add-on Start
-        = text_field_tag "start_date", @start_date.strftime('%F'), placeholder: 'YYYY-MM-DD', data: {behaviour: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span10"
-      .span2.input-prepend
-        %label.control-label.add-on End
-        = text_field_tag "end_date", @end_date.strftime('%F'), placeholder: 'YYYY-MM-DD', data: { behaviour: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span10"
-      .span6.input-prepend
-        %label.control-label.add-on Agency
-        = collection_select_for_agencies("agency", params["agency"], false, "span10")
       .span2
+        .control-group
+          %label.control-label Start
+          .controls
+            = text_field_tag "start_date", @start_date.strftime('%F'), placeholder: 'YYYY-MM-DD', data: {behaviour: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span12"
+      .span2
+        .control-group
+          %label.control-label End
+          .controls
+            = text_field_tag "end_date", @end_date.strftime('%F'), placeholder: 'YYYY-MM-DD', data: { behaviour: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span12"
+      .span6
+        .control-group
+          %label.control-label Agency
+          .controls
+            = collection_select_for_agencies("agency", params["agency"], false, "span10")
+          :javascript
+            $('#agency').select2({allowClear: true, width: 'copy'});
+      .span2
+        .control-group
         .btn-group
           = submit_tag 'Clear', class: 'btn'
           = submit_tag 'Apply', class: 'btn btn-primary'
