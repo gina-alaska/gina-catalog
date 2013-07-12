@@ -6,5 +6,5 @@
       New Snippet
       
 %ol.page-list
-  - current_setup.snippets.each do |snippet|
+  - current_setup.snippets.order("slug ASC").each do |snippet|
     = render '/manager/page_snippets/snippet', snippet: snippet
