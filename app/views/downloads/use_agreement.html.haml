@@ -24,8 +24,14 @@
     
   - if @catalog.request_contact_info? or @catalog.require_contact_info?
     %p
-      = link_to next_catalog_download_path(@catalog, :use_agreement => true), method: :post, class: 'btn btn-primary btn-large btn-block' do
-        Submit Contact Information (Optional)
+      = link_to contact_info_catalog_downloads_path(@catalog, :use_agreement => true), method: :post, class: 'btn btn-primary btn-large btn-block' do
+        - if cookies.signed[:contact_info_id].nil?
+          Submit Contact Information
+        - else
+          Update Contact Information
+          
+        - unless @catalog.require_contact_info?
+          (Optional)
       
   - if @catalog.sds? and @authorized
     = render 'download_urls', download_urls: @catalog.download_urls

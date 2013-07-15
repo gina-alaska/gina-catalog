@@ -100,9 +100,13 @@ NSCatalog::Application.routes.draw do
 
   resources :contacts, only: [:index, :create]
   resources :catalogs do
-    resource :download, :only => [:show] do
-       get :next
-       post :next
+    resources :downloads, :only => [:index, :show] do
+      get :redirect, on: :member 
+      collection do
+        get :contact_info
+        get :next
+        post :next
+      end
     end
   end
   match '/sds/:catalog_id' => "downloads#show"

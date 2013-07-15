@@ -2,9 +2,11 @@ class DownloadsController < ApplicationController
   layout 'downloads'
   STEP = { :use_agreement => 1, :contact_info => 2, :download => 3 }
   
-  def show
+  def index
     @catalog = fetch_catalog
-    logger.info next_step(cookies.signed[:sds_step])
+    unless cookies.signed[:sds_catalog_id] == @catalog.id
+      reset
+    end
     
     respond_to do |format|
       if @catalog.downloadable?
@@ -30,28 +32,33 @@ class DownloadsController < ApplicationController
   end
   
   def reset
+    logger.info 'RESET!'
     cookies.signed[:sds_catalog_id] = nil
     cookies.signed[:use_agreement_id] = nil
     cookies.signed[:contact_info_id] = nil
-    cookies.signed[:sds_step] = nil
+    cookies.signed[:sds_step] = 0
   end
 
   def use_agreement
     unless @catalog.require_contact_info?
-      save_contact_info
+    #   save_contact_info
       @authorized = true 
     end
     
-    if ask_for_use_agreement?
-      render 'use_agreement'
-    else
-      render_next_sds_step(STEP[:use_agreement]) 
-    end
+    # if ask_for_use_agreement?
+    render 'use_agreement'
+    # else
+      # render_next_sds_step(STEP[:use_agreement]) 
+    # end
   end
 
   def contact_info
+    @catalog ||= fetch_catalog
+    
     if ask_for_contact_info?
-      save_contact_info
+      # save_contact_info
+      @contact_info = contact_info_from_cookie || ContactInfo.new
+      logger.info @contact_info.inspect
       render 'contact_info'
     else
       render_next_sds_step(STEP[:contact_info]) 
@@ -61,13 +68,21 @@ class DownloadsController < ApplicationController
   def download
     save_contact_info
     
-    reset
+    # reset
     if @catalog.remote_download?
       @authorized = true
       render 'use_agreement'
     else
       offer_file
     end
+  end
+  
+  def show
+    @catalog = fetch_catalog
+    @download = @catalog.download_urls.where(uuid: params[:id]).first
+
+    save_contact_info
+    redirect_to @download.url
   end
 
   def next
@@ -81,9 +96,9 @@ class DownloadsController < ApplicationController
       end
     elsif params.include? :use_agreement
       save_use_agreement
-      redirect_to catalog_download_path(@catalog)
+      redirect_to catalog_downloads_path(@catalog)
     else
-      redirect_to catalog_download_path(@catalog)
+      redirect_to catalog_downloads_path(@catalog)
     end
   end
   
@@ -98,7 +113,7 @@ class DownloadsController < ApplicationController
     end
   end
   
-  def render_next_sds_step(current = cookies.signed[:sds_step])
+  def render_next_sds_step(current = cookies.signed[:sds_step])    
     case next_step(current)
     when STEP[:use_agreement]
       use_agreement
@@ -167,9 +182,13 @@ class DownloadsController < ApplicationController
   def next_step(current = 0)
     current = 0 if current.nil?
     
-    return STEP[:use_agreement] if current < STEP[:use_agreement] and ask_for_use_agreement?
+    return STEP[:use_agreement] if current < STEP[:use_agreement]
     return STEP[:contact_info] if current < STEP[:contact_info] and ask_for_contact_info?
     return STEP[:download] 
+  end
+  
+  def fetch_download_url
+    DownloadUrl.where(uuid: params[:catalog_id]).first
   end
   
   def fetch_catalog

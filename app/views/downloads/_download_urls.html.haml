@@ -1,5 +1,5 @@
 - download_urls.each do |url|
   %p
-    = link_to url.url, class: 'btn btn-primary btn-large btn-block', target: "_blank" do
+    = link_to catalog_download_path(url.catalog, url), class: 'btn btn-primary btn-large btn-block', target: "_blank" do
       = "Download #{url.name}"
       
