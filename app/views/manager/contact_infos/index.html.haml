@@ -3,9 +3,32 @@
     %thead
       %tr
         %td{colspan: 6, style: "padding: 0;"}
+          = form_tag manager_contact_infos_path, method: 'GET', class: 'navbar-form form-search' do
+            .span2
+              .control-group
+                %label.control-label Start
+                .controls
+                  = text_field_tag "start_date", @start_date.strftime('%F'), placeholder: 'YYYY-MM-DD', data: {behaviour: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span2"
+            .span2
+              .control-group
+                %label.control-label End
+                .controls
+                  = text_field_tag "end_date", @end_date.strftime('%F'), placeholder: 'YYYY-MM-DD', data: { behaviour: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span2"
+            .span5
+              .control-group
+                %label.control-label Agency
+                .controls
+                  = collection_select_for_agencies("agency", params["agency"], false, "span6")
+              :javascript
+                $('#agency').select2({allowClear: true, width: 'copy'});
+            .span2{ style: "padding-top: 15px; padding-left: 30px;" }
+              .control-group
+                = submit_tag 'Search', class: 'btn btn-primary pull-right'
+      %tr
+        %td{colspan: 6, style: "padding: 0; text-align: center;"}
           .navbar.navbar-static-top
             .navbar-inner
-              .btn-group.pull-right
+              .btn-group
                 = link_to_first_page @contact_infos, params: { start_date: @start_date, end_date: @end_date }, class: 'btn' do
                   %i.icon-double-angle-left
                 = link_to_prev_page @contact_infos, params: { start_date: @start_date, end_date: @end_date }, class: 'btn' do
@@ -16,15 +39,6 @@
                   %i.icon-angle-right
                 = link_to_last_page @contact_infos, params: { start_date: @start_date, end_date: @end_date }, class: 'btn' do
                   %i.icon-double-angle-right
-
-              = form_tag manager_contact_infos_path, method: 'GET', class: 'navbar-form form-search pull-left' do
-                .input-prepend
-                  %span.add-on Start
-                  = text_field_tag "start_date", @start_date.strftime('%F'), placeholder: 'YYYY-MM-DD', data: {behaviour: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span2"
-                .input-prepend
-                  %span.add-on End
-                  = text_field_tag "end_date", @end_date.strftime('%F'), placeholder: 'YYYY-MM-DD', data: { behaviour: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span2"
-                = submit_tag 'Date Search', class: 'btn btn-primary'
       %tr
         %th.span2 Date
         %th Name

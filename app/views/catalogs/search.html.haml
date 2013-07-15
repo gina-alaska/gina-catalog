@@ -12,22 +12,8 @@
               = render 'collection_search', search_params: @search_params, results: @results
             %br/
             = render 'advanced_search', search_params: @search_params, results: @results
-          %div
-            %h5
-              Map Legend:
-            %div{ style: "margin-left: 50px;"}
-              %i.icon-circle{style: "color: orange;"}
-              = "- Projects"
-              %br/
-              %i.icon-circle{style: "color: CornflowerBlue;"}
-              = "- Data"
-            %h5
-              Status Icons:
-            %div{ style: "margin-left: 50px;"}
-              %i.icon-warning-sign &nbsp;Not Published
-              %br/
-              %i.icon-globe &nbsp;Has Location
-          
+          .legends
+            = render 'legends'
       .span8
         .search-results
           = render 'search_results'

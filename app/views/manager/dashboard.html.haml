@@ -1,16 +1,25 @@
 .content
-  = form_tag manager_path, method: 'GET', class: 'form-inline well well-small' do
+  = form_tag manager_path, method: 'GET', class: 'well well-small' do
     .row-fluid
-      .span2.input-prepend
-        %label.control-label.add-on Start
-        = text_field_tag "start_date", @start_date.strftime('%F'), placeholder: 'YYYY-MM-DD', data: {behaviour: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span10"
-      .span2.input-prepend
-        %label.control-label.add-on End
-        = text_field_tag "end_date", @end_date.strftime('%F'), placeholder: 'YYYY-MM-DD', data: { behaviour: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span10"
-      .span6.input-prepend
-        %label.control-label.add-on Agency
-        = collection_select_for_agencies("agency", params["agency"], false, "span10")
       .span2
+        .control-group
+          %label.control-label Start
+          .controls
+            = text_field_tag "start_date", @start_date.strftime('%F'), placeholder: 'YYYY-MM-DD', data: {behaviour: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span12"
+      .span2
+        .control-group
+          %label.control-label End
+          .controls
+            = text_field_tag "end_date", @end_date.strftime('%F'), placeholder: 'YYYY-MM-DD', data: { behaviour: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span12"
+      .span6
+        .control-group
+          %label.control-label Agency
+          .controls
+            = collection_select_for_agencies("agency", params["agency"], false, "span10")
+          :javascript
+            $('#agency').select2({allowClear: true, width: 'copy'});
+      .span2
+        .control-group
         .btn-group
           = submit_tag 'Clear', class: 'btn'
           = submit_tag 'Apply', class: 'btn btn-primary'
@@ -50,19 +59,29 @@
   .row-fluid
     .span12
       %table.table.table-bordered.table-striped.table-condensed
-        %head
+        %thead
           %tr
-            %td{colspan: 3} 50 Latest records accessed:
+            %th{colspan: 5} 50 Latest records accessed:
           %tr
             %th Date
             %th Data Record
-        - @latest_access.each do |item|
-          %tr
-            %td.span3
-              = item.created_at.strftime('%F %T %z')
-            %td
-              = link_to manager_catalog_path(item.catalog.id), title: "#{item.catalog.title}" do
-                = item.catalog.title.truncate(80)
+            %th Download Portal
+            %th Name
+            %th Email
+        %tbody
+          - @latest_access.each do |item|
+            %tr
+              %td.span3
+                = item.created_at.strftime('%F %T %z')
+              %td
+                = link_to manager_catalog_path(item.catalog.id), title: "#{item.catalog.title}" do
+                  = item.catalog.title.truncate(60)
+              %td
+                = Setup.find(item.portal_id).title unless item.portal_id.nil?
+              %td.span2
+                = item.name
+              %td.span2
+                = item.email
 
 :javascript
   $(document).ready( function(){
