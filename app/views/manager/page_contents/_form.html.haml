@@ -104,4 +104,10 @@
     form.attr('target', '');
     form.data('remote', true);
   }
+
+  $(document).on('click', 'button[data-action="remove-tab"]', function() {
+    var id = $('.tab-pane.active').attr('id').replace('_tab_pane', '');
+    //console.log(id);
+    //$('#page_tabs li.active').remove(); 
+  })  
 / = render 'manager/page_layouts/new_page', page: page

@@ -62,7 +62,8 @@ class @AceEditor
     $(el).find('[data-action]').on 'click', (evt) => 
       evt.preventDefault()  
       btn = $(evt.currentTarget)
-      @actions[btn.data('action')](editor, btn, this)
+      if @actions[btn.data('action')]
+        @actions[btn.data('action')](editor, btn, this)
       
   addHandler: (name, func) ->
     @actions[name] = func

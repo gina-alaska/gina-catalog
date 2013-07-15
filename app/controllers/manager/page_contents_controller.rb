@@ -50,7 +50,7 @@ class Manager::PageContentsController < ManagerController
   def add
     # @page.sections = @page.sections << params[:new_page_name] unless @page.sections.include? params[:new_page_name]
     if params[:new_tab_name]
-      @page.sections = @page.sections << params[:new_tab_name] unless @page.sections.include? params[:new_tab_name]
+      @page.sections = @page.sections << params[:new_tab_name].parameterize unless @page.sections.include? params[:new_tab_name]
       @page.save!
       render 'add_tab'
     else
@@ -58,6 +58,19 @@ class Manager::PageContentsController < ManagerController
     end
   end
   
+  def remove
+    if params[:tab_name] and params[:tab_name] != 'body'
+      @page.sections.delete_if { |section| section == params[:tab_name] }
+      @page.save!
+
+      respond_to do |format|
+        format.js
+      end
+    else
+      render nothing: true
+    end
+  end
+
   def create
     @page = current_setup.pages.build(params[:page_content])
     current_setup.pages << @page
