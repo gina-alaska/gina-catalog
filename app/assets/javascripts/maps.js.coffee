@@ -39,7 +39,6 @@ class CatalogMap
 
   loadMapState: (size) =>
     if size? and size != @map_state.size
-      console.log 'resize'
       @expandMap(@map_state.target, size)
     else
       if $(@map_state.target).hasClass(@map_state.previous_size)
@@ -92,12 +91,24 @@ class CatalogMap
     Gina.Layers.inject(@map, @data_config['layers']);
     
     unless @aoiLayer?
-      @aoiLayer = new OpenLayers.Layer.Vector("AOI Search", {           
-        displayInLayerSwitcher: false
+      aoiStyle = new OpenLayers.StyleMap({
+        default: new OpenLayers.Style({
+          fillColor: '#00ff00', 
+          fillOpacity: 0.2,
+          strokeColor: '#00ff00',
+          strokeOpacity: 0.8,
+          strokeWidth: 1
+        })
       })
+      @aoiLayer = new OpenLayers.Layer.Vector("AOI Search", {           
+        displayInLayerSwitcher: false,
+        styleMap: aoiStyle, 
+      })
+    
       @map.addLayer(@aoiLayer)
       
     if @data_config['aoiInputField']
+      console.log 'readd aoi'
       @addAOI($(@data_config['aoiInputField']).val())
     
     @zoomToDefaultBounds()
@@ -109,8 +120,8 @@ class CatalogMap
     wktReader = new OpenLayers.Format.WKT()
     feature = wktReader.read(wkt);
 
-    @aoiLayer.removeAllFeatures()
     if feature
+      @aoiLayer.removeAllFeatures()
       feature.geometry.transform('EPSG:4326', @map.projection);
       @aoiLayer.addFeatures([feature])
     
@@ -135,6 +146,7 @@ class CatalogMap
             @aoiDrawControl.deactivate()
             
             feature.geometry.transform(@config['projection'], @config['displayProjection'])
+            this.addAOI(feature.geometry.toString())
             
             $.event.trigger({
               type: 'openlayers:aoidrawn',
