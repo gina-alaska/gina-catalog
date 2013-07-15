@@ -1,8 +1,8 @@
-.tab-pane{id:name.underscore + "_tab_pane", class:(name == page.sections.first ? 'active' : '')}
+.tab-pane{id:name.parameterize + "_tab_pane", class:(name == page.sections.first ? 'active' : '')}
   - if name == 'images'
     = render 'images', page: page
   - else
     / ACE Editor
     %div.ace{ data: { editor: 'ace' } }
-      = render '/shared/ace/toolbar'
+      = render '/shared/ace/toolbar', page: page, section: name
       = text_area_tag "page_content[content][#{name}]", content
