@@ -56,9 +56,10 @@
     %ul.nav.nav-tabs
       - page.sections.each do |section|
         = render 'section_tab', section: section, active_class: (section == page.sections.first ? 'active' : '')
-      %li#new_page_tab
-        =link_to add_manager_page_content_path(page), remote: true do
-          %i.icon-plus
+      - unless page.new_record?
+        %li#new_page_tab
+          =link_to add_manager_page_content_path(page), remote: true do
+            %i.icon-plus
       
   #page_content.tab-content
     - page.content.each do |name,content|
