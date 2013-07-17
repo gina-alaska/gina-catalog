@@ -19,6 +19,7 @@
 //= require 'flash_message'
 //= require 'pages'
 //= require 'history'
+//= require 'catalog_search'
 //= require_self
 
 
@@ -29,19 +30,6 @@ var initialize_page = function(){
     }); 
   }, $('.carousel').data('start-delay') || 5000);
   
-  $(document).on("click", "[data-behaviour='load_collection']", function(evt){
-    evt.preventDefault();
-    
-    var target = $(this).data("target");
-    if($(target).val() == $(this).data("value")) {
-      $(target).val('');
-      $(target).parents("form").submit();
-    } else {
-      $(target).val($(this).data("value"));
-      $(target).parents("form").submit();
-    }
-  });
-
   $('a.goto-top').hide();
   
   // var features, map = $('#map').data('map').map;
@@ -71,14 +59,6 @@ $(document).ready(initialize_page);
 $(document).on('click', '[data-disabled]', function(evt) {
   evt.preventDefault();
   evt.stopPropagation();
-});
-
-$(document).on("click", '[data-behaviour="stash"]', function(evt) {
-  evt.preventDefault();
-  var target = $(this).data("target");
-  var value = $(this).data("value");
-  $(target).val(value);
-  $(target).parents("form").submit();
 });
 
 $(document).on('click', '[data-action="scroll"]', function(evt) {

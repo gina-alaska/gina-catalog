@@ -8,12 +8,12 @@
               .control-group
                 %label.control-label Start
                 .controls
-                  = text_field_tag "start_date", @start_date.strftime('%F'), placeholder: 'YYYY-MM-DD', data: {behaviour: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span2"
+                  = text_field_tag "start_date", @start_date.strftime('%F'), placeholder: 'YYYY-MM-DD', data: {behavior: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span2"
             .span2
               .control-group
                 %label.control-label End
                 .controls
-                  = text_field_tag "end_date", @end_date.strftime('%F'), placeholder: 'YYYY-MM-DD', data: { behaviour: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span2"
+                  = text_field_tag "end_date", @end_date.strftime('%F'), placeholder: 'YYYY-MM-DD', data: { behavior: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span2"
             .span5
               .control-group
                 %label.control-label Agency
@@ -61,7 +61,7 @@
 
 :javascript
   $(document).ready( function(){
-    $('[data-behaviour~=datepicker]').datepicker().on('changeDate', function(ev){
+    $('[data-behavior~=datepicker]').datepicker().on('changeDate', function(ev){
       $(this).datepicker('hide'); 
     })
   })
