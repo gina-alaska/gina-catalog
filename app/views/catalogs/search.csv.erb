@@ -2,6 +2,7 @@
 <% count = 0 %>
 <% @results.each do |row| %>
 <% break if current_user.nil? and count >= 50 %>
+<% row.description = "" if row.description.nil? %>
 "<%= row.title %>",<%= row.start_date.try(:year) %>,<%= row.end_date.try(:year) %>,<%= row.status %>,"<%= row.source_agency.try(:name) %>",<%= row.source_agency.try(:category) %>,"<%= row.agencies.collect(&:name).join(', ') %>","<%= row.iso_topics.collect(&:name).join(', ') %>","<%= row.tags.list %>","<%= row.geokeywords.list %>",,"<%= row.primary_contact.try(:full_name) %>","<%= catalog_url(row) %>","<%= row.data_source.try(:name) %>","<%= row.description.slice(0..600) %>","<%=row.long_term_monitoring%>"
 <% count += 1 %>
 <% end %> 

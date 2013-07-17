@@ -5,6 +5,6 @@
       .badge.pull-right{ style: 'margin: 10px 5px 0 0;' }
         = @collection_facets[coll.id] || 0
         results
-      = link_to "/search?search[collection_id]=#{coll.id}", data: {behaviour: "load_collection", target: "#search_collection_id", value: coll.id}, title: coll.description do
+      = link_to "/search?search[collection_id]=#{coll.id}", data: {behavior: "load_collection", target: "#search_collection_id", value: coll.id}, title: coll.description do
         = coll.name
         = " (#{coll.setup.title})" if coll.setup != current_setup
