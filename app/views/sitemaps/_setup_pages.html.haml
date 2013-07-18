@@ -1,0 +1,6 @@
+- setup_pages.each do |page|
+  %ul
+    %li
+      = link_to page.title, "/#{page.slug}", title: page.description
+      - unless page.children.empty?
+        = render '/sitemaps/setup_pages', setup_pages: page.children
