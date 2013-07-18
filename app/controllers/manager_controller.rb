@@ -39,6 +39,28 @@ class ManagerController < ApplicationController
       }
     }
   end
+
+  def full_contact
+    @contact_infos = ContactInfo.includes(:catalog => [:catalogs_setups]).where(:catalogs_setups => { :setup_id => current_setup.id })
+    @contact_infos = @contact_infos.where("length(name) > 0 OR length(email) > 0")
+
+    @page = params["page"].nil? ? 1 : params["page"]
+    @limit = params["limit"].nil? ? 30 : params["limit"]
+    @start_date = params["start_date"].present? ? Time.zone.parse(params["start_date"]) : 30.days.ago
+    @end_date = params["end_date"].present? ? Time.zone.parse(params["end_date"]) : Time.zone.now
+
+    if params["agency"].present?
+      @contact_infos = @contact_infos.where("catalog.source_agency_id = ?", params["agency"])
+    end
+
+    @contact_infos = @contact_infos.created_between(@start_date, @end_date)
+    @total = @contact_infos.count
+    @contact_infos = @contact_infos.order("contact_infos.created_at DESC").page(@page).per(@limit)
+
+    respond_to do |format|
+      format.html
+    end
+  end
   
   protected
   
