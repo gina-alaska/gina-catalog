@@ -32,6 +32,7 @@ class Catalog < ActiveRecord::Base
   belongs_to :primary_contact, :class_name => 'Person'
   belongs_to :data_source
   belongs_to :owner_setup, :class_name => 'Setup'
+  belongs_to :csw_import
   
   has_many :catalogs_setups, uniq: true
   has_many :setups, :through => :catalogs_setups, uniq: true
