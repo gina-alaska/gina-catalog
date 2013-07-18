@@ -32,10 +32,6 @@
           = catalog.collections.list
           
 .pull-right{ style: 'margin: 0 5px 5px 0;'}
-  .btn-group
-    = link_to "##{dom_id(catalog, :description)}", data: { toggle: "collapse" }, class: "btn" do
-      %i.icon-resize-vertical
-      Expand
   - unless catalog.geometry_center_collection.blank?
     .btn-group
       = link_to '#', class: 'btn', data: { "openlayers-action" => "select-features", target: "##{dom_id(catalog, :record)}", title: "Zoom To Record", content: "Zoom to the record location on the map.", trigger: "hover", placement: "bottom", toggle: "popover", container: "##{dom_id(catalog, :record)}" } do
@@ -73,6 +69,10 @@
       = link_to catalog_downloads_path(catalog), class: 'btn', remote: true, data: { title: "Download Files", content: "Download all of the files that are associated with this record.", trigger: "hover", placement: "bottom", toggle: "popover", container: "##{dom_id(catalog, :record)}" } do
         %i.icon-cloud-download
         Download
+  .btn-group
+    = link_to "##{dom_id(catalog, :description)}", data: { toggle: "collapse" }, class: "btn" do
+      %i.icon-resize-vertical
+      More Info...
   .btn-group
     = link_to catalog, class: 'btn btn-primary', data: { title: "Full Data Record", content: "View all of the details for this record.", trigger: "hover", placement: "bottom", toggle: "popover", container: "##{dom_id(catalog, :record)}" } do
       Full Record
