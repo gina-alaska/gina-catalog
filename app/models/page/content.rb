@@ -32,6 +32,7 @@ class Page::Content < ActiveRecord::Base
   
   scope :public, where(draft: false)
   scope :contact, where(slug: "contacts")
+  scope :sitemap, where(slug: "sitemap")
 
   def rebuild_slug
     parent_slugs = self.ancestors.collect { |p| p.slug.split('/').last } << self.slug_without_path

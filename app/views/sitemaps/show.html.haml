@@ -1,0 +1,6 @@
+= render_cms_content(@page, current_setup) do
+  %hr
+  %ul
+    %li
+      = link_to "Home", "/"
+    = render '/sitemaps/setup_pages', setup_pages: @setup_pages

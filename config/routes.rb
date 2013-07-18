@@ -99,6 +99,8 @@ NSCatalog::Application.routes.draw do
   resources :agencies
   resources :people
 
+  resource :sitemap
+
   resources :contacts, only: [:index, :create]
   resources :catalogs do
     resources :downloads, :only => [:index, :show] do
