@@ -45,7 +45,7 @@
   / - else
   /   %dd= link_to item, item, :target => :_blank
   
-  - unless item.owner_setup.full_title == current_setup.full_title
+  - unless item.owner_setup.id == current_setup.id
     %dt Source Portal
     %dd
       = link_to "//#{item.owner_setup.default_url}" do
