@@ -70,6 +70,10 @@
         %i.icon-cloud-download
         Download
   .btn-group
+    = link_to "##{dom_id(catalog, :description)}", data: { toggle: "collapse" }, class: "btn" do
+      %i.icon-resize-vertical
+      More Info...
+  .btn-group
     = link_to catalog, class: 'btn btn-primary', data: { title: "Full Data Record", content: "View all of the details for this record.", trigger: "hover", placement: "bottom", toggle: "popover", container: "##{dom_id(catalog, :record)}" } do
       Full Record
       %i.icon-arrow-right
