@@ -1,0 +1,32 @@
+%table.table.table-bordered.table-striped.table-condensed
+  %thead
+    %tr
+      %td{colspan:10,style:'padding:0;'}
+        .navbar.navbar-static-top
+          .navbar-inner
+            .btn-group
+              = link_to new_manager_csw_import_path, class: 'btn btn-success' do
+                %i.icon-plus.icon-white
+                New CSW Endpoint
+    %tr
+      %th
+        Title
+      %th
+        URL
+      %th
+        Sync Frequency
+      %th
+      
+  %tbody
+    -@csw_imports.each do |import|
+      %tr
+        %td= import.title
+        %td= import.url
+        %td= "#{import.sync_frequency} hours"
+        %td
+          .btn-group
+            = link_to edit_manager_csw_import_path(import.id), class: 'btn', title: "Edit" do
+              %i.icon-edit
+            = link_to manager_csw_import_path(import.id), method: :delete, confirm: "Are you sure?", class: 'btn btn-danger', title: "Delete Collection" do
+              %i.icon-trash.icon-white
+        
