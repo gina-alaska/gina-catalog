@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130716222031) do
+ActiveRecord::Schema.define(:version => 20130719200449) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -217,7 +217,7 @@ ActiveRecord::Schema.define(:version => 20130716222031) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "user_ip"
-    t.integer  "portal_id"
+    t.integer  "setup_id"
     t.integer  "user_id"
     t.text     "user_agent"
   end

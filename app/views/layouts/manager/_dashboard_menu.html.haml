@@ -1,10 +1,8 @@
 .row-fluid
   .span12
     %h4.pull-left
-      - if controller.class.const_defined?(:PAGETITLE)
-        .brand= "Catalog: #{controller.class::PAGETITLE}"
-      - else
-        .brand= "Catalog"
+      .brand= "Catalog: #{page_title}"
     %ul.nav.pull-right.nav-pills
       %li= link_to 'Home', manager_path
+      %li= link_to 'Download Contacts', manager_full_contact_path
       %li= link_to 'Download Log', manager_contact_infos_path

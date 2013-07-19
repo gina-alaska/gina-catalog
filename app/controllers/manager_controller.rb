@@ -39,7 +39,7 @@ class ManagerController < ApplicationController
       }
     }
   end
-  
+
   protected
   
   def fetch_cms_pages
@@ -72,4 +72,14 @@ class ManagerController < ApplicationController
       authenticate_user!
     end      
   end
+
+  def page_title
+    @page_title || PAGETITLE
+  end
+
+  def page_title=(title)
+    @page_title = title
+  end
+
+  helper_method :page_title
 end
