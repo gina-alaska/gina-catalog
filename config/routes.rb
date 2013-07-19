@@ -78,7 +78,7 @@ NSCatalog::Application.routes.draw do
   
   match '/manager' => 'manager#dashboard', as: 'manager'
   match '/search' => 'catalogs#search', as: 'search'
-  match '/manager/full_contact' => 'manager#full_contact'
+  match '/manager/full_contact' => 'manager/contact_infos#full_contact'
 
   resources :contact_infos
 
