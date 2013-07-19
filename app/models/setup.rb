@@ -24,6 +24,7 @@ class Setup < ActiveRecord::Base
   has_many :memberships
   has_many :roles
   has_many :use_agreements
+  has_many :csw_imports
   
   belongs_to :theme
   has_many :themes, foreign_key: 'owner_setup_id'
