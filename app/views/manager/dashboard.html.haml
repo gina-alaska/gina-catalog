@@ -77,7 +77,7 @@
                 = link_to manager_catalog_path(item.catalog.id), title: "#{item.catalog.title}" do
                   = item.catalog.title.truncate(60)
               %td
-                = Setup.find(item.portal_id).title unless item.portal_id.nil?
+                = item.setup.try(:title)
               %td.span2
                 = item.name
               %td.span2

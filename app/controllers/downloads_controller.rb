@@ -145,7 +145,7 @@ class DownloadsController < ApplicationController
     @contact_info.user_ip = request.remote_ip
     @contact_info.user_agent = request.env['HTTP_USER_AGENT']
     @contact_info.user_id = current_user.id unless current_user.nil?
-    @contact_info.portal_id = current_setup.id
+    @contact_info.setup_id = current_setup.id
     
     if @contact_info.save(validate: (run_validations and @catalog.require_contact_info))
       cookies.signed[:sds_catalog_id] = @catalog.id
