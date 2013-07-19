@@ -1,5 +1,6 @@
 class ContactInfo < ActiveRecord::Base
   belongs_to :catalog
+  belongs_to :setup
   
   validates_presence_of :name
   validates_presence_of :email
