@@ -6,33 +6,45 @@ class Manager::ContactInfosController < ManagerController
   def index
     @contact_infos = ContactInfo.joins(:catalog => [:catalogs_setups]).where(:catalogs_setups => { :setup_id => current_setup.id }).uniq
 
-    do_contact_setup
+    contact_setup
 
     respond_to do |format|
-      format.html
+      format.html do
+        if params[:commit] == "CSV"
+          csv_download
+        else
+          render
+        end
+      end
       format.json { render json: @contact_infos }
-      format.csv { do_csv_download }
     end
   end
 
   def full_contact
+    self.page_title = "Download Contacts"
     @contact_infos = ContactInfo.includes(:catalog => [:catalogs_setups]).where(:catalogs_setups => { :setup_id => current_setup.id })
     @contact_infos = @contact_infos.where("length(name) > 0 OR length(email) > 0")
 
-    do_contact_setup
+    contact_setup
 
     respond_to do |format|
-      format.html
+      format.html do
+        if params[:commit] == "CSV"
+          csv_download
+        else
+          render "index"
+        end
+      end
       format.json { render json: @contact_infos }
-      format.csv { do_csv_download }
     end
   end
 
   protected
 
-  def do_contact_setup
+  def contact_setup
     @page = params["page"].nil? ? 1 : params["page"]
     @limit = params["limit"].nil? ? 30 : params["limit"]
+    @limit = 100000 if params["commit"] == "CSV"
     @start_date = params["start_date"].present? ? Time.zone.parse(params["start_date"]) : 30.days.ago
     @end_date = params["end_date"].present? ? Time.zone.parse(params["end_date"]) : Time.zone.now
 
@@ -45,8 +57,8 @@ class Manager::ContactInfosController < ManagerController
     @contact_infos = @contact_infos.order("contact_infos.created_at DESC").page(@page).per(@limit)
   end
 
-  def do_csv_download
-    filename = "catalog-#{Time.now.strftime("%Y%m%d")}.csv"
+  def csv_download
+    filename = "downloads-#{Time.now.strftime("%Y%m%d")}.csv"
     if request.env['HTTP_USER_AGENT'] =~ /msie/i
       # headers['Pragma'] = 'public'
       headers["Content-type"] = "text/csv" 
@@ -57,6 +69,6 @@ class Manager::ContactInfosController < ManagerController
       headers["Content-Type"] ||= 'text/csv'
       headers["Content-Disposition"] = "attachment; filename=\"#{filename}\"" 
     end
-    render layout: false
+    render "download.csv.erb", layout: false
   end
 end

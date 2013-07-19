@@ -1,0 +1,6 @@
+"ID", "Date","Name","Email","Usage", "Portal", "User IP", "User Agent", "Record Title", "Record URL"
+<% count = 0 %>
+<% @contact_infos.each do |row| %>
+<%= row.id %>,"<%= row.created_at %>","<%= row.name %>","<%= row.email %>","<%= row.usage_description.to_s %>", "<%= row.setup.try(:title) %>", "<%= row.user_ip %>", "<%= row.user_agent %>", "<%= row.catalog.try(:title) %>", "<%= catalog_url(row.catalog) %>"
+<% count += 1 %>
+<% end %> 

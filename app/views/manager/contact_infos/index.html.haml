@@ -3,7 +3,7 @@
     %thead
       %tr
         %td{colspan: 6, style: "padding: 0;"}
-          = form_tag manager_contact_infos_path, method: 'GET', class: 'navbar-form form-search' do
+          = form_tag manager_full_contact_path, method: 'GET', class: 'navbar-form form-search' do
             .span2
               .control-group
                 %label.control-label Start
@@ -17,13 +17,15 @@
             .span5
               .control-group
                 %label.control-label Agency
-                .controls
-                  = collection_select_for_agencies("agency", params["agency"], false, "span6")
+                .controls{ style: "margin-top: 5px;" }
+                  = collection_select_for_agencies("agency", params["agency"], false, "span5")
               :javascript
                 $('#agency').select2({allowClear: true, width: 'copy'});
             .span2{ style: "padding-top: 15px; padding-left: 30px;" }
               .control-group
-                = submit_tag 'Search', class: 'btn btn-primary pull-right'
+                .btn-group.pull-right{ style: "margin-top: 8px;" }
+                  = submit_tag 'Search', class: 'btn btn-primary'
+                  = submit_tag 'CSV', class: 'btn btn-primary', data: { format: 'csv' }
       %tr
         %td{colspan: 6, style: "padding: 0; text-align: center;"}
           .navbar.navbar-static-top
@@ -53,10 +55,7 @@
           %td= item.name
           %td= item.email
           %td= item.usage_description
-          - if item.portal_id.nil?
-            %td
-          - else
-            %td= Setup.find(item.portal_id).title
+          %td= item.setup.try(:title)
           %td= link_to item.catalog.title, [:manager, item.catalog]
 
 :javascript
