@@ -60,9 +60,12 @@ class Manager::CswImportsController < ManagerController
     
 
   def destroy
+    @csw_import = current_setup.csw_imports.find(params[:id])
+    @csw_import.destroy
+
     respond_to do |format|
-      flash[:success] = 'Contact was successfully deleted.'
-      format.html { redirect_to manager_contacts_path }
+      flash[:success] = 'CSW Import was successfully deleted.'
+      format.html { redirect_to manager_csw_imports_path }
       format.json { head :no_content }
     end
   end
