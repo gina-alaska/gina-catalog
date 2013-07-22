@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
 
   def member_portals
     return [] unless user_signed_in?
-    @member_portals ||= current_user.memberships.collect(&:setup).sort {|a,b| a.try(:title) <=> b.try(:title) }
+    @member_portals ||= current_user.memberships.collect(&:setup).sort {|a,b| a.try(:title).to_s <=> b.try(:title).to_s }
   end
   helper_method :member_portals
   
