@@ -1,3 +1,5 @@
+- sortable = [['Sort: Relevance', ''],['Sort: Title', 'title_sort'], ['Sort: Type', 'record_type'], ['Sort: Status', 'status'], ['Sort: Agency', 'source_agency_acronym']]
+- sortdir = [['Ascending', 'asc'], ['Descending', 'desc']]
 %table.table.table-striped.table-condensed#catalog-items
   %thead
     %tr
@@ -17,21 +19,16 @@
               %i.icon-hdd              
             %button.btn{ type: "button", class: @search[:unpublished] == 'true' ? 'active' : '', data: { toggle: 'button', action: 'button-toggle', target: '#search_unpublished' }, title: 'Show unpublished records only' }
               %i.icon-folder-close-alt              
+            = select_tag "sort", options_for_select(sortable, params[:sort]), class: 'span2'
+            = select_tag "sort_direction", options_for_select(sortdir, @sortdir), class: 'span2'
     %tr
       %td{colspan:10,style:'padding:0;'}
         .navbar.navbar-static-top
           .navbar-inner
             .btn-group.pull-right
-              = link_to_first_page @catalogs, params: { search: @search }, class: 'btn' do
-                %i.icon-double-angle-left
-              = link_to_prev_page @catalogs, params: {search: @search}, class: 'btn' do
-                %i.icon-angle-left
-              %button.btn
-                %span= display_result_info(@catalogs, @page, @limit, @total)
-              = link_to_next_page @catalogs, params: {search: @search}, class: 'btn' do
-                %i.icon-angle-right
-              = link_to_last_page @catalogs, params: { search: @search }, class: 'btn' do
-                %i.icon-double-angle-right
+              = link_to new_manager_catalog_path, class: 'btn btn-success' do
+                %i.icon-plus.icon-white
+                New Record
             .btn-group
               %button#check-toggle.btn{data: { action: 'toggle-checkbox', target: '.item-checkbox' }, title: "Toggle CheckBoxes" }
                 %i.icon-check
@@ -51,9 +48,16 @@
                     %a{ id: coll.id, href: "#", onclick: "CollToggle(#{coll.id})"}
                       = coll.name
             .btn-group
-              = link_to new_manager_catalog_path, class: 'btn btn-success' do
-                %i.icon-plus.icon-white
-                New Record
+              = link_to_first_page @catalogs, params: { search: @search }, class: 'btn' do
+                %i.icon-double-angle-left
+              = link_to_prev_page @catalogs, params: {search: @search}, class: 'btn' do
+                %i.icon-angle-left
+              %button.btn
+                %span= display_result_info(@catalogs, @page, @limit, @total)
+              = link_to_next_page @catalogs, params: {search: @search}, class: 'btn' do
+                %i.icon-angle-right
+              = link_to_last_page @catalogs, params: { search: @search }, class: 'btn' do
+                %i.icon-double-angle-right
     %tr
       %th{style:'width:25px;'}
       %th Title
@@ -97,10 +101,13 @@
         %td= item.end_date.try(:year)
         %td= item.source_agency
         %td
-          - if item.owner_setup.id == current_setup.id 
-            Yes
-          - else
-            %abbr{ title: "This record is shared from the #{item.owner_setup.try(:title)} portal"} No
+          -if item.owner_setup.nil?
+            Udef
+          -else
+            - if item.owner_setup == current_setup 
+              Yes
+            - else
+              %abbr{ title: "This record is shared from the #{item.owner_setup.try(:title)} portal"} No
         %td
           - if item.published_at.nil?
             No

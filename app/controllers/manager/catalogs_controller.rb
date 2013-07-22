@@ -16,16 +16,24 @@ class Manager::CatalogsController < ManagerController
   def index
     @page = params[:page] || 1
     @limit = 50
+    @sort = params[:sort] || ''
+    @sortdir = params[:sort_direction] || "ascending"
 
     @search = params[:search] || {}
-    @search[:order_by] ||= 'title_sort-ascending'
-    if @search.keys.count > 0
-      search = solr_search(@search, @page, @limit)
+    if @search[:q].blank? and @sort.empty?
+      @sort = "title_sort"
+    end
+
+    @search[:order_by] = "#{@sort}-#{@sortdir}" unless @sort.empty?
+
+    search = solr_search(@search, @page, @limit)
+
+    if search.respond_to? :results
       @catalogs = search.results
       @total = search.total
     else
-      @catalogs = Catalog.order('title ASC').page(@page).per(@limit)
-      @total = Catalog.all.count
+      @catalogs = Array.wrap(search)
+      @total = 0
     end
     
     respond_with @catalogs
