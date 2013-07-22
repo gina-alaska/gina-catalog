@@ -70,8 +70,8 @@ class Setup < ActiveRecord::Base
     
     source.roles.each do |r|
       role = r.dup
-      r.save!
-      self.roles << r
+      role.save!
+      self.roles << role
     end
     
     self.theme = source.theme
