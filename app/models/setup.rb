@@ -12,19 +12,19 @@ class Setup < ActiveRecord::Base
   has_and_belongs_to_many :agencies, join_table: 'agencies_setups'
 
 
-  has_many :catalogs_setups, uniq: true
+  has_many :catalogs_setups, uniq: true, dependent: :destroy
   has_many :catalogs, through: :catalogs_setups
   has_many :owned_catalogs, class_name: 'Catalog', foreign_key: 'catalogs'
 #  has_and_belongs_to_many :catalogs
   
-  has_many :catalog_collections
+  has_many :catalog_collections, dependent: :destroy
   has_many :collections
   has_many :contacts
   has_many :urls, class_name: 'SiteUrl', dependent: :destroy, order: "id ASC"
-  has_many :memberships
-  has_many :roles
-  has_many :use_agreements
-  has_many :csw_imports
+  has_many :memberships, dependent: :destroy
+  has_many :roles, dependent: :destroy
+  has_many :use_agreements, dependent: :destroy
+  has_many :csw_imports, dependent: :destroy
   
   belongs_to :theme
   has_many :themes, foreign_key: 'owner_setup_id'
