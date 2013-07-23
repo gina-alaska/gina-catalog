@@ -5,8 +5,8 @@ $(document).on 'click', 'a[data-behavior="search-results-load"]', (evt) ->
   href = $(this).attr('href')
   state = { behavior: 'search-results-load' }
     
-  if $('#map')
-    state.map_size = $('#map').data('map').map_state.size
+  if $('#map_canvas')
+    state.map_size = $('#map_canvas').data('map').map_state.size
   
   History.pushState(state, null, href)
 
@@ -29,10 +29,10 @@ loadState = (state) ->
   if state.data
     switch state.data.behavior
       when 'search-results-load'
-        if $('#map')
+        if $('#map_canvas')
           $('.spinner-container').spin('large')
           CatalogSearch.load(state.url)
-          $('#map').data('map').loadMapState(state.data.map_size)  
+          $('#map_canvas').data('map').loadMapState(state.data.map_size)  
 
 $ ->
   History.Adapter.bind(window, 'statechange', statechange)
