@@ -12,7 +12,7 @@
     state = { behavior: 'search-results-load' }
     
     if $('#map')
-      state.map_size = $('#map').data('map').map_state.size
+      state.map_size = $('#map_canvas').data('map').map_state.size
     
     if track
       History.pushState(state, null, url)
