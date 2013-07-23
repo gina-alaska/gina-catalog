@@ -92,7 +92,7 @@
   .modal-header
     %button.close{ type: 'button', data: { dismiss: 'modal' } } &times;
     %h3 Location Editor
-  #map.modal-body{ style: 'position: relative; padding: 0; height:400px;', data: { openlayers: 'map_canvas', projection: 'EPSG:3338', layers: 'TILE.EPSG:3338.*' } }
+  #map.modal-body{ style: 'position: relative; padding: 0; height:400px;', data: { map: 'EditorMap', target: '#map_canvas' } }
     .navbar.navbar-static-top
       .navbar-inner
         .btn-group{ data: { toggle: 'buttons-radio' } }
@@ -105,7 +105,7 @@
             Clear
           %button.btn{ data: { "openlayers-action" => 'reset' } }
             Reset  
-    #map_canvas{style: "width:100%; height: 359px;" }
+    #map_canvas{style: "width:100%; height: 359px;", data: { projection: 'EPSG:3338', displayProjection: 'EPSG:4326', layers: 'TILE.EPSG:3338.*' } }
   .modal-footer
     = link_to '#', class: 'btn', data: { dismiss: 'modal' } do
       Cancel
@@ -116,28 +116,26 @@
 / refresh because of select2 moving things around on the page
 :javascript
   $(document).ready(function() {
+    var mapwrap = $('[data-map="EditorMap"]')
+    var map = new EditorMap(mapwrap.data('target'));
+  
     $('[data-spy="scroll"]').each(function() {
       $(this).delay(500).scrollspy('refresh');
     });
     
     var input, feature, active_draw_button;
-    var catalog_map = $('#map').data('map');
-    var map = catalog_map.map;
-    
-    var editor = new LocationEditor(map);
-    catalog_map.addBtnHandler('clear', function() { editor.clear(); });
-    catalog_map.addBtnHandler('reset', function() { editor.addFeature(); });
-    catalog_map.addBtnHandler('draw', function(evt, el) { editor.drawFeature($(el).data('type')); });
+    // var catalog_map = $('#map').data('map');
+    // var map = catalog_map.map;
     
     $('#location_editor').on('shown', function() {
-      map.updateSize();
+      map.resize();
     });
     
     $(document).on('click', '[data-openlayers-action="edit-location"]', function(evt) {
       evt.preventDefault();
       
       input = $($(this).data('target'));
-      var feature = editor.addFeature(input);      
+      var feature = map.addFeature(input);      
       $('#location_editor').modal('show');
       
       if(feature) {
@@ -156,7 +154,7 @@
     
     $(document).on('click', '.btn[data-openlayers-action="update-location"]', function(evt) {
       evt.preventDefault();
-      input.val(editor.getWKT());      
+      input.val(map.getWKT());      
       $('#location_editor').modal('hide');
     });
   })

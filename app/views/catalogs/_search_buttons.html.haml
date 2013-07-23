@@ -1,34 +1,40 @@
-.row-fluid#search_buttons
-  .span5
-    .btn-group.btn-block
-      / .dropdown{style:'margin-bottom:0px; color:#000;', data: { title: "Limit Results", content: "Limit the number of records displayed on each page.", trigger: "hover", toggle: "popover", placement: "right", container: "#search_buttons" }}
-      = link_to '#', class: "btn span9", id: 'limit-btn', data: { toggle: "dropdown" } do
-        = "Limit: #{@limit}"
-      = link_to '#', class: "btn span3 dropdown-toggle", data: { toggle: "dropdown" } do
-        %i.caret
-        
-      %ul.dropdown-menu
-        %li
-          =link_to '#', data: { behavior: 'stash', target: '#limit', value: 30, title: 'Limit: 30', title_target: '#limit-btn' } do
-            30 Records
-        %li
-          =link_to '#', data: { behavior: 'stash', target: '#limit', value: 100, title: 'Limit: 100', title_target: '#limit-btn' } do
-            100 Records
-        %li
-          =link_to '#', data: { behavior: 'stash', target: '#limit', value: 500, title: 'Limit: 500', title_target: '#limit-btn' } do
-            500 Records
-  .span7
-    .btn-group.btn-block
-      = link_to '#', class: "btn span12 dropdown-toggle", data: { toggle: "dropdown" } do
-        = "Export results as..."
-        %b.caret
-      %ul.dropdown-menu
-        %li 
-          = link_to '#', data: { behavior: 'submit-form', format: 'js', track: false } do
-            Normal Search
-        %li 
-          = link_to '#', data: { behavior: 'submit-form', format: 'csv', track: false } do
-            CSV
-        /%li 
-        /  = link_to '#', data: { behavior: 'submit-form', format: 'pdf', track: false } do
-        /    PDF
+#search_buttons
+  .row-fluid
+    .span6
+      .btn-group.btn-block
+        = link_to '#', class: "btn", id: 'limit-btn', data: { toggle: "dropdown" }, style: 'width: 90px' do
+          = "Limit: #{@limit}"
+        = link_to '#', class: "btn dropdown-toggle", data: { toggle: "dropdown" } do
+          %i.caret
+    
+        %ul.dropdown-menu
+          %li
+            =link_to '#', data: { behavior: 'stash', target: '#limit', value: 30, title: 'Limit: 30', title_target: '#limit-btn' } do
+              30 Records
+          %li
+            =link_to '#', data: { behavior: 'stash', target: '#limit', value: 100, title: 'Limit: 100', title_target: '#limit-btn' } do
+              100 Records
+          %li
+            =link_to '#', data: { behavior: 'stash', target: '#limit', value: 500, title: 'Limit: 500', title_target: '#limit-btn' } do
+              500 Records
+    .span6
+      = link_to '/search', class: 'btn btn-block' do
+        Clear
+  .row-fluid{style: "margin-top: 5px;"}
+    .span6
+      .btn-group.btn-block
+        = link_to '#', class: "btn", data: { toggle: "dropdown" }, style: 'width: 90px' do
+          = "Export as..."
+        = link_to '#', class: "btn dropdown-toggle", data: { toggle: "dropdown" } do
+          %i.caret
+          
+        %ul.dropdown-menu
+          %li 
+            = link_to '#', data: { behavior: 'submit-form', format: 'csv', track: false } do
+              CSV
+          /%li 
+          /  = link_to '#', data: { behavior: 'submit-form', format: 'pdf', track: false } do
+          /    PDF
+    .span6
+      %button.btn.btn-primary.btn-block{ type: 'submit'}
+        Search

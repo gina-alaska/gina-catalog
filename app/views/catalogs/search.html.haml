@@ -27,5 +27,7 @@
     $('#search_aoi').val(evt.wkt);
   })
   $(document).ready(function() {
+    var mapwrap = $('[data-map="CatalogMap"]');
+    var map = new CatalogMap(mapwrap.data('target'))
     $('[data-toggle="popover"]').popover();
   })
