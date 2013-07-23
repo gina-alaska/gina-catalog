@@ -32,12 +32,6 @@
           = catalog.collections.list
           
 .pull-right{ style: 'margin: 0 5px 5px 0;'}
-  - unless catalog.geometry_center_collection.blank?
-    .btn-group
-      = link_to '#', class: 'btn', data: { "openlayers-action" => "select-features", target: "##{dom_id(catalog, :record)}", title: "Zoom To Record", content: "Zoom to the record location on the map.", trigger: "hover", placement: "bottom", toggle: "popover", container: "##{dom_id(catalog, :record)}" } do
-        %i.icon-search
-        Zoom To
-      
   - if user_signed_in?
     - available_portals = member_portals# - catalog.setups - current_setup.ancestors
     - if catalog.published? and available_portals.count > 0
@@ -64,16 +58,19 @@
           %i.icon-edit
           Edit
 
-  - if catalog.downloadable?
-    .btn-group
+  .btn-group
+    - unless catalog.geometry_center_collection.blank?
+      = link_to '#', class: 'btn', data: { "openlayers-action" => "select-features", target: "##{dom_id(catalog, :record)}", title: "Zoom To Record", content: "Zoom to the record location on the map.", trigger: "hover", placement: "bottom", toggle: "popover", container: "##{dom_id(catalog, :record)}" } do
+        %i.icon-search
+        Zoom To
+
+    - if catalog.downloadable?
       = link_to catalog_downloads_path(catalog), class: 'btn', remote: true, data: { title: "Download Files", content: "Download all of the files that are associated with this record.", trigger: "hover", placement: "bottom", toggle: "popover", container: "##{dom_id(catalog, :record)}" } do
         %i.icon-cloud-download
         Download
-  .btn-group
     = link_to "##{dom_id(catalog, :description)}", data: { toggle: "collapse" }, class: "btn" do
       %i.icon-plus
-      More Info...
-  .btn-group
+      More Info
     = link_to catalog, class: 'btn btn-primary', data: { title: "Full Data Record", content: "View all of the details for this record.", trigger: "hover", placement: "bottom", toggle: "popover", container: "##{dom_id(catalog, :record)}" } do
       Full Record
       %i.icon-arrow-right
