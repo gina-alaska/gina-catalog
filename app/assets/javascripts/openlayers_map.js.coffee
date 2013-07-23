@@ -1,6 +1,7 @@
 class @OpenlayersMap
   constructor: (@el) ->
     @setupMap(@el)
+    @wktReader = new OpenLayers.Format.WKT()
     $(@el).data('map', this)
     
   # end constructor  
@@ -17,7 +18,8 @@ class @OpenlayersMap
     @default_bounds = new OpenLayers.Bounds(162.0498, 45, -106.7196, 76);
     @default_bounds.transform('EPSG:4326', @data_config['projection']);
     
-    @map = new OpenLayers.Map(@data_config['openlayers'], @config)
+    # strip out the # for openlayers
+    @map = new OpenLayers.Map(el.replace('#', ''), @config)
     @map.addControls([
       new OpenLayers.Control.LayerSwitcher(),
       new OpenLayers.Control.MousePosition({ displayProjection: @map.displayProjection, numDigits: 3, prefix: 'Mouse: ' })
@@ -39,6 +41,16 @@ class @OpenlayersMap
   zoomToDefaultBounds: =>
     @map.zoomToExtent(@default_bounds, true);
   #end zoomToDefaultBounds  
+
+  zoomToBounds: (bounds, maxZoom = 6) =>
+    zoom = @map.getZoomForExtent(bounds)
+    center = bounds.getCenterLonLat()
+    
+    if zoom > maxZoom
+      zoom = maxZoom
+
+    @map.zoomTo(zoom)
+    @map.setCenter(center)
 
   resize: =>
     @map.updateSize()

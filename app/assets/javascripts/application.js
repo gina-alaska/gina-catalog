@@ -15,7 +15,7 @@
 //= require 'spin'
 //= require 'projections'
 //= require 'openlayers_map'
-//= require 'maps'
+//= require 'catalog_map'
 //= require 'catalogs'
 //= require 'flash_message'
 //= require 'pages'

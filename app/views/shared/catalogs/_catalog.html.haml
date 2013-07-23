@@ -26,13 +26,13 @@
           = render '/shared/catalogs/collapsed_content', item: catalog, collapse: collapse
           
         .span5
-          #map{ data: {                                       |
-            openlayers: 'map_canvas',                         |
-            projection: 'EPSG:3857',                          |
-            displayProjection: 'EPSG:4326',                   |
-            google: "true",
-            layers: ['TILE.EPSG:3857.*'] } }
-            #map_canvas
+          #map{ data: { map: 'CatalogMap', target: '#map_canvas' } }
+            #map_canvas{ data: { projection: 'EPSG:3857', displayProjection: 'EPSG:4326', google: "true", layers: ['TILE.EPSG:3857.*'] } } } }
 
           %br/
           = render '/shared/catalogs/files', catalog: catalog
+:javascript
+  $(document).ready(function() {
+    var mapwrap = $('[data-map="CatalogMap"]');
+    var map = new CatalogMap(mapwrap.data('target'))
+  })

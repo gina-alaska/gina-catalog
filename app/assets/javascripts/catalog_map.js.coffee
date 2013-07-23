@@ -1,7 +1,7 @@
 map_size = { hidden: false, large: false, fullscreen: false }
 map_size_target = null
 
-class CatalogMap extends OpenlayersMap
+class @CatalogMap extends OpenlayersMap
   constructor: (@el) ->
     super(@el)
     
@@ -15,8 +15,38 @@ class CatalogMap extends OpenlayersMap
         @expandMap(map_size_target, size) 
             
     @loadMapState()
+    @loadFeatures()
     
   # end constructor
+  
+  loadFeatures: =>
+    unless @result_feature_layer?
+      @result_feature_layer = new OpenLayers.Layer.Vector('Search Results', { styleMap: @styleMap, rendererOptions: {zIndexing: true} })
+      @map.addLayer(@result_feature_layer)
+    
+    geoms = $('[data-wkt]');
+    return unless geoms.length > 0 and $('#map').data('map') 
+        
+    @result_feature_layer.destroyFeatures()
+    
+    geoms.each (k, result) =>
+      return unless $(result).data('wkt')
+    
+      features = @wktReader.read($(result).data('wkt'));
+      if features.length > 0
+        $(features).each (k,f) =>
+          f.geometry.transform('EPSG:4326', @map.projection);
+          f.attributes = { record_id: $(result).attr('id'), type: $(result).data('type') }
+          
+        @result_feature_layer.addFeatures(features)
+        #save features back to dom object for later use to interact with the map
+        $(result).data('features', features)
+        
+    @centerOnData(@result_feature_layer)
+        
+  centerOnData: (layer) =>
+    if layer.features.length > 0
+      @zoomToBounds(layer.getDataExtent())
   
   addBtnHandler: (name, func) =>
     @btnHandlers[name] = func
@@ -58,7 +88,7 @@ class CatalogMap extends OpenlayersMap
     @addBtnHandler 'expand', (evt, btn) =>
       @expandMap(btn.data('target'), btn.data('size'), btn)
       
-    @btns = $(@el).find('.btn[data-openlayers-action]')
+    @btns = $(@el).parent().find('.btn[data-openlayers-action]')
     @btns.on 'click', (evt) =>
       evt.preventDefault()
       action = $(evt.currentTarget).data('openlayers-action')
@@ -85,7 +115,6 @@ class CatalogMap extends OpenlayersMap
       @map.addLayer(@aoiLayer)
       
     if @data_config['aoiInputField']
-      console.log 'readd aoi'
       @addAOI($(@data_config['aoiInputField']).val())    
   #end setupMap
     
@@ -142,13 +171,3 @@ class CatalogMap extends OpenlayersMap
       @map.addControl(@aoiDrawControl)
   #end setupAOIControl
 #end CatalogMap
-
-map_init = ->
-  $('div[data-openlayers]').each -> 
-    el = $(this).attr('id');
-    map = new CatalogMap(this);
-
-
-$(document).ready ->
-  map_init();
-  # $(document).on 'page:load', map_init
