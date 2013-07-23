@@ -14,6 +14,7 @@
 //= require 'gina-map-layers/projections/all'
 //= require 'spin'
 //= require 'projections'
+//= require 'openlayers_map'
 //= require 'maps'
 //= require 'catalogs'
 //= require 'flash_message'
