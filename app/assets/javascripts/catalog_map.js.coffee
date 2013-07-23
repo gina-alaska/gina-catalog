@@ -1,22 +1,52 @@
 map_size = { hidden: false, large: false, fullscreen: false }
 map_size_target = null
 
-class CatalogMap
+class @CatalogMap extends OpenlayersMap
   constructor: (@el) ->
+    super(@el)
+    
     @btnHandlers = {}
     @map_state = { target: '.search', size: History.getState().data.map_size || 'normal' }
-    @setupMap(@el)
+    @setupCatalogMap()
     @setupToolbar()
     
     if map_size_target 
       for size, active of map_size when active is true
         @expandMap(map_size_target, size) 
-    
-    
-    $(@el).data('map', this)
+            
     @loadMapState()
+    @loadFeatures()
     
   # end constructor
+  
+  loadFeatures: =>
+    unless @result_feature_layer?
+      @result_feature_layer = new OpenLayers.Layer.Vector('Search Results', { styleMap: @styleMap, rendererOptions: {zIndexing: true} })
+      @map.addLayer(@result_feature_layer)
+    
+    geoms = $('[data-wkt]');
+    return unless geoms.length > 0 and $('#map').data('map') 
+        
+    @result_feature_layer.destroyFeatures()
+    
+    geoms.each (k, result) =>
+      return unless $(result).data('wkt')
+    
+      features = @wktReader.read($(result).data('wkt'));
+      if features.length > 0
+        $(features).each (k,f) =>
+          f.geometry.transform('EPSG:4326', @map.projection);
+          f.attributes = { record_id: $(result).attr('id'), type: $(result).data('type') }
+          
+        @result_feature_layer.addFeatures(features)
+        #save features back to dom object for later use to interact with the map
+        $(result).data('features', features)
+        
+    @centerOnData(@result_feature_layer)
+        
+  centerOnData: (layer) =>
+    if layer.features.length > 0
+      @zoomToBounds(layer.getDataExtent())
   
   addBtnHandler: (name, func) =>
     @btnHandlers[name] = func
@@ -58,7 +88,7 @@ class CatalogMap
     @addBtnHandler 'expand', (evt, btn) =>
       @expandMap(btn.data('target'), btn.data('size'), btn)
       
-    @btns = $(@el).find('.btn[data-openlayers-action]')
+    @btns = $(@el).parent().find('.btn[data-openlayers-action]')
     @btns.on 'click', (evt) =>
       evt.preventDefault()
       action = $(evt.currentTarget).data('openlayers-action')
@@ -66,30 +96,7 @@ class CatalogMap
         @btnHandlers[action](evt, $(evt.currentTarget));
   # end setupToolbar
   
-  setupMap: (el) ->
-    @data_config = $(el).data()
-    @data_config['displayProjection'] = @data_config['displayProjection'] || 'EPSG:4326'
-    @config = Gina.Projections.get(@data_config['projection']);
-    @config['projection'] = @data_config['projection']
-    @config['displayProjection'] = @data_config['displayProjection'] || 'EPSG:4326'
-    @config['zoomMethod'] = OpenLayers.Easing.Quad.easeOut
-    @config['zoomDuratoin'] = 5
-    
-    # @default_bounds = new OpenLayers.Bounds(-168.67373199615875, 56.046343829256664, -134.76560087596793, 70.81655788845131);
-    @default_bounds = new OpenLayers.Bounds(162.0498, 45, -106.7196, 76);
-    @default_bounds.transform('EPSG:4326', @data_config['projection']);
-    
-    @map = new OpenLayers.Map(@data_config['openlayers'], @config)
-    @map.addControls([
-      new OpenLayers.Control.LayerSwitcher(),
-      new OpenLayers.Control.MousePosition({ displayProjection: @map.displayProjection, numDigits: 3, prefix: 'Mouse: ' })
-    ])
-
-    if @data_config['google']
-      @add_google_layers()
-
-    Gina.Layers.inject(@map, @data_config['layers']);
-    
+  setupCatalogMap: () ->
     unless @aoiLayer?
       aoiStyle = new OpenLayers.StyleMap({
         default: new OpenLayers.Style({
@@ -108,12 +115,7 @@ class CatalogMap
       @map.addLayer(@aoiLayer)
       
     if @data_config['aoiInputField']
-      console.log 'readd aoi'
-      @addAOI($(@data_config['aoiInputField']).val())
-    
-    @zoomToDefaultBounds()
-    
-    @ready()
+      @addAOI($(@data_config['aoiInputField']).val())    
   #end setupMap
     
   addAOI:(wkt) =>
@@ -167,66 +169,5 @@ class CatalogMap
         $(this).removeClass('active')
       
       @map.addControl(@aoiDrawControl)
-
-  
-  setDefaultBounds: (bounds) =>
-    @default_bounds = bounds
-  
-  zoomToDefaultBounds: =>
-    @map.zoomToExtent(@default_bounds, true);
-    
-  #end zoomToDefaultBounds  
-
-  resize: =>
-    @map.updateSize()
-    $.event.trigger({
-      type: 'openlayers:resize',
-      map: @map
-    })
-
-  add_google_layers: =>
-    layers = [
-      new OpenLayers.Layer.Google(
-          "Google Physical",
-          {type: google.maps.MapTypeId.TERRAIN}
-      ),
-      new OpenLayers.Layer.Google(
-          "Google Streets",
-          {numZoomLevels: 20}
-      ),
-      new OpenLayers.Layer.Google(
-          "Google Hybrid",
-          {type: google.maps.MapTypeId.HYBRID, numZoomLevels: 20}
-      ),
-      new OpenLayers.Layer.Google(
-          "Google Satellite",
-          {type: google.maps.MapTypeId.SATELLITE, numZoomLevels: 22}
-      )
-    ]
-    @map.addLayers layers
-
-  ready: =>
-    $('#map_canvas').on "transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", (evt) =>
-      @resize() if $(evt.target).attr('id') == 'map_canvas'
-    
-    setTimeout(=>
-      $("##{@data_config['openlayers']}").addClass('ready')      
-      @map.updateSize()
-      
-      $.event.trigger({
-        type: 'openlayers:ready',
-        map: @map,
-        mapInstance: this
-      })
-    , 1000)
+  #end setupAOIControl
 #end CatalogMap
-
-map_init = ->
-  $('div[data-openlayers]').each -> 
-    el = $(this).attr('id');
-    map = new CatalogMap(this);
-
-
-$(document).ready ->
-  map_init();
-  # $(document).on 'page:load', map_init

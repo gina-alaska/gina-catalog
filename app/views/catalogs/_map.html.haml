@@ -1,11 +1,5 @@
-#map{ data: {                                       |
-  openlayers: 'map_canvas',                         |
-  projection: 'EPSG:3857',                          |
-  display_projection: 'EPSG:4326',                  |
-  aoi_input_field: '#search_aoi',                   |
-  google: "true",
-  layers: ['TILE.EPSG:3857.*'] } }
-  #map_canvas{ style:'padding-bottom: 40px;' }
+#map{ data: { map: 'CatalogMap', target: '#map_canvas' } }
+  #map_canvas{ style:'padding-bottom: 40px;', data: { projection: 'EPSG:3857', display_projection: 'EPSG:4326', aoi_input_field: '#search_aoi', google: "true", layers: ['TILE.EPSG:3857.*'] } }
   .navbar.navbar-static-top
     .navbar-inner
       .pull-right.pagetoolbar

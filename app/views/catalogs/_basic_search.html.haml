@@ -3,10 +3,4 @@
 = hidden_field_tag 'limit', @limit, id: 'limit'
 = hidden_field_tag 'search[bbox]', @search_params[:bbox], id: "search_aoi"
 
-.input-append.btn-block
-  = text_field_tag 'search[q]', @search_params[:q], placeholder: 'Enter keyword search', class: 'span9'
-  = link_to '/search', class: 'btn', title: "Reset search" do
-    %i.icon-remove
-  = link_to '#', class: 'btn btn-primary', data: {behavior: 'submit-form', target: "#catalog_search_form", format: "js"}, title: 'Search' do
-    %i.icon-search
-
+= text_field_tag 'search[q]', @search_params[:q], placeholder: 'Enter keyword search', class: 'span12'
