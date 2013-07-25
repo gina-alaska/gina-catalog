@@ -40,7 +40,7 @@ class Manager::AgenciesController < ManagerController
     @agency = Agency.new(params[:agency])
     @agency.setups << current_setup
 
-    if @agency.save!
+    if @agency.save
       respond_to do |format|
         flash[:success] = "Agency #{@agency.name} was successfully created."
         format.html { redirect_to manager_agencies_path }
