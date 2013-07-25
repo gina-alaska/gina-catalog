@@ -2,5 +2,5 @@
   %ul
     %li
       = link_to page.title, "/#{page.slug}", title: page.description
-      - unless page.children.empty?
-        = render '/sitemaps/setup_pages', setup_pages: page.children
+      - unless page.children.autolinkable.empty?
+        = render '/sitemaps/setup_pages', setup_pages: page.children.autolinkable

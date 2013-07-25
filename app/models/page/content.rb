@@ -31,6 +31,7 @@ class Page::Content < ActiveRecord::Base
   # end
   
   scope :public, where(draft: false)
+  scope :autolinkable, -> { where({ draft: false, main_menu: true }) }
   scope :contact, where(slug: "contacts")
   scope :sitemap, where(slug: "sitemap")
 
