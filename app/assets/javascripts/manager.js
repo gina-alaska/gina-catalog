@@ -32,6 +32,7 @@ $(document).ready(function() {
   $(document).on('click', '[data-action="collapse-all"]', function() {
     $($(this).data('target')).collapse('hide');
   });
+  $('select[data-ui="select2"]').select2({ allowClear: true, width:'copy' })
 });
 
 function remove_fields(link) {

@@ -4,23 +4,76 @@
   %thead
     %tr
       %td{colspan:10,style:'padding:0;'}
-        = form_tag manager_catalogs_path, method: 'GET', class: 'form-inline well well-small', style: "margin: 0;" do
+        = form_tag manager_catalogs_path, method: 'GET', class: 'well well-small', style: "margin: 0;" do
           = hidden_field_tag 'search[editable]', @search[:editable] || 'false', id: 'search_editable'
           = hidden_field_tag 'search[sds]', @search[:sds] || 'false', id: 'search_sds'
           = hidden_field_tag 'search[unpublished]', @search[:published_at] || 'false', id: 'search_unpublished'
-          .btn-group
-            .input-append
+          .form-inline
+            .btn-group
               = text_field_tag 'search[q]', @search[:q], placeholder: "Search"
+            .btn-group
+              %button.btn{ type: "button", class: @search[:editable] == 'true' ? 'active' : '', data: { toggle: 'button', action: 'button-toggle', target: '#search_editable' }, title: 'Show editable records only' }
+                %i.icon-edit              
+              %button.btn{ type: "button", class: @search[:sds] == 'true' ? 'active' : '', data: { toggle: 'button', action: 'button-toggle', target: '#search_sds' }, title: 'Show SDS records only' }
+                %i.icon-hdd              
+              %button.btn{ type: "button", class: @search[:unpublished] == 'true' ? 'active' : '', data: { toggle: 'button', action: 'button-toggle', target: '#search_unpublished' }, title: 'Show unpublished records only' }
+                %i.icon-folder-close-alt              
+            .btn-group
+              = select_tag "sort", options_for_select(sortable, params[:sort]), class: 'span2', title: "Sort by Column"
+              = select_tag "sort_direction", options_for_select(sortdir, @sortdir), class: 'span2', title: "Sort Direction"
+            .btn-group
+              = link_to '#options', class: 'btn', data: { toggle: 'collapse', parent: '#options' } do
+                Advanced
+            .btn-group.pull-right
               = submit_tag 'Search', class: 'btn btn-primary'
-          .btn-group
-            %button.btn{ type: "button", class: @search[:editable] == 'true' ? 'active' : '', data: { toggle: 'button', action: 'button-toggle', target: '#search_editable' }, title: 'Show editable records only' }
-              %i.icon-edit              
-            %button.btn{ type: "button", class: @search[:sds] == 'true' ? 'active' : '', data: { toggle: 'button', action: 'button-toggle', target: '#search_sds' }, title: 'Show SDS records only' }
-              %i.icon-hdd              
-            %button.btn{ type: "button", class: @search[:unpublished] == 'true' ? 'active' : '', data: { toggle: 'button', action: 'button-toggle', target: '#search_unpublished' }, title: 'Show unpublished records only' }
-              %i.icon-folder-close-alt              
-            = select_tag "sort", options_for_select(sortable, params[:sort]), class: 'span2'
-            = select_tag "sort_direction", options_for_select(sortdir, @sortdir), class: 'span2'
+          #options.collapse{ class: @is_advanced ? 'in' : '', style: "margin: 0; padding-top: 5px;"}
+            .row-fluid
+              .span4
+                = label_tag 'search[type]', 'Record Type'
+                = select_tag 'search[type]', options_for_select([['Projects', 'Project'], ['Data', 'Data']], @search[:type]), style: "width: 60%;", data: {placeholder: 'Projects and Data', ui: 'select2' }, include_blank: true
+              .span4
+                = label_tag 'search[data_types]', 'Data Type'
+                = select_tag 'search[data_types]', options_from_collection_for_select(DataType.all, :name, :name, @search[:data_types]), style: "width: 60%;", data: {placeholder: 'All types', ui: 'select2'}, include_blank: true
+              .span4
+                = label_tag 'search[status]', 'Status'
+                = select_tag 'search[status]', options_for_select(Project::STATUSES + Asset::STATUSES, @search[:status]),style: "width: 60%;", data: {placeholder: 'Any', ui: 'select2'}, include_blank: true
+            .row-fluid
+              .span4
+                = label_tag 'search[start_date_afer]', 'Starts after'
+                = number_field_tag 'search[start_date_afer]', @search[:start_date_afer], min: 1900, max: Time.zone.now.year, placeholder: 'YYYY'
+              .span4
+                = label_tag 'search[end_date_before]', 'Ends before'
+                = number_field_tag 'search[end_date_before]', @search[:end_date_before], min: 1900, max: Time.zone.now.year, placeholder: 'YYYY'
+              .span4
+                = label_tag 'search[region]', 'Region'
+                = select_tag 'search[region]', options_from_collection_for_select(Geokeyword.all, :name, :name, @search[:region]), style: "width: 60%;", data: {placeholder: 'All regions', ui: 'select2'}, include_blank: true
+            .row-fluid
+              .span12
+                = label_tag 'search[iso_topic_ids]', 'ISO Topics'
+                = select_tag 'search[iso_topic_ids]', options_from_collection_for_select(IsoTopic.all, :id, :long_name_with_code, @search[:iso_topic_ids]), style: "width: 80%;", data: {placeholder: 'All types', ui: 'select2'}, include_blank: true
+            .row-fluid
+              .span12
+                =label_tag 'search[source_agency_id]', 'Primary Agency'
+                = collection_select_for_agencies('search[source_agency_id]', @search[:source_agency_id], false, 'span10') 
+            .row-fluid
+              .span12
+                =label_tag 'search[funding_agency_id]', 'Funding Agency'
+                = collection_select_for_agencies('search[funding_agency_id]', @search[:funding_agency_id], false, 'span10') 
+            .row-fluid
+              .span12
+                =label_tag 'search[agency_ids]', 'Other Agencies'
+                = collection_select_for_agencies('search[agency_ids]', @search[:agency_ids], true, 'span10') 
+            .row-fluid
+              .span4
+                =label_tag 'search[agency_types]', 'Agency Type'
+                =select_tag 'search[agency_types]', options_for_select(Agency::CATEGORIES, @search[:agency_types]), data: {placeholder: 'All Agency Types', ui: 'select2'}, style: "width: 60%;", :include_blank => true
+              .span4
+                =label_tag 'search[primary_contact_id]', 'Primary Contact'
+                =select_tag 'search[primary_contact_id]', options_from_collection_for_select(current_setup.persons, :id, :contact_string, @search[:primary_contact_id]), data: {placeholder: 'All Contacts', ui: 'select2'}, style: "width: 60%;", :include_blank => true
+              .span4
+                =label_tag 'search[contact_ids]', 'Contacts'
+                =select_tag 'search[contact_ids]', options_from_collection_for_select(current_setup.persons, :id, :contact_string, @search[:contact_ids]), multiple: true, style: "width: 60%;", data: {placeholder: 'All Contacts', ui: 'select2'}
+        
     %tr
       %td{colspan:10,style:'padding:0;'}
         .navbar.navbar-static-top

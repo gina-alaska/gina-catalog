@@ -24,8 +24,10 @@ class Manager::CatalogsController < ManagerController
       @sort = "title_sort"
     end
 
-    @search[:order_by] = "#{@sort}-#{@sortdir}" unless @sort.empty?
+    advanced_opts = @search.reject { |k,v| v.blank? or ['q', 'collection_id', 'order_by', 'sds', 'unpublished', 'editable'].include?(k) }
+    @is_advanced = advanced_opts.keys.size > 0
 
+    @search[:order_by] = "#{@sort}-#{@sortdir}" unless @sort.empty?
     search = solr_search(@search, @page, @limit)
 
     if search.respond_to? :results

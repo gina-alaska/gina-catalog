@@ -37,10 +37,10 @@
         = collection_select_for_agencies('search[source_agency_id]', search_params[:source_agency_id], false) 
 
         =label_tag 'search[funding_agency_id]', 'Funding Agency'
-        = collection_select_for_agencies('search[source_agency_id]', search_params[:funding_agency_id], false) 
+        = collection_select_for_agencies('search[funding_agency_id]', search_params[:funding_agency_id], false) 
         
         =label_tag 'search[agency_ids]', 'Other Agencies'
-        = collection_select_for_agencies('search[source_agency_id]', search_params[:agency_ids], true) 
+        = collection_select_for_agencies('search[agency_ids]', search_params[:agency_ids], true) 
 
         =label_tag 'search[agency_types]', 'Agency Type'
         =select_tag 'search[agency_types]', options_for_select(Agency::CATEGORIES, search_params[:agency_types]), class: 'span12', data: {placeholder: 'All Agency Types', ui: 'select2'}, :include_blank => true
