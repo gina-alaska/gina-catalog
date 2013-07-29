@@ -68,10 +68,10 @@ class CatalogsController < ApplicationController
       end
       format.json
       format.js
-      format.pdf {
+      #format.pdf {
 
-        render :pdf => 'test.pdf', :layout => 'pdf.html'
-      }
+      #  render :pdf => 'test.pdf', :layout => 'pdf.html'
+      #}
       #format.pdf do
       #  render :pdf => 'nssi_catalog_search.pdf', :layout => 'pdf.html'
       #end
