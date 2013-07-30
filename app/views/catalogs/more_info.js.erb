@@ -1,0 +1,11 @@
+if ($('<%= dom_id(@catalog, "#more_info") %>').data("moreinfo") == 'true') {
+  $('<%= dom_id(@catalog, "#more_info") %>').html("");
+  $('<%= dom_id(@catalog, "#more_info") %>').data("moreinfo", 'false')
+}
+else {
+  var record_stat = $('<%= escape_javascript(render 'status', item: @catalog) %>');
+  $('<%= dom_id(@catalog, "#more_info") %>').append(record_stat);
+  var collapse = $('<%= escape_javascript(render 'collapsed_content', item: @catalog) %>');
+  $('<%= dom_id(@catalog, "#more_info") %>').append(collapse);
+  $('<%= dom_id(@catalog, "#more_info") %>').data("moreinfo", 'true')
+}

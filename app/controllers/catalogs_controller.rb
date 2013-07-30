@@ -106,4 +106,13 @@ class CatalogsController < ApplicationController
       format.json
     end
   end
+
+  def more_info
+    @catalog = Catalog.includes(:locations, :source_agency, :agencies, :data_source, :links, :tags, :geokeywords)
+    @catalog = @catalog.includes({ :people => [ :addresses, :phone_numbers ] }).find(params[:id])
+
+    respond_to do |format|
+      format.js
+    end
+  end
 end

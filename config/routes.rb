@@ -105,6 +105,7 @@ NSCatalog::Application.routes.draw do
 
   resources :contacts, only: [:index, :create]
   resources :catalogs do
+    get :more_info, on: :member
     resources :downloads, :only => [:index, :show] do
       get :redirect, on: :member 
       collection do
