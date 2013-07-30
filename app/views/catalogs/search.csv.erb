@@ -3,6 +3,6 @@
 <% @results.each do |row| %>
 <% break if current_user.nil? and count >= 50 %>
 <% row.description = "" if row.description.nil? %>
-"<%= row.title %>","<%= row.description.truncate(150) %>","<%= row.source_agency.try(:name) %>","<%= row.primary_contact.try(:full_name) %>",<%= row.start_date.try(:year) %>,<%= row.end_date.try(:year) %>,"<%= catalog_url(row) %>"
+"<%= row.title %>","<%= strip_tags(row.description).truncate(150) %>","<%= row.source_agency.try(:name) %>","<%= row.primary_contact.try(:full_name) %>",<%= row.start_date.try(:year) %>,<%= row.end_date.try(:year) %>,"<%= catalog_url(row) %>"
 <% count += 1 %>
 <% end %> 
