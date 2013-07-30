@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  layout 'pdf'
+  #layout 'pdf'
   respond_to :json, :html
 
   def index

@@ -1,0 +1,36 @@
+.btn-group
+  %button#check-toggle.btn{data: { action: 'toggle-checkbox', target: '.item-checkbox' }, title: "Toggle CheckBoxes" }
+    %i.icon-check
+.btn-group
+  %button.btn{data: { action: 'expand-all', target: '.results .collapse' }, title: "Expand All"}
+    %i.icon-plus-sign
+  %button.btn{data: { action: 'collapse-all', target: '.results .collapse' }, title: "Collapse All"}
+    %i.icon-minus-sign
+
+.btn-group
+  = link_to '#', class: "btn dropdown-toggle", data: { toggle: "dropdown" } do
+    Add to collection
+    %b.caret
+  %ul.dropdown-menu
+    - current_setup.collections.each do |coll|
+      %li
+        %a{ id: coll.id, href: "#", onclick: "CollToggle(#{coll.id})"}
+          = coll.name
+
+.btn-group
+  = link_to new_manager_catalog_path, class: 'btn btn-success' do
+    %i.icon-plus.icon-white
+    New Record
+
+.btn-group.pull-right
+  = link_to_first_page @catalogs, params: { search: @search }, class: 'btn' do
+    %i.icon-double-angle-left
+  = link_to_prev_page @catalogs, params: {search: @search}, class: 'btn' do
+    %i.icon-angle-left
+  %button.btn
+    %span= display_result_info(@catalogs, @page, @limit, @total)
+  = link_to_next_page @catalogs, params: {search: @search}, class: 'btn' do
+    %i.icon-angle-right
+  = link_to_last_page @catalogs, params: { search: @search }, class: 'btn' do
+    %i.icon-double-angle-right
+    

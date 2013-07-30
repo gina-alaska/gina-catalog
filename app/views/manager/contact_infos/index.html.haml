@@ -18,7 +18,7 @@
               .control-group
                 %label.control-label Agency
                 .controls{ style: "margin-top: 5px;" }
-                  = collection_select_for_agencies("agency", params["agency"], false, "span5")
+                  = collection_select_for_agencies("agency", params["agency"], false, class: "span5")
               :javascript
                 $('#agency').select2({allowClear: true, width: 'copy'});
             .span2{ style: "padding-top: 15px; padding-left: 30px;" }

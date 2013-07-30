@@ -15,7 +15,7 @@
         .control-group
           %label.control-label Agency
           .controls
-            = collection_select_for_agencies("agency", params["agency"], false, "span10")
+            = collection_select_for_agencies("agency", params["agency"], false, class: "span12")
           :javascript
             $('#agency').select2({allowClear: true, width: 'copy'});
       .span2
