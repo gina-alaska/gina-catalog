@@ -1,42 +1,41 @@
 .content
-  %table.table.table-bordered.table-striped.table-condensed
+  = form_tag manager_contact_info_path, method: 'GET', style: "margin-bottom: 0;" do
+    .row-fluid
+      .span3
+        .control-group
+          %label.control-label Start
+          .controls
+            = text_field_tag "start_date", @start_date.strftime('%F'), placeholder: 'YYYY-MM-DD', data: {behavior: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span12"
+      .span3
+        .control-group
+          %label.control-label End
+          .controls
+            = text_field_tag "end_date", @end_date.strftime('%F'), placeholder: 'YYYY-MM-DD', data: { behavior: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span12"
+      .span6
+        .control-group
+          %label.control-label &nbsp;
+          .controls
+            = submit_tag 'Search', class: 'btn btn-primary pull-right'
+  %table.table.table-striped.table-condensed.table-bordered
     %thead
       %tr
-        %td{colspan: 5}
-          = form_tag manager_contact_info_path, method: 'GET', style: "margin-bottom: 0;", class: 'well well-small' do
-            .row-fluid
-              .span4
-                .control-group
-                  %label.control-label Start
-                  .controls
-                    = text_field_tag "start_date", @start_date.strftime('%F'), placeholder: 'YYYY-MM-DD', data: {behavior: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span12"
-              .span4
-                .control-group
-                  %label.control-label End
-                  .controls
-                    = text_field_tag "end_date", @end_date.strftime('%F'), placeholder: 'YYYY-MM-DD', data: { behavior: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span12"
-              .span4
-                = submit_tag 'Apply', class: 'btn btn-primary pull-right'
-          %h4
-            For Catalog Record:
-            = link_to manager_catalog_path(@catalog_record), title: "#{@catalog_record.title}" do
-              = @catalog_record.title.truncate(100)
-          = link_to "Back", manager_path, class: "btn pull-right"
-          %br/
-          = "Total Downloads for Date Range: #{@total}"
-    %tr
-      %th Date
-      %th Name
-      %th Email
-      %th Usage Description
-      %th Portal
-    - @contact_infos.each do |contact|
+        %th{colspan: 5}
+          = link_to manager_catalog_path(@catalog_record), title: "#{@catalog_record.title}" do
+            = @catalog_record.title.truncate(100)
       %tr
-        %td= contact.created_at.strftime("%F %T %z")
-        %td= contact.name
-        %td= contact.email
-        %td= contact.usage_description
-        %td= contact.setup.try(:title)
+        %th Date
+        %th Name
+        %th Email
+        %th Usage Description
+        %th Portal
+    %tbody
+      - @contact_infos.each do |contact|
+        %tr
+          %td= contact.created_at.strftime("%F %T %z")
+          %td= contact.name
+          %td= contact.email
+          %td= contact.usage_description
+          %td= contact.setup.try(:title)
 
 :javascript
   $(document).ready( function(){
