@@ -32,7 +32,7 @@ class CatalogsController < ApplicationController
     @search_params = params[:search] || {}
     @format = params[:format] || ""
     @limit = params[:limit] || 30
-    @limit = 30000 if @format == "csv"
+    @limit = 150 if @format == "csv"
     @pagenum = params[:page] || 1
 
     advanced_opts = @search_params.reject { |k,v| v.blank? or ['q', 'collection_id', 'order_by'].include?(k) }
