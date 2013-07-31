@@ -263,7 +263,7 @@ class Catalog < ActiveRecord::Base
   end
   
   def remote_download?
-    self.download_urls.count > 0
+    !self.download_urls.empty?
   end
   
   def local_download?
