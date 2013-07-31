@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
   has_many :permissions, :through => :roles
   has_many :services
   has_many :memberships, :primary_key => :email, :foreign_key => :email 
-  
+  has_many :setups, through: :memberships
   belongs_to :agency
 
   validates :email, :presence   => true,
