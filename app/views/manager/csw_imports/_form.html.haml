@@ -19,8 +19,10 @@
   .row-fluid
     .span12
       =f.label :sync_frequency
-      =f.number_field :sync_frequency, class: 'span12'
-
+      .input-append
+        =f.number_field :sync_frequency, class: 'span12'
+        %span.add-on
+          Hours
   #actions.form-actions
     = link_to [:manager, @csw_import], class: 'btn btn-inverse' do
       %i.icon-arrow-left.icon-white
