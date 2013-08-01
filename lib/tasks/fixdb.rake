@@ -55,4 +55,15 @@ namespace :fixdb do
       end
     end
   end
+
+  desc 'create sitemap page if one does not exist in a portal'
+  task :create_sitemap => :environment do
+    puts "Looking for setups with missing sitemap page..."
+
+    Setup.all.each do |setup|
+      next if setup.pages.where(slug: "sitemap").any?
+      page = setup.pages.build(slug: "sitemap", main_menu: false, title: "Sitemap", setup_id: setup, description: "This page has been auto-generated.")
+      setup.pages << page
+    end
+  end
 end
