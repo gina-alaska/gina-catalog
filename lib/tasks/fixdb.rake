@@ -1,6 +1,6 @@
 namespace :fixdb do
   desc 'run all fixdb tasks'
-  task :all => [:collections, :themes, :update_downloads] do
+  task :all => [:collections, :themes, :update_downloads, :create_sitemap] do
   end
   
   desc 'migrate collections to the new setup'
