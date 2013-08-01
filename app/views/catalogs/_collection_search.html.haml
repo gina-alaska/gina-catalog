@@ -1,6 +1,6 @@
 / %label Collections
 %ul.nav.nav-tabs.nav-stacked.collection-list
-  - Collection.including_descendents(current_setup).order('name ASC').each do |coll|
+  - Collection.including_descendents(current_setup).includes(:setup).order('name ASC').each do |coll|
     %li.clearfix{class: search_params[:collection_id].to_i == coll.id ? "active" : "", data: { collid: search_params[:collection_id] } }
       = link_to "/search?search[collection_id]=#{coll.id}", data: {behavior: "load_collection", target: "#search_collection_id", value: coll.id}, title: coll.description do
         .badge.pull-right{ }

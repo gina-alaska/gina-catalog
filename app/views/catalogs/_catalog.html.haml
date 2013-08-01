@@ -32,7 +32,7 @@
           
 .pull-right{ style: 'margin: 0 5px 5px 0;'}
   - if user_signed_in?
-    - available_portals = member_portals# - catalog.setups - current_setup.ancestors
+    - available_portals = member_portals(:can_manage_catalog?)# - catalog.setups - current_setup.ancestors
     - if catalog.published? and available_portals.count > 0
       .btn-group
         = link_to '#', class: 'btn dropdown-toggle', data: { toggle: 'dropdown' } do
@@ -41,7 +41,7 @@
           %b.caret
         %ul.dropdown-menu
           - available_portals.each do |p|
-            - next unless current_user.memberships.where(setup_id: p.id).first.can_manage_catalog?
+            / - next unless current_user.memberships.where(setup_id: p.id).first.can_manage_catalog?
             %li
               = link_to share_manager_catalog_path(catalog, setup_id: p), method: 'PUT', remote: true do
                 - if catalog.available_in?(p)
@@ -51,7 +51,7 @@
                 = p.full_title
 
             
-    - if current_member.can_manage_catalog? and catalog.owner_setup == current_setup
+    - if catalog.owner_setup == current_setup and current_member.can_manage_catalog?
       .btn-group
         = link_to edit_manager_catalog_path(catalog), class: 'btn', target: :_blank, data: { title: "Edit Record", content: "Edit this record.", trigger: "hover", placement: "bottom", toggle: "popover", container: "##{dom_id(catalog, :record)}" } do
           %i.icon-edit
