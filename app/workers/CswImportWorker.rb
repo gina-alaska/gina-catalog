@@ -11,7 +11,10 @@ class CswImportWorker
     records.each do |record|
       uuid = record.identifier.gsub(/({|})/,"")
       
-      catalog = Catalog.where(uuid: uuid, csw_import_id: @csw_import.id).first_or_initialize
+      catalog = Catalog.where(
+        uuid: uuid, 
+        csw_import_id: @csw_import.id, 
+        owner_setup_id: @csw_import.setup_id).first_or_initialize
 
       #Todo:  If the tags/locations change, do the old ones get deleted?
       catalog.update_attributes({
