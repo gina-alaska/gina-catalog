@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   
+  before_filter :check_for_setup
   before_filter :fetch_setup
   
   helper_method :current_user
@@ -14,6 +15,10 @@ class ApplicationController < ActionController::Base
     @current_setup ||= Setup.includes(:urls).where(site_urls: { :url => request.host }).first    
   end
   alias_method :current_setup, :fetch_setup
+
+  def check_for_setup
+    redirect_to "http://portal.gina.alaska.edu" if current_setup.nil?
+  end
 
   def member_portals(permission = nil)
     return [] unless user_signed_in?
