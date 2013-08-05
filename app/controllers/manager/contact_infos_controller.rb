@@ -41,11 +41,11 @@ class Manager::ContactInfosController < ManagerController
 
   def show
     self.page_title = "Report Downloads"
-    @start_date = Time.parse(params[:start_date])
-    @end_date = Time.parse(params[:end_date])
+    @start_date = Time.zone.parse(params[:start_date])
+    @end_date = Time.zone.parse(params[:end_date])
 
     @catalog_record = Catalog.find(params[:id])
-    @contact_infos = ContactInfo.where(catalog_id: params[:id]).created_between(@start_date, @end_date)
+    @contact_infos = ContactInfo.where(catalog_id: params[:id]).created_between(@start_date, @end_date).order('created_at DESC')
     @total = @contact_infos.count
 
     respond_to do |format|

@@ -24,6 +24,7 @@
             = @catalog_record.title.truncate(100)
       %tr
         %th Date
+        %th IP
         %th Name
         %th Email
         %th Usage Description
@@ -32,6 +33,7 @@
       - @contact_infos.each do |contact|
         %tr
           %td= contact.created_at.strftime("%F %T %z")
+          %td= contact.user_ip
           %td= contact.name
           %td= contact.email
           %td= contact.usage_description

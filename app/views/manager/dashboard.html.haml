@@ -26,14 +26,14 @@
             = submit_tag 'Search', class: 'btn btn-primary'
           
   .row-fluid
-    .span6
+    .span8
       %table.table.table-bordered.table-striped.table-condensed
         %thead
           %tr
-            %th{colspan: 2} Top Downloads
+            %th{colspan: 2} Top downloads
           %tr
             %th Data Record
-            %th Count
+            %th= "Last #{((@end_date - @start_date) / 86400).to_i} days"
         %tbody
           - @top_downloads.each do |item|
             %tr
@@ -42,7 +42,7 @@
                   = item.catalog.title.truncate(80)
               %td
                 = item.download_count
-    .span6
+    .span4
       %table.table.table-bordered.table-striped.table-condensed
         %thead
           %tr
@@ -79,7 +79,7 @@
                 = link_to manager_contact_info_path(item.catalog_id, start_date: @start_date, end_date: @end_date), title: "#{item.catalog.title}" do
                   = item.catalog.title.truncate(60)
               %td
-                = item.setup.try(:title)
+                = item.setup.try(:acronym)
               %td.span2
                 = item.name
               %td.span2
