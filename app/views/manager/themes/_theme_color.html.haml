@@ -1,0 +1,57 @@
+.row-fluid
+  .span6
+    %fieldset
+      %legend Site background
+      - %w{ page_bg content_bg }.each do |name|
+        .control-group
+          = f.label name, name.gsub('bg', 'background').humanize, class: 'control-label'
+          .controls
+            .input-append.color{ data: { color: f.object.send(name), 'color-format' => 'hex' } }
+              = f.text_field name, class: 'span12'
+              %span.add-on{ style: "background-color: #{f.object.send(name)}" }
+    %fieldset
+      %legend Header
+      - %w{ header_bg header_title_color header_byline_color }.each do |name|
+        .control-group
+          = f.label name, name.gsub('bg', 'background').gsub('header_', '').humanize, class: 'control-label'
+          .controls
+            .input-append.color{ data: { color: f.object.send(name), 'color-format' => 'hex' } }
+              = f.text_field name, class: 'span12'
+              %span.add-on{ style: "background-color: #{f.object.send(name)}" }
+    %fieldset
+      %legend Footer
+      - %w{ footer_bg footer_text_color footer_partners_bg }.each do |name|
+        .control-group
+          = f.label name, name.gsub('bg', 'background').gsub('footer_', '').humanize, class: 'control-label'
+          .controls
+            .input-append.color{ data: { color: f.object.send(name), 'color-format' => 'hex' } }
+              = f.text_field name, class: 'span12'
+              %span.add-on{ style: "background-color: #{f.object.send(name)}" }
+  .span6
+    %fieldset
+      %legend Main Menu
+      - %w{ menu_bg menu_link_color menu_active_bg menu_active_link_color menu_hover_bg menu_hover_link_color }.each do |name|
+        .control-group
+          = f.label name, name.gsub('bg', 'background').gsub('menu_', '').humanize, class: 'control-label'
+          .controls
+            .input-append.color{ data: { color: f.object.send(name), 'color-format' => 'hex' } }
+              = f.text_field name, class: 'span12'
+              %span.add-on{ style: "background-color: #{f.object.send(name)}" }
+    %fieldset
+      %legend Home buttons
+      - %w{ home_btn_bg home_btn_link_color home_btn_hover_bg home_btn_hover_link_color home_btn_hover_border }.each do |name|
+        .control-group
+          = f.label name, name.gsub('bg', 'background').gsub('home_btn_', '').humanize, class: 'control-label'
+          .controls
+            .input-append.color{ data: { color: f.object.send(name), 'color-format' => 'hex' } }
+              = f.text_field name, class: 'span12'
+              %span.add-on{ style: "background-color: #{f.object.send(name)}" }    
+    %fieldset
+      %legend Social Icons
+      - %w{ social_icons_link_color social_icons_hover_link_color }.each do |name|
+        .control-group
+          = f.label name, name.gsub('bg', 'background').gsub('social_icons_', '').humanize, class: 'control-label'
+          .controls
+            .input-append.color{ data: { color: f.object.send(name), 'color-format' => 'hex' } }
+              = f.text_field name, class: 'span12'
+              %span.add-on{ style: "background-color: #{f.object.send(name)}" }    

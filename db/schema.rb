@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130731202823) do
+ActiveRecord::Schema.define(:version => 20130805181531) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -924,6 +924,7 @@ ActiveRecord::Schema.define(:version => 20130731202823) do
     t.string   "footer_bg"
     t.string   "footer_text_color"
     t.string   "footer_partners_bg"
+    t.text     "css"
   end
 
   create_table "use_agreements", :force => true do |t|
