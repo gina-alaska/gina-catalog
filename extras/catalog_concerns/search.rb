@@ -38,7 +38,7 @@ module CatalogConcerns
           #   params[:pf] = [:title, :description]
           # end
 
-          fulltext search[:q] unless search[:q].present?
+          fulltext search[:q] if search[:q].present?
           
           any_of do
             with :owner_setup_id, current_setup.id 
