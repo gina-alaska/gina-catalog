@@ -19,7 +19,7 @@
       %th Name
       %th Email
       %th Usage Description
-      %th Portal
+      %th Downloaded from
       %th Data Record
   %tbody
     - @contact_infos.each do |item|
@@ -28,7 +28,9 @@
         %td= item.name
         %td= item.email
         %td= item.usage_description
-        %td= item.setup.try(:title)
+        %td
+          %abbr{ title: item.setup.try(:title) }= item.setup.try(:acronym)
+          
         %td= link_to item.catalog.title, [:manager, item.catalog]
 
 :javascript

@@ -67,7 +67,7 @@
           %tr
             %th Date
             %th Data Record
-            %th Download Portal
+            %th Downloaded from
             %th Name
             %th Email
         %tbody
@@ -79,7 +79,7 @@
                 = link_to manager_contact_info_path(item.catalog_id, start_date: @start_date, end_date: @end_date), title: "#{item.catalog.title}" do
                   = item.catalog.title.truncate(60)
               %td
-                = item.setup.try(:acronym)
+                %abbr{ title: item.setup.try(:title) }= item.setup.try(:acronym)
               %td.span2
                 = item.name
               %td.span2

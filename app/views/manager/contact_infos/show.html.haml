@@ -28,7 +28,7 @@
         %th Name
         %th Email
         %th Usage Description
-        %th Portal
+        %th Downloaded from
     %tbody
       - @contact_infos.each do |contact|
         %tr
@@ -37,7 +37,8 @@
           %td= contact.name
           %td= contact.email
           %td= contact.usage_description
-          %td= contact.setup.try(:title)
+          %td
+            %abbr{ title: contact.setup.try(:title) }= contact.setup.try(:acronym)
 
 :javascript
   $(document).ready( function(){
