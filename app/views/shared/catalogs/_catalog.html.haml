@@ -1,11 +1,23 @@
 - collapse ||= false
-- if catalog.downloadable?
-  .navbar.navbar-static-top
-    .navbar-inner
+.navbar.navbar-static-top
+  .navbar-inner
+    - if catalog.downloadable?
       .btn-group
         = link_to catalog_downloads_path(catalog), class: 'btn', remote: true do
           %i.icon-cloud-download
           Download
+    - if user_signed_in?
+      - available_portals = member_portals(:can_manage_catalog?)# - catalog.setups - current_setup.ancestors
+      - if catalog.published? and available_portals.count > 0
+        .btn-group{id: dom_id(catalog,"share_button")}
+          = render 'share_button', catalog: catalog, available_portals: available_portals
+      - if catalog.owner_setup == current_setup and current_member.can_manage_catalog?
+        .btn-group
+          = link_to edit_manager_catalog_path(catalog), class: 'btn', target: :_blank, data: { title: "Edit Record", content: "Edit this record.", trigger: "hover", placement: "bottom", toggle: "popover", container: "##{dom_id(catalog, :record)}" } do
+            %i.icon-edit
+            Edit
+
+  .btn-group
 .content
   - if !catalog.published?
     %h5.alert.alert-warning
