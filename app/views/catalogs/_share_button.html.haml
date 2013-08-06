@@ -1,0 +1,14 @@
+= link_to '#', class: 'btn dropdown-toggle', data: { toggle: 'dropdown' } do
+  %i.icon-share
+  Share...
+  %b.caret
+%ul.dropdown-menu
+  - available_portals.each do |p|
+    / - next unless current_user.memberships.where(setup_id: p.id).first.can_manage_catalog?
+    %li
+      = link_to share_manager_catalog_path(catalog, setup_id: p), method: 'put', remote: true do
+        - if catalog.available_in?(p)
+          %i.icon-check
+        - else
+          %i.icon-check-empty
+        = p.full_title
