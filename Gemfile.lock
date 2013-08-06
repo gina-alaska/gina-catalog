@@ -301,6 +301,7 @@ DEPENDENCIES
   kaminari
   liquid
   nested_form!
+  nokogiri
   omniauth
   omniauth-openid
   pdfkit
@@ -309,7 +310,7 @@ DEPENDENCIES
   puma
   quiet_assets
   rails (= 3.2.13)
-  rcsw (>= 0.1.1)!
+  rcsw (~> 0.1.1)!
   resque
   rgeo
   rgeo-activerecord

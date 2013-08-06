@@ -27,10 +27,11 @@ gem 'liquid'
 gem 'dragonfly'
 gem 'awesome_nested_set'
 gem 'nested_form', git: 'http://github.com/ryanb/nested_form.git'
-gem 'rcsw', ">= 0.1.1", git: 'http://github.com/gina-alaska/ruby-csw.git'
+gem 'rcsw', "~> 0.1.1", git: 'http://github.com/gina-alaska/ruby-csw.git'
 gem 'whenever'
 gem 'sidekiq'
 gem 'sidekiq-client-cli'
+gem 'nokogiri'
 
 #gem 'nofxx-georuby'
 #broke in rails 3.1
@@ -56,7 +57,6 @@ gem 'puma'
 
 # Bundle the extra gems:
 # gem 'bj'
-# gem 'nokogiri'
 # gem 'sqlite3-ruby', :require => 'sqlite3'
 # gem 'aws-s3', :require => 'aws/s3'
 
