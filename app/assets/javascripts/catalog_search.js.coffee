@@ -21,9 +21,11 @@
     
   load: (url, ajax = true) ->
     if ajax
-      $.ajax({ url: url, dataType: 'script', global: false })
+      $.ajax({ url: url, dataType: 'script', global: false }).complete(CatalogSearch.afterLoad)
     else
       top.location = url
+      
+  afterLoad: ->
 }
 
 $(document).submit (evt) ->

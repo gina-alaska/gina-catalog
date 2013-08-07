@@ -1,7 +1,7 @@
 class Catalog
   constructor: (@map) ->
     @initListeners()
-    @addLayer()    
+    @setupLayers()    
     @wktReader = new OpenLayers.Format.WKT()
     @loadFeatures()
     
@@ -34,7 +34,7 @@ class Catalog
     # @selectControl.multipleSelect(false)
     @zoomToBounds(bounds)
 
-  addLayer: =>
+  setupLayers: =>
     lookup = {
       'Asset': { fillColor: '#3a87ad', strokeColor: '#3a87ad' },
       'Project': { fillColor: '#c09853', strokeColor: '#c09853' }
@@ -58,11 +58,11 @@ class Catalog
     })
     @styleMap.addUniqueValueRules("default", "type", lookup)
     
-    @layer = new OpenLayers.Layer.Vector('Search Results', { styleMap: @styleMap, rendererOptions: {zIndexing: true} })
+    @search_layer = new OpenLayers.Layer.Vector('Search Results', { styleMap: @styleMap, rendererOptions: {zIndexing: true} })
     
-    @map.addLayer(@layer)
+    @map.addLayer(@search_layer)
     
-    @selectControl = new OpenLayers.Control.SelectFeature(@layer, {
+    @selectControl = new OpenLayers.Control.SelectFeature(@search_layer, {
       autoActivate: true,
       onUnselect: () =>
         if @higlightEl
@@ -92,32 +92,33 @@ class Catalog
     #   @centerOnData()
     
   loadFeatures: =>
+    console.log 'foo'
+    @search_layer.destroyFeatures()
+
     geoms = $('[data-wkt]');
     return unless geoms.length > 0 and $('#map').data('map') 
     
     # @map = $('#map').data('map').map
     return unless @map
     
-    @layer.destroyFeatures()
-    
     geoms.each (k, result) =>
-      return unless $(result).data('wkt')
+      return unless wkts = $(result).data('wkt')
     
-      features = @wktReader.read($(result).data('wkt'));
+      features = @wktReader.read(wkts);
       if features.length > 0
         $(features).each (k,f) =>
           f.geometry.transform('EPSG:4326', @map.projection);
           f.attributes = { record_id: $(result).attr('id'), type: $(result).data('type') }
           
-        @layer.addFeatures(features)
+        @search_layer.addFeatures(features)
         #save features back to dom object for later use to interact with the map
         $(result).data('features', features)
         
     @centerOnData()
         
   centerOnData: =>
-    if @layer.features.length > 0
-      @zoomToBounds(@layer.getDataExtent())
+    if @search_layer.features.length > 0
+      @zoomToBounds(@search_layer.getDataExtent())
   
   zoomToBounds: (bounds, maxZoom = 6) =>
     zoom = @map.getZoomForExtent(bounds)
@@ -127,11 +128,8 @@ class Catalog
       zoom = maxZoom
 
     @map.zoomTo(zoom)
-    @map.setCenter(center)
-    
-    
-  setup: ->
+    @map.setCenter(center)    
 #end class Catalog
-
-$(document).on 'openlayers:ready', (evt) -> 
-  $(document).data('catalog_map', new Catalog(evt.map));
+# 
+# $(document).on 'openlayers:ready', (evt) -> 
+#   $(document).data('catalog_map', new Catalog(evt.map));

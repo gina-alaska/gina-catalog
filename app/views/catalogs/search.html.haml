@@ -29,5 +29,6 @@
   $(document).ready(function() {
     var mapwrap = $('[data-map="CatalogMap"]');
     var map = new CatalogMap(mapwrap.data('target'))
+    CatalogSearch.afterLoad = map.loadFeatures
     $('[data-toggle="popover"]').popover();
   })
