@@ -1,4 +1,4 @@
-- cache([:theme, :v7, current_setup.theme]) do
+- cache([:theme, :v11, current_setup.theme]) do
   :sass
     body
       background-color: #{current_setup.theme.page_bg}
@@ -7,7 +7,8 @@
       background-color: #{current_setup.theme.content_bg}
 
     #header
-      background-color: #{current_setup.theme.header_bg}
+      background: #{sass_color(current_setup.theme.header_bg, current_setup.theme.header_bg_grad)}
+
       color: #{current_setup.theme.header_title_color}
       font-family: 'Quando', serif
   
@@ -15,7 +16,7 @@
         color: #{current_setup.theme.header_byline_color}
 
       ul.nav 
-        background-color: #{current_setup.theme.menu_bg}
+        background: #{sass_color(current_setup.theme.menu_bg, current_setup.theme.menu_bg_grad)}
         margin: 0
         padding: 10px 5px
 
@@ -33,7 +34,7 @@
 
     #footer 
       color: #{current_setup.theme.footer_text_color}
-      background-color: #{current_setup.theme.footer_bg}
+      background: #{sass_color(current_setup.theme.footer_bg, current_setup.theme.footer_bg_grad)}
 
       .partners 
         background-color: #{current_setup.theme.footer_partners_bg}

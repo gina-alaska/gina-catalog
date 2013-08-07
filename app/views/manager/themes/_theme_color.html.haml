@@ -11,7 +11,7 @@
               %span.add-on{ style: "background-color: #{f.object.send(name)}" }
     %fieldset
       %legend Header
-      - %w{ header_bg header_title_color header_byline_color }.each do |name|
+      - %w{ header_bg header_bg_grad header_title_color header_byline_color }.each do |name|
         .control-group
           = f.label name, name.gsub('bg', 'background').gsub('header_', '').humanize, class: 'control-label'
           .controls
@@ -20,7 +20,7 @@
               %span.add-on{ style: "background-color: #{f.object.send(name)}" }
     %fieldset
       %legend Footer
-      - %w{ footer_bg footer_text_color footer_partners_bg }.each do |name|
+      - %w{ footer_bg footer_bg_grad footer_text_color footer_partners_bg }.each do |name|
         .control-group
           = f.label name, name.gsub('bg', 'background').gsub('footer_', '').humanize, class: 'control-label'
           .controls
@@ -30,7 +30,7 @@
   .span6
     %fieldset
       %legend Main Menu
-      - %w{ menu_bg menu_link_color menu_active_bg menu_active_link_color menu_hover_bg menu_hover_link_color }.each do |name|
+      - %w{ menu_bg menu_bg_grad menu_link_color menu_active_bg menu_active_link_color menu_hover_bg menu_hover_link_color }.each do |name|
         .control-group
           = f.label name, name.gsub('bg', 'background').gsub('menu_', '').humanize, class: 'control-label'
           .controls
