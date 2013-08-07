@@ -7,7 +7,7 @@ class FGDC
     @xml.search('idinfo title').children.to_s
   end
   
-  def abstsract
+  def abstract
     @xml.search('idinfo abstract').children.to_s
   end
   
@@ -31,7 +31,27 @@ class FGDC
   end
 
   def onlinks
+    @xml.search('idinfo onlink').children.collect(&:to_s)
+  end
+  
+  def primary_contact
+    person = @xml.search('idinfo cntperp cntper').children.to_s
     
+    if person.empty?
+      nil
+    else
+      {first_name: person.split.first, last_name: person.split.last}
+    end
+  end
+  
+  def source_agency
+    agency = @xml.search('idinfo cntorgp cntorg').children.
+  end
+  
+  def funding_agency
+  end
+
+  def agencies
   end
 
 end
