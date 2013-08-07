@@ -1,4 +1,6 @@
 class Catalog < ActiveRecord::Base
+  
+  include CatalogConcerns::FgdcImport
   STATUSES = %w(Complete Ongoing Unknown Funded)
 
   attr_accessible :links_attributes, :locations_attributes, :download_urls_attributes, 
