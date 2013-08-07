@@ -14,9 +14,19 @@ class CswImportWorker
       catalog = Catalog.where(uuid: uuid, csw_import_id: @csw.id).first_or_initialize
 
       if catalog.new_record? or catalog.remote_updated_at != record.modified
-        catalog.assign_attributes(@csw.default_attributes.merge({modified: record.modified}))
+        url = @csw.fgdc_import_url(record)
+        
+        default_attributes = { 
+          modified: record.modified, 
+          source_url: url
+        }.merge(@csw.default_attributes)
+        
+        catalog.assign_attributes(default_attributes)
 
-        catalog.import_from_fgcd(@csw.fgcd_import_url(record))
+        case @csw.metadata_type
+        when "FGDC"
+          catalog.import_from_fgcd(url)
+        end
 
         catalog.save
       end
