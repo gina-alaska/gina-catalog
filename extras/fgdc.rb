@@ -12,7 +12,15 @@ class FGDC
   end
   
   def keywords 
-    @xml.search('idinfo keywords theme themekey').children.collect(&:to_s)
+    @xml.search('idinfo keywords').search('themekey','placekey').children.collect(&:to_s)
+  end
+  
+  def start_date
+    @xml.search('idinfo timeperd timeinfo rngdates begdate').children.to_s
+  end
+  
+  def end_date
+    @xml.search('idinfo timeperd timeinfo rngdates enddate').children.to_s
   end
   
   def bounds
@@ -27,7 +35,7 @@ class FGDC
     lower_corner = factory.point(westbc, southbc)
     upper_corner = factory.point(eastbc, northbc)
 
-    RGeo::Cartesian::BoundingBox.create_from_points(lower_corner, upper_upper_corner).to_geometry
+    RGeo::Cartesian::BoundingBox.create_from_points(lower_corner, upper_corner).to_geometry
   end
 
   def onlinks
@@ -40,12 +48,22 @@ class FGDC
     if person.empty?
       nil
     else
-      {first_name: person.split.first, last_name: person.split.last}
+      if person.split(",").count == 1 #No comma, assume First Last
+        {first_name: person.split.first, last_name: person.split.last}
+      else #Comma in the name, assume Last, First
+        {first_name: person.split(",").last.lstrip, last_name: person.split(",").first}
+      end
     end
   end
   
   def source_agency
-    agency = @xml.search('idinfo cntorgp cntorg').children.
+    agency = @xml.search('idinfo cntorgp cntorg').children.to_s
+    
+    if agency.empty?
+      nil
+    else
+      agency
+    end
   end
   
   def funding_agency
@@ -53,5 +71,7 @@ class FGDC
 
   def agencies
   end
+
+  private
 
 end
