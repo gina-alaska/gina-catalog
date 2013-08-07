@@ -1,9 +1,8 @@
-- cache([:search_result, :v17, catalog]) do
-  .result{id: dom_id(catalog, :record), data: { wkt: catalog.geometry_center_collection, type: catalog.type, title: "Record Details", content: "Click on the record title to see more information.", trigger: "hover", placement: "right", toggle: "popover" } }
+- cache([:search_result, :v20, catalog]) do
+  .result{id: dom_id(catalog, :record), data: { wkt: catalog.geometry_center_collection, type: catalog.type } }
     .row-fluid
       .span10
         %h5.title
-          %i.icon-chevron-down.collapse-icon
           = catalog.title.try(:truncate,78)
           - if !catalog.published?
             %i.icon-warning-sign{ data: { title: 'Catalog Record Not Public', content: "This data record has not been made public yet by the site manager.", trigger: "hover", placement: "top", toggle: "popover", container: "##{dom_id(catalog, :record)}" }}
@@ -30,31 +29,31 @@
       /    %b Collections: 
       /    = catalog.collections.list
           
-.pull-right{ style: 'margin: 0 5px 5px 0;'}
-  - if user_signed_in?
-    - available_portals = member_portals(:can_manage_catalog?)# - catalog.setups - current_setup.ancestors
-    - if catalog.published? and available_portals.count > 0
-      .btn-group{id: dom_id(catalog,"share_button")}
-        = render 'share_button', catalog: catalog, available_portals: available_portals
-    - if catalog.owner_setup == current_setup and current_member.can_manage_catalog?
+    %div{ style: 'text-align:right; margin: 0 5px 5px 0;'}
+      - if user_signed_in?
+        - available_portals = member_portals(:can_manage_catalog?)# - catalog.setups - current_setup.ancestors
+        - if catalog.published? and available_portals.count > 0
+          .btn-group{id: dom_id(catalog,"share_button")}
+            = render 'share_button', catalog: catalog, available_portals: available_portals
+        - if catalog.owner_setup == current_setup and current_member.can_manage_catalog?
+          .btn-group
+            = link_to edit_manager_catalog_path(catalog), class: 'btn', target: :_blank, data: { title: "Edit Record", content: "Edit this record.", trigger: "hover", placement: "bottom", toggle: "popover", container: "##{dom_id(catalog, :record)}" } do
+              %i.icon-edit
+              Edit
+
       .btn-group
-        = link_to edit_manager_catalog_path(catalog), class: 'btn', target: :_blank, data: { title: "Edit Record", content: "Edit this record.", trigger: "hover", placement: "bottom", toggle: "popover", container: "##{dom_id(catalog, :record)}" } do
-          %i.icon-edit
-          Edit
+        - unless catalog.geometry_center_collection.blank?
+          = link_to '#', class: 'btn', data: { "openlayers-action" => "select-features", target: "##{dom_id(catalog, :record)}", title: "Zoom To Record", content: "Zoom to the record location on the map.", trigger: "hover", placement: "bottom", toggle: "popover", container: "##{dom_id(catalog, :record)}" } do
+            %i.icon-search
+            Zoom To
 
-  .btn-group
-    - unless catalog.geometry_center_collection.blank?
-      = link_to '#', class: 'btn', data: { "openlayers-action" => "select-features", target: "##{dom_id(catalog, :record)}", title: "Zoom To Record", content: "Zoom to the record location on the map.", trigger: "hover", placement: "bottom", toggle: "popover", container: "##{dom_id(catalog, :record)}" } do
-        %i.icon-search
-        Zoom To
-
-    - if catalog.downloadable?
-      = link_to catalog_downloads_path(catalog), class: 'btn', remote: true, data: { title: "Download Files", content: "Download all of the files that are associated with this record.", trigger: "hover", placement: "bottom", toggle: "popover", container: "##{dom_id(catalog, :record)}" } do
-        %i.icon-cloud-download
-        Download
-    = link_to more_info_catalog_path(catalog), class: "btn", remote: true do
-      %i.icon-plus
-      More Info
-    = link_to catalog, class: 'btn btn-primary', data: { title: "Full Data Record", content: "View all of the details for this record.", trigger: "hover", placement: "bottom", toggle: "popover", container: "##{dom_id(catalog, :record)}" } do
-      Full Record
-      %i.icon-arrow-right
+        - if catalog.downloadable?
+          = link_to catalog_downloads_path(catalog), class: 'btn', remote: true, data: { title: "Download Files", content: "Download all of the files that are associated with this record.", trigger: "hover", placement: "bottom", toggle: "popover", container: "##{dom_id(catalog, :record)}" } do
+            %i.icon-cloud-download
+            Download
+        = link_to more_info_catalog_path(catalog), class: "btn", remote: true do
+          %i.icon-plus
+          More Info
+        = link_to catalog, class: 'btn btn-primary', data: { title: "Full Data Record", content: "View all of the details for this record.", trigger: "hover", placement: "bottom", toggle: "popover", container: "##{dom_id(catalog, :record)}" } do
+          Full Record
+          %i.icon-arrow-right

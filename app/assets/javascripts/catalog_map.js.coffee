@@ -177,14 +177,14 @@ class @CatalogMap extends OpenlayersMap
         
       onSelect: (feature) =>
         unless @skipHighlight
-          el = $('#' + feature.attributes.record_id).parent('td')
+          el = $('#' + feature.attributes.record_id)
           parent = $('body,html')
 
           padding = $('#map').height()
          
           # .data('scroll-offset')
           parent.animate({
-            scrollTop: el.offset().top - padding
+            scrollTop: el.offset().top - padding - 30
           })
         
           #save this for later reset

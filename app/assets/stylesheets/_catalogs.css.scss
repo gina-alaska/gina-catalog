@@ -1,10 +1,15 @@
-.search table.results {
+.search .search-results {
   margin-top: 10px;
   
-  td {
-    padding:0;
+  .result {
+    position: relative;
+    padding:5px;
+    border-bottom: 1px solid #cfcfcf;
   }  
-  td:hover {
+  .result.highlight {
+    background: #ffff99;
+  }
+  .result:hover {
     background-color: #eee;
   }
     
@@ -13,17 +18,8 @@
     margin-bottom: 5px;
   }
   
-  .result {
-    padding: 5px 5px 35px 5px;
-    position: relative;
-  }
-  
   .status, .description {
     margin-left: 10px;
-  }
-  
-  .highlight {
-    background: #ffff99;
   }
   
   .legend-tag {

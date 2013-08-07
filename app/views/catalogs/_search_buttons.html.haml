@@ -17,6 +17,15 @@
           %li
             =link_to '#', data: { behavior: 'stash', target: '#limit', value: 500, title: 'Limit: 500', title_target: '#limit-btn' } do
               500 Records
+          %li
+            =link_to '#', data: { behavior: 'stash', target: '#limit', value: 1000, title: 'Limit: 1000', title_target: '#limit-btn' } do
+              1000 Records
+          %li
+            =link_to '#', data: { behavior: 'stash', target: '#limit', value: 2000, title: 'Limit: 2000', title_target: '#limit-btn' } do
+              2000 Records
+          %li
+            =link_to '#', data: { behavior: 'stash', target: '#limit', value: 5000, title: 'Limit: 5000', title_target: '#limit-btn' } do
+              5000 Records
     .span6
       = link_to '/search', class: 'btn btn-block' do
         Clear
