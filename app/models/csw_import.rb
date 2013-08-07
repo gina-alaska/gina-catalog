@@ -15,8 +15,11 @@ class CswImport < ActiveRecord::Base
   
   def default_attributes
     {
-      owner_setup_id: self.setup_id
-      #sds_use_agreements
+      owner_setup_id: self.setup_id,
+      use_agreement_id: self.use_agreement_id,
+      request_contact_info: self.request_contact_info,
+      require_contact_info: self.require_contact_info
+#      collections: self.collections
     }
   end
   
