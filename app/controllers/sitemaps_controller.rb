@@ -5,7 +5,8 @@ class SitemapsController < ApplicationController
     @setup_pages = current_setup.pages.autolinkable.roots.where("slug NOT IN (?)", excludes)
 
     respond_to do |format|
-      format.html
+      format.html  
+      format.xml
     end
   end 
 end
