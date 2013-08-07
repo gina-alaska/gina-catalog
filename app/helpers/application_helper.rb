@@ -113,4 +113,12 @@ module ApplicationHelper
   def ddtext(string)
     string.blank? ? "&nbsp;".html_safe : string
   end
+
+  def sass_color(primary, gradient)
+    if gradient.nil? or gradient.empty?
+      "#{primary}".html_safe
+    else
+      "linear-gradient(to bottom, #{primary}, #{gradient})".html_safe
+    end
+  end
 end
