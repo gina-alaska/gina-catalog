@@ -13,22 +13,19 @@
 }
 
 .image-list {
+  li { margin: 2px; vertical-align: top; position: relative; }
   .thumbnail {
-    width:250px;
+    width:150px;
+    height: 200px;
     display: inline-block;
-    margin-left: 10px;
-    margin-top: 10px;
-    .image { position: relative; margin-bottom: 5px; }
-    .caption {
-      position: absolute;
-      bottom: 0px;
-      background: rgba(0,0,0, 0.7);
-      color: #fff;
-      left:0;
-      right:0;
-      height: 33%;
-      overflow: auto;
-    }
+  }
+  .image { position: relative; height: 100px; vertical-align: middle; }
+  .info { height: 100px; position: relative; text-align: left; }
+  
+  .caption {
+    padding: 0;
+    height: 70px;
+    overflow: auto;
   }
 }
  

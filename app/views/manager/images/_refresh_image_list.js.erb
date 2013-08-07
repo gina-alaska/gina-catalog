@@ -1,7 +1,11 @@
 //$('#images .image-list').load('#{edit_manager_page_path(page)} #images .thumbnails');
+var chooser_list = $('<%= escape_javascript(render('manager/images/list.html', images: @images, page: @page)) %>');
+$('#image_chooser_modal #thumbnail-list').html(chooser_list);
+var page_list = $('<%= escape_javascript(render('manager/page_contents/image_list.html', page: @page)) %>');
+$('#images_tab_pane .image-list').html(page_list);
 
-$.get('<%= edit_manager_page_content_path(@page) %>', function(responseText, textStatus, xhr) {
-  var response = $(responseText);
-  $('#images .image-list').replaceWith(response.find('#images .image-list'));
-  $('#image_chooser_modal #thumbnail-list').replaceWith(response.find('#image_chooser_modal #thumbnail-list'));
-});
+// $.get('<%= edit_manager_page_content_path(@page) %>', function(responseText, textStatus, xhr) {
+//   var response = $(responseText);
+//   // $('#images .image-list').replaceWith(response.find('#images .image-list'));
+//   // $('#image_chooser_modal #thumbnail-list').replaceWith(response.find('#image_chooser_modal #thumbnail-list'));
+// });
