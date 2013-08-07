@@ -17,7 +17,7 @@ class CswImportWorker
         url = @csw.fgdc_import_url(record)
         
         default_attributes = { 
-          modified: record.modified, 
+          remote_updated_at: record.modified, 
           source_url: url
         }.merge(@csw.default_attributes)
         
