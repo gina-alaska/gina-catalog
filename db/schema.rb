@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130731202823) do
+ActiveRecord::Schema.define(:version => 20130806232509) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -128,6 +128,7 @@ ActiveRecord::Schema.define(:version => 20130731202823) do
     t.boolean  "require_contact_info", :default => false
     t.integer  "owner_setup_id"
     t.integer  "csw_import_id"
+    t.datetime "remote_updated_at"
   end
 
   create_table "catalog_agencies", :id => false, :force => true do |t|
@@ -244,8 +245,10 @@ ActiveRecord::Schema.define(:version => 20130731202823) do
     t.integer  "sync_frequency", :default => 24
     t.integer  "setup_id"
     t.string   "title"
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
+    t.datetime "created_at",                                                                                  :null => false
+    t.datetime "updated_at",                                                                                  :null => false
+    t.string   "metadata_field", :default => "urn:x-esri:specification:ServiceType:ArcIMS:Metadata:Document"
+    t.string   "metadata_type",  :default => "FGDC"
   end
 
   create_table "data_sources", :force => true do |t|
@@ -924,6 +927,10 @@ ActiveRecord::Schema.define(:version => 20130731202823) do
     t.string   "footer_bg"
     t.string   "footer_text_color"
     t.string   "footer_partners_bg"
+    t.text     "css"
+    t.string   "header_bg_grad"
+    t.string   "menu_bg_grad"
+    t.string   "footer_bg_grad"
   end
 
   create_table "use_agreements", :force => true do |t|

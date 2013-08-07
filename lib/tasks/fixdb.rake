@@ -1,6 +1,6 @@
 namespace :fixdb do
   desc 'run all fixdb tasks'
-  task :all => [:collections, :themes, :update_downloads, :create_sitemap] do
+  task :all => [:collections, :themes, :update_downloads, :create_sitemap, :move_theme_css] do
   end
   
   desc 'migrate collections to the new setup'
@@ -64,6 +64,19 @@ namespace :fixdb do
       next if setup.pages.where(slug: "sitemap").any?
       page = setup.pages.build(slug: "sitemap", main_menu: false, title: "Sitemap", setup_id: setup, description: "This page has been auto-generated.")
       setup.pages << page
+    end
+  end
+
+  desc 'Move theme css snippet content to theme css field.'
+  task :move_theme_css => :environment do
+    puts "Looking for empty theme css fields..."
+
+    Setup.all.each do |portal|
+      next if portal.theme.css
+      if !portal.snippets.where(slug: "theme").first.nil?
+        portal.theme.css = portal.snippets.where(slug: "theme").first.content
+        portal.theme.save
+      end
     end
   end
 end

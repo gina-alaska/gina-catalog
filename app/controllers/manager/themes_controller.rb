@@ -1,6 +1,9 @@
 class Manager::ThemesController < ManagerController
   before_filter :authenticate_access_cms!
   
+  SUBMENU = '/layouts/manager/cms_menu'
+  PAGETITLE = 'Themes'
+
   def index
   end
   
