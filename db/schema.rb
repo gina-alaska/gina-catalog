@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130719200449) do
+ActiveRecord::Schema.define(:version => 20130806184859) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -128,6 +128,7 @@ ActiveRecord::Schema.define(:version => 20130719200449) do
     t.boolean  "require_contact_info", :default => false
     t.integer  "owner_setup_id"
     t.integer  "csw_import_id"
+    t.datetime "remote_updated_at"
   end
 
   create_table "catalog_agencies", :id => false, :force => true do |t|
@@ -198,6 +199,7 @@ ActiveRecord::Schema.define(:version => 20130719200449) do
     t.integer "setup_id"
   end
 
+  add_index "catalogs_setups", ["catalog_id"], :name => "index_catalogs_setups_on_catalog_id"
   add_index "catalogs_setups", ["setup_id"], :name => "index_catalogs_setups_on_setup_id"
 
   create_table "collections", :force => true do |t|
@@ -243,8 +245,10 @@ ActiveRecord::Schema.define(:version => 20130719200449) do
     t.integer  "sync_frequency", :default => 24
     t.integer  "setup_id"
     t.string   "title"
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
+    t.datetime "created_at",                                                                                  :null => false
+    t.datetime "updated_at",                                                                                  :null => false
+    t.string   "metadata_field", :default => "urn:x-esri:specification:ServiceType:ArcIMS:Metadata:Document"
+    t.string   "metadata_type",  :default => "FGDC"
   end
 
   create_table "data_sources", :force => true do |t|
@@ -284,6 +288,8 @@ ActiveRecord::Schema.define(:version => 20130719200449) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "download_urls", ["catalog_id"], :name => "index_download_urls_on_catalog_id"
 
   create_table "features", :force => true do |t|
     t.string "class",       :limit => 1
@@ -441,6 +447,8 @@ ActiveRecord::Schema.define(:version => 20130719200449) do
     t.datetime "updated_at"
     t.spatial  "geom",       :limit => {:srid=>4326, :type=>"geometry"}
   end
+
+  add_index "locations", ["asset_id"], :name => "index_locations_on_asset_id"
 
   create_table "membership_roles", :force => true do |t|
     t.integer  "membership_id"
@@ -737,6 +745,8 @@ ActiveRecord::Schema.define(:version => 20130719200449) do
     t.datetime "updated_at"
   end
 
+  add_index "repos", ["catalog_id"], :name => "index_repos_on_catalog_id"
+
   create_table "role_permissions", :force => true do |t|
     t.integer "role_id"
     t.integer "permission_id"
@@ -917,6 +927,7 @@ ActiveRecord::Schema.define(:version => 20130719200449) do
     t.string   "footer_bg"
     t.string   "footer_text_color"
     t.string   "footer_partners_bg"
+    t.text     "css"
   end
 
   create_table "use_agreements", :force => true do |t|
