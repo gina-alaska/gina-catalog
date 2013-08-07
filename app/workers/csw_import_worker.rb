@@ -31,7 +31,7 @@ class CswImportWorker
         catalog.save
       end
     end
-    
+    Sunspot.commit
     @csw.touch
   end
   
