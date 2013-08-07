@@ -23,6 +23,16 @@
         =f.number_field :sync_frequency, class: 'span12'
         %span.add-on
           Hours
+  .row-fluid
+    .span12
+      =f.label :metadata_type
+      =f.select :metadata_type, options_for_select(CswImport::METADATA_TYPES)
+  .row-fluid
+    .span12
+      =f.label :metadata_field
+      =f.text_field :metadata_field, class: 'span12'
+      
+
   #actions.form-actions
     = link_to [:manager, @csw_import], class: 'btn btn-inverse' do
       %i.icon-arrow-left.icon-white
