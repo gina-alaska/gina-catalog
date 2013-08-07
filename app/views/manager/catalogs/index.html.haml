@@ -1,47 +1,11 @@
 %table.table.table-striped.table-condensed#catalog-items
   %thead
     %tr
-      %td{colspan:10,style:'padding:0;'}
-        .navbar.navbar-static-top
-          .navbar-inner
-            .btn-group
-              %button#check-toggle.btn{data: { action: 'toggle-checkbox', target: '.item-checkbox' }, title: "Toggle CheckBoxes" }
-                %i.icon-check
-            .btn-group
-              %button.btn{data: { action: 'expand-all', target: '.collapse' }, title: "Expand All"}
-                %i.icon-plus-sign
-              %button.btn{data: { action: 'collapse-all', target: '.collapse' }, title: "Collapse All"}
-                %i.icon-minus-sign
-  
-            .btn-group
-              = link_to '#', class: "btn dropdown-toggle", data: { toggle: "dropdown" } do
-                Add to collection
-                %b.caret
-              %ul.dropdown-menu
-                - current_setup.collections.each do |coll|
-                  %li
-                    %a{ id: coll.id, href: "#", onclick: "CollToggle(#{coll.id})"}
-                      = coll.name
-            
-            .btn-group
-              = link_to new_manager_catalog_path, class: 'btn btn-success' do
-                %i.icon-plus.icon-white
-                New Record
-            
-            = form_tag manager_catalogs_path, method: 'GET', class: 'navbar-form form-search pull-right' do
-              = hidden_field_tag 'search[editable]', @search[:editable] || 'false', id: 'search_editable'
-              = hidden_field_tag 'search[sds]', @search[:sds] || 'false', id: 'search_sds'
-              = hidden_field_tag 'search[unpublished]', @search[:published_at] || 'false', id: 'search_unpublished'
-              .btn-group
-                %button.btn{ type: "button", class: @search[:editable] == 'true' ? 'active' : '', data: { toggle: 'button', action: 'button-toggle', target: '#search_editable' }, title: 'Show editable records only' }
-                  %i.icon-edit              
-                %button.btn{ type: "button", class: @search[:sds] == 'true' ? 'active' : '', data: { toggle: 'button', action: 'button-toggle', target: '#search_sds' }, title: 'Show SDS records only' }
-                  %i.icon-hdd              
-                %button.btn{ type: "button", class: @search[:unpublished] == 'true' ? 'active' : '', data: { toggle: 'button', action: 'button-toggle', target: '#search_unpublished' }, title: 'Show unpublished records only' }
-                  %i.icon-folder-close-alt              
-              .input-prepend.input-append
-                = text_field_tag 'search[q]', @search[:q], class: 'span4', placeholder: "Search"
-                = submit_tag 'Search', class: 'btn btn-primary'
+      %td{colspan:10}
+        .search.clearfix{ style: "margin-bottom: 5px;" }
+          = render 'search'
+        .toolbar
+          = render 'toolbar'
     %tr
       %th{style:'width:25px;'}
       %th Title
@@ -55,7 +19,7 @@
       %th
         %span{title: "Number of Downloads"}
           DLs
-  %tbody
+  %tbody.results
     - @catalogs.each do |item|
       %tr{data: { toggle: 'collapse', target: "#row_#{dom_id(item)}" }}
         %td{style:"text-align:center; padding:0;"}
@@ -79,16 +43,20 @@
                 - if item.primary_contact
                   %dt Primary Contact:
                   %dd= item.primary_contact
-        %td= item.type.humanize
+        %td= item.type == 'Project' ? 'Project' : 'Data'
         %td= item.status.try(:humanize)
         %td= item.start_date.try(:year)
         %td= item.end_date.try(:year)
-        %td= item.source_agency
         %td
-          - if item.owner_setup.id == current_setup.id 
-            Yes
-          - else
-            %abbr{ title: "This record is shared from the #{item.owner_setup.try(:title)} portal"} No
+          %abbr{ title: item.source_agency.try(:name) }= item.source_agency
+        %td
+          -if item.owner_setup.nil?
+            Udef
+          -else
+            - if item.owner_setup == current_setup 
+              Yes
+            - else
+              %abbr{ title: "This record is shared from the #{item.owner_setup.try(:title)} portal"} No
         %td
           - if item.published_at.nil?
             No

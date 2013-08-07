@@ -129,6 +129,7 @@ class Manager::ImagesController < ManagerController
   # POST /manager/page/:page_id/image/:id/add
   def add
     if @image and !@page.images.exists?(@image) and @page.images << @image
+      @images = current_setup.images.order('created_at DESC') - @page.images
       respond_to do |format|
         format.html {
           flash[:success] = "Added image"
@@ -150,6 +151,7 @@ class Manager::ImagesController < ManagerController
   # POST /manager/page/:page_id/image/:id/remove
   def remove
     if @image and @page.images.delete(@image)
+      @images = current_setup.images.order('created_at DESC') - @page.images
       respond_to do |format|
         format.html {
           flash[:success] = "Added image"

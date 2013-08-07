@@ -1,0 +1,48 @@
+.content
+  = form_tag manager_contact_info_path, method: 'GET', style: "margin-bottom: 0;" do
+    .row-fluid
+      .span3
+        .control-group
+          %label.control-label Start
+          .controls
+            = text_field_tag "start_date", @start_date.strftime('%F'), placeholder: 'YYYY-MM-DD', data: {behavior: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span12"
+      .span3
+        .control-group
+          %label.control-label End
+          .controls
+            = text_field_tag "end_date", @end_date.strftime('%F'), placeholder: 'YYYY-MM-DD', data: { behavior: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span12"
+      .span6
+        .control-group
+          %label.control-label &nbsp;
+          .controls
+            = submit_tag 'Search', class: 'btn btn-primary pull-right'
+  %table.table.table-striped.table-condensed.table-bordered
+    %thead
+      %tr
+        %th{colspan: 5}
+          = link_to manager_catalog_path(@catalog_record), title: "#{@catalog_record.title}" do
+            = @catalog_record.title.truncate(100)
+      %tr
+        %th Date
+        %th IP
+        %th Name
+        %th Email
+        %th Usage Description
+        %th Downloaded from
+    %tbody
+      - @contact_infos.each do |contact|
+        %tr
+          %td= contact.created_at.strftime("%F %T %z")
+          %td= contact.user_ip
+          %td= contact.name
+          %td= contact.email
+          %td= contact.usage_description
+          %td
+            %abbr{ title: contact.setup.try(:title) }= contact.setup.try(:acronym)
+
+:javascript
+  $(document).ready( function(){
+    $('[data-behavior~=datepicker]').datepicker().on('changeDate', function(ev){
+      $(this).datepicker('hide'); 
+    })
+  })

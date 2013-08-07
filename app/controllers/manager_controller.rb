@@ -15,7 +15,7 @@ class ManagerController < ApplicationController
       @end_date = nil
     end
 
-    @contact_infos = ContactInfo.joins(:catalog => [:catalogs_setups]).where(:catalogs_setups => { :setup_id => current_setup.id }).uniq
+    @contact_infos = ContactInfo.joins(:catalog).where("catalog.owner_setup_id = ? or contact_infos.setup_id = ?", current_setup.id, current_setup.id).uniq
 
     if params["agency"].present?
       @contact_infos = @contact_infos.where("catalog.source_agency_id = ?", params["agency"])

@@ -7,7 +7,7 @@ module CatalogConcerns
         return [] if search.nil? or search.keys.empty?
     
         table_includes = {
-          :repo => []
+          :repo => [], :locations => [], :download_urls => [], :owner_setup => [], :setups => []
           # :tags => [], :locations => [], :agencies => [], :source_agency => [], :funding_agency => [], :links => [], 
           # :primary_contact => [:phone_numbers], :people => [:phone_numbers], :data_source => [], :geokeywords => [], :catalog_collections => [], 
           # :repo => [], :data_types => [], :collections => []
@@ -38,7 +38,7 @@ module CatalogConcerns
           #   params[:pf] = [:title, :description]
           # end
 
-          fulltext search[:q]
+          fulltext search[:q] if search[:q].present?
           
           any_of do
             with :owner_setup_id, current_setup.id 

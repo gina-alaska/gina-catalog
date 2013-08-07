@@ -32,14 +32,21 @@ class Membership < ActiveRecord::Base
     elsif match = matches_dynamic_perm_check?(method_id)
       return true if self.user.try(:is_an_admin?)
       
-      permission = permissions.where(name: match.captures.first).first
-      return true if permission
+      tokenize_roles(match.captures.first).each do |check|
+        return true if self.permissions.index { |i| i.name == check }
+      end
+      
+      # permission = permissions.where(name: match.captures.first).first
+      # return true if permission
       return false
     elsif match = matches_dynamic_perm_group_check?(method_id)
       return true if self.user.try(:is_an_admin?)
       
-      permission = permissions.where(group: match.captures.first).first
-      return true if permission
+      tokenize_roles(match.captures.first).each do |check|
+        return true if self.permissions.index { |i| i.group == check }
+      end
+      # permission = permissions.where(group: match.captures.first).first
+      # return true if permission
       return false
     else
       super

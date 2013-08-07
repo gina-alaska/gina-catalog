@@ -1,0 +1,18 @@
+- if images.count == 0
+  %p.lead{style:"padding: 15px;"} No images available
+- else
+  %ul
+    - images.each do |image|
+      %li.thumbnail{ style: "text-align: center;"}
+        .image
+          - if image.file.nil?
+            %p.lead Broken image
+          - else
+            = image_tag image.file.png.thumb('250x100').url, alt: image.title
+        .info
+          .caption
+            %strong= link_to_unless image.link_to_url.empty?, image.title, image.link_to_url
+            %p= image.description
+          .btn-group{style:"text-align:center;"}
+            = link_to 'Add', add_manager_page_content_image_path(page, image), method: 'POST', class: 'btn', remote: true
+            = link_to 'Edit', '#', class: 'btn'

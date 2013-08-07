@@ -1,0 +1,30 @@
+- sortable = [['Sort: Relevance', ''],['Sort: Title', 'title_sort'], ['Sort: Type', 'record_type'], ['Sort: Status', 'status'], ['Sort: Agency', 'source_agency_acronym']]
+- sortdir = [['Ascending', 'asc'], ['Descending', 'desc']]
+
+= form_tag manager_catalogs_path, method: 'GET', style: "margin: 0px;" do
+  = hidden_field_tag 'search[editable]', @search[:editable] || 'false', id: 'search_editable'
+  = hidden_field_tag 'search[sds]', @search[:sds] || 'false', id: 'search_sds'
+  = hidden_field_tag 'search[unpublished]', @search[:published_at] || 'false', id: 'search_unpublished'
+  .form-inline
+    .btn-group
+      = text_field_tag 'search[q]', @search[:q], placeholder: "Search", tabindex: 1
+    .btn-group
+      %button.btn{ type: "button", class: @search[:editable] == 'true' ? 'active' : '', data: { toggle: 'button', action: 'button-toggle', target: '#search_editable' }, title: 'Show editable records only', tabindex: 2 }
+        %i.icon-edit              
+      %button.btn{ type: "button", class: @search[:sds] == 'true' ? 'active' : '', data: { toggle: 'button', action: 'button-toggle', target: '#search_sds' }, title: 'Show SDS records only' , tabindex: 3 }
+        %i.icon-hdd              
+      %button.btn{ type: "button", class: @search[:unpublished] == 'true' ? 'active' : '', data: { toggle: 'button', action: 'button-toggle', target: '#search_unpublished' }, title: 'Show unpublished records only', tabindex: 4 }
+        %i.icon-folder-close-alt              
+    .btn-group
+      = select_tag "sort", options_for_select(sortable, params[:sort]), class: 'span2', title: "Sort by Column", tabindex: 5
+    .btn-group
+      = select_tag "sort_direction", options_for_select(sortdir, @sortdir), class: 'span2', title: "Sort Direction", tabindex: 6
+    .pull-right
+      .btn-group
+        = link_to '.advanced-options', class: 'btn', data: { toggle: 'collapse' }, tabindex: 7 do
+          Advanced
+      .btn-group
+        = submit_tag 'Search', class: 'btn btn-primary', tabindex: 8
+  %fieldset.advanced-options.collapse{ class: @is_advanced ? 'in' : '' }
+    %legend Advanced Options
+    = render 'advanced_search'

@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   
+  before_filter :check_for_setup
   before_filter :fetch_setup
   
   helper_method :current_user
@@ -15,9 +16,24 @@ class ApplicationController < ActionController::Base
   end
   alias_method :current_setup, :fetch_setup
 
-  def member_portals
+  def check_for_setup
+    redirect_to "http://portal.gina.alaska.edu" if current_setup.nil?
+  end
+
+  def member_portals(permission = nil)
     return [] unless user_signed_in?
-    @member_portals ||= current_user.memberships.collect(&:setup).sort {|a,b| a.try(:title).to_s <=> b.try(:title).to_s }
+    # .sort {|a,b| a.try(:title).to_s <=> b.try(:title).to_s }
+    @member_portals ||= {}
+    @member_portals[:all] ||= current_user.setups.order('title ASC')
+    
+    if permission.nil?
+      return @member_portals[:all]
+    else
+      @member_portals[permission.to_sym] ||= @member_portals[:all].reject do |p|
+        !current_user.memberships.where(setup_id: p.id).first.send(permission)
+      end
+      return @member_portals[permission.to_sym]
+    end
   end
   helper_method :member_portals
   
@@ -28,7 +44,7 @@ class ApplicationController < ActionController::Base
   end
   
   def current_member
-    @current_member ||= current_user.memberships.where(setup_id: current_setup).includes(:setup).first || Membership.new(user: current_user) if user_signed_in?
+    @current_member ||= current_user.memberships.where(setup_id: current_setup).includes(:setup, :roles, :permissions).first || Membership.new(user: current_user) if user_signed_in?
   end
   
   def user_signed_in?

@@ -1,10 +1,11 @@
 class Manager::CatalogsController < ManagerController
-  before_filter :authenticate_access_catalog!
+  skip_before_filter :authenticate_manager!, only: [:share]
+  before_filter :authenticate_access_catalog!, except: [:share]
 #  before_filter :authenticate_access_cms!
   before_filter :authenticate_edit_records!, only: [:edit, :new, :create, :update]
   before_filter :authenticate_publish_records!, only: [:unpublish, :publish]
-  before_filter :fetch_record, :except => [:index, :create, :new, :toggle_collection]
-  before_filter :restrict_to_current_setup, :except => [:index, :create, :new, :toggle_collection, :show]
+  before_filter :fetch_record, :except => [:index, :create, :new, :toggle_collection, :share]
+  before_filter :restrict_to_current_setup, :except => [:index, :create, :new, :toggle_collection, :show, :share]
   
   SUBMENU = '/layouts/manager/catalog_menu'
   PAGETITLE = 'Data Records'
@@ -16,16 +17,26 @@ class Manager::CatalogsController < ManagerController
   def index
     @page = params[:page] || 1
     @limit = 50
+    @sort = params[:sort] || ''
+    @sortdir = params[:sort_direction] || "ascending"
 
     @search = params[:search] || {}
-    @search[:order_by] ||= 'title_sort-ascending'
-    if @search.keys.count > 0
-      search = solr_search(@search, @page, @limit)
+    if @search[:q].blank? and @sort.empty?
+      @sort = "title_sort"
+    end
+
+    advanced_opts = @search.reject { |k,v| v.blank? or ['q', 'collection_id', 'order_by', 'sds', 'unpublished', 'editable'].include?(k) }
+    @is_advanced = advanced_opts.keys.size > 0
+
+    @search[:order_by] = "#{@sort}-#{@sortdir}" unless @sort.empty?
+    search = solr_search(@search, @page, @limit)
+
+    if search.respond_to? :results
       @catalogs = search.results
       @total = search.total
     else
-      @catalogs = Catalog.order('title ASC').page(@page).per(@limit)
-      @total = Catalog.all.count
+      @catalogs = Array.wrap(search)
+      @total = 0
     end
     
     respond_with @catalogs
@@ -153,7 +164,7 @@ class Manager::CatalogsController < ManagerController
     
     membership = current_user.memberships.where(setup_id: @setup.id).first
     
-    if membership and membership.can_manage_catalog?
+    if user_signed_in? and membership and membership.can_manage_catalog?
       if @catalog.setups.where(id: @setup.id).any?
         if @catalog.owner_setup == @setup
           flash.now[:error] = "Cannot be unshared the record from this portal, it is the current owner of the record"          

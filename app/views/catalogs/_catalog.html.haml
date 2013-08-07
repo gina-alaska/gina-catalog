@@ -1,11 +1,10 @@
-- cache([:search_result, :v13, catalog]) do
+- cache([:search_result, :v17, catalog]) do
   .result{id: dom_id(catalog, :record), data: { wkt: catalog.geometry_center_collection, type: catalog.type, title: "Record Details", content: "Click on the record title to see more information.", trigger: "hover", placement: "right", toggle: "popover" } }
     .row-fluid
       .span10
         %h5.title
-          = link_to "##{dom_id(catalog, :description)}", data: { toggle: "collapse" } do
-            %i.icon-chevron-down.collapse-icon
-            = catalog.title.try(:truncate,78)
+          %i.icon-chevron-down.collapse-icon
+          = catalog.title.try(:truncate,78)
           - if !catalog.published?
             %i.icon-warning-sign{ data: { title: 'Catalog Record Not Public', content: "This data record has not been made public yet by the site manager.", trigger: "hover", placement: "top", toggle: "popover", container: "##{dom_id(catalog, :record)}" }}
           - unless catalog.geometry_collection.blank?
@@ -20,39 +19,24 @@
         #{catalog.description.try(:truncate, 300).try(:html_safe)}
       /.try(:truncate, 200)}
 
-    .collapse{id: dom_id(catalog, :description)}
-      - if !catalog.published?
-        .alert.alert-warning
-          This record has not been published
-      .status
-        = render 'status', item: catalog
+    - if !catalog.published?
+      .alert.alert-warning
+        This record has not been published
+    %div{id: dom_id(catalog, :more_info)}
+      /.status
+      /  = render 'status', item: catalog
   
-        - unless catalog.collections.list.blank?
-          %b Collections: 
-          = catalog.collections.list
+      /  - unless catalog.collections.list.blank?
+      /    %b Collections: 
+      /    = catalog.collections.list
           
 .pull-right{ style: 'margin: 0 5px 5px 0;'}
   - if user_signed_in?
-    - available_portals = member_portals# - catalog.setups - current_setup.ancestors
+    - available_portals = member_portals(:can_manage_catalog?)# - catalog.setups - current_setup.ancestors
     - if catalog.published? and available_portals.count > 0
-      .btn-group
-        = link_to '#', class: 'btn dropdown-toggle', data: { toggle: 'dropdown' } do
-          %i.icon-share
-          Share...
-          %b.caret
-        %ul.dropdown-menu
-          - available_portals.each do |p|
-            - next unless current_user.memberships.where(setup_id: p.id).first.can_manage_catalog?
-            %li
-              = link_to share_manager_catalog_path(catalog, setup_id: p), method: 'PUT', remote: true do
-                - if catalog.available_in?(p)
-                  %i.icon-check
-                - else
-                  %i.icon-check-empty
-                = p.full_title
-
-            
-    - if current_member.can_manage_catalog? and catalog.owner_setup == current_setup
+      .btn-group{id: dom_id(catalog,"share_button")}
+        = render 'share_button', catalog: catalog, available_portals: available_portals
+    - if catalog.owner_setup == current_setup and current_member.can_manage_catalog?
       .btn-group
         = link_to edit_manager_catalog_path(catalog), class: 'btn', target: :_blank, data: { title: "Edit Record", content: "Edit this record.", trigger: "hover", placement: "bottom", toggle: "popover", container: "##{dom_id(catalog, :record)}" } do
           %i.icon-edit
@@ -68,7 +52,7 @@
       = link_to catalog_downloads_path(catalog), class: 'btn', remote: true, data: { title: "Download Files", content: "Download all of the files that are associated with this record.", trigger: "hover", placement: "bottom", toggle: "popover", container: "##{dom_id(catalog, :record)}" } do
         %i.icon-cloud-download
         Download
-    = link_to "##{dom_id(catalog, :description)}", data: { toggle: "collapse" }, class: "btn" do
+    = link_to more_info_catalog_path(catalog), class: "btn", remote: true do
       %i.icon-plus
       More Info
     = link_to catalog, class: 'btn btn-primary', data: { title: "Full Data Record", content: "View all of the details for this record.", trigger: "hover", placement: "bottom", toggle: "popover", container: "##{dom_id(catalog, :record)}" } do

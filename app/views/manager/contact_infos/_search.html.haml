@@ -1,0 +1,26 @@
+= form_tag manager_full_contact_path, method: 'GET', class: 'form-inline', style: 'margin-bottom: 0;' do
+  .row-fluid
+    .span2
+      .control-group
+        %label.control-label Start
+        .controls
+          = text_field_tag "start_date", @start_date.strftime('%F'), placeholder: 'YYYY-MM-DD', data: {behavior: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span12"
+    .span2
+      .control-group
+        %label.control-label End
+        .controls
+          = text_field_tag "end_date", @end_date.strftime('%F'), placeholder: 'YYYY-MM-DD', data: { behavior: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span12"
+    .span5
+      .control-group
+        %label.control-label Agency
+        .controls
+          = collection_select_for_agencies("agency", params["agency"], false, class: "span12")
+      :javascript
+        $('#agency').select2({allowClear: true, width: 'copy'});
+    .span3
+      .control-group.pull-right
+        %label.control-label &nbsp;
+        .controls
+          = submit_tag 'Search', class: 'btn btn-primary'
+          = submit_tag 'Export CSV', class: 'btn', data: { format: 'csv' }
+            

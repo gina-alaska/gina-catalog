@@ -10,17 +10,4 @@
 .row-fluid
   .image-list.span12
     .thumbnails{style:'padding: 3px;'}
-      - if page.images.count == 0
-        %p.lead No images 
-      - else
-        %ul
-          - page.images.each do |image|
-            %li.thumbnail
-              .image
-                = image_tag image.file.png.thumb('250x250#').url, alt: image.title
-                .caption
-                  %h5= link_to_unless image.link_to_url.empty?, image.title, image.link_to_url
-                  %p= image.description
-              .btn-group{style:"text-align:center;"}
-                = link_to 'Edit', edit_manager_image_path(image), class: 'btn', target: :_blank
-                = link_to 'Remove', remove_manager_page_content_image_path(page, image), method: "POST", data: { confirm: 'Are you sure?' }, class: 'btn', remote: true
+      = render 'image_list', images: page.images, page: page
