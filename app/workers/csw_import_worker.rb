@@ -35,14 +35,5 @@ class CswImportWorker
     @csw.touch
   end
   
-  def self.queue_imports
-    @csws = CswImport.all
-  
-    @csws.each do |csw| 
-      if csw.updated_at > Time.now - csw.sync_interval.hours
-        CswImportWorker.perform_async(csw.id)
-      end
-    end
-  end
   
 end
