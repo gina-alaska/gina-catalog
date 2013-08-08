@@ -21,12 +21,12 @@ module CatalogConcerns
         self.start_date = begin
           DateTime.parse(metadata.start_date) unless metadata.start_date.empty?
         rescue
-          nil
+          import_errors[:start_date] = metadata.start_date unless metadata.start_date.empty?
         end
         self.end_date = begin
           DateTime.parse(metadata.end_date) unless metadata.end_date.empty?
         rescue
-          nil
+          import_errors[:end_date] = metadata.end_date unless metadata.end_date.empty?
         end
         
         
