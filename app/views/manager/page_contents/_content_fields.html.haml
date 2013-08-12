@@ -6,6 +6,6 @@
     %div.ace{ data: { editor: 'ace' } }
       .navbar.navbar-static-top
         .navbar-inner
-          = render '/shared/ace/toolbar', page: page, section: name
+          = render '/shared/ace/base_toolbar', page: page, section: name
           = render 'delete_tab', page: page, section: name
       = text_area_tag "page_content[content][#{name}]", content
