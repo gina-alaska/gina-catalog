@@ -1,0 +1,4 @@
+- unless section == "body"
+  .btn-group.pull-right
+    =link_to remove_manager_page_content_path(page, tab_name: section), method: :put, remote: true, class: 'btn btn-small btn-danger', confirm: "Are you sure?" do
+      Delete Tab

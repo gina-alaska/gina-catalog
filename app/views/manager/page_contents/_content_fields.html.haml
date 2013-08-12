@@ -4,5 +4,8 @@
   - else
     / ACE Editor
     %div.ace{ data: { editor: 'ace' } }
-      = render '/shared/ace/toolbar', page: page, section: name
+      .navbar.navbar-static-top
+        .navbar-inner
+          = render '/shared/ace/base_toolbar', page: page, section: name
+          = render '/shared/ace/delete_tab', page: page, section: name
       = text_area_tag "page_content[content][#{name}]", content
