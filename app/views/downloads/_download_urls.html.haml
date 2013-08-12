@@ -1,5 +1,10 @@
-- download_urls.each do |url|
-  %p
-    = link_to catalog_download_path(url.catalog, url), class: 'btn btn-primary btn-large btn-block', target: "_blank" do
-      = "Download #{url.name}"
+- if catalog.remote_download?
+  - catalog.download_urls.each do |url|
+    %p
+      = link_to catalog_download_path(url.catalog, url), class: 'btn btn-primary btn-large btn-block', target: "_blank" do
+        = "Download #{url.name}"
+- else
+  %p 
+    = link_to catalog_downloads_path(catalog, offer: true), class: 'btn btn-primary btn-large btn-block' do
+      = "Download #{File.basename(catalog.repo.archive_filenames[:zip])}"
       

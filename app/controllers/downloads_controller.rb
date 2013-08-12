@@ -16,7 +16,11 @@ class DownloadsController < ApplicationController
           #   redirect_to catalog_path(@catalog)
           # }
           format.html {
-            render_next_sds_step            
+            if @catalog.local_download? and params[:offer] == 'true' and authorized?
+              offer_file
+            else
+              render_next_sds_step            
+            end
           }
           format.js { reset }
         else
@@ -103,6 +107,15 @@ class DownloadsController < ApplicationController
   end
   
   protected
+  
+  def authorized?
+    return true unless @catalog.require_contact_info? or ask_for_use_agreement?
+    
+    return false if @catalog.require_contact_info? and cookies.signed[:contact_info_id].nil?
+    return false if ask_for_use_agreement? and cookies.signed[:use_agreement_id].nil?
+    
+    return true
+  end
   
   def offer_file
     if @catalog.local_download?

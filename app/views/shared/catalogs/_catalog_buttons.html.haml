@@ -1,0 +1,8 @@
+- if user_signed_in?
+  .btn-group{ id: dom_id(catalog, 'manage')}
+    = render 'shared/catalogs/manage_button', catalog: catalog
+- if catalog.downloadable?
+  .btn-group
+    = link_to catalog_downloads_path(catalog), class: 'btn', remote: true do
+      %i.icon-cloud-download
+      Download

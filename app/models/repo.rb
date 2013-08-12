@@ -173,11 +173,20 @@ Description: #{self.catalog.description}
   end
   
   def archive_filenames
-    dest = NSCatalog::Application.config.archive_path
-    { 
-      :zip => File.join(dest, "#{self.catalog.to_param}.zip"), 
-      :tar_gz => File.join(dest, "#{self.catalog.to_param}.tar.gz")
-    }
+    # dest = NSCatalog::Application.config.archive_path
+    # { 
+    #   :zip => File.join(dest, "#{self.catalog.to_param}.zip"), 
+    #   :tar_gz => File.join(dest, "#{self.catalog.to_param}.tar.gz")
+    # }
+    { :zip => self.find_archive || self.default_archive_filename }
+  end
+  
+  def default_archive_filename
+    File.join(NSCatalog::Application.config.archive_path, "#{self.catalog.to_param}.zip")
+  end
+  
+  def find_archive
+    Dir.glob(File.join(NSCatalog::Application.config.archive_path, "#{self.catalog.id}-*.zip")).first 
   end
   
   def archive_available?(format = :zip)
@@ -189,7 +198,9 @@ Description: #{self.catalog.description}
     
     FileUtils.mkdir_p(File.dirname(archive_filenames[:zip]))
     
-    File.open(archive_filenames[:zip], 'wb') do |fp|
+    FileUtils.rm(self.find_archive) if File.exists?(self.find_archive)
+      
+    File.open(default_archive_filename, 'wb') do |fp|
       fp << archive_zip(treeish, opts[:prefix])
     end
       

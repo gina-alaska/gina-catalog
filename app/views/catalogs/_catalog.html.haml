@@ -24,22 +24,18 @@
       %div{id: dom_id(catalog, :more_info)}
           
   %div{ style: 'text-align:right; margin: 0 5px 5px 0;'}
-    - if user_signed_in?
-      .btn-group{ id: dom_id(catalog, 'manage')}
-        = render 'manage_button', catalog: catalog
-    .btn-group
-      - unless catalog.geometry_center_collection.blank?
+    = render 'shared/catalogs/catalog_buttons', catalog: catalog
+    - unless catalog.geometry_center_collection.blank?
+      .btn-group
         = link_to '#', class: 'btn', data: { "openlayers-action" => "select-features", target: "##{dom_id(catalog, :record)}" } do
           %i.icon-search
           Zoom To
 
-      - if catalog.downloadable?
-        = link_to catalog_downloads_path(catalog), class: 'btn', remote: true do
-          %i.icon-cloud-download
-          Download
+    .btn-group
       = link_to more_info_catalog_path(catalog), class: "btn", remote: true do
         %i.icon-plus
         More Info
+    .btn-group
       = link_to catalog, class: 'btn btn-primary' do
         Full Record
         %i.icon-arrow-right
