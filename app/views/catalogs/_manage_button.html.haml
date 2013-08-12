@@ -1,0 +1,23 @@
+%button.btn.dropdown-toggle{ data: { toggle: 'dropdown' } } 
+  Manage
+  %span.caret
+
+%ul.dropdown-menu
+  - if catalog.owner_setup == current_setup and current_member.can_manage_catalog?
+    %li
+      = link_to edit_manager_catalog_path(catalog), target: :_blank do
+        %i.icon-edit
+        Edit
+  - available_portals = member_portals(:can_manage_catalog?)
+  - if catalog.published? and available_portals.count > 0
+    %li.divider
+    %li{ style: 'padding-left: 18px;' }
+      %strong Share with...
+    - available_portals.each do |p|
+      %li
+        = link_to share_manager_catalog_path(catalog, setup_id: p), method: 'put', remote: true do
+          - if catalog.available_in?(p)
+            %i.icon-check
+          - else
+            %i.icon-check-empty
+          = p.full_title
