@@ -25,7 +25,7 @@
           
         .span5
           #map{ data: { map: 'CatalogMap', target: '#map_canvas' } }
-            #map_canvas{ data: { projection: 'EPSG:3857', displayProjection: 'EPSG:4326', google: "true", layers: ['TILE.EPSG:3857.*'] } } } }
+            #map_canvas{ data: { projection: @current_setup.projection, displayProjection: @current_setup.projection, google: @current_setup.google_layers==true ? "true" : "false", layers: ["TILE.#{@current_setup.projection}.*"] } } } }
 
           %br/
           = render '/shared/catalogs/files', catalog: catalog
