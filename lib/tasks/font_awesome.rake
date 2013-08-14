@@ -11,6 +11,7 @@ namespace :font_awesome do
     File.open(ENV['FILE']).each do |line|
       next unless line =~ /^.icon*/
       icon = line.split(":")[0]
+      icon = icon[1..-1]
       icons.push("\"#{icon}\"")
     end
     icons.sort!
