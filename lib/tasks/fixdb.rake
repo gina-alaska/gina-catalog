@@ -1,6 +1,6 @@
 namespace :fixdb do
   desc 'run all fixdb tasks'
-  task :all => [:collections, :themes, :update_downloads, :create_sitemap, :move_theme_css] do
+  task :all => [:collections, :themes, :update_downloads, :create_sitemap, :move_theme_css, :set_default_projection] do
   end
   
   desc 'migrate collections to the new setup'
@@ -77,6 +77,17 @@ namespace :fixdb do
         portal.theme.css = portal.snippets.where(slug: "theme").first.content
         portal.theme.save
       end
+    end
+  end
+
+  desc 'If not set, set the site projection to ESPG:3857.'
+  task :set_default_projection => :environment do
+    puts "Looking for unset site projections..."
+
+    Setup.all.each do |portal|
+      next unless portal.projection.empty?
+      portal.projection = "EPSG:3857"
+      portal.save
     end
   end
 end
