@@ -3,11 +3,30 @@
   %span.caret
 
 %ul.dropdown-menu
-  - if catalog.owner_setup == current_setup and current_member.can_manage_catalog?
-    %li
-      = link_to edit_manager_catalog_path(catalog), target: :_blank do
-        %i.icon-edit
-        Edit
+  - if catalog.owner_setup == current_setup
+    - if current_member.can_manage_catalog?
+      %li
+        = link_to edit_manager_catalog_path(catalog), target: :_blank do
+          %i.icon-edit
+          Edit
+      %li
+        = link_to manager_catalog_path(catalog), method: :delete, class: 'error', data: { confirm: 'Are you sure?' } do
+          %i.icon-trash
+          Delete
+            
+    - if current_member.can_publish_catalog?
+  
+      - if catalog.published?
+        %li
+          = link_to unpublish_manager_catalog_path(catalog), method: :put do
+            %i.icon-thumbs-down
+            Un-Publish
+      - else
+        %li
+          = link_to publish_manager_catalog_path(catalog), method: :put do
+            %i.icon-thumbs-up
+            Publish
+        
   - available_portals = member_portals(:can_manage_catalog?)
   - if catalog.published? and available_portals.count > 0
     %li.divider
