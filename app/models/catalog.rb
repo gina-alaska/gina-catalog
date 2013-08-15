@@ -20,6 +20,7 @@ class Catalog < ActiveRecord::Base
   validates :title, length: { maximum: 255 }
   validates_presence_of :type
   validates_presence_of :description
+  validate :temporal_continuity
   # validates_presence_of :owner_id
   
   #validates_presence_of :license_id
@@ -490,5 +491,11 @@ Title: #{self.title}
 
   def set_data_source
     self.data_source = DataSource.find_by_name('NSSI') if self.data_source.nil?
+  end
+
+  def temporal_continuity
+    unless self.start_date.nil? or self.end_date.nil?
+      errors.add(:base, "Start date must come before the end date.") if self.start_date > self.end_date
+    end
   end
 end
