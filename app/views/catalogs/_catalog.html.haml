@@ -32,7 +32,7 @@
           Zoom To
 
     .btn-group
-      = link_to more_info_catalog_path(catalog), class: "btn", remote: true do
+      = link_to more_info_catalog_path(catalog), class: "btn", id: dom_id(catalog, "info_button"), remote: true, data: {"less-text" => "<i class='icon-minus'/> Less Info"} do
         %i.icon-plus
         More Info
     .btn-group

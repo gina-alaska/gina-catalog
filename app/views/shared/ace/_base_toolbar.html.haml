@@ -15,7 +15,7 @@
     Icons
     %b.caret
   %ul.dropdown-menu{ role: 'menu', style: 'overflow-y: auto; max-height: 350px;' }
-    - %w{ icon-cloud-download icon-angle-left icon-angle-right icon-lightbulb icon-suitcase icon-bell-alt icon-circle icon-circle-blank icon-asterisk icon-envelope icon-envelope-alt icon-map-marker icon-shopping-cart icon-minus icon-exclamation-sign icon-minus-sign icon-signin icon-signout icon-beaker icon-external-link icon-eye-close icon-eye-open icon-move icon-money icon-bell icon-bolt icon-ok icon-book icon-bookmark icon-bookmark-empty icon-star icon-star-empty icon-flag icon-briefcase icon-fire icon-pencil icon-folder-close icon-folder-open icon-plane icon-plus icon-tag icon-calendar icon-thumbs-up icon-thumbs-down icon-cloud icon-heart icon-heart-empty icon-refresh icon-coffee icon-home icon-user icon-cogs icon-comment icon-comment-alt icon-comments icon-comments-alt icon-road icon-wrench icon-zoom-in icon-zoom-out icon-lock icon-unlock icon-search icon-angle-up icon-angle-down icon-arrow-left icon-arrow-right icon-arrow-up icon-arrow-down }.sort.each do |icon|
+    - load_icons.each do |icon|
       %li
         = link_to '#', data: { action: 'insert', html: "<i class=\"#{icon}\"></i>" } do
           %i{ class: icon }

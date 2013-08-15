@@ -45,7 +45,7 @@
           .control-group
             = f.label :menu_icon, 'Menu Icon', class: 'control-label'
             .controls
-              = f.select :menu_icon, Page::Content::ICONS, {include_blank: true}, class: 'menu-icons span12'
+              = f.select :menu_icon, load_icons, {include_blank: true}, class: 'menu-icons span12'
         .span6
           .control-group
             = f.label :description, class: 'control-label'
