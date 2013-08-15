@@ -494,6 +494,8 @@ Title: #{self.title}
   end
 
   def temporal_continuity
-    errors.add(:base, "Start date must come before the end date.") if self.start_date > self.end_date
+    unless self.start_date.nil? and self.end_date.nil?
+      errors.add(:base, "Start date must come before the end date.") if self.start_date > self.end_date
+    end
   end
 end
