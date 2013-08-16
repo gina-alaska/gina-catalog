@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130813180647) do
+ActiveRecord::Schema.define(:version => 20130816174702) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -808,6 +808,7 @@ ActiveRecord::Schema.define(:version => 20130813180647) do
     t.text     "keywords"
     t.string   "projection"
     t.boolean  "google_layers",     :default => true
+    t.string   "record_projection"
   end
 
   create_table "setups_snippets", :id => false, :force => true do |t|
