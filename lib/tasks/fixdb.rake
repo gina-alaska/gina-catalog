@@ -85,8 +85,13 @@ namespace :fixdb do
     puts "Looking for unset site projections..."
 
     Setup.all.each do |portal|
-      next unless portal.projection.empty?
-      portal.projection = "EPSG:3857"
+      next unless portal.projection.nil? or portal.record_projection.nil?
+      if portal.projection.nil?
+        portal.projection = "EPSG:3857"
+      end
+      if portal.record_projection.nil?
+        portal.record_projection = "EPSG:3857"
+      end
       portal.save
     end
   end
