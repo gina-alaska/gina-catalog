@@ -24,15 +24,9 @@
     %dd=ddtext setup.keywords
     %h5 Site Maps
     %dt Site Projection
-    - case(setup.projection)
-      - when "EPSG:3338"
-        %dd=ddtext "#{setup.projection} (Alaskan Albers)"
-      - when "EPSG:3572"
-        %dd=ddtext "#{setup.projection} (Polar)"
-      - when "EPSG:3857"
-        %dd=ddtext "#{setup.projection} (Web Mercator)"
-      - else 
-        %dd=ddtext "No Projection"
+    %dd=ddtext display_projection(setup.projection)
+    %dt Full Record Projection
+    %dd=ddtext display_projection(setup.record_projection)
     %dt Use Google Layers
     %dd=ddtext setup.google_layers==true ? "Yes" : "No"
     %h5 Site Social
