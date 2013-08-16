@@ -40,7 +40,7 @@ class Manager::PeopleController < ManagerController
     @person = Person.new(params[:person])
     @person.setups << current_setup
 
-    if @person.save!
+    if @person.save
       respond_to do |format|
         flash[:success] = "Contact for #{@person.first_name} #{@person.last_name} was successfully created."
         format.html { redirect_to manager_people_path }
