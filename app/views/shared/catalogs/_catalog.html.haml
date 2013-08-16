@@ -24,8 +24,9 @@
           = render '/shared/catalogs/collapsed_content', item: catalog, collapse: collapse
           
         .span5
+          - map_projection = @current_setup.record_projection.empty? ? @current_setup.projection : @current_setup.record_projection
           #map{ data: { map: 'CatalogMap', target: '#map_canvas' } }
-            #map_canvas{ data: { projection: @current_setup.projection, displayProjection: @current_setup.projection, google: @current_setup.google_layers==true ? "true" : "false", layers: ["TILE.#{@current_setup.projection}.*"] } } } }
+            #map_canvas{ data: { projection: map_projection, displayProjection: 'EPSG:4326', google: @current_setup.google_layers==true ? "true" : "false", layers: ["TILE.#{map_projection}.*"] } } } }
 
           %br/
           = render '/shared/catalogs/files', catalog: catalog

@@ -62,7 +62,7 @@
     .control-group
       = f.label "Full Record Projection", class: 'control-label'
       .controls
-        = f.select :record_projection, options_for_select(projections, @current_setup.record_projection), class: 'span12'
+        = f.select :record_projection, options_for_select(projections, @current_setup.record_projection), { include_blank: true }
     .control-group
       = f.label "Use Google Layers", class: 'control-label'
       .controls
