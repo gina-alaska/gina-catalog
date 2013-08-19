@@ -3,7 +3,6 @@ class CreateActivityLogs < ActiveRecord::Migration
     create_table :activity_logs do |t|
       t.string     :activity
       t.integer    :user_id
-      t.datetime   :performed_at
       t.text       :log
       t.references :loggable, polymorphic: true
       
