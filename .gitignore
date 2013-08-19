@@ -32,3 +32,5 @@ db/data
 *.pid
 /uploads
 .zeus.sock
+
+dump.rdb
