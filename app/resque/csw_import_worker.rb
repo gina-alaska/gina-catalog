@@ -1,7 +1,7 @@
 class CswImportWorker 
-  include Sidekiq::Worker
-
-  def perform(csw_id)
+  @queue = :imports
+ 
+  def self.perform(csw_id)
     @csw = CswImport.where(id: csw_id).first
     failed_imports = []
     import_errors = {}
