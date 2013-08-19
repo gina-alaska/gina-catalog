@@ -172,4 +172,15 @@ namespace :import do
       #puts data.title
     end
   end
+
+  desc "Queue imports from CSW sources"
+  task "csw:queue" => :environment do 
+    @csws = CswImport.all
+  
+    @csws.each do |csw| 
+      if csw.updated_at < Time.now - csw.sync_frequency.hours
+        Resque.enqueue(CswImportWorker, csw.id)
+      end
+    end
+  end
 end
