@@ -3,9 +3,15 @@ class CswImportWorker
  
   def self.perform(csw_id)
     @csw = CswImport.where(id: csw_id).first
-    failed_imports = []
-    import_errors = {}
-    
+
+    @log = @csw.activity_logs.build
+    @log.activity = "CSW Import"
+    @log.log = {
+      failed: [],
+      errors: {},
+      new_catalogs: []
+    }
+
     client = RCSW::Client::Base.new(@csw.url)
     records = client.record(client.records.collect(&:identifier)).all
     
@@ -24,16 +30,22 @@ class CswImportWorker
         
         catalog.assign_attributes(default_attributes)
 
-        import_errors[url] = case @csw.metadata_type
+        import_errors = case @csw.metadata_type
         when "FGDC"
           catalog.import_from_fgcd(url)
         end
+        @log.log[:errors][url] = import_errors if import_errors.any?
 
-        unless catalog.save
-          failed_imports << url
+        if catalog.save
+          @log.log[:new_catalogs] << catalog.id
+        else
+          @log.log[:failed] << url
         end
       end
     end
+    
+    @log.save
+    
     Sunspot.commit
     @csw.touch
   end

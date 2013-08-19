@@ -3,7 +3,8 @@ class CswImport < ActiveRecord::Base
   
   belongs_to :setup
   has_many :catalogs
-   
+  has_many :activity_logs, as: :loggable
+  
   METADATA_TYPES = [
     #['display text','type']
     ['FGDC', 'FGDC']
