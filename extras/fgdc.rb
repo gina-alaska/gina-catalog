@@ -1,4 +1,6 @@
 class FGDC 
+  attr_reader :xml
+  
   def initialize url
     @xml = Nokogiri::HTML(open(url))
   end
