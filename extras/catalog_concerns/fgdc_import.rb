@@ -39,7 +39,7 @@ module CatalogConcerns
         agency = Agency.where(name: metadata.source_agency).first
         if agency.nil?
           import_errors[:agencies] ||= []
-          import_errors[:agencies] << agency
+          import_errors[:agencies] << metadata.source_agency
         else
           self.source_agency = agency        
         end
