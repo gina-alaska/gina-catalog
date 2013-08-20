@@ -11,7 +11,7 @@ class CswImportWorker
       errors: {},
       new_catalogs: []
     }
-
+    
     client = RCSW::Client::Base.new(@csw.url)
     records = client.record(client.records.collect(&:identifier)).all
     
@@ -34,10 +34,12 @@ class CswImportWorker
         when "FGDC"
           catalog.import_from_fgcd(url)
         end
-        @log.log[:errors][url] = import_errors if import_errors.any?
+        
 
         if catalog.save
           @log.log[:new_catalogs] << catalog.id
+          #Only keep the errors on imported records
+          @log.log[:errors][url] = import_errors if import_errors.any?
         else
           @log.log[:failed] << url
         end
