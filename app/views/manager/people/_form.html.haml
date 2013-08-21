@@ -1,4 +1,4 @@
-= form_for [:manager, @person] do |f|
+= nested_form_for [:manager, @person] do |f|
   - unless @person.errors.full_messages.empty?
     .alert.alert-error
       %h4 Errors prevents this record from being saved
@@ -25,14 +25,19 @@
       = f.label :url
       = f.text_field :url, class: "span12"
 
-      = f.label :work_phone
-      = f.text_field :work_phone, class: "span4"
-
-      = f.label :mobile_phone
-      = f.text_field :mobile_phone, class: "span4"
-
-      = f.label :alt_phone
-      = f.text_field :alt_phone, class: "span4"
+      #phones
+        .pull-right
+          = f.link_to_add :phone_numbers, :data => { :target => "#phones" }, class: "btn btn-success" do
+            %i.icon-plus.icon-white
+            Add a Phone Number
+        %h4 Phone Numbers
+        .header.row-fluid
+          .span4 Type
+          .span6 Number
+          .span2.actions Actions
+        .body
+          .phones
+            = f.fields_for :phone_numbers
   .row-fluid
     .span12
       .form-actions

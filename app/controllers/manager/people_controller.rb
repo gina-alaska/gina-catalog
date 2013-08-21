@@ -54,11 +54,11 @@ class Manager::PeopleController < ManagerController
   end
 
   def edit
-    @person = Person.find(params[:id])
+    @person = Person.includes(:phone_numbers).where(id: params[:id]).first
   end
 
   def update
-    @person = Person.where(id: params[:id]).first
+    @person = Person.includes(:phone_numbers).where(id: params[:id]).first
 
     if @person.update_attributes(params[:person])
       respond_to do |format|
