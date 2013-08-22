@@ -38,6 +38,7 @@ class Manager::PageLayoutsController < ManagerController
   # POST /setups/page_layouts.json
   def create
     @page_layout = current_setup.layouts.build(params[:page_layout])
+    check_for_default unless params[:default] == false
     current_setup.layouts << @page_layout
 
     respond_to do |format|
@@ -74,6 +75,7 @@ class Manager::PageLayoutsController < ManagerController
   # PUT /setups/page_layouts/1.json
   def update
     @page_layout = current_setup.layouts.find(params[:id])
+    check_for_default unless params[:default] == false
 
     respond_to do |format|
       if @page_layout.update_attributes(params[:page_layout])
@@ -115,9 +117,21 @@ class Manager::PageLayoutsController < ManagerController
 
     respond_to do |format|
       format.html {
-        redirect_to edit_manager_page_layout_path(@page_layout)
+        redirect_to manager_page_contents_path(tab: "page_layouts")
       }
       format.json { head :no_content }
+    end
+  end
+
+  protected
+
+  def check_for_default
+    @current_setup.layouts.each do |layout|
+      next if @page_layout == layout
+      if layout.default?
+        layout.default = false
+        layout.save
+      end
     end
   end
 end
