@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130822202341) do
+ActiveRecord::Schema.define(:version => 20130822202950) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -629,6 +629,7 @@ ActiveRecord::Schema.define(:version => 20130822202341) do
     t.string   "menu_icon"
     t.boolean  "draft",          :default => false
     t.integer  "updated_by_id"
+    t.boolean  "system_page"
   end
 
   create_table "page_images", :force => true do |t|
@@ -819,7 +820,6 @@ ActiveRecord::Schema.define(:version => 20130822202341) do
     t.string   "projection"
     t.boolean  "google_layers",     :default => true
     t.string   "record_projection"
-    t.boolean  "system_page"
   end
 
   create_table "setups_snippets", :id => false, :force => true do |t|
