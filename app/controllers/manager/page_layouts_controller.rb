@@ -119,10 +119,8 @@ class Manager::PageLayoutsController < ManagerController
       format.html {
         if @page_layout.default?
           flash[:error] = "The #{@page_layout.name} layout is currently set as the default layout and can not be deleted!"
-          redirect_to manager_page_contents_path(tab: "page_layouts")
-        else
-          redirect_to manager_page_contents_path(tab: "page_layouts")
         end
+        redirect_to manager_page_contents_path(tab: "page_layouts")
         }
       format.json { head :no_content }
     end
