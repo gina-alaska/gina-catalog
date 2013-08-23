@@ -629,7 +629,7 @@ ActiveRecord::Schema.define(:version => 20130822202950) do
     t.string   "menu_icon"
     t.boolean  "draft",          :default => false
     t.integer  "updated_by_id"
-    t.boolean  "system_page"
+    t.boolean  "system_page",    :default => false
   end
 
   create_table "page_images", :force => true do |t|
