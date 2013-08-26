@@ -19,9 +19,9 @@
               Agency
     .span6
       .btn-group.btn-block
-        = link_to '#', class: "btn", id: 'sort_dir-btn', data: {toggle: "dropdown"}, style: 'width: 96px' do
+        = link_to '#', class: "btn #{dir_btn_class(@search_params)}", id: 'sort_dir-btn', data: {toggle: "dropdown"}, style: 'width: 96px' do
           = @search_params[:direction].capitalize
-        = link_to '#', class: 'btn dropdown-toggle', id: 'sort_dir-toggle', data: {toggle: "dropdown"} do
+        = link_to '#', class: "btn dropdown-toggle #{dir_btn_class(@search_params)}", id: 'sort_dir-toggle', data: {toggle: "dropdown"} do
           %i.caret
         %ul.dropdown-menu
           %li
