@@ -7,7 +7,7 @@
 
 .input-append.span10
   = text_field_tag 'search[q]', @search_params[:q], placeholder: 'Enter keyword search', class: 'span12'
-  %button#clear-search.btn 
+  = link_to "#", class: "btn", id: "clear-search" do 
     %i.icon-remove
 
 :javascript

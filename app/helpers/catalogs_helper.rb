@@ -86,4 +86,7 @@ module CatalogsHelper
     link_to params.merge(param_name => scope.num_pages), options.reverse_merge(:rel => 'previous'), &block
   end  
   
+  def dir_btn_class(sort_field)
+    sort_field[:field] == 'relevance' ? 'disabled' : ''
+  end
 end
