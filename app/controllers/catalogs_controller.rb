@@ -36,7 +36,8 @@ class CatalogsController < ApplicationController
     @limit = 150 if @format == "csv"
     @pagenum = params[:page] || 1
     @search_params[:field] = "relevance" unless SORT_FIELDS.include?(@search_params[:field])
-    @search_params[:direction] ||= "ascending"
+    @search_params[:direction] = "ascending" unless %w{ascending descending}.include?(@search_params[:direction])
+  
           
     advanced_opts = @search_params.reject { |k,v| v.blank? or ['q', 'collection_id', 'order_by'].include?(k) }
     @is_advanced = advanced_opts.keys.size > 0
