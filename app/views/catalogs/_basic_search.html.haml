@@ -3,4 +3,13 @@
 = hidden_field_tag 'limit', @limit, id: 'limit'
 = hidden_field_tag 'search[bbox]', @search_params[:bbox], id: "search_aoi"
 
-= text_field_tag 'search[q]', @search_params[:q], placeholder: 'Enter keyword search', class: 'span12'
+.input-append.span10
+  = text_field_tag 'search[q]', @search_params[:q], placeholder: 'Enter keyword search', class: 'span12'
+  %button#clear-search.btn 
+    %i.icon-remove
+
+:javascript
+  $("#clear-search").on('click', function(e) {
+    e.preventDefault();
+    $("#search_q").val("");
+  })
