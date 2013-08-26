@@ -5,4 +5,13 @@
 = hidden_field_tag 'search[field]', @sort, id: "sort"
 = hidden_field_tag 'search[direction]', @sort_dir, id: "sort_dir"
 
-= text_field_tag 'search[q]', @search_params[:q], placeholder: 'Enter keyword search', class: 'span12'
+.input-append.span10
+  = text_field_tag 'search[q]', @search_params[:q], placeholder: 'Enter keyword search', class: 'span12'
+  %button#clear-search.btn 
+    %i.icon-remove
+
+:javascript
+  $("#clear-search").on('click', function(e) {
+    e.preventDefault();
+    $("#search_q").val("");
+  })
