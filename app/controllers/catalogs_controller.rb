@@ -2,7 +2,7 @@ class CatalogsController < ApplicationController
   # caches_action :show, :layout => true, :if => lambda { |c| c.request.xhr? }
   # caches_action :show, :layout => false, :unless => lambda { |c| c.request.xhr? }
   #caches_action :search
-
+  SORT_FIELDS = ["title", "agency", "relevance"]
   include CatalogConcerns::Search
 
   def show
@@ -26,6 +26,7 @@ class CatalogsController < ApplicationController
   end
   
   def search
+    
     @agencies = Agency.select([:name,:id]).collect{|a| [a.name, a.id]}.group_by{|a| a.first.first }
      #Agency.all #.group_by{|a| a.name[0]}
   
@@ -34,16 +35,13 @@ class CatalogsController < ApplicationController
     @limit = params[:limit] || 30
     @limit = 150 if @format == "csv"
     @pagenum = params[:page] || 1
-
+          
     advanced_opts = @search_params.reject { |k,v| v.blank? or ['q', 'collection_id', 'order_by'].include?(k) }
     @is_advanced = advanced_opts.keys.size > 0
     
-    if (@search_params['q'].nil? or @search_params['q'].blank?)
-      @search_params[:order_by] = 'title_sort-ascending'
-    else
-      @search_params.delete(:order_by)
-    end
-    
+    @search_params[:field] = "title" unless SORT_FIELDS.include?(@search_params[:field] )
+    @search_params[:direction] ||= "ascending"
+        
     unless current_user and current_member.can_manage_cms?
       @search_params[:published_only] = true
     end

@@ -23,11 +23,10 @@ module CatalogConcerns
           catalog_ids.uniq!
         end
 
-        if search[:order_by]
-          field, direction = search[:order_by].split("-");
-          direction ||= :asc
-        end
-
+        field = "#{search[:field]}_sort" unless search[:field] == "relevance"
+        field ||= nil
+        direction = search[:direction] || :asc
+        
         Catalog.search(include: table_includes) do
           # adjust_solr_params do |params|
           #   # Force solar to do an 'OR'ish search, at least 1 "optional" word is required in each  

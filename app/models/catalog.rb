@@ -236,10 +236,16 @@ class Catalog < ActiveRecord::Base
     string :geokeyword_sort do
       geokeywords.map(&:name).sort.join(' ')
     end
+    
+    #Sorts
     string :title_sort do
       filtered_words = ['a', 'the', 'and', 'an', 'of', 'i', '' ]
       title.downcase.split(/\s+/).delete_if { |word| filtered_words.include? word }.join(' ').gsub(/["',]/,'')
     end
+    string :agency_sort do
+      source_agency.try(&:name)
+    end
+    
     string :source_agency_acronym do
       source_agency.try(&:acronym)
     end
