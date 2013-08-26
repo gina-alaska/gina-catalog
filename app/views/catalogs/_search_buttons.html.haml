@@ -80,7 +80,6 @@
         Search
 :javascript
   $("#sort").on('change', function(e) {
-    console.log($(this).val());
     if($(this).val() == "relevance") {
       $("#sort_dir-btn").addClass("disabled")
       $("#sort_dir-toggle").addClass("disabled")      
@@ -88,5 +87,4 @@
       $("#sort_dir-btn").removeClass("disabled")
       $("#sort_dir-toggle").removeClass("disabled")
     }
-    console.log(e)
   })
