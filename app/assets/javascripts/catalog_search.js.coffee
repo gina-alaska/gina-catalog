@@ -1,6 +1,7 @@
 @CatalogSearch = {
   update: (el, value) ->
     $(el).val(value)
+    $(el).trigger("change")
   
   submit: (format = 'js', track = true) ->
     form = $('#catalog_search_form')
