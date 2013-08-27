@@ -4,24 +4,25 @@
 - else
   %ul.nav{ style: 'margin: 0;' }
     - @images.each do |image|
-      %li.pull-left.thumbnail{ style: 'width: 46%; margin-left: 10px; margin-top: 10px;' }
-        .row-fluid
-          .span3
-            .image
-              - if image.file.nil?
-                %p.lead Broken image
-              - else
-                = image_tag image.file.png.thumb('150x100#').url, alt: image.title
-          .span9
-            %div{ style: 'height: 68px; overflow: auto;' }
-              %strong= image.title
-              %p= image.description
-            .buttons{style:""}
-              .btn-group
+      - cache(['ace_image_chooser', image, 'v1']) do
+        %li.pull-left.thumbnail{ style: 'width: 46%; margin-left: 10px; margin-top: 10px;' }
+          .row-fluid
+            .span3
+              .image
                 - if image.file.nil?
-                  %p.lead Please fix this image before linking
+                  %p.lead Broken image
                 - else
-                  = link_to '200x200', '#', class: 'btn btn-small', data: { behavior: 'add', src: image.file.png.thumb('200x200').url,alt: image.title }
-                  = link_to '640x480', '#', class: 'btn btn-small', data: { behavior: 'add', src: image.file.png.thumb('640x480').url,alt: image.title }
-                  = link_to '1024x768', '#', class: 'btn btn-small', data: { behavior: 'add', src: image.file.png.thumb('1024x768').url, alt: image.title }
-                  = link_to 'Fullsize', '#', class: 'btn btn-small', data: { behavior: 'add', src: image.file.png.url, alt: image.title }
+                  = image_tag image.file.png.thumb('150x100#').url, alt: image.title
+            .span9
+              %div{ style: 'height: 68px; overflow: auto;' }
+                %strong= image.title
+                %p= image.description
+              .buttons{style:""}
+                .btn-group
+                  - if image.file.nil?
+                    %p.lead Please fix this image before linking
+                  - else
+                    = link_to '200x200', '#', class: 'btn btn-small', data: { behavior: 'add', src: image.file.png.thumb('200x200').url,alt: image.title }
+                    = link_to '640x480', '#', class: 'btn btn-small', data: { behavior: 'add', src: image.file.png.thumb('640x480').url,alt: image.title }
+                    = link_to '1024x768', '#', class: 'btn btn-small', data: { behavior: 'add', src: image.file.png.thumb('1024x768').url, alt: image.title }
+                    = link_to 'Fullsize', '#', class: 'btn btn-small', data: { behavior: 'add', src: image.file.png.url, alt: image.title }

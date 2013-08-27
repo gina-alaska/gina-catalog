@@ -1,11 +1,13 @@
 class Catalog < ActiveRecord::Base
+  
+  include CatalogConcerns::FgdcImport
   STATUSES = %w(Complete Ongoing Unknown Funded)
 
   attr_accessible :links_attributes, :locations_attributes, :download_urls_attributes, 
     :collection_ids, :title, :description, :start_date, :end_date, :status, :owner_id, 
     :primary_contact_id, :contact_ids, :source_agency_id, :funding_agency_id, :data_type_ids, 
     :iso_topic_ids, :agency_ids, :tags, :geokeyword_ids, :type, :use_agreement_id, :request_contact_info, 
-    :require_contact_info
+    :require_contact_info, :remote_updated_at, :source_url, :owner_setup_id
   
   #The exception to the db name rule, since this is a collection of multiple types of items
   self.table_name = 'catalog'
@@ -20,6 +22,7 @@ class Catalog < ActiveRecord::Base
   validates :title, length: { maximum: 255 }
   validates_presence_of :type
   validates_presence_of :description
+  validate :temporal_continuity
   # validates_presence_of :owner_id
   
   #validates_presence_of :license_id
@@ -233,10 +236,16 @@ class Catalog < ActiveRecord::Base
     string :geokeyword_sort do
       geokeywords.map(&:name).sort.join(' ')
     end
+    
+    #Sorts
     string :title_sort do
       filtered_words = ['a', 'the', 'and', 'an', 'of', 'i', '' ]
       title.downcase.split(/\s+/).delete_if { |word| filtered_words.include? word }.join(' ').gsub(/["',]/,'')
     end
+    string :agency_sort do
+      source_agency.try(&:name)
+    end
+    
     string :source_agency_acronym do
       source_agency.try(&:acronym)
     end
@@ -490,5 +499,11 @@ Title: #{self.title}
 
   def set_data_source
     self.data_source = DataSource.find_by_name('NSSI') if self.data_source.nil?
+  end
+
+  def temporal_continuity
+    unless self.start_date.nil? or self.end_date.nil?
+      errors.add(:base, "Start date must come before the end date.") if self.start_date > self.end_date
+    end
   end
 end

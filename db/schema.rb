@@ -11,13 +11,23 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130816174702) do
+ActiveRecord::Schema.define(:version => 20130822202950) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
     t.text     "text"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "activity_logs", :force => true do |t|
+    t.string   "activity"
+    t.integer  "user_id"
+    t.text     "log"
+    t.integer  "loggable_id"
+    t.string   "loggable_type"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   create_table "addresses", :force => true do |t|
@@ -619,6 +629,7 @@ ActiveRecord::Schema.define(:version => 20130816174702) do
     t.string   "menu_icon"
     t.boolean  "draft",          :default => false
     t.integer  "updated_by_id"
+    t.boolean  "system_page",    :default => false
   end
 
   create_table "page_images", :force => true do |t|

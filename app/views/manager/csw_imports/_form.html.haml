@@ -19,7 +19,30 @@
   .row-fluid
     .span12
       =f.label :sync_frequency
-      =f.number_field :sync_frequency, class: 'span12'
+      .input-append
+        =f.number_field :sync_frequency, class: 'span12'
+        %span.add-on
+          Hours
+  .row-fluid
+    .span12
+      =f.label :metadata_type
+      =f.select :metadata_type, options_for_select(CswImport::METADATA_TYPES)
+  .row-fluid
+    .span12
+      =f.label :metadata_field
+      =f.text_field :metadata_field, class: 'span12'
+      
+  .row-fluid
+    .span12
+      = f.label :use_agreement_id, class: 'control-label'
+      = f.select :use_agreement_id, options_from_collection_for_select(UseAgreement.all, :id, :title, @csw_import.use_agreement_id), { include_blank: true }, { class: 'span12' }
+      = f.label :request_contact_info, class: 'control-label' do
+        = f.check_box :request_contact_info
+        Ask for contact info
+      = f.label :require_contact_info, class: 'control-label' do
+        = f.check_box :require_contact_info
+        Contact info required
+
 
   #actions.form-actions
     = link_to [:manager, @csw_import], class: 'btn btn-inverse' do
