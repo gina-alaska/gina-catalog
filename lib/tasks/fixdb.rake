@@ -84,7 +84,7 @@ namespace :fixdb do
   task :set_default_projection => :environment do
     puts "Looking for unset site projections..."
 
-    Setup.where("projection = ? OR record_projection = ?", nil, nil).each do |portal|
+    Setup.where("projection IS NULL OR record_projection IS NULL").each do |portal|
       if portal.projection.nil?
         portal.projection = "EPSG:3857"
       end
