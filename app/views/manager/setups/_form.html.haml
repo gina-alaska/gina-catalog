@@ -1,3 +1,4 @@
+- projections = [["Alaskan Albers","EPSG:3338"],["Polar", "EPSG:3572"],["Web Mercator", "EPSG:3857"]]
 = form_for setup, url: manager_setup_path, html: { class: 'form-horizontal' } do |f|
   - if setup.errors.any?
     #error_explanation.alert.alert-error
@@ -8,60 +9,82 @@
         - setup.errors.full_messages.each do |msg|
           %li= msg
           
-  .control-group
-    = f.label :title, class: 'control-label'
-    .controls
-      = f.text_field :title, class: 'span12'
-  
-  .control-group
-    = f.label :acronym, class: 'control-label'
-    .controls
-      = f.text_field :acronym, class: 'span12'
-  
-  .control-group
-    = f.label :by_line, class: 'control-label'
-    .controls
-      = f.text_field :by_line, class: 'span12'
+  %fieldset
+    %legend
+      Site Information
+    .control-group
+      = f.label :title, class: 'control-label'
+      .controls
+        = f.text_field :title, class: 'span12'
+    
+    .control-group
+      = f.label :acronym, class: 'control-label'
+      .controls
+        = f.text_field :acronym, class: 'span12'
+    
+    .control-group
+      = f.label :by_line, class: 'control-label'
+      .controls
+        = f.text_field :by_line, class: 'span12'
 
-  .control-group
-    = f.label :contact_email, class: 'control-label'
-    .controls
-      = f.text_field :contact_email, class: 'span12'
+    .control-group
+      = f.label :contact_email, class: 'control-label'
+      .controls
+        = f.text_field :contact_email, class: 'span12'
 
-  .control-group
-    = f.label "Default Invite Text", class: 'control-label'
-    .controls
-      = f.text_area :default_invite, rows: 6, cols: 40, class: 'span12'
+    .control-group
+      = f.label "Default Invite Text", class: 'control-label'
+      .controls
+        = f.text_area :default_invite, rows: 6, cols: 40, class: 'span12'
 
-  .control-group
-    = f.label "Google Analytics Account", class: 'control-label'
-    .controls
-      = f.text_field :analytics_account, class: 'span12'
+    .control-group
+      = f.label "Google Analytics Account", class: 'control-label'
+      .controls
+        = f.text_field :analytics_account, class: 'span12'
 
-  .control-group
-    = f.label "GitHub URL Link", class: 'control-label'
-    .controls
-      = f.text_field :github_url, class: 'span12'
+    .control-group
+      = f.label "Metadata - Description", class: 'control-label'
+      .controls
+        = f.text_field :description, class: 'span12'
 
-  .control-group
-    = f.label "Twitter URL Link", class: 'control-label'
-    .controls
-      = f.text_field :twitter_url, class: 'span12'
+    .control-group
+      = f.label "Metadata - Keywords", class: 'control-label'
+      .controls
+        = f.text_field :keywords, class: 'span12'
 
-  .control-group
-    = f.label "Facebook URL Link", class: 'control-label'
-    .controls
-      = f.text_field :facebook_url, class: 'span12'
+  %fieldset
+    %legend
+      Site Maps
+    .control-group
+      = f.label "Site Projection", class: 'control-label'
+      .controls
+        = f.select :projection, options_for_select(projections, @current_setup.projection), class: 'span12'
+    .control-group
+      = f.label "Full Record Projection", class: 'control-label'
+      .controls
+        = f.select :record_projection, options_for_select(projections, @current_setup.record_projection), { include_blank: true }
+    .control-group
+      = f.label "Use Google Layers", class: 'control-label'
+      .controls
+        = f.check_box :google_layers, {}, "true", "false"
 
-  .control-group
-    = f.label "Metadata - Description", class: 'control-label'
-    .controls
-      = f.text_field :description, class: 'span12'
+  %fieldset
+    %legend
+      Site Social
+    .control-group
+      = f.label "GitHub URL Link", class: 'control-label'
+      .controls
+        = f.text_field :github_url, class: 'span12'
 
-  .control-group
-    = f.label "Metadata - Keywords", class: 'control-label'
-    .controls
-      = f.text_field :keywords, class: 'span12'
+    .control-group
+      = f.label "Twitter URL Link", class: 'control-label'
+      .controls
+        = f.text_field :twitter_url, class: 'span12'
+
+    .control-group
+      = f.label "Facebook URL Link", class: 'control-label'
+      .controls
+        = f.text_field :facebook_url, class: 'span12'
 
   .form-actions
     = link_to manager_page_contents_path(tab: "setups"), class: 'btn' do

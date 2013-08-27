@@ -5,6 +5,7 @@
       %i.icon-edit
 .content
   %dl.dl-horizontal
+    %h5 Site Information
     %dt Title
     %dd=ddtext setup.title
     %dt Acronym
@@ -17,14 +18,21 @@
     %dd=ddtext setup.default_invite 
     %dt Google Analytics
     %dd=ddtext setup.analytics_account
+    %dt Description
+    %dd=ddtext setup.description
+    %dt Keywords
+    %dd=ddtext setup.keywords
+    %h5 Site Maps
+    %dt Site Projection
+    %dd=ddtext display_projection(setup.projection)
+    %dt Full Record Projection
+    %dd=ddtext display_projection(setup.record_projection)
+    %dt Use Google Layers
+    %dd=ddtext setup.google_layers==true ? "Yes" : "No"
+    %h5 Site Social
     %dt Twitter URL
     %dd=ddtext setup.twitter_url
     %dt GitHub URL
     %dd=ddtext setup.github_url
     %dt Facebook URL
     %dd=ddtext setup.facebook_url
-    %h5 Site Metadata
-    %dt Description
-    %dd=ddtext setup.description
-    %dt Keywords
-    %dd=ddtext setup.keywords
