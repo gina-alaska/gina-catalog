@@ -5,9 +5,15 @@ class Setup < ActiveRecord::Base
         :default_invite, :urls_attributes, :analytics_account, :twitter_url, :github_url, :facebook_url, :parent_id, :acronym, :description, :keywords, :projection, :google_layers, :record_projection
   
   has_and_belongs_to_many :images
-  has_and_belongs_to_many :pages, class_name: 'Page::Content', join_table: 'pages_setups'
-  has_and_belongs_to_many :layouts, class_name: 'Page::Layout', join_table: 'page_layouts_setups'
-  has_and_belongs_to_many :snippets, class_name: 'Page::Snippet'
+  
+  # has_and_belongs_to_many :pages, class_name: 'Page::Content', join_table: 'pages_setups'
+  # has_and_belongs_to_many :layouts, class_name: 'Page::Layout', join_table: 'page_layouts_setups'
+  # has_and_belongs_to_many :snippets, class_name: 'Page::Snippet'
+  
+  has_many :pages, class_name: 'Page::Content'
+  has_many :layouts, class_name: 'Page::Layout'
+  has_many :snippets, class_name: 'Page::Snippet'
+  
   has_and_belongs_to_many :persons, join_table: 'persons_setups'
   has_and_belongs_to_many :agencies, join_table: 'agencies_setups'
 

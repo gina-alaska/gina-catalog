@@ -9,7 +9,10 @@ class Page::Content < ActiveRecord::Base
   serialize :sections
   serialize :content
   
+  # this will need to be removed in a future update
   has_and_belongs_to_many :setups, join_table: 'pages_setups'
+  belongs_to :setup
+  
   has_many :page_images, class_name: 'Page::Image'
   has_many :images, :through => :page_images
   
@@ -78,7 +81,7 @@ class Page::Content < ActiveRecord::Base
   end
   
   def content_for(section)
-    context = { :page => self, :setup => self.setups.first }
+    context = { :page => self, :setup => self.setup.first }
     
     pipeline = HTML::Pipeline.new([ ::LiquidFilter ], context)
     pipeline.call(self.content[section.to_s])[:output].to_s.html_safe
