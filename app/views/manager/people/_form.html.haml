@@ -7,18 +7,19 @@
           %li= err
 
   .row-fluid
-    .span2
-      = f.label :salutation
-      = f.text_field :salutation, class: "span12"
     .span4
       = f.label :first_name
       = f.text_field :first_name, class: "span12"
     .span4
       = f.label :last_name
       = f.text_field :last_name, class: "span12"
-    .span2
-      = f.label :suffix
-      = f.text_field :suffix, class: "span12"
+  / .row-fluid
+  /   .span2
+  /     = f.label :salutation
+  /     = f.text_field :salutation, class: "span12"
+  /   .span2
+  /     = f.label :suffix
+  /     = f.text_field :suffix, class: "span12"
 
   = f.label :email
   = f.text_field :email, class: "span12"
@@ -33,9 +34,14 @@
         %i.icon-plus.icon-white
         Add Phone Number
     .header.row-fluid
-      .span4 Type
-      .span6 Number
-      .span2.actions Actions
+      .span4 
+        %strong Type
+      .span6
+        %strong Number 
+        (Blank entries will not be saved)
+        
+      .span2.actions 
+        %strong Actions
     .body
       .phones
         = f.fields_for :phone_numbers
