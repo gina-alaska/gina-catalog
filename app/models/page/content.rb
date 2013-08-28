@@ -22,6 +22,7 @@ class Page::Content < ActiveRecord::Base
   accepts_nested_attributes_for :images
   
   validates_presence_of :slug
+  validates_uniqueness_of :slug, scope: :setup_id
   validates_presence_of :title
   validates_length_of :description, maximum: 255
   

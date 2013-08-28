@@ -6,4 +6,5 @@ class Page::Snippet < ActiveRecord::Base
   belongs_to :setup
   
   validates_presence_of :slug
+  validates_uniqueness_of :slug, scope: :setup_id
 end
