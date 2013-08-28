@@ -8,7 +8,7 @@ class Person < ActiveRecord::Base
   has_many :addresses, :dependent => :destroy
   
   has_many :phone_numbers, order: "name DESC"
-  accepts_nested_attributes_for :phone_numbers, allow_destroy: true
+  accepts_nested_attributes_for :phone_numbers, allow_destroy: true, reject_if: proc { |attributes| attributes['digits'].blank? }
 
   has_and_belongs_to_many :setups, join_table: 'persons_setups', uniq: true
   #has_and_belongs_to_many :catalogs, join_table: 'catalogs_contacts', uniq: true
