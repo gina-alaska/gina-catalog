@@ -1,5 +1,0 @@
-# Set any path stuff necessary to initialize your ruby paths
-# Git likes to put it's own stuff in $PATH and it can mess with rbenv
-HOME=/Users/will
-PATH=$HOME/.rbenv/shims:$HOME/.rbenv/bin:/usr/local/bin:$PATH
-#PATH=/Users/will/.rbenv/shims:/Users/will/.rbenv/shims:/Users/will/.rbenv/bin:/Users/will/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin:/usr/local
