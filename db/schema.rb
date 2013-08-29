@@ -11,13 +11,23 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130806232509) do
+ActiveRecord::Schema.define(:version => 20130827223225) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
     t.text     "text"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "activity_logs", :force => true do |t|
+    t.string   "activity"
+    t.integer  "user_id"
+    t.text     "log"
+    t.integer  "loggable_id"
+    t.string   "loggable_type"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   create_table "addresses", :force => true do |t|
@@ -242,13 +252,16 @@ ActiveRecord::Schema.define(:version => 20130806232509) do
 
   create_table "csw_imports", :force => true do |t|
     t.string   "url"
-    t.integer  "sync_frequency", :default => 24
+    t.integer  "sync_frequency",       :default => 24
     t.integer  "setup_id"
     t.string   "title"
-    t.datetime "created_at",                                                                                  :null => false
-    t.datetime "updated_at",                                                                                  :null => false
-    t.string   "metadata_field", :default => "urn:x-esri:specification:ServiceType:ArcIMS:Metadata:Document"
-    t.string   "metadata_type",  :default => "FGDC"
+    t.datetime "created_at",                                                                                        :null => false
+    t.datetime "updated_at",                                                                                        :null => false
+    t.string   "metadata_field",       :default => "urn:x-esri:specification:ServiceType:ArcIMS:Metadata:Document"
+    t.string   "metadata_type",        :default => "FGDC"
+    t.integer  "use_agreement_id"
+    t.boolean  "request_contact_info", :default => false
+    t.boolean  "require_contact_info", :default => false
   end
 
   create_table "data_sources", :force => true do |t|
@@ -616,6 +629,8 @@ ActiveRecord::Schema.define(:version => 20130806232509) do
     t.string   "menu_icon"
     t.boolean  "draft",          :default => false
     t.integer  "updated_by_id"
+    t.boolean  "system_page",    :default => false
+    t.integer  "setup_id"
   end
 
   create_table "page_images", :force => true do |t|
@@ -631,6 +646,7 @@ ActiveRecord::Schema.define(:version => 20130806232509) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.boolean  "default"
+    t.integer  "setup_id"
   end
 
   create_table "page_layouts_setups", :id => false, :force => true do |t|
@@ -643,6 +659,7 @@ ActiveRecord::Schema.define(:version => 20130806232509) do
     t.text     "content"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "setup_id"
   end
 
   add_index "page_snippets", ["slug"], :name => "index_page_snippets_on_slug"
@@ -787,8 +804,8 @@ ActiveRecord::Schema.define(:version => 20130806232509) do
     t.string   "by_line"
     t.string   "url"
     t.string   "logo_uid"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
     t.string   "contact_email"
     t.text     "default_invite"
     t.text     "analytics_account"
@@ -803,6 +820,9 @@ ActiveRecord::Schema.define(:version => 20130806232509) do
     t.string   "acronym"
     t.text     "description"
     t.text     "keywords"
+    t.string   "projection"
+    t.boolean  "google_layers",     :default => true
+    t.string   "record_projection"
   end
 
   create_table "setups_snippets", :id => false, :force => true do |t|

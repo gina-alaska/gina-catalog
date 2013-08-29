@@ -5,7 +5,7 @@ class Manager::ReposController < ManagerController
   
   def show
     @repo = Repo.where(:slug => params[:id]).first
-    respond_with(@repo)
+    redirect_to [:manager, @repo.catalog]
   end
   
   def update
