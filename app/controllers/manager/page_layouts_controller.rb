@@ -113,13 +113,10 @@ class Manager::PageLayoutsController < ManagerController
   # DELETE /setups/page_layouts/1.json
   def destroy
     @page_layout = current_setup.layouts.find(params[:id])
-    @page_layout.destroy unless @page_layout.default?
+    @page_layout.destroy
 
     respond_to do |format|
       format.html {
-        if @page_layout.default?
-          flash[:error] = "The #{@page_layout.name} layout is currently set as the default layout and can not be deleted!"
-        end
         redirect_to manager_page_contents_path(tab: "page_layouts")
         }
       format.json { head :no_content }
