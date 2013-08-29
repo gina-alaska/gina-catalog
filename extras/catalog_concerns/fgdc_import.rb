@@ -14,9 +14,10 @@ module CatalogConcerns
         self.description = metadata.abstract
         self.type = "Asset"
         self.tags = metadata.keywords.collect{|k| Tag.where(text: k).first_or_initialize}
-        self.locations = [self.locations.first_or_initialize(geom: metadata.bounds, name: url)]
+        self.locations = [self.locations.first_or_initialize(geom: metadata.bounds, name: 'Record Bounds')]
         self.links = metadata.onlinks.collect do |l|
           self.links.where(url: l).first_or_initialize(display_text: l, category: "Website")
+          self.links.where(url: url).first_or_initialize(display_text: 'Metadata', categroy: 'Metadata')
         end
         self.start_date = begin
           DateTime.parse(metadata.start_date) unless metadata.start_date.empty?
