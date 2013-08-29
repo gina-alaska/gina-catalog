@@ -5,4 +5,4 @@
   .btn-group
     = link_to catalog_downloads_path(catalog), class: 'btn', rel: "nofollow", remote: true do
       %i.icon-cloud-download
-      = "Download (#{number_to_human_size(File.size(catalog.repo.archive_filenames.first[1]))})"
+      = "Download (#{number_to_human_size(File.size(catalog.repo.archive_filenames[:zip]))})"
