@@ -2,7 +2,9 @@ class FGDC
   attr_reader :xml
   
   def initialize url
+    puts "Fetching metadata"
     @xml = Nokogiri::HTML(open(url))
+    puts "metadata fetched"
   end
   
   def title
@@ -38,6 +40,10 @@ class FGDC
     upper_corner = factory.point(eastbc, northbc)
 
     RGeo::Cartesian::BoundingBox.create_from_points(lower_corner, upper_corner).to_geometry
+  end
+  
+  def status
+    @xml.search('idinfo status progress').children.to_s
   end
 
   def onlinks

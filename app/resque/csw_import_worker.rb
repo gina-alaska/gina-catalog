@@ -1,7 +1,11 @@
 class CswImportWorker 
   @queue = :imports
  
-  def self.perform(csw_id)
+  def self.perform(csw_id, force = false)
+    if force
+      puts 'wahoo'
+    end
+      
     @csw = CswImport.where(id: csw_id).first
 
     @log = @csw.activity_logs.build
@@ -12,15 +16,17 @@ class CswImportWorker
       new_catalogs: []
     }
     
+    puts "Fetching client records"
     client = RCSW::Client::Base.new(@csw.url)
     records = client.record(client.records.collect(&:identifier)).all
+    puts "Done fetching records"
     
     records.each do |record|
       uuid = record.identifier.gsub(/({|})/,"")
       
       catalog = Catalog.where(uuid: uuid, csw_import_id: @csw.id).first_or_initialize
 
-      if catalog.new_record? or catalog.remote_updated_at != record.modified
+      if force or catalog.new_record? or catalog.remote_updated_at != record.modified
         url = @csw.fgdc_import_url(record)
         
         default_attributes = { 
@@ -48,8 +54,8 @@ class CswImportWorker
     
     @log.save
     
-    Sunspot.commit
     @csw.touch
+    Sunspot.commit
   end
   
   

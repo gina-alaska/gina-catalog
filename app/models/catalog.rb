@@ -7,7 +7,7 @@ class Catalog < ActiveRecord::Base
     :collection_ids, :title, :description, :start_date, :end_date, :status, :owner_id, 
     :primary_contact_id, :contact_ids, :source_agency_id, :funding_agency_id, :data_type_ids, 
     :iso_topic_ids, :agency_ids, :tags, :geokeyword_ids, :type, :use_agreement_id, :request_contact_info, 
-    :require_contact_info, :remote_updated_at, :source_url, :owner_setup_id
+    :require_contact_info, :remote_updated_at, :source_url, :owner_setup_id, :csw_import_id
   
   #The exception to the db name rule, since this is a collection of multiple types of items
   self.table_name = 'catalog'

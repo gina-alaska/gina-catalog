@@ -1,5 +1,5 @@
 class IsoTopic < ActiveRecord::Base
-  set_table_name 'iso_topic_categories'
+  self.table_name = 'iso_topic_categories'
   
   def long_name_with_code
     "#{iso_theme_code} :: #{name.humanize} - #{long_name}"

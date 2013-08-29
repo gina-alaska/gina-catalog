@@ -25,4 +25,8 @@ class CswImport < ActiveRecord::Base
     }
   end
   
+  def async_import(force = false)
+    Resque.enqueue(CswImportWorker, self.id, force)
+  end
+  
 end
