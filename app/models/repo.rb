@@ -202,7 +202,7 @@ Description: #{self.catalog.description}
     
     FileUtils.mkdir_p(File.dirname(archive_filenames[:zip]))
     
-    FileUtils.rm(self.find_archive) if File.exists?(self.find_archive)
+    FileUtils.rm(self.archive_filenames[:zip]) if self.archive_available?
       
     File.open(default_archive_filename, 'wb') do |fp|
       fp << archive_zip(treeish, opts[:prefix])
