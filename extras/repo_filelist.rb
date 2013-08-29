@@ -28,7 +28,7 @@ class RepoFilelist
         :children => item.contents.collect { |i| process(i) } 
       }
     elsif item.kind_of? Grit::Blob
-      return { name: item.name, :type => 'blob', size: item.size }
+      return { name: item.name, :type => 'blob' }
     else
       raise "Unknown Grit::Tree content type #{item.class}::#{item.inspect}"
     end
