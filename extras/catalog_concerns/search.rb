@@ -24,10 +24,10 @@ module CatalogConcerns
         end
 
         if search[:order_by]
-          field, direction = search[:order_by].split("-");
+          field, direction = search[:order_by].split("-")
           direction ||= :asc
         end
-
+        
         Catalog.search(include: table_includes) do
           # adjust_solr_params do |params|
           #   # Force solar to do an 'OR'ish search, at least 1 "optional" word is required in each  

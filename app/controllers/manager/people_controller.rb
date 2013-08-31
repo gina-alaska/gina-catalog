@@ -34,13 +34,14 @@ class Manager::PeopleController < ManagerController
 
   def new
     @person = Person.new
+    @person.phone_numbers.build
   end
 
   def create
     @person = Person.new(params[:person])
     @person.setups << current_setup
 
-    if @person.save!
+    if @person.save
       respond_to do |format|
         flash[:success] = "Contact for #{@person.first_name} #{@person.last_name} was successfully created."
         format.html { redirect_to manager_people_path }
@@ -55,10 +56,12 @@ class Manager::PeopleController < ManagerController
 
   def edit
     @person = Person.find(params[:id])
+    @person.phone_numbers.build
+    
   end
 
   def update
-    @person = Person.where(id: params[:id]).first
+    @person = Person.find(params[:id])
 
     if @person.update_attributes(params[:person])
       respond_to do |format|

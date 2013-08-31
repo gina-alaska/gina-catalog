@@ -177,7 +177,7 @@ class @CatalogMap extends OpenlayersMap
         
       onSelect: (feature) =>
         unless @skipHighlight
-          el = $('#' + feature.attributes.record_id)
+          el = $('#' + feature.attributes.record_id).parent('.result')
           parent = $('body,html')
 
           padding = $('#map').height()

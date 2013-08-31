@@ -17,8 +17,6 @@
         Finish Page Reorder
 %ol#page-content-list.page-list.sortable
   - current_setup.pages.roots.each do |page|
-    - # shouldn't be necessary
-    - next unless page.setups.include?(current_setup)
     = render '/manager/page_contents/page', page: page
 
 :javascript
