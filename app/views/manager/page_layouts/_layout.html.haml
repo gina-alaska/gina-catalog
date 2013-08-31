@@ -4,7 +4,7 @@
       %i.icon-file
       = link_to edit_manager_page_layout_path(layout), class: 'edit' do
         = layout.name
-        - if layout.default?
+        - if !layout.default?
           .label.label-info Default
     .span4.actions
       .btn-group
