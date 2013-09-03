@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130822202950) do
+ActiveRecord::Schema.define(:version => 20130829000215) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -463,6 +463,20 @@ ActiveRecord::Schema.define(:version => 20130822202950) do
 
   add_index "locations", ["asset_id"], :name => "index_locations_on_asset_id"
 
+  create_table "map_layers", :force => true do |t|
+    t.string   "name"
+    t.string   "url"
+    t.string   "type"
+    t.string   "projections"
+    t.string   "layers"
+    t.integer  "zoom"
+    t.integer  "catalog_id"
+    t.datetime "created_at",                                            :null => false
+    t.datetime "updated_at",                                            :null => false
+    t.spatial  "bounds",      :limit => {:srid=>-1, :type=>"geometry"}
+    t.spatial  "center",      :limit => {:srid=>-1, :type=>"geometry"}
+  end
+
   create_table "membership_roles", :force => true do |t|
     t.integer  "membership_id"
     t.integer  "role_id"
@@ -630,6 +644,7 @@ ActiveRecord::Schema.define(:version => 20130822202950) do
     t.boolean  "draft",          :default => false
     t.integer  "updated_by_id"
     t.boolean  "system_page",    :default => false
+    t.integer  "setup_id"
   end
 
   create_table "page_images", :force => true do |t|
@@ -645,6 +660,7 @@ ActiveRecord::Schema.define(:version => 20130822202950) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.boolean  "default"
+    t.integer  "setup_id"
   end
 
   create_table "page_layouts_setups", :id => false, :force => true do |t|
@@ -657,6 +673,7 @@ ActiveRecord::Schema.define(:version => 20130822202950) do
     t.text     "content"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "setup_id"
   end
 
   add_index "page_snippets", ["slug"], :name => "index_page_snippets_on_slug"
