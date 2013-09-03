@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130829000215) do
+ActiveRecord::Schema.define(:version => 20130903233700) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -469,13 +469,13 @@ ActiveRecord::Schema.define(:version => 20130829000215) do
     t.string   "type"
     t.string   "projections"
     t.string   "layers"
-    t.integer  "zoom"
     t.integer  "catalog_id"
-    t.datetime "created_at",                                            :null => false
-    t.datetime "updated_at",                                            :null => false
-    t.spatial  "bounds",      :limit => {:srid=>-1, :type=>"geometry"}
-    t.spatial  "center",      :limit => {:srid=>-1, :type=>"geometry"}
+    t.datetime "created_at",                                              :null => false
+    t.datetime "updated_at",                                              :null => false
+    t.spatial  "bounds",      :limit => {:srid=>4326, :type=>"geometry"}
   end
+
+  add_index "map_layers", ["catalog_id"], :name => "index_map_layers_on_catalog_id"
 
   create_table "membership_roles", :force => true do |t|
     t.integer  "membership_id"
@@ -671,9 +671,10 @@ ActiveRecord::Schema.define(:version => 20130829000215) do
   create_table "page_snippets", :force => true do |t|
     t.string   "slug"
     t.text     "content"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
     t.integer  "setup_id"
+    t.boolean  "system_page"
   end
 
   add_index "page_snippets", ["slug"], :name => "index_page_snippets_on_slug"
