@@ -201,11 +201,11 @@ class @CatalogMap extends OpenlayersMap
           
   #end setupMap
   
-  toggleBtn: (btn, status) ->
+  toggleCheck: (check, status) ->
     if status
-      $(btn).addClass('active')
+      $(check).addClass('icon-check').removeClass('icon-check-empty')
     else
-      $(btn).removeClass('active')
+      $(check).removeClass('icon-check').addClass('icon-check-empty')
     
   
   preview_layer:(evt, btn) =>
@@ -213,14 +213,14 @@ class @CatalogMap extends OpenlayersMap
     
     if @preview_layers_list[href]?
       @preview_layers_list[href].setVisibility(!@preview_layers_list[href].getVisibility())
-      @toggleBtn($(btn).parent('li'), @preview_layers_list[href].getVisibility())
+      @toggleCheck($(btn).find('i'), @preview_layers_list[href].getVisibility())
       
     else
       $.ajax(href).success (response) =>
         maplayer = new MapLayers(response)
         @preview_layers_list[href] = maplayer.build()
         @map.addLayer(@preview_layers_list[href])
-        @toggleBtn($(btn).parent('li'), @preview_layers_list[href].getVisibility())
+        @toggleCheck($(btn).find('i'), @preview_layers_list[href].getVisibility())
     
   addAOI:(wkt) =>
     wktReader = new OpenLayers.Format.WKT()
