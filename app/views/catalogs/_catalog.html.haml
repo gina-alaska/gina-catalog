@@ -28,17 +28,25 @@
         %div{id: dom_id(catalog, :more_info)}
           
   %div{ style: 'text-align:right; margin: 0 5px 5px 0;'}
-    = render 'shared/catalogs/catalog_buttons', catalog: catalog
-    - unless catalog.geometry_center_collection.blank?
-      .btn-group
-        = link_to '#', class: 'btn', data: { "openlayers-action" => "select-features", target: "##{dom_id(catalog, :record)}" } do
-          %i.icon-search
-          Zoom To
-
     .btn-group
-      = link_to more_info_catalog_path(catalog), class: "btn", id: dom_id(catalog, "info_button"), remote: true, data: {"less-text" => "<i class='icon-minus'/> Less Info"} do
+      - unless catalog.geometry_center_collection.blank?
+        = link_to '#', class: 'btn', data: { "openlayers-action" => "select-features", target: "##{dom_id(catalog, :record)}" }, title: 'Zoom To' do
+          %i.icon-map-marker
+          
+      - unless catalog.map_layers.empty?
+        = link_to '#', class: 'btn dropdown-toggle', data: { toggle: 'dropdown' }, title: 'View map layer' do
+          %i.icon-globe
+          %span.caret
+        %ul.dropdown-menu
+          - catalog.map_layers.each do |layer|
+            %li= link_to layer, map_layer_path(layer, :json), class: layer.supports?(current_setup.projection) ? '' : 'disabled', data: { openlayers_action: 'preview' }
+        
+    .btn-group
+      = link_to more_info_catalog_path(catalog), class: "btn", id: dom_id(catalog, "info_button"), remote: true, data: {"less-text" => "<i class='icon-minus'/>"}, title: 'More Info' do
         %i.icon-plus
-        More Info
+
+    = render 'shared/catalogs/catalog_buttons', catalog: catalog
+        
     .btn-group
       = link_to catalog, class: 'btn btn-primary' do
         Full Record

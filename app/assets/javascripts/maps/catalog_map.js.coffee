@@ -6,6 +6,8 @@ class @CatalogMap extends OpenlayersMap
     super(@el)
     
     @btnHandlers = {}
+    @preview_layers_list = {}
+    
     @map_state = { target: '.search', size: History.getState().data.map_size || 'normal' }
     @setupCatalogMap()
     @initListeners()
@@ -108,13 +110,14 @@ class @CatalogMap extends OpenlayersMap
       @resize()      
       
   setupToolbar: =>
+    @addBtnHandler 'preview', @preview_layer
     @addBtnHandler 'drawAOI', @drawAOI
     @addBtnHandler 'zoomToMaxExtent', @zoomToDefaultBounds
     @addBtnHandler 'expand', (evt, btn) =>
       @expandMap(btn.data('target'), btn.data('size'), btn)
       
-    @btns = $(@el).parent().find('.btn[data-openlayers-action]')
-    @btns.on 'click', (evt) =>
+    @btns = $('[data-openlayers-action]')
+    $(document).on 'click', '[data-openlayers-action]', (evt) =>
       evt.preventDefault()
       action = $(evt.currentTarget).data('openlayers-action')
       if @btnHandlers[action]
@@ -197,6 +200,27 @@ class @CatalogMap extends OpenlayersMap
     
           
   #end setupMap
+  
+  toggleBtn: (btn, status) ->
+    if status
+      $(btn).addClass('active')
+    else
+      $(btn).removeClass('active')
+    
+  
+  preview_layer:(evt, btn) =>
+    href = btn.attr('href')
+    
+    if @preview_layers_list[href]?
+      @preview_layers_list[href].setVisibility(!@preview_layers_list[href].getVisibility())
+      @toggleBtn($(btn).parent('li'), @preview_layers_list[href].getVisibility())
+      
+    else
+      $.ajax(href).success (response) =>
+        maplayer = new MapLayers(response)
+        @preview_layers_list[href] = maplayer.build()
+        @map.addLayer(@preview_layers_list[href])
+        @toggleBtn($(btn).parent('li'), @preview_layers_list[href].getVisibility())
     
   addAOI:(wkt) =>
     wktReader = new OpenLayers.Format.WKT()
