@@ -201,26 +201,37 @@ class @CatalogMap extends OpenlayersMap
           
   #end setupMap
   
-  toggleCheck: (check, status) ->
+  toggleCheck: (btn, checkbox, status) ->
     if status
-      $(check).addClass('icon-check').removeClass('icon-check-empty')
+      $(checkbox).addClass('icon-check').removeClass('icon-check-empty')
+      $(btn).addClass('btn-success')
+      
     else
-      $(check).removeClass('icon-check').addClass('icon-check-empty')
+      $(checkbox).removeClass('icon-check').addClass('icon-check-empty')
+      $(btn).removeClass('btn-success') unless $(btn).parent().find('.icon-check').size() > 0
     
   
-  preview_layer:(evt, btn) =>
-    href = btn.attr('href')
+  preview_layer:(evt, link) =>
+    return false if link.hasClass('disabled')
+    
+    href = link.attr('href')
+    
+    checkbox= $(link).find('i.check')
+    if $(link).hasClass('btn')
+      btn = link
+    else
+      btn = $(link).parents('ul').siblings('.btn')
     
     if @preview_layers_list[href]?
       @preview_layers_list[href].setVisibility(!@preview_layers_list[href].getVisibility())
-      @toggleCheck($(btn).find('i.check'), @preview_layers_list[href].getVisibility())
+      @toggleCheck(btn, checkbox, @preview_layers_list[href].getVisibility())
       
     else
       $.ajax(href).success (response) =>
         maplayer = new MapLayers(response)
         @preview_layers_list[href] = maplayer.build()
         @map.addLayer(@preview_layers_list[href])
-        @toggleCheck($(btn).find('i.check'), @preview_layers_list[href].getVisibility())
+        @toggleCheck(btn, checkbox, @preview_layers_list[href].getVisibility())
     
   addAOI:(wkt) =>
     wktReader = new OpenLayers.Format.WKT()

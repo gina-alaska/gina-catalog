@@ -1,7 +1,9 @@
 - unless catalog.map_layers.empty?
   - if catalog.map_layers.count == 1
     - layer = catalog.map_layers.first
-    = link_to map_layer_path(layer, :json), class: 'btn', data: { openlayers_action: 'preview' }, title: 'Preview map layer' do
+    - disabled = layer.supports?(current_setup.projection) ? '' : 'disabled'
+    
+    = link_to map_layer_path(layer, :json), class: "btn #{disabled}", data: { openlayers_action: 'preview' }, title: 'Preview map layer' do
       %i.check.icon-check-empty
       %i.icon-eye-open
   - else
@@ -10,7 +12,8 @@
       %span.caret
     %ul.dropdown-menu
       - catalog.map_layers.each do |layer|
+        - disabled = layer.supports?(current_setup.projection) ? '' : 'disabled'
         %li
-          = link_to map_layer_path(layer, :json), class: layer.supports?(current_setup.projection) ? '' : 'disabled', data: { openlayers_action: 'preview' } do
-            %i.icon-check-empty
+          = link_to map_layer_path(layer, :json), class: disabled, data: { openlayers_action: 'preview' } do
+            %i.check.icon-check-empty
             = layer
