@@ -33,16 +33,7 @@
         = link_to '#', class: 'btn', data: { "openlayers-action" => "select-features", target: "##{dom_id(catalog, :record)}" }, title: 'Zoom To' do
           %i.icon-map-marker
           
-      - unless catalog.map_layers.empty?
-        = link_to '#', class: 'btn dropdown-toggle', data: { toggle: 'dropdown' }, title: 'View map layer' do
-          %i.icon-list
-          %span.caret
-        %ul.dropdown-menu
-          - catalog.map_layers.each do |layer|
-            %li
-              = link_to map_layer_path(layer, :json), class: layer.supports?(current_setup.projection) ? '' : 'disabled', data: { openlayers_action: 'preview' } do
-                %i.icon-check-empty
-                = layer
+      = render 'preview_button', catalog: catalog
         
     .btn-group
       = link_to more_info_catalog_path(catalog), class: "btn", id: dom_id(catalog, "info_button"), remote: true, data: {"less-text" => "<i class='icon-minus'/>"}, title: 'More Info' do

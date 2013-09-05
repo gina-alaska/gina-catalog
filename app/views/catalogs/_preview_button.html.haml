@@ -1,0 +1,16 @@
+- unless catalog.map_layers.empty?
+  - if catalog.map_layers.count == 1
+    - layer = catalog.map_layers.first
+    = link_to map_layer_path(layer, :json), class: 'btn', data: { openlayers_action: 'preview' }, title: 'Preview map layer' do
+      %i.check.icon-check-empty
+      %i.icon-eye-open
+  - else
+    = link_to '#', class: 'btn dropdown-toggle', data: { toggle: 'dropdown' }, title: 'Preview map layers' do
+      %i.icon-eye-open
+      %span.caret
+    %ul.dropdown-menu
+      - catalog.map_layers.each do |layer|
+        %li
+          = link_to map_layer_path(layer, :json), class: layer.supports?(current_setup.projection) ? '' : 'disabled', data: { openlayers_action: 'preview' } do
+            %i.icon-check-empty
+            = layer

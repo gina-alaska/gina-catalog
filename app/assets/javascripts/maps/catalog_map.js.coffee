@@ -213,14 +213,14 @@ class @CatalogMap extends OpenlayersMap
     
     if @preview_layers_list[href]?
       @preview_layers_list[href].setVisibility(!@preview_layers_list[href].getVisibility())
-      @toggleCheck($(btn).find('i'), @preview_layers_list[href].getVisibility())
+      @toggleCheck($(btn).find('i.check'), @preview_layers_list[href].getVisibility())
       
     else
       $.ajax(href).success (response) =>
         maplayer = new MapLayers(response)
         @preview_layers_list[href] = maplayer.build()
         @map.addLayer(@preview_layers_list[href])
-        @toggleCheck($(btn).find('i'), @preview_layers_list[href].getVisibility())
+        @toggleCheck($(btn).find('i.check'), @preview_layers_list[href].getVisibility())
     
   addAOI:(wkt) =>
     wktReader = new OpenLayers.Format.WKT()
