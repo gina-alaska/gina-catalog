@@ -79,4 +79,14 @@ namespace :fixdb do
       end
     end
   end
+
+  desc 'Check that all system pages are setup'
+  task :set_system_pages => :environment do
+    puts "Looking for system pages that are not tagged..."
+    system_pages = ["home", "sitemap", "search", "contacts", "404-not-found"]
+    system_snippets = ["header", "footer"]
+
+    Page::Content.where(system_page: false, slug: system_pages).update_all(system_page: true)
+    Page::Snippet.where(system_page: false, slug: system_snippets).update_all(system_page: true)
+  end
 end
