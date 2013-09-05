@@ -5,6 +5,7 @@ class Page::Content < ActiveRecord::Base
 
   acts_as_nested_set
   before_save :rebuild_slug
+  before_destroy :prevent_system_delete
   
   serialize :sections
   serialize :content
@@ -36,6 +37,10 @@ class Page::Content < ActiveRecord::Base
   def rebuild_slug
     parent_slugs = self.ancestors.collect { |p| p.slug.split('/').last } << self.slug_without_path
     self.slug = parent_slugs.join('/')
+  end
+
+  def prevent_system_delete
+    !self.system_page?
   end
   
   def slug_without_path
