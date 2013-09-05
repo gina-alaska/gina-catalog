@@ -223,15 +223,17 @@ class @CatalogMap extends OpenlayersMap
       btn = $(link).parents('ul').siblings('.btn')
     
     if @preview_layers_list[href]?
-      @preview_layers_list[href].setVisibility(!@preview_layers_list[href].getVisibility())
-      @toggleCheck(btn, checkbox, @preview_layers_list[href].getVisibility())
+      @preview_layers_list[href].destroy()
+      delete(@preview_layers_list[href])
+      # @preview_layers_list[href].setVisibility(!@preview_layers_list[href].getVisibility())
+      @toggleCheck(btn, checkbox, false)
       
     else
       $.ajax(href).success (response) =>
         maplayer = new MapLayers(response)
         @preview_layers_list[href] = maplayer.build()
         @map.addLayer(@preview_layers_list[href])
-        @toggleCheck(btn, checkbox, @preview_layers_list[href].getVisibility())
+        @toggleCheck(btn, checkbox, true)
     
   addAOI:(wkt) =>
     wktReader = new OpenLayers.Format.WKT()
