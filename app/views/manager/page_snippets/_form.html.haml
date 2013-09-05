@@ -11,7 +11,7 @@
   .control-group
     = f.label :slug, class: 'control-label'
     .controls
-      = f.text_field :slug, class: 'span12'      
+      = f.text_field :slug, class: 'span12', readonly: @snippet.system_page?     
           
   / ACE Editor
   %div.ace.bordered{ data: { editor: 'ace' } }
