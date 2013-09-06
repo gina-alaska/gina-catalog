@@ -1,10 +1,12 @@
 class Page::Snippet < ActiveRecord::Base
   attr_accessible :content, :slug
-  before_destroy :prevent_system_delete
+
+  has_and_belongs_to_many :setups, join_table: 'setups_snippets'
+
+  belongs_to :setup
+  
+  include CatalogConcerns::SystemContent
   
   validates_presence_of :slug
-
-  def prevent_system_delete
-    !self.system_page?
-  end
+  validates_uniqueness_of :slug, scope: :setup_id
 end

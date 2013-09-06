@@ -186,7 +186,11 @@ Description: #{self.catalog.description}
   end
   
   def find_archive
-    Dir.glob(File.join(NSCatalog::Application.config.archive_path, "#{self.catalog.id}-*.zip")).first 
+    if File.exists?(default_archive_filename)
+      default_archive_filename
+    else
+      Dir.glob(File.join(NSCatalog::Application.config.archive_path, "#{self.catalog.id}-*.zip")).first 
+    end
   end
   
   def archive_available?(format = :zip)
@@ -198,7 +202,7 @@ Description: #{self.catalog.description}
     
     FileUtils.mkdir_p(File.dirname(archive_filenames[:zip]))
     
-    FileUtils.rm(self.find_archive) if File.exists?(self.find_archive)
+    FileUtils.rm(self.archive_filenames[:zip]) if self.archive_available?
       
     File.open(default_archive_filename, 'wb') do |fp|
       fp << archive_zip(treeish, opts[:prefix])

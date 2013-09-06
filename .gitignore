@@ -6,6 +6,7 @@ tmp/
 .idea/
 config/database.yml
 config/sunspot.yml
+config/git_hooks_env
 public/javascripts/cached
 *.git
 public/javascripts/extjs3/

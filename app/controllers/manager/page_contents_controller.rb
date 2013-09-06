@@ -166,7 +166,7 @@ class Manager::PageContentsController < ManagerController
     else
       respond_to do |format|
         format.html {
-          flash[:success] = "Unable to delete #{@page.title}"
+          flash[:error] = @page.errors.full_messages.join(', ')
           redirect_to manager_page_contents_path
         }
       end

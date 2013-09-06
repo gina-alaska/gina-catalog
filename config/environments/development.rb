@@ -40,7 +40,7 @@ NSCatalog::Application.configure do
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
   # Disable Rails's static asset server (Apache or nginx will already do this)
-  config.serve_static_assets = false  
+  config.serve_static_assets = true  
 
   #config.threadsafe!
 end

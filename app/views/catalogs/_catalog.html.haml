@@ -1,5 +1,5 @@
 .result
-  - cache([:search_result, :v24, catalog]) do
+  - cache([:search_result, :v29, catalog]) do
     %div{id: dom_id(catalog, :record), data: { wkt: catalog.geometry_center_collection, type: catalog.type } }
       .row-fluid
         .span10
@@ -10,18 +10,22 @@
             - unless catalog.geometry_collection.blank?
               %i.icon-globe
         .span2
-          .legend-tag.alert
-            %b= catalog.type == 'Project' ? 'Project' : 'Data'
+          - if catalog.type == 'Project'
+            .legend-tag.alert.alert-warning
+              %b Project
+          - else
+            .legend-tag.alert.alert-info
+              %b Data
+      - if !catalog.published?
+        .alert.alert-warning{style:'margin-bottom: 5px;'}
+          This record has not been published
       .description
         - unless catalog.source_agency.nil?
           %b= catalog.source_agency.try(:name_with_acronym)
         :markdown
           #{catalog.description.try(:truncate, 300).try(:html_safe)}
 
-      - if !catalog.published?
-        .alert.alert-warning
-          This record has not been published
-      %div{id: dom_id(catalog, :more_info)}
+        %div{id: dom_id(catalog, :more_info)}
           
   %div{ style: 'text-align:right; margin: 0 5px 5px 0;'}
     = render 'shared/catalogs/catalog_buttons', catalog: catalog
