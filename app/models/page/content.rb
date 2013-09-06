@@ -6,6 +6,10 @@ class Page::Content < ActiveRecord::Base
   acts_as_nested_set
   before_save :rebuild_slug
   
+  # this needs to be included after the rebuild slug to make sure we check for the change 
+  # correctly
+  include CatalogConcerns::SystemContent
+  
   serialize :sections
   serialize :content
   
