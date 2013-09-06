@@ -27,7 +27,8 @@
       Back
   
     .pull-right
-      = f.submit 'Save', class: 'btn btn-primary'
+      = f.submit 'Save', class: 'btn btn-primary', data: { 'disable-with' => "Saving..." }
+      = f.submit 'Save and Close', class: 'btn btn-primary', data: { 'disable-with' => "Saving..." }
       
 :javascript
   $("[data-color-format]").colorpicker();

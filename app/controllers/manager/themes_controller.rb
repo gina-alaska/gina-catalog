@@ -32,7 +32,11 @@ class Manager::ThemesController < ManagerController
           current_setup.save!
           
           flash[:success] = "Created new theme #{@theme.name}"
-          redirect_to manager_page_contents_path(tab: 'themes')
+          if params["commit"] == "Save"
+            redirect_to edit_manager_theme_path(@theme)
+          else
+            redirect_to manager_page_contents_path(tab: 'themes')
+          end
         }
       end
     else
@@ -55,7 +59,11 @@ class Manager::ThemesController < ManagerController
           current_setup.save!
           
           flash[:success] = "Updated #{@theme.name} theme"
-          redirect_to manager_page_contents_path(tab: 'themes')
+          if params["commit"] == "Save"
+            redirect_to edit_manager_theme_path(@theme)
+          else
+            redirect_to manager_page_contents_path(tab: 'themes')
+          end
         }
       end
     else
