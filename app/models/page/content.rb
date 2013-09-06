@@ -5,7 +5,6 @@ class Page::Content < ActiveRecord::Base
 
   acts_as_nested_set
   before_save :rebuild_slug
-  before_destroy :prevent_system_delete
   
   # this needs to be included after the rebuild slug to make sure we check for the change 
   # correctly
@@ -43,10 +42,6 @@ class Page::Content < ActiveRecord::Base
     self.slug = parent_slugs.join('/')
   end
 
-  def prevent_system_delete
-    !self.system_page?
-  end
-  
   def slug_without_path
     self.read_attribute(:slug).try(:split, '/').try(:last)
   end
