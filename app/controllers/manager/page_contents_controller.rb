@@ -7,6 +7,7 @@ class Manager::PageContentsController < ManagerController
 
   SUBMENU = '/layouts/manager/cms_menu'
   PAGETITLE = 'Pages'
+  SYSTEM_PAGES = ["sitemap", "search", "contacts", "404-not-found"]
 
   def index
     fetch_cms_pages
@@ -73,8 +74,12 @@ class Manager::PageContentsController < ManagerController
 
   def create
     @page = current_setup.pages.build(params[:page_content])
-    current_setup.pages << @page
     @page.updated_by = current_user
+    @page.system_page = true if SYSTEM_PAGES.include?(@page.slug)
+    Rails.logger.info("***************************")
+    Rails.logger.info(@page.slug.inspect)
+    Rails.logger.info("***************************")
+    current_setup.pages << @page
     
     if @page.save
       respond_to do |format|
