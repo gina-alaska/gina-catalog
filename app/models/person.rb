@@ -7,7 +7,8 @@ class Person < ActiveRecord::Base
   
   has_many :addresses, :dependent => :destroy
   
-  has_many :phone_numbers
+  has_many :phone_numbers, order: "name DESC"
+  accepts_nested_attributes_for :phone_numbers, allow_destroy: true, reject_if: proc { |attributes| attributes['digits'].blank? }
 
   has_and_belongs_to_many :setups, join_table: 'persons_setups', uniq: true
   #has_and_belongs_to_many :catalogs, join_table: 'catalogs_contacts', uniq: true
@@ -60,51 +61,6 @@ class Person < ActiveRecord::Base
   end
   alias_method :to_s, :full_name
   
-  def work_phone
-    self.phone_numbers.each do |pn|
-      return pn.digits if pn.name == 'work'
-    end
-    nil
-  end
-
-  def work_phone=(digits)
-    pn = self.phone_numbers.where(name: 'work').first unless self.new_record?
-    pn = self.phone_numbers.build({ :name => 'work' }) if pn.nil?
-    pn.digits = digits
-
-    # pn.save!
-  end
-
-  def alt_phone
-    self.phone_numbers.each do |pn|
-      return pn.digits if pn.name == 'alt'
-    end
-    nil
-  end
-
-  def alt_phone=(digits)
-    pn = self.phone_numbers.where(name: 'alt').first unless self.new_record?
-    pn = self.phone_numbers.build({ :name => 'alt' }) if pn.nil?
-    pn.digits = digits
-
-    # pn.save!
-  end
-
-  def mobile_phone
-    self.phone_numbers.each do |pn|
-      return pn.digits if pn.name == 'mobile'
-    end
-    nil
-  end
-  
-  def mobile_phone=(digits)
-    pn = self.phone_numbers.where(name: 'mobile').first unless self.new_record?
-    pn = self.phone_numbers.build({ :name => 'mobile' }) if pn.nil?
-    pn.digits = digits
-
-    #pn.save!
-  end
-
   def as_json(*opts)
     {
       :id => self.id,

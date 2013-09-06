@@ -110,7 +110,7 @@ class DownloadsController < ApplicationController
     return true unless @catalog.require_contact_info? or ask_for_use_agreement?
     
     return false if @catalog.require_contact_info? and cookies.signed[:contact_info_id].nil?
-    return false if ask_for_use_agreement? and cookies.signed[:use_agreement_id].nil?
+    # return false if ask_for_use_agreement? and cookies.signed[:use_agreement_id].nil?
     
     return true
   end

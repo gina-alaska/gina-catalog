@@ -8,7 +8,7 @@
 //= require 'fileupload/bootstrap-fileupload'
 //= require 'select2/select2'
 //= require 'manager/pages'
-//= require bootstrap-datepicker
+//= require bootstrap-datepicker/core
 //= require 'bootstrap-colorpicker/bootstrap-colorpicker'
 //= require jquery_nested_form
 //= require 'gina-map-layers/gina-openlayers'
