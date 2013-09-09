@@ -22,6 +22,7 @@ class Manager::PageLayoutsController < ManagerController
   # GET /setups/page_layouts/new.json
   def new
     @page_layout = current_setup.layouts.new
+    @default_layout = check_for_default
 
     respond_to do |format|
       format.html # new.html.erb
@@ -32,13 +33,14 @@ class Manager::PageLayoutsController < ManagerController
   # GET /setups/page_layouts/1/edit
   def edit
     @page_layout = current_setup.layouts.find(params[:id])
+    @default_layout = check_for_default(@page_layout.id)
   end
 
   # POST /setups/page_layouts
   # POST /setups/page_layouts.json
   def create
     @page_layout = current_setup.layouts.build(params[:page_layout])
-    current_setup.layouts << @page_layout
+    change_default if params[:page_layout].delete("change_default") == "true"
 
     respond_to do |format|
       if @page_layout.save
@@ -74,6 +76,7 @@ class Manager::PageLayoutsController < ManagerController
   # PUT /setups/page_layouts/1.json
   def update
     @page_layout = current_setup.layouts.find(params[:id])
+    change_default if params[:page_layout].delete(:change_default) == "true"
 
     respond_to do |format|
       if @page_layout.update_attributes(params[:page_layout])
@@ -115,9 +118,23 @@ class Manager::PageLayoutsController < ManagerController
 
     respond_to do |format|
       format.html {
-        redirect_to edit_manager_page_layout_path(@page_layout)
-      }
+        redirect_to manager_page_contents_path(tab: "page_layouts")
+        }
       format.json { head :no_content }
     end
+  end
+
+  protected
+
+  def check_for_default(layout_id = nil)
+    layout = current_setup.layouts.where(default: true)
+    unless layout_id.nil? 
+      layout = layout.where("page_layouts.id != ?", layout_id)
+    end
+    layout.any?
+  end
+
+  def change_default
+    current_setup.layouts.where(default: true).update_all(default: false)
   end
 end

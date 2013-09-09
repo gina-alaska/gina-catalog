@@ -16,6 +16,7 @@
     = f.label :default, class: 'control-label'
     .controls
       = f.select :default, [['No', false], ['Yes', true]], class: 'span12'
+    = f.hidden_field :change_default, value: false
 
   / ACE Editor
   %div.ace.bordered{ data: { editor: 'ace' } }
@@ -33,3 +34,17 @@
 = render '/shared/ace/image_chooser', page: @page_layout
 = render '/shared/ace/link_chooser', page: @page_layout
 = render '/shared/ace/javascript', page: @page_layout
+
+:javascript
+
+  $("#page_layout_default").change(function() {
+    var default_val = $("select#page_layout_default :selected").val();
+    if (#{@default_layout} && default_val == "true") {
+      var response = confirm("Another layout is set to default, do you wish to make this the default layout?");
+      if (response == true) {
+        $("#page_layout_change_default").val(true);
+      } else {
+        $("#page_layout_default").val(false);
+      }
+    }
+  })
