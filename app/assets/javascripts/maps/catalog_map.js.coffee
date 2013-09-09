@@ -6,6 +6,8 @@ class @CatalogMap extends OpenlayersMap
     super(@el)
     
     @btnHandlers = {}
+    @preview_layers_list = {}
+    
     @map_state = { target: '.search', size: History.getState().data.map_size || 'normal' }
     @setupCatalogMap()
     @initListeners()
@@ -108,13 +110,14 @@ class @CatalogMap extends OpenlayersMap
       @resize()      
       
   setupToolbar: =>
+    @addBtnHandler 'preview', @preview_layer
     @addBtnHandler 'drawAOI', @drawAOI
     @addBtnHandler 'zoomToMaxExtent', @zoomToDefaultBounds
     @addBtnHandler 'expand', (evt, btn) =>
       @expandMap(btn.data('target'), btn.data('size'), btn)
       
-    @btns = $(@el).parent().find('.btn[data-openlayers-action]')
-    @btns.on 'click', (evt) =>
+    @btns = $('[data-openlayers-action]')
+    $(document).on 'click', '[data-openlayers-action]', (evt) =>
       evt.preventDefault()
       action = $(evt.currentTarget).data('openlayers-action')
       if @btnHandlers[action]
@@ -197,6 +200,40 @@ class @CatalogMap extends OpenlayersMap
     
           
   #end setupMap
+  
+  toggleCheck: (btn, checkbox, status) ->
+    if status
+      $(checkbox).addClass('icon-check').removeClass('icon-check-empty')
+      $(btn).addClass('btn-success')
+      
+    else
+      $(checkbox).removeClass('icon-check').addClass('icon-check-empty')
+      $(btn).removeClass('btn-success') unless $(btn).parent().find('.icon-check').size() > 0
+    
+  
+  preview_layer:(evt, link) =>
+    return false if link.hasClass('disabled')
+    
+    href = link.attr('href')
+    
+    checkbox= $(link).find('i.check')
+    if $(link).hasClass('btn')
+      btn = link
+    else
+      btn = $(link).parents('ul').siblings('.btn')
+    
+    if @preview_layers_list[href]?
+      @preview_layers_list[href].destroy()
+      delete(@preview_layers_list[href])
+      # @preview_layers_list[href].setVisibility(!@preview_layers_list[href].getVisibility())
+      @toggleCheck(btn, checkbox, false)
+      
+    else
+      $.ajax(href).success (response) =>
+        maplayer = new MapLayers(response)
+        @preview_layers_list[href] = maplayer.build()
+        @map.addLayer(@preview_layers_list[href])
+        @toggleCheck(btn, checkbox, true)
     
   addAOI:(wkt) =>
     wktReader = new OpenLayers.Format.WKT()
