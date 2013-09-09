@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130903232555) do
+ActiveRecord::Schema.define(:version => 20130903233700) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -671,9 +671,10 @@ ActiveRecord::Schema.define(:version => 20130903232555) do
   create_table "page_snippets", :force => true do |t|
     t.string   "slug"
     t.text     "content"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
     t.integer  "setup_id"
+    t.boolean  "system_page", :default => false
   end
 
   add_index "page_snippets", ["slug"], :name => "index_page_snippets_on_slug"

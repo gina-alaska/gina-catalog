@@ -62,7 +62,7 @@ namespace :fixdb do
 
     Setup.all.each do |setup|
       next if setup.pages.where(slug: "sitemap").any?
-      page = setup.pages.build(slug: "sitemap", main_menu: false, title: "Sitemap", setup_id: setup, description: "This page has been auto-generated.")
+      page = setup.pages.build(slug: "sitemap", main_menu: false, title: "Sitemap", setup_id: setup, description: "This page has been auto-generated.", system_page: true)
       setup.pages << page
     end
   end
@@ -80,6 +80,16 @@ namespace :fixdb do
     end
   end
 
+  desc 'Check that all system pages are setup'
+  task :set_system_pages => :environment do
+    puts "Looking for system pages that are not tagged..."
+    system_pages = ["home", "sitemap", "search", "contacts", "404-not-found"]
+    system_snippets = ["header", "footer"]
+
+    Page::Content.where(system_page: false, slug: system_pages).update_all(system_page: true)
+    Page::Snippet.where(system_page: false, slug: system_snippets).update_all(system_page: true)
+  end
+  
   desc 'If not set, set the site projection to ESPG:3857.'
   task :set_default_projection => :environment do
     puts "Looking for unset site projections..."
