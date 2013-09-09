@@ -40,7 +40,7 @@ class Manager::PageLayoutsController < ManagerController
   # POST /setups/page_layouts.json
   def create
     @page_layout = current_setup.layouts.build(params[:page_layout])
-    change_default if params[:page_layout].delete("change_default")
+    change_default if params[:page_layout].delete("change_default") == "true"
 
     respond_to do |format|
       if @page_layout.save
@@ -76,7 +76,7 @@ class Manager::PageLayoutsController < ManagerController
   # PUT /setups/page_layouts/1.json
   def update
     @page_layout = current_setup.layouts.find(params[:id])
-    change_default if params[:page_layout].delete(:change_default)
+    change_default if params[:page_layout].delete(:change_default) == "true"
 
     respond_to do |format|
       if @page_layout.update_attributes(params[:page_layout])
