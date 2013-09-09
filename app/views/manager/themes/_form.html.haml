@@ -1,4 +1,4 @@
-= form_for [:manager, theme], html: { class: '' } do |f|
+= form_for [:manager, theme], remote: true, html: { class: '' } do |f|
   - if theme.errors.count > 0
     .alert.alert-error
       %ul

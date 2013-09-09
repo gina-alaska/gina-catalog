@@ -27,16 +27,27 @@ class Manager::ThemesController < ManagerController
     
     if @theme.save
       respond_to do |format|
+        current_setup.theme = @theme
+        current_setup.save!
+        msg = "Created new #{@theme.name} theme"
+
         format.html {
-          current_setup.theme = @theme
-          current_setup.save!
-          
-          flash[:success] = "Created new theme #{@theme.name}"
+          flash[:success] = msg
           if params["commit"] == "Save"
             redirect_to edit_manager_theme_path(@theme)
           else
             redirect_to manager_page_contents_path(tab: 'themes')
           end
+        }
+
+        format.js {
+          if params["commit"] == "Save"
+            flash.now[:success] = msg
+          else
+            flash[:success] = msg
+            @redirect_to = manager_page_contents_path(tab: 'themes')
+          end
+          render '/shared/form_response'          
         }
       end
     else
@@ -54,16 +65,27 @@ class Manager::ThemesController < ManagerController
     
     if @theme.owner_setup == current_setup and @theme.update_attributes(params[:theme])
       respond_to do |format|
-        format.html {
-          current_setup.theme = @theme
-          current_setup.save!
+        current_setup.theme = @theme
+        current_setup.save!
+        msg = "Updated #{@theme.name} theme"
           
-          flash[:success] = "Updated #{@theme.name} theme"
+        format.html {
+          flash[:success] = msg
           if params["commit"] == "Save"
             redirect_to edit_manager_theme_path(@theme)
           else
             redirect_to manager_page_contents_path(tab: 'themes')
           end
+        }
+
+        format.js {
+          if params["commit"] == "Save"
+            flash.now[:success] = msg
+          else
+            flash[:success] = msg
+            @redirect_to = manager_page_contents_path(tab: 'themes')
+          end
+          render '/shared/form_response'          
         }
       end
     else
