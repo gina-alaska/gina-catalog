@@ -1,0 +1,6 @@
+.row-fluid.aliases_fields
+  .span10
+    = f.label :text, "Alias", class: 'control-label'
+    .controls.input-append
+      = f.text_field :text, class: 'span12'
+      = f.link_to_remove "Delete", class: 'btn btn-danger'
