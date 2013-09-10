@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130827223225) do
+ActiveRecord::Schema.define(:version => 20130910010316) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -68,6 +68,14 @@ ActiveRecord::Schema.define(:version => 20130827223225) do
     t.integer  "agency_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "aliases", :force => true do |t|
+    t.string   "text"
+    t.integer  "aliasable_id"
+    t.string   "aliasable_type"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
   end
 
   create_table "asset_descriptions", :force => true do |t|
@@ -463,6 +471,20 @@ ActiveRecord::Schema.define(:version => 20130827223225) do
 
   add_index "locations", ["asset_id"], :name => "index_locations_on_asset_id"
 
+  create_table "map_layers", :force => true do |t|
+    t.string   "name"
+    t.string   "url"
+    t.string   "type"
+    t.string   "projections"
+    t.string   "layers"
+    t.integer  "catalog_id"
+    t.datetime "created_at",                                              :null => false
+    t.datetime "updated_at",                                              :null => false
+    t.spatial  "bounds",      :limit => {:srid=>4326, :type=>"geometry"}
+  end
+
+  add_index "map_layers", ["catalog_id"], :name => "index_map_layers_on_catalog_id"
+
   create_table "membership_roles", :force => true do |t|
     t.integer  "membership_id"
     t.integer  "role_id"
@@ -657,9 +679,10 @@ ActiveRecord::Schema.define(:version => 20130827223225) do
   create_table "page_snippets", :force => true do |t|
     t.string   "slug"
     t.text     "content"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
     t.integer  "setup_id"
+    t.boolean  "system_page", :default => false
   end
 
   add_index "page_snippets", ["slug"], :name => "index_page_snippets_on_slug"
