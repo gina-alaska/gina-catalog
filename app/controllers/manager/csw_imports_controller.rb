@@ -11,7 +11,9 @@ class Manager::CswImportsController < ManagerController
   end
 
   def show
-    @csw_import = current_setup.csw_imports.where(id: params[:id])
+    @csw_import = current_setup.csw_imports.where(id: params[:id]).first
+    @log = @csw_import.activity_logs.first
+    
     respond_to do |format|
       format.html
     end
@@ -70,4 +72,22 @@ class Manager::CswImportsController < ManagerController
     end
   end
   
+  def import
+    @csw_import = current_setup.csw_imports.where(id: params[:id]).first
+    Resque.enqueue(CswImportWorker, @csw_import.id)
+  end
+  
+  def agencies
+    @csw_import = current_setup.csw_imports.where(id: params[:id]).first
+    @agencies = []
+    client = RCSW::Client::Base.new(@csw_import.url)
+    records = client.record(client.records.collect(&:identifier))
+    records.each do |record|
+      metadata = FGDC.new(@csw_import.fgdc_import_url(record))
+      unless metadata.source_agency.nil? and Agency.where(name: metadata.source_agency).any?
+        @agencies << metadata.source_agency
+      end
+    end
+    @agencies.uniq!.flatten!
+  end
 end

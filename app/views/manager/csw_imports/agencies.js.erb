@@ -1,0 +1,9 @@
+$("#agencies").spin(false);
+
+<%- if @agencies.any? %>
+  <%- @agencies.each do |agency| %>
+    $("#agencies").append("<%= escape_javascript(agency) %><br>");
+  <%- end %>
+<%- else %>
+  $("#agencies").html("All agencies are present or aliased in gLynx");
+<%- end %>

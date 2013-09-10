@@ -16,7 +16,12 @@ NSCatalog::Application.routes.draw do
         put :share
       end
     end
-    resources :csw_imports
+    resources :csw_imports do
+      member do
+        post :import
+        get :agencies
+      end
+    end
     resources :images do
       collection do
         post :ace_search

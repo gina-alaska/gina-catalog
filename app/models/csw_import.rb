@@ -3,8 +3,8 @@ class CswImport < ActiveRecord::Base
   
   belongs_to :setup
   has_many :catalogs
-  has_many :activity_logs, as: :loggable
-  
+  has_many :activity_logs, as: :loggable, order: "created_at DESC"
+    
   METADATA_TYPES = [
     #['display text','type']
     ['FGDC', 'FGDC']
@@ -29,4 +29,5 @@ class CswImport < ActiveRecord::Base
     Resque.enqueue(CswImportWorker, self.id, force)
   end
   
+
 end

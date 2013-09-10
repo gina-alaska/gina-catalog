@@ -1,5 +1,5 @@
 class ActivityLog < ActiveRecord::Base
-  attr_accessible :activity, :log, :performed_at, :user_id
+  attr_accessible :activity, :log, :user_id
   
   serialize :log
 

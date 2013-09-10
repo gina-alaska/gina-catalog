@@ -1,0 +1,55 @@
+%table.table.table-bordered.table-striped.table-condensed
+  %thead
+    %tr
+      %td{colspan:10,style:'padding:0;'}
+        .navbar.navbar-static-top
+          .navbar-inner
+            .btn-group
+              =link_to "Import Now", ['import', :manager, @csw_import], class: 'btn'
+            .btn-group
+              =link_to "Check Agencies", ['agencies', :manager, @csw_import], id: 'check-agencies-btn', class: 'btn', remote: true
+              
+  %thead
+    %tr
+      %td
+        Results of last run
+  - if @log.log[:new_catalogs].any?
+    %thead
+      %tr
+        %td
+          The following catalogs were created or updated during the last run:
+    %tbody
+      - @log.log[:new_catalogs].each do |c|
+        %tr
+          %td
+            =link_to "Some catalog title", catalog_path(c)
+  
+
+#agencies
+
+
+
+
+/ Results of last run
+/ 
+/ - if @log.log[:new_catalogs].any? 
+/   New/Updated Catalogs
+/   %br
+/   - @log.log[:new_catalogs].each do |catalog|
+/     .row-fluid
+/       .span12
+/         = catalog.inspect
+/ 
+/ Actvity Log: 
+/ %br
+/ - @csw_import.activity_logs.each do |log|
+/   .row-fluid
+/     .span12
+/       =log.created_at
+
+:javascript
+  $("#check-agencies-btn").click( function() {
+    $("#agencies").text("");
+    $("#agencies").css("min-height", "300px");
+    $("#agencies").spin("large", "#fff");
+  })
