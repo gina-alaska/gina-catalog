@@ -2,7 +2,6 @@ class SocialTag < Liquid::Tag
   def initialize(tag_name, type, tokens)
     super
     @tag = tag_name
-    Rails.logger.info "TAGS: #{@tag}"
   end
   
   def facebook_block(setup)

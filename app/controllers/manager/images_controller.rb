@@ -14,7 +14,6 @@ class Manager::ImagesController < ManagerController
     search_params = params[:search] || {}
     if search_params.keys.count > 0
       solr = Image.search do
-        logger.info(search_params.inspect)
         fulltext search_params[:q]
       end
       @images = solr.results

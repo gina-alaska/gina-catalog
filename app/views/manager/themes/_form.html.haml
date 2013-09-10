@@ -1,4 +1,4 @@
-= form_for [:manager, theme], html: { class: '' } do |f|
+= form_for [:manager, theme], remote: true, html: { class: '' } do |f|
   - if theme.errors.count > 0
     .alert.alert-error
       %ul
@@ -27,7 +27,8 @@
       Back
   
     .pull-right
-      = f.submit 'Save', class: 'btn btn-primary'
+      = f.submit 'Save', class: 'btn btn-primary', data: { 'disable-with' => "Saving..." }
+      = f.submit 'Save and Close', class: 'btn btn-primary', data: { 'disable-with' => "Saving..." }
       
 :javascript
   $("[data-color-format]").colorpicker();
