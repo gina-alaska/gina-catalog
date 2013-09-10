@@ -19,7 +19,7 @@
       .control-group
         = f.label :slug, class: 'control-label'
         .controls
-          = f.text_field :slug, value: page.slug_without_path, class: 'span12'
+          = f.text_field :slug, value: page.slug_without_path, class: 'span12', readonly: page.system_page?
       :javascript
         $('#page_content_slug').slugify('#page_content_title');
 

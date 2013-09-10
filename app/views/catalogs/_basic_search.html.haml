@@ -2,5 +2,16 @@
 = hidden_field_tag 'search[tags]', @search_params[:tags], id: "search_tags"
 = hidden_field_tag 'limit', @limit, id: 'limit'
 = hidden_field_tag 'search[bbox]', @search_params[:bbox], id: "search_aoi"
+= hidden_field_tag 'search[field]', @sort, id: "sort"
+= hidden_field_tag 'search[direction]', @sort_dir, id: "sort_dir"
 
-= text_field_tag 'search[q]', @search_params[:q], placeholder: 'Enter keyword search', class: 'span12'
+.input-append.span10
+  = text_field_tag 'search[q]', @search_params[:q], placeholder: 'Enter keyword search', class: 'span12'
+  = link_to "#", class: "btn", id: "clear-search" do 
+    %i.icon-remove
+
+:javascript
+  $("#clear-search").on('click', function(e) {
+    e.preventDefault();
+    $("#search_q").val("");
+  })

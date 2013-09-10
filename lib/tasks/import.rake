@@ -1,4 +1,65 @@
+def update_record(c, row)
+  start_date = Date.new(row['Start Date'].to_i, 1, 1)
+  end_date = Date.new(row['End Date'].to_i, 12, 31)
+  
+  # puts "#{row['Start Date']} :: #{row['End Date']}"
+  c.start_date = start_date
+  c.end_date = end_date
+  if (row['End Date'].to_i >= 2012)
+    c.status = 'Ongoing'
+  elsif c.end_date.nil?
+    c.status = 'Unknown'
+  elsif c.end_date.year <= 2011
+    c.status = 'Complete'
+  end
+  
+  # if c.valid?
+  #   puts c.changed_attributes
+  #   puts c.attributes.slice('start_date', 'end_date', 'status')
+  # end
+  
+  c.save
+end
+
 namespace :import do
+  desc 'Fix ARMAP Records'
+  task :armap => :environment do
+    file = ENV['FILE']
+    raise "Unable to find ARMAP CSV File #{file}" unless File.exists?(file)
+    
+    require 'csv'
+    csv = CSV.read(File.open(ENV['FILE'], 'r'), encoding: 'windows-1251:utf-8', headers: :first_row)
+    yes = 0
+    no = 0
+    csv.each do |row|
+      if c = Catalog.where('source_url like ?', "%#{row['Award Info']}%").where(archived_at: nil).first
+        if update_record(c, row)
+          yes +=1
+        else
+          no += 1
+          puts "Title: #{c.id} - #{c.title}"
+          puts "Error: #{c.errors.full_messages}"
+        end
+      else
+        # if c = Catalog.where('title = ?', row['Project Title']).where(archived_at: nil).first
+#           if update_record(c, row)
+#             yes +=1
+#           else
+#             no += 1
+#             puts "Title: #{c.id} - #{c.title}"
+#             puts "Error: #{c.errors.full_messages}"
+#           end
+#         else
+          no += 1
+          puts "Couldn't find #{row['Award Info']}"          
+        # end
+        
+      end
+    end
+    Sunspot.commit
+    puts "Yes: #{yes}, No: #{no}"
+  end
+  
   desc 'Import AEA Project info'
   task :aea => :environment do
     

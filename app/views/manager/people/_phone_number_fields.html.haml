@@ -1,0 +1,5 @@
+.phones.row-fluid.fields
+  .span4= f.select :name, options_for_select(PhoneNumber::VALID_NAMES, f.object.name), class: 'span12'
+  .span6= f.text_field :digits, class: 'span12'
+  .span2.actions
+    = link_to_remove_fields '<i class="icon-trash icon-white"></i>'.html_safe, f

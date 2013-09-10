@@ -11,13 +11,23 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130807203513) do
+ActiveRecord::Schema.define(:version => 20130903233700) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
     t.text     "text"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "activity_logs", :force => true do |t|
+    t.string   "activity"
+    t.integer  "user_id"
+    t.text     "log"
+    t.integer  "loggable_id"
+    t.string   "loggable_type"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   create_table "addresses", :force => true do |t|
@@ -453,6 +463,20 @@ ActiveRecord::Schema.define(:version => 20130807203513) do
 
   add_index "locations", ["asset_id"], :name => "index_locations_on_asset_id"
 
+  create_table "map_layers", :force => true do |t|
+    t.string   "name"
+    t.string   "url"
+    t.string   "type"
+    t.string   "projections"
+    t.string   "layers"
+    t.integer  "catalog_id"
+    t.datetime "created_at",                                              :null => false
+    t.datetime "updated_at",                                              :null => false
+    t.spatial  "bounds",      :limit => {:srid=>4326, :type=>"geometry"}
+  end
+
+  add_index "map_layers", ["catalog_id"], :name => "index_map_layers_on_catalog_id"
+
   create_table "membership_roles", :force => true do |t|
     t.integer  "membership_id"
     t.integer  "role_id"
@@ -619,6 +643,8 @@ ActiveRecord::Schema.define(:version => 20130807203513) do
     t.string   "menu_icon"
     t.boolean  "draft",          :default => false
     t.integer  "updated_by_id"
+    t.boolean  "system_page",    :default => false
+    t.integer  "setup_id"
   end
 
   create_table "page_images", :force => true do |t|
@@ -634,6 +660,7 @@ ActiveRecord::Schema.define(:version => 20130807203513) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.boolean  "default"
+    t.integer  "setup_id"
   end
 
   create_table "page_layouts_setups", :id => false, :force => true do |t|
@@ -644,8 +671,10 @@ ActiveRecord::Schema.define(:version => 20130807203513) do
   create_table "page_snippets", :force => true do |t|
     t.string   "slug"
     t.text     "content"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+    t.integer  "setup_id"
+    t.boolean  "system_page", :default => false
   end
 
   add_index "page_snippets", ["slug"], :name => "index_page_snippets_on_slug"
@@ -790,8 +819,8 @@ ActiveRecord::Schema.define(:version => 20130807203513) do
     t.string   "by_line"
     t.string   "url"
     t.string   "logo_uid"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
     t.string   "contact_email"
     t.text     "default_invite"
     t.text     "analytics_account"
@@ -806,6 +835,9 @@ ActiveRecord::Schema.define(:version => 20130807203513) do
     t.string   "acronym"
     t.text     "description"
     t.text     "keywords"
+    t.string   "projection"
+    t.boolean  "google_layers",     :default => true
+    t.string   "record_projection"
   end
 
   create_table "setups_snippets", :id => false, :force => true do |t|

@@ -3,10 +3,7 @@
     = check_box_tag "agency_check[#{item.id}]", item.id, nil, class: 'item-checkbox'
 %td= item.first_name
 %td= item.last_name
-- if item.work_phone.nil?
-  %td
-- else
-  %td= item.work_phone
+%td= item.phone_numbers.work_phone.first.try(:digits)
 %td= item.setups.include?(current_setup) ? "Yes" : "No"
 %td
   .span1.actions

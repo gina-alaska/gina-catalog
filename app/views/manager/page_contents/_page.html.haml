@@ -8,6 +8,8 @@
         .label.label-info Hidden
       - if page.draft
         .label.label-warning Draft
+      - if page.system_page?
+        .label.label-important System
     .span4.actions
       .btn-group
         = link_to edit_manager_page_content_path(page), class: 'btn', title: "Edit" do
