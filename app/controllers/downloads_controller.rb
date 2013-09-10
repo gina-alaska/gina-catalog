@@ -36,7 +36,6 @@ class DownloadsController < ApplicationController
   end
   
   def reset
-    logger.info 'RESET!'
     cookies.signed[:sds_catalog_id] = nil
     cookies.signed[:use_agreement_id] = nil
     cookies.signed[:contact_info_id] = nil
@@ -62,7 +61,6 @@ class DownloadsController < ApplicationController
     if ask_for_contact_info?
       # save_contact_info
       @contact_info = contact_info_from_cookie || ContactInfo.new
-      logger.info @contact_info.inspect
       render 'contact_info'
     else
       render_next_sds_step(STEP[:contact_info]) 

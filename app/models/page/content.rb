@@ -1,10 +1,14 @@
 require 'html/pipeline'
 
 class Page::Content < ActiveRecord::Base
-  attr_accessible :content, :layout, :slug, :title, :sections, :page_layout_id, :page_layout, :parent_id, :redirect, :description, :main_menu, :menu_icon, :draft, :updated_by_id
-  
+  attr_accessible :content, :layout, :slug, :title, :sections, :page_layout_id, :page_layout, :parent_id, :redirect, :description, :main_menu, :menu_icon, :draft, :updated_by_id, :system_page
+
   acts_as_nested_set
   before_save :rebuild_slug
+  
+  # this needs to be included after the rebuild slug to make sure we check for the change 
+  # correctly
+  include CatalogConcerns::SystemContent
   
   serialize :sections
   serialize :content
@@ -41,7 +45,7 @@ class Page::Content < ActiveRecord::Base
     parent_slugs = self.ancestors.collect { |p| p.slug.split('/').last } << self.slug_without_path
     self.slug = parent_slugs.join('/')
   end
-  
+
   def slug_without_path
     self.read_attribute(:slug).try(:split, '/').try(:last)
   end

@@ -104,6 +104,7 @@ class Catalog < ActiveRecord::Base
 
   has_many :links, :as => :asset, :dependent => :destroy
   has_many :locations, foreign_key: 'asset_id', :dependent => :destroy
+  has_many :map_layers, :dependent => :destroy
   has_many :contact_infos, :dependent => :destroy
 
   scope :published, lambda { where('published_at <= ?', Time.now.utc) }

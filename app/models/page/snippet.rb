@@ -5,6 +5,8 @@ class Page::Snippet < ActiveRecord::Base
 
   belongs_to :setup
   
+  include CatalogConcerns::SystemContent
+  
   validates_presence_of :slug
   validates_uniqueness_of :slug, scope: :setup_id
 end

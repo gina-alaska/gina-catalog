@@ -82,13 +82,21 @@ class Manager::PageSnippetsController < ManagerController
 
   def destroy
     @snippet = current_setup.snippets.find(params[:id])
-    @snippet.destroy
-
-    respond_to do |format|
-      format.html {
-        redirect_to manager_page_contents_path(tab: "page_snippets")
-      }
-      format.json { head :no_content }
+    if @snippet.destroy
+      respond_to do |format|
+        format.html {
+          redirect_to manager_page_contents_path(tab: "page_snippets")
+        }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        format.html {
+          flash[:error] = @snippet.errors.full_messages.join(', ')
+          redirect_to manager_page_contents_path(tab: "page_snippets")
+        }
+        format.json { head :no_content }
+      end
     end
   end
 end
