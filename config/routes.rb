@@ -19,6 +19,7 @@ NSCatalog::Application.routes.draw do
     resources :csw_imports do
       member do
         post :import
+        post :new_agency
         get :agencies
       end
     end
