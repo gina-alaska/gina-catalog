@@ -1,10 +1,11 @@
-= form_for [:manager, @agency] do |f|
+= nested_form_for [:manager, @agency] do |f|
   - unless @agency.errors.full_messages.empty?
     .alert.alert-error
       %h4 Errors prevents this record from being saved
       %ul
         - @agency.errors.full_messages.each do |err|
           %li= err
+          
   .row-fluid
     .field.span12
       = f.label :acronym
@@ -19,12 +20,20 @@
       = f.label :category
       = f.select :category, Agency::CATEGORIES, {}, { class: 'span4' }
 
-      = f.label :active
-  .row-fluid
-    .span11.offset1
-      %label.checkbox
-        = f.check_box :active
-        Yes
+      /     = f.label :active
+      / .row-fluid
+      /   .span11.offset1
+      /     %label.checkbox
+      /       = f.check_box :active
+      /       Yes
+      #aliases 
+        .pull-right
+          = f.link_to_add :aliases, :data => { :target => "#aliases" }, class: "btn btn-success" do
+            %i.icon-plus.icon-white
+            Add an alias
+        %h3 Aliases
+        = f.fields_for :aliases
+
    
   .row-fluid
     .span12
