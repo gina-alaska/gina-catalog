@@ -80,7 +80,7 @@ class Manager::CswImportsController < ManagerController
   end
   
   def new_agency
-    save_url
+    save_url(url_for([:manager, CswImport.find(params[:id])]))
     redirect_to new_manager_agency_path(new_agency_params)
   end
   
