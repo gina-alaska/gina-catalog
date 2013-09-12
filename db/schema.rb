@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130903233700) do
+ActiveRecord::Schema.define(:version => 20130910010316) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -68,6 +68,14 @@ ActiveRecord::Schema.define(:version => 20130903233700) do
     t.integer  "agency_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "aliases", :force => true do |t|
+    t.string   "text"
+    t.integer  "aliasable_id"
+    t.string   "aliasable_type"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
   end
 
   create_table "asset_descriptions", :force => true do |t|

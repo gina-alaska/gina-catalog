@@ -34,6 +34,7 @@ class Manager::AgenciesController < ManagerController
 
   def new
     @agency = Agency.new
+    @agency.aliases.build
   end
 
   def create
@@ -55,6 +56,7 @@ class Manager::AgenciesController < ManagerController
 
   def edit
     @agency = Agency.find(params[:id])
+    @agency.aliases.build
   end
 
   def update
