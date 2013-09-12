@@ -1,0 +1,34 @@
+.search{ data: { spy: 'affix', 'offset-top' => 110 } }
+  = render 'map'
+  .result-list
+    .row-fluid
+      .span4
+        .search-form
+          = form_tag search_url, method: 'GET', id: 'catalog_search_form', data: { behavior: 'search-results-load' } do        
+            = render 'basic_search', search_params: @search_params, results: @results
+            = render 'search_buttons',  search_params: @search_params, results: @results
+            %br/
+            .collection-search
+              = render 'collection_search', search_params: @search_params, results: @results
+            %br/
+            = render 'advanced_search', search_params: @search_params, results: @results
+          .legends
+            = render 'legends'
+      .span8
+        .search-results
+          = render 'search_results'
+        .pagetoolbar{style: 'text-align:center'}
+          = render 'pagetoolbar', results: @results, total: @total, page: @pagenum, limit: @limit, params: @search_params
+:javascript
+  $(document).on('openlayers:aoidraw', function(evt) {
+    $('#search_aoi').val('');
+  })
+  $(document).on('openlayers:aoidrawn', function(evt) {
+    $('#search_aoi').val(evt.wkt);
+  })
+  $(document).ready(function() {
+    var mapwrap = $('[data-map="CatalogMap"]');
+    var map = new CatalogMap(mapwrap.data('target'));
+    CatalogSearch.afterLoad = map.loadFeatures;
+    $('[data-toggle="popover"]').popover();
+  })
