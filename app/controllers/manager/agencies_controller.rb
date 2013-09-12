@@ -33,7 +33,7 @@ class Manager::AgenciesController < ManagerController
   end
 
   def new
-    @agency = Agency.new
+    @agency = Agency.new(new_agency_params)
   end
 
   def create
@@ -116,5 +116,9 @@ class Manager::AgenciesController < ManagerController
 
   def search_params
     params[:search] || {}
+  end
+  
+  def new_agency_params
+    params.slice(:name, :category, :description, :acronym)  || {}
   end
 end
