@@ -1,0 +1,9 @@
+%tr{data: {agency: unknown_agency}}
+  %td.span6
+    = unknown_agency
+  %td.span4
+    = collection_select("agency", "agency_id", current_setup.agencies, :id, :name)
+  %td.span2
+    .btn-group
+      = link_to "Alias", manager_agencies_path("agency_id"), remote: true, class: 'btn', method: :post
+      = link_to "Create", new_agency_manager_csw_import_path(name: unknown_agency), class: 'btn', method: :post

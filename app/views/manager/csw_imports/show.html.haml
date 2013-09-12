@@ -1,55 +1,34 @@
-%table.table.table-bordered.table-striped.table-condensed
-  %thead
-    %tr
-      %td{colspan:10,style:'padding:0;'}
-        .navbar.navbar-static-top
-          .navbar-inner
-            .btn-group
-              =link_to "Import Now", ['import', :manager, @csw_import], class: 'btn'
-            .btn-group
-              =link_to "Check Agencies", ['agencies', :manager, @csw_import], id: 'check-agencies-btn', class: 'btn', remote: true
-              
-  %thead
-    %tr
-      %td
-        Results of last run
-  - if @log.log[:new_catalogs].any?
-    %thead
-      %tr
-        %td
-          The following catalogs were created or updated during the last run:
-    %tbody
-      - @log.log[:new_catalogs].each do |c|
-        %tr
-          %td
-            =link_to "Some catalog title", catalog_path(c)
-  
+.row-fluid
+  .span12
+    %ul#csw.nav.nav-pills
+      %li.active
+        =link_to "Import Details", "#details", data: {toggle: 'tab'}
+      %li
+        =link_to "Import Log", "#activity_log", data: {toggle: 'tab'}
+      %li
+        =link_to "Check Agencies", "#check_agencies", data: {toggle: 'tab'}
+      %li.pull-right
+        =link_to "Schedule Import", ['import', :manager, @csw_import], class: 'btn'
 
-#agencies
+    .tab-content
+      #details.tab-pane.active
+        =render "log_details"
+      #activity_log.tab-pane
+        =render "import_history"
+      #check_agencies.tab-pane.table.table-striped.table-bordered
+        %table.table.table-striped
+          %thead
+            %tr
+              %th.span6 Unknown Agency
+              %th.span4 Alias to:
+              %th.span2 Action
+          %tbody
+            = render partial: "unknown_agency", collection: @unknown_agencies
+            = form_tag [:manager, :agency], remote: true do
+              = hidden_field_tag "aliases_attributes['text']", ""
 
-
-
-
-/ Results of last run
-/ 
-/ - if @log.log[:new_catalogs].any? 
-/   New/Updated Catalogs
-/   %br
-/   - @log.log[:new_catalogs].each do |catalog|
-/     .row-fluid
-/       .span12
-/         = catalog.inspect
-/ 
-/ Actvity Log: 
-/ %br
-/ - @csw_import.activity_logs.each do |log|
-/   .row-fluid
-/     .span12
-/       =log.created_at
+ 
+.spinner
 
 :javascript
-  $("#check-agencies-btn").click( function() {
-    $("#agencies").text("");
-    $("#agencies").css("min-height", "300px");
-    $("#agencies").spin("large", "#fff");
-  })
+  $("select").select2({width: '270px'});
