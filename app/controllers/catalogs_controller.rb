@@ -2,8 +2,6 @@ class CatalogsController < ApplicationController
   # caches_action :show, :layout => true, :if => lambda { |c| c.request.xhr? }
   # caches_action :show, :layout => false, :unless => lambda { |c| c.request.xhr? }
   #caches_action :search
-  SORT_FIELDS = ["title", "agency", "relevance"]
-  include CatalogConcerns::Search
 
   def show
     @item = Catalog.includes(:locations, :source_agency, :agencies, :data_source, :links, :tags, :geokeywords)
