@@ -12,10 +12,12 @@ class Manager::CswImportsController < ManagerController
 
   def show
     @csw_import = current_setup.csw_imports.where(id: params[:id]).first
-    @log = @csw_import.activity_logs.first
-    
+    @log = @csw_import.activity_logs.where(id: params[:log]).first || @csw_import.activity_logs.first
+    @unknown_agencies = @log.unknown_agencies
+
     respond_to do |format|
       format.html
+      format.js
     end
   end
   
@@ -77,17 +79,27 @@ class Manager::CswImportsController < ManagerController
     Resque.enqueue(CswImportWorker, @csw_import.id)
   end
   
+  def new_agency
+    save_url
+    redirect_to new_manager_agency_path(new_agency_params)
+  end
+  
   def agencies
-    @csw_import = current_setup.csw_imports.where(id: params[:id]).first
-    @agencies = []
-    client = RCSW::Client::Base.new(@csw_import.url)
-    records = client.record(client.records.collect(&:identifier))
-    records.each do |record|
-      metadata = FGDC.new(@csw_import.fgdc_import_url(record))
-      unless metadata.source_agency.nil? and Agency.where(name: metadata.source_agency).any?
-        @agencies << metadata.source_agency
-      end
-    end
-    @agencies.uniq!.flatten!
+    # @csw_import = current_setup.csw_imports.where(id: params[:id]).first
+  #   @agencies = []
+  #   client = RCSW::Client::Base.new(@csw_import.url)
+  #   records = client.record(client.records.collect(&:identifier))
+  #   records.each do |record|
+  #     metadata = FGDC.new(@csw_import.fgdc_import_url(record))
+  #     unless metadata.source_agency.nil? and Agency.where(name: metadata.source_agency).any?
+  #       @agencies << metadata.source_agency
+  #     end
+  #   end
+  #   @agencies.uniq!.flatten!
+  end
+  
+  private
+  def new_agency_params
+    params.slice(:name, :acronym, :description, :category) || {}
   end
 end
