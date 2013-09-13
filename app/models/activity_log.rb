@@ -13,16 +13,19 @@ class ActivityLog < ActiveRecord::Base
         agencies << error[:agencies]
       end
     end
-    agencies.flatten!.uniq!.reject!(&:blank?)
-    agencies.reject do |a| 
-      results = Agency.search do
-        any_of do
-          with(:name,a)
-          with(:alias_names, a)
+    if agencies.any?
+      agencies.flatten!.uniq!.reject!(&:blank?)
+      agencies.reject! do |a| 
+        results = Agency.search do
+          any_of do
+            with(:name,a)
+            with(:alias_names, a)
+          end
         end
+        results.total > 0
       end
-      results.total > 0
     end
+    agencies
   end
   
 end
