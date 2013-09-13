@@ -77,7 +77,9 @@ NSCatalog::Application.routes.draw do
     end
   end
 
-  resource :search
+  resource :search do
+    get :export
+  end
   
   match '/manager' => 'manager#dashboard', as: 'manager'
 #  match '/search' => 'search#search', as: 'search'
