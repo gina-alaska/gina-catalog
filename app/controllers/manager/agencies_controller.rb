@@ -113,6 +113,16 @@ class Manager::AgenciesController < ManagerController
       format.js { render 'visible' }
     end
   end
+  
+  def add_alias
+    @agency = Agency.find(params[:id])
+    
+    @agency.aliases << Alias.new(text: params[:text])
+    
+    respond_to do |format|
+      format.json { head :no_content}
+    end
+  end
 
   protected
 

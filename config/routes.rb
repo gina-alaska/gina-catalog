@@ -60,6 +60,9 @@ NSCatalog::Application.routes.draw do
         post :visible
         post :hidden
       end
+      member do
+        put :add_alias
+      end
     end
 
     resources :collections do
