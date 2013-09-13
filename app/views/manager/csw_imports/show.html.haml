@@ -8,7 +8,10 @@
       %li
         =link_to "Check Agencies", "#check_agencies", data: {toggle: 'tab'}
       %li.pull-right
-        =link_to "Schedule Import", ['import', :manager, @csw_import], class: 'btn'
+        .btn-group
+          .btn.disabled
+            = "Status: #{@csw_import.status}"
+          =link_to "Schedule Import", ['import', :manager, @csw_import], class: 'btn'
 
     .tab-content
       #details.tab-pane.active
