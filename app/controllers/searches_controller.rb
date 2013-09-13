@@ -69,7 +69,6 @@ class SearchesController < ApplicationController
     @search_params = params[:search] || {}
     @format = params[:format] || ""
     @limit = params[:limit] || 30
-    @limit = 150 if @format == "csv"
     @pagenum = params[:page] || 1
     @search_params[:field] = "relevance" unless SORT_FIELDS.include?(@search_params[:field])
     @search_params[:direction] = "ascending" unless %w{ascending descending}.include?(@search_params[:direction])
