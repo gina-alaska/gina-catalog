@@ -69,23 +69,29 @@ module CatalogConcerns
         end
         self.links << fgdc_link(url, 'Metadata')
         
-        self.start_date = begin
-          DateTime.parse(metadata.start_date) unless metadata.start_date.empty?
-        rescue => e
-          unless metadata.start_date.empty?
-            puts "Error #{e}"
-            import_errors[:start_date] = metadata.start_date
+        unless metadata.start_date.empty?
+          self.start_date = begin
+            DateTime.parse(metadata.start_date)
+          rescue => e
+            begin
+              DateTime.strptime(metadata.start_date, "%Y").beginning_of_year
+            rescue => e
+              import_errors[:start_date] = metadata.start_date
+            end
           end
         end
-        self.end_date = begin
-          DateTime.parse(metadata.end_date) unless metadata.end_date.empty?
-        rescue => e
-          unless metadata.end_date.empty?
-            puts "Error #{e}"
-            import_errors[:end_date] = metadata.end_date 
+
+        unless metadata.end_date.empty?
+          self.end_date = begin
+            DateTime.parse(metadata.end_date)
+          rescue => e
+            begin
+              DateTime.strptime(metadata.end_date, "%Y").end_of_year
+            rescue => e
+              import_errors[:end_date] = metadata.end_date 
+            end
           end
         end
-        
         
         if metadata.primary_contact.nil?
           self.primary_contact_id = nil
@@ -94,6 +100,7 @@ module CatalogConcerns
         end
         
         agency = Agency.where(name: metadata.source_agency).first
+        agency ||= Alias.where(text: metadata.source_agency, aliasable_type: 'Agency').first.try(:aliasable)
         if agency.nil?
           import_errors[:agencies] ||= []
           import_errors[:agencies] << metadata.source_agency

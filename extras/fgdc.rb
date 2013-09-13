@@ -8,7 +8,7 @@ class FGDC
   end
   
   def title
-    @xml.search('idinfo title').children.to_s
+    @xml.search('idinfo title').children.to_s.strip
   end
   
   def abstract
@@ -20,11 +20,11 @@ class FGDC
   end
   
   def start_date
-    @xml.search('idinfo timeperd timeinfo rngdates begdate').children.to_s
+    @xml.search('idinfo timeperd timeinfo rngdates begdate').children.to_s.strip
   end
   
   def end_date
-    @xml.search('idinfo timeperd timeinfo rngdates enddate').children.to_s
+    @xml.search('idinfo timeperd timeinfo rngdates enddate').children.to_s.strip
   end
   
   def bounds
@@ -43,7 +43,7 @@ class FGDC
   end
   
   def status
-    @xml.search('idinfo status progress').children.to_s
+    @xml.search('idinfo status progress').children.to_s.strip
   end
 
   def onlinks
@@ -70,7 +70,7 @@ class FGDC
     if agency.empty?
       nil
     else
-      agency
+      agency.strip
     end
   end
   
