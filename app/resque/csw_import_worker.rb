@@ -7,7 +7,8 @@ class CswImportWorker
     end
       
     @csw = CswImport.where(id: csw_id).first
-
+    @csw.update_attribute(:status, "Fetching records")
+    
     @log = @csw.activity_logs.build
     @log.activity = "CSW Import"
     @log.log = {
@@ -20,8 +21,10 @@ class CswImportWorker
     client = RCSW::Client::Base.new(@csw.url)
     records = client.record(client.records.collect(&:identifier)).all
     puts "Done fetching records"
-    
-    records.each do |record|
+  
+    @csw.update_attribute(:status, "Importing 0 of #{records.count}")
+
+    records.each_with_index do |record, index|
       uuid = record.identifier.gsub(/({|})/,"")
       
       catalog = Catalog.where(uuid: uuid, csw_import_id: @csw.id).first_or_initialize
@@ -50,13 +53,14 @@ class CswImportWorker
           @log.log[:failed] << url
         end
       end
+      if(index % 10 == 0)
+        @csw.update_attribute(:status, "Importing #{index} of #{records.count}")
+      end
     end
     
     @log.save
     
-    @csw.touch
+    @csw.update_attribute(:status, "Finished")
     Sunspot.commit
   end
-  
-  
 end

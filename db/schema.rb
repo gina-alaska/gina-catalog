@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130910010316) do
+ActiveRecord::Schema.define(:version => 20130913024346) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -270,6 +270,7 @@ ActiveRecord::Schema.define(:version => 20130910010316) do
     t.integer  "use_agreement_id"
     t.boolean  "request_contact_info", :default => false
     t.boolean  "require_contact_info", :default => false
+    t.string   "status"
   end
 
   create_table "data_sources", :force => true do |t|
