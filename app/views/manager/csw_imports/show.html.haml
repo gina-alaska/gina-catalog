@@ -24,11 +24,28 @@
               %th.span2 Action
           %tbody
             = render partial: "unknown_agency", collection: @unknown_agencies
-            = form_tag [:manager, :agency], remote: true do
-              = hidden_field_tag "aliases_attributes['text']", ""
-
- 
-.spinner
 
 :javascript
   $("select").select2({width: '270px'});
+  
+  $("a[data-action='add-alias']").on("click", function(e) {
+    e.preventDefault();
+    var row = $(this).parents("tr")
+    var agency_alias = row.data("agency");
+    var agency_id = row.find("select option:selected").val()
+    
+    $.ajax("/manager/agencies/" + agency_id + "/add_alias", {
+      type: 'put',
+      dataType: 'json',
+      data: {
+        text: agency_alias
+      },
+      complete: function() {
+        row.hide('slow', function() {
+          $(this).remove();
+        });
+        console.log(row);
+      }
+    })
+
+  })
