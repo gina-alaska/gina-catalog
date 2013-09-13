@@ -99,6 +99,8 @@ class Page::Content < ActiveRecord::Base
       'content' => ::PageContentDrop.new(self),
       'description' => self.description,
       'images' => self.images,
+      'root' => self.root,
+      'parent' => self.parent,
       'children' => self.children.public,
       'public' => self.public?,
       'show_in_menu' => self.main_menu
