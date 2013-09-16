@@ -1,29 +1,28 @@
 %h4= "Log for #{@log.created_at}"
-Number of records created/updated: 
-= @log.log[:new_catalogs].count
 
-/ The import had the following errors:
-/ - @log.log[:errors].each do |record, errors| 
-/   .row-fluid
-/     .span12
-/       =link_to "The record", record
-/   .row-fluid
-/     %dl
-/       - errors.each do |error, value|
-/         = humanize_import_error(error,value)
+%dl
+  %dt Number of records created/updated: 
+  %dd= @log.log[:new_catalogs].count
+  %dt Number of records with errors: 
+  %dd= @log.log[:errors].count
 
 
-%table.table.table-striped.table-bordered
-  - @log.log[:errors].each do |record, errors|
-    %thead
-      %tr
-        %th{colspan:2}= link_to record, record
-    %thead
-      %tr
-        %th Field
-        %th Value
-    %tbody
-      - errors.each do |field, values|
-        %tr
-          %td= field
-          %td= values
+%h5 Error Details
+- @log.log[:errors].each_with_index do |record, index|
+  .bordered{style: "padding: 5px;"}
+    %div{data: {toggle: 'collapse', target: "#error_#{index}"} }
+      = record.first
+      = link_to record.first do
+        %i.icon-external-link
+      %i.icon-chevron-down.pull-right
+    .collapse{id: "error_#{index}"}
+      %table.table.table-striped.table-bordered
+        %thead
+          %tr
+            %th Field
+            %th Value
+        %tbody
+          - record.last.each do |field, values|
+            %tr
+              %td= field
+              %td= values
