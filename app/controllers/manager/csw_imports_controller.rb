@@ -76,28 +76,27 @@ class Manager::CswImportsController < ManagerController
   
   def import
     @csw_import = current_setup.csw_imports.where(id: params[:id]).first
-    Resque.enqueue(CswImportWorker, @csw_import.id)
+    if @csw_import.status == "Finished"
+      @csw_import.async_import(true)
+    end
+    respond_to do |format|
+      format.html {redirect_to [:manager, @csw_import]}
+      format.js {head :no_content }
+    end
+  end
+
+  def status
+    @csw_import = current_setup.csw_imports.where(id: params[:id]).first
+    respond_to do |format|
+      format.html { render layout: false}
+    end
   end
   
   def new_agency
     save_url(url_for([:manager, CswImport.find(params[:id])]))
     redirect_to new_manager_agency_path(new_agency_params)
   end
-  
-  def agencies
-    # @csw_import = current_setup.csw_imports.where(id: params[:id]).first
-  #   @agencies = []
-  #   client = RCSW::Client::Base.new(@csw_import.url)
-  #   records = client.record(client.records.collect(&:identifier))
-  #   records.each do |record|
-  #     metadata = FGDC.new(@csw_import.fgdc_import_url(record))
-  #     unless metadata.source_agency.nil? and Agency.where(name: metadata.source_agency).any?
-  #       @agencies << metadata.source_agency
-  #     end
-  #   end
-  #   @agencies.uniq!.flatten!
-  end
-  
+ 
   private
   def new_agency_params
     params.slice(:name, :acronym, :description, :category) || {}

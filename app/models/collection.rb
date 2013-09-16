@@ -6,6 +6,9 @@ class Collection < ActiveRecord::Base
   has_many :catalogs_collections, uniq: true
   has_many :catalogs, :through => :catalogs_collections, uniq: true
 
+  has_and_belongs_to_many :csw_imports
+  
+  
   validates_presence_of :name
   validates :name, length: { maximum: 255 }
   liquid_methods :name, :id  

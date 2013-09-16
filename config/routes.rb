@@ -20,7 +20,7 @@ NSCatalog::Application.routes.draw do
       member do
         post :import
         post :new_agency
-        get :agencies
+        get :status
       end
     end
     resources :images do

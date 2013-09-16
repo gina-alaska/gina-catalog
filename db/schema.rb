@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130913024346) do
+ActiveRecord::Schema.define(:version => 20130913182654) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -226,6 +226,11 @@ ActiveRecord::Schema.define(:version => 20130913024346) do
     t.integer  "setup_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+  end
+
+  create_table "collections_csw_imports", :id => false, :force => true do |t|
+    t.integer "collection_id"
+    t.integer "csw_import_id"
   end
 
   create_table "contact_infos", :force => true do |t|
