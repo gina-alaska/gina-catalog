@@ -59,14 +59,15 @@ class Setup < ActiveRecord::Base
     @layout_map = {}
     source.layouts.each do |l|
       layout = l.dup
-      layout.save!
       self.layouts << layout
+      # layout.save!
       @layout_map[l.id] = layout
     end
     
     source.snippets.each do |p|
       snippet = p.dup
-      snippet.save!
+      # snippet.setup = self
+      # snippet.save!
       self.snippets << snippet
     end
     
@@ -76,11 +77,12 @@ class Setup < ActiveRecord::Base
     
     source.roles.each do |r|
       role = r.dup
-      role.save!
+      # role.setup = self
+      # role.save!
       self.roles << role
     end
     
-    self.theme = source.theme
+    self.theme = source.theme.dup
   end
   alias_method :clone=, :clone
   
@@ -88,7 +90,6 @@ class Setup < ActiveRecord::Base
     new_page = page.dup
     new_page.page_layout = layouts[page.page_layout_id]
     new_page.parent = parent_page
-    new_page.save!
     self.pages << new_page
     
     page.children.each do |child_page|

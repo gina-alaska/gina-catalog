@@ -14,7 +14,7 @@ class Page::Content < ActiveRecord::Base
   serialize :content
   
   # this will need to be removed in a future update
-  has_and_belongs_to_many :setups, join_table: 'pages_setups'
+  # has_and_belongs_to_many :setups, join_table: 'pages_setups'
   belongs_to :setup
   
   has_many :page_images, class_name: 'Page::Image'
