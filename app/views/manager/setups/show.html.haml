@@ -1,0 +1,38 @@
+.content
+  %dl.dl-horizontal
+    %h4 Portal Information
+    %hr
+    %dt Title
+    %dd=ddtext current_setup.title
+    %dt Acronym
+    %dd=ddtext current_setup.acronym
+    %dt By line
+    %dd=ddtext current_setup.by_line
+    %dt Contact Email
+    %dd=ddtext current_setup.contact_email
+    %dt Default Invite Text
+    %dd=ddtext current_setup.default_invite 
+    %dt Google Analytics
+    %dd=ddtext current_setup.analytics_account
+    %dt Description
+    %dd=ddtext current_setup.description
+    %dt Keywords
+    %dd=ddtext current_setup.keywords
+    %br
+    %h4 Portal Maps
+    %hr
+    %dt Site Projection
+    %dd=ddtext display_projection(current_setup.projection)
+    %dt Full Record Projection
+    %dd=ddtext display_projection(current_setup.record_projection)
+    %dt Use Google Layers
+    %dd=ddtext current_setup.google_layers==true ? "Yes" : "No"
+    %br
+    %h4 Portal Social
+    %hr
+    %dt Twitter URL
+    %dd=ddtext current_setup.twitter_url
+    %dt GitHub URL
+    %dd=ddtext current_setup.github_url
+    %dt Facebook URL
+    %dd=ddtext current_setup.facebook_url
