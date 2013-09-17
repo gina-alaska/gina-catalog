@@ -1,7 +1,10 @@
 .row-fluid
   .span12
     %h4.pull-left
-      .brand= "Catalog: #{page_title}"
+      - if controller.class.const_defined?(:PAGETITLE)
+        .brand= "Catalog: #{controller.class::PAGETITLE}"
+      - else
+        .brand= "Catalog"
     %ul.nav.pull-right.nav-pills
       %li= link_to 'Data Records', manager_catalogs_path
       %li= link_to 'CSW Imports', manager_csw_imports_path
