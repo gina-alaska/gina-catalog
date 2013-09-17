@@ -73,8 +73,14 @@ class ManagerController < ApplicationController
     end      
   end
 
+  def authenticate_access_settings!
+    unless user_is_a_member? and current_member.access_settings?
+      authenticate_user!
+    end      
+  end
+
   def page_title
-    @page_title || PAGETITLE
+    @page_title ||= PAGETITLE
   end
 
   def page_title=(title)
