@@ -96,7 +96,7 @@ class Page::Content < ActiveRecord::Base
     {
       'title' => self.title,
       'slug' => self.slug,
-      'domid' => self.slug.downcase.gsub(/\/\s/, '_'),
+      'domid' => self.slug.downcase.gsub(/[\/\s]/, '_'),
       'content' => ::PageContentDrop.new(self),
       'description' => self.description,
       'images' => self.images,
