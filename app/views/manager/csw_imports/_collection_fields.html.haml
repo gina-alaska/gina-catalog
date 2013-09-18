@@ -1,0 +1,9 @@
+.row-fluid
+  .span12
+    = f.label "Associate this record with:", class: 'control-label'
+    =# f.select :collections, options_from_collection_for_select(current_setup.collections, :id,
+:name, @csw_import.collections), {include_blank: true, multiple: true}, {class: 'span12'}
+    = f.collection_select :collection_ids, current_setup.collections.order('name ASC'), :id, :name, {}, { multiple: true , class: 'span12' }
+    
+:javascript
+  $('#csw_import_collection_ids').select2();

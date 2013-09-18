@@ -1,0 +1,5 @@
+%tr
+  %td.span3= link_to catalog.title, manager_catalog_path(catalog)
+  %td.span9
+    :markdown
+      #{truncate(catalog.description, length: 120)}
