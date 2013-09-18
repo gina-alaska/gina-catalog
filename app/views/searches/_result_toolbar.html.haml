@@ -1,0 +1,20 @@
+%div{id: dom_id(catalog, :more_info)}
+%div{ style: 'text-align:right; margin: 0 5px 5px 0;'}
+  .btn-group
+    = link_to more_info_catalog_path(catalog), class: "btn", id: dom_id(catalog, "info_button"), remote: true, data: {"less-text" => "<i class='icon-minus'/> Less"}, title: 'More Info' do
+      %i.icon-plus 
+      More
+
+  .btn-group
+    - unless catalog.geometry_center_collection.blank?
+      = link_to '#', class: 'btn', data: { "openlayers-action" => "select-features", target: "##{dom_id(catalog, :record)}" }, title: 'Zoom To' do
+        %i.icon-map-marker
+        
+    = render 'preview_button', catalog: catalog
+      
+  = render 'shared/catalogs/catalog_buttons', catalog: catalog
+      
+  .btn-group
+    = link_to catalog, class: 'btn btn-primary' do
+      Full Record
+      %i.icon-arrow-right
