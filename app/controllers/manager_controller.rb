@@ -44,8 +44,7 @@ class ManagerController < ApplicationController
   
   def fetch_cms_pages
     @manager_pages = { 
-      :page_contents => 'Pages', :page_snippets => 'Snippets', :page_layouts => 'Layouts', 
-      :setups => 'Settings', :themes => 'Themes' } 
+      :page_contents => 'Pages', :page_snippets => 'Snippets', :page_layouts => 'Layouts', :themes => 'Themes' }
     @available_themes = Theme.where('owner_setup_id IS NULL or owner_setup_id = ?', current_setup.id)     
   end
 
@@ -73,8 +72,14 @@ class ManagerController < ApplicationController
     end      
   end
 
+  def authenticate_access_settings!
+    unless user_is_a_member? and current_member.access_settings?
+      authenticate_user!
+    end      
+  end
+
   def page_title
-    @page_title || PAGETITLE
+    @page_title ||= PAGETITLE
   end
 
   def page_title=(title)

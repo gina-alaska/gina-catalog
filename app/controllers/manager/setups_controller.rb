@@ -1,15 +1,13 @@
 class Manager::SetupsController < ManagerController
   before_filter :fetch_setup, except: [:new,:create]
   
-  PAGETITLE = 'Pages'
-  SUBMENU = '/layouts/manager/cms_menu'
+  PAGETITLE = 'Dashboard'
+  SUBMENU = '/layouts/manager/settings_menu'
   
   def show
-    if current_setup.nil? 
-      redirect_to new_setup_path
-      return
-    end
-    
+    page_title = "Portal Settings"
+    @edit_button = true
+
     respond_to do |format|
       format.html
       format.js
@@ -37,7 +35,7 @@ class Manager::SetupsController < ManagerController
       respond_to do |format|
         format.html {
           flash[:success] = 'First time setup completed!'
-          redirect_to manager_page_contents_path(tab: "setups")
+          redirect_to manager_setup_path
         }
       end
     else
@@ -58,7 +56,7 @@ class Manager::SetupsController < ManagerController
       respond_to do |format|
         format.html {
           flash[:success] = 'Settings updated'
-          redirect_to manager_page_contents_path(tab: "setups")
+          redirect_to manager_setup_path
         }
       end
     else

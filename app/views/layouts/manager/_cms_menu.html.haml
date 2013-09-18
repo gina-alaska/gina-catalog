@@ -1,7 +1,10 @@
 .row-fluid
   .span12
     %h4.pull-left
-      .brand= "CMS: #{page_title}"
+      - if controller.class.const_defined?(:PAGETITLE)
+        .brand= "CMS: #{controller.class::PAGETITLE}"
+      - else
+        .brand= "CMS"
     %ul.nav.nav-pills.pull-right
       %li= link_to 'Pages', manager_page_contents_path
       %li= link_to 'Images', manager_images_path
