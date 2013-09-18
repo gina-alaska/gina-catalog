@@ -117,7 +117,7 @@ NSCatalog::Application.routes.draw do
       end
     end
   end
-  match '/sds/:catalog_id' => "downloads#show"
+  match '/sds/:catalog_id' => "downloads#index"
      
   # Omniauth pure
   match "/login" => redirect('/auth/gina')
