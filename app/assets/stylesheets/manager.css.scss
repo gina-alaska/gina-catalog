@@ -53,6 +53,7 @@ $smallColor: contrast-color($primaryColor, #333, #999);
   text-align: center;
 }
 
+<<<<<<< HEAD
 .ace-icon-modal {
   font-size: 14px;
   line-height: normal;
@@ -97,4 +98,12 @@ $smallColor: contrast-color($primaryColor, #333, #999);
     text-decoration: none;
     width: 120px;
   }
+
+.bordered {
+  border: 1px solid #CCC;
+  @include border-radius(3px);
+}
+
+.striped > div:nth-child(odd) {
+  background: #EFEFEF;
 }

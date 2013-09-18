@@ -10,11 +10,14 @@ class Admin::SetupsController < AdminController
   end
 
   def create
-    @setup = Setup.new(params[:setup])
-    clone_from = Setup.find(params[:setup][:clone])
+    setup_params = params[:setup].dup
+    clone_id = setup_params.delete(:clone)
+    
+    @setup = Setup.create(setup_params)
+    clone_from = Setup.find(clone_id)
     @setup.clone(clone_from)
     
-    if @setup.save!
+    if @setup.save
       respond_to do |format|
         flash[:success] = "Setup #{@setup.title} was successfully created."
         format.html { redirect_to admin_setups_path }
@@ -32,7 +35,7 @@ class Admin::SetupsController < AdminController
   end
 
   def update
-    @setup = Setup.where(id: params[:id]).first
+    @setup = Setup.find(params[:id])
 
     if @setup.update_attributes(params[:setup])
       respond_to do |format|

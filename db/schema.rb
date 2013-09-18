@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130903233700) do
+ActiveRecord::Schema.define(:version => 20130913182654) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -68,6 +68,14 @@ ActiveRecord::Schema.define(:version => 20130903233700) do
     t.integer  "agency_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "aliases", :force => true do |t|
+    t.string   "text"
+    t.integer  "aliasable_id"
+    t.string   "aliasable_type"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
   end
 
   create_table "asset_descriptions", :force => true do |t|
@@ -220,6 +228,11 @@ ActiveRecord::Schema.define(:version => 20130903233700) do
     t.datetime "updated_at",  :null => false
   end
 
+  create_table "collections_csw_imports", :id => false, :force => true do |t|
+    t.integer "collection_id"
+    t.integer "csw_import_id"
+  end
+
   create_table "contact_infos", :force => true do |t|
     t.integer  "catalog_id"
     t.string   "name"
@@ -262,6 +275,7 @@ ActiveRecord::Schema.define(:version => 20130903233700) do
     t.integer  "use_agreement_id"
     t.boolean  "request_contact_info", :default => false
     t.boolean  "require_contact_info", :default => false
+    t.string   "status"
   end
 
   create_table "data_sources", :force => true do |t|

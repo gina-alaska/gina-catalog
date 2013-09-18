@@ -8,6 +8,8 @@ module CatalogConcerns
     end
     
     def verify_system_page_changes
+      return true unless self.respond_to? :system_page?
+      
       if self.system_page? and self.slug_changed?
         self.errors.add(:slug, "can't be changed.  This slug is required by the application to work properly.")
         return false 

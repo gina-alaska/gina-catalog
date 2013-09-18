@@ -1,4 +1,4 @@
-= form_for [:manager, @csw_import], html: { class: 'form' } do |f|
+= nested_form_for [:manager, @csw_import], html: { class: 'form' } do |f|
   - unless @csw_import.errors.full_messages.empty?
     .alert.alert-error
       %h4 Errors prevents this record from being saved
@@ -42,11 +42,11 @@
       = f.label :require_contact_info, class: 'control-label' do
         = f.check_box :require_contact_info
         Contact info required
-
+  = render "collection_fields", f: f
 
   #actions.form-actions
     = link_to [:manager, @csw_import], class: 'btn btn-inverse' do
       %i.icon-arrow-left.icon-white
       Back
-    
+
     = f.submit class: 'btn btn-primary pull-right'

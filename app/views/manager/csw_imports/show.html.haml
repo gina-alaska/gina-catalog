@@ -1,0 +1,56 @@
+.row-fluid
+  .span12
+    #import-status.pull-right{style: 'padding: 3px'}
+      = render "import_status_button"
+    %ul#csw.nav.nav-pills
+      %li.active
+        = link_to "Import Details", "#details", data: {toggle: 'tab'}
+      %li
+        = link_to "Import Log", "#activity_log", data: {toggle: 'tab'}
+      %li
+        = link_to "Associated Catalogs", "#catalogs", data: {toggle: 'tab'}
+      %li
+        = link_to "Unknown Agencies", "#unknown_agencies", data: {toggle: 'tab'}
+    
+    .tab-content
+      #details.tab-pane.active
+        = render "log_details"
+      #activity_log.tab-pane
+        = render "import_history"
+      #catalogs.tab-pane
+        %table.table.table-striped.table-bordered.table-condensed
+          %tbody
+            = render partial: "catalog", collection: @csw_import.catalogs
+      #unknown_agencies.tab-pane.table.table-striped.table-bordered
+        %table.table.table-striped
+          %thead
+            %tr
+              %th.span6 Unknown Agency
+              %th.span4 Alias to:
+              %th.span2 Action
+          %tbody
+            = render partial: "unknown_agency", collection: @unknown_agencies
+
+:javascript
+  $("select").select2({width: '270px'});
+  
+  $("a[data-action='add-alias']").on("click", function(e) {
+    e.preventDefault();
+    var row = $(this).parents("tr")
+    var agency_alias = row.data("agency");
+    var agency_id = row.find("select option:selected").val()
+    
+    $.ajax("/manager/agencies/" + agency_id + "/add_alias", {
+      type: 'put',
+      dataType: 'json',
+      data: {
+        text: agency_alias
+      },
+      complete: function() {
+        row.hide('slow', function() {
+          $(this).remove();
+        });
+        console.log(row);
+      }
+    })
+  })

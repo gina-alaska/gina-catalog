@@ -33,7 +33,8 @@ class Manager::AgenciesController < ManagerController
   end
 
   def new
-    @agency = Agency.new
+    @agency = Agency.new(new_agency_params)
+    @agency.aliases.build
   end
 
   def create
@@ -43,7 +44,7 @@ class Manager::AgenciesController < ManagerController
     if @agency.save
       respond_to do |format|
         flash[:success] = "Agency #{@agency.name} was successfully created."
-        format.html { redirect_to manager_agencies_path }
+        format.html { redirect_back_or_default manager_agencies_path }
       end
     else
       respond_to do |format|
@@ -55,6 +56,7 @@ class Manager::AgenciesController < ManagerController
 
   def edit
     @agency = Agency.find(params[:id])
+    @agency.aliases.build
   end
 
   def update
@@ -63,7 +65,7 @@ class Manager::AgenciesController < ManagerController
     if @agency.update_attributes(params[:agency])
       respond_to do |format|
         flash[:success] = "Agency #{@agency.name} was successfully updated."
-        format.html { redirect_to manager_agencies_path }
+        format.html { redirect_back_or_default manager_agencies_path }
         format.json { head :nocontent }
       end
     else
@@ -111,10 +113,24 @@ class Manager::AgenciesController < ManagerController
       format.js { render 'visible' }
     end
   end
+  
+  def add_alias
+    @agency = Agency.find(params[:id])
+    
+    @agency.aliases << Alias.new(text: params[:text])
+    
+    respond_to do |format|
+      format.json { head :no_content}
+    end
+  end
 
   protected
 
   def search_params
     params[:search] || {}
+  end
+  
+  def new_agency_params
+    params.slice(:name, :category, :description, :acronym)  || {}
   end
 end

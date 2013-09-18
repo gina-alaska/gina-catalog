@@ -11,13 +11,16 @@ class Agency < ActiveRecord::Base
   ]
 
   has_many :agency_people
-  has_many :people, :through => :agency_people  
+  has_many :people, :through => :agency_people
+  has_many :aliases, as: :aliasable, dependent: :destroy
+   
   has_and_belongs_to_many :setups, join_table: 'agencies_setups', uniq: true
   
   # has_many :catalog_agencies, :dependent => :destroy
   # has_many :projects, :through => :project_agencies
   has_and_belongs_to_many :catalogs, join_table: :catalog_agencies
 
+  accepts_nested_attributes_for :aliases, reject_if: ->(a) { a[:text].blank? }, allow_destroy: true
   default_scope order('name ASC')
   scope :active, :conditions => { :active => true }, :order => 'name asc'
   
@@ -43,6 +46,12 @@ class Agency < ActiveRecord::Base
       acronym.downcase
     end
     
+    text :alias_names do
+      self.aliases.pluck(:text).join(" ")
+    end
+    string :alias_names, multiple: true do
+      self.aliases.pluck(:text)
+    end
     
     text :description
     string :description

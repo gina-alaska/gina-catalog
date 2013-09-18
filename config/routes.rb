@@ -16,7 +16,13 @@ NSCatalog::Application.routes.draw do
         put :share
       end
     end
-    resources :csw_imports
+    resources :csw_imports do
+      member do
+        post :import
+        post :new_agency
+        get :status
+      end
+    end
     resources :images do
       collection do
         post :ace_search
@@ -53,6 +59,9 @@ NSCatalog::Application.routes.draw do
       collection do
         post :visible
         post :hidden
+      end
+      member do
+        put :add_alias
       end
     end
 
@@ -117,7 +126,7 @@ NSCatalog::Application.routes.draw do
       end
     end
   end
-  match '/sds/:catalog_id' => "downloads#show"
+  match '/sds/:catalog_id' => "downloads#index"
      
   # Omniauth pure
   match "/login" => redirect('/auth/gina')
