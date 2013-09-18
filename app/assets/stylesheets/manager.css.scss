@@ -53,6 +53,52 @@ $smallColor: contrast-color($primaryColor, #333, #999);
   text-align: center;
 }
 
+.ace-icon-modal {
+  font-size: 14px;
+  line-height: normal;
+  margin: 0;
+
+  li .icon {
+    display: block;
+    vertical-align: middle;
+    position: absolute;
+    top: 50%;
+    left: 0; 
+    text-align: center;
+    width: 30px;
+    font-size: 20px;
+    margin-top: -12px;
+  }
+
+  li a:hover .icon {
+    margin-top: -19px;
+    font-size: 30px;
+  }
+
+  li i {
+    width: 100%;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  li {
+    display: inline-block;
+    text-align: left;
+    padding: 5px;
+    line-height: normal;
+    vertical-align: middle;
+  }
+
+  li a {
+    position: relative;
+    vertical-align: top;
+    padding-left: 35px;
+    display: block;
+    text-decoration: none;
+    width: 120px;
+  }
+}
+
 .bordered {
   border: 1px solid #CCC;
   @include border-radius(3px);

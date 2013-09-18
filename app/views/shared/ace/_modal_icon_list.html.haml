@@ -1,0 +1,12 @@
+#ace-icons.modal.hide.fade{tabindex:"-1", role:"dialog"}
+  .modal-header
+    %button.close{type:'button', data: { dismiss: 'modal' }} &times;
+    %h3 Choose an Icon
+  .modal-body
+    %ul.ace-icon-modal
+      - load_icons.each do |icon|
+        %li
+          = link_to '#', data: { behavior: 'add', icon: icon } do
+            %span.icon
+              %i{ class: icon }
+            = icon.gsub(/^icon-/, "").gsub(/-/, ' ')
