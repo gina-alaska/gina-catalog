@@ -1,48 +1,25 @@
-.result
-  - cache([:search_result, :v29, catalog]) do
-    %div{id: dom_id(catalog, :record), data: { wkt: catalog.geometry_center_collection, type: catalog.type } }
-      .row-fluid
-        .span10
-          %h5.title
-            = catalog.title.try(:truncate,78)
-            - if !catalog.published?
-              %i.icon-warning-sign
-            - unless catalog.geometry_collection.blank?
-              %i.icon-globe
-        .span2
-          - if catalog.type == 'Project'
-            .legend-tag.alert.alert-warning
-              %b Project
-          - else
-            .legend-tag.alert.alert-info
-              %b Data
-      - if !catalog.published?
-        .alert.alert-warning{style:'margin-bottom: 5px;'}
-          This record has not been published
-      .description
-        - unless catalog.source_agency.nil?
-          %b= catalog.source_agency.try(:name_with_acronym)
-        :markdown
-          #{catalog.description.try(:truncate, 300).try(:html_safe)}
-
-        %div{id: dom_id(catalog, :more_info)}
-          
-  %div{ style: 'text-align:right; margin: 0 5px 5px 0;'}
-    .btn-group
-      = link_to more_info_catalog_path(catalog), class: "btn", id: dom_id(catalog, "info_button"), remote: true, data: {"less-text" => "<i class='icon-minus'/> Less"}, title: 'More Info' do
-        %i.icon-plus 
-        More
-
-    .btn-group
-      - unless catalog.geometry_center_collection.blank?
-        = link_to '#', class: 'btn', data: { "openlayers-action" => "select-features", target: "##{dom_id(catalog, :record)}" }, title: 'Zoom To' do
-          %i.icon-map-marker
-          
-      = render 'preview_button', catalog: catalog
-        
-    = render 'shared/catalogs/catalog_buttons', catalog: catalog
-        
-    .btn-group
-      = link_to catalog, class: 'btn btn-primary' do
-        Full Record
-        %i.icon-arrow-right
+- cache([:search_result, :v30, catalog]) do
+  %div{id: dom_id(catalog, :record), data: { wkt: catalog.geometry_center_collection, type: catalog.type } }
+    .row-fluid
+      .span10
+        %h5.title
+          = catalog.title.try(:truncate,78)
+          - if !catalog.published?
+            %i.icon-warning-sign
+          - unless catalog.geometry_collection.blank?
+            %i.icon-globe
+      .span2
+        - if catalog.type == 'Project'
+          .legend-tag.alert.alert-warning
+            %b Project
+        - else
+          .legend-tag.alert.alert-info
+            %b Data
+    - if !catalog.published?
+      .alert.alert-warning{style:'margin-bottom: 5px;'}
+        This record has not been published
+    .description
+      - unless catalog.source_agency.nil?
+        %b= catalog.source_agency.try(:name_with_acronym)
+      :markdown
+        #{catalog.description.try(:truncate, 300).try(:html_safe)}

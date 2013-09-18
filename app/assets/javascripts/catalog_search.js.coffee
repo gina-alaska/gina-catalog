@@ -20,6 +20,13 @@
     else
       CatalogSearch.load(url, false)
     
+  export: (format = 'html') ->
+    form = $('#catalog_search_form')
+    url = form.attr('action')
+    url = url + "/export.#{format}?#{form.serialize()}"
+    
+    window.open(url)
+
   load: (url, ajax = true) ->
     if ajax
       $.ajax({ url: url, dataType: 'script', global: false }).complete(CatalogSearch.afterLoad)
@@ -38,6 +45,11 @@ $(document).submit (evt) ->
 $(document).on("click", '[data-behavior="submit-form"]', (evt) ->
   evt.preventDefault()
   CatalogSearch.submit($(this).data('format'), $(this).data('track'))
+)
+
+$(document).on("click", '[data-behavior="export"]', (evt) ->
+  evt.preventDefault()
+  CatalogSearch.export($(this).data('format'))
 )
 
 $(document).on("click", '[data-behavior="stash"]', (evt) ->

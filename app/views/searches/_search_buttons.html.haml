@@ -70,11 +70,14 @@
           
         %ul.dropdown-menu
           %li 
-            = link_to '#', data: { behavior: 'submit-form', format: 'csv', track: false } do
+            = link_to '#', data: { behavior: 'export', format: 'csv' } do
               CSV
-          /%li 
-          /  = link_to '#', data: { behavior: 'submit-form', format: 'pdf', track: false } do
-          /    PDF
+          %li 
+            = link_to '#', data: { behavior: 'export', format: 'html' } do
+              HTML
+          %li 
+            = link_to '#', data: { behavior: 'export', format: 'pdf' } do
+              PDF
     .span6
       %button.btn.btn-primary.btn-block{ type: 'submit'}
         Search
