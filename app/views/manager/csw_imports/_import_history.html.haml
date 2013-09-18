@@ -1,0 +1,5 @@
+%table.table.table-striped
+  -@csw_import.activity_logs.each do |log|
+    %tr
+      %td
+        = link_to log.created_at, manager_csw_import_path(@csw_import, log: log.id), remote: true

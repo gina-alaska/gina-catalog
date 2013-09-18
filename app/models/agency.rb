@@ -46,6 +46,12 @@ class Agency < ActiveRecord::Base
       acronym.downcase
     end
     
+    text :alias_names do
+      self.aliases.pluck(:text).join(" ")
+    end
+    string :alias_names, multiple: true do
+      self.aliases.pluck(:text)
+    end
     
     text :description
     string :description

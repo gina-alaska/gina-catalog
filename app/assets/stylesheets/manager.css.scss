@@ -52,3 +52,12 @@ $smallColor: contrast-color($primaryColor, #333, #999);
 .center-paging {
   text-align: center;
 }
+
+.bordered {
+  border: 1px solid #CCC;
+  @include border-radius(3px);
+}
+
+.striped > div:nth-child(odd) {
+  background: #EFEFEF;
+}
