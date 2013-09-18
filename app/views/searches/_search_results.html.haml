@@ -1,0 +1,6 @@
+- if @results.empty?
+  %p.lead No search results
+- @results.each do |result|
+  .result
+    = render result if result.published? or (current_user and current_member.can_manage_catalog?)
+    = render 'result_toolbar', catalog: result

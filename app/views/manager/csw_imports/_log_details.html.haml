@@ -1,0 +1,28 @@
+%h4= "Log for #{@log.created_at}"
+
+%dl
+  %dt Number of records created/updated: 
+  %dd= @log.log[:new_catalogs].count
+  %dt Number of records with errors: 
+  %dd= @log.log[:errors].count
+
+
+%h5 Error Details
+- @log.log[:errors].each_with_index do |record, index|
+  .bordered{style: "padding: 5px;"}
+    %div{data: {toggle: 'collapse', target: "#error_#{index}"} }
+      = record.first
+      = link_to record.first do
+        %i.icon-external-link
+      %i.icon-chevron-down.pull-right
+    .collapse{id: "error_#{index}"}
+      %table.table.table-striped.table-bordered
+        %thead
+          %tr
+            %th Field
+            %th Value
+        %tbody
+          - record.last.each do |field, values|
+            %tr
+              %td= field
+              %td= values

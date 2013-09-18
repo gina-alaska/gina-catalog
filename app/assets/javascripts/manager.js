@@ -21,6 +21,7 @@
 //= require 'ace_editor'
 //= require 'flash_message'
 //= require 'history'
+//= require 'spin'
 //= require_self
 
 $(document).ready(function() {

@@ -38,7 +38,7 @@
           .control-group
             = f.label :page_layout_id, 'Layout', class: 'control-label'
             .controls
-              = f.collection_select :page_layout_id, current_setup.layouts, :id, :name, {}, { class: 'span12' }
+              = f.collection_select :page_layout_id, current_setup.layouts.order("name"), :id, :name, {}, { class: 'span12' }
           %label.checkbox
             =f.check_box :main_menu
             Show in Main Menu
@@ -81,6 +81,7 @@
 
 = render '/shared/ace/image_chooser', page: page
 = render '/shared/ace/link_chooser', page: page
+= render '/shared/ace/modal_icon_list', page: page
 = render '/shared/ace/javascript', page: page
 
 :javascript

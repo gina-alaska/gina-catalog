@@ -20,7 +20,7 @@
   %tbody
     -@csw_imports.each do |import|
       %tr
-        %td= import.title
+        %td= link_to import.title, [:manager, import]
         %td= import.url
         %td= "#{import.sync_frequency} hours"
         %td

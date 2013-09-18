@@ -14,7 +14,7 @@ class Page::Content < ActiveRecord::Base
   serialize :content
   
   # this will need to be removed in a future update
-  has_and_belongs_to_many :setups, join_table: 'pages_setups'
+  # has_and_belongs_to_many :setups, join_table: 'pages_setups'
   belongs_to :setup
   
   has_many :page_images, class_name: 'Page::Image'
@@ -26,7 +26,7 @@ class Page::Content < ActiveRecord::Base
   accepts_nested_attributes_for :images
   
   validates_presence_of :slug
-  validates_uniqueness_of :slug, scope: :setup_id
+  validates_uniqueness_of :slug, scope: [:parent_id, :setup_id]
   validates_presence_of :title
   validates_length_of :description, maximum: 255
   
@@ -96,6 +96,7 @@ class Page::Content < ActiveRecord::Base
     {
       'title' => self.title,
       'slug' => self.slug,
+      'domid' => self.slug.downcase.gsub(/[\/\s]/, '_'),
       'content' => ::PageContentDrop.new(self),
       'description' => self.description,
       'images' => self.images,

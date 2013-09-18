@@ -16,7 +16,13 @@ NSCatalog::Application.routes.draw do
         put :share
       end
     end
-    resources :csw_imports
+    resources :csw_imports do
+      member do
+        post :import
+        post :new_agency
+        get :status
+      end
+    end
     resources :images do
       collection do
         post :ace_search
@@ -54,6 +60,9 @@ NSCatalog::Application.routes.draw do
         post :visible
         post :hidden
       end
+      member do
+        put :add_alias
+      end
     end
 
     resources :collections do
@@ -76,9 +85,13 @@ NSCatalog::Application.routes.draw do
       end
     end
   end
+
+  resource :search do
+    get :export
+  end
   
   match '/manager' => 'manager#dashboard', as: 'manager'
-  match '/search' => 'catalogs#search', as: 'search'
+#  match '/search' => 'search#search', as: 'search'
   match '/manager/full_contact' => 'manager/contact_infos#full_contact'
 
   resources :map_layers
@@ -117,7 +130,7 @@ NSCatalog::Application.routes.draw do
       end
     end
   end
-  match '/sds/:catalog_id' => "downloads#show"
+  match '/sds/:catalog_id' => "downloads#index"
      
   # Omniauth pure
   match "/login" => redirect('/auth/gina')

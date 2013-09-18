@@ -43,3 +43,22 @@ editors.addHandler('picture', function(editor, btn, ace) {
   
   $(document).on('click', '#insert_image_chooser_modal a[data-behavior="add"]', addImage);
 });
+
+editors.addHandler('icon', function(editor, btn, ace) {
+  $('#ace-icons').modal();
+  
+  var addIcon = function() {
+    $('#ace-icons').modal('hide');
+
+    var icon = $(this).data("icon");
+    var tag = '<i class="'+icon+'"></i>';
+    
+    ace.wrapSelectionWithTags(editor, tag);
+  }
+  
+  $('#ace-icons').on('hidden', function() {
+    $(document).unbind('click', addIcon);
+  });
+  
+  $(document).on('click', '#ace-icons a[data-behavior="add"]', addIcon); 
+});

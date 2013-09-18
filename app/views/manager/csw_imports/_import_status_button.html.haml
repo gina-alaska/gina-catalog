@@ -1,0 +1,13 @@
+= link_to ['import', :manager, @csw_import], id: 'schedule-import-btn', class: 'btn', method: 'post' do
+  - unless @csw_import.status == "Finished"
+    %i.icon-spinner.icon-spin
+  = import_status_text(@csw_import.status)
+  
+:javascript
+  if("#{@csw_import.status}" != "Finished")
+    setTimeout(function() {
+      $("#import-status").load("#{status_manager_csw_import_path(@csw_import, polling: true)}")
+    }, 5000);
+  else if("#{params[:polling]}" == "true"){
+    top.location = "#{url_for([:manager, @csw_import])}"
+  }

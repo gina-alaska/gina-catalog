@@ -3,7 +3,7 @@ class Page::Layout < ActiveRecord::Base
 
   before_destroy :prevent_default_delete_check
   
-  has_and_belongs_to_many :setups, join_table: 'page_layouts_setups'
+  # has_and_belongs_to_many :setups, join_table: 'page_layouts_setups'
   belongs_to :setup
 
   validates_uniqueness_of :name, scope: :setup_id

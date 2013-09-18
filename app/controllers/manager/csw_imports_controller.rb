@@ -11,9 +11,13 @@ class Manager::CswImportsController < ManagerController
   end
 
   def show
-    @csw_import = current_setup.csw_imports.where(id: params[:id])
+    @csw_import = current_setup.csw_imports.where(id: params[:id]).first
+    @log = @csw_import.activity_logs.where(id: params[:log]).first || @csw_import.activity_logs.first
+    @unknown_agencies = @log.unknown_agencies
+
     respond_to do |format|
       format.html
+      format.js
     end
   end
   
@@ -70,4 +74,31 @@ class Manager::CswImportsController < ManagerController
     end
   end
   
+  def import
+    @csw_import = current_setup.csw_imports.where(id: params[:id]).first
+    if @csw_import.status == "Finished"
+      @csw_import.async_import(true)
+    end
+    respond_to do |format|
+      format.html {redirect_to [:manager, @csw_import]}
+      format.js {head :no_content }
+    end
+  end
+
+  def status
+    @csw_import = current_setup.csw_imports.where(id: params[:id]).first
+    respond_to do |format|
+      format.html { render layout: false}
+    end
+  end
+  
+  def new_agency
+    save_url(url_for([:manager, CswImport.find(params[:id])]))
+    redirect_to new_manager_agency_path(new_agency_params)
+  end
+ 
+  private
+  def new_agency_params
+    params.slice(:name, :acronym, :description, :category) || {}
+  end
 end
