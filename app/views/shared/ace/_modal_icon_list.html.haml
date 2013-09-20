@@ -1,7 +1,13 @@
 #ace-icons.modal.hide.fade{tabindex:"-1", role:"dialog"}
-  .modal-header
+  .modal-header.form-inline
     %button.close{type:'button', data: { dismiss: 'modal' }} &times;
     %h3 Choose an Icon
+    = label_tag 'Find', nil, style: "font-weight: bold;"
+    = text_field_tag :filter, "", title: "Filter Text"
+    %button#clear-button.btn{ title: "Clear" }
+      %i.icon-remove
+
+    %i#filter-spinner.icon-spinner.icon-spin{ style: 'display: none;' }
   .modal-body
     %ul.ace-icon-modal
       - load_icons.each do |icon|
@@ -10,3 +16,36 @@
             %span.icon
               %i{ class: icon }
             = icon.gsub(/^icon-/, "").gsub(/-/, ' ')
+:javascript
+  $(document).ready(function(){
+    var timer;
+    $("#filter").keyup(function() {
+      if(timer){
+        clearTimeout(timer);
+      }
+      var input = this
+      timer = setTimeout(function(){filterIcons(input)}, 200);
+      $('#filter-spinner').show();
+    });
+  });
+
+  var filterIcons = function(input){
+    var filterVal = $(input).val();
+    var pattern = new RegExp(filterVal);
+    $(".ace-icon-modal a").each(function(i){
+      var el = $(this).parent();
+
+      if(pattern.test($(this)[0].innerText)) {
+        setTimeout(function() { el.show(); },0);
+      }
+      else {
+        setTimeout(function() { el.hide(); },0);
+      }
+    });
+    $('#filter-spinner').hide();
+  };
+
+  $('#clear-button').click(function(){
+    $("#filter").val("");
+    filterIcons("");
+  });
