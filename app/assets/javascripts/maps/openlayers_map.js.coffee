@@ -25,7 +25,7 @@ class @OpenlayersMap
       new OpenLayers.Control.MousePosition({ displayProjection: @map.displayProjection, numDigits: 3, prefix: 'Mouse: ' })
     ])
 
-    if @data_config['google']
+    if @data_config['google'] and @config['projection'] == "EPSG:3857"
       @add_google_layers()
 
     Gina.Layers.inject(@map, @data_config['layers']);
