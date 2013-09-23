@@ -3,7 +3,7 @@
 - else
   %ul
     - page.images.each do |image|
-      - cache(['page_images', image, 'v1']) do
+      - cache(['page_images', page, image, 'v1']) do
         %li.thumbnail{ style: "text-align: center;"}
           .image
             = image_tag image.file.png.thumb('250x100').url, alt: image.title
