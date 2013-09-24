@@ -37,8 +37,11 @@
                 %span.fileupload-new Select image
                 %span.fileupload-exists Change
                 = f.file_field :file
+              - if image.file
+                = link_to "View Original", image.try(:file).try(:url), class: 'fileupload-exists btn btn-primary'
       .form-actions
         = link_to manager_images_path, class: 'btn' do 
           %i.icon-arrow-left
           Back
-        = f.submit class: 'btn btn-primary pull-right', id: 'upload-image-button'
+        .pull-right
+          = f.submit class: 'btn btn-primary', id: 'upload-image-button'
