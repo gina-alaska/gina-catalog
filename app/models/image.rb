@@ -6,8 +6,6 @@ class Image < ActiveRecord::Base
   has_many :page_images, class_name: 'Page::Image'
   has_many :pages, :through => :page_images, class_name: 'Page::Content'
   
-  validates_length_of :description, :maximum => 255
-  
   liquid_methods :title, :description, :link_to_url, :image_url
   
   def image_url
