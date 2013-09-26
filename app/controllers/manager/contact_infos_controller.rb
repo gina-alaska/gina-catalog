@@ -4,10 +4,12 @@ class Manager::ContactInfosController < ManagerController
   PAGETITLE = 'Download Log'
 
   def index
-    @contact_infos = ContactInfo.joins(:catalog => [:catalogs_setups]).where(:catalogs_setups => { :setup_id => current_setup.id }).uniq
+    @contact_infos = ContactInfo.joins(:catalog).where("catalog.owner_setup_id = ? or contact_infos.setup_id = ?", current_setup.id, current_setup.id).uniq
+    #@contact_infos = ContactInfo.joins(:catalog => [:catalogs_setups]).where(:catalogs_setups => { :setup_id => current_setup.id }).uniq
 
     contact_setup
-
+    @search_action = :contact_infos
+    
     respond_to do |format|
       format.html do
         if params[:commit] == "CSV"
@@ -22,10 +24,12 @@ class Manager::ContactInfosController < ManagerController
 
   def full_contact
     self.page_title = "Download Contacts"
-    @contact_infos = ContactInfo.includes(:catalog => [:catalogs_setups]).where(:catalogs_setups => { :setup_id => current_setup.id })
-    @contact_infos = @contact_infos.where("length(name) > 0 OR length(email) > 0")
+    @contact_infos = ContactInfo.joins(:catalog).where("catalog.owner_setup_id = ? or contact_infos.setup_id = ?", current_setup.id, current_setup.id).uniq
+    #@contact_infos = ContactInfo.includes(:catalog => [:catalogs_setups]).where(:catalogs_setups => { :setup_id => current_setup.id })
 
     contact_setup
+    @contact_infos = @contact_infos.where("length(name) > 0 OR length(email) > 0")
+    @search_action = :full_contact
 
     respond_to do |format|
       format.html do
@@ -39,6 +43,7 @@ class Manager::ContactInfosController < ManagerController
     end
   end
 
+  # This doesn't appear to be used anymore?
   def show
     self.page_title = "Report Downloads"
     @start_date = Time.zone.parse(params[:start_date])
