@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130917192226) do
+ActiveRecord::Schema.define(:version => 20130927230603) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(:version => 20130917192226) do
     t.boolean  "active",                    :default => true
     t.string   "adiwg_code"
     t.string   "adiwg_path"
+    t.integer  "image_id"
   end
 
   create_table "agencies_setups", :id => false, :force => true do |t|

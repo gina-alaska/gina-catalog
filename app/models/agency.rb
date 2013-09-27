@@ -15,6 +15,7 @@ class Agency < ActiveRecord::Base
   has_many :aliases, as: :aliasable, dependent: :destroy
    
   has_and_belongs_to_many :setups, join_table: 'agencies_setups', uniq: true
+  belongs_to :images
   
   # has_many :catalog_agencies, :dependent => :destroy
   # has_many :projects, :through => :project_agencies
