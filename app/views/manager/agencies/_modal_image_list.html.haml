@@ -1,0 +1,25 @@
+/ - images = current_setup.images.order('title ASC')
+- if @images.nil?
+  %p.lead{style:"padding: 15px;"} No images available
+- else
+  %ul.nav{ style: 'margin: 0;' }
+    - @images.each do |image|
+      /- cache(['ace_image_chooser', image, 'v2']) do
+      %li.pull-left.thumbnail{ style: 'width: 46%; margin-left: 10px; margin-top: 10px;' }
+        .row-fluid
+          .span3
+            .image
+              - if image.file.nil?
+                %p.lead Broken image
+              - else
+                = image_tag image.file.png.thumb('150x100#').url, alt: image.title
+          .span9
+            %div#logo-text{ style: 'height: 68px; overflow: auto;' }
+              %strong= image.title
+              %p= image.description
+            .buttons{style:""}
+              .btn-group
+                - if image.file.nil?
+                  %p.lead Please fix this image before linking
+                - else
+                  = link_to 'Select', add_image_manager_agency_path(@agency, image: image.id), class: 'btn', data: { alt: image.title }, remote: true, method: "put"

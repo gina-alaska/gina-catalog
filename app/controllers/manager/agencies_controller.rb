@@ -57,6 +57,12 @@ class Manager::AgenciesController < ManagerController
   def edit
     @agency = Agency.find(params[:id])
     @agency.aliases.build
+    if @agency.image_id.nil?
+      @current_image = nil
+    else
+      @current_image = current_setup.images.find(@agency.image_id)
+    end
+    @images = current_setup.images
   end
 
   def update
@@ -121,6 +127,24 @@ class Manager::AgenciesController < ManagerController
     
     respond_to do |format|
       format.json { head :no_content}
+    end
+  end
+
+  def add_image
+    @agency = Agency.find(params[:id])
+    
+    @agency.image_id = params[:image]
+
+    if @agency.image_id.nil?
+      @current_image = nil
+    else
+      @current_image = current_setup.images.find(@agency.image_id)
+    end
+    
+    if @agency.save
+      respond_to do |format|
+        format.js {render layout: false}
+      end
     end
   end
 

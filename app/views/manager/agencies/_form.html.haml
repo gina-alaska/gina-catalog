@@ -7,33 +7,43 @@
           %li= err
           
   .row-fluid
-    .field.span12
+    .field.span8
       = f.label :acronym
       = f.text_field :acronym, class: "span3"
 
       = f.label :name
       = f.text_field :name, class: "span8"
-
-      = f.label :description
-      = f.text_field :description, class: "span12"
-
-      = f.label :category
-      = f.select :category, Agency::CATEGORIES, {}, { class: 'span4' }
-
-      /     = f.label :active
-      / .row-fluid
-      /   .span11.offset1
-      /     %label.checkbox
-      /       = f.check_box :active
-      /       Yes
-      #aliases 
+    .field.span4
+      .navbar.navbar-inner
         .pull-right
-          = f.link_to_add :aliases, :data => { :target => "#aliases" }, class: "btn btn-success" do
-            %i.icon-plus.icon-white
-            Add an alias
-        %h3 Aliases
-        = f.fields_for :aliases
+          = link_to '#insert_image_chooser_modal', class: 'btn', title: 'Pick Logo', data: { toggle: 'modal' } do
+            %i.icon-picture
+          = link_to add_image_manager_agency_path(@agency), class: 'btn', remote: true, title: 'Remove Logo', method: "put", data: {toggle: nil} do
+            %i.icon-remove
+        .brand Logo
+      #logo-div
+        = render 'logo'
 
+  .row-fluid
+    = f.label :description
+    = f.text_field :description, class: "span12"
+
+    = f.label :category
+    = f.select :category, Agency::CATEGORIES, {}, { class: 'span4' }
+
+    /     = f.label :active
+    / .row-fluid
+    /   .span11.offset1
+    /     %label.checkbox
+    /       = f.check_box :active
+    /       Yes
+    #aliases 
+      .pull-right
+        = f.link_to_add :aliases, :data => { :target => "#aliases" }, class: "btn btn-success" do
+          %i.icon-plus.icon-white
+          Add an alias
+      %h3 Aliases
+      = f.fields_for :aliases
    
   .row-fluid
     .span12
@@ -47,3 +57,4 @@
         =link_to item.title, manager_catalog_path(item)
       %td
         = item.description
+= render 'image_chooser', agency: @agency
