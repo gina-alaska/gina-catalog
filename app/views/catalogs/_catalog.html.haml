@@ -1,4 +1,4 @@
-- cache([:search_result, :v30, catalog]) do
+- cache([:search_result, :v31, catalog]) do
   %div{id: dom_id(catalog, :record), data: { wkt: catalog.geometry_center_collection, type: catalog.type } }
     .row-fluid
       .span10
@@ -15,9 +15,8 @@
         - else
           .legend-tag.alert.alert-info
             %b Data
-    - if !catalog.published?
-      .alert.alert-warning{style:'margin-bottom: 5px;'}
-        This record has not been published
+    #catalog-published
+      = render 'catalogs/ispublished', catalog: catalog
     .description
       - unless catalog.source_agency.nil?
         %b= catalog.source_agency.try(:name_with_acronym)

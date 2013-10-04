@@ -6,5 +6,7 @@
 <% end %>
 
 var content = $('<%= escape_javascript(render("shared/catalogs/manage_button", catalog: @catalog)) %>')
+var published_content = $('<%= escape_javascript(render("catalogs/ispublished", catalog: @catalog)) %>')
 $('<%= dom_id(@catalog, "#manage") %>').html(content);
+$('#catalog-published').html(published_content);
 $('.spinner-container').spin(false);

@@ -1,0 +1,10 @@
+- if catalog.published?
+  %li#publish-button
+    = link_to unpublish_manager_catalog_path(catalog), method: :put, remote: true do
+      %i.icon-thumbs-down
+      Un-Publish
+- else
+  %li#publish-button
+    = link_to publish_manager_catalog_path(catalog), method: :put, remote: true do
+      %i.icon-thumbs-up
+      Publish
