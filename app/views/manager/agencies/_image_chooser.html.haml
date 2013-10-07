@@ -28,7 +28,7 @@
 
   var filterImages = function(input){
     var filterVal = $(input).val();
-    var pattern = new RegExp(filterVal);
+    var pattern = new RegExp(filterVal, "i");
     $("#insert_image_chooser_modal li #logo-text").each(function(i){
       var el = $(this).parent().parent().parent();
 
