@@ -11,12 +11,12 @@ class ContactInfo < ActiveRecord::Base
       data = self
       unless starts_at.nil?
         starts_at = starts_at.beginning_of_day
-        data = data.where("contact_infos.created_at >= ?", starts_at)
       end
       unless ends_at.nil?
         ends_at = ends_at.end_of_day
-        data = data.where("contact_infos.created_at <= ?", ends_at)
       end
+      data = data.where("contact_infos.created_at >= ?", starts_at)
+      data = data.where("contact_infos.created_at <= ?", ends_at)
 
       data
     else 
