@@ -33,3 +33,4 @@
                 = link_to manager_image_path(image), method: :delete, class: 'btn btn-danger', 'data-confirm' => 'Are you sure?', title: "Delete Image" do
                   %i.icon-trash.icon-white
                   Delete
+                = link_to "View Original", image.file.url, class: 'btn btn-primary'
