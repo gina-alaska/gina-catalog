@@ -5,7 +5,6 @@ class Image < ActiveRecord::Base
   has_and_belongs_to_many :setups
   has_many :page_images, class_name: 'Page::Image'
   has_many :pages, :through => :page_images, class_name: 'Page::Content'
-  has_many :agencies
   
   validates_length_of :description, :maximum => 255
   
