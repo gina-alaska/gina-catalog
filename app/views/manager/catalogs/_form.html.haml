@@ -135,7 +135,7 @@
       evt.preventDefault();
       
       input = $($(this).data('target'));
-      var feature = map.addFeature(input);      
+      var feature = map.addFeature($(input).val());      
       $('#location_editor').modal('show');
       
       if(feature) {
