@@ -50,6 +50,9 @@ class Manager::CatalogsController < ManagerController
   
   def new
     @catalog = Catalog.new
+    @catalog.links.build
+    @catalog.locations.build
+    @catalog.download_urls.build
     
     respond_to do |format|
       format.html
