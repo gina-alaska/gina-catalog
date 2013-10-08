@@ -7,33 +7,44 @@
           %li= err
           
   .row-fluid
-    .field.span12
+    .field.span8
       = f.label :acronym
       = f.text_field :acronym, class: "span3"
 
       = f.label :name
       = f.text_field :name, class: "span8"
+    .field.span4
+      = f.label :logo
+      .controls
+        .fileupload{ class: (f.object.new_record? ? 'fileupload-new' : 'fileupload-exists'), data: { provides: 'fileupload' } }
+          .fileupload-preview.thumbnail.fileupload-exists{style:'width: 200px; min-height: 50px;'}
+            = image_tag @agency.logo.png.thumb('200x200').url if @agency.logo
+          %div
+            %span.btn.btn-file
+              %span.fileupload-new Select image
+              %span.fileupload-exists Change
+              = f.file_field :logo
 
-      = f.label :description
-      = f.text_field :description, class: "span12"
+  .row-fluid
+    = f.label :description
+    = f.text_field :description, class: "span12"
 
-      = f.label :category
-      = f.select :category, Agency::CATEGORIES, {}, { class: 'span4' }
+    = f.label :category
+    = f.select :category, Agency::CATEGORIES, {}, { class: 'span4' }
 
-      /     = f.label :active
-      / .row-fluid
-      /   .span11.offset1
-      /     %label.checkbox
-      /       = f.check_box :active
-      /       Yes
-      #aliases 
-        .pull-right
-          = f.link_to_add :aliases, :data => { :target => "#aliases" }, class: "btn btn-success" do
-            %i.icon-plus.icon-white
-            Add an alias
-        %h3 Aliases
-        = f.fields_for :aliases
-
+    /     = f.label :active
+    / .row-fluid
+    /   .span11.offset1
+    /     %label.checkbox
+    /       = f.check_box :active
+    /       Yes
+    #aliases 
+      .pull-right
+        = f.link_to_add :aliases, :data => { :target => "#aliases" }, class: "btn btn-success" do
+          %i.icon-plus.icon-white
+          Add an alias
+      %h3 Aliases
+      = f.fields_for :aliases
    
   .row-fluid
     .span12

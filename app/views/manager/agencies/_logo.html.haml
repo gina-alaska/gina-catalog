@@ -1,0 +1,5 @@
+- if @current_image.nil?
+  Logo Not Set
+-else
+  .image
+    = image_tag @current_image.file.png.thumb('250x100').url, alt: @current_image.title

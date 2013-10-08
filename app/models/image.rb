@@ -5,6 +5,7 @@ class Image < ActiveRecord::Base
   has_and_belongs_to_many :setups
   has_many :page_images, class_name: 'Page::Image'
   has_many :pages, :through => :page_images, class_name: 'Page::Content'
+  has_many :agencies
   
   liquid_methods :title, :description, :link_to_url, :image_url
   
