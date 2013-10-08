@@ -14,15 +14,16 @@
       = f.label :name
       = f.text_field :name, class: "span8"
     .field.span4
-      .navbar.navbar-inner
-        .pull-right
-          = link_to '#insert_image_chooser_modal', class: 'btn', title: 'Pick Logo', data: { toggle: 'modal' } do
-            %i.icon-picture
-          = link_to add_image_manager_agency_path(@agency), class: 'btn', remote: true, title: 'Remove Logo', method: "put", data: {toggle: nil} do
-            %i.icon-remove
-        .brand Logo
-      #logo-div
-        = render 'logo'
+      = f.label :logo
+      .controls
+        .fileupload{ class: (f.object.new_record? ? 'fileupload-new' : 'fileupload-exists'), data: { provides: 'fileupload' } }
+          .fileupload-preview.thumbnail.fileupload-exists{style:'max-width:75%'}
+            = image_tag @agency.logo.png.thumb('200x200').url if @agency.logo
+          %div
+            %span.btn.btn-file
+              %span.fileupload-new Select image
+              %span.fileupload-exists Change
+              = f.file_field :logo
 
   .row-fluid
     = f.label :description
@@ -57,4 +58,3 @@
         =link_to item.title, manager_catalog_path(item)
       %td
         = item.description
-= render 'image_chooser', agency: @agency

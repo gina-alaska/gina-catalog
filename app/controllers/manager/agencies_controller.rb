@@ -57,12 +57,6 @@ class Manager::AgenciesController < ManagerController
   def edit
     @agency = Agency.find(params[:id])
     @agency.aliases.build
-    if @agency.image_id.nil?
-      @current_image = nil
-    else
-      @current_image = current_setup.images.find(@agency.image_id)
-    end
-    @images = current_setup.images
   end
 
   def update
