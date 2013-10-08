@@ -52,8 +52,8 @@ ActiveRecord::Schema.define(:version => 20131008000019) do
     t.boolean  "active",                    :default => true
     t.string   "adiwg_code"
     t.string   "adiwg_path"
-    t.string   "file_uid"
-    t.string   "file_name"
+    t.string   "logo_uid"
+    t.string   "logo_name"
   end
 
   create_table "agencies_setups", :id => false, :force => true do |t|
