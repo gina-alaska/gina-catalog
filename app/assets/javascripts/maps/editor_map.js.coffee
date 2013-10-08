@@ -49,13 +49,13 @@ class @EditorMap extends OpenlayersMap
     @addBtnHandler('clear', @clear)
     @addBtnHandler('reset', @resetFeature)
     @addBtnHandler('draw', (evt, el) =>
+      evt.preventDefault();
       @drawFeature($(el).data('type'))
     )
   #end setupMap
   
   finishFeature: =>
-    for name, control of @controls
-      control.deactivate()
+    @deactivateAll()
     @controls.modify.activate()
         
   resetFeature: =>
@@ -72,36 +72,33 @@ class @EditorMap extends OpenlayersMap
       @controls.modify.activate()
       
     feature
-      
+
+  isActive: (type) =>
+    $("[data-openlayers-action=\"draw\"][data-type=\"#{type}\"]").hasClass('active')
+    
+  activateControl: (type) =>
+    @deactivateAll()
+    @controls[type].activate();
+    $("[data-openlayers-action=\"draw\"][data-type=\"#{type}\"]").addClass('active')
+    
+    
+  deactivateAll: =>
+    for name, control of @controls
+      control.deactivate()
+      $("[data-openlayers-action=\"draw\"][data-type=\"#{name}\"]").removeClass('active')
+  
   clear: =>
-    @controls.modify.deactivate()
+    @deactivateAll()
     @vector.removeAllFeatures()
     
   drawFeature: (type) =>
-    @clear()
-    
-    switch type
-      when 'polygon'
-        @controls.polygon.activate()
-        # width = 0.5 * @map.getExtent().getWidth()
-        # height = 0.5 * @map.getExtent().getHeight()
-        # 
-        # radius = if width < height then width else height
-        # geom = OpenLayers.Geometry.Polygon.createRegularPolygon(center_geom, radius, 4)
-      when 'point'
-        @controls.point.activate()
-        # geom = center_geom
-        
-    #if a feature is already in the map check its type
-    # if !@feature? or @feature.geometry.CLASS_NAME != geom.CLASS_NAME 
-    #   #if the feature type is the different create the new geom and start drawing!
-    #   @startDrawing(geom)
-    
-  startDrawing: (geom) =>
-    # @clear()
-    # @feature = new OpenLayers.Feature.Vector(geom)
-    # @vector.addFeatures([@feature])
-    # @edit_features.selectFeature(@feature)
+    if @isActive(type)
+      @controls[type].finishSketch()
+      @deactivateAll()
+    else
+      @clear()
+      @activateControl(type)        
+
     
   getWKT: =>
     f = @vector.features[0].geometry.clone()

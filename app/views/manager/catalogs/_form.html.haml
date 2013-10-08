@@ -95,15 +95,22 @@
   #map.modal-body{ style: 'position: relative; padding: 0; height:400px;', data: { map: 'EditorMap', target: '#map_canvas' } }
     .navbar.navbar-static-top
       .navbar-inner
-        .btn-group{ data: { toggle: 'buttons-radio' } }
-          %button.btn{ data: { "openlayers-action" => 'draw', type: 'polygon' } }
-            Polygon
+        .btn-group
           %button.btn{ data: { "openlayers-action" => 'draw', type: 'point' } }
+            %i.icon-map-marker
             Point
+          %button.btn{ data: { "openlayers-action" => 'draw', type: 'line' } }
+            %i.icon-minus
+            Line
+          %button.btn{ data: { "openlayers-action" => 'draw', type: 'polygon' } }
+            %i.icon-star-empty
+            Polygon
         .btn-group
           %button.btn{ data: { "openlayers-action" => 'clear' } }
+            %i.icon-eraser
             Clear
           %button.btn{ data: { "openlayers-action" => 'reset' } }
+            %i.icon-undo
             Reset  
     #map_canvas{style: "width:100%; height: 359px;", data: { projection: 'EPSG:3338', displayProjection: 'EPSG:4326', layers: 'TILE.EPSG:3338.*' } }
   .modal-footer
@@ -137,19 +144,6 @@
       input = $($(this).data('target'));
       var feature = map.addFeature($(input).val());      
       $('#location_editor').modal('show');
-      
-      if(feature) {
-        switch(feature.geometry.CLASS_NAME) {
-          case 'OpenLayers.Geometry.Polygon':
-            active_draw_button = $('#location_editor button[data-type="polygon"]').button('toggle');
-            break;
-          case 'OpenLayers.Geometry.Point':
-            active_draw_button = $('#location_editor button[data-type="point"]').button('toggle');
-            break;
-        }
-      } else {
-        $('#location_editor button.active[data-openlayers-action="draw"]').removeClass('active');
-      }
     });
     
     $(document).on('click', '.btn[data-openlayers-action="update-location"]', function(evt) {
