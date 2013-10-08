@@ -27,66 +27,85 @@ class @EditorMap extends OpenlayersMap
     @vector = new OpenLayers.Layer.Vector('Location')
     @map.addLayer(@vector)
     
-    @edit_features = new OpenLayers.Control.ModifyFeature(@vector)
-    @map.addControl(@edit_features)
+    @controls = {
+      point: new OpenLayers.Control.DrawFeature(@vector,
+                  OpenLayers.Handler.Point, { featureAdded: @finishFeature }),
+      line: new OpenLayers.Control.DrawFeature(@vector,
+                  OpenLayers.Handler.Path, { featureAdded: @finishFeature }),
+      polygon: new OpenLayers.Control.DrawFeature(@vector,
+                  OpenLayers.Handler.Polygon, { featureAdded: @finishFeature }),
+      modify: new OpenLayers.Control.ModifyFeature(@vector)
+    }
+    
+    for name, control of @controls
+      @map.addControl(control)
+    
+    # @edit_features = new OpenLayers.Control.ModifyFeature(@vector)
+    # @map.addControl(@edit_features)
+    # @edit_features.activate()
     
     @wktreader = new OpenLayers.Format.WKT()
     
     @addBtnHandler('clear', @clear)
-    @addBtnHandler('reset', @addFeature)
+    @addBtnHandler('reset', @resetFeature)
     @addBtnHandler('draw', (evt, el) =>
       @drawFeature($(el).data('type'))
     )
   #end setupMap
   
-  addFeature: (input = null) =>
-    return false unless input?
-    
+  finishFeature: =>
+    for name, control of @controls
+      control.deactivate()
+    @controls.modify.activate()
+        
+  resetFeature: =>
+    @addFeature(@original)    
+  
+  addFeature: (wkt) =>
+    @original = wkt
     @clear()
-    @input = input 
-    wkt = @input.val()
-    
     if wkt? and wkt != ''
-      @feature = @wktreader.read(wkt)
-      @feature.geometry.transform('EPSG:4326', @map.projection)
-      @vector.addFeatures([@feature])
-      @edit_features.selectFeature(@feature)
-    else
-      @feature = null
+      feature = @wktreader.read(wkt)
+      feature.geometry.transform('EPSG:4326', @map.projection)
+      @vector.addFeatures([feature])
+      @controls.modify.selectFeature(feature)
+      @controls.modify.activate()
       
-    @feature
+    feature
       
   clear: =>
+    @controls.modify.deactivate()
     @vector.removeAllFeatures()
-    @feature = null
     
   drawFeature: (type) =>
-    center = @map.getCenter()
-    center_geom = new OpenLayers.Geometry.Point(center.lon, center.lat);
+    @clear()
     
     switch type
       when 'polygon'
-        width = 0.5 * @map.getExtent().getWidth()
-        height = 0.5 * @map.getExtent().getHeight()
-        
-        radius = if width < height then width else height
-        geom = OpenLayers.Geometry.Polygon.createRegularPolygon(center_geom, radius, 4)
+        @controls.polygon.activate()
+        # width = 0.5 * @map.getExtent().getWidth()
+        # height = 0.5 * @map.getExtent().getHeight()
+        # 
+        # radius = if width < height then width else height
+        # geom = OpenLayers.Geometry.Polygon.createRegularPolygon(center_geom, radius, 4)
       when 'point'
-        geom = center_geom
+        @controls.point.activate()
+        # geom = center_geom
         
     #if a feature is already in the map check its type
-    if !@feature? or @feature.geometry.CLASS_NAME != geom.CLASS_NAME 
-      #if the feature type is the different create the new geom and start drawing!
-      @startDrawing(geom)
+    # if !@feature? or @feature.geometry.CLASS_NAME != geom.CLASS_NAME 
+    #   #if the feature type is the different create the new geom and start drawing!
+    #   @startDrawing(geom)
     
   startDrawing: (geom) =>
-    @clear()
-    @feature = new OpenLayers.Feature.Vector(geom)
-    @vector.addFeatures([@feature])
-    @edit_features.selectFeature(@feature)
+    # @clear()
+    # @feature = new OpenLayers.Feature.Vector(geom)
+    # @vector.addFeatures([@feature])
+    # @edit_features.selectFeature(@feature)
     
   getWKT: =>
-    f = @feature.geometry.clone()
+    f = @vector.features[0].geometry.clone()
+    # f = @feature.geometry.clone()
     f.transform(@map.projection, 'EPSG:4326')
     f.toString()
 #end CatalogMap
