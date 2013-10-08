@@ -45,6 +45,13 @@ body, html {
   }
 }
 
+.modal-backdrop {
+  z-index: 1100;
+}
+.modal {
+  z-index: 1101;
+}
+
 .content { padding: 0 10px; }
 a.goto-top { 
   position: fixed; bottom: 10px; right: 10px;
