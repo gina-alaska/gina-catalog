@@ -124,6 +124,24 @@ class Manager::AgenciesController < ManagerController
     end
   end
 
+  def add_image
+    @agency = Agency.find(params[:id])
+    
+    @agency.image_id = params[:image]
+
+    if @agency.image_id.nil?
+      @current_image = nil
+    else
+      @current_image = current_setup.images.find(@agency.image_id)
+    end
+    
+    if @agency.save
+      respond_to do |format|
+        format.js {render layout: false}
+      end
+    end
+  end
+
   protected
 
   def search_params

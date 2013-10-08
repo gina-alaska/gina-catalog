@@ -56,6 +56,7 @@ NSCatalog::Application.routes.draw do
     resource :setup
 
     resources :agencies do
+      put :add_image, :on => :member
       collection do
         post :visible
         post :hidden
