@@ -17,7 +17,7 @@
       = f.label :logo
       .controls
         .fileupload{ class: (f.object.new_record? ? 'fileupload-new' : 'fileupload-exists'), data: { provides: 'fileupload' } }
-          .fileupload-preview.thumbnail.fileupload-exists{style:'max-width:75%'}
+          .fileupload-preview.thumbnail.fileupload-exists{style:'width: 200px; min-height: 50px;'}
             = image_tag @agency.logo.png.thumb('200x200').url if @agency.logo
           %div
             %span.btn.btn-file
