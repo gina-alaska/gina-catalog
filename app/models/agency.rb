@@ -10,6 +10,8 @@ class Agency < ActiveRecord::Base
     'Unknown'
   ]
 
+  image_accessor :logo
+
   has_many :agency_people
   has_many :people, :through => :agency_people
   has_many :aliases, as: :aliasable, dependent: :destroy
