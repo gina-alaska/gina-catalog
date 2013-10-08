@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131008000019) do
+ActiveRecord::Schema.define(:version => 20131008220429) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -661,6 +661,7 @@ ActiveRecord::Schema.define(:version => 20131008000019) do
     t.integer  "updated_by_id"
     t.boolean  "system_page",    :default => false
     t.integer  "setup_id"
+    t.integer  "lock_version"
   end
 
   create_table "page_images", :force => true do |t|
@@ -673,10 +674,11 @@ ActiveRecord::Schema.define(:version => 20131008000019) do
   create_table "page_layouts", :force => true do |t|
     t.string   "name"
     t.text     "content"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
     t.boolean  "default"
     t.integer  "setup_id"
+    t.integer  "lock_version"
   end
 
   create_table "page_layouts_setups", :id => false, :force => true do |t|
@@ -687,10 +689,11 @@ ActiveRecord::Schema.define(:version => 20131008000019) do
   create_table "page_snippets", :force => true do |t|
     t.string   "slug"
     t.text     "content"
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
     t.integer  "setup_id"
-    t.boolean  "system_page", :default => false
+    t.boolean  "system_page",  :default => false
+    t.integer  "lock_version"
   end
 
   add_index "page_snippets", ["slug"], :name => "index_page_snippets_on_slug"
