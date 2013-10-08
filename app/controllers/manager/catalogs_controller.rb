@@ -113,10 +113,10 @@ class Manager::CatalogsController < ManagerController
   def unpublish
     respond_to do |format|
       if @catalog.unpublish
-        flash[:success] = 'Successfully unpublished record'
+        flash.now[:success] = 'Successfully unpublished record'
         format.js { render 'share' }
       else
-        flash[:error] = 'Unable to unpublish record'
+        flash.now[:error] = 'Unable to unpublish record'
         format.js { render 'share' }
       end
     end
@@ -125,10 +125,10 @@ class Manager::CatalogsController < ManagerController
   def publish
     respond_to do |format|
       if @catalog.publish(current_user)
-        flash[:success] = 'Successfully published record'
+        flash.now[:success] = 'Successfully published record'
         format.js { render 'share' }
       else
-        flash[:error] = 'Unable to publish record'
+        flash.now[:error] = 'Unable to publish record'
         format.js { render 'share' }
       end
     end
