@@ -5,13 +5,15 @@
       %li{class: (section == sections.first ? 'active' : '')}
         = link_to section.humanize, "##{section}", data: { toggle: 'tab' }
   = nested_form_for [:manager, @catalog], html: { class: 'form' } do |f|
-    - unless @catalog.errors.full_messages.empty?
-      .alert.alert-error
-        %h4 Errors prevents this record from being saved
-        %ul
-          - @catalog.errors.full_messages.each do |err|
-            %li= err
     .tab-content{ style: 'min-height: 200px;'}      
+      - unless @catalog.errors.full_messages.empty?
+        .alert.alert-error{ style: 'margin: 5px;' }
+          %a{ href:"#", class:"close", data: { dismiss:"alert" } }
+            &times;
+          %h4 Errors prevents this record from being saved
+          %ul
+            - @catalog.errors.full_messages.each do |err|
+              %li= err
       #general.tab-pane.active
         .navbar.navbar-static-top
           .navbar-inner
