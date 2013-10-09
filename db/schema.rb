@@ -661,7 +661,7 @@ ActiveRecord::Schema.define(:version => 20131008220429) do
     t.integer  "updated_by_id"
     t.boolean  "system_page",    :default => false
     t.integer  "setup_id"
-    t.integer  "lock_version"
+    t.integer  "lock_version",   :default => 1
   end
 
   create_table "page_images", :force => true do |t|
@@ -674,11 +674,11 @@ ActiveRecord::Schema.define(:version => 20131008220429) do
   create_table "page_layouts", :force => true do |t|
     t.string   "name"
     t.text     "content"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
     t.boolean  "default"
     t.integer  "setup_id"
-    t.integer  "lock_version"
+    t.integer  "lock_version", :default => 1
   end
 
   create_table "page_layouts_setups", :id => false, :force => true do |t|
@@ -693,7 +693,7 @@ ActiveRecord::Schema.define(:version => 20131008220429) do
     t.datetime "updated_at",                      :null => false
     t.integer  "setup_id"
     t.boolean  "system_page",  :default => false
-    t.integer  "lock_version"
+    t.integer  "lock_version", :default => 1
   end
 
   add_index "page_snippets", ["slug"], :name => "index_page_snippets_on_slug"
