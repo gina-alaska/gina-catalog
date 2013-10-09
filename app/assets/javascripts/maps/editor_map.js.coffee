@@ -70,9 +70,10 @@ class @EditorMap extends OpenlayersMap
       @vector.addFeatures([feature])
       @controls.modify.selectFeature(feature)
       @controls.modify.activate()
-      
-    feature
+      @zoomToBounds(@vector.getDataExtent())
 
+    feature
+    
   isActive: (type) =>
     $("[data-openlayers-action=\"draw\"][data-type=\"#{type}\"]").hasClass('active')
     

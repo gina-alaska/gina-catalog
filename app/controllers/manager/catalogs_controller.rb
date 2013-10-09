@@ -91,6 +91,10 @@ class Manager::CatalogsController < ManagerController
   end
   
   def edit
+    @catalog.links.build
+    @catalog.locations.build
+    @catalog.download_urls.build
+    
     respond_to do |format|
       format.html
     end
