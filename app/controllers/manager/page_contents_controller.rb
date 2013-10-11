@@ -130,7 +130,7 @@ class Manager::PageContentsController < ManagerController
           if params["commit"] == "Save"
             flash.now[:success] = msg
           else
-            flash[:success] = msg
+            flash.now[:success] = msg
             @redirect_to = manager_page_contents_path
           end
           render '/shared/form_response'
@@ -143,7 +143,18 @@ class Manager::PageContentsController < ManagerController
           flash.now[:error] = @page.errors.full_messages
           render '/shared/form_response'
         }
-      end      
+      end
+    end      
+  rescue ActiveRecord::StaleObjectError
+    respond_to do |format|
+      format.html {
+        flash[:error] = "This file has changed after you started editing, please copy your changes and reload the page to continue editing."
+        render action: 'edit'
+      }
+      format.js {
+        flash.now[:error] = "This file has changed after you started editing, please copy your changes and reload the page to continue editing."
+        render '/shared/form_response'
+      }
     end
   end
   

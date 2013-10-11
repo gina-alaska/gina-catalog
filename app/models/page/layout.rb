@@ -1,5 +1,5 @@
 class Page::Layout < ActiveRecord::Base
-  attr_accessible :content, :name, :default
+  attr_accessible :content, :name, :default, :lock_version
 
   before_destroy :prevent_default_delete_check
   
