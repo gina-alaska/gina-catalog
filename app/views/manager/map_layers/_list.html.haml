@@ -1,0 +1,14 @@
+%table#map_layer_list.table.table-stripped.tabled-condensed
+  %thead
+    %tr
+      %th Type
+      %th Name
+      %th Url
+      %th Action
+  %tbody
+    - map_layers.each do |ml|
+      = render '/manager/map_layers/map_layer', map_layer: ml
+:javascript
+  $('#map_layer_list .btn-danger').on('ajax:success', function() {
+    $(document).trigger('map_layers:refresh');
+  })

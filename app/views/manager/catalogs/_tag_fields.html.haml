@@ -1,18 +1,21 @@
-= f.label :tags, class: 'control-label'
-= f.text_field :tags, value: @catalog.tags.map(&:text).join(','), class: 'span12'
+%div{ style:'margin-bottom: 10px;'}
+  = f.label :tags, class: 'control-label'
+  = f.text_field :tags, value: @catalog.tags.map(&:text).join(','), style: 'width: 100%;'
 
-= f.label :geokeyword_ids, 'Geokeywords', class: 'control-label'
-= f.select :geokeyword_ids, options_from_collection_for_select(Geokeyword.all, :id, :name, @catalog.geokeywords.map(&:id)), {}, multiple: true, class: 'span12'
+  = f.label :geokeyword_ids, 'Geokeywords', class: 'control-label'
+  = f.select :geokeyword_ids, options_from_collection_for_select(Geokeyword.all, :id, :name, @catalog.geokeywords.map(&:id)), {}, multiple: true, style: 'width: 100%;'
 
-= f.label :iso_topic_ids, 'ISO Topics', class: 'control-label'
-= f.select :iso_topic_ids, iso_topic_options(@catalog), {}, multiple: true, class: 'span12'
+  = f.label :iso_topic_ids, 'ISO Topics', class: 'control-label'
+  = f.select :iso_topic_ids, iso_topic_options(@catalog), {}, multiple: true, style: 'width: 100%;'
 
-.control-group
   = f.label :data_type_ids, 'Data Types', class: 'control-label'
-  .controls
-    = f.select :data_type_ids, options_from_collection_for_select(DataType.all, :id, :name, @catalog.data_types.map(&:id)), { include_blank: true },  multiple: true, class: 'span12'
+  = f.select :data_type_ids, options_from_collection_for_select(DataType.all, :id, :name, @catalog.data_types.map(&:id)), { include_blank: true },  multiple: true, style: 'width: 100%;'
 
+  = f.label "Collections:", class: 'control-label'
+  = f.collection_select :collection_ids, current_setup.collections.order('name ASC'), :id, :name, {}, { multiple: true, style: 'width: 100%;' }
+    
 :javascript
+  $('##{@catalog.class.to_s.downcase}_collection_ids').select2({ width: 'copy' });
   $('##{@catalog.class.to_s.downcase}_tags').select2({ tags: #{Tag.order('text ASC').all.map(&:text).to_json}, width: 'copy'});
   $('##{@catalog.class.to_s.downcase}_geokeyword_ids').select2({ width: 'copy' });
   $('##{@catalog.class.to_s.downcase}_iso_topic_ids').select2({ width: 'copy' });  

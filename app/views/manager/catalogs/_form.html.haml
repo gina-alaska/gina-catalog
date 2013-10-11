@@ -1,93 +1,112 @@
-.row-fluid
-  .section-nav.span4
-    %ul.manager-edit-navigation.nav.nav-list{ data: { spy: 'affix', 'offset-top' => 100 }}
-      - sections = %w{ general contacts agencies tags collections links locations sds downloads actions }
-      - sections.each do |section|
-        %li{class: (section == sections.first ? 'active' : '')}
-          = link_to section.humanize, "##{section}"
-      
-  .span8
-    = nested_form_for [:manager, @catalog], html: { class: 'form' } do |f|
+#catalog-form.tabbable.tabs-left
+  %ul.nav.nav-tabs
+    - sections = %w{ general contacts agencies tags links locations map_layers sds downloads }
+    - sections.each do |section|
+      %li{class: (section == sections.first ? 'active' : '')}
+        = link_to section.humanize, "##{section}", data: { toggle: 'tab' }
+  = nested_form_for [:manager, @catalog], html: { class: 'form' } do |f|
+    .tab-content{ style: 'min-height: 200px;'}      
       - unless @catalog.errors.full_messages.empty?
-        .alert.alert-error
+        .alert.alert-error{ style: 'margin: 5px;' }
+          %a{ href:"#", class:"close", data: { dismiss:"alert" } }
+            &times;
           %h4 Errors prevents this record from being saved
           %ul
             - @catalog.errors.full_messages.each do |err|
               %li= err
-      #general
-        %h2 General
-        = render 'general_fields', f: f
+      #general.tab-pane.active
+        .navbar.navbar-static-top
+          .navbar-inner
+            .navbar-text.pull-left General Information      
+        .content= render 'general_fields', f: f
         
-      #contacts
-        %h2 Contacts
-        = render 'contact_fields', f: f
+      #contacts.tab-pane
+        .navbar.navbar-static-top
+          .navbar-inner
+            .navbar-text.pull-left Contact Information      
+        .content= render 'contact_fields', f: f
     
-      #agencies
-        %h2 Agencies
-        = render 'agency_fields', f: f
+      #agencies.tab-pane
+        .navbar.navbar-static-top
+          .navbar-inner
+            .navbar-text.pull-left Agency Information      
+        .content= render 'agency_fields', f: f
     
-      #tags
-        %h2 Tags
-        = render 'tag_fields', f: f
+      #tags.tab-pane
+        .navbar.navbar-static-top
+          .navbar-inner
+            .navbar-text.pull-left Tags and Collections
+        .content= render 'tag_fields', f: f
 
-      #collections
-        %h2 Collections
-        = render 'collection_fields', f: f
-
-      #links 
-        .pull-right
-          = f.link_to_add :links, :data => { :target => "#links" }, class: "btn btn-success" do
-            %i.icon-plus.icon-white
-            Add a Link
-        %h2 Links
-        .header.row-fluid
-          .span2 Category
-          .span4 Display Text
-          .span4 URL
-          .span2.actions Actions
-        .body
-          .links
+      #links.tab-pane
+        .navbar.navbar-static-top
+          .navbar-inner
+            .navbar-text.pull-left Links
+            = f.link_to_add :links, :data => { :target => "#link_fields" }, class: "btn btn-success pull-right" do
+              %i.icon-plus.icon-white
+              Add a Link
+        .content
+          .header.row-fluid
+            .span2 Category
+            .span4 Display Text
+            .span4 URL
+            .span2.actions Actions
+          #link_fields.fields
             = f.fields_for :links
     
-      #locations
-        .pull-right
-          = f.link_to_add :locations, :data => { :target => "#locations" }, class: "btn btn-success" do
-            %i.icon-plus.icon-white
-            Add a Location
-        %h2 Locations
-        .header.row-fluid
-          .span4 Name
-          .span6 WKT
-          .span2.actions Actions
-        .body
-          .locations
+      #locations.tab-pane
+        .navbar.navbar-static-top
+          .navbar-inner
+            .navbar-text.pull-left Locations
+            = f.link_to_add :locations, :data => { :target => "#location_fields" }, class: "btn btn-success pull-right" do
+              %i.icon-plus.icon-white
+              Add a Location
+        .content
+          .header.row-fluid
+            .span4 Name
+            .span6 WKT
+            .span2.actions Actions
+          #location_fields.fields
             = f.fields_for :locations
-
-      #sds
-        %h2 Secure Data System
-        = render 'sds_fields', f: f
+            
+      #map_layers.tab-pane
+        .navbar.navbar-static-top
+          .navbar-inner
+            .navbar-text.pull-left Map Layers
+            = link_to new_manager_catalog_map_layer_path(@catalog), class: 'btn btn-success pull-right', remote: true do
+              %i.icon-plus
+              Add map layer
+        .fields
+          = render '/manager/map_layers/list', map_layers: @catalog.map_layers
+          
+      #sds.tab-pane
+        .navbar.navbar-static-top
+          .navbar-inner
+            .navbar-text.pull-left Secure Data Services      
+        .content= render 'sds_fields', f: f
       
-      #downloads
-        .pull-right
-          = f.link_to_add :download_urls, :data => { :target => "#downloads" }, class: "btn btn-success" do
-            %i.icon-plus.icon-white
-            Add Download URL
-        %h2 Downloads/Files
-        .header.row-fluid
-          .span4 Name
-          .span6 URL
-          .span2.actions Actions
-        .body
-          .downloads
+      #downloads.tab-pane
+        .navbar.navbar-static-top
+          .navbar-inner
+            .navbar-text.pull-left Remote Download Urls
+            = f.link_to_add :download_urls, :data => { :target => "#download_fields" }, class: "btn btn-success pull-right" do
+              %i.icon-plus.icon-white
+              Add Download URL
+        .content
+          .header.row-fluid
+            .span4 Name
+            .span6 URL
+            .span2.actions Actions
+          #download_fields.fields
             = f.fields_for :download_urls
-
-      #actions.form-actions
+            
+      .form-actions
         = link_to [:manager, @catalog], class: 'btn btn-inverse' do
           %i.icon-arrow-left.icon-white
           Back
-          
+    
         = f.submit "Save Record", class: 'btn btn-primary pull-right'
-
+      
 #location_editor.modal.hide.fade
   .modal-header
     %button.close{ type: 'button', data: { dismiss: 'modal' } } &times;
@@ -112,6 +131,10 @@
           %button.btn{ data: { "openlayers-action" => 'reset' } }
             %i.icon-undo
             Reset  
+        .btn-group.pull-right
+          %button#edit-help.btn{ data: { title: '<nobr>Location editor help</nobr>', content: '<p>Clicking on "Polygon", "Line", or "Point" buttons will clear the current shape, then click in the map to start draw the desired shape.</p><p>For lines and polygons double-click the last point to end drawing or click the edit button again.</p>', placement: 'bottom', html: 'true', container: 'body' } }
+            %i.icon-question
+            Help
     #map_canvas{style: "width:100%; height: 359px;", data: { projection: 'EPSG:3338', displayProjection: 'EPSG:4326', layers: 'TILE.EPSG:3338.*' } }
   .modal-footer
     = link_to '#', class: 'btn', data: { dismiss: 'modal' } do
@@ -122,13 +145,19 @@
 
 / refresh because of select2 moving things around on the page
 :javascript
+  $(document).on('map_layers:refresh', function() {
+    $.get('#{manager_catalog_map_layers_path(@catalog)}').done(function(data) {
+      $('#map_layers .fields').html(data)
+    })
+  });
+  
   $(document).ready(function() {
     var mapwrap = $('[data-map="EditorMap"]')
     var map = new EditorMap(mapwrap.data('target'));
   
-    $('[data-spy="scroll"]').each(function() {
-      $(this).delay(500).scrollspy('refresh');
-    });
+    // $('[data-spy="scroll"]').each(function() {
+    //   $(this).delay(500).scrollspy('refresh');
+    // });
     
     var input, feature, active_draw_button;
     // var catalog_map = $('#map').data('map');
@@ -151,5 +180,7 @@
       input.val(map.getWKT());      
       $('#location_editor').modal('hide');
     });
+    
+    $('#edit-help').popover();
   })
   

@@ -1,5 +1,0 @@
-= f.label "Associate This Record With:", class: 'control-label'
-= f.collection_select :collection_ids, current_setup.collections.order('name ASC'), :id, :name, {}, { multiple: true , class: 'span12' }
-    
-:javascript
-  $('##{@catalog.class.to_s.downcase}_collection_ids').select2({ width: 'copy' });
