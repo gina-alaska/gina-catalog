@@ -15,18 +15,8 @@
           Delete
             
     - if current_member.can_publish_catalog?
+      = render "shared/catalogs/manage_publish_buttons", catalog: catalog
   
-      - if catalog.published?
-        %li
-          = link_to unpublish_manager_catalog_path(catalog), method: :put do
-            %i.icon-thumbs-down
-            Un-Publish
-      - else
-        %li
-          = link_to publish_manager_catalog_path(catalog), method: :put do
-            %i.icon-thumbs-up
-            Publish
-        
   - available_portals = member_portals(:can_manage_catalog?)
   - if catalog.published? and available_portals.count > 0
     %li.divider
