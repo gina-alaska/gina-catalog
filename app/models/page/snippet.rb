@@ -1,5 +1,5 @@
 class Page::Snippet < ActiveRecord::Base
-  attr_accessible :content, :slug
+  attr_accessible :content, :slug, :lock_version
 
   # has_and_belongs_to_many :setups, join_table: 'setups_snippets'
 

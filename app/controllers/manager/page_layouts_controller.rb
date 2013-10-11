@@ -108,6 +108,17 @@ class Manager::PageLayoutsController < ManagerController
         format.json { render json: @page_layout.errors, status: :unprocessable_entity }
       end
     end
+  rescue ActiveRecord::StaleObjectError
+    respond_to do |format|
+      format.html {
+        flash[:error] = "This file has changed after you started editing, please copy your changes and reload the page to continue editing."
+        render action: 'edit'
+      }
+      format.js {
+        flash.now[:error] = "This file has changed after you started editing, please copy your changes and reload the page to continue editing."
+        render '/shared/form_response'
+      }
+    end
   end
 
   # DELETE /setups/page_layouts/1
