@@ -1,9 +1,14 @@
 .row-fluid
-  .span4
+  .span2
+    = f.object.type.try(:underscore).try(:humanize)
+  .span3
     = f.object.name
-  .span6
+  .span5
     = f.object.url
   .span2
-    = link_to edit_manager_catalog_map_layer_path(@catalog, f.object), class: 'btn', remote: true do
-      %i.icon-edit
-      Edit
+    .btn-group
+      = link_to edit_manager_catalog_map_layer_path(@catalog, f.object), class: 'btn', remote: true, title: 'Edit' do
+        %i.icon-edit
+      = link_to manager_catalog_map_layer_path(@catalog, f.object), method: :delete, title: 'Delete', data: { confirm: 'Are you sure?' }, class: 'btn btn-danger', remote: true do
+        %i.icon-trash
+        

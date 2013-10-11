@@ -76,12 +76,8 @@
             = link_to new_manager_catalog_map_layer_path(@catalog), class: 'btn btn-success pull-right', remote: true do
               %i.icon-plus
               Add map layer
-        .content
-          .header.row-fluid
-            .span4 Name
-            .span6 URL
-            .span2.actions Actions
-          .fields= f.fields_for :map_layers
+        .fields
+          = render '/manager/map_layers/list', map_layers: @catalog.map_layers
           
       #sds.tab-pane
         .navbar.navbar-static-top
@@ -149,6 +145,12 @@
 
 / refresh because of select2 moving things around on the page
 :javascript
+  $(document).on('map_layers:refresh', function() {
+    $.get('#{manager_catalog_map_layers_path(@catalog)}').done(function(data) {
+      $('#map_layers .fields').html(data)
+    })
+  });
+  
   $(document).ready(function() {
     var mapwrap = $('[data-map="EditorMap"]')
     var map = new EditorMap(mapwrap.data('target'));

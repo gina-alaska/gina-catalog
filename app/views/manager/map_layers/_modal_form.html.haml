@@ -5,3 +5,9 @@
     %h3 Map layer form
   .modal-body{ style: 'padding: 0; max-height: none;'}
     = render 'form'
+    
+:javascript
+  $('#map_layers_modal_form').on('ajax:success', function(evt, data, status, xhr) {
+    $('#map_layers_modal_form').modal('hide')
+    $(document).trigger('map_layers:refresh');
+  });
