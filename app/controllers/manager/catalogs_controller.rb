@@ -1,4 +1,6 @@
 class Manager::CatalogsController < ManagerController
+  include CatalogConcerns::Search
+  
   skip_before_filter :authenticate_manager!, only: [:share]
   before_filter :authenticate_access_catalog!, except: [:share]
 #  before_filter :authenticate_access_cms!
@@ -9,8 +11,6 @@ class Manager::CatalogsController < ManagerController
   
   SUBMENU = '/layouts/manager/catalog_menu'
   PAGETITLE = 'Data Records'
-  
-  include CatalogConcerns::Search
   
   respond_to :html
   
@@ -199,18 +199,6 @@ class Manager::CatalogsController < ManagerController
   end
 
   protected
-  
-  def authenticate_edit_records!
-    unless user_is_a_member? and current_member.can_manage_catalog?
-      authenticate_user!
-    end
-  end  
-  
-  def authenticate_publish_records!
-    unless user_is_a_member? and current_member.can_publish_catalog?
-      authenticate_user!
-    end
-  end
   
   def catalog_params
     v = params[:catalog].slice(:title, :description, :start_date, :end_date, :status, 

@@ -8,6 +8,7 @@ NSCatalog::Application.routes.draw do
   namespace :manager do
     resources :catalogs do
       resources :repos
+      resources :map_layers
       member do
         put :publish
         put :unpublish

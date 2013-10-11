@@ -1,0 +1,9 @@
+.row-fluid
+  .span4
+    = f.object.name
+  .span6
+    = f.object.url
+  .span2
+    = link_to edit_manager_catalog_map_layer_path(@catalog, f.object), class: 'btn', remote: true do
+      %i.icon-edit
+      Edit

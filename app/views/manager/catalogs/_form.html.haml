@@ -1,6 +1,6 @@
 #catalog-form.tabbable.tabs-left
   %ul.nav.nav-tabs
-    - sections = %w{ general contacts agencies tags links locations sds downloads }
+    - sections = %w{ general contacts agencies tags links locations map_layers sds downloads }
     - sections.each do |section|
       %li{class: (section == sections.first ? 'active' : '')}
         = link_to section.humanize, "##{section}", data: { toggle: 'tab' }
@@ -68,7 +68,21 @@
             .span2.actions Actions
           #location_fields.fields
             = f.fields_for :locations
-
+            
+      #map_layers.tab-pane
+        .navbar.navbar-static-top
+          .navbar-inner
+            .navbar-text.pull-left Map Layers
+            = link_to new_manager_catalog_map_layer_path(@catalog), class: 'btn btn-success pull-right', remote: true do
+              %i.icon-plus
+              Add map layer
+        .content
+          .header.row-fluid
+            .span4 Name
+            .span6 URL
+            .span2.actions Actions
+          .fields= f.fields_for :map_layers
+          
       #sds.tab-pane
         .navbar.navbar-static-top
           .navbar-inner
