@@ -1,0 +1,8 @@
+if ($('#map_layers_modal_form').length > 0) {
+  $('#map_layers_modal_form .modal-body').html('<%= escape_javascript(render('form')) %>');
+} else {
+  var modal_el = $('body').append('<%= escape_javascript(render('modal_form')) %>');
+  $('#map_layers_modal_form').modal().on('hidden', function() {
+    $(this).remove();
+  });  
+}

@@ -1,4 +1,6 @@
 class ManagerController < ApplicationController
+  include CatalogConcerns::Security  
+  
   before_filter :authenticate_manager!
   
   before_filter :fetch_setup
@@ -46,36 +48,6 @@ class ManagerController < ApplicationController
     @manager_pages = { 
       :page_contents => 'Pages', :page_snippets => 'Snippets', :page_layouts => 'Layouts', :themes => 'Themes' }
     @available_themes = Theme.where('owner_setup_id IS NULL or owner_setup_id = ?', current_setup.id)     
-  end
-
-  def authenticate_manager!
-    unless user_is_a_member? and (current_member.access_catalog? or current_member.access_cms? or current_member.access_permissions?)
-      authenticate_user!
-    end      
-  end
-  
-  def authenticate_access_catalog!
-    unless user_is_a_member? and current_member.access_catalog?
-      authenticate_user!
-    end      
-  end
-  
-  def authenticate_access_cms!
-    unless user_is_a_member? and current_member.access_cms?
-      authenticate_user!
-    end      
-  end
-  
-  def authenticate_access_permissions!
-    unless user_is_a_member? and current_member.access_permissions?
-      authenticate_user!
-    end      
-  end
-
-  def authenticate_access_settings!
-    unless user_is_a_member? and current_member.access_settings?
-      authenticate_user!
-    end      
   end
 
   def page_title

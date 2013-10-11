@@ -118,6 +118,7 @@ class Catalog < ActiveRecord::Base
   accepts_nested_attributes_for :download_urls, reject_if:  proc { |download| download['url'].blank? and download['name'].blank? }, allow_destroy: true
   accepts_nested_attributes_for :links, reject_if:  proc { |link| link['url'].blank? }, allow_destroy: true
   accepts_nested_attributes_for :locations, reject_if:  proc { |location| location['name'].blank? and location['wkt'].blank? }, allow_destroy: true
+  accepts_nested_attributes_for :map_layers, reject_if:  proc { |layer| layer['url'].blank? and layer['name'].blank? }, allow_destroy: true
   
   #Adding solr indexing
   searchable do
