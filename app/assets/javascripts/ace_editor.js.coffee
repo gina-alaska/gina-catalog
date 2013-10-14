@@ -31,6 +31,9 @@ class @AceEditor
       else if html = btn.data('html')
         start_tag = html
         end_tag = ''
+      else if start = btn.data('start')
+        start_tag = start
+        end_tag = btn.data('end') || ""
          
       @wrapSelectionWithTags(editor, start_tag, end_tag)
       
