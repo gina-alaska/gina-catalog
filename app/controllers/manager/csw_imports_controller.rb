@@ -13,7 +13,7 @@ class Manager::CswImportsController < ManagerController
   def show
     @csw_import = current_setup.csw_imports.where(id: params[:id]).first
     @log = @csw_import.activity_logs.where(id: params[:log]).first || @csw_import.activity_logs.first
-    @unknown_agencies = @log.unknown_agencies
+    @unknown_agencies = @log.try(:unknown_agencies)
 
     respond_to do |format|
       format.html
