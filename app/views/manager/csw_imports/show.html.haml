@@ -14,7 +14,10 @@
     
     .tab-content
       #details.tab-pane.active
-        = render "log_details"
+        - if @log
+          = render "log_details"
+        - else
+          %h4 No imports have been performed yet
       #activity_log.tab-pane
         = render "import_history"
       #catalogs.tab-pane
