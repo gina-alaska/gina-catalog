@@ -7,13 +7,18 @@
           %li= err
           
   .row-fluid
-    .field.span8
+    .field.span9
       = f.label :acronym
       = f.text_field :acronym, class: "span3"
 
       = f.label :name
       = f.text_field :name, class: "span8"
-    .field.span4
+      = f.label :description
+      = f.text_field :description, class: "span12"
+
+      = f.label :category
+      = f.select :category, Agency::CATEGORIES, {}, { class: 'span4' }
+    .field.span3
       = f.label :logo
       .controls
         .fileupload{ class: (f.object.new_record? ? 'fileupload-new' : 'fileupload-exists'), data: { provides: 'fileupload' } }
@@ -24,13 +29,6 @@
               %span.fileupload-new Select image
               %span.fileupload-exists Change
               = f.file_field :logo
-
-  .row-fluid
-    = f.label :description
-    = f.text_field :description, class: "span12"
-
-    = f.label :category
-    = f.select :category, Agency::CATEGORIES, {}, { class: 'span4' }
 
     /     = f.label :active
     / .row-fluid
