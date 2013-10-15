@@ -39,17 +39,22 @@ class CswImportWorker
         
         catalog.assign_attributes(default_attributes)
 
-        import_errors = case @csw.metadata_type
-        when "FGDC"
-          catalog.import_from_fgcd(url)
-        end
+        begin        
+          import_errors = case @csw.metadata_type
+          when "FGDC"
+            catalog.import_from_fgcd(url)
+          end
         
-
-        if catalog.save
-          @log.log[:new_catalogs] << catalog.id
-          #Only keep the errors on imported records
-          @log.log[:errors][url] = import_errors if import_errors.any?
-        else
+          if catalog.save
+            @log.log[:new_catalogs] << catalog.id
+            #Only keep the errors on imported records
+            @log.log[:errors][url] = import_errors if import_errors.any?
+          else
+            @log.log[:failed] << url
+          end
+        rescue Exception => e
+          puts "While importing #{url}"
+          puts "Backtrace:\n\t#{e.backtrace.join("\n\t")}"
           @log.log[:failed] << url
         end
       end
