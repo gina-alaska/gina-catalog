@@ -453,7 +453,7 @@ Title: #{self.title}
   end
   
   def to_param
-  	"#{self.id}-#{self.title.truncate(50).parameterize}"
+  	"#{self.id}-#{self.title.try(:truncate, 50).try(:parameterize)}"
   end
 
   def to_s
