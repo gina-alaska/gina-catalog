@@ -14,8 +14,8 @@ class Setup < ActiveRecord::Base
   has_many :layouts, class_name: 'Page::Layout'
   has_many :snippets, class_name: 'Page::Snippet'
   
-  has_and_belongs_to_many :persons, join_table: 'persons_setups'
-  has_and_belongs_to_many :agencies, join_table: 'agencies_setups'
+  has_and_belongs_to_many :persons, join_table: 'persons_setups', uniq: true
+  has_and_belongs_to_many :agencies, join_table: 'agencies_setups', uniq: true
 
 
   has_many :catalogs_setups, uniq: true, dependent: :destroy
