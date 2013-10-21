@@ -28,6 +28,16 @@
 
           %br/
           = render '/shared/catalogs/files', catalog: catalog
+
+          #agency-images
+            - catalog.agencies.each do |agency|
+              - if agency.logo
+                .row-fluid
+                  .span6
+                    = agency.name
+                  .span6
+                    = image_tag agency.logo.thumb('150x75').url, alt: agency.name
+
 :javascript
   $(document).ready(function() {
     var mapwrap = $('[data-map="CatalogMap"]');
