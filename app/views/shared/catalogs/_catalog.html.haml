@@ -30,13 +30,15 @@
           = render '/shared/catalogs/files', catalog: catalog
 
           #agency-images
-            - catalog.agencies.each do |agency|
+            - cat_agencies = catalog.agencies
+            - cat_agencies.push(catalog.source_agency)
+            - cat_agencies.push(catalog.funding_agency)
+            - cat_agencies.uniq!
+
+            - cat_agencies.each do |agency|
               - if agency.logo
-                .row-fluid
-                  .span6
-                    = agency.name
-                  .span6
-                    = image_tag agency.logo.thumb('150x75').url, alt: agency.name
+                .span3
+                  = image_tag agency.logo.thumb('150x75').url, alt: agency.name, title: agency.name
 
 :javascript
   $(document).ready(function() {
