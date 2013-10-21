@@ -30,12 +30,7 @@
           = render '/shared/catalogs/files', catalog: catalog
 
           #agency-images
-            - cat_agencies = catalog.agencies
-            - cat_agencies.push(catalog.source_agency)
-            - cat_agencies.push(catalog.funding_agency)
-            - cat_agencies.uniq!
-
-            - cat_agencies.each do |agency|
+            - [catalog.source_agency, catalog.funding_agency, catalog.agencies].flatten.uniq.each do |agency|
               - if agency.logo
                 .span3
                   = image_tag agency.logo.thumb('150x75').url, alt: agency.name, title: agency.name
