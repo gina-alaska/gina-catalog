@@ -10,7 +10,7 @@
   .span6 
     %div
       %strong Type:
-      = item.class == Project ? 'Project' : 'Data'
+      = item.type == 'Project' ? 'Project' : 'Data'
     - unless item.end_date.nil?
       %div
         %strong End Date:
