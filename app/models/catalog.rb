@@ -67,7 +67,7 @@ class Catalog < ActiveRecord::Base
   
   belongs_to :source_agency, :class_name => 'Agency'
   belongs_to :funding_agency, :class_name => 'Agency'
-  has_and_belongs_to_many :agencies, :join_table => 'catalog_agencies'
+  has_and_belongs_to_many :agencies, :join_table => 'catalog_agencies', uniq: true
   #has_and_belongs_to_many :people, :join_table => 'catalogs_contacts'
   has_and_belongs_to_many :geokeywords, :order => 'name ASC' do
     def list

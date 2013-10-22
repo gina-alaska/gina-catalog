@@ -28,6 +28,12 @@
 
           %br/
           = render '/shared/catalogs/files', catalog: catalog
+
+          #agency-images.clear-fix
+            - [catalog.source_agency, catalog.funding_agency, catalog.agencies].flatten.uniq.compact.each do |agency|
+              - next unless agency.logo
+              = image_tag agency.logo.thumb('x75').url, alt: agency.name, title: agency.name, style: 'display: inline; margin: 10px;'
+
 :javascript
   $(document).ready(function() {
     var mapwrap = $('[data-map="CatalogMap"]');
