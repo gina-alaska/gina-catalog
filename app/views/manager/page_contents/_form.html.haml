@@ -62,7 +62,7 @@
           =link_to add_manager_page_content_path(page), remote: true do
             %i.icon-plus
       
-  #page_content.tab-content
+  #page_content.ace_editors.tab-content
     - page.content.each do |name,content|
       = render 'content_fields', name: name, content: content, page: page
             
