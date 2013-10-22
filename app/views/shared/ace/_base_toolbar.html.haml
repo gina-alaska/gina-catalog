@@ -50,12 +50,6 @@
         %li
           %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ page.show_in_menu }}' } } Show In Menu
         %li
-          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{% system %}' } } System
-        %li
-          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{% social_icons %}' } } Social Icons
-        %li
-          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{% facebook_block %}' } } Facebook Block
-        %li
           %a{ href: "#", type: 'button', data: { action: 'insert', start: '{% for child in page.children %}', end: '{% endfor %}' } } Each Children
         %li
           %a{ href: "#", type: 'button', data: { action: 'insert', start: '{% for image in page.images %}', end: "{% endfor %}" } } Each Image
