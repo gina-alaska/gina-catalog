@@ -55,8 +55,7 @@
               %li
                 = link_to '#', data: { action: 'hide_toolbar', target: '#sitemanager_toolbar', dir: 'right' } do
                   %i.icon-chevron-right
-    
-    = render_snippet_content current_setup.snippets.where(slug: 'theme').first, current_setup
+    = current_setup.theme.css.html_safe
     .container
       #header= render "layouts/#{theme}/header"
       #search 

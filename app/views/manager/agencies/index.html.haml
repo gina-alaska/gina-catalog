@@ -4,7 +4,7 @@
 %table.table.table-bordered.table-striped.table-condensed
   %thead
     %tr
-      %td{colspan:7, style: 'padding:5px;'}
+      %td{colspan:8, style: 'padding:5px;'}
         = form_tag manager_agencies_path, method: 'GET', style: 'margin-bottom:0px;', class: 'form-inline' do
           .row-fluid
             .span4
@@ -41,7 +41,7 @@
                 = link_to_last_page @agencies, params: { search: @search }, class: 'btn' do
                   %i.icon-double-angle-right   
     %tr
-      %td{colspan:7, style: 'padding:5px;'}
+      %td{colspan:8, style: 'padding:5px;'}
         .btn-group
           %button#check-toggle.btn{data: { action: 'toggle-checkbox', target: '.item-checkbox' }, title: "Toggle Checkboxes" }
             %i.icon-check

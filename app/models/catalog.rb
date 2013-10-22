@@ -67,7 +67,7 @@ class Catalog < ActiveRecord::Base
   
   belongs_to :source_agency, :class_name => 'Agency'
   belongs_to :funding_agency, :class_name => 'Agency'
-  has_and_belongs_to_many :agencies, :join_table => 'catalog_agencies'
+  has_and_belongs_to_many :agencies, :join_table => 'catalog_agencies', uniq: true
   #has_and_belongs_to_many :people, :join_table => 'catalogs_contacts'
   has_and_belongs_to_many :geokeywords, :order => 'name ASC' do
     def list
@@ -118,6 +118,7 @@ class Catalog < ActiveRecord::Base
   accepts_nested_attributes_for :download_urls, reject_if:  proc { |download| download['url'].blank? and download['name'].blank? }, allow_destroy: true
   accepts_nested_attributes_for :links, reject_if:  proc { |link| link['url'].blank? }, allow_destroy: true
   accepts_nested_attributes_for :locations, reject_if:  proc { |location| location['name'].blank? and location['wkt'].blank? }, allow_destroy: true
+  accepts_nested_attributes_for :map_layers, reject_if:  proc { |layer| layer['url'].blank? and layer['name'].blank? }, allow_destroy: true
   
   #Adding solr indexing
   searchable do
@@ -452,7 +453,7 @@ Title: #{self.title}
   end
   
   def to_param
-  	"#{self.id}-#{self.title.truncate(50).parameterize}"
+  	"#{self.id}-#{self.title.try(:truncate, 50).try(:parameterize)}"
   end
 
   def to_s

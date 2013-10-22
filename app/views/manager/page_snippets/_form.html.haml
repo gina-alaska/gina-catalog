@@ -8,6 +8,7 @@
         - @snippet.errors.full_messages.each do |msg|
           %li= msg
           
+  = f.hidden_field :lock_version
   .control-group
     = f.label :slug, class: 'control-label'
     .controls
