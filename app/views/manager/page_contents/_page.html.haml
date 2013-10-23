@@ -18,7 +18,7 @@
           %i.icon-plus-sign
         = link_to page_path(page.slug), class: 'btn', title: "View Page" do
           %i.icon-share
-        = link_to manager_page_content_path(page), method: 'DELETE', class: 'btn btn-danger', data: { confirm: 'Are you sure?' }, title: "Delete Page" do
+        = link_to manager_page_content_path(page), method: 'DELETE', class: 'btn btn-danger', data: { confirm: 'Are you sure? All child pages will also be deleted' }, title: "Delete Page" do
           %i.icon-trash.icon-white
           
   - unless page.children.empty?

@@ -166,7 +166,10 @@ class Manager::PageContentsController < ManagerController
   end
   
   def destroy
-    if @page.destroy
+    @page.descendants.map(&:destroy)
+    @page.reload
+    
+    if @page.children.empty? and @page.destroy
       respond_to do |format|
         format.html {
           flash[:success] = "#{@page.title} page deleted"
@@ -176,7 +179,12 @@ class Manager::PageContentsController < ManagerController
     else
       respond_to do |format|
         format.html {
-          flash[:error] = @page.errors.full_messages.join(', ')
+          if @page.children.empty? 
+            flash[:error] = @page.errors.full_messages.join(', ')
+          else
+            flash[:error] = "Could not delete this page, some child pages where unable to be deleted"
+          end
+          
           redirect_to manager_page_contents_path
         }
       end
