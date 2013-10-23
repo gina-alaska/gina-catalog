@@ -24,7 +24,7 @@ class Agency < ActiveRecord::Base
   has_and_belongs_to_many :catalogs, join_table: :catalog_agencies
 
   accepts_nested_attributes_for :aliases, reject_if: ->(a) { a[:text].blank? }, allow_destroy: true
-  default_scope order('name ASC')
+  # default_scope order('name ASC')
   scope :active, :conditions => { :active => true }, :order => 'name asc'
   
   validates_presence_of     :name

@@ -2,7 +2,7 @@
   %td.span6
     = unknown_agency
   %td.span4
-    = collection_select("agency", "agency_id", current_setup.agencies, :id, :name)
+    = collection_select("agency", "agency_id", current_setup.agencies.order('name ASC'), :id, :name)
   %td.span2
     .btn-group
       = link_to "Alias", "#", class: "btn", data: {action: 'add-alias'}
