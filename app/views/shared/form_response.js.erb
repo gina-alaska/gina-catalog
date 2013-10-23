@@ -7,3 +7,6 @@
 <% if @redirect_to %>
   top.location = "<%= @redirect_to %>";
 <% end %>
+<% if @lock_version %>
+  $('input.lock_version_field').val(<%= @lock_version %>)
+<% end %>

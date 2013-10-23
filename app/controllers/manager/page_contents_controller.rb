@@ -76,12 +76,10 @@ class Manager::PageContentsController < ManagerController
     @page = current_setup.pages.build(params[:page_content])
     @page.updated_by = current_user
     @page.system_page = true if SYSTEM_PAGES.include?(@page.slug)
-    Rails.logger.info("***************************")
-    Rails.logger.info(@page.slug.inspect)
-    Rails.logger.info("***************************")
     current_setup.pages << @page
     
     if @page.save
+      @lock_version = @page.lock_version
       respond_to do |format|
         flash[:success] = "#{@page.title} page created"
         format.html {
@@ -116,6 +114,7 @@ class Manager::PageContentsController < ManagerController
 
     if @page.update_attributes(params[:page_content])
       msg = "#{@page.title} page updated"
+      @lock_version = @page.lock_version
       
       respond_to do |format|
         format.html {

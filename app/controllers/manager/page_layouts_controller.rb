@@ -44,6 +44,8 @@ class Manager::PageLayoutsController < ManagerController
 
     respond_to do |format|
       if @page_layout.save
+        @lock_version = @page_layout.lock_version
+        
         flash[:success] = "#{@page_layout.name} layout successfully created."
         format.html {
           if params["commit"] == "Save"
@@ -80,6 +82,8 @@ class Manager::PageLayoutsController < ManagerController
 
     respond_to do |format|
       if @page_layout.update_attributes(params[:page_layout])
+        @lock_version = @page_layout.lock_version
+        
         msg="#{@page_layout.name} layout successfully updated."
         format.html {
           flash[:success] = msg

@@ -7,7 +7,7 @@
       %ul
         - page.errors.full_messages.each do |msg|
           %li= msg
-  = f.hidden_field :lock_version
+  = f.hidden_field :lock_version, class: 'lock_version_field'
           
   .control-group
     = f.label :title, class: 'control-label'

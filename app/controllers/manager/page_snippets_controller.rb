@@ -17,6 +17,8 @@ class Manager::PageSnippetsController < ManagerController
     
     respond_to do |format|
       if @snippet.save
+        @lock_version = @snippet.lock_version
+        
         flash[:success] = 'Successfully created snippet'
         format.html {
           flash[:success] = 'Successfully created snippet'
@@ -52,6 +54,8 @@ class Manager::PageSnippetsController < ManagerController
     @snippet = current_setup.snippets.find(params[:id])
     respond_to do |format|
       if @snippet.update_attributes(params[:page_snippet])
+        @lock_version = @snippet.lock_version
+        
         msg = 'Successfully updated snippet'
         format.html {
           flash[:success] = msg
