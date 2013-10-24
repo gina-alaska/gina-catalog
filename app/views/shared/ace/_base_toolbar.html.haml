@@ -85,6 +85,21 @@
           %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ setup.github_url }}' } } Github URL
         %li
           %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ setup.facebook_url }}' } } Facebook URL
+    %li.dropdown-submenu
+      %a{ href: "#" } Image:
+      %ul.dropdown-menu
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ image.title }}' } } Title
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ image.link_to_url }}' } } Link To URL
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ image.description }}' } } Description
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ image.thumb }}' } } Thumb
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ image.grayscale }}' } } Grayscale
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ image.tag }}' } } Tag
     %li
       %a{ href: "#", type: 'button', data: { action: 'insert', html: '{% system %}' } } System
     %li
