@@ -41,6 +41,7 @@ class Setup < ActiveRecord::Base
   	{ 
   		'title' => self.title,
   		'by_line' => self.by_line,
+      'contact_email' => self.contact_email, 
   		'collections' => self.collections,
       'page' => SetupSubpageDrop.new(self),
       'twitter_url' => self.twitter_url,
