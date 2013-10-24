@@ -28,10 +28,10 @@
     %i.icon-link
   %button.btn.btn-small{ type: 'button', title: 'Attach Document', data: { action: 'picture' } }
     %i.icon-picture
-.btn-group
+.btn-group.dropdown
   = link_to '#', class: "btn btn-small dropdown-toggle", data: { toggle: "dropdown" } do
-    Liquid Tools&nbsp;
-    %i.icon-sort-down
+    Liquid Helpers
+    %b.caret
   %ul.dropdown-menu
     %li.dropdown-submenu
       %a{ href: "#" } Page:
