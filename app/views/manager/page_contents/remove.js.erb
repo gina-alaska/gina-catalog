@@ -1,2 +1,6 @@
 $('a[href="#<%= params[:tab_name].parameterize %>_tab_pane"]').parent().remove();
 $('#page_tabs a:first').tab('show');
+
+<% if @lock_version %>
+  $('input.lock_version_field').val(<%= @lock_version %>)
+<% end %>

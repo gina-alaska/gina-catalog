@@ -53,6 +53,8 @@ class Manager::PageContentsController < ManagerController
     if params[:new_tab_name]
       @page.sections = @page.sections << params[:new_tab_name].parameterize unless @page.sections.include? params[:new_tab_name]
       @page.save!
+      @lock_version = @page.lock_version
+      
       render 'add_tab'
     else
       render 'tab_name_form'
@@ -63,6 +65,7 @@ class Manager::PageContentsController < ManagerController
     if params[:tab_name] and params[:tab_name] != 'body'
       @page.sections.delete_if { |section| section == params[:tab_name] }
       @page.save!
+      @lock_version = @page.lock_version
 
       respond_to do |format|
         format.js
