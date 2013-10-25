@@ -52,7 +52,7 @@ Description: #{self.catalog.description}
 
   def files
     if File.exists?(self.path)
-      RepoFilelist.new(grit).tree
+      RepoFilelist.new(grit).tree.sort_by{ |file| file[:name].downcase }
     else
       []
     end
