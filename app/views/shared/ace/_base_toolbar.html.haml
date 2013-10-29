@@ -85,6 +85,23 @@
           %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ setup.github_url }}' } } Github URL
         %li
           %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ setup.facebook_url }}' } } Facebook URL
+    %li.dropdown-submenu
+      %a{ href: "#" } Catalog Records:
+      %ul.dropdown-menu
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', start: '{% for record in setup.catalog.latest %}', end: '{% endfor %}' } } Each Record
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ record.title }}' } } Title
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ record.description }}' } } Description
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ record.type }}' } } Type
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ record.source_url }}' } } Source URL
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ record.start_date }}' } } Start Date
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ record.end_date }}' } } End Date
     %li
       %a{ href: "#", type: 'button', data: { action: 'insert', html: '{% system %}' } } System
     %li
