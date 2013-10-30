@@ -112,8 +112,9 @@ NSCatalog::Application.routes.draw do
   resources :videos
   resources :links
 
-  resources :projects
-  resources :assets
+  # old resources
+  # resources :projects
+  # resources :assets
   
   resources :agencies
   resources :people
