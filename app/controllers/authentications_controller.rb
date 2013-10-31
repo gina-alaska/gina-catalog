@@ -1,4 +1,4 @@
-class ServicesController < ApplicationController
+class AuthenticationsController < ApplicationController
   before_filter :fetch_setup, :only => []
 	before_filter :authenticate_user!, :except => [:create, :signin, :signout, :signup, :newaccount, :failure]
 
@@ -110,7 +110,7 @@ class ServicesController < ApplicationController
           else
           	# this is a new user; show signup; @authhash is available to the view and stored in the sesssion for creation of a new user
           	session[:authhash] = @authhash
-          	render signup_services_path
+          	render signup_authentications_path
           end
         end
       else
@@ -139,7 +139,7 @@ class ServicesController < ApplicationController
 	    @service.destroy
 	  end
 
-	  redirect_to services_path
+	  redirect_to authentications_path
 	end
 
   # Sign out current user
