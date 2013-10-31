@@ -117,7 +117,7 @@ NSCatalog::Application.routes.draw do
   # resources :assets
   
   resources :agencies
-  resources :people
+  # resources :people
 
   resource :sitemap
 
