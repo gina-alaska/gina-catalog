@@ -8,7 +8,7 @@ class FGDC
   end
   
   def title
-    @xml.search('idinfo title').children.to_s.strip
+    @xml.search('idinfo citation citeinfo title').children.to_s.strip
   end
   
   def abstract

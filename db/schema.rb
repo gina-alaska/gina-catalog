@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131024234952) do
+ActiveRecord::Schema.define(:version => 20131030005117) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -863,6 +863,8 @@ ActiveRecord::Schema.define(:version => 20131024234952) do
     t.string   "youtube_url"
     t.string   "instagram_url"
     t.string   "linkedin_url"
+    t.string   "favicon_uid"
+    t.string   "favicon_name"
   end
 
   create_table "setups_snippets", :id => false, :force => true do |t|
