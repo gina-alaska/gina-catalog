@@ -1,6 +1,9 @@
 class SocialTag < Liquid::Tag
-  def initialize(tag_name, type, tokens)
+  include ActionView::Helpers
+  
+  def initialize(tag_name, args, tokens)
     super
+    @args = args
     @tag = tag_name
   end
   
@@ -20,10 +23,38 @@ EOHTML
     EOHTML
   end
   
+  def tumblr_block(setup, tumblr_url)
+    
+    feed = Feedzirra::Feed.fetch_and_parse(tumblr_url)  
+    
+    if feed.respond_to?(:entries)
+      entry = feed.entries.first
+      <<-EOHTML
+      <table class="table table-bordered tumblr tumblr-home">
+        <tr>
+          <td class="tumblr_title">
+            <a href="#{entry.url}">#{entry.title}</a>
+          </td>
+        </tr>
+        <tr>
+          <td class="tumblr_post">
+            <small> Posted #{time_ago_in_words entry.published} ago</small>
+            #{entry.summary.html_safe}
+          </td>
+        </tr>
+      </table>
+      EOHTML
+    else
+      <<-EOHTML
+      <p>No tumblr entries available</p>
+      EOHTML
+    end
+  end
+  
   def social_icons(setup)
     results = ""
     
-    { twitter_url: 'icon-twitter', github_url: 'icon-github', facebook_url: 'icon-facebook' }.each do |k,v|
+    { twitter_url: 'icon-twitter', github_url: 'icon-github', facebook_url: 'icon-facebook', google_plus_url: 'icon-google-plus-sign', instagram_url: 'icon-instagram', linkedin_url: 'icon-linkedin-sign', youtube_url: 'icon-youtube-sign' }.each do |k,v|
       next if setup.send(k).nil? or setup.send(k).blank?
       results << "<a href=\"#{setup.send(k)}\" target=\"_blank\" title=\"Visit us at #{k.to_s.gsub('_url', '')}\"><i class=\"#{v}\"></i></a>"
     end
@@ -40,6 +71,8 @@ EOHTML
     case @tag.to_s
     # when 'twitter_block'
     #   twitter_block(setup).html_safe
+    when 'tumblr_block'
+      tumblr_block(setup, @args).html_safe
     when 'facebook_block'
       facebook_block(setup).html_safe
     when 'social_icons'

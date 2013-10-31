@@ -2,7 +2,7 @@ class Setup < ActiveRecord::Base
   acts_as_nested_set
   
   attr_accessible :logo_uid, :primary_color, :title, :by_line, :contact_email, 
-        :default_invite, :urls_attributes, :analytics_account, :twitter_url, :github_url, :facebook_url, :parent_id, :acronym, :description, :keywords, :projection, :google_layers, :record_projection
+        :default_invite, :urls_attributes, :analytics_account, :twitter_url, :github_url, :facebook_url, :parent_id, :acronym, :description, :keywords, :projection, :google_layers, :record_projection, :google_plus_url, :youtube_url, :instagram_url, :linkedin_url
   
   has_and_belongs_to_many :images
   
@@ -41,12 +41,17 @@ class Setup < ActiveRecord::Base
   	{ 
   		'title' => self.title,
   		'by_line' => self.by_line,
+      'contact_email' => self.contact_email, 
   		'collections' => self.collections,
       'page' => SetupSubpageDrop.new(self),
       'twitter_url' => self.twitter_url,
       'github_url' => self.github_url,
       'facebook_url' => self.facebook_url,
-      'catalog' => SetupCatalogRecordsDrop.new(self)
+      'catalog' => SetupCatalogRecordsDrop.new(self),
+      'google_plus_url' => self.google_plus_url,
+      'youtube_url' => self.youtube_url, 
+      'instagram_url' => self.instagram_url,
+      'linkedin_url' => self.linkedin_url
   	}
   end
   
