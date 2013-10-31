@@ -120,6 +120,17 @@ class Catalog < ActiveRecord::Base
   accepts_nested_attributes_for :locations, reject_if:  proc { |location| location['name'].blank? and location['wkt'].blank? }, allow_destroy: true
   accepts_nested_attributes_for :map_layers, reject_if:  proc { |layer| layer['url'].blank? and layer['name'].blank? }, allow_destroy: true
   
+  def to_liquid
+    { 
+      'title' => self.title,
+      'description' => self.description,
+      'type' => self.type,
+      'source_url' => self.source_url,
+      'start_date' => self.start_date,
+      'end_date' => self.end_date
+    }
+  end
+
   #Adding solr indexing
   searchable do
     text :title, { :boost => 2.0, :stored => true }

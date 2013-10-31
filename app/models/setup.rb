@@ -47,6 +47,7 @@ class Setup < ActiveRecord::Base
       'twitter_url' => self.twitter_url,
       'github_url' => self.github_url,
       'facebook_url' => self.facebook_url,
+      'catalog' => SetupCatalogRecordsDrop.new(self),
       'google_plus_url' => self.google_plus_url,
       'youtube_url' => self.youtube_url, 
       'instagram_url' => self.instagram_url,
