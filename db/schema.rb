@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131024004607) do
+ActiveRecord::Schema.define(:version => 20131030005117) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(:version => 20131024004607) do
     t.string   "adiwg_path"
     t.string   "logo_uid"
     t.string   "logo_name"
+    t.string   "url"
   end
 
   create_table "agencies_setups", :id => false, :force => true do |t|
@@ -862,6 +863,8 @@ ActiveRecord::Schema.define(:version => 20131024004607) do
     t.string   "youtube_url"
     t.string   "instagram_url"
     t.string   "linkedin_url"
+    t.string   "favicon_uid"
+    t.string   "favicon_name"
   end
 
   create_table "setups_snippets", :id => false, :force => true do |t|
