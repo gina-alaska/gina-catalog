@@ -21,6 +21,11 @@ editors.addHandler('link', function(editor, btn, ace) {
     $('#link_chooser').modal('hide');
     
     var link = '<a href="'+url+'" target="'+target+'">';
+    
+    if( $(this).find('[name="image"]').is(':checked') ) {
+      link += '<img src="'+ url + '" />'
+    }
+    
     ace.wrapSelectionWithTags(editor, link, "</a>")
   });
 });
