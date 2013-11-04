@@ -26,8 +26,8 @@ gem 'html-pipeline'
 gem 'liquid'
 gem 'dragonfly'
 gem 'awesome_nested_set'
-gem 'nested_form', git: 'http://github.com/ryanb/nested_form.git'
-gem 'rcsw', "~> 0.1.1", git: 'http://github.com/gina-alaska/ruby-csw.git'
+gem 'nested_form', git: 'https://github.com/ryanb/nested_form.git'
+gem 'rcsw', "~> 0.1.1", git: 'https://github.com/gina-alaska/ruby-csw.git'
 gem 'whenever'
 gem 'nokogiri'
 
@@ -48,7 +48,10 @@ gem 'puma'
 gem 'feedzirra'
 
 # Deploy with Capistrano
-# gem 'capistrano'
+gem 'capistrano', '~> 3.0'
+gem 'capistrano-chruby', github: "capistrano/chruby"
+gem 'capistrano-bundler'
+gem 'capistrano-rails'
 
 # To use debugger (ruby-debug for Ruby 1.8.7+, ruby-debug19 for Ruby 1.9.2+)
 # gem 'ruby-debug'
