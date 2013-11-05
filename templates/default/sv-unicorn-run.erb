@@ -46,7 +46,7 @@ fi
  
 if [ ! $RUNNING ]; then
     echo "Starting unicorn"
-    cd <%= @option[:path] %>
+    cd <%= @options[:path] %>
     # You need to daemonize the unicorn process, http://unicorn.bogomips.org/unicorn_rails_1.html
     bundle exec <%= unicorn_command %> -c config/unicorn.rb -E <%= @options[:environment] || 'production' %> -D
     sleep 3

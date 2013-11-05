@@ -52,8 +52,8 @@ Vagrant.configure("2") do |config|
   # View the documentation for the provider you're using for more
   # information on available options.
 
-  config.ssh.max_tries = 40
-  config.ssh.timeout   = 120
+  # config.ssh.max_tries = 40
+  # config.ssh.timeout   = 120
 
   # The path to the Berksfile to use with Vagrant Berkshelf
   # config.berkshelf.berksfile_path = "./Berksfile"
@@ -72,12 +72,17 @@ Vagrant.configure("2") do |config|
   config.omnibus.chef_version = :latest
   
   config.vm.provision :chef_solo do |chef|
+    chef.data_bags_path = 'data_bags'
+    
     chef.json = {
     }
 
     chef.run_list = [
       "recipe[minitest-handler::default]",
-      "recipe[glynx::default]"
+      "recipe[glynx::application]",
+      "recipe[gina-postgresql::client]",
+      "recipe[glynx::nginx]",
+      "recipe[glynx::unicorn]"
     ]
   end
 end
