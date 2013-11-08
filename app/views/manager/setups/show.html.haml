@@ -36,3 +36,11 @@
     %dd=ddtext current_setup.github_url
     %dt Facebook URL
     %dd=ddtext current_setup.facebook_url
+    %br
+    %h4 Portal Favicon
+    %hr
+    %dt Image
+    - if current_setup.favicon.image.nil?
+      %dd=ddtext "No Favicon Uploaded"
+    - else
+      %dd= image_tag current_setup.favicon.image.png.thumb('100x100').url unless current_setup.favicon.image.nil?
