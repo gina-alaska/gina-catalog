@@ -1,0 +1,5 @@
+- if current_setup.favicon.nil?
+  Favicon Not Set
+-else
+  .image
+    = image_tag current_setup.favicon.png.thumb('250x100').url

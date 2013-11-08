@@ -52,6 +52,10 @@ class Manager::SetupsController < ManagerController
   end
   
   def update
+    if params["setup"]["favicon_attributes"]["image"] == ""
+      params["setup"]["favicon_attributes"]["image"] = nil
+    end
+    
     if current_setup.update_attributes(params[:setup])
       respond_to do |format|
         format.html {

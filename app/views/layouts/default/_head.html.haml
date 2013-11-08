@@ -1,6 +1,9 @@
 %title
   = current_setup.title
-= favicon_link_tag 'favicon.png', type: 'image/png'
+- if current_setup.favicon.image.try(:url).nil?
+  = favicon_link_tag 'favicon.png', type: 'image/png'
+- else
+  = favicon_link_tag current_setup.favicon.image.png.thumb('32x32').url, type: 'image/png'
 %meta{ :name => 'description', :content => current_setup.description }
 %meta{ :name => 'keywords', :content => current_setup.keywords }
 %meta{ :name => 'author', :content => 'GINA' }
