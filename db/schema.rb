@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131030005117) do
+ActiveRecord::Schema.define(:version => 20131111200222) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -248,6 +248,7 @@ ActiveRecord::Schema.define(:version => 20131030005117) do
     t.integer  "setup_id"
     t.integer  "user_id"
     t.text     "user_agent"
+    t.string   "job_title"
   end
 
   create_table "contacts", :force => true do |t|
@@ -320,6 +321,14 @@ ActiveRecord::Schema.define(:version => 20131030005117) do
   end
 
   add_index "download_urls", ["catalog_id"], :name => "index_download_urls_on_catalog_id"
+
+  create_table "favicons", :force => true do |t|
+    t.integer  "setup_id"
+    t.string   "image_uid"
+    t.string   "image_name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "features", :force => true do |t|
     t.string "class",       :limit => 1
@@ -863,8 +872,6 @@ ActiveRecord::Schema.define(:version => 20131030005117) do
     t.string   "youtube_url"
     t.string   "instagram_url"
     t.string   "linkedin_url"
-    t.string   "favicon_uid"
-    t.string   "favicon_name"
   end
 
   create_table "setups_snippets", :id => false, :force => true do |t|
