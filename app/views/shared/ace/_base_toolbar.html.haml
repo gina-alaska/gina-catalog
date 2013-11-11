@@ -110,6 +110,8 @@
         %li
           %a{ href: "#", type: 'button', data: { action: 'insert', start: '{% for record in setup.catalog.latest %}', end: '{% endfor %}' } } Each Record
         %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ record.title }}' } } Record Link
+        %li
           %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ record.title }}' } } Title
         %li
           %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ record.description }}' } } Description
