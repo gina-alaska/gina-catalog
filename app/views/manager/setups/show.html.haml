@@ -40,7 +40,7 @@
     %h4 Portal Favicon
     %hr
     %dt Image
-    - if current_setup.favicon.image.nil?
+    - if current_setup.favicon.nil?
       %dd=ddtext "No Favicon Uploaded"
     - else
       %dd= image_tag current_setup.favicon.image.png.thumb('100x100').url unless current_setup.favicon.image.nil?

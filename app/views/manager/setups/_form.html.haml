@@ -106,9 +106,9 @@
           Site Favicon
         #logo.tab-pane
           .controls
-            .fileupload{ class: (f.object.new_record? ? 'fileupload-new' : 'fileupload-exists'), data: { provides: 'fileupload' } }
+            .fileupload{ class: (current_setup.favicon.new_record? ? 'fileupload-new' : 'fileupload-exists'), data: { provides: 'fileupload' } }
               .fileupload-preview.thumbnail.fileupload-exists{style:'width: 200px; min-height: 50px;'}
-                - if current_setup.favicon.image.try(:url).nil?
+                - if current_setup.favicon.image.nil?
                   No Favicon
                 -else
                   = image_tag current_setup.favicon.image.png.thumb('200x200').url
