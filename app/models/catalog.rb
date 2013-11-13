@@ -125,7 +125,7 @@ class Catalog < ActiveRecord::Base
       'title' => self.title,
       'description' => self.description,
       'type' => self.type,
-      'source_url' => self.source_url,
+      'url' => "/catalogs/#{self.to_param})",
       'start_date' => self.start_date,
       'end_date' => self.end_date
     }
