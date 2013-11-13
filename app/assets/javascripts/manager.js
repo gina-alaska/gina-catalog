@@ -17,6 +17,7 @@
 //= require 'maps/openlayers_map'
 //= require 'maps/editor_map'
 //= require 'maps/catalog_map'
+//= require 'maps/map_layers'
 //= require 'location_editor'
 //= require 'ace_editor'
 //= require 'flash_message'

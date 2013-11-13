@@ -1,0 +1,12 @@
+- if catalog.map_layers.count > 0 or catalog.locations.count > 0
+  - map_projection = current_setup.record_projection || current_setup.projection
+
+  #record_map{ data: { map: 'RecordMap', target: '#map_canvas' } }
+    #map_canvas{ data: { projection: map_projection, displayProjection: 'EPSG:4326', google: current_setup.google_layers.to_s, layers: ["TILE.#{map_projection}.*"] } }
+  :javascript
+    $(document).ready(function() {
+      var mapwrap = $('[data-map="RecordMap"]');
+      var map = new CatalogMap(mapwrap.data('target'));
+      
+      $('.map_layer_btn')[0].click()
+    })
