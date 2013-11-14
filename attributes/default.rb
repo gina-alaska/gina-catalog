@@ -12,7 +12,7 @@ default['glynx']['dragonfly_uploads_path'] = "#{default['glynx']['shared_path']}
 default['glynx']['account'] = "webdev"
 
 default['glynx']['database']['adapter']  = "postgis"
-default['glynx']['database']['hostname'] = "yang.gina.alaska.edu"
+default['glynx']['database']['hostname'] = "yin.gina.alaska.edu"
 default['glynx']['database']['database'] = "nssi_prod"
 default['glynx']['database']['username'] = "nssi_prod"
 default['glynx']['database']['password'] = "g0d0fn551"
