@@ -43,7 +43,7 @@ defined?(ActiveRecord::Base) and
   ActiveRecord::Base.establish_connection
 "
 
-default['glynx']['package_deps'] = %w{libicu-devel curl-devel libxml2-devel libxslt-devel nfs-utils geos-devel}
+default['glynx']['package_deps'] = %w{libicu-devel curl-devel libxml2-devel libxslt-devel nfs-utils geos-devel ImageMagick-devel}
 
 default['users'] ||= []
 %w{ webdev }.each do |user|
