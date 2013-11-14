@@ -25,6 +25,7 @@
           Advanced
       .btn-group
         = submit_tag 'Search', class: 'btn btn-primary', tabindex: 8
-  %fieldset.advanced-options.collapse{ class: @is_advanced ? 'in' : '' }
-    %legend Advanced Options
-    = render 'advanced_search'
+  .advanced-options.collapse
+    %fieldset{ class: @is_advanced ? 'in' : '' }
+      %legend Advanced Options
+      = render 'advanced_search'

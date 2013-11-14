@@ -112,11 +112,12 @@ NSCatalog::Application.routes.draw do
   resources :videos
   resources :links
 
-  resources :projects
-  resources :assets
+  # old resources
+  # resources :projects
+  # resources :assets
   
   resources :agencies
-  resources :people
+  # resources :people
 
   resource :sitemap
 
@@ -136,14 +137,14 @@ NSCatalog::Application.routes.draw do
      
   # Omniauth pure
   match "/login" => redirect('/auth/gina')
-  match "/logout" => "services#signout"
+  match "/logout" => "authentications#signout"
   match "/signin" => redirect('/auth/gina')
-  match "/signout" => "services#signout"
+  match "/signout" => "authentications#signout"
 
-  match '/auth/:service/callback' => 'services#create' 
-  match '/auth/failure' => 'services#failure'
+  match '/auth/:service/callback' => 'authentications#create' 
+  match '/auth/failure' => 'authentications#failure'
 
-  resources :services, :only => [:index, :create, :destroy] do
+  resources :authentications, :only => [:index, :create, :destroy] do
     collection do
       get 'signout'
       get 'signup'

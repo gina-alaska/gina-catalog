@@ -86,9 +86,29 @@
         %legend
           Site Social
         .control-group
+          = f.label "Facebook URL Link", class: 'control-label'
+          .controls
+            = f.text_field :facebook_url, class: 'span12'
+
+        .control-group
           = f.label "GitHub URL Link", class: 'control-label'
           .controls
             = f.text_field :github_url, class: 'span12'
+
+        .control-group
+          = f.label "Google+ URL Link", class: 'control-label'
+          .controls
+            = f.text_field :google_plus_url, class: 'span12'
+
+        .control-group
+          = f.label "Instagram URL Link", class: 'control-label'
+          .controls
+            = f.text_field :instagram_url, class: 'span12'
+
+        .control-group
+          = f.label "Linkedin URL Link", class: 'control-label'
+          .controls
+            = f.text_field :linkedin_url, class: 'span12'
 
         .control-group
           = f.label "Twitter URL Link", class: 'control-label'
@@ -96,9 +116,9 @@
             = f.text_field :twitter_url, class: 'span12'
 
         .control-group
-          = f.label "Facebook URL Link", class: 'control-label'
+          = f.label "YouTube URL Link", class: 'control-label'
           .controls
-            = f.text_field :facebook_url, class: 'span12'
+            = f.text_field :youtube_url, class: 'span12'
 
     #favicon.tab-pane
       %fieldset

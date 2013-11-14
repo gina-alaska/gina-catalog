@@ -5,7 +5,7 @@
   = image_tag item.logo.try(:thumb, '50x50').try(:url) unless item.logo.nil?
 %td= item.name
 %td= item.acronym
-%td= item.description
+%td= item.url
 %td= item.category
 %td= item.setups.include?(current_setup) ? "Yes" : "No"
 %td.span2

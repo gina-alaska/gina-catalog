@@ -54,7 +54,7 @@ class @CatalogMap extends OpenlayersMap
     @result_feature_layer.destroyFeatures()
     
     geoms = $('[data-wkt]');
-    return unless geoms.length > 0 and $('#map').data('map') 
+    return unless geoms.length > 0 and @map?
     
     geoms.each (k, result) =>
       return unless wkt = $(result).data('wkt')
@@ -70,7 +70,7 @@ class @CatalogMap extends OpenlayersMap
         $(result).data('features', features)
         
     @centerOnData(@result_feature_layer)
-        
+    
   centerOnData: (layer) =>
     if layer.features.length > 0
       @zoomToBounds(layer.getDataExtent())

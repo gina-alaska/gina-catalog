@@ -1,0 +1,46 @@
+.tumblr {
+  @extend .clearfix;
+  
+  ol {
+    list-style-type: none;
+  }
+  
+  h3.title { margin-bottom: 3px; }
+  h5 { margin-top: 3px; }
+  
+  .tumblr_post {
+    margin: 0 0 40px 0;
+    display: block;
+    clear: right;
+    
+    br { display: none; }
+    br.keep { display: block; }
+  }
+  
+  .tumblr_video {
+    @extend .pull-right;
+    @extend .thumbnail;
+    margin-left: 20px;  
+  }
+  
+  img, iframe {
+    float: right;
+    @extend .thumbnail;
+    margin-left: 20px;
+    width: 50%;
+    margin-bottom: 3px;
+  }
+}
+
+.tumblr-home {
+  border-color: #e8e8e8;
+  .tumblr_title {
+    font-weight:bold;
+  }
+  .tumblr_post {
+    border-bottom: none;
+    margin: 0;
+    height: 345px;
+    overflow: auto;  
+  }
+}
