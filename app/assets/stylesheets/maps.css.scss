@@ -1,10 +1,10 @@
 #record_map {
   width: 100%;
-  min-height: 400px;
+  min-height: 300px;
   
   #map_canvas {
     width: 100%;
-    height: 400px;
+    height: 300px;
     background-color: #B3C6D4;
     background-color: #000; 
   }
@@ -12,12 +12,12 @@
 
 #map {
   width: 100%;
-  height: 300px;
+  height: 340px;
   z-index: 1000000;
   
   #map_canvas {
     width: 100%;
-    height: 260px;
+    height: 300px;
     background-color: #B3C6D4;
     background-color: #000;
   }
@@ -67,9 +67,9 @@
 
 .search.large {
   #map {
-    height: 500px;      
+    height: 540px;      
     #map_canvas {
-      height: 460px;
+      height: 500px;
     }
   }  
 }
