@@ -1,54 +1,57 @@
-.content
-  %dl.dl-horizontal
-    %h4 Portal Information
-    %hr
-    %dt Title
-    %dd=ddtext current_setup.title
-    %dt Acronym
-    %dd=ddtext current_setup.acronym
-    %dt By line
-    %dd=ddtext current_setup.by_line
-    %dt Contact Email
-    %dd=ddtext current_setup.contact_email
-    %dt Default Invite Text
-    %dd=ddtext current_setup.default_invite 
-    %dt Google Analytics
-    %dd=ddtext current_setup.analytics_account
-    %dt Description
-    %dd=ddtext current_setup.description
-    %dt Keywords
-    %dd=ddtext current_setup.keywords
-    %br
-    %h4 Portal Maps
-    %hr
-    %dt Site Projection
-    %dd=ddtext display_projection(current_setup.projection)
-    %dt Full Record Projection
-    %dd=ddtext display_projection(current_setup.record_projection)
-    %dt Use Google Layers
-    %dd=ddtext current_setup.google_layers==true ? "Yes" : "No"
-    %br
-    %h4 Portal Social
-    %hr
-    %dt Facebook URL
-    %dd=ddtext current_setup.facebook_url
-    %dt GitHub URL
-    %dd=ddtext current_setup.github_url
-    %dt Google+ URL
-    %dd=ddtext current_setup.google_plus_url
-    %dt Instagram URL
-    %dd=ddtext current_setup.instagram_url
-    %dt Linkedin URL
-    %dd=ddtext current_setup.linkedin_url
-    %dt Twitter URL
-    %dd=ddtext current_setup.twitter_url
-    %dt YouTube URL
-    %dd=ddtext current_setup.youtube_url
-    %br
-    %h4 Portal Favicon
-    %hr
-    %dt Image
-    - if current_setup.favicon.nil?
-      %dd=ddtext "No Favicon Uploaded"
-    - else
-      %dd= image_tag current_setup.favicon.image.png.thumb('100x100').url unless current_setup.favicon.image.nil?
+.row-fluid
+  .span6
+    %fieldset.content
+      %legend Site settings
+      %dl.dl-horizontal
+        %dt Title
+        %dd=ddtext current_setup.title
+        %dt Acronym
+        %dd=ddtext current_setup.acronym
+        %dt By line
+        %dd=ddtext current_setup.by_line
+        %dt Contact Email
+        %dd=ddtext current_setup.contact_email
+        %dt Default Invite Text
+        %dd=ddtext current_setup.default_invite 
+        %dt Google Analytics
+        %dd=ddtext current_setup.analytics_account
+        %dt Description
+        %dd=ddtext current_setup.description
+        %dt Keywords
+        %dd=ddtext current_setup.keywords
+    %fieldset.content
+      %legend Map settings
+      %dl.dl-horizontal
+        %dt Site Projection
+        %dd=ddtext display_projection(current_setup.projection)
+        %dt Full Record Projection
+        %dd=ddtext display_projection(current_setup.record_projection)
+        %dt Use Google Layers
+        %dd=ddtext current_setup.google_layers==true ? "Yes" : "No"
+  .span6
+    %fieldset.content
+      %legend Portal Favicon
+      - if current_setup.favicon.nil?
+        No Favicon Uploaded
+      - else
+        = image_tag current_setup.favicon.image.png.thumb('100x100').url unless current_setup.favicon.image.nil?
+.row-fluid
+  .span12
+    %fieldset.content
+      %legend Social settings
+      %dl.dl-horizontal
+        %dt Facebook URL
+        %dd=ddtext current_setup.facebook_url
+        %dt GitHub URL
+        %dd=ddtext current_setup.github_url
+        %dt Google+ URL
+        %dd=ddtext current_setup.google_plus_url
+        %dt Instagram URL
+        %dd=ddtext current_setup.instagram_url
+        %dt Linkedin URL
+        %dd=ddtext current_setup.linkedin_url
+        %dt Twitter URL
+        %dd=ddtext current_setup.twitter_url
+        %dt YouTube URL
+        %dd=ddtext current_setup.youtube_url          
+    
