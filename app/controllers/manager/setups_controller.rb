@@ -25,6 +25,7 @@ class Manager::SetupsController < ManagerController
   
   def new
     @setup = Setup.new
+    @setup.build_favicon
   end
   
   def create
@@ -49,9 +50,14 @@ class Manager::SetupsController < ManagerController
   
   def edit
     @setup = current_setup
+    @setup.build_favicon if @setup.favicon.nil?
   end
   
   def update
+    if params["setup"]["favicon_attributes"]["image"] == ""
+      params["setup"]["favicon_attributes"]["_destroy"] = true 
+    end
+    
     if current_setup.update_attributes(params[:setup])
       respond_to do |format|
         format.html {

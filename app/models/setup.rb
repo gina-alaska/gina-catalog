@@ -2,7 +2,7 @@ class Setup < ActiveRecord::Base
   acts_as_nested_set
   
   attr_accessible :logo_uid, :primary_color, :title, :by_line, :contact_email, 
-        :default_invite, :urls_attributes, :analytics_account, :twitter_url, :github_url, :facebook_url, :parent_id, :acronym, :description, :keywords, :projection, :google_layers, :record_projection, :google_plus_url, :youtube_url, :instagram_url, :linkedin_url
+        :default_invite, :urls_attributes, :analytics_account, :twitter_url, :github_url, :facebook_url, :parent_id, :acronym, :description, :keywords, :projection, :google_layers, :record_projection, :google_plus_url, :youtube_url, :instagram_url, :linkedin_url, :favicon_attributes
   
   has_and_belongs_to_many :images
   
@@ -34,8 +34,10 @@ class Setup < ActiveRecord::Base
   
   belongs_to :theme
   has_many :themes, foreign_key: 'owner_setup_id'
+  has_one :favicon, dependent: :destroy
   
   accepts_nested_attributes_for :urls, reject_if: proc { |url| url['url'].blank? }, allow_destroy: true
+  accepts_nested_attributes_for :favicon, allow_destroy: true
 
   def to_liquid
   	{ 

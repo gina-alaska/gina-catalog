@@ -1,5 +1,5 @@
 - projections = [["Alaskan Albers","EPSG:3338"],["Polar", "EPSG:3572"],["Web Mercator", "EPSG:3857"]]
-= form_for setup, url: manager_setup_path, html: { class: 'form-horizontal' } do |f|
+= form_for setup, url: manager_setup_path, html: { class: 'form-horizontal', multipart: true } do |f|
   - if setup.errors.any?
     #error_explanation.alert.alert-error
       %h4
@@ -9,102 +9,137 @@
         - setup.errors.full_messages.each do |msg|
           %li= msg
           
-  %fieldset
-    %legend
-      Site Information
-    .control-group
-      = f.label :title, class: 'control-label'
-      .controls
-        = f.text_field :title, class: 'span12'
-    
-    .control-group
-      = f.label :acronym, class: 'control-label'
-      .controls
-        = f.text_field :acronym, class: 'span12'
-    
-    .control-group
-      = f.label :by_line, class: 'control-label'
-      .controls
-        = f.text_field :by_line, class: 'span12'
+  %ul.nav.nav-tabs{ style: 'padding-left: 10px; margin-bottom: 3px;' }
+    %li.active
+      %a{ href: '#setup_information', data: { toggle: 'tab' } } Site Information
+    %li
+      %a{ href: '#maps', data: { toggle: 'tab' } } Maps Setup
+    %li
+      %a{ href: '#social', data: { toggle: 'tab' } } Social Links
+    %li
+      %a{ href: '#favicon', data: { toggle: 'tab' } } Favicon
 
-    .control-group
-      = f.label :contact_email, class: 'control-label'
-      .controls
-        = f.text_field :contact_email, class: 'span12'
+  .tab-content.content
+    #setup_information.tab-pane.active
+      %fieldset
+        %legend
+          Site Information
+        .control-group
+          = f.label :title, class: 'control-label'
+          .controls
+            = f.text_field :title, class: 'span12'
+        
+        .control-group
+          = f.label :acronym, class: 'control-label'
+          .controls
+            = f.text_field :acronym, class: 'span12'
+        
+        .control-group
+          = f.label :by_line, class: 'control-label'
+          .controls
+            = f.text_field :by_line, class: 'span12'
 
-    .control-group
-      = f.label "Default Invite Text", class: 'control-label'
-      .controls
-        = f.text_area :default_invite, rows: 6, cols: 40, class: 'span12'
+        .control-group
+          = f.label :contact_email, class: 'control-label'
+          .controls
+            = f.text_field :contact_email, class: 'span12'
 
-    .control-group
-      = f.label "Google Analytics Account", class: 'control-label'
-      .controls
-        = f.text_field :analytics_account, class: 'span12'
+        .control-group
+          = f.label "Default Invite Text", class: 'control-label'
+          .controls
+            = f.text_area :default_invite, rows: 6, cols: 40, class: 'span12'
 
-    .control-group
-      = f.label "Metadata - Description", class: 'control-label'
-      .controls
-        = f.text_field :description, class: 'span12'
+        .control-group
+          = f.label "Google Analytics Account", class: 'control-label'
+          .controls
+            = f.text_field :analytics_account, class: 'span12'
 
-    .control-group
-      = f.label "Metadata - Keywords", class: 'control-label'
-      .controls
-        = f.text_field :keywords, class: 'span12'
+        .control-group
+          = f.label "Metadata - Description", class: 'control-label'
+          .controls
+            = f.text_field :description, class: 'span12'
 
-  %fieldset
-    %legend
-      Site Maps
-    .control-group
-      = f.label "Site Projection", class: 'control-label'
-      .controls
-        = f.select :projection, options_for_select(projections, @current_setup.projection), class: 'span12'
-    .control-group
-      = f.label "Full Record Projection", class: 'control-label'
-      .controls
-        = f.select :record_projection, options_for_select(projections, @current_setup.record_projection), { include_blank: true }
-    .control-group
-      = f.label "Use Google Layers", class: 'control-label'
-      .controls
-        = f.check_box :google_layers, {}, "true", "false"
+        .control-group
+          = f.label "Metadata - Keywords", class: 'control-label'
+          .controls
+            = f.text_field :keywords, class: 'span12'
 
-  %fieldset
-    %legend
-      Site Social
-    .control-group
-      = f.label "Facebook URL Link", class: 'control-label'
-      .controls
-        = f.text_field :facebook_url, class: 'span12'
+    #maps.tab-pane
+      %fieldset
+        %legend
+          Site Maps
+        .control-group
+          = f.label "Site Projection", class: 'control-label'
+          .controls
+            = f.select :projection, options_for_select(projections, @current_setup.projection), class: 'span12'
+        .control-group
+          = f.label "Full Record Projection", class: 'control-label'
+          .controls
+            = f.select :record_projection, options_for_select(projections, @current_setup.record_projection), { include_blank: true }
+        .control-group
+          = f.label "Use Google Layers", class: 'control-label'
+          .controls
+            = f.check_box :google_layers, {}, "true", "false"
 
-    .control-group
-      = f.label "GitHub URL Link", class: 'control-label'
-      .controls
-        = f.text_field :github_url, class: 'span12'
+    #social.tab-pane
+      %fieldset
+        %legend
+          Site Social
+        .control-group
+          = f.label "Facebook URL Link", class: 'control-label'
+          .controls
+            = f.text_field :facebook_url, class: 'span12'
 
-    .control-group
-      = f.label "Google+ URL Link", class: 'control-label'
-      .controls
-        = f.text_field :google_plus_url, class: 'span12'
+        .control-group
+          = f.label "GitHub URL Link", class: 'control-label'
+          .controls
+            = f.text_field :github_url, class: 'span12'
 
-    .control-group
-      = f.label "Instagram URL Link", class: 'control-label'
-      .controls
-        = f.text_field :instagram_url, class: 'span12'
+        .control-group
+          = f.label "Google+ URL Link", class: 'control-label'
+          .controls
+            = f.text_field :google_plus_url, class: 'span12'
 
-    .control-group
-      = f.label "Linkedin URL Link", class: 'control-label'
-      .controls
-        = f.text_field :linkedin_url, class: 'span12'
+        .control-group
+          = f.label "Instagram URL Link", class: 'control-label'
+          .controls
+            = f.text_field :instagram_url, class: 'span12'
 
-    .control-group
-      = f.label "Twitter URL Link", class: 'control-label'
-      .controls
-        = f.text_field :twitter_url, class: 'span12'
+        .control-group
+          = f.label "Linkedin URL Link", class: 'control-label'
+          .controls
+            = f.text_field :linkedin_url, class: 'span12'
 
-    .control-group
-      = f.label "YouTube URL Link", class: 'control-label'
-      .controls
-        = f.text_field :youtube_url, class: 'span12'
+        .control-group
+          = f.label "Twitter URL Link", class: 'control-label'
+          .controls
+            = f.text_field :twitter_url, class: 'span12'
+
+        .control-group
+          = f.label "YouTube URL Link", class: 'control-label'
+          .controls
+            = f.text_field :youtube_url, class: 'span12'
+
+    #favicon.tab-pane
+      %fieldset
+        %legend
+          Site Favicon
+        #logo.tab-pane
+          .controls
+            .fileupload{ class: (current_setup.favicon.new_record? ? 'fileupload-new' : 'fileupload-exists'), data: { provides: 'fileupload' } }
+              .fileupload-preview.thumbnail.fileupload-exists{style:'width: 200px; min-height: 50px;'}
+                - if current_setup.favicon.image.nil?
+                  No Favicon
+                -else
+                  = image_tag current_setup.favicon.image.png.thumb('200x200').url
+              %div
+                %span.btn.btn-file
+                  %span.fileupload-new Select image
+                  %span.fileupload-exists Change
+                  = f.fields_for :favicon do |attachment|
+                    = attachment.file_field :image
+                %a.btn.fileupload-exists{href: "#", data: { dismiss: "fileupload" }} Remove
+            %p Note:  Only use .png or .ico images for the favicon.
 
   .form-actions
     = link_to manager_page_contents_path(tab: "setups"), class: 'btn' do
