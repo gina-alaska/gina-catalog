@@ -20,7 +20,7 @@ set :stage, :production
 # extended properties on the server.
 
 # vagrant test
-server '192.168.222.221', user: 'webdev', roles: %w{web app db}
+server 'catalog-web2.x.gina.alaska.edu', user: 'webdev', roles: %w{web app db}
 
 # you can set custom ssh options
 # it's possible to pass any option but you need to keep in mind that net/ssh understand limited list of options
