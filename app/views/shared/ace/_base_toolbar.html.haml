@@ -1,133 +1,132 @@
-.btn-group
-  %button.btn.btn-small{ type: 'button', title: 'Undo', data: { action: 'undo' } }
-    %i.icon-undo
-  %button.btn.btn-small{ type: 'button', title: 'Redo', data: { action: 'redo' } }
-    %i.icon-repeat              
-.btn-group
-  %button.btn.btn-small{ type: 'button', title: 'Header 1', data: { action: 'insert', tag: 'h1' } } H1
-  %button.btn.btn-small{ type: 'button', title: 'Header 2', data: { action: 'insert', tag: 'h2' } } H2
-  %button.btn.btn-small{ type: 'button', title: 'Header 3', data: { action: 'insert', tag: 'h3' } } H3
-  %button.btn.btn-small{ type: 'button', title: 'Header 4', data: { action: 'insert', tag: 'h4' } } H4
-  %button.btn.btn-small{ type: 'button', title: 'Header 5', data: { action: 'insert', tag: 'h5' } } H5
-  %button.btn.btn-small{ type: 'button', title: 'Paragraph', data: { action: 'insert', tag: 'p' } } P
-  %button.btn.btn-small{ type: 'button', title: '<br/>', data: { action: 'insert', html: '<br/>' } } BR 
-.btn-group
-  %button.btn.btn-small{ type: 'button', title: 'Bold', data: { action: 'insert', tag: 'b' } }
-    %i.icon-bold
-  %button.btn.btn-small{ type: 'button', title: 'Italic', data: { action: 'insert', tag: 'i' } }
-    %i.icon-italic
-.btn-group
-  %button.btn.btn-small{ type: 'button', title: 'Unordered List', data: { action: 'insert', tag: 'ul' } }
-    %i.icon-list-ul
-  %button.btn.btn-small{ type: 'button', title: 'Ordered List', data: { action: 'insert', tag: 'ol' } }
-    %i.icon-list-ol
-  %button.btn.btn-small{ type: 'button', title: 'List Item', data: { action: 'insert', tag: 'li' } }
-    %i.icon-minus
-.btn-group
-  %button.btn.btn-small{ type: 'button', title: 'Link', data: { action: 'link' } }
-    %i.icon-link
-  %button.btn.btn-small{ type: 'button', title: 'Attach Document', data: { action: 'picture' } }
-    %i.icon-picture
-.btn-group.dropdown
-  = link_to '#', class: "btn btn-small dropdown-toggle", data: { toggle: "dropdown" } do
-    Liquid Helpers
-    %b.caret
-  %ul.dropdown-menu
-    %li.dropdown-submenu
-      %a{ href: "#" } Page:
-      %ul.dropdown-menu
-        %li
-          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ page.title }}' } } Title
-        %li
-          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ page.slug }}' } } Slug
-        %li
-          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ page.content.body }}' } } Content Body
-        %li
-          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ page.description }}' } } Description
-        %li
-          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ page.domid }}' } } DomID
-        %li
-          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ page.public }}' } } Public
-        %li
-          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ page.show_in_menu }}' } } Show In Menu
-        %li
-          %a{ href: "#", type: 'button', data: { action: 'insert', start: '{% for child in page.children %}', end: '{% endfor %}' } } Each Children
-        %li
-          %a{ href: "#", type: 'button', data: { action: 'insert', start: '{% for image in page.images %}', end: "{% endfor %}" } } Each Image
-        %li.dropdown-submenu
-          %a{ href: "#" } Parent:
-          %ul.dropdown-menu
-            %li
-              %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ page.parent.title }}' } } Title
-            %li
-              %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ page.parent.description }}' } } Description
-            %li
-              %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ page.parent.slug }}' } } Slug
-        %li.dropdown-submenu
-          %a{ href: "#" } Root:
-          %ul.dropdown-menu
-            %li
-              %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ page.root.title }}' } } Title
-            %li
-              %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ page.root.description }}' } } Description
-            %li
-              %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ page.root.slug }}' } } Slug
-    %li.dropdown-submenu
-      %a{ href: "#" } Setup:
-      %ul.dropdown-menu
-        %li
-          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ setup.title }}' } } Title
-        %li
-          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ setup.by_line }}' } } By-Line
-        %li
-          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ setup.description }}' } } Description
-        %li
-          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ setup.contact_email }}' } } Contact Email
-        %li
-          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ setup.twitter_url }}' } } Twitter URL
-        %li
-          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ setup.github_url }}' } } Github URL
-        %li
-          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ setup.facebook_url }}' } } Facebook URL
-    %li.dropdown-submenu
-      %a{ href: "#" } Image:
-      %ul.dropdown-menu
-        %li
-          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ image.title }}' } } Title
-        %li
-          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ image.link_to_url }}' } } Link To URL
-        %li
-          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ image.description }}' } } Description
-        %li
-          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ image.thumb }}' } } Thumb
-        %li
-          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ image.grayscale }}' } } Grayscale
-        %li
-          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ image.tag }}' } } Tag
-    %li.dropdown-submenu      
-      %a{ href: "#" } Catalog Records:
-      %ul.dropdown-menu
-        %li
-          %a{ href: "#", type: 'button', data: { action: 'insert', start: '{% for record in setup.catalog.latest %}', end: '{% endfor %}' } } Each Record
-        %li
-          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ record.url }}' } } Record Link
-        %li
-          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ record.title }}' } } Title
-        %li
-          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ record.description }}' } } Description
-        %li
-          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ record.type }}' } } Type
-        %li
-          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ record.url }}' } } URL
-        %li
-          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ record.start_date }}' } } Start Date
-        %li
-          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ record.end_date }}' } } End Date
-    %li
-      %a{ href: "#", type: 'button', data: { action: 'insert', html: '{% system %}' } } System
-    %li
-      %a{ href: "#", type: 'button', data: { action: 'insert', html: '{% social_icons %}' } } Social Icons
-    %li
-      %a{ href: "#", type: 'button', data: { action: 'insert', html: '{% facebook_block %}' } } Facebook Block
-%button.btn.btn-small{ type: "button", data: { action: 'icon' } }
-  Icons
+- cache([:ace, :base_toolbar, :v1]) do
+  .btn-group
+    %button.btn.btn-small{ type: 'button', title: 'Undo', data: { action: 'undo' } }
+      %i.icon-undo
+    %button.btn.btn-small{ type: 'button', title: 'Redo', data: { action: 'redo' } }
+      %i.icon-repeat              
+  .btn-group
+    %button.btn.btn-small{ type: 'button', title: 'Header 1', data: { action: 'insert', tag: 'h1' } } H1
+    %button.btn.btn-small{ type: 'button', title: 'Header 2', data: { action: 'insert', tag: 'h2' } } H2
+    %button.btn.btn-small{ type: 'button', title: 'Header 3', data: { action: 'insert', tag: 'h3' } } H3
+    %button.btn.btn-small{ type: 'button', title: 'Header 4', data: { action: 'insert', tag: 'h4' } } H4
+    %button.btn.btn-small{ type: 'button', title: 'Header 5', data: { action: 'insert', tag: 'h5' } } H5
+    %button.btn.btn-small{ type: 'button', title: 'Paragraph', data: { action: 'insert', tag: 'p' } } P
+    %button.btn.btn-small{ type: 'button', title: '<br/>', data: { action: 'insert', html: '<br/>' } } BR 
+  .btn-group
+    %button.btn.btn-small{ type: 'button', title: 'Bold', data: { action: 'insert', tag: 'b' } }
+      %i.icon-bold
+    %button.btn.btn-small{ type: 'button', title: 'Italic', data: { action: 'insert', tag: 'i' } }
+      %i.icon-italic
+  .btn-group
+    %button.btn.btn-small{ type: 'button', title: 'Unordered List', data: { action: 'insert', tag: 'ul' } }
+      %i.icon-list-ul
+    %button.btn.btn-small{ type: 'button', title: 'Ordered List', data: { action: 'insert', tag: 'ol' } }
+      %i.icon-list-ol
+    %button.btn.btn-small{ type: 'button', title: 'List Item', data: { action: 'insert', tag: 'li' } }
+      %i.icon-minus
+  .btn-group
+    %button.btn.btn-small{ type: 'button', title: 'Link', data: { action: 'link' } }
+      %i.icon-link
+    %button.btn.btn-small{ type: 'button', title: 'Attach Document', data: { action: 'picture' } }
+      %i.icon-picture
+  .btn-group.dropdown
+    = link_to '#', class: "btn btn-small dropdown-toggle", data: { toggle: "dropdown" } do
+      Liquid Helpers
+      %b.caret
+    %ul.dropdown-menu
+      %li.dropdown-submenu
+        %a{ href: "#" } Page:
+        %ul.dropdown-menu
+          %li
+            %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ page.title }}' } } Title
+          %li
+            %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ page.slug }}' } } Slug
+          %li
+            %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ page.content.body }}' } } Content Body
+          %li
+            %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ page.description }}' } } Description
+          %li
+            %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ page.domid }}' } } DomID
+          %li
+            %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ page.public }}' } } Public
+          %li
+            %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ page.show_in_menu }}' } } Show In Menu
+          %li
+            %a{ href: "#", type: 'button', data: { action: 'insert', start: '{% for child in page.children %}', end: '{% endfor %}' } } Each Children
+          %li
+            %a{ href: "#", type: 'button', data: { action: 'insert', start: '{% for image in page.images %}', end: "{% endfor %}" } } Each Image
+          %li.dropdown-submenu
+            %a{ href: "#" } Parent:
+            %ul.dropdown-menu
+              %li
+                %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ page.parent.title }}' } } Title
+              %li
+                %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ page.parent.description }}' } } Description
+              %li
+                %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ page.parent.slug }}' } } Slug
+          %li.dropdown-submenu
+            %a{ href: "#" } Root:
+            %ul.dropdown-menu
+              %li
+                %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ page.root.title }}' } } Title
+              %li
+                %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ page.root.description }}' } } Description
+              %li
+                %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ page.root.slug }}' } } Slug
+      %li.dropdown-submenu
+        %a{ href: "#" } Setup:
+        %ul.dropdown-menu
+          %li
+            %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ setup.title }}' } } Title
+          %li
+            %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ setup.by_line }}' } } By-Line
+          %li
+            %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ setup.description }}' } } Description
+          %li
+            %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ setup.contact_email }}' } } Contact Email
+          %li
+            %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ setup.twitter_url }}' } } Twitter URL
+          %li
+            %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ setup.github_url }}' } } Github URL
+          %li
+            %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ setup.facebook_url }}' } } Facebook URL
+      %li.dropdown-submenu
+        %a{ href: "#" } Image:
+        %ul.dropdown-menu
+          %li
+            %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ image.title }}' } } Title
+          %li
+            %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ image.link_to_url }}' } } Link To URL
+          %li
+            %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ image.description }}' } } Description
+          %li
+            %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ image.thumb }}' } } Thumb
+          %li
+            %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ image.grayscale }}' } } Grayscale
+          %li
+            %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ image.tag }}' } } Tag
+      %li.dropdown-submenu      
+        %a{ href: "#" } Catalog Records:
+        %ul.dropdown-menu
+          %li
+            %a{ href: "#", type: 'button', data: { action: 'insert', start: '{% for record in setup.catalog.latest %}', end: '{% endfor %}' } } Each Record
+          %li
+            %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ record.title }}' } } Title
+          %li
+            %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ record.description }}' } } Description
+          %li
+            %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ record.type }}' } } Type
+          %li
+            %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ record.url }}' } } URL
+          %li
+            %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ record.start_date }}' } } Start Date
+          %li
+            %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ record.end_date }}' } } End Date
+      %li
+        %a{ href: "#", type: 'button', data: { action: 'insert', html: '{% system %}' } } System
+      %li
+        %a{ href: "#", type: 'button', data: { action: 'insert', html: '{% social_icons %}' } } Social Icons
+      %li
+        %a{ href: "#", type: 'button', data: { action: 'insert', html: '{% facebook_block %}' } } Facebook Block
+  %button.btn.btn-small{ type: "button", data: { action: 'icon' } }
+    Icons
