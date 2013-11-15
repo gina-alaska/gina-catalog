@@ -129,7 +129,7 @@ class @CatalogMap extends OpenlayersMap
       aoiStyle = new OpenLayers.StyleMap({
         default: new OpenLayers.Style({
           fillColor: '#00ff00', 
-          fillOpacity: 0.2,
+          fillOpacity: 0.3,
           strokeColor: '#00ff00',
           strokeOpacity: 0.8,
           strokeWidth: 1
@@ -153,11 +153,11 @@ class @CatalogMap extends OpenlayersMap
       default: new OpenLayers.Style({
         graphicZIndex: 1,
         pointRadius: 6,
-        fillColor: '#3a87ad', 
-        fillOpacity: 0.8,
-        strokeColor: '#3a87ad',
+        fillColor: '#70faff', 
+        fillOpacity: 0,
+        strokeColor: '#70faff',
         strokeOpacity: 1,
-        strokeWidth: 1
+        strokeWidth: 4
       }),
       select: new OpenLayers.Style({
         fillColor: '#f00',
