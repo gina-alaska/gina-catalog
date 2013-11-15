@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131105193838) do
+ActiveRecord::Schema.define(:version => 20131111201111) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -722,6 +722,7 @@ ActiveRecord::Schema.define(:version => 20131105193838) do
     t.string   "url"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "job_title"
   end
 
   create_table "permissions", :force => true do |t|
