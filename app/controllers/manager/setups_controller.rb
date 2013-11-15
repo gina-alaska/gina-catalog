@@ -29,7 +29,7 @@ class Manager::SetupsController < ManagerController
   end
   
   def create
-    @setup = Setup.new(params[:setup])
+    @setup = Setup.new(setup_params)
     @setup.url = request.host
     
     if @setup.save
@@ -54,11 +54,7 @@ class Manager::SetupsController < ManagerController
   end
   
   def update
-    if params["setup"]["favicon_attributes"]["image"] == ""
-      params["setup"]["favicon_attributes"]["_destroy"] = true 
-    end
-    
-    if current_setup.update_attributes(params[:setup])
+    if current_setup.update_attributes(setup_params)
       respond_to do |format|
         format.html {
           flash[:success] = 'Settings updated'
@@ -72,5 +68,16 @@ class Manager::SetupsController < ManagerController
         }
       end      
     end
+  end
+  
+  protected
+  
+  def setup_params
+    @setup_params = params['setup'].dup
+    if @setup_params.include? 'favicon_attributes'
+      @setup_params['favicon_attributes']['_destroy'] = 1 if @setup_params['favicon_attributes']['image'].blank?
+    end
+    
+    @setup_params
   end
 end
