@@ -63,10 +63,27 @@ $(document).on("click", "[data-behavior='load_collection']", (evt) ->
   evt.preventDefault()
   
   target = $(this).data("target")
-  if parseInt($(target).val()) == parseInt($(this).data("value"))
-    CatalogSearch.update(target, '')
-    CatalogSearch.submit()
+  clicked_id = $(this).data('value')
+
+  if $(target).val() == ''
+    collection_ids = []
   else
-    CatalogSearch.update(target, $(this).data("value"))
-    CatalogSearch.submit()
+    collection_ids = (parseInt(id) for id in ($(target).val().split(",")))
+  
+  if clicked_id in collection_ids
+    collection_ids = (id for id in collection_ids when id isnt clicked_id)
+  else
+    collection_ids.push(clicked_id)
+
+  $(target).val(collection_ids.join(','))
+  CatalogSearch.submit()
+
+  #for each (var collection in coll_array) {
+  #  if parseInt($(collection).val()) == parseInt($(this).data("value"))
+  #    CatalogSearch.update(collection, '')
+  #    CatalogSearch.submit()
+  #  else
+  #    CatalogSearch.update(collection, $(this).data("value"))
+  #    CatalogSearch.submit()
+  #  }
 )

@@ -70,6 +70,10 @@ class SearchesController < ApplicationController
     @format = params[:format] || ""
     @limit = params[:limit] || 30
     @pagenum = params[:page] || 1
+    
+    @search_params[:collection_ids] = @search_params[:collection_ids].split(',').map(&:to_i) 
+    @search_params[:collection_ids] ||= []
+
     @search_params[:field] = "relevance" unless SORT_FIELDS.include?(@search_params[:field])
     @search_params[:direction] = "ascending" unless %w{ascending descending}.include?(@search_params[:direction])
   

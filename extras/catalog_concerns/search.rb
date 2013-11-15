@@ -71,6 +71,13 @@ module CatalogConcerns
           with :funding_agency_id, search[:funding_agency_id] if search[:funding_agency_id].present?
           with :iso_topic_ids, search[:iso_topic_ids] if search[:iso_topic_ids].present?
           with :collection_ids, search[:collection_id] if search[:collection_id].present?
+          if search[:collection_ids].present?
+            all_of do
+              search[:collection_ids].each do |id|
+                with :collection_ids, id
+              end
+            end
+          end
           with :primary_contact_id, search[:primary_contact_id] if search[:primary_contact_id].present?
           with :contact_ids, search[:contact_ids] if search[:contact_ids].present?
           with :geokeywords_name, search[:region] if search[:region].present?
