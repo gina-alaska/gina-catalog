@@ -3,6 +3,45 @@ module CatalogConcerns
     extend ActiveSupport::Concern
     
     module InstanceMethods
+      def search_catalog(search={}, limit=30, page=1, format="")
+        search[:collection_ids] = search[:collection_ids].split(',').map(&:to_i) 
+        search[:collection_ids] ||= []
+
+        search[:field] = "relevance" unless SORT_FIELDS.include?(search[:field])
+        search[:direction] = "ascending" unless %w{ascending descending}.include?(search[:direction])
+      
+              
+        advanced_opts = search.reject { |k,v| v.blank? or ['q', 'collection_id', 'order_by'].include?(k) }
+        is_advanced = advanced_opts.keys.size > 0
+        
+        if (search['q'].nil? or search['q'].blank?)
+          search[:order_by] = "title_sort-ascending"
+        else
+          search.delete(:order_by)
+        end
+        
+        unless search[:field] == "relevance"
+          search[:order_by] ||= "#{search[:field]}_sort-#{search[:direction]}"
+        end
+            
+        unless current_user and current_member.can_manage_cms?
+          search[:published_only] = true
+        end
+        
+        solr_results = solr_search(search, pagenum, limit, :collection_ids)
+        if solr_results.respond_to? :results
+          collection_facets = solr_results.facet(:collection_ids).rows.inject({}) do |c,v|
+            c[v.value] = v.count
+            c
+          end
+          results = solr_results.results
+          total = solr_results.total
+        else
+          results = Array.wrap(solr_results)
+          total = 0
+        end
+      end
+
       def solr_search(search, page=1, limit=10000, facet_list = false)    
         return [] if search.nil? or search.keys.empty?
     
