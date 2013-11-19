@@ -11,7 +11,7 @@ set :log_level, :debug
 # set :pty, true
 
 set :linked_files, %w{config/database.yml config/initializers/catalog.rb config/git_hooks_env config/sunspot.yml}
-set :linked_dirs, %w{bin log tmp vendor/bundle public/assets public/system archives uploads git}
+set :linked_dirs, %w{bin log tmp vendor/bundle public/assets public/system archive repos uploads git}
 
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 set :keep_releases, 5
