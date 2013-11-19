@@ -2,18 +2,19 @@ module CatalogConcerns
   module Search
     extend ActiveSupport::Concern
     
+    SORT_FIELDS = ["title", "agency", "relevance"]
+
     module InstanceMethods
-      def search_catalog(search={}, limit=30, page=1, format="")
-        search[:collection_ids] = search[:collection_ids].split(',').map(&:to_i) 
+      def search_params(search={})
+        if search.include? :collection_ids
+          search[:collection_ids] = search[:collection_ids].split(',') unless search[:collection_ids].is_a?(Array)
+          search[:collection_ids] = search[:collection_ids].map(&:to_i) 
+        end
         search[:collection_ids] ||= []
 
         search[:field] = "relevance" unless SORT_FIELDS.include?(search[:field])
         search[:direction] = "ascending" unless %w{ascending descending}.include?(search[:direction])
       
-              
-        advanced_opts = search.reject { |k,v| v.blank? or ['q', 'collection_id', 'order_by'].include?(k) }
-        is_advanced = advanced_opts.keys.size > 0
-        
         if (search['q'].nil? or search['q'].blank?)
           search[:order_by] = "title_sort-ascending"
         else
@@ -24,27 +25,18 @@ module CatalogConcerns
           search[:order_by] ||= "#{search[:field]}_sort-#{search[:direction]}"
         end
             
-        unless current_user and current_member.can_manage_cms?
+        unless current_user and current_member.can_manage_catalog?
           search[:published_only] = true
         end
         
-        solr_results = solr_search(search, pagenum, limit, :collection_ids)
-        if solr_results.respond_to? :results
-          collection_facets = solr_results.facet(:collection_ids).rows.inject({}) do |c,v|
-            c[v.value] = v.count
-            c
-          end
-          results = solr_results.results
-          total = solr_results.total
-        else
-          results = Array.wrap(solr_results)
-          total = 0
-        end
+        return search
       end
 
       def solr_search(search, page=1, limit=10000, facet_list = false)    
-        return [] if search.nil? or search.keys.empty?
-    
+        if search.nil? or search.keys.empty?
+          return [] 
+        end
+
         table_includes = {
           :repo => [], :locations => [], :download_urls => []
           # :repo => [], :locations => [], :download_urls => [], :owner_setup => [], :setups => [], :source_agency => []

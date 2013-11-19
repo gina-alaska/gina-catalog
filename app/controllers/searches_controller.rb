@@ -1,5 +1,4 @@
 class SearchesController < ApplicationController
-  SORT_FIELDS = ["title", "agency", "relevance"]
   include CatalogConcerns::Search
 
   def show
@@ -66,34 +65,13 @@ class SearchesController < ApplicationController
   protected
 
   def search_catalog
-    @search_params = params[:search] || {}
+    @search_params = search_params(params[:search])
     @format = params[:format] || ""
     @limit = params[:limit] || 30
     @pagenum = params[:page] || 1
     
-    @search_params[:collection_ids] = @search_params[:collection_ids].split(',').map(&:to_i) 
-    @search_params[:collection_ids] ||= []
-
-    @search_params[:field] = "relevance" unless SORT_FIELDS.include?(@search_params[:field])
-    @search_params[:direction] = "ascending" unless %w{ascending descending}.include?(@search_params[:direction])
-  
-          
     advanced_opts = @search_params.reject { |k,v| v.blank? or ['q', 'collection_id', 'order_by'].include?(k) }
     @is_advanced = advanced_opts.keys.size > 0
-    
-    if (@search_params['q'].nil? or @search_params['q'].blank?)
-      @search_params[:order_by] = "title_sort-ascending"
-    else
-      @search_params.delete(:order_by)
-    end
-    
-    unless @search_params[:field] == "relevance"
-      @search_params[:order_by] ||= "#{@search_params[:field]}_sort-#{@search_params[:direction]}"
-    end
-        
-    unless current_user and current_member.can_manage_cms?
-      @search_params[:published_only] = true
-    end
     
     @search = solr_search(@search_params, @pagenum, @limit, :collection_ids)
     if @search.respond_to? :results
