@@ -63,4 +63,4 @@
 .row-fluid
   .span12
     =label_tag 'search[collection_ids]', 'Collections'
-    =select_tag 'search[collection_ids]', options_from_collection_for_select(current_setup.catalog_collections, :id, :name, @search[:collection_ids]), data: {placeholder: 'Collections', ui: 'select2'}, class: 'span12', :include_blank => true, tabindex: 21
+    =select_tag 'search[collection_ids]', options_from_collection_for_select(current_setup.collections, :id, :name, @search[:collection_ids]), data: {placeholder: 'Collections', ui: 'select2'}, class: 'span12', :include_blank => true, tabindex: 21, multiple: true
