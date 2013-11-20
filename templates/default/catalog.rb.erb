@@ -1,6 +1,7 @@
 module NSCatalog
   class Application
     config.theme         = 'default'
+    config.deploy_path   = "<%= @deploy_path %>"
     config.archive_path  = "#{config.root}/archive"
     config.repo_clones   = "#{config.root}/repo_clones"
     config.repos_path    = "#{config.root}/repos"

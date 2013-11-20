@@ -31,16 +31,23 @@ mount node[app_name]['catalog_silo_path'] do
   action [:mount, :enable]
 end
 
-
-%w{ archives uploads git }.each do |d|
-  from_silo_path = File.join(node[app_name]['catalog_silo_path'], d)
-  to_shared_path = File.join(node[app_name]['shared_path'], d)
-
-  link to_shared_path do
-    to from_silo_path
-  end
+link File.join(node[app_name]['shared_path'], 'archive') do
+  to File.join(node[app_name]['catalog_silo_path'], 'archives') 
+  owner account
+  group account
 end
 
+link File.join(node[app_name]['shared_path'], 'repos') do
+  to File.join(node[app_name]['catalog_silo_path'], 'git') 
+  owner account
+  group account
+end
+
+link File.join(node[app_name]['shared_path'], 'uploads') do
+  to File.join(node[app_name]['catalog_silo_path'], 'uploads') 
+  owner account
+  group account
+end
 
 template "#{node[app_name]['shared_path']}/config/sunspot.yml" do
   owner account
@@ -70,6 +77,16 @@ template "#{node[app_name]['shared_path']}/config/initializers/catalog.rb" do
   owner account
   group account
   mode 00644  
+  
+  variables({ deploy_path: node[app_name]['deploy_path'] })
+end
+
+template "#{node[app_name]['shared_path']}/config/resque.yml" do
+  owner account
+  group account
+  mode 00644  
+  
+  variables(node[app_name]['redis'])
 end
 
 directory "/home/#{account}/.bundle" do

@@ -21,6 +21,7 @@ default['glynx']['database']['search_path'] = "nssi_prod,public"
 default['glynx']['sunspot']['hostname'] = "peanut.x.gina.alaska.edu"
 default['glynx']['sunspot']['port'] = "8983"
 
+default['glynx']['redis']['hostname'] = "peanut.x.gina.alaska.edu"
 
 default['glynx']['before_fork'] = '
 defined?(ActiveRecord::Base) and
