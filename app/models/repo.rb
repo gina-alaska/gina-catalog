@@ -160,7 +160,7 @@ Description: #{self.catalog.description}
   
   ## ARCHIVE
   def update_hooks
-    cmd = ['ln -sf', (Rails.root + 'hooks/post-receive').to_s, "#{path}/hooks/post-receive"]
+    cmd = ['ln -sf', File.join(NSCatalog::Application.config.deploy_path, 'hooks/post-receive'), "#{path}/hooks/post-receive"]
     `#{cmd.join(' ')}`
   end
   
