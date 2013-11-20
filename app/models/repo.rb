@@ -121,9 +121,13 @@ Description: #{self.catalog.description}
         yield(self, @cloned)
   
         if opts[:autocommit]
+          Rails.logger.info "Auto commiting files"
           @cloned.commit({ :timeout => false, :a => true, :m => @commit_msgs.join("\n") })
           @commit_msgs = []
-          @cloned.push({ :timeout => false }) if opts[:autopush]
+          if opts[:autopush]
+            Rails.logger.info "Auto pushing files"
+            @cloned.push({ :timeout => false }) 
+          end
         end
       end
       cleanup if opts[:autoclean]
