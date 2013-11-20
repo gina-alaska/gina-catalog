@@ -113,6 +113,7 @@ Description: #{self.catalog.description}
       opts[:autocommit] = true unless opts.include? :autocommit
     end
   
+    Rails.logger.info "Cloning to temp repo @ #{NSCatalog::Application.config.repos_tmp}"
     @cloned ||= self.clone_to(NSCatalog::Application.config.repos_tmp)
     
     if block_given?
@@ -135,6 +136,7 @@ Description: #{self.catalog.description}
   
     @commit_msgs = []
     clone_repo do |repo, git|
+      Rails.logger.info "Clone repo #{repo.inspect}"
       files.each do |f|
         if f.original_filename
           filename = f.original_filename
@@ -146,6 +148,7 @@ Description: #{self.catalog.description}
         FileUtils.mkdir_p(File.dirname(destination))
         
         if f.tempfile
+          Rails.logger.info "copying #{f.tempfile} to #{destination}"
           FileUtils.cp(f.tempfile, destination)
         else
           FileUtils.cp(f, destination)
