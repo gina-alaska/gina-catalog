@@ -62,6 +62,9 @@ gem 'capistrano-rails'
 # gem 'sqlite3-ruby', :require => 'sqlite3'
 # gem 'aws-s3', :require => 'aws/s3'
 
+# Document gems
+gem 'pdf-reader', git: 'https://github.com/yob/pdf-reader'
+
 group :assets do
   gem 'sass-rails', "~> 3.2.0"
   gem 'coffee-rails', '~> 3.2.0'
