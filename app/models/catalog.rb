@@ -125,7 +125,7 @@ class Catalog < ActiveRecord::Base
       'title' => self.title,
       'description' => self.description,
       'type' => self.type,
-      'url' => "/catalogs/#{self.to_param})",
+      'url' => "/catalogs/#{self.to_param}",
       'start_date' => self.start_date,
       'end_date' => self.end_date
     }
@@ -171,7 +171,7 @@ class Catalog < ActiveRecord::Base
     text :contacts do
       contacts.map{|a| [a.first_name, a.last_name, a.email]}
     end
-    
+        
     string :agency_types, :multiple => true do
       types = [source_agency.try(:category), funding_agency.try(:category)]
       types += agencies.collect(&:category)
