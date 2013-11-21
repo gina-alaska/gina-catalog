@@ -74,8 +74,9 @@ class Manager::SetupsController < ManagerController
   
   def setup_params
     @setup_params = params['setup'].dup
-    if @setup_params.include? 'favicon_attributes'
-      @setup_params['favicon_attributes']['_destroy'] = 1 if @setup_params['favicon_attributes']['image'].blank?
+    if @setup_params.include? 'favicon_attributes' and @setup_params['favicon_attributes']['image'].blank? and !@setup_params['favicon_attributes']['_destroy'].to_i
+      
+      @setup_params.delete('favicon_attributes') 
     end
     
     @setup_params

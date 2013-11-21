@@ -137,6 +137,7 @@
                   %span.fileupload-new Select image
                   %span.fileupload-exists Change
                   = f.fields_for :favicon do |attachment|
+                    = attachment.hidden_field :_destroy, value: 0
                     = attachment.file_field :image
                 %a.btn.fileupload-exists{href: "#", data: { dismiss: "fileupload" }} Remove
             %p Note:  Only use .png or .ico images for the favicon.
@@ -146,3 +147,12 @@
       %i.icon-arrow-left
       Back
     = f.submit class: 'btn btn-primary pull-right'
+:javascript
+  $('[data-dismiss="fileupload"]').on('click', function() {
+    $('#setup_favicon_attributes__destroy').val(1);
+  })
+  $('#setup_favicon_attributes_image').on('change', function() {
+    if ($(this).val() != '') {
+      $('#setup_favicon_attributes__destroy').val(0);
+    }
+  })
