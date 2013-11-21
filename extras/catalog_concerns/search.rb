@@ -6,6 +6,8 @@ module CatalogConcerns
 
     module InstanceMethods
       def search_params(search={})
+        search ||= {}
+          
         if search.include? :collection_ids
           search[:collection_ids] = search[:collection_ids].split(',') unless search[:collection_ids].is_a?(Array)
           search[:collection_ids] = search[:collection_ids].map(&:to_i) 
