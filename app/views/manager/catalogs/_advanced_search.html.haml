@@ -59,3 +59,8 @@
   .span8
     =label_tag 'search[contact_ids]', 'Contacts'
     =select_tag 'search[contact_ids]', options_from_collection_for_select(current_setup.persons, :id, :contact_string, @search[:contact_ids]), multiple: true, class: 'span12', data: {placeholder: 'All Contacts', ui: 'select2'}, tabindex: 20
+
+.row-fluid
+  .span12
+    =label_tag 'search[collection_ids]', 'Collections'
+    =select_tag 'search[collection_ids]', options_from_collection_for_select(current_setup.collections, :id, :name, @search[:collection_ids]), data: {placeholder: 'Collections', ui: 'select2'}, class: 'span12', :include_blank => true, tabindex: 21, multiple: true

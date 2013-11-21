@@ -20,17 +20,12 @@ class Manager::CatalogsController < ManagerController
     @sort = params[:sort] || ''
     @sortdir = params[:sort_direction] || "ascending"
 
-    @search = params[:search] || {}
-    if @search[:q].blank? and @sort.empty?
-      @sort = "title_sort"
-    end
+    @search = search_params(params[:search])
 
     advanced_opts = @search.reject { |k,v| v.blank? or ['q', 'collection_id', 'order_by', 'sds', 'unpublished', 'editable'].include?(k) }
     @is_advanced = advanced_opts.keys.size > 0
 
-    @search[:order_by] = "#{@sort}-#{@sortdir}" unless @sort.empty?
     search = solr_search(@search, @page, @limit)
-
     if search.respond_to? :results
       @catalogs = search.results
       @total = search.total
