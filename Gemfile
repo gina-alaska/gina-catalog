@@ -30,6 +30,7 @@ gem 'nested_form', git: 'https://github.com/ryanb/nested_form.git'
 gem 'rcsw', "~> 0.1.1", git: 'https://github.com/gina-alaska/ruby-csw.git'
 gem 'whenever'
 gem 'nokogiri'
+gem 'dalli'
 
 #gem 'nofxx-georuby'
 #broke in rails 3.1
