@@ -6,7 +6,7 @@ class Catalog
     @loadFeatures()
     
   initListeners: =>
-    $(document).on('click', "[data-openlayers-action='select-features']", @selectResultFeatures)
+    # $(document).on('click', "[data-openlayers-action='select-features']", @selectResultFeatures)
     # $(document).on('page:fetch').unbind('click', @selectResultFeatures)
 
   selectResultFeatures: (evt) =>

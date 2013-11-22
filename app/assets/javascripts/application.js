@@ -16,6 +16,7 @@
 //= require 'projections'
 //= require 'maps/openlayers_map'
 //= require 'maps/catalog_map'
+//= require 'maps/record_map'
 //= require 'maps/map_layers'
 //= require 'catalogs'
 //= require 'flash_message'

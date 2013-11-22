@@ -1,7 +1,7 @@
 map_size = { hidden: false, large: false, fullscreen: false }
 map_size_target = null
 
-class @CatalogMap extends OpenlayersMap
+class @RecordMap extends OpenlayersMap
   constructor: (@el) ->
     super(@el)
     
@@ -9,46 +9,20 @@ class @CatalogMap extends OpenlayersMap
     @preview_layers_list = {}
     
     @map_state = { target: '.search', size: History.getState().data.map_size || 'normal' }
-    @setupCatalogMap()
+    @setupRecordMap()
     @initListeners()
-    @setupToolbar()
+    @setupHandlers()
     
     if map_size_target 
       for size, active of map_size when active is true
         @expandMap(map_size_target, size) 
             
-    @loadMapState()
+    # @loadMapState()
     @loadFeatures()
     
   # end constructor
   
   initListeners: =>
-    $(document).on('click', "[data-openlayers-action='select-features']", @selectResultFeatures)
-
-  selectResultFeatures: (evt) =>
-    evt.preventDefault()
-    target = $(evt.currentTarget).data('target')
-    features = $(target).data("features")
-    @selectControl.unselectAll()
-    
-    bounds = features[0].geometry.getBounds().clone()
-
-    @selectControl.multiple = true
-    @selectControl.multipleSelect()
-    
-    # use @skipHighlight to only scroll to the result the first time it's clicked on
-    @skipHighlight = false
-    
-    for feature in features
-      bounds.extend(feature.geometry.getBounds())
-      @selectControl.select(feature) 
-      @skipHighlight = true
-      
-    @skipHighlight = false
-    @selectControl.multiple = false
-    @selectControl.multipleSelect()
-    # @selectControl.multipleSelect(false)
-    @zoomToBounds(bounds)  
   
   loadFeatures: =>        
     @result_feature_layer.destroyFeatures()
@@ -109,9 +83,8 @@ class @CatalogMap extends OpenlayersMap
       
       @resize()      
       
-  setupToolbar: =>
+  setupHandlers: =>
     @addBtnHandler 'preview', @preview_layer
-    @addBtnHandler 'drawAOI', @drawAOI
     @addBtnHandler 'zoomToMaxExtent', @zoomToDefaultBounds
     @addBtnHandler 'expand', (evt, btn) =>
       @expandMap(btn.data('target'), btn.data('size'), btn)
@@ -124,27 +97,7 @@ class @CatalogMap extends OpenlayersMap
         @btnHandlers[action](evt, $(evt.currentTarget));
   # end setupToolbar
   
-  setupCatalogMap: () ->
-    unless @aoiLayer?
-      aoiStyle = new OpenLayers.StyleMap({
-        default: new OpenLayers.Style({
-          fillColor: '#00ff00', 
-          fillOpacity: 0.3,
-          strokeColor: '#00ff00',
-          strokeOpacity: 0.8,
-          strokeWidth: 1
-        })
-      })
-      @aoiLayer = new OpenLayers.Layer.Vector("AOI Search", {           
-        displayInLayerSwitcher: false,
-        styleMap: aoiStyle, 
-      })
-    
-      @map.addLayer(@aoiLayer)      
-      
-    if @data_config['aoiInputField']
-      @addAOI($(@data_config['aoiInputField']).val())    
-      
+  setupRecordMap: () -> 
     lookup = {
       'Asset': { fillColor: '#3a87ad', strokeColor: '#3a87ad' },
       'Project': { fillColor: '#c09853', strokeColor: '#c09853' }
@@ -168,36 +121,10 @@ class @CatalogMap extends OpenlayersMap
     })
     @styleMap.addUniqueValueRules("default", "type", lookup)
     
-    @result_feature_layer = new OpenLayers.Layer.Vector('Search Results', { styleMap: @styleMap, rendererOptions: {zIndexing: true} })
+    @result_feature_layer = new OpenLayers.Layer.Vector('Locations', { styleMap: @styleMap, rendererOptions: {zIndexing: true} })
     @map.addLayer(@result_feature_layer)
-    @map.events.register 'addLayer', @, @moveFeaturesToTop
-      
+    @map.events.register 'addlayer', @, @moveFeaturesToTop
     
-    @selectControl = new OpenLayers.Control.SelectFeature(@result_feature_layer, {
-      autoActivate: true,
-      onUnselect: () =>
-        if @higlightEl
-          @higlightEl.removeClass('highlight')
-        
-      onSelect: (feature) =>
-        unless @skipHighlight
-          el = $('#' + feature.attributes.record_id).parent('.result')
-          parent = $('body,html')
-
-          padding = $('#map').height()
-         
-          # .data('scroll-offset')
-          parent.animate({
-            scrollTop: el.offset().top - padding - 30
-          })
-        
-          #save this for later reset
-          bgcolor = el.css('backgroundColor')
-        
-          el.addClass('highlight')
-          @higlightEl = el
-    })
-    @map.addControl(@selectControl)     
   #end setupMap
   
   moveFeaturesToTop: =>
@@ -237,56 +164,5 @@ class @CatalogMap extends OpenlayersMap
         @map.addLayer(@preview_layers_list[href])
         @toggleCheck(btn, checkbox, true)
     
-  addAOI:(wkt) =>
-    wktReader = new OpenLayers.Format.WKT()
-    feature = wktReader.read(wkt);
-
-    if feature
-      @aoiLayer.removeAllFeatures()
-      feature.geometry.transform('EPSG:4326', @map.projection);
-      @aoiLayer.addFeatures([feature])
-    
-    
-  drawAOI:(evt, btn) =>
-    @setupAOIControl(evt, btn)
-    @aoiLayer.removeAllFeatures()
-    $.event.trigger({
-      type: 'openlayers:aoidraw',
-      map: @map,
-      mapInstance: this
-    })
-    @aoiDrawControl.activate()    
-  
-  setupAOIControl: (evt, btn) =>      
-    unless @aoiDrawControl
-      @aoiDrawControl = new OpenLayers.Control.DrawFeature(@aoiLayer,
-        OpenLayers.Handler.RegularPolygon, {
-          autoActivate: false,
-          documentDrag: true,
-          featureAdded: (feature) =>
-            @aoiDrawControl.deactivate()
-            
-            feature.geometry.transform(@config['projection'], @config['displayProjection'])
-            this.addAOI(feature.geometry.toString())
-            
-            $.event.trigger({
-              type: 'openlayers:aoidrawn',
-              wkt: feature.geometry.toString(),
-              map: @map,
-              mapInstance: this
-            })
-          handlerOptions: {
-            documentDrag: true,
-            sides: 4,
-            irregular: true
-          }
-        }
-      )
-      @aoiDrawControl.events.register 'activate', btn, ->
-        $(this).addClass('active')
-      @aoiDrawControl.events.register 'deactivate', btn, ->
-        $(this).removeClass('active')
-      
-      @map.addControl(@aoiDrawControl)
   #end setupAOIControl
 #end CatalogMap
