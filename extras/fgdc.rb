@@ -16,7 +16,9 @@ class FGDC
   end
   
   def keywords 
-    @xml.search('idinfo keywords').search('themekey','placekey').children.collect(&:to_s)
+    @xml.search('idinfo keywords').search('themekey','placekey').children.collect { |tag|
+      tag.to_s.split(/\s*[;,:]\s*/)
+    }.flatten
   end
   
   def start_date
@@ -64,20 +66,12 @@ class FGDC
     end
   end
   
-  def source_agency
-    agency = @xml.search('idinfo cntorgp cntorg').children.to_s
-    
-    if agency.empty?
-      nil
-    else
-      agency.strip
-    end
+  def agencies
+    agency = @xml.search('idinfo cntorgp cntorg').children.collect(&:to_s)
+    agency
   end
   
   def funding_agency
-  end
-
-  def agencies
   end
 
   private

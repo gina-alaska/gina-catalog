@@ -14,10 +14,13 @@ class Link < ActiveRecord::Base
   def pdf_to_text
     return "" unless self.is_pdf?
     pdf_text = ""
-    io = open(self.url)
-
-    PDF::Reader.new(io).pages.each do |page|
-      pdf_text << page.text
+    begin      
+      io = open(self.url)
+      PDF::Reader.new(io).pages.each do |page|
+        pdf_text << page.text
+      end
+    rescue
+      # don't die because of pdf or http error
     end
 
     return pdf_text

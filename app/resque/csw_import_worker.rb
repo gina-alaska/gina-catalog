@@ -27,6 +27,8 @@ class CswImportWorker
     records.each_with_index do |record, index|
       uuid = record.identifier.gsub(/({|})/,"")
       
+      puts uuid
+      
       catalog = Catalog.where(uuid: uuid, csw_import_id: @csw.id).first_or_initialize
 
       if force or catalog.new_record? or catalog.remote_updated_at != record.modified
@@ -50,6 +52,8 @@ class CswImportWorker
             #Only keep the errors on imported records
             @log.log[:errors][url] = import_errors if import_errors.any?
           else
+            puts "Failed import of #{url}"
+            puts catalog.errors.full_messages
             @log.log[:failed] << url
           end
         rescue Exception => e

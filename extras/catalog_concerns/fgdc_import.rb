@@ -59,6 +59,8 @@ module CatalogConcerns
         # 
         # self.links.where(url: url).first_or_initialize(display_text: 'Metadata', category: 'Metadata')
         metadata.onlinks.each do |l|
+          next if l.downcase == 'none'
+          
           case l.split('.').last
           when 'zip'
             self.download_urls << fgdc_download_url(l)
@@ -99,14 +101,19 @@ module CatalogConcerns
           self.primary_contact = Person.where(metadata.primary_contact).first_or_initialize
         end
         
-        agency = Agency.where(name: metadata.source_agency).first
-        agency ||= Alias.where(text: metadata.source_agency, aliasable_type: 'Agency').first.try(:aliasable)
-        if agency.nil?
-          import_errors[:agencies] ||= []
-          import_errors[:agencies] << metadata.source_agency
-        else
-          self.source_agency = agency        
+        metadata.agencies.each do |agency_name|
+          puts agency_name
+          next if agency_name.nil? or agency_name.empty?
+          agency = Agency.where(name: agency_name).first
+          agency ||= Alias.where(text: agency_name, aliasable_type: 'Agency').first.try(:aliasable)
+          if agency.nil? 
+            import_errors[:agencies] ||= []
+            import_errors[:agencies] << agency_name
+          else
+            self.agencies << agency        
+          end
         end
+        
 
         
         import_errors

@@ -25,4 +25,4 @@
           - record.last.each do |field, values|
             %tr
               %td= field
-              %td= values
+              %td= Array.wrap(values).join(', ').html_safe
