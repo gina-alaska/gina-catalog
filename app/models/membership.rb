@@ -24,6 +24,7 @@ class Membership < ActiveRecord::Base
   def method_missing(method_id, *args)
     if match = matches_dynamic_role_check?(method_id)
       return true if self.user.try(:is_an_admin?)
+
       
       tokenize_roles(match.captures.first).each do |check|
         return true if self.roles.index { |i| i.name == check }
@@ -41,6 +42,7 @@ class Membership < ActiveRecord::Base
       return false
     elsif match = matches_dynamic_perm_group_check?(method_id)
       return true if self.user.try(:is_an_admin?)
+      return false unless self.setup.send("#{match[1]}_enabled")
       
       tokenize_roles(match.captures.first).each do |check|
         return true if self.permissions.index { |i| i.group == check }

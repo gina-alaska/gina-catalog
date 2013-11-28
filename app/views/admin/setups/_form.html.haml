@@ -44,12 +44,12 @@
     .control-group
       = f.label "Enable CMS", class: 'control-label'
       .controls
-        = f.check_box :cms
+        = f.check_box :cms_enabled
 
     .control-group
       = f.label "Enable Data Records", class: 'control-label'
       .controls
-        = f.check_box :data
+        = f.check_box :catalog_enabled
 
   .form-actions
     = link_to admin_setups_path, class: 'btn' do
