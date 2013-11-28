@@ -849,8 +849,8 @@ ActiveRecord::Schema.define(:version => 20131128011035) do
     t.string   "by_line"
     t.string   "url"
     t.string   "logo_uid"
-    t.datetime "created_at",                          :null => false
-    t.datetime "updated_at",                          :null => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
     t.string   "contact_email"
     t.text     "default_invite"
     t.text     "analytics_account"
@@ -866,14 +866,16 @@ ActiveRecord::Schema.define(:version => 20131128011035) do
     t.text     "description"
     t.text     "keywords"
     t.string   "projection"
-    t.boolean  "google_layers",     :default => true
+    t.boolean  "google_layers",       :default => true
     t.string   "record_projection"
     t.string   "google_plus_url"
     t.string   "youtube_url"
     t.string   "instagram_url"
     t.string   "linkedin_url"
-    t.boolean  "cms",               :default => true
-    t.boolean  "data",              :default => true
+    t.boolean  "cms_enabled",         :default => true
+    t.boolean  "catalog_enabled",     :default => true
+    t.boolean  "settings_enabled",    :default => true
+    t.boolean  "permissions_enabled", :default => true
   end
 
   create_table "setups_snippets", :id => false, :force => true do |t|
