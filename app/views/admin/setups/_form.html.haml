@@ -37,6 +37,20 @@
     #url_fields
       = f.fields_for :urls
 
+  %fieldset
+    %legend 
+      Site Modules
+
+    .control-group
+      = f.label "Enable CMS", class: 'control-label'
+      .controls
+        = f.check_box :cms
+
+    .control-group
+      = f.label "Enable Data Records", class: 'control-label'
+      .controls
+        = f.check_box :data
+
   .form-actions
     = link_to admin_setups_path, class: 'btn' do
       %i.icon-arrow-left
