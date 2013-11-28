@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131111201111) do
+ActiveRecord::Schema.define(:version => 20131128011035) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -872,6 +872,8 @@ ActiveRecord::Schema.define(:version => 20131111201111) do
     t.string   "youtube_url"
     t.string   "instagram_url"
     t.string   "linkedin_url"
+    t.boolean  "cms",               :default => true
+    t.boolean  "data",              :default => true
   end
 
   create_table "setups_snippets", :id => false, :force => true do |t|
