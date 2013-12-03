@@ -11,7 +11,7 @@ module CatalogConcerns
     end
     
     def archive_file
-      File.join(archive_path, 'catalog', self.id.to_s[0..2], self.to_param + '.zip')
+      File.join(archive_path, 'catalog', self.id.to_s[0..1], self.to_param + '.zip')
     end
     
     def archive_size
