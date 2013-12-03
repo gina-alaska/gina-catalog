@@ -31,6 +31,7 @@ gem 'rcsw', "~> 0.1.1", git: 'https://github.com/gina-alaska/ruby-csw.git'
 gem 'whenever'
 gem 'nokogiri'
 gem 'dalli'
+gem 'rubyzip', require: 'zip'
 
 #gem 'nofxx-georuby'
 #broke in rails 3.1

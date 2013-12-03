@@ -22,8 +22,7 @@ log/sunspot*
 tools/wkhtmltopdf
 nssi-catalog-export*.xml
 app/assets/images/icons/.DS_Store
-archive/*.zip
-archive/*.tar.gz
+archive/
 config/initializers/catalog.rb
 repo_clones
 db/data
