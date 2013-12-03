@@ -10,6 +10,7 @@ namespace :fixdb do
       
       begin
         repo.catalog.try(:convert_repo)
+        repo.catalog.create_archive_file
       rescue => e
         puts "Error converting repo #{repo.catalog.to_param}: #{e.class}::#{e.message}"
       end
