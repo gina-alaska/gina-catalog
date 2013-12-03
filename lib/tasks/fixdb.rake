@@ -1,6 +1,19 @@
 namespace :fixdb do
   desc 'run all fixdb tasks'
-  task :all => [:collections, :themes, :update_downloads, :create_sitemap, :move_theme_css, :set_default_projection] do
+  task :all => [:themes, :update_downloads, :create_sitemap, :move_theme_css, :set_default_projection] do
+  end
+  
+  desc 'convert git repos to new upload paths'
+  task :convert_repos => :environment do
+    Repo.all.each do |repo|
+      puts repo.path
+      
+      begin
+        repo.catalog.try(:convert_repo)
+      rescue => e
+        puts "Error converting repo #{repo.catalog.to_param}: #{e.class}::#{e.message}"
+      end
+    end
   end
   
   desc 'migrate collections to the new setup'
