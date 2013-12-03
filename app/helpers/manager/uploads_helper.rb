@@ -1,0 +1,2 @@
+module Manager::UploadsHelper
+end
