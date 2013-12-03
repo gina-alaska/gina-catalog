@@ -4,19 +4,33 @@
       = label_tag 'search[type]', 'Record Type', class: 'control-label'
       .controls
         = select_tag 'search[type]', options_for_select([['Projects', 'Project'], ['Data', 'Data']], @search[:type]), class: 'span12', data: {placeholder: 'Projects and Data', ui: 'select2' }, include_blank: true, tabindex: 8
-    .control-group
-      = label_tag 'search[start_date_afer]', 'Starts after', class: 'control-label'
-      .controls
-        = number_field_tag 'search[start_date_afer]', @search[:start_date_afer], min: 1900, max: Time.zone.now.year, placeholder: 'YYYY', class: 'span12', tabindex: 11
+    .span12{ style: "margin-left: 0" }
+      .span6
+        .control-group
+          = label_tag 'search[start_date_before]', 'Starts before', class: 'control-label'
+          .controls
+            = number_field_tag 'search[start_date_before]', @search[:start_date_before], min: 1900, max: Time.zone.now.year, placeholder: 'YYYY', class: 'span12', tabindex: 11
+      .span6
+        .control-group
+          = label_tag 'search[start_date_after]', 'Starts after', class: 'control-label'
+          .controls
+            = number_field_tag 'search[start_date_after]', @search[:start_date_after], min: 1900, max: Time.zone.now.year, placeholder: 'YYYY', class: 'span12', tabindex: 11
   .span4
     .control-group
       = label_tag 'search[data_types]', 'Data Type', class: 'control-label'
       .controls
         = select_tag 'search[data_types]', options_from_collection_for_select(DataType.all, :name, :name, @search[:data_types]), class: 'span12', data: {placeholder: 'All types', ui: 'select2'}, include_blank: true, tabindex: 9
-    .control-group
-      = label_tag 'search[end_date_before]', 'Ends before'
-      .controls
-        = number_field_tag 'search[end_date_before]', @search[:end_date_before], min: 1900, max: Time.zone.now.year, placeholder: 'YYYY', class: 'span12', tabindex: 12
+    .span12{ style: "margin-left: 0" }
+      .span6
+        .control-group
+          = label_tag 'search[end_date_before]', 'Ends before'
+          .controls
+            = number_field_tag 'search[end_date_before]', @search[:end_date_before], min: 1900, max: Time.zone.now.year, placeholder: 'YYYY', class: 'span12', tabindex: 12
+      .span6
+        .control-group
+          = label_tag 'search[end_date_after]', 'Ends after'
+          .controls
+            = number_field_tag 'search[end_date_after]', @search[:end_date_after], min: 1900, max: Time.zone.now.year, placeholder: 'YYYY', class: 'span12', tabindex: 12
   .span4
     .control-group
       = label_tag 'search[status]', 'Status'
