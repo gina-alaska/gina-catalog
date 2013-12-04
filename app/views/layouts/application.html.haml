@@ -28,7 +28,7 @@
             Portal Tools
           .pull-right
             %ul.nav
-              - if current_member.access_cms? or current_member.access_catalog? or current_member.access_site_admin?
+              - if current_member.access_cms? or current_member.access_catalog? or current_member.access_settings? or current_member.access_permissions?
                 %li
                   = link_to manager_path do
                     %i.icon-cog.icon-spin

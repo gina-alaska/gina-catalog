@@ -3,8 +3,8 @@
     %p
       = link_to catalog_download_path(url.catalog, url), class: 'btn btn-primary btn-large btn-block', target: "_blank" do
         = "Download #{url.name}"
-- else
+- if catalog.local_download?
   %p 
     = link_to catalog_downloads_path(catalog, offer: true), class: 'btn btn-primary btn-large btn-block' do
-      = "Download #{File.basename(catalog.repo.archive_filenames[:zip])}"
+      = "Download #{File.basename(catalog.archive_file)}"
       

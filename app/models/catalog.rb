@@ -1,6 +1,7 @@
 class Catalog < ActiveRecord::Base
-  
   include CatalogConcerns::FgdcImport
+  include CatalogConcerns::Upload
+  
   STATUSES = %w(Complete Ongoing Unknown Funded)
 
   attr_accessible :links_attributes, :locations_attributes, :download_urls_attributes, 
@@ -29,7 +30,7 @@ class Catalog < ActiveRecord::Base
 
   #after_create :setup_path
   
-  after_create :create_repo!
+  # after_create :create_repo!
 
   belongs_to :owner, :class_name => 'User'
   belongs_to :primary_contact, :class_name => 'Person'
@@ -282,12 +283,6 @@ class Catalog < ActiveRecord::Base
     joins(:locations).where("ST_Intersects(geom, ?::geometry)", "SRID=#{srid};#{wkt}")
   end
   
-  def convert_repo!
-    if self.repo.nil? && self.repohex
-      self.create_repo!(repohex: self.repohex, slug: self.repohex)
-    end
-  end
-  
   def sds?
     self.remote_download? or !self.use_agreement.nil? or self.request_contact_info? or self.require_contact_info?
   end
@@ -297,15 +292,11 @@ class Catalog < ActiveRecord::Base
   end
   
   def local_download?
-    self.repo && !self.repo.empty? && self.repo.archive_available?(:zip)
+    self.archive_exists?
   end
   
   def downloadable?
     self.remote_download? or self.local_download?
-  end
-  
-  def repo_exists?
-    RepoProxy.exists?(self)
   end
 
   # def repohex

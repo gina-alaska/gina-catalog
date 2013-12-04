@@ -19,11 +19,23 @@
         = select_tag 'search[status]', options_for_select(Project::STATUSES + Asset::STATUSES, search_params[:status]), class: 'span12', 
           data: {placeholder: 'Any', ui: 'select2'}, include_blank: true
 
-        = label_tag 'search[start_date_afer]', 'Starts after'
-        = number_field_tag 'search[start_date_afer]', search_params[:start_date_afer], min: 1900, max: Time.zone.now.year, class: 'span12', placeholder: 'YYYY'
+        .span12{ style: "margin-left: 0" }
+          .span6
+            = label_tag 'search[start_date_before]', 'Starts before'
+            = number_field_tag 'search[start_date_before]', search_params[:start_date_before], min: 1900, max: Time.zone.now.year, class: 'span12', placeholder: 'YYYY'
             
-        = label_tag 'search[end_date_before]', 'Ends before'
-        = number_field_tag 'search[end_date_before]', search_params[:end_date_before], min: 1900, max: Time.zone.now.year, class: 'span12', placeholder: 'YYYY'
+          .span6
+            = label_tag 'search[start_date_after]', 'Starts after'
+            = number_field_tag 'search[start_date_after]', search_params[:start_date_after], min: 1900, max: Time.zone.now.year, class: 'span12', placeholder: 'YYYY'
+            
+        .span12{ style: "margin-left: 0" }
+          .span6
+            = label_tag 'search[end_date_before]', 'Ends before'
+            = number_field_tag 'search[end_date_before]', search_params[:end_date_before], min: 1900, max: Time.zone.now.year, class: 'span12', placeholder: 'YYYY'
+            
+          .span6
+            = label_tag 'search[end_date_after]', 'Ends after'
+            = number_field_tag 'search[end_date_after]', search_params[:end_date_after], min: 1900, max: Time.zone.now.year, class: 'span12', placeholder: 'YYYY'
             
         = label_tag 'search[iso_topic_ids]', 'ISO Topics'
         = select_tag 'search[iso_topic_ids]', options_from_collection_for_select(IsoTopic.all, :id, :long_name_with_code, search_params[:iso_topic_ids]), class: 'span12',

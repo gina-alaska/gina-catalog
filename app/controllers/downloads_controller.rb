@@ -118,7 +118,7 @@ class DownloadsController < ApplicationController
   def offer_file
     if @catalog.local_download?
       save_contact_info
-      send_file @catalog.repo.archive_filenames[:zip]
+      send_file @catalog.archive_file
     else
       render 'public/404', :status => 404
     end
