@@ -26,7 +26,7 @@
           %form#choose-file.form-inline
             %label.control-label Select an image:
             .controls
-              - files = current_setup.images.collect { |image| ["<img src=\"#{image.file.process(:page, 0).thumb('50x').url}\" /> #{image.title} #{(' - ' + truncate(image.description)) unless image.description.empty?}", image.url] }
+              - files = current_setup.images.collect { |image| ["<img src=\"#{image.thumbnail('50x').try(:url)}\" /> #{image.title} #{(' - ' + truncate(image.description)) unless image.description.empty?}", image.url] }
               = select_tag 'url', options_for_select(files), prompt: 'Select a file', class: 'images-select2'              
             .control-group.offset1
               %label.checkbox

@@ -31,7 +31,7 @@
         .controls
           .fileupload{ class: (f.object.new_record? ? 'fileupload-new' : 'fileupload-exists'), data: { provides: 'fileupload' } }
             .fileupload-preview.thumbnail.fileupload-exists{style:'max-width:75%'}
-              = image_tag image.file.process(:page, 0).png.thumb('300x300').url if image.file
+              = image_tag image.thumbnail('300x300').try(:url) if image.file
             %div
               %span.btn.btn-file
                 %span.fileupload-new Select image

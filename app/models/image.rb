@@ -7,29 +7,31 @@ class Image < ActiveRecord::Base
   has_many :pages, :through => :page_images, class_name: 'Page::Content'
   has_many :agencies
   
-  liquid_methods :title, :description, :link_to_url, :image_url
-  
-  def image_url
+  def raw_url
     self.file.url
   end
   
-  def url
-    url = self.link_to_url
-    if url.nil? or url.empty?
-      "#{self.file.url}"
-    else
-      url
-    end
+  def link_to_url_or_raw_url
+    self.link_to_url.empty? ? self.link_to_url : self.raw_url
+  end
+  
+  alias_method :url, :raw_url
+  alias_method :image_url, :raw_url
+  
+  def thumbnail(size = '640x480#')
+    self.file.image? ? self.file.process(:page, 0).thumb(size).png : nil
+  rescue Dragonfly::DataStorage::DataNotFound => e
+    nil
   end
   
   def to_liquid
     {
       'title' => self.title,
       'description' => self.description,
-      'link_to_url' => self.url,
-      'thumb' => ::ImageTagDrop.new(self.file),
-      'grayscale' => ::ProcessImageTagDrop.new(self.file, :grayscale),
-      'tag' => "<img src=\"#{self.file.png.process(:page, 0).thumb('640x480#').url}\" alt=\"#{self.title}\" />"
+      'link_to_url' => self.raw_url,
+      'thumb' => ::ImageTagDrop.new(self),
+      'grayscale' => ::ProcessImageTagDrop.new(self, :grayscale),
+      'tag' => "<img src=\"#{self.thumbnail.try(:url)}\" alt=\"#{self.title}\" />"
     }
   end
 

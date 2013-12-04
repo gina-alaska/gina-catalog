@@ -2,7 +2,7 @@
   .carousel-inner
     - images.each do |image|
       .item{class: images.first == image ? 'active' : '' }
-        = image_tag image.file.process(:page, 0).png.thumb('640x4280#').url, alt: image.title
+        = image_tag image.thumbnail('640x4280#').try(:url), alt: image.title
         .carousel-caption
           %h4= link_to_unless image.link_to_url.empty?, image.title, image.link_to_url
           %p= image.description

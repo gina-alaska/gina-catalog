@@ -3,7 +3,7 @@
     - @images.each do |image|
       %li.span3
         .thumbnail
-          = image_tag image.file.process(:page, 0).png.thumb('100x100').url, alt: image.title
+          = image_tag image.thumbnail('100x100').try(:url), alt: image.title
           %h4= link_to_unless image.link_to_url.empty?, image.title, image.link_to_url
           %p= image.description
           .buttons{style:"text-align:center;"}
