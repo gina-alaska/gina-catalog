@@ -23,7 +23,7 @@
       - catalog.files.each do |file|
         %tr
           %td= file
-          %td= number_to_human_size File.size(File.join(catalog.storage_path, file))
+          %td= number_to_human_size File.size(File.join(catalog.upload_path, file))
           
 - if current_member and current_member.can_manage_catalog?
   = form_for catalog, as: :upload, url: manager_upload_path(catalog), html: { class: 'modal hide fade', id: 'file_upload_modal' } do |f|
