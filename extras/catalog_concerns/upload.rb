@@ -23,7 +23,7 @@ module CatalogConcerns
     end
     
     def files
-      @files = Dir.entries(self.upload_path).reject { |f| f[0] == ?. or file == 'README' } if File.directory? self.upload_path
+      @files = Dir.entries(self.upload_path).reject { |f| f[0] == ?. or f == 'README' } if File.directory? self.upload_path
       @files ||= []      
     end
     
