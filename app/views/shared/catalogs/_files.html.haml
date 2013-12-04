@@ -11,10 +11,10 @@
                 %button.btn.btn-primary{data: { toggle:'modal', target:'#file_upload_modal' }}
                   %i.icon-upload.icon-white
                   Add File
-      - unless catalog.files.empty?
-        %tr{style:'text-align:left'}
-          %th Name
-          %th Size
+    - unless catalog.files.empty?
+      %tr{style:'text-align:left'}
+        %th Name
+        %th Size
   %tbody
     - if catalog.files.empty?
       %tr
