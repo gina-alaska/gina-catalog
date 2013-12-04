@@ -86,10 +86,7 @@ class Page::Content < ActiveRecord::Base
   end
   
   def content_for(section)
-    context = { :page => self, :setup => self.setup }
-    
-    pipeline = HTML::Pipeline.new([ ::LiquidFilter ], context)
-    pipeline.call(self.content[section.to_s])[:output].to_s.html_safe
+    ::CmsRenderers.content_section(self, self.setup, self.content[section])
   end
   
   def to_liquid

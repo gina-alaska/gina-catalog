@@ -60,6 +60,14 @@ class CmsRenderers
       ], self.context(page, setup, system_content))
       pipeline.call(page.layout)[:output].to_s.html_safe
     end
+    
+    def content_section(page, setup, content)
+      pipeline = HTML::Pipeline.new([
+        LiquidFilter,
+        HTML::Pipeline::AutolinkFilter
+      ], self.context(page, setup))
+      pipeline.call(content)[:output].to_s.html_safe
+    end
   
     def snippet(snippet, setup, page = nil)
       pipeline = HTML::Pipeline.new([
