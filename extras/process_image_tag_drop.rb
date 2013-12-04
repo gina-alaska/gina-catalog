@@ -5,6 +5,6 @@ class ProcessImageTagDrop < Liquid::Drop
   end
   
   def before_method(size)
-    @image.process(*@opts).png.thumb(size).url
+    @image.process(*@opts).process(:page, 0).png.thumb(size).url
   end
 end

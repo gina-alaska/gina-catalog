@@ -1,4 +1,4 @@
 .thumbnail
-  = image_tag image.file.png.thumb('300x200').url, alt: image.title
+  = image_tag image.file.process(:page, 0).png.thumb('300x200').url, alt: image.title
   %h4= link_to_unless image.link_to_url.empty?, image.title, image.link_to_url
   %p= image.description

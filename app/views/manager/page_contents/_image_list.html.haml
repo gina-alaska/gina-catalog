@@ -6,7 +6,7 @@
       - cache(['page_images', page, image, 'v1']) do
         %li.thumbnail{ style: "text-align: center;"}
           .image
-            = image_tag image.file.png.thumb('250x100').url, alt: image.title
+            = image_tag image.file.process(:page, 0).png.thumb('250x100').url, alt: image.title
           .info
             .caption
               %strong= link_to_unless image.link_to_url.empty?, image.title, image.link_to_url
