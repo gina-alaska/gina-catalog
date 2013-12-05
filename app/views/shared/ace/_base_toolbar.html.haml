@@ -1,4 +1,4 @@
-- cache([:ace, :base_toolbar, :v2]) do
+- cache([:ace, :base_toolbar, :v3]) do
   .btn-group
     %button.btn.btn-small{ type: 'button', title: 'Undo', data: { action: 'undo' } }
       %i.icon-undo
@@ -47,6 +47,10 @@
             %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ page.description }}' } } Description
           %li
             %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ page.last_editor }}' } } Last Editor
+          %li
+            %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ page.created_at }}' } } Created At
+          %li
+            %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ page.updated_at }}' } } Updated At
           %li
             %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ page.domid }}' } } DomID
           %li

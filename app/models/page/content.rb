@@ -102,7 +102,9 @@ class Page::Content < ActiveRecord::Base
       'children' => self.children.public,
       'public' => self.public?,
       'show_in_menu' => self.main_menu,
-      'last_editor' => self.updated_by.fullname
+      'last_editor' => self.updated_by.fullname,
+      'created_at' => self.created_at,
+      'updated_at' => self.updated_at
     }
   end
 end
