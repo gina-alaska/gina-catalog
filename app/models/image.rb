@@ -19,7 +19,7 @@ class Image < ActiveRecord::Base
   alias_method :image_url, :raw_url
   
   def thumbnail(size = '640x480#')
-    (self.file.image? or self.file.format == 'pdf') ? self.file.process(:page, 0).thumb(size).png : Image.document_image
+    (self.file.image?) ? self.file.process(:page, 0).thumb(size).png : Image.document_image
   rescue Dragonfly::DataStorage::DataNotFound => e
     Image.document_image
   end
