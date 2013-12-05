@@ -4,7 +4,7 @@
 - else
   %ul.nav{ style: 'margin: 0;' }
     - @images.each do |image|
-      - cache(['ace_image_chooser', image, 'v1']) do
+      - cache(['ace_image_chooser', image, 'v2']) do
         %li.pull-left.thumbnail{ style: 'width: 46%; margin-left: 10px; margin-top: 10px;' }
           .row-fluid
             .span3
