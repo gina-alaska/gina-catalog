@@ -12,7 +12,7 @@
                 - if image.file.nil?
                   %p.lead Broken image
                 - else
-                  = image_tag image.file.png.thumb('150x100#').url, alt: image.title
+                  = image_tag image.thumbnail('150x100#').url, alt: image.title
             .span9
               %div{ style: 'height: 68px; overflow: auto;' }
                 %strong= image.title
