@@ -8,7 +8,7 @@ class Image < ActiveRecord::Base
   has_many :agencies
   
   def raw_url
-    self.file.url
+    self.file.remote_url
   end
   
   def link_to_url_or_raw_url

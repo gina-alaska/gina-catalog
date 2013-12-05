@@ -8,6 +8,7 @@ config/database.yml
 config/sunspot.yml
 config/git_hooks_env
 public/javascripts/cached
+public/cms
 *.git
 public/javascripts/extjs3/
 public/javascripts/oldapp/

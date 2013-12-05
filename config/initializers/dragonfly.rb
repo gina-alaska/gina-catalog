@@ -10,5 +10,5 @@ app.define_macro(ActiveRecord::Base, :image_accessor)
 app.define_macro(ActiveRecord::Base, :file_accessor)
 
 app.datastore.configure do |d|
-  d.root_path = Rails.root.join('uploads').to_s
+  d.root_path = Rails.root.join('public/cms').to_s
 end

@@ -6,7 +6,7 @@
     .tabbable.tabs-left
       %ul.nav.nav-tabs
         %li.active= link_to 'Choose page', '#page-list', data: { toggle: 'tab' }
-        / %li= link_to 'Choose image', '#file-list', data: { toggle: 'tab' }
+        %li= link_to 'Choose image', '#file-list', data: { toggle: 'tab' }
         %li= link_to 'Enter URL', '#enter-url', data: { toggle: 'tab' }
       .tab-content
         #page-list.active.tab-pane
@@ -22,22 +22,18 @@
                 Open new window?
                 
             = submit_tag 'Add Link', class: 'btn btn-primary pull-right'
-        / #file-list.tab-pane
-        /   %form#choose-file.form-inline
-        /     %label.control-label Select an image:
-        /     .controls
-        /       - files = current_setup.images.collect { |image| ["<img src=\"#{image.thumbnail('50x').try(:url)}\" /> #{image.title} #{(' - ' + truncate(image.description)) unless image.description.empty?}", image.url] }
-        /       = select_tag 'url', options_for_select(files), prompt: 'Select a file', class: 'images-select2'              
-        /     .control-group.offset1
-        /       %label.checkbox
-        /         = check_box_tag 'target', '_blank'
-        /         Open new window?
-        /       %br/
-        /       %label.checkbox
-        /         = check_box_tag 'image', 'true'
-        /         Include image tag
-        /         
-        /     = submit_tag 'Add File', class: 'btn btn-primary pull-right'
+        #file-list.tab-pane
+          %form#choose-file.form-inline
+            %label.control-label Select an image:
+            .controls
+              - files = current_setup.images.collect { |image| ["<img src=\"#{image.thumbnail('50x').try(:url)}\" /> #{image.title} #{(' - ' + truncate(image.description)) unless image.description.empty?}", image.raw_url] }
+              = select_tag 'url', options_for_select(files), prompt: 'Select a file', class: 'images-select2'              
+            .control-group.offset1
+              %label.checkbox
+                = check_box_tag 'target', '_blank'
+                Open new window?
+                
+            = submit_tag 'Add File', class: 'btn btn-primary pull-right'
             
         #enter-url.tab-pane
           %form#add-link-form.form-inline
