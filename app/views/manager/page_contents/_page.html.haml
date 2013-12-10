@@ -1,13 +1,11 @@
 %li{id: dom_id(page, :list)}
   .row-fluid.group
-    .span8.title
-      - if page.children.empty?
-        %i{class: (page.slug == 'home' ? 'icon-home' : (page.leaf? ? 'icon-file' : 'icon-folder-close') )}
+    .span8.title{ data: { toggle: "collapse", target: "##{dom_id(page)}", behavior: 'toggle-icon' } }
+      %i{class: (page.leaf? ? 'icon-file' : 'icon-folder-close') }
+        
+      = link_to edit_manager_page_content_path(page) do
         = page.title
-      - else
-        = link_to "#", data: { toggle: "collapse", target: "##{dom_id(page)}", behavior: 'toggle-icon' } do
-          %i{class: 'icon-folder-close folder-icon' }
-          = page.title
+        
       - unless page.main_menu
         .label.label-info Hidden
       - if page.draft
