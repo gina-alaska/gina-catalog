@@ -53,7 +53,8 @@ class Setup < ActiveRecord::Base
       'google_plus_url' => self.google_plus_url,
       'youtube_url' => self.youtube_url, 
       'instagram_url' => self.instagram_url,
-      'linkedin_url' => self.linkedin_url
+      'linkedin_url' => self.linkedin_url,
+      'tumblr_url' => self.tumblr_url
   	}
   end
   
