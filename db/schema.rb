@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131128011035) do
+ActiveRecord::Schema.define(:version => 20131209194512) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -876,6 +876,8 @@ ActiveRecord::Schema.define(:version => 20131128011035) do
     t.boolean  "catalog_enabled",     :default => true
     t.boolean  "settings_enabled",    :default => true
     t.boolean  "permissions_enabled", :default => true
+    t.string   "location_projection"
+    t.string   "tumblr_url"
   end
 
   create_table "setups_snippets", :id => false, :force => true do |t|
