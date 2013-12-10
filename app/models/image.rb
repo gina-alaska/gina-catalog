@@ -12,7 +12,7 @@ class Image < ActiveRecord::Base
   end
   
   def link_to_url_or_raw_url
-    self.link_to_url.empty? ? self.link_to_url : self.raw_url
+    self.link_to_url.empty? ? self.raw_url : self.link_to_url
   end
   
   alias_method :url, :raw_url
