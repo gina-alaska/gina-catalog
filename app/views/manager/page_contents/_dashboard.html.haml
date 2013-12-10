@@ -20,6 +20,15 @@
     = render '/manager/page_contents/page', page: page
 
 :javascript
+  $(document).on('click', '[data-behavior="toggle-icon"]', function(){
+    var target = $(this).data('target')
+    if($(target).hasClass('in')) {
+      $(this).find('i').addClass('icon-folder-open').removeClass('icon-folder-close'); 
+    } else {
+      $(this).find('i').removeClass('icon-folder-open').addClass('icon-folder-close'); 
+    }
+  })
+
   $('#sort-btn').on('click', function() {
     $('#page-content-list').nestedSortable({
       handle: 'div',
