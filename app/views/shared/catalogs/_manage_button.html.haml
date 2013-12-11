@@ -6,7 +6,7 @@
   - if catalog.owner_setup == current_setup
     - if current_member.can_manage_catalog?
       %li
-        = link_to edit_manager_catalog_path(catalog), target: :_blank do
+        = link_to edit_manager_catalog_path(catalog) do
           %i.icon-edit
           Edit
       %li
