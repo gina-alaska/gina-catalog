@@ -1,4 +1,4 @@
-include_recipe "gina::yum"
+include_recipe "gina::repo"
 
 package "gina-ruby-19" do
   action :install

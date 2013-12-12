@@ -6,13 +6,19 @@ directory "/www"
 app_name = "glynx"
 account = node[app_name]['account']
 
-%w{ application_path shared_path config_path initializers_path }.each do |dir|
+%w{ application_path shared_path config_path initializers_path  }.each do |dir|
   directory node[app_name][dir] do
     owner account
     group account
     mode 00755
     action :create
   end
+end
+
+directory File.join(node[app_name]['shared_path'], 'public') do
+  owner account
+  group account
+  mode 00755
 end
 
 directory node[app_name]['catalog_silo_path'] do
@@ -45,6 +51,12 @@ end
 
 link File.join(node[app_name]['shared_path'], 'uploads') do
   to File.join(node[app_name]['catalog_silo_path'], 'uploads') 
+  owner account
+  group account
+end
+
+link File.join(node[app_name]['shared_path'], 'public/cms') do
+  to File.join(node[app_name]['catalog_silo_path'], 'cms') 
   owner account
   group account
 end
