@@ -33,6 +33,7 @@ NSCatalog::Application.routes.draw do
     end
     resources :use_agreements
     resources :contact_infos
+    resources :notifications
     resources :themes do
       member do
         put :activate
