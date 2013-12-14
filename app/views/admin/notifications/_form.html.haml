@@ -1,0 +1,48 @@
+= form_for [:admin, @notification], html: { class: 'form-horizontal' } do |f|
+  - unless @notification.errors.full_messages.empty?
+    .alert.alert-error
+      %h4 Errors prevents this record from being saved
+      %ul
+        - @notification.errors.full_messages.each do |err|
+          %li= err
+  .control-group
+    = f.label :title, class: 'control-label'
+    .controls
+      = f.text_field :title, class: "span11"
+
+  .control-group
+    = f.label :message, class: 'control-label'
+    .controls
+      = f.text_area :message, rows: 6, cols: 40, class: "span11"
+
+  .control-group
+    = f.label :icon_name, class: 'control-label'
+    .controls
+      = f.select :icon_name, load_icons, {include_blank: true}, class: "menu-icons span11"
+
+  .control-group
+    = f.label :expire_date, class: 'control-label'
+    .controls
+      = f.text_field :expire_date, placeholder: 'YYYY-MM-DD', data: {behavior: 'datepicker', date_format: 'yyyy-mm-dd'}, value: @notification.expire_date.try(:to_date)
+
+  .row-fluid
+    .span12
+      .form-actions
+        = f.submit class: 'btn btn-primary pull-right'
+    
+:javascript
+  $(document).ready( function(){
+    $('[data-behavior~=datepicker]').datepicker().on('changeDate', function(ev){
+      $(this).datepicker('hide'); 
+    })
+  })
+
+  function format_menu_icon_select(item) {
+    return "<i class='" + $(item.element).val() + "'></i>&nbsp;" + item.text
+  }
+
+  $('select.menu-icons').select2({
+    formatResult: format_menu_icon_select,
+    formatSelection: format_menu_icon_select,
+    escapeMarkup: function(m) { return m; }
+  })

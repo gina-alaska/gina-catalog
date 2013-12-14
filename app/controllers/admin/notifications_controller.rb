@@ -1,10 +1,6 @@
-class Manager::NotificationsController < ManagerController
-
-  SUBMENU = '/layouts/manager/cms_menu'
-  PAGETITLE = 'Notifications'
-
+class Admin::NotificationsController < AdminController
   def index
-    @notifications = Notification.where(setup_id: current_setup.id)
+    @notifications = Notification.where(setup_id: nil)
   end
 
   def new
@@ -14,12 +10,10 @@ class Manager::NotificationsController < ManagerController
   def create
     @notification = Notification.new(params[:notification])
 
-    @notification.setup_id = current_setup.id
-
     if @notification.save
       respond_to do |format|
         flash[:success] = "Notification #{@notification.title} was successfully created."
-        format.html { redirect_back_or_default manager_notifications_path }
+        format.html { redirect_back_or_default admin_notifications_path }
       end
     else
       respond_to do |format|
@@ -39,7 +33,7 @@ class Manager::NotificationsController < ManagerController
     if @notification.update_attributes(params[:notification])
       respond_to do |format|
         flash[:success] = "Notification #{@notification.title} was successfully updated."
-        format.html { redirect_back_or_default manager_notifications_path }
+        format.html { redirect_back_or_default admin_notifications_path }
         format.json { head :nocontent }
       end
     else
@@ -56,7 +50,7 @@ class Manager::NotificationsController < ManagerController
 
     respond_to do |format|
       flash[:success] = "Notification #{@notification.title} was successfully deleted."
-      format.html { redirect_to manager_notifications_path }
+      format.html { redirect_to admin_notifications_path }
       format.json { head :no_content }
       format.js
     end
