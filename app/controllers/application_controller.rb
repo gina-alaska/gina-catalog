@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_member
   helper_method :user_signed_in?
   helper_method :current_setup
+  helper_method :current_notifications
 
   protected
   
@@ -47,6 +48,10 @@ class ApplicationController < ActionController::Base
     @current_member ||= current_user.memberships.where(setup_id: current_setup).includes(:setup, :roles, :permissions).first || Membership.new(user: current_user, setup: current_setup) if user_signed_in?
   end
   
+  def current_notifications
+    @current_notifications ||= Notification.where("expire_date > ?", Time.zone.now)
+  end
+
   def user_signed_in?
     return true if current_user 
   end

@@ -28,6 +28,22 @@ module ApplicationHelper
     output.html_safe
   end
   
+  def show_notifications
+    output = ''
+    current_notifications.each do |notice|
+      output << content_tag(:div, class: "alert alert-block fade in alert-#{notice.message_type}",id: dom_id(notice)) do
+        content_tag(:h4) {
+          content_tag(:i, '', class: notice.icon_name) + " " + notice.title
+        } + notice.message +
+        content_tag(:div, style: "float: right;") do
+          link_to 'Dismiss', dismiss_notification_path(notice), class: "btn btn-#{notice.message_type}", title: "Dismiss Notification", remote: true
+        end
+      end
+    end
+
+    output.html_safe
+  end
+
   def add_js_errors_for(model)
     klass = model.class.to_s.underscore
     output = ''

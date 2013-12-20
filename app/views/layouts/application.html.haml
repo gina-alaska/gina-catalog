@@ -62,10 +62,10 @@
       #header= render "layouts/#{theme}/header"
       %div{id: (@page.nil? ? 'content' : "#{@page.slug.parameterize}-page") }
         = show_flash_messages
+        #notifications
+          = show_notifications
         = yield
       #footer= render_snippet_content current_setup.snippets.where(slug: 'footer').first, current_setup
     = link_to '#top', class: 'goto-top', data: { action: 'scroll' } do
       %i.icon-arrow-up
       Top
-      
-    

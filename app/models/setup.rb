@@ -30,6 +30,7 @@ class Setup < ActiveRecord::Base
   has_many :roles, dependent: :destroy
   has_many :use_agreements, dependent: :destroy
   has_many :csw_imports, dependent: :destroy
+  has_many :notifications
   
   belongs_to :theme
   has_many :themes, foreign_key: 'owner_setup_id'

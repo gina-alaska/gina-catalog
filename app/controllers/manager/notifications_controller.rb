@@ -4,7 +4,7 @@ class Manager::NotificationsController < ManagerController
   PAGETITLE = 'Notifications'
 
   def index
-    @notifications = Notification.where(setup_id: current_setup.id)
+    @notifications = current_setup.notifications
   end
 
   def new
