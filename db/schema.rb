@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131211194911) do
+ActiveRecord::Schema.define(:version => 20131216214014) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -551,8 +551,9 @@ ActiveRecord::Schema.define(:version => 20131211194911) do
     t.string   "icon_name"
     t.date     "expire_date"
     t.integer  "setup_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.string   "message_type"
   end
 
   create_table "old_assets", :force => true do |t|
