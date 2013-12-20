@@ -9,7 +9,7 @@
       - catalog.map_layers.each do |layer|
         %tr
           %td{ style: 'text-align: center;' }
-            - disabled = layer.supports?(current_setup.location_projection) ? '' : 'disabled'
+            - disabled = layer.supports?(current_setup.projection) ? '' : 'disabled'
     
             = link_to map_layer_path(layer, :json), class: "map_layer_btn btn #{disabled}", data: { openlayers_action: 'preview' }, title: 'Preview map layer' do
               %i.check.icon-check-empty
