@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131206013758) do
+ActiveRecord::Schema.define(:version => 20131216214014) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -545,6 +545,17 @@ ActiveRecord::Schema.define(:version => 20131206013758) do
     t.datetime "updated_at"
   end
 
+  create_table "notifications", :force => true do |t|
+    t.string   "title"
+    t.text     "message"
+    t.string   "icon_name"
+    t.date     "expire_date"
+    t.integer  "setup_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.string   "message_type"
+  end
+
   create_table "old_assets", :force => true do |t|
     t.string   "title"
     t.string   "description"
@@ -877,6 +888,7 @@ ActiveRecord::Schema.define(:version => 20131206013758) do
     t.boolean  "settings_enabled",    :default => true
     t.boolean  "permissions_enabled", :default => true
     t.string   "location_projection"
+    t.string   "tumblr_url"
   end
 
   create_table "setups_snippets", :id => false, :force => true do |t|
