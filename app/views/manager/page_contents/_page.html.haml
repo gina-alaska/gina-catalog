@@ -1,9 +1,11 @@
 %li{id: dom_id(page, :list)}
   .row-fluid.group
-    .span8.title
-      %i{class: (page.slug == 'home' ? 'icon-home' : (page.leaf? ? 'icon-file' : 'icon-folder-open') )}
-      = link_to edit_manager_page_content_path(page), class: 'edit' do
+    .span8.title{ data: { toggle: "collapse", target: "##{dom_id(page)}", behavior: 'toggle-icon' } }
+      %i{class: (page.leaf? ? 'icon-file' : 'icon-folder-close') }
+        
+      = link_to edit_manager_page_content_path(page) do
         = page.title
+        
       - unless page.main_menu
         .label.label-info Hidden
       - if page.draft
@@ -22,6 +24,8 @@
           %i.icon-trash.icon-white
           
   - unless page.children.empty?
-    %ol.page-list-child{style:'padding-left:20px;'}
+    %ol.page-list-child.collapse{style:'padding-left:20px;', id: dom_id(page)}
       = render partial: '/manager/page_contents/page', collection: page.children
       
+:javascript
+

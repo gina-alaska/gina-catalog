@@ -12,7 +12,7 @@ class Image < ActiveRecord::Base
   end
   
   def link_to_url_or_raw_url
-    self.link_to_url.empty? ? self.link_to_url : self.raw_url
+    self.link_to_url.empty? ? self.raw_url : self.link_to_url
   end
   
   alias_method :url, :raw_url
@@ -32,7 +32,7 @@ class Image < ActiveRecord::Base
     {
       'title' => self.title,
       'description' => self.description,
-      'link_to_url' => self.raw_url,
+      'link_to_url' => self.link_to_url_or_raw_url,
       'thumb' => ::ImageTagDrop.new(self),
       'grayscale' => ::ProcessImageTagDrop.new(self, :grayscale),
       'tag' => "<img src=\"#{self.thumbnail.try(:url)}\" alt=\"#{self.title}\" />"

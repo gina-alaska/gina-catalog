@@ -72,7 +72,7 @@ group :assets do
   gem 'coffee-rails', '~> 3.2.0'
   gem 'compass-rails'
   gem 'uglifier'
-  gem 'font-awesome-rails'
+  gem 'font-awesome-rails', '~> 3.2.1.3'
   gem 'bootstrap-sass', '~> 2.3.2.0'
   #gem 'twitter-bootstrap-rails'
   gem 'jquery-ui-rails'

@@ -1,4 +1,4 @@
-- cache([:ace, :base_toolbar, :v1]) do
+- cache([:ace, :base_toolbar, :v4]) do
   .btn-group
     %button.btn.btn-small{ type: 'button', title: 'Undo', data: { action: 'undo' } }
       %i.icon-undo
@@ -46,6 +46,12 @@
           %li
             %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ page.description }}' } } Description
           %li
+            %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ page.last_editor }}' } } Last Editor
+          %li
+            %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ page.created_at }}' } } Created At
+          %li
+            %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ page.updated_at }}' } } Updated At
+          %li
             %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ page.domid }}' } } DomID
           %li
             %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ page.public }}' } } Public
@@ -85,11 +91,19 @@
           %li
             %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ setup.contact_email }}' } } Contact Email
           %li
-            %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ setup.twitter_url }}' } } Twitter URL
+            %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ setup.facebook_url }}' } } Facebook URL
           %li
             %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ setup.github_url }}' } } Github URL
           %li
-            %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ setup.facebook_url }}' } } Facebook URL
+            %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ setup.google_plus_url }}' } } Google Plus URL
+          %li
+            %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ setup.linkedin_url }}' } } Linkedin URL
+          %li
+            %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ setup.instagram_url }}' } } Instagram URL
+          %li
+            %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ setup.twitter_url }}' } } Twitter URL
+          %li
+            %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ setup.tumblr_url }}' } } Tumblr URL
       %li.dropdown-submenu
         %a{ href: "#" } Image:
         %ul.dropdown-menu

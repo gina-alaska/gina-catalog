@@ -4,6 +4,6 @@ class SetupCatalogRecordsDrop < Liquid::Drop
   end
 
   def latest
-    @setup.catalogs.order('updated_at DESC').limit(10).all
+    @setup.catalogs.where("published_at <= ?", Time.now.utc).order('updated_at DESC').limit(10).all
   end
 end
