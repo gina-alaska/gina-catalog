@@ -127,7 +127,7 @@ NSCatalog::Application.routes.draw do
   resource :sitemap
 
   resources :notifications, only: [:index] do
-    put :dismiss, on: :member
+    post :dismiss, on: :member
   end
 
   resources :contacts, only: [:index, :create]

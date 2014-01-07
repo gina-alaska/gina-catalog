@@ -36,7 +36,7 @@ module ApplicationHelper
           content_tag(:i, '', class: notice.icon_name) + " " + notice.title
         } + notice.message +
         content_tag(:div, style: "float: right;") do
-          link_to 'Dismiss', dismiss_notification_path(notice), class: "btn btn-#{notice.message_type}", title: "Dismiss Notification", remote: true
+          link_to 'Dismiss', dismiss_notification_path(notice), class: "btn btn-#{notice.message_type}", title: "Dismiss Notification", remote: true, method: :post
         end
       end
     end
