@@ -50,7 +50,7 @@ class ApplicationController < ActionController::Base
   
   def current_notifications
     if @current_notifications.nil?
-      @current_notifications = Notification.where("expire_date > ?", Time.zone.now)
+      @current_notifications = Notification.global_or_local_to(current_setup).where("expire_date > ?", Time.zone.now)
       @current_notifications = @current_notifications.where("id not in (?)", Array.wrap(session["read_notifications"])) if session["read_notifications"].present?
     end
     @current_notifications
