@@ -44,8 +44,10 @@ class ApplicationController < ActionController::Base
   end
   
   def current_user=(user)
-    @current_user = user
-    session[:user_id] = user.id
+    unless user.nil?
+      @current_user = user
+      session[:user_id] = user.id 
+    end
   end  
   
   def current_member

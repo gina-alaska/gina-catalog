@@ -1,7 +1,9 @@
 class Service < ActiveRecord::Base
 	belongs_to :user
 
-  attr_accessible :provider, :uid, :uname, :uemail
+  attr_accessible :provider, :uid, :uname, :uemail, :user
+  
+  validates_associated :user
   
   def self.find_from_hash(hash)
     find_by_provider_and_uid(hash['provider'], hash['uid'])
