@@ -141,10 +141,10 @@ NSCatalog::Application.routes.draw do
   match "/login" => redirect('/auth/gina')
   match "/logout" => "authentications#signout"
   match "/signin" => redirect('/auth/gina')
-  match "/signout" => "authentications#signout"
+  match "/signout" => "sessions#signout"
 
-  match '/auth/:service/callback' => 'authentications#create' 
-  match '/auth/failure' => 'authentications#failure'
+  match '/auth/:service/callback' => 'sessions#create' 
+  match '/auth/failure' => 'sessions#failure'
 
   resources :authentications, :only => [:index, :create, :destroy] do
     collection do

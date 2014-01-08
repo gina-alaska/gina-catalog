@@ -109,8 +109,44 @@ class User < ActiveRecord::Base
       :fullname => self.fullname
     }
   end
+  
+  def self.create_from_hash!(hash)
+    user = create(params_from_hash(hash))
+
+    # attempt to associate with membership
+    # membership = Membership.where(email: user.email).first
+    # user.membership = membership unless membership.nil?
+    
+    user
+  end
+  
+  def update_from_hash!(hash)
+    update_attributes(self.class.params_from_hash(hash))
+    
+    # attempt to associate with membership
+    # if self.membership.nil?
+    #   membership = Membership.where(email: self.email).first
+    #   self.membership = membership unless membership.nil?
+    # end
+  end
+  
+  def update_credentials(hash)
+    update_attributes({
+      token: hash['token'],
+      expires_at: hash['expires_at']
+    })
+  end  
 
   private
+  
+  def self.params_from_hash(hash)
+    info = {
+      fullname: hash['info']['name'], 
+      email: hash['info']['email'] 
+    }
+    # info.merge!({ avatar: hash['info']['image'] }) unless hash['info']['image'].blank?
+    info
+  end  
 
   def matches_dynamic_perm_group_check?(method_id)
     /^access_([a-zA-Z]\w*)\?$/.match(method_id.to_s)

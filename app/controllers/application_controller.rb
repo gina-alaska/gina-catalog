@@ -43,6 +43,11 @@ class ApplicationController < ActionController::Base
     @current_user ||= User.find_by_id(session[:user_id]) if session[:user_id]  
   end
   
+  def current_user=(user)
+    @current_user = user
+    session[:user_id] = user.id
+  end  
+  
   def current_member
     @current_member ||= current_user.memberships.where(setup_id: current_setup).includes(:setup, :roles, :permissions).first || Membership.new(user: current_user, setup: current_setup) if user_signed_in?
   end
