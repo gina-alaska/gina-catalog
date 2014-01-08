@@ -43,6 +43,10 @@ class SessionsController < ApplicationController
     flash[:error] = params[:message] # if using sinatra-flash or rack-flash
     redirect_to '/'
   end
+  
+  def test
+    render text: session.inspect
+  end
 
   protected
 

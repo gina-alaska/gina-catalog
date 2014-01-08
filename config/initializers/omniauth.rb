@@ -1,14 +1,13 @@
+# you need a store for OpenID; (if you deploy on heroku you need Filesystem.new('./tmp') instead of Filesystem.new('/tmp'))
+require 'openid/store/filesystem'
 require 'openid/store/memcache'
 require 'openid/fetchers'
-if ::File.exists? "/etc/ssl/certs/ca-bundle.crt"
-  OpenID.fetcher.ca_file = "/etc/ssl/certs/ca-bundle.crt"  #This is where it lives on centos
-end
+# if ::File.exists? "/etc/ssl/certs/ca-bundle.crt"
+#   OpenID.fetcher.ca_file = "/etc/ssl/certs/ca-bundle.crt"  #This is where it lives on centos
+# end
 
 Rails.application.config.middleware.use OmniAuth::Builder do
   # ALWAYS RESTART YOUR SERVER IF YOU MAKE CHANGES TO THESE SETTINGS!
-   
-  # you need a store for OpenID; (if you deploy on heroku you need Filesystem.new('./tmp') instead of Filesystem.new('/tmp'))
-  require 'openid/store/filesystem'
    
   # providers with id/secret, you need to sign up for their services (see below) and enter the parameters here
   # provider :facebook, 'APP_ID', 'APP_SECRET'
@@ -21,11 +20,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
   # dedicated openid
 
   memcached_client = OpenID::Store::Memcache.new(
-    Dalli::Client.new("flash.x.gina.alaska.edu",
-      username: ENV['MEMCACHE_USERNAME'],
-      password: ENV['MEMCACHE_PASSWORD'],
-      namespace: 'glynx-authentication'
-    )
+    Dalli::Client.new("flash.x.gina.alaska.edu", namespace: 'glynx-authentication')
   )
     
   provider :open_id, name: 'google', 

@@ -142,6 +142,7 @@ NSCatalog::Application.routes.draw do
   match "/logout" => "authentications#signout"
   match "/signin" => redirect('/auth/gina')
   match "/signout" => "sessions#signout"
+  match "/sessions/test" => "#sessions#test"
 
   match '/auth/:service/callback' => 'sessions#create' 
   match '/auth/failure' => 'sessions#failure'
