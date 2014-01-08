@@ -40,7 +40,7 @@ gem 'rubyzip', require: 'zip'
 #gem 'spatial_adapter', :git => 'https://github.com/juniorz/spatial_adapter.git'
 
 gem "haml-rails"
-
+gem 'grit', '>= 2.4.1'
 gem 'pdfkit'
 gem 'ancestry', '~> 1.2.4'
 
