@@ -1,7 +1,7 @@
 # you need a store for OpenID; (if you deploy on heroku you need Filesystem.new('./tmp') instead of Filesystem.new('/tmp'))
 require 'openid/store/filesystem'
 require 'openid/store/memcache'
-require 'openid/fetchers'
+# require 'openid/fetchers'
 # if ::File.exists? "/etc/ssl/certs/ca-bundle.crt"
 #   OpenID.fetcher.ca_file = "/etc/ssl/certs/ca-bundle.crt"  #This is where it lives on centos
 # end
@@ -19,17 +19,26 @@ Rails.application.config.middleware.use OmniAuth::Builder do
    
   # dedicated openid
 
-  memcached_client = OpenID::Store::Memcache.new(
-    Dalli::Client.new("flash.x.gina.alaska.edu", namespace: 'glynx-authentication')
-  )
+  if Rails.env == 'production'
+    memcached_client = Dalli::Client.new("flash.x.gina.alaska.edu", namespace: 'glynx') 
     
-  provider :open_id, name: 'google', 
-            identifier: 'https://www.google.com/accounts/o8/id',
-            store: memcached_client
+    provider :open_id, name: 'google', 
+              identifier: 'https://www.google.com/accounts/o8/id',
+              store: OpenID::Store::Memcache.new(memcached_client)
   
-  provider :open_id, name: 'gina',
-            identifier: 'https://id.gina.alaska.edu',
-            store: memcached_client
+    provider :open_id, name: 'gina',
+              identifier: 'https://id.gina.alaska.edu',
+              store: OpenID::Store::Memcache.new(memcached_client)
+
+  else    
+    provider :open_id, name: 'google', 
+              identifier: 'https://www.google.com/accounts/o8/id',
+              store: OpenID::Store::Filesystem.new('./tmp')
+  
+    provider :open_id, name: 'gina',
+              identifier: 'https://id.gina.alaska.edu',
+              store: OpenID::Store::Filesystem.new('./tmp')
+  end
             
   # provider :google_apps, OpenID::Store::Filesystem.new('./tmp'), :name => 'google_apps'
   # /auth/google_apps; you can bypass the prompt for the domain with /auth/google_apps?domain=somedomain.com
