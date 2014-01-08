@@ -33,6 +33,8 @@ NSCatalog::Application.configure do
   config.assets.digest = false
 
   # Use a different cache store in production
+  config.cache_store = :dalli_store, 'localhost', { :namespace => 'glynx-development', :compress => true }
+  
   # config.cache_store = :dalli_store, 'flash.x.gina.alaska.edu', { :namespace => 'gLynxCatalogDevelopment', :compress => true }
 
   # Raise exception on mass assignment protection for Active Record models

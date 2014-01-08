@@ -45,6 +45,7 @@ class SessionsController < ApplicationController
   end
   
   def test
+    reset_session
     render text: session.inspect
   end
 

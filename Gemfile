@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.14'
+gem 'rails', '3.2.15'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'https://github.com/rails/rails.git'
@@ -40,7 +40,7 @@ gem 'rubyzip', require: 'zip'
 #gem 'spatial_adapter', :git => 'https://github.com/juniorz/spatial_adapter.git'
 
 gem "haml-rails"
-gem 'grit', '>= 2.4.1'
+
 gem 'pdfkit'
 gem 'ancestry', '~> 1.2.4'
 
@@ -49,11 +49,13 @@ gem 'unicorn'
 gem 'puma'
 gem 'feedzirra'
 
-# Deploy with Capistrano
-gem 'capistrano', '~> 3.0'
-gem 'capistrano-chruby', github: "capistrano/chruby"
-gem 'capistrano-bundler'
-gem 'capistrano-rails'
+group :development do
+  # Deploy with Capistrano
+  gem 'capistrano', '~> 3.0'
+  gem 'capistrano-chruby', github: "capistrano/chruby"
+  gem 'capistrano-bundler'
+  gem 'capistrano-rails'
+end
 
 # To use debugger (ruby-debug for Ruby 1.8.7+, ruby-debug19 for Ruby 1.9.2+)
 # gem 'ruby-debug'
