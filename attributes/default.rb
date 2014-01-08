@@ -27,14 +27,14 @@ default['glynx']['before_fork'] = '
 defined?(ActiveRecord::Base) and
    ActiveRecord::Base.connection.disconnect!
    
-   old_pid = "#{server.config[:pid]}.oldbin"
-   if old_pid != server.pid
-     begin
-       sig = (worker.nr + 1) >= server.worker_processes ? :QUIT : :TTOU
-       Process.kill(sig, File.read(old_pid).to_i)
-     rescue Errno::ENOENT, Errno::ESRCH
-     end
+ old_pid = "#{server.config[:pid]}.oldbin"
+ if old_pid != server.pid
+   begin
+     sig = (worker.nr + 1) >= server.worker_processes ? :QUIT : :TTOU
+     Process.kill(sig, File.read(old_pid).to_i)
+   rescue Errno::ENOENT, Errno::ESRCH
    end
+ end
       
 sleep 1
 '
@@ -42,6 +42,12 @@ sleep 1
 default['glynx']['after_fork'] = "
 defined?(ActiveRecord::Base) and
   ActiveRecord::Base.establish_connection
+  
+# Reset the memcache-based object store
+Rails.cache.instance_variable_get(:@data).reset if Rails.cache.instance_variable_get(:@data).respond_to?(:reset)
+
+# Reset the memcache-based session store
+ActionController::Base.session_options[:cache].reset if ActionController::Base.session_options[:cache].respond_to?(:reset)  
 "
 
 default['glynx']['package_deps'] = %w{libicu-devel curl-devel libxml2-devel libxslt-devel nfs-utils geos-devel ImageMagick-devel}
