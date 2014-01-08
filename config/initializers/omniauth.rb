@@ -19,7 +19,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
    
   # dedicated openid
 
-  if Rails.env == 'production'
+  if Rails.env.production?
     memcached_client = Dalli::Client.new("flash.x.gina.alaska.edu") 
     
     provider :open_id, name: 'google', 
