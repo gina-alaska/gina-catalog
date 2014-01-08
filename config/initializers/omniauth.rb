@@ -20,17 +20,21 @@ Rails.application.config.middleware.use OmniAuth::Builder do
    
   # dedicated openid
 
-  memcached_client = Dalli::Client.new("flash.x.gina.alaska.edu",
-                                        username: ENV['MEMCACHE_USERNAME'],
-                                        password: ENV['MEMCACHE_PASSWORD'],
-                                        namespace: 'glynx-authentication')
+  memcached_client = OpenID::Store::Memcache.new(
+    Dalli::Client.new("flash.x.gina.alaska.edu",
+      username: ENV['MEMCACHE_USERNAME'],
+      password: ENV['MEMCACHE_PASSWORD'],
+      namespace: 'glynx-authentication'
+    )
+  )
+    
   provider :open_id, name: 'google', 
             identifier: 'https://www.google.com/accounts/o8/id',
-            #identifier: 'https://id.gina.alaska.edu',
-            store: OpenID::Store::Memcache.new(memcached_client)
+            store: memcached_client
   
-  provider :openid, name: 'gina', :identifier => 'https://id.gina.alaska.edu',
-            store: OpenID::Store::Memcache.new(memcached_client)
+  provider :open_id, name: 'gina',
+            identifier: 'https://id.gina.alaska.edu',
+            store: memcached_client
             
   # provider :google_apps, OpenID::Store::Filesystem.new('./tmp'), :name => 'google_apps'
   # /auth/google_apps; you can bypass the prompt for the domain with /auth/google_apps?domain=somedomain.com
