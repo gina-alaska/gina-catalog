@@ -5,6 +5,7 @@ end
 
 cookbook "nginx"
 cookbook "application_ruby"
+cookbook "yum", "~> 2.4.4"
 cookbook "gina", "= 0.4.6", chef_api: :config
 cookbook "postgresql", chef_api: :config
 cookbook "gina-postgresql", "~> 0.3.2", chef_api: :config
