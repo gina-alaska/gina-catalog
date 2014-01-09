@@ -43,8 +43,7 @@ class ApplicationController < ActionController::Base
   def check_for_beta
     if params[:BETA].present?
       cookies[:beta] = 1
-    elsif params[:BETA] == 0
-      cookies.delete(:beta)
+      redirect_to '/'
     end
   end
   
