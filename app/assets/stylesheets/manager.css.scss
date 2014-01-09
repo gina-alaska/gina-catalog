@@ -19,6 +19,7 @@ $smallColor: contrast-color($primaryColor, #333, #999);
 @import 'select2/select2';
 @import 'select2-fixes';
 @import 'forms';
+@import 'user_toolbar';
 
 .section-nav .nav {
   width: 250px;

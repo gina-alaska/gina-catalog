@@ -158,6 +158,7 @@ NSCatalog::Application.routes.draw do
 
   resources :users, :only => [:index] do
     collection do
+      get :toggle_beta
       get :preferences
     end
   end

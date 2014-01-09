@@ -12,4 +12,5 @@ $smallColor: contrast-color($primaryColor, #333, #999);
 @import 'select2-fixes';
 @import 'manager/header';
 @import 'manager/page_list';
-@import 'admin/setups'
+@import 'admin/setups';
+@import 'user_toolbar';

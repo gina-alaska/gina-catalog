@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   
+  before_filter :check_for_beta
   before_filter :check_for_setup
   before_filter :fetch_setup
   
@@ -38,6 +39,14 @@ class ApplicationController < ActionController::Base
   helper_method :member_portals
   
   private  
+  
+  def check_for_beta
+    if params[:BETA].present?
+      cookies[:beta] = 1
+    elsif params[:BETA] == 0
+      cookies.delete(:beta)
+    end
+  end
   
   def current_user  
     @current_user ||= User.find_by_id(session[:user_id]) if session[:user_id]  

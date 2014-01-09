@@ -11,6 +11,7 @@
     = stylesheet_link_tag 'manager'
     = csrf_meta_tag
   %body{ data: { spy: 'scroll', target: '.section-nav', offset: 150 }}
+    = render "layouts/user_toolbar"
     .container
       #header
         = render "layouts/manager/header"
