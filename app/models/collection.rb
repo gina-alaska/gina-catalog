@@ -1,5 +1,5 @@
 class Collection < ActiveRecord::Base
-  attr_accessible :description, :name, :setup_id
+  attr_accessible :description, :name, :setup_id, :hidden
   
   belongs_to :setup
   
@@ -14,8 +14,10 @@ class Collection < ActiveRecord::Base
   liquid_methods :name, :id  
   
   scope :including_descendents, ->(setup) {
-    where(:setup_id => setup.self_and_descendants.pluck(:id))
+    where(setup_id: setup.self_and_descendants.pluck(:id))
   }
   
-  
+  scope :visible_to, ->(member) {
+    where(hidden: false) unless member.try(:access_catalog?)
+  }  
 end

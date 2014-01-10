@@ -27,7 +27,7 @@
 
   - unless item.collections.nil? or item.collections.empty?
     %dt Collection
-    %dd= item.collections.list
+    %dd= item.collections.visible_to(current_member).list
     %br
 
   - unless item.links.nil? or  item.links.empty?
