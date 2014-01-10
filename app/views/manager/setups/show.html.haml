@@ -20,12 +20,14 @@
         %dt Keywords
         %dd=ddtext current_setup.keywords
     %fieldset.content
-      %legend Map settings
+      %legend Map Projections
       %dl.dl-horizontal
-        %dt Site Projection
+        %dt Search
         %dd=ddtext display_projection(current_setup.projection)
-        %dt Full Record Projection
+        %dt Full Record
         %dd=ddtext display_projection(current_setup.record_projection)
+        %dt Location Editor
+        %dd=ddtext display_projection(current_setup.location_projection)
         %dt Use Google Layers
         %dd=ddtext current_setup.google_layers==true ? "Yes" : "No"
   .span6
