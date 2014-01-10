@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   
+  before_filter :check_for_beta
   before_filter :check_for_setup
   before_filter :fetch_setup
   
@@ -8,6 +9,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_member
   helper_method :user_signed_in?
   helper_method :current_setup
+  helper_method :current_notifications
 
   protected
   
@@ -39,6 +41,13 @@ class ApplicationController < ActionController::Base
   
   private  
   
+  def check_for_beta
+    if params[:BETA].present?
+      cookies[:beta] = 1
+      redirect_to '/'
+    end
+  end
+  
   def current_user  
     @current_user ||= User.find_by_id(session[:user_id]) if session[:user_id]  
   end
@@ -54,6 +63,14 @@ class ApplicationController < ActionController::Base
     @current_member ||= current_user.memberships.where(setup_id: current_setup).includes(:setup, :roles, :permissions).first || Membership.new(user: current_user, setup: current_setup) if user_signed_in?
   end
   
+  def current_notifications
+    if @current_notifications.nil?
+      @current_notifications = Notification.global_or_local_to(current_setup).where("expire_date > ?", Time.zone.now)
+      @current_notifications = @current_notifications.where("id not in (?)", Array.wrap(session["read_notifications"])) if session["read_notifications"].present?
+    end
+    @current_notifications
+  end
+
   def user_signed_in?
     return true if current_user 
   end
@@ -90,6 +107,11 @@ class ApplicationController < ActionController::Base
   def save_url(url = nil)
     session[:return_to] = url || request.fullpath
   end
+  
+  def beta?
+    cookies[:beta].present?
+  end
+  helper_method :beta?
 
   def redirect_back_or_default(default = '/')
     if session[:return_to]

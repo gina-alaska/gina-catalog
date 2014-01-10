@@ -1,0 +1,83 @@
+#sitemanager_toolbar.navbar.navbar-static-top
+  .navbar-inner
+    %ul.nav
+      - if user_signed_in?
+        - if controller.send(:_layout).virtual_path.name != 'application'
+          %li
+            = link_to root_path do
+              %i.icon-arrow-left
+              Back to Site
+        - if current_member.access_cms? or current_member.access_catalog? or current_member.access_settings? or current_member.access_permissions?
+          %li.dropdown
+            = link_to '#', class: 'dropdown-toggle', data: { toggle: 'dropdown' } do
+              %i.icon-cog.icon-spin
+              Manage Portal 
+              %b.caret
+            
+            %ul.dropdown-menu
+              - if current_member.access_cms?
+                %li
+                  = link_to 'CMS', manager_page_contents_path
+              - if current_member.access_catalog?
+                %li
+                  = link_to 'Catalog', manager_catalogs_path
+              - if current_member.access_settings?
+                %li
+                  = link_to 'Settings', manager_setup_path
+              - if current_member.access_permissions?
+                %li
+                  = link_to 'Permissions', manager_memberships_path
+        = render 'layouts/admin/menu'
+        - if member_portals.count > 0 # unless current_user.memberships.empty?
+          %li.dropdown
+            = link_to '#', class: 'dropdown-toggle', data: { toggle: 'dropdown' } do
+              Switch Portals
+              %b.caret
+          
+            %ul.dropdown-menu
+              - member_portals.each do |s|
+                %li= link_to s.title, "http://#{ s.default_url }"
+      - else
+        %li.dropdown
+          = link_to '#', class: 'dropdown-toggle', data: { toggle: 'dropdown' } do
+            Switch Portals
+            %b.caret
+        
+          %ul.dropdown-menu
+            - %w{ gina-catalog.dev catalog.northslope.org epscor.alaska.edu southcentral.epscor.alaska.edu southeast.epscor.alaska.edu }.each do |url|
+              - if s = SiteUrl.where(url: url).first.try(:setup)
+                %li= link_to s.title, "http://#{ s.default_url }"
+    
+    .pull-right    
+      %ul.nav
+        - if user_signed_in?
+          %li= render 'layouts/beta_button'
+          %li#notification-menu.dropdown
+            = link_to '#', class: 'dropdown-toggle', data: { toggle: 'dropdown' }, title: 'Notifications' do
+              %i.icon-envelope
+              %span.badge{ class: (current_notifications.count > 0 ? 'badge-success' : 'badge-muted' )}
+                = current_notifications.count
+              %b.caret
+            %ul.dropdown-menu.pull-right{ style: 'min-width: 520px;' }
+              - current_notifications.each do |notice|
+                %li{ id: dom_id(notice), style: 'padding: 5px;' }
+                  = render 'notifications/notification', notification: notice
+                %li.divider
+          %li.dropdown.avatar
+            = link_to '#', class: 'dropdown-toggle', data: { toggle: 'dropdown' } do
+              %img{ src: avatar_url(current_user, 40) }
+              = current_user.fullname
+              %b.caret
+            %ul.dropdown-menu.pull-right
+              %li
+                = link_to logout_path do
+                  %i.icon-lock
+                  Logout
+        - else 
+          - if beta?
+            / only show this to logged out users if we are viewing the beta site
+            %li= render 'layouts/beta_button'
+          %li 
+            = link_to login_path do
+              %i.icon-lock
+              Login

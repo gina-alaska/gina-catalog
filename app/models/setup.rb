@@ -1,7 +1,7 @@
 class Setup < ActiveRecord::Base
   acts_as_nested_set
   
-  attr_accessible :logo_uid, :primary_color, :title, :by_line, :contact_email, :default_invite, :urls_attributes, :analytics_account, :twitter_url, :github_url, :facebook_url, :parent_id, :acronym, :description, :keywords, :projection, :google_layers, :record_projection, :google_plus_url, :youtube_url, :instagram_url, :linkedin_url, :favicon_attributes, :cms_enabled, :catalog_enabled, :tumblr_url
+  attr_accessible :logo_uid, :primary_color, :title, :by_line, :contact_email, :default_invite, :urls_attributes, :analytics_account, :twitter_url, :github_url, :facebook_url, :parent_id, :acronym, :description, :keywords, :projection, :google_layers, :record_projection, :google_plus_url, :youtube_url, :instagram_url, :linkedin_url, :favicon_attributes, :cms_enabled, :catalog_enabled, :tumblr_url, :location_projection
   
   has_and_belongs_to_many :images
   
@@ -30,6 +30,7 @@ class Setup < ActiveRecord::Base
   has_many :roles, dependent: :destroy
   has_many :use_agreements, dependent: :destroy
   has_many :csw_imports, dependent: :destroy
+  has_many :notifications
   
   belongs_to :theme
   has_many :themes, foreign_key: 'owner_setup_id'

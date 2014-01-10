@@ -1,0 +1,36 @@
+.navbar.navbar-static-top{style:"margin-bottom:5px;"}
+  .navbar-inner
+    .brand Posted Notifications
+    = link_to 'New Notification', new_admin_notification_path, class: 'btn btn-success pull-right'
+
+%table.table.table-bordered.table-striped.table-condensed
+  %thead
+    - if @notifications.length == 0
+      %tr
+        %td
+          %p No Notifications
+    - else
+      %tr
+        %td{class: "span1"}
+        %th Title
+        %th Message
+        %th{class: "span2"} Expire Date
+        %th Actions
+      - @notifications.each do |note|
+        %tr
+          %td
+            %i{class: "#{note.icon_name}"}
+          %td
+            = note.title
+          %td
+            = note.message
+          %td
+            = note.expire_date
+          %td.span2
+            .actions
+              .btn-group{id:"action_buttons_#{dom_id(note)}"}
+                = link_to edit_admin_notification_path(note.id), class: 'btn', title: "Edit" do
+                  %i.icon-edit    
+                = link_to admin_notification_path(note.id), method: :delete, confirm: "Are you sure?", class: 'btn btn-danger', title: 'Remove Notification' do
+                  %i.icon-trash
+  

@@ -1,4 +1,5 @@
 - projections = [["Alaskan Albers","EPSG:3338"],["Polar", "EPSG:3572"],["Web Mercator", "EPSG:3857"]]
+- location_projections = [["Alaskan Albers","EPSG:3338"],["Polar", "EPSG:3572"]]
 = form_for setup, url: manager_setup_path, html: { class: 'form-horizontal', multipart: true } do |f|
   - if setup.errors.any?
     #error_explanation.alert.alert-error
@@ -13,7 +14,7 @@
     %li.active
       %a{ href: '#setup_information', data: { toggle: 'tab' } } Site Information
     %li
-      %a{ href: '#maps', data: { toggle: 'tab' } } Maps Setup
+      %a{ href: '#maps', data: { toggle: 'tab' } } Map Projections
     %li
       %a{ href: '#social', data: { toggle: 'tab' } } Social Links
     %li
@@ -67,15 +68,19 @@
     #maps.tab-pane
       %fieldset
         %legend
-          Site Maps
+          Map Projections
         .control-group
-          = f.label "Site Projection", class: 'control-label'
+          = f.label "Search", class: 'control-label'
           .controls
             = f.select :projection, options_for_select(projections, @current_setup.projection), class: 'span12'
         .control-group
-          = f.label "Full Record Projection", class: 'control-label'
+          = f.label "Full Record", class: 'control-label'
           .controls
             = f.select :record_projection, options_for_select(projections, @current_setup.record_projection), { include_blank: true }
+        .control-group
+          = f.label "Location Editor", class: 'control-label'
+          .controls
+            = f.select :location_projection, options_for_select(location_projections, @current_setup.location_projection), { include_blank: true }
         .control-group
           = f.label "Use Google Layers", class: 'control-label'
           .controls

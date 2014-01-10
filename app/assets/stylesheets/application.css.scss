@@ -11,39 +11,12 @@
 @import 'tumblr';
 @import 'select2-fixes';
 @import 'forms';
+@import 'user_toolbar';
 
 @import url(http://fonts.googleapis.com/css?family=Quando);
 
 body, html {
   position: relative;
-}
-
-#sitemanager_toolbar {
-  width: 100%;
-  float: left;
-  position: relative;
-  z-index: 5000;
-  
-  .navbar-inner {
-    padding-left: 0;
-    padding-right: 0;
-  }
-  
-  .hide-buttons {
-    margin:0;
-    a {
-      padding-left: 10px;
-      padding-right: 10px;
-    }
-  }
-  
-  &.hidden {
-    position: absolute;
-  }
-  
-  &.left {
-    position: absolute;
-  }
 }
 
 .modal-backdrop {
@@ -74,13 +47,6 @@ a.goto-top {
   top: 0px;
   width: 100%;  
   z-index: 2000000;
-}
-
-.navbar .nav li.avatar > a {
-  padding: 0px 10px 0px;
-  .caret {
-    margin-top: 15px;
-  }
 }
 
 #search {

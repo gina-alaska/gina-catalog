@@ -133,7 +133,7 @@ GEM
     hashie (2.0.5)
     highline (1.6.20)
     hike (1.2.3)
-    html-pipeline (1.1.0)
+    html-pipeline (1.2.0)
       activesupport (>= 2)
       nokogiri (~> 1.4)
     i18n (0.6.9)
@@ -236,7 +236,7 @@ GEM
       rgeo (>= 0.3.20)
     rgeo-geojson (0.2.3)
       rgeo (>= 0.3.7)
-    rinku (1.7.2)
+    rinku (1.7.3)
     rsolr (1.0.9)
       builder (>= 2.1.2)
     ruby-openid (2.3.0)
@@ -264,14 +264,13 @@ GEM
       net-scp (>= 1.1.2)
       net-ssh
       term-ansicolor
-    sunspot (2.1.0)
+    sunspot (1.3.3)
       pr_geohash (~> 1.0)
       rsolr (~> 1.0.7)
-    sunspot_rails (2.1.0)
+    sunspot_rails (1.3.3)
       nokogiri
-      rails (>= 3)
-      sunspot (= 2.1.0)
-    sunspot_solr (2.1.0)
+      sunspot (= 1.3.3)
+    sunspot_solr (1.3.3)
     term-ansicolor (1.2.2)
       tins (~> 0.8)
     therubyracer (0.12.0)
@@ -350,8 +349,8 @@ DEPENDENCIES
   rubyzip
   sanitize
   sass-rails (~> 3.2.0)
-  sunspot_rails
-  sunspot_solr
+  sunspot_rails (~> 1.3.3)
+  sunspot_solr (~> 1.3.3)
   therubyracer
   turbolinks
   uglifier

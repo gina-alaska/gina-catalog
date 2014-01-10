@@ -19,4 +19,14 @@ class UsersController < ApplicationController
   def preferences
     respond_with({ :user => current_user })
   end
+  
+  def toggle_beta
+    if beta?
+      cookies.delete(:beta)
+    else
+      cookies[:beta] = 1
+    end
+    
+    redirect_to '/'
+  end
 end

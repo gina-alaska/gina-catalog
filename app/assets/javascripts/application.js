@@ -23,6 +23,7 @@
 //= require 'pages'
 //= require 'history'
 //= require 'catalog_search'
+//= require 'notifications'
 //= require_self
 
 
