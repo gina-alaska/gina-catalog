@@ -13,6 +13,8 @@
         .field.span3
           = f.label :name
           = f.text_field :name
+          = f.label :hidden
+          = f.check_box :hidden
         .field.span9
           = f.label :description
           = f.text_area :description, cols: "80", rows: "4", class: "span12"

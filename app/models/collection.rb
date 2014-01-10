@@ -1,5 +1,5 @@
 class Collection < ActiveRecord::Base
-  attr_accessible :description, :name, :setup_id
+  attr_accessible :description, :name, :setup_id, :hidden
   
   belongs_to :setup
   
