@@ -45,11 +45,12 @@ class Catalog < ActiveRecord::Base
   has_many :catalogs_collections, uniq: true
   has_many :collections, :through => :catalogs_collections, uniq: true do
     def list
-      proxy_association.owner.collections.names.join(', ')
+      #proxy_association.owner.collections.names.join(', ')
+      names.join(', ')
     end
     
     def names
-      proxy_association.owner.collections.where("hidden = ?", false).order('name ASC').pluck(:name)
+      order('name ASC').pluck(:name)
     end
   end
   
