@@ -21,7 +21,7 @@ class UsersController < ApplicationController
   end
   
   def toggle_beta
-    if cookies[:beta].present?
+    if beta?
       cookies.delete(:beta)
     else
       cookies[:beta] = 1

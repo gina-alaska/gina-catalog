@@ -98,6 +98,11 @@ class ApplicationController < ActionController::Base
   def save_url(url = nil)
     session[:return_to] = url || request.fullpath
   end
+  
+  def beta?
+    cookies[:beta].present?
+  end
+  helper_method :beta?
 
   def redirect_back_or_default(default = '/')
     if session[:return_to]

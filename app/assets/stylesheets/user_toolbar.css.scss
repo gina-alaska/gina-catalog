@@ -24,8 +24,12 @@
   &.left {
     position: absolute;
   }
+
+  &.navbar .nav > li > a.text-error {
+    color: #b94a48;
+  }
   
-  .navbar .nav li.avatar > a {
+  &.navbar .nav li.avatar > a {
     padding: 0px 10px 0px;
     .caret {
       margin-top: 15px;
