@@ -18,7 +18,7 @@ module ApplicationHelper
   def show_flash_messages
     output = ''
     dismiss = '<a class="close" data-dismiss="alert" href="#">X</a>'.html_safe
-    [:notice, :error, :success, :warning].each do |type|
+    [:notice, :error, :success, :warning, :danger].each do |type|
       next if flash[type].blank?
       output << content_tag(:div, :class => "alert fade in alert-#{type}") do
         dismiss + flash[type]

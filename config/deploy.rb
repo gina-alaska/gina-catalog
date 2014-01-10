@@ -7,7 +7,7 @@ set :deploy_to, '/www/glynx'
 set :scm, :git
 
 set :format, :pretty
-set :log_level, :debug
+# set :log_level, :debug
 # set :pty, true
 
 set :linked_files, %w{config/database.yml config/initializers/catalog.rb config/resque.yml config/git_hooks_env config/sunspot.yml}
@@ -30,7 +30,7 @@ namespace :deploy do
     on roles(:app), in: :sequence, wait: 5 do
       # Your restart mechanism here, for example:
       # execute :touch, release_path.join('tmp/restart.txt')
-      execute :kill, '-USR2', "`cat #{release_path.join('tmp/pids/unicorn.pid')}`"
+      # execute :kill, '-USR2', "`cat #{release_path.join('tmp/pids/unicorn.pid')}`"
     end
   end
 

@@ -1,0 +1,38 @@
+
+#sitemanager_toolbar {
+  width: 100%;
+  position: relative;
+  z-index: 5000;
+  
+  .navbar-inner {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  
+  .hide-buttons {
+    margin:0;
+    a {
+      padding-left: 10px;
+      padding-right: 0px;
+    }
+  }
+  
+  &.hidden {
+    position: absolute;
+  }
+  
+  &.left {
+    position: absolute;
+  }
+
+  &.navbar .nav > li > a.text-error {
+    color: #b94a48;
+  }
+  
+  &.navbar .nav li.avatar > a {
+    padding: 0px 10px 0px;
+    .caret {
+      margin-top: 15px;
+    }
+  }  
+}

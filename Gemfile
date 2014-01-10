@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.13'
+gem 'rails', '3.2.15'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'https://github.com/rails/rails.git'
@@ -24,13 +24,15 @@ gem 'turbolinks'
 gem 'jquery-turbolinks'
 gem 'html-pipeline'
 gem 'liquid'
-gem 'dragonfly'
+gem 'dragonfly', '~> 0.9.14'
 gem 'awesome_nested_set'
 gem 'nested_form', git: 'https://github.com/ryanb/nested_form.git'
 gem 'rcsw', "~> 0.1.1", git: 'https://github.com/gina-alaska/ruby-csw.git'
 gem 'whenever'
 gem 'nokogiri'
 gem 'dalli'
+gem 'rinku'
+gem 'sanitize'
 gem 'rubyzip', require: 'zip'
 
 #gem 'nofxx-georuby'
@@ -49,11 +51,13 @@ gem 'unicorn'
 gem 'puma'
 gem 'feedzirra'
 
-# Deploy with Capistrano
-gem 'capistrano', '~> 3.0'
-gem 'capistrano-chruby', github: "capistrano/chruby"
-gem 'capistrano-bundler'
-gem 'capistrano-rails'
+group :development do
+  # Deploy with Capistrano
+  gem 'capistrano', '~> 3.0'
+  gem 'capistrano-chruby', github: "capistrano/chruby"
+  gem 'capistrano-bundler'
+  gem 'capistrano-rails'
+end
 
 # To use debugger (ruby-debug for Ruby 1.8.7+, ruby-debug19 for Ruby 1.9.2+)
 # gem 'ruby-debug'
@@ -82,8 +86,8 @@ group :production do
   gem 'therubyracer'
 end
 
-gem 'sunspot_solr'
-gem 'sunspot_rails'
+gem 'sunspot_solr', '~> 1.3.3'
+gem 'sunspot_rails', '~> 1.3.3'
 
 group :development do
   #gem 'sunspot_solr'

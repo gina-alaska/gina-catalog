@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   
+  before_filter :check_for_beta
   before_filter :check_for_setup
   before_filter :fetch_setup
   
@@ -40,9 +41,23 @@ class ApplicationController < ActionController::Base
   
   private  
   
+  def check_for_beta
+    if params[:BETA].present?
+      cookies[:beta] = 1
+      redirect_to '/'
+    end
+  end
+  
   def current_user  
     @current_user ||= User.find_by_id(session[:user_id]) if session[:user_id]  
   end
+  
+  def current_user=(user)
+    unless user.nil?
+      @current_user = user
+      session[:user_id] = user.id 
+    end
+  end  
   
   def current_member
     @current_member ||= current_user.memberships.where(setup_id: current_setup).includes(:setup, :roles, :permissions).first || Membership.new(user: current_user, setup: current_setup) if user_signed_in?
@@ -92,6 +107,11 @@ class ApplicationController < ActionController::Base
   def save_url(url = nil)
     session[:return_to] = url || request.fullpath
   end
+  
+  def beta?
+    cookies[:beta].present?
+  end
+  helper_method :beta?
 
   def redirect_back_or_default(default = '/')
     if session[:return_to]
