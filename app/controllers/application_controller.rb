@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_member
   helper_method :user_signed_in?
   helper_method :current_setup
+  helper_method :current_notifications
 
   protected
   
@@ -62,6 +63,14 @@ class ApplicationController < ActionController::Base
     @current_member ||= current_user.memberships.where(setup_id: current_setup).includes(:setup, :roles, :permissions).first || Membership.new(user: current_user, setup: current_setup) if user_signed_in?
   end
   
+  def current_notifications
+    if @current_notifications.nil?
+      @current_notifications = Notification.global_or_local_to(current_setup).where("expire_date > ?", Time.zone.now)
+      @current_notifications = @current_notifications.where("id not in (?)", Array.wrap(session["read_notifications"])) if session["read_notifications"].present?
+    end
+    @current_notifications
+  end
+
   def user_signed_in?
     return true if current_user 
   end

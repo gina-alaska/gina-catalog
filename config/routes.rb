@@ -3,6 +3,7 @@ NSCatalog::Application.routes.draw do
     resources :setups
     resources :geokeywords
     resources :users
+    resources :notifications
   end
   
   namespace :manager do
@@ -33,6 +34,8 @@ NSCatalog::Application.routes.draw do
     end
     resources :use_agreements
     resources :contact_infos
+    resources :notifications
+    
     resources :themes do
       member do
         put :activate
@@ -122,6 +125,10 @@ NSCatalog::Application.routes.draw do
   # resources :people
 
   resource :sitemap
+
+  resources :notifications, only: [:index] do
+    post :dismiss, on: :member
+  end
 
   resources :contacts, only: [:index, :create]
   resources :catalogs do

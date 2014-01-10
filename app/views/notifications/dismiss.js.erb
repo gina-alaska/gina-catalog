@@ -1,0 +1,2 @@
+// $("#<%= dom_id(@notification) %>").alert('close');
+$(document).trigger('notification:dismiss', ['#<%= dom_id(@notification) %>', <%= current_notifications.count %>])

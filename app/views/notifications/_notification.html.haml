@@ -1,0 +1,13 @@
+.title
+  = link_to dismiss_notification_path(notification), method: :post, remote: true, class: 'close pull-right', style: 'padding: 0px 10px;' do
+    &times;
+  %h4
+    = notification.title
+    %small{ style: 'margin-left: 10px;' }
+      Posted 
+      = notification.created_at.strftime('%Y-%m-%d')
+  
+%p
+  %span.label.pull-left{ class: "label-#{notification.message_type}", style: "font-size: 40px; margin-top: 5px; margin-right: 10px;" }
+    %i{ class: notification.icon_name }
+  = notification.message
