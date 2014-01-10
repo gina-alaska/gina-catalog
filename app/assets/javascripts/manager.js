@@ -24,6 +24,8 @@
 //= require 'flash_message'
 //= require 'history'
 //= require 'spin'
+//= require 'notifications'
+
 //= require_self
 
 $(document).ready(function() {
