@@ -227,9 +227,9 @@ ActiveRecord::Schema.define(:version => 20140109194603) do
     t.string   "name"
     t.text     "description"
     t.integer  "setup_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-    t.boolean  "hidden"
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+    t.boolean  "hidden",      :default => false
   end
 
   create_table "collections_csw_imports", :id => false, :force => true do |t|

@@ -14,7 +14,8 @@ class Collection < ActiveRecord::Base
   liquid_methods :name, :id  
   
   scope :including_descendents, ->(setup) {
-    where(:setup_id => setup.self_and_descendants.pluck(:id))
+    where(setup_id: setup.self_and_descendants.pluck(:id))
+    where(hidden: false)
   }
   
   
