@@ -59,6 +59,9 @@
                 = current_notifications.count
               %b.caret
             %ul.dropdown-menu.pull-right{ style: 'min-width: 520px;' }
+              - if current_notifications.count == 0
+                %li#no-notifications{ style: 'text-align: center;' }
+                  %h4 No notifications to display
               - current_notifications.each do |notice|
                 %li{ id: dom_id(notice), style: 'padding: 5px;' }
                   = render 'notifications/notification', notification: notice
