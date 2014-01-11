@@ -1,32 +1,34 @@
 - collapse ||= false
-.navbar.navbar-static-top
-  .navbar-inner
-    = render '/shared/catalogs/catalog_buttons', catalog: catalog
                 
 = render '/shared/catalogs/map', catalog: catalog
     
-.content
-  #catalog-published
-    = render 'catalogs/ispublished', catalog: catalog
-  .result{ data: { wkt: catalog.geometry_collection, type: catalog.type } }
-    %h4.title= catalog.title
-
-    - if catalog.published? or (current_member and current_member.can_manage_catalog?)
-      .row-fluid
-        .span7
-          = render '/shared/catalogs/status', item: catalog
-          %dl
-            %dt Description
-            %dd
-              :markdown
-                #{catalog.description}
-          = render '/shared/catalogs/collapsed_content', item: catalog, collapse: collapse
-          
-        .span5
+.result{ data: { wkt: catalog.geometry_collection, type: catalog.type } }
+  = render '/shared/catalogs/catalog_buttons', catalog: catalog
+  %table
+    %tr
+      %td{ style: 'vertical-align: top; width: 300px;' }
+        .content{ style: 'border-bottom: 1px solid #efefef;' }
+          = render '/shared/catalogs/primary_agency_icon', catalog: catalog
+        .content{ style: 'border-bottom: 1px solid #efefef;' }
+          = render '/shared/catalogs/agency_icons', catalog: catalog
+        .content  
           = render '/shared/catalogs/map_layers', catalog: catalog
-          = render '/shared/catalogs/files', catalog: catalog
+      %td.content{ style: 'border-left: 1px solid #efefef' }
+        #catalog-published
+          = render 'catalogs/ispublished', catalog: catalog
 
-          #agency-images.clear-fix
-            - [catalog.source_agency, catalog.funding_agency, catalog.agencies].flatten.uniq.compact.each do |agency|
-              - next unless agency.logo
-              = image_tag agency.logo.thumb('x75').url, alt: agency.name, title: agency.name, style: 'display: inline; margin: 10px;'
+        %h4.title= catalog.title
+  
+        - if catalog.published? or current_member.try(:can_manage_catalog?)
+          :markdown
+            #{catalog.description}
+    
+          = render '/shared/catalogs/resources', catalog: catalog
+          = render '/shared/catalogs/tag_cloud', catalog: catalog
+
+          %h3 Additional Information
+    
+          = render '/shared/catalogs/status', item: catalog
+          = render '/shared/catalogs/collapsed_content', item: catalog, collapse: collapse
+
+= render '/shared/catalogs/files', catalog: catalog

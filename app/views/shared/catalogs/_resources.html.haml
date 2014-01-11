@@ -1,0 +1,74 @@
+%h3 Files and Resources
+%ul.media-list
+  - if catalog.downloadable? 
+    %li.media
+      .pull-left{ style: 'color: #555; min-width: 50px; font-size: 50px; text-align:center;' }
+        %i.icon-download-alt
+      .media-body
+        = link_to catalog_downloads_path(catalog), class: 'btn pull-right', rel: "nofollow", remote: true do
+          %i.icon-download-alt.media-object
+          Download
+          
+        %h4.media-heading Download
+        %p
+          - if catalog.local_download?
+            = File.basename(catalog.archive_file)
+            = "(#{number_to_human_size(catalog.archive_size)})"
+          - else
+            Remote files download
+  - catalog.links.where('category = ?', 'Download').each do |link|
+    %li.media
+      .pull-left{ style: 'color: #555; min-width: 50px; font-size: 50px; text-align:center;' }
+        %i.icon-download-alt
+      .media-body
+        = link_to link.url, class: 'btn pull-right', rel: "nofollow", remote: true do
+          %i.icon-download-alt.media-object
+          Download
+          
+        %h4.media-heading Download
+        %p= link.url
+                        
+  - catalog.links.where('category in (?)', ['Report']).each do |link|
+    %li.media
+      .pull-left{ style: 'color: #E66C00; min-width: 50px; font-size: 50px; text-align:center;' }
+        %i.icon-file
+      .media-body
+        = link_to link.url, class: 'btn pull-right', :target => :_blank do
+          %i.icon-external-link
+          View website
+            
+        %h4.media-heading
+          = link.category
+          - unless link.display_text.empty? or link.display_text == link.url
+            = " :: #{link.display_text}"
+        %p= link.url
+  - catalog.links.where('category not in (?)', ['Metadata', 'Download', 'Report']).each do |link|
+    %li.media
+      .pull-left{ style: 'color: #549FCB; min-width: 50px; font-size: 50px; text-align:center;' }
+        %i.icon-cloud
+      .media-body
+        = link_to link.url, class: 'btn pull-right', :target => :_blank do
+          %i.icon-external-link
+          View website
+            
+        %h4.media-heading
+          = link.category
+          - unless link.display_text.empty? or link.display_text == link.url
+            = " :: #{link.display_text}"
+        %p= link.url
+    
+%h3 Metadata Source
+%ul.media-list   
+  - catalog.links.where('category = ?', 'Metadata').each do |link|
+    %li.media
+      .pull-left{ style: 'color: #2CAD59; min-width: 50px; font-size: 50px; text-align:center;' }
+        %i.icon-file
+      .media-body
+        = link_to link.url, class: 'btn pull-right', :target => :_blank do
+          %i.icon-external-link
+          View metadata
+            
+        %h4.media-heading
+          - unless link.display_text.empty? or link.display_text == link.url
+            = link.display_text
+        %p= link.url          

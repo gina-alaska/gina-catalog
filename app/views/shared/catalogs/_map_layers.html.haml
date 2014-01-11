@@ -1,16 +1,10 @@
 - unless catalog.map_layers.empty?
   %h4 Map Layers
-  %table.table-bordered.table-striped.table-condensed{style:'width:100%'}
-    %thead
-      %tr
-        %th.span3 Visible
-        %th Name
-    %tbody
-      - catalog.map_layers.each do |layer|
-        %tr
-          %td{ style: 'text-align: center;' }
-            - disabled = layer.supports?(current_setup.projection) ? '' : 'disabled'
-    
-            = link_to map_layer_path(layer, :json), class: "map_layer_btn btn #{disabled}", data: { openlayers_action: 'preview' }, title: 'Preview map layer' do
-              %i.check.icon-check-empty
-          %td= layer.name
+  %ul.nav
+    - catalog.map_layers.each do |layer|
+      %li
+        - disabled = layer.supports?(current_setup.projection) ? '' : 'disabled'
+        .layer-toggle.pull-left{ style: 'margin-right: 10px;' }
+          = link_to map_layer_path(layer, :json), class: "map_layer_btn btn #{disabled}", data: { openlayers_action: 'preview' }, title: 'Preview map layer' do
+            %i.check.icon-check-empty
+        = layer.name
