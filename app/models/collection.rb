@@ -17,7 +17,7 @@ class Collection < ActiveRecord::Base
     where(setup_id: setup.self_and_descendants.pluck(:id))
   }
   
-  scope :visible_to, ->(member) {
+  scope :visible_to, ->(member = nil) {
     where(hidden: false) unless member.try(:access_catalog?)
   }  
 end

@@ -44,7 +44,7 @@ class Setup < ActiveRecord::Base
   		'title' => self.title,
   		'by_line' => self.by_line,
       'contact_email' => self.contact_email, 
-  		'collections' => self.collections,
+  		'collections' => self.collections.visible_to,
       'page' => SetupSubpageDrop.new(self),
       'catalog' => SetupCatalogRecordsDrop.new(self),
       'snippets' => PageSnippetDrop.new(self),

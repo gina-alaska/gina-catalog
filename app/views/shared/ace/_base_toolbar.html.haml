@@ -1,4 +1,4 @@
-- cache([:ace, :base_toolbar, :v5]) do
+- cache([:ace, :base_toolbar, :v6]) do
   .btn-group
     %button.btn.btn-small{ type: 'button', title: 'Undo', data: { action: 'undo' } }
       %i.icon-undo
@@ -92,6 +92,15 @@
             %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ setup.contact_email }}' } } Contact Email
           %li
             %a{ href: "#", type: 'button', data: { action: 'insert', html: "{{ setup.snippets['snippet_name'] }}" } } Snippet
+          %li.dropdown-submenu
+            %a{ href: "#" } Collections:
+            %ul.dropdown-menu
+              %li
+                %a{ href: "#", type: 'button', data: { action: 'insert', start: '{% for collection in setup.collections %}', end: '{% endfor %}' } } Each Collection
+              %li
+                %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ collection.name }}' } } Collection Name
+              %li
+                %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ collection.description }}' } } Collection Description
           %li
             %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ setup.facebook_url }}' } } Facebook URL
           %li
