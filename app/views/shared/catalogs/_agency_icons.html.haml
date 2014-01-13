@@ -1,5 +1,11 @@
-#agency-images.clear-fix
-  - [catalog.funding_agency, catalog.agencies].flatten.uniq.compact.each do |agency|
-    - next unless agency.logo
-    = image_tag agency.logo.thumb('x75').url, alt: agency.name, title: agency.name, style: 'display: inline; margin: 10px;'
+- agency_list = [catalog.funding_agency, catalog.agencies].flatten.uniq.compact - [catalog.source_agency]
+- unless agency_list.empty?
+  #agency-images
+    %h5 Other agencies
+    %ul.nav
+      - agency_list.each do |agency|
+        %li{ style: 'width: 100px; text-align: center; margin: 5px; display: inline-block;' }
+          = image_tag agency.logo.thumb('100x').url, alt: agency.name, title: agency.name if agency.logo
+          %br/
+          = agency.acronym
 

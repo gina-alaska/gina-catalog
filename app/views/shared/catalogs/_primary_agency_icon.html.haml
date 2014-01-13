@@ -1,5 +1,5 @@
 - if catalog.source_agency
   .primary-agency{style: 'text-align: center;' }
-    = image_tag catalog.source_agency.logo.thumb('400x').url, alt: catalog.source_agency.name, title: catalog.source_agency.name if catalog.source_agency.logo
+    = image_tag catalog.source_agency.logo.remote_url, alt: catalog.source_agency.name, title: catalog.source_agency.name if catalog.source_agency.logo
     %h4= catalog.source_agency.name
 

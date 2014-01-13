@@ -1,8 +1,8 @@
 %h3 Files and Resources
-%ul.media-list
+%ul.media-list.catalog-resources
   - if catalog.downloadable? 
     %li.media
-      .pull-left{ style: 'color: #555; min-width: 50px; font-size: 50px; text-align:center;' }
+      .icon.download.pull-left
         %i.icon-download-alt
       .media-body
         = link_to catalog_downloads_path(catalog), class: 'btn pull-right', rel: "nofollow", remote: true do
@@ -18,7 +18,7 @@
             Remote files download
   - catalog.links.where('category = ?', 'Download').each do |link|
     %li.media
-      .pull-left{ style: 'color: #555; min-width: 50px; font-size: 50px; text-align:center;' }
+      .icon.download.pull-left
         %i.icon-download-alt
       .media-body
         = link_to link.url, class: 'btn pull-right', rel: "nofollow", remote: true do
@@ -30,12 +30,12 @@
                         
   - catalog.links.where('category in (?)', ['Report']).each do |link|
     %li.media
-      .pull-left{ style: 'color: #E66C00; min-width: 50px; font-size: 50px; text-align:center;' }
+      .icon.report.pull-left
         %i.icon-file
       .media-body
         = link_to link.url, class: 'btn pull-right', :target => :_blank do
           %i.icon-external-link
-          View website
+          View report
             
         %h4.media-heading
           = link.category
@@ -44,31 +44,33 @@
         %p= link.url
   - catalog.links.where('category not in (?)', ['Metadata', 'Download', 'Report']).each do |link|
     %li.media
-      .pull-left{ style: 'color: #549FCB; min-width: 50px; font-size: 50px; text-align:center;' }
+      .icon.website.pull-left
         %i.icon-cloud
       .media-body
         = link_to link.url, class: 'btn pull-right', :target => :_blank do
           %i.icon-external-link
-          View website
+          View
+          = link.category.downcase
             
         %h4.media-heading
           = link.category
           - unless link.display_text.empty? or link.display_text == link.url
             = " :: #{link.display_text}"
         %p= link.url
-    
-%h3 Metadata Source
-%ul.media-list   
-  - catalog.links.where('category = ?', 'Metadata').each do |link|
-    %li.media
-      .pull-left{ style: 'color: #2CAD59; min-width: 50px; font-size: 50px; text-align:center;' }
-        %i.icon-file
-      .media-body
-        = link_to link.url, class: 'btn pull-right', :target => :_blank do
-          %i.icon-external-link
-          View metadata
+
+- if catalog.links.where('category = ?', 'Metadata').count > 0
+  %h3 Metadata Source
+  %ul.media-list.catalog-resources
+    - catalog.links.where('category = ?', 'Metadata').each do |link|
+      %li.media
+        .icon.metadata.pull-left
+          %i.icon-file
+        .media-body
+          = link_to link.url, class: 'btn pull-right', :target => :_blank do
+            %i.icon-external-link
+            View metadata
             
-        %h4.media-heading
-          - unless link.display_text.empty? or link.display_text == link.url
-            = link.display_text
-        %p= link.url          
+          %h4.media-heading
+            - unless link.display_text.empty? or link.display_text == link.url
+              = link.display_text
+          %p= link.url          
