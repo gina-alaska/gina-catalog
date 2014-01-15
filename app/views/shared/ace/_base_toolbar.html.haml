@@ -1,4 +1,4 @@
-- cache([:ace, :base_toolbar, :v6]) do
+- cache([:ace, :base_toolbar, :v9]) do
   .btn-group
     %button.btn.btn-small{ type: 'button', title: 'Undo', data: { action: 'undo' } }
       %i.icon-undo
@@ -136,6 +136,8 @@
           %li
             %a{ href: "#", type: 'button', data: { action: 'insert', start: '{% for record in setup.catalog.latest %}', end: '{% endfor %}' } } Each Record
           %li
+            %a{ href: "#", type: 'button', data: { action: 'insert', start: '{% for record in setup.catalog.top_downloads %}', end: '{% endfor %}' } } Each Popular Record
+          %li
             %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ record.title }}' } } Title
           %li
             %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ record.description }}' } } Description
@@ -147,6 +149,8 @@
             %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ record.start_date }}' } } Start Date
           %li
             %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ record.end_date }}' } } End Date
+          %li
+            %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ record.downloads }}' } } Record Downloads
       %li
         %a{ href: "#", type: 'button', data: { action: 'insert', html: '{% system %}' } } System
       %li

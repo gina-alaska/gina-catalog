@@ -23,4 +23,15 @@ class ContactInfo < ActiveRecord::Base
       where("contact_infos.created_at <= ?", Time.zone.now)
     end
   }
+
+  scope :current_setup, ->(setup) {
+    joins(:catalog).where("catalog.owner_setup_id = ? or contact_infos.setup_id = ?", setup.id, setup.id).uniq
+  }
+
+  scope :top_downloads, lambda {
+    data = self
+    data = data.select("contact_infos.catalog_id, count(*) as download_count").group("contact_infos.catalog_id").order('download_count DESC').limit(10)
+
+    data
+  }
 end

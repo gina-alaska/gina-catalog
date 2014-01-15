@@ -129,7 +129,8 @@ class Catalog < ActiveRecord::Base
       'type' => self.type,
       'url' => "/catalogs/#{self.to_param}",
       'start_date' => self.start_date,
-      'end_date' => self.end_date
+      'end_date' => self.end_date,
+      'downloads' => self.contact_infos.count
     }
   end
 
@@ -498,6 +499,10 @@ Title: #{self.title}
         c.save
       end
     end
+  end
+
+  def self.top_downloads(setup)
+
   end
 
   protected
