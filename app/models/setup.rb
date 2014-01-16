@@ -19,7 +19,7 @@ class Setup < ActiveRecord::Base
 
   has_many :catalogs_setups, uniq: true, dependent: :destroy
   has_many :catalogs, through: :catalogs_setups
-  has_many :owned_catalogs, class_name: 'Catalog', foreign_key: 'catalogs'
+  has_many :owned_catalogs, class_name: 'Catalog', foreign_key: 'owner_setup_id'
 #  has_and_belongs_to_many :catalogs
   
   has_many :catalog_collections, dependent: :destroy

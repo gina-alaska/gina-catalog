@@ -5,6 +5,7 @@ class ActivityLog < ActiveRecord::Base
 
   belongs_to :loggable, polymorphic: true
   
+  validates :activity, presence: true
   
   def unknown_agencies
     agencies = []

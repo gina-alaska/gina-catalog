@@ -18,15 +18,34 @@ class FGDC
   def keywords 
     @xml.search('idinfo keywords').search('themekey','placekey').children.collect { |tag|
       tag.to_s.split(/\s*[;,:]\s*/)
-    }.flatten
+    }.flatten.to_a.join(', ')
   end
   
   def start_date
-    @xml.search('idinfo timeperd timeinfo rngdates begdate').children.to_s.strip
+    parse_date @xml.search('idinfo timeperd timeinfo rngdates begdate').children.to_s.strip
   end
   
   def end_date
-    @xml.search('idinfo timeperd timeinfo rngdates enddate').children.to_s.strip
+    parse_date @xml.search('idinfo timeperd timeinfo rngdates enddate').children.to_s.strip, true
+  end
+  
+  def parse_date(raw_date, end_of_year = false)
+    return nil if ['', 'present', 'unknown'].include? raw_date.downcase
+
+    begin
+      date = DateTime.parse raw_date
+    rescue
+      date = DateTime.strptime(raw_date, "%Y")
+      if end_of_year
+        date = date.end_of_year
+      else
+        date = date.beginning_of_year
+      end
+    rescue
+      nil
+    end
+    
+    date
   end
   
   def bounds
@@ -45,7 +64,16 @@ class FGDC
   end
   
   def status
-    @xml.search('idinfo status progress').children.to_s.strip
+    case @xml.search('idinfo status progress').children.to_s.strip.chomp.downcase
+    when 'complete'
+      "Complete"
+    when 'in work'
+      "Ongoing"
+    when 'ongoing'
+      "Ongoing"
+    else
+      "Unknown"
+    end
   end
 
   def onlinks

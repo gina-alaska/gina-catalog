@@ -1,28 +1,70 @@
-%h4= "Log for #{@log.created_at}"
+/ %h4= "Log for #{@log.created_at}"
+/ 
+- if @import_counts
+  %div.content
+    %b Number of records created/updated: 
+    = @import_counts.log[:counts][:success]
+  %div.content
+    %b Number of records with errors: 
+    = @import_counts.log[:counts][:error]
 
-%dl
-  %dt Number of records created/updated: 
-  %dd= @log.log[:new_catalogs].count
-  %dt Number of records with errors: 
-  %dd= @log.log[:errors].count
-
-
-%h5 Error Details
-- @log.log[:errors].each_with_index do |record, index|
-  .bordered{style: "padding: 5px;"}
-    %div{data: {toggle: 'collapse', target: "#error_#{index}"} }
-      = record.first
-      = link_to record.first do
-        %i.icon-external-link
-      %i.icon-chevron-down.pull-right
-    .collapse{id: "error_#{index}"}
-      %table.table.table-striped.table-bordered
-        %thead
-          %tr
-            %th Field
-            %th Value
-        %tbody
-          - record.last.each do |field, values|
-            %tr
-              %td= field
-              %td= Array.wrap(values).join(', ').html_safe
+.tabbable
+  %ul.nav.nav-tabs
+    %li.active{ style: 'margin-left: 10px;' }= link_to 'Import Errors', '#import-errors', data: { toggle: 'tab' }
+    %li= link_to 'Agency Errors', '#agency-errors', data: { toggle: 'tab' }
+    %li= link_to 'Import messages', '#import-messages', data: { toggle: 'tab' }
+  
+  .tab-content
+    #import-errors.tab-pane.active
+      - @logs.import_errors.each do |log|
+        .row-fluid{ style: 'margin-top: 5px;' }
+          .span3.content
+            %b= log.activity.underscore.humanize.upcase
+            %br/
+            = log.created_at
+          .span9.content
+            %b Catalog record:
+            = link_to log.loggable, log.loggable
+        .row-fluid{ style: 'border-bottom: 1px solid #efefef; padding-bottom: 5px;' }
+          .span12.content
+            %b Source:
+            = link_to log.loggable.source_url, log.loggable.source_url
+            %br/
+            %b Message:
+            = log.log[:message].html_safe if log.log[:message].present?
+            
+    #agency-errors.tab-pane
+      - @logs.agency_import_errors.each do |log|
+        .row-fluid{ style: 'margin-top: 5px;' }
+          .span3.content
+            %b= log.activity.underscore.humanize.upcase
+            %br/
+            = log.created_at
+          .span9.content
+            %b Catalog record:
+            = link_to log.loggable, log.loggable
+        .row-fluid{ style: 'border-bottom: 1px solid #efefef; padding-bottom: 5px;' }
+          .span12.content
+            %b Source:
+            = link_to log.loggable.source_url, log.loggable.source_url
+            %br/
+            %b Message:
+            = log.log[:message].html_safe if log.log[:message].present?
+            
+    #import-messages.tab-pane
+      - @logs.import_log.each do |log|
+        .row-fluid{ style: 'margin-top: 5px;' }
+          .span3.content
+            %b= log.activity.underscore.humanize.upcase
+            %br/
+            = log.created_at
+          .span9.content
+            %b Catalog record:
+            = link_to log.loggable, log.loggable
+        .row-fluid{ style: 'border-bottom: 1px solid #efefef; padding-bottom: 5px;' }
+          .span12.content
+            %b Source:
+            = link_to log.loggable.source_url, log.loggable.source_url
+            %br/
+            %b Message:
+            = log.log[:message].html_safe if log.log[:message].present?         

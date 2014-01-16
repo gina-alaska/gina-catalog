@@ -4,9 +4,7 @@
       = render "import_status_button"
     %ul#csw.nav.nav-pills
       %li.active
-        = link_to "Import Details", "#details", data: {toggle: 'tab'}
-      %li
-        = link_to "Import Log", "#activity_log", data: {toggle: 'tab'}
+        = link_to "Import Logs", "#details", data: {toggle: 'tab'}
       %li
         = link_to "Associated Catalogs", "#catalogs", data: {toggle: 'tab'}
       %li
@@ -14,12 +12,10 @@
     
     .tab-content
       #details.tab-pane.active
-        - if @log
-          = render "log_details"
-        - else
+        - if @logs.empty?
           %h4 No imports have been performed yet
-      #activity_log.tab-pane
-        = render "import_history"
+        - else
+          = render "log_details"
       #catalogs.tab-pane
         %table.table.table-striped.table-bordered.table-condensed
           %tbody
