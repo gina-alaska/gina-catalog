@@ -1,9 +1,9 @@
-%tr{data: {agency: unknown_agency}}
-  %td.span6
+.row-fluid.unknown-agency{data: {agency: unknown_agency}}
+  .span6.content
     = unknown_agency
-  %td.span4
-    = collection_select("agency", "agency_id", current_setup.agencies.order('name ASC'), :id, :name)
-  %td.span2
+  .span4.content
+    = collection_select("agency", "agency_id", current_setup.agencies.order('name ASC'), :id, :name_with_acronym)
+  .span2.content
     .btn-group
       = link_to "Alias", "#", class: "btn", data: {action: 'add-alias'}
-      = link_to "Create", new_agency_manager_csw_import_path(@csw_import, name: unknown_agency), class: 'btn', method: :post
+      = link_to "Create", new_agency_manager_csw_import_path(@csw_import, name: unknown_agency), class: 'btn', method: :post, target: :_blank

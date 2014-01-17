@@ -119,6 +119,8 @@ class Manager::AgenciesController < ManagerController
     
     @agency.aliases << Alias.new(text: params[:text])
     
+    @agency.index!
+    
     respond_to do |format|
       format.json { head :no_content}
     end
