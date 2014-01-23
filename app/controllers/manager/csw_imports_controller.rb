@@ -16,8 +16,9 @@ class Manager::CswImportsController < ManagerController
     @import_counts = @csw_import.import_logs.complete.first
     @import_start = @csw_import.import_logs.start.first
     
-    @logs = @csw_import.activity_logs.where(created_at: @import_start.created_at..@import_counts.created_at)
-    # @unknown_agencies = @log.try(:unknown_agencies)
+    if @import_start and @import_counts
+      @logs = @csw_import.activity_logs.where(created_at: @import_start.created_at..@import_counts.created_at) 
+    end
     
     @unknown_agencies = @logs.agency_import_errors.collect do |log|
       log.log[:missing_agencies]
