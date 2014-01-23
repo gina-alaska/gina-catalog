@@ -12,8 +12,16 @@ class Manager::CswImportsController < ManagerController
 
   def show
     @csw_import = current_setup.csw_imports.where(id: params[:id]).first
-    @log = @csw_import.activity_logs.where(id: params[:log]).first || @csw_import.activity_logs.first
-    @unknown_agencies = @log.try(:unknown_agencies)
+    
+    @import_counts = @csw_import.import_logs.complete.first
+    @import_start = @csw_import.import_logs.start.first
+    
+    @logs = @csw_import.activity_logs.where(created_at: @import_start.created_at..@import_counts.created_at)
+    # @unknown_agencies = @log.try(:unknown_agencies)
+    
+    @unknown_agencies = @logs.agency_import_errors.collect do |log|
+      log.log[:missing_agencies]
+    end.flatten.uniq
 
     respond_to do |format|
       format.html

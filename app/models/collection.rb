@@ -1,7 +1,7 @@
 class Collection < ActiveRecord::Base
   attr_accessible :description, :name, :setup_id, :hidden
   
-  belongs_to :setup
+  belongs_to :setup, touch: true
   
   has_many :catalogs_collections, uniq: true
   has_many :catalogs, :through => :catalogs_collections, uniq: true

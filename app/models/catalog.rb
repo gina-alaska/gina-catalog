@@ -8,7 +8,7 @@ class Catalog < ActiveRecord::Base
     :collection_ids, :title, :description, :start_date, :end_date, :status, :owner_id, 
     :primary_contact_id, :contact_ids, :source_agency_id, :funding_agency_id, :data_type_ids, 
     :iso_topic_ids, :agency_ids, :tags, :geokeyword_ids, :type, :use_agreement_id, :request_contact_info, 
-    :require_contact_info, :remote_updated_at, :source_url, :owner_setup_id, :csw_import_id
+    :require_contact_info, :remote_updated_at, :source_url, :owner_setup_id, :csw_import_id, :uuid
   
   #The exception to the db name rule, since this is a collection of multiple types of items
   self.table_name = 'catalog'
@@ -24,6 +24,7 @@ class Catalog < ActiveRecord::Base
   validates_presence_of :type
   validates_presence_of :description
   validate :temporal_continuity
+  validates :uuid, uniqueness: true
   # validates_presence_of :owner_id
   
   #validates_presence_of :license_id
@@ -37,6 +38,8 @@ class Catalog < ActiveRecord::Base
   belongs_to :data_source
   belongs_to :owner_setup, :class_name => 'Setup'
   belongs_to :csw_import
+  
+  has_many :activity_logs, as: :loggable, order: "created_at DESC", extend: ImportsExtension
   
   has_many :catalogs_setups, uniq: true
   has_many :setups, :through => :catalogs_setups, uniq: true

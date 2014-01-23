@@ -2,7 +2,7 @@ class CatalogsCollection < ActiveRecord::Base
   attr_accessible :catalog_id, :collection_id
   
   belongs_to :catalog, touch: true
-  belongs_to :collection
+  belongs_to :collection, touch: true
   
   after_save :reindex_catalog
   after_destroy :reindex_catalog

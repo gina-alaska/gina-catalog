@@ -36,7 +36,8 @@ class CswImportWorker
         
         default_attributes = { 
           remote_updated_at: record.modified, 
-          source_url: url
+          source_url: url,
+          collection_ids: catalog.collection_ids
         }.merge(@csw.default_attributes)
         
         catalog.assign_attributes(default_attributes)

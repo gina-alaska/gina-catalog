@@ -23,31 +23,21 @@ module CatalogConcerns
         end
       end
       
-      def import_from_fgcd url
+      def import_from_fgdc url
         import_errors = {}
 
         #Fetch the record
         metadata = FGDC.new(url)
         
+        self.source_url = url
         self.title = metadata.title
         self.description = metadata.abstract
-
-        case metadata.status.chomp.strip.downcase
-        when 'complete'
-          self.status = "Complete"
-        when 'in work'
-          self.status = "Ongoing"
-        when 'ongoing'
-          self.status = "Ongoing"
-        else
-          self.status = "Unknown"
-          puts import_errors[:status] = "Unknown status: #{metadata.status}"
-        end
+        self.status = metadata.status
         
         self.type = "Asset"
         # self.tags = metadata.keywords.collect{|k| Tag.where(text: k).first_or_initialize}
         
-        self.tags = metadata.keywords.collect.to_a.join(', ')
+        self.tags = metadata.keywords
         
         loc = self.locations.where(geom: metadata.bounds).first_or_initialize(name: 'Record Bounds')
         loc.update_attributes(name: 'Record Bounds')
@@ -64,36 +54,15 @@ module CatalogConcerns
           case l.split('.').last
           when 'zip'
             self.download_urls << fgdc_download_url(l)
-            self.links << fgdc_link(l, 'Download')
+            # self.links << fgdc_link(l, 'Download')
           else
             self.links << fgdc_link(l, 'Website')
           end
         end
         self.links << fgdc_link(url, 'Metadata')
         
-        unless metadata.start_date.empty?
-          self.start_date = begin
-            DateTime.parse(metadata.start_date)
-          rescue => e
-            begin
-              DateTime.strptime(metadata.start_date, "%Y").beginning_of_year
-            rescue => e
-              import_errors[:start_date] = metadata.start_date
-            end
-          end
-        end
-
-        unless metadata.end_date.empty?
-          self.end_date = begin
-            DateTime.parse(metadata.end_date)
-          rescue => e
-            begin
-              DateTime.strptime(metadata.end_date, "%Y").end_of_year
-            rescue => e
-              import_errors[:end_date] = metadata.end_date 
-            end
-          end
-        end
+        self.start_date = metadata.start_date
+        self.end_date = metadata.end_date
         
         if metadata.primary_contact.nil?
           self.primary_contact_id = nil
@@ -101,26 +70,30 @@ module CatalogConcerns
           self.primary_contact = Person.where(metadata.primary_contact).first_or_initialize
         end
         
+        missing_agencies ||= []
         metadata.agencies.each do |agency_name|
-          puts agency_name
           next if agency_name.nil? or agency_name.empty?
           agency = Agency.where(name: agency_name).first
           agency ||= Alias.where(text: agency_name, aliasable_type: 'Agency').first.try(:aliasable)
           if agency.nil? 
-            import_errors[:agencies] ||= []
-            import_errors[:agencies] << agency_name
+            missing_agencies << agency_name
           else
             self.agencies << agency        
           end
         end
         
-
-        
-        import_errors
+        unless missing_agencies.empty?
+          self.activity_logs.create_agency_import_error(message: "Could not find the following agencies: #{missing_agencies.join(', ')}", missing_agencies: missing_agencies)
+        end
       rescue => e
         puts "Unhandled error #{e}"
+        puts e.backtrace
+        
+        self.activity_logs.create_import_error(message: "Unhandled error #{e}, while trying to import the record")
         raise
       end
+      
+      alias_method :import_from_fgcd, :import_from_fgdc
     end
   end
 end

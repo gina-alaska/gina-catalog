@@ -70,6 +70,17 @@ class Agency < ActiveRecord::Base
     end
   end
   
+  def self.exists_by_name_or_alias?(name)
+    search = Agency.search do
+      any_of do
+        with(:name, name)
+        with(:alias_names, name)
+      end
+    end
+    
+    search.total > 0 
+  end
+  
   def name_with_acronym
     "#{name} (#{acronym})"
   end
