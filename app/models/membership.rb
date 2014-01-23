@@ -42,7 +42,7 @@ class Membership < ActiveRecord::Base
       return false
     elsif match = matches_dynamic_perm_group_check?(method_id)
       return true if self.user.try(:is_an_admin?)
-      return false unless self.setup.send("#{match[1]}_enabled")
+      return false unless !self.setup.respond_to?("#{match[1]}_enabled".to_sym) or self.setup.send("#{match[1]}_enabled")
       
       tokenize_roles(match.captures.first).each do |check|
         return true if self.permissions.index { |i| i.group == check }
