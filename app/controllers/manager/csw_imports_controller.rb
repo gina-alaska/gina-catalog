@@ -18,11 +18,11 @@ class Manager::CswImportsController < ManagerController
     
     if @import_start and @import_counts
       @logs = @csw_import.activity_logs.where(created_at: @import_start.created_at..@import_counts.created_at) 
+      @unknown_agencies = @logs.agency_import_errors.collect do |log|
+        log.log[:missing_agencies]
+      end.flatten.uniq
     end
-    
-    @unknown_agencies = @logs.agency_import_errors.collect do |log|
-      log.log[:missing_agencies]
-    end.flatten.uniq
+  
 
     respond_to do |format|
       format.html
