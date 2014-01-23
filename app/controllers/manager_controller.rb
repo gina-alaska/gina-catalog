@@ -17,14 +17,16 @@ class ManagerController < ApplicationController
       @end_date = nil
     end
 
-    @contact_infos = ContactInfo.joins(:catalog).where("catalog.owner_setup_id = ? or contact_infos.setup_id = ?", current_setup.id, current_setup.id).uniq
+#    @contact_infos = ContactInfo.joins(:catalog).where("catalog.owner_setup_id = ? or contact_infos.setup_id = ?", current_setup.id, current_setup.id).uniq
+    @contact_infos = ContactInfo.current_setup(current_setup)
 
     if params["agency"].present?
       @contact_infos = @contact_infos.where("catalog.source_agency_id = ?", params["agency"])
     end
     
-    @top_downloads = @contact_infos.select("contact_infos.catalog_id, count(*) as download_count").created_between(@start_date, @end_date).group("contact_infos.catalog_id")
-    @top_downloads = @top_downloads.order('download_count DESC').limit(10) 
+    @top_downloads = @contact_infos.top_downloads
+#    @top_downloads = @contact_infos.select("contact_infos.catalog_id, count(*) as download_count").created_between(@start_date, @end_date).group("contact_infos.catalog_id")
+#    @top_downloads = @top_downloads.order('download_count DESC').limit(10) 
     
     @latest_access = @contact_infos.created_between(@start_date, @end_date).order('contact_infos.created_at DESC')    
     @latest_access = @latest_access.limit(50)    

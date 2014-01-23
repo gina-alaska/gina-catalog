@@ -15,6 +15,9 @@
               %b.caret
             
             %ul.dropdown-menu
+              - if current_member.access_catalog? or current_member.access_sds?
+                %li
+                  = link_to 'Dashboard', manager_path
               - if current_member.access_cms?
                 %li
                   = link_to 'CMS', manager_page_contents_path
