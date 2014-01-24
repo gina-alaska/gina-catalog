@@ -70,7 +70,7 @@ class CswImport < ActiveRecord::Base
     
     if catalog.save and catalog.valid?
       puts 'Saved'
-      catalog.activity_logs.create_import_log(message: "Import completed #{Time.zone.now}, #{change_count} field updated", changes: catalog.changes)
+      catalog.activity_logs.create_import_log(message: "Import completed #{Time.zone.now}, #{change_count} field updated", changes: catalog.changes).save
       return true
     else
       puts 'Error during save'
