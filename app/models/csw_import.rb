@@ -60,7 +60,6 @@ class CswImport < ActiveRecord::Base
         })
       )
     end
-    catalog.title ||= 'No title set'
     catalog.setups << setup      
     catalog.remote_updated_at = record.modified.chomp.strip
     
@@ -75,9 +74,11 @@ class CswImport < ActiveRecord::Base
     else
       puts 'Error during save'
       puts catalog.errors.full_messages.join("\n")
+
       catalog.activity_logs.create_import_error(message: "Error while try to validate record update: #{catalog.errors.full_messages.join(', ')}")
 
       # don't publish this record! it's invalid
+      catalog.title ||= 'No title set'
       catalog.published_at = nil
       catalog.save(validate: false)
       return false
