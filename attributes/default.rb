@@ -35,13 +35,18 @@ defined?(ActiveRecord::Base) and
    rescue Errno::ENOENT, Errno::ESRCH
    end
  end
-      
+  
 sleep 1
 '
 
 default['glynx']['after_fork'] = "
 defined?(ActiveRecord::Base) and
   ActiveRecord::Base.establish_connection
+  
+# If you are using Redis but not Resque, change this
+if defined?(Resque)
+  Resque.redis.client.reconnect
+end
 "
 
 default['glynx']['package_deps'] = %w{libicu-devel curl-devel libxml2-devel libxslt-devel nfs-utils geos-devel ImageMagick-devel}
