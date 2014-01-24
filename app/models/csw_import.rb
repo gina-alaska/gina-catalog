@@ -56,7 +56,7 @@ class CswImport < ActiveRecord::Base
       catalog = setup.owned_catalogs.build(
         self.default_attributes.merge({
           uuid: uuid,
-          csw_import_id: csw.id
+          csw_import_id: self.id
         })
       )        
     end
