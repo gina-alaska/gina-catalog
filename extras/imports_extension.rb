@@ -4,7 +4,7 @@ module ImportsExtension
   end
 
   def create_import_log(log, activity='Import')
-    create({ activity: activity, log: log })
+    build({ activity: activity, log: log })
   end    
   
   def import_errors
