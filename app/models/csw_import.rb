@@ -78,7 +78,7 @@ class CswImport < ActiveRecord::Base
       catalog.activity_logs.create_import_error(message: "Error while try to validate record update: #{catalog.errors.full_messages.join(', ')}")
 
       # don't publish this record! it's invalid
-      catalog.title ||= 'No title set'
+      catalog.title = 'No title set' unless catalog.title.present?
       catalog.published_at = nil
       catalog.save(validate: false)
       return false
