@@ -4,7 +4,7 @@
     = @csw_import.title
     %small= @csw_import.url
 
-- if @logs.empty?
+- if !@logs or @logs.empty?
   %h4.content No logs from latest import currently available
 - else
   = render "log_details"
