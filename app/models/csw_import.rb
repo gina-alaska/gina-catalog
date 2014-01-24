@@ -58,8 +58,9 @@ class CswImport < ActiveRecord::Base
           uuid: uuid,
           csw_import_id: self.id
         })
-      )        
+      )
     end
+    catalog.title ||= 'No title set'
     catalog.setups << setup      
     catalog.remote_updated_at = record.modified.chomp.strip
     
