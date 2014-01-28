@@ -78,7 +78,7 @@ module CatalogConcerns
           if agency.nil? 
             missing_agencies << agency_name
           else
-            self.agencies << agency        
+            self.agencies << agency unless self.agencies.include?(agency)
           end
         end
         

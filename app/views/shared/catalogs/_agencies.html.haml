@@ -10,5 +10,5 @@
 
 - unless item.agencies.empty?
   %dt Other Agencies
-  %dd= item.agencies.collect(&:name).join(', ')
+  %dd= item.agencies.pluck(:name).join(', ')
   %br

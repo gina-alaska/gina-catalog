@@ -79,7 +79,7 @@ class Catalog < ActiveRecord::Base
       proxy_association.owner.geokeywords.collection.join(', ')
     end
     def collection
-      proxy_association.owner.geokeywords.collect(&:name).compact
+      proxy_association.owner.geokeywords.pluck(:name).compact
     end
   end
   has_and_belongs_to_many :iso_topics do 
@@ -87,7 +87,7 @@ class Catalog < ActiveRecord::Base
       proxy_association.owner.iso_topics.collection.join(', ')
     end
     def collection
-      proxy_association.owner.iso_topics.collect(&:name).compact
+      proxy_association.owner.iso_topics.pluck(:name).compact
     end
   end
   has_and_belongs_to_many :data_types
@@ -98,7 +98,7 @@ class Catalog < ActiveRecord::Base
     end
 
     def collection
-      proxy_association.owner.tags.collect(&:text).compact
+      proxy_association.owner.tags.pluck(:text).compact
     end
   end
 

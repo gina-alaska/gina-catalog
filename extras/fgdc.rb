@@ -95,8 +95,9 @@ class FGDC
   end
   
   def agencies
-    agency = @xml.search('idinfo cntorgp cntorg').children.collect(&:to_s)
-    agency
+    @xml.search('idinfo cntorgp cntorg').children.map do |child|
+      child.to_s.strip
+    end
   end
   
   def funding_agency
