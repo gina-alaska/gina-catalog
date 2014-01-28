@@ -19,7 +19,7 @@ class Image < ActiveRecord::Base
   alias_method :image_url, :raw_url
   
   def thumbnail(size = '640x480#')
-    if !%w{ pdf kmz kml }.include?(self.file.format) and self.file.try(:image?)
+    if self.file_stored? and !%w{ pdf kmz kml }.include?(self.file.format) and self.file.try(:image?)
       self.file.thumb(size).encode(:png)
     else
       Image.document_image
