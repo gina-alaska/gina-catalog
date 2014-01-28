@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.15'
+gem 'rails', '3.2.16'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'https://github.com/rails/rails.git'
@@ -24,7 +24,7 @@ gem 'turbolinks'
 gem 'jquery-turbolinks'
 gem 'html-pipeline'
 gem 'liquid'
-gem 'dragonfly', '~> 0.9.14'
+gem 'dragonfly', '~> 1.0.1'
 gem 'awesome_nested_set'
 gem 'nested_form', git: 'https://github.com/ryanb/nested_form.git'
 gem 'rcsw', "~> 0.1.1", git: 'https://github.com/gina-alaska/ruby-csw.git'

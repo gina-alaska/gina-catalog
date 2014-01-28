@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  catalog_id: 1
+  file_uid: MyString
+  file_size: 1
+  file_name: MyString
+  downloadable: false
+  preview: false
+
+two:
+  name: MyString
+  catalog_id: 1
+  file_uid: MyString
+  file_size: 1
+  file_name: MyString
+  downloadable: false
+  preview: false
