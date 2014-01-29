@@ -4,7 +4,7 @@ class Catalog < ActiveRecord::Base
   
   STATUSES = %w(Complete Ongoing Unknown Funded)
 
-  attr_accessible :links_attributes, :locations_attributes, :download_urls_attributes, 
+  attr_accessible :links_attributes, :locations_attributes, :download_urls_attributes, :uploads_attributes,
     :collection_ids, :title, :description, :start_date, :end_date, :status, :owner_id, 
     :primary_contact_id, :contact_ids, :source_agency_id, :funding_agency_id, :data_type_ids, 
     :iso_topic_ids, :agency_ids, :tags, :geokeyword_ids, :type, :use_agreement_id, :request_contact_info, 
@@ -25,6 +25,7 @@ class Catalog < ActiveRecord::Base
   validates_presence_of :description
   validate :temporal_continuity
   validates :uuid, uniqueness: true
+  validates_associated :uploads
   # validates_presence_of :owner_id
   
   #validates_presence_of :license_id
@@ -40,6 +41,7 @@ class Catalog < ActiveRecord::Base
   belongs_to :csw_import
   
   has_many :activity_logs, as: :loggable, order: "created_at DESC", extend: ImportsExtension
+  has_many :uploads
   
   has_many :catalogs_setups, uniq: true
   has_many :setups, :through => :catalogs_setups, uniq: true
@@ -117,13 +119,14 @@ class Catalog < ActiveRecord::Base
   scope :archived, lambda { where('archived_at <= ?', Time.now.utc) }
   scope :not_archived, where('archived_at IS NULL')
 
-  before_create :set_data_source
+  before_validation :create_uuid
   # before_create :repohex
   
   accepts_nested_attributes_for :download_urls, reject_if:  proc { |download| download['url'].blank? and download['name'].blank? }, allow_destroy: true
   accepts_nested_attributes_for :links, reject_if:  proc { |link| link['url'].blank? }, allow_destroy: true
   accepts_nested_attributes_for :locations, reject_if:  proc { |location| location['name'].blank? and location['wkt'].blank? }, allow_destroy: true
   accepts_nested_attributes_for :map_layers, reject_if:  proc { |layer| layer['url'].blank? and layer['name'].blank? }, allow_destroy: true
+  accepts_nested_attributes_for :uploads, reject_if:  proc { |upload| upload['file'].blank? and upload['exists'] != 'true' }, allow_destroy: true
   
   def to_liquid
     { 
@@ -286,6 +289,10 @@ class Catalog < ActiveRecord::Base
   def self.location_intersects(wkt, srid=4326)
     wkt = wkt.as_text if wkt.respond_to? :as_text
     joins(:locations).where("ST_Intersects(geom, ?::geometry)", "SRID=#{srid};#{wkt}")
+  end
+  
+  def create_uuid
+    self.uuid ||= UUIDTools::UUID.timestamp_create
   end
   
   def sds?

@@ -133,12 +133,11 @@ NSCatalog::Application.routes.draw do
   resources :contacts, only: [:index, :create]
   resources :catalogs do
     get :more_info, on: :member
-    resources :downloads, :only => [:index, :show] do
+    resources :downloads do
       get :redirect, on: :member 
-      collection do
+      
+      member do
         get :contact_info
-        get :next
-        post :next
       end
     end
   end

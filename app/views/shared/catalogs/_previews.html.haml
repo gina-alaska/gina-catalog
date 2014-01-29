@@ -1,0 +1,8 @@
+- if catalog.uploads.previews.size > 0
+  #preview-images
+    %h5 Record Previews
+    %ul.nav
+      - catalog.uploads.previews.each do |preview|
+        %li{ style: 'width: 100%; text-align: center; margin: 5px; display: inline-block;' }
+          = image_tag preview.file.thumb('250x250').url, alt: preview.name, title: preview.name
+

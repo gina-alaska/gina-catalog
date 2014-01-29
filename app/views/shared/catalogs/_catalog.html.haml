@@ -13,6 +13,9 @@
           = render '/shared/catalogs/agency_icons', catalog: catalog
         .content  
           = render '/shared/catalogs/map_layers', catalog: catalog
+        .content
+          = render '/shared/catalogs/previews', catalog: catalog
+          
       %td.content{ style: 'border-left: 1px solid #efefef' }
         #catalog-published
           = render 'catalogs/ispublished', catalog: catalog

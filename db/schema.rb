@@ -1029,6 +1029,7 @@ ActiveRecord::Schema.define(:version => 20140128190854) do
     t.string   "file_name"
     t.boolean  "downloadable"
     t.boolean  "preview"
+    t.string   "uuid"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
   end

@@ -61,9 +61,8 @@ class DownloadsController < ApplicationController
     if ask_for_contact_info?
       # save_contact_info
       @contact_info = contact_info_from_cookie || ContactInfo.new
-      render 'contact_info'
     else
-      render_next_sds_step(STEP[:contact_info]) 
+      redirect_to catalog_download_path(@catalog, current_download)
     end
   end
 
@@ -81,10 +80,32 @@ class DownloadsController < ApplicationController
   
   def show
     @catalog = fetch_catalog
-    @download = @catalog.download_urls.where(uuid: params[:id]).first
-
-    save_contact_info
-    redirect_to @download.url
+  
+    respond_to do |format|
+      format.html {
+        if save_contact_info
+          current_download.activity_logs.record_download!(@contact_info, current_user)
+        else
+          redirect_to edit_catalog_download_path(@catalog, current_download)
+        end          
+      }
+      format.js
+    end
+  end
+  
+  def edit
+    @catalog = fetch_catalog
+    @contact_info = contact_info_from_cookie || ContactInfo.new
+  end
+  
+  def update
+    @catalog = fetch_catalog
+    
+    if save_contact_info
+      redirect_to catalog_download_path(@catalog, current_download)
+    else
+      render 'edit'
+    end
   end
 
   def next
@@ -105,6 +126,16 @@ class DownloadsController < ApplicationController
   end
   
   protected
+  
+  def current_download
+    # look for local upload file
+    @download ||= @catalog.uploads.where(uuid: params[:id]).first
+    # if not found then look for remote file
+    @download ||= @catalog.download_urls.where(uuid: params[:id]).first
+    
+    @download
+  end
+  helper_method :current_download
   
   def authorized?
     return true unless @catalog.require_contact_info? or ask_for_use_agreement?
@@ -147,8 +178,12 @@ class DownloadsController < ApplicationController
 
   def save_contact_info(run_validations = false)
     info_params = params[:contact_info].try(:slice, :name, :email, :phone_number, :usage_description)
-
-    @contact_info = contact_info_from_cookie || ContactInfo.new
+    
+    if cookies.signed[:sds_catalog_id] == @catalog.id
+      @contact_info = contact_info_from_cookie || ContactInfo.new
+    else
+      @contact_info = ContactInfo.new
+    end
     @contact_info.attributes = info_params unless info_params.nil?
     @contact_info.catalog = @catalog
   
@@ -158,12 +193,14 @@ class DownloadsController < ApplicationController
     @contact_info.user_id = current_user.id unless current_user.nil?
     @contact_info.setup_id = current_setup.id
     
-    if @contact_info.save(validate: (run_validations and @catalog.require_contact_info))
-      cookies.signed[:sds_catalog_id] = @catalog.id
-      cookies.signed[:contact_info_id] = @contact_info.id
-      return true
+    @contact_info.save(validate: false)
+    cookies.signed[:sds_catalog_id] = @catalog.id
+    cookies.signed[:contact_info_id] = @contact_info.id
+    
+    if @catalog.require_contact_info and !@contact_info.valid?
+      return false 
     else
-      return false
+      return true
     end
   end
 

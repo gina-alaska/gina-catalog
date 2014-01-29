@@ -48,6 +48,7 @@ class Manager::CatalogsController < ManagerController
     @catalog.links.build
     @catalog.locations.build
     @catalog.download_urls.build
+    @catalog.uploads.build
     
     respond_to do |format|
       format.html
@@ -89,6 +90,7 @@ class Manager::CatalogsController < ManagerController
     @catalog.links.build
     @catalog.locations.build
     @catalog.download_urls.build
+    @catalog.uploads.build
     
     respond_to do |format|
       format.html
@@ -191,7 +193,7 @@ class Manager::CatalogsController < ManagerController
     v = params[:catalog].slice(:title, :description, :start_date, :end_date, :status, 
       :owner_id, :primary_contact_id, :contact_ids, :source_agency_id, :funding_agency_id, :data_type_ids,
       :iso_topic_ids, :agency_ids, :tags, :geokeyword_ids, :collection_ids, :type, :links_attributes,
-      :locations_attributes, :download_urls_attributes, :use_agreement_id, :request_contact_info, :require_contact_info)
+      :locations_attributes, :download_urls_attributes, :uploads_attributes, :use_agreement_id, :request_contact_info, :require_contact_info)
     
     
     v['collection_ids'] = clean_param_ids(v['collection_ids'])

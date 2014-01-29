@@ -1,21 +1,30 @@
 %h3 Files and Resources
 %ul.media-list.catalog-resources
-  - if catalog.downloadable? 
+  - catalog.uploads.downloadable.each do |upload| 
     %li.media
       .icon.download.pull-left
         %i.icon-download-alt
       .media-body
-        = link_to catalog_downloads_path(catalog), class: 'btn pull-right', rel: "nofollow", remote: true do
+        = link_to catalog_download_path(catalog, upload), class: 'btn pull-right', rel: "nofollow", remote: true do
           %i.icon-download-alt.media-object
           Download
           
         %h4.media-heading Download
         %p
-          - if catalog.local_download?
-            = File.basename(catalog.archive_file)
-            = "(#{number_to_human_size(catalog.archive_size)})"
-          - else
-            Remote files download
+          = upload.file.name
+          = "(#{number_to_human_size upload.file.size})"
+  - catalog.download_urls.each do |link|
+    %li.media
+      .icon.download.pull-left
+        %i.icon-download-alt
+      .media-body
+        = link_to catalog_download_path(catalog, link), class: 'btn pull-right', rel: "nofollow", remote: true do
+          %i.icon-download-alt.media-object
+          Download
+          
+        %h4.media-heading Remote Download
+        %p= File.basename(link.url)
+                  
   - catalog.links.where('category = ?', 'Download').each do |link|
     %li.media
       .icon.download.pull-left

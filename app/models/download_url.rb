@@ -1,5 +1,6 @@
 class DownloadUrl < ActiveRecord::Base
   belongs_to :catalog
+  has_many :activity_logs, as: :loggable, order: "created_at DESC", extend: DownloadActivityExtension
   
   before_save :update_uuid
   

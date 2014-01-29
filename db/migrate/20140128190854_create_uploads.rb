@@ -8,6 +8,7 @@ class CreateUploads < ActiveRecord::Migration
       t.string :file_name
       t.boolean :downloadable
       t.boolean :preview
+      t.string :uuid
 
       t.timestamps
     end
