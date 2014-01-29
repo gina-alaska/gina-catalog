@@ -14,6 +14,19 @@
   .tab-content .content { padding: 10px; }
 }
 
+.catalog-resources {
+  .media > .icon {
+    min-width: 50px; 
+    font-size: 50px; 
+    text-align:center;
+    &.download { color: #555; }
+    &.report { color: #E66C00; }
+    &.website { color: #549FCB; }
+    &.metadata { color: #2CAD59; }
+  }
+  
+}
+
 label {
   font-weight: bold;
 }
