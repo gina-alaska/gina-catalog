@@ -138,6 +138,7 @@ NSCatalog::Application.routes.draw do
       
       member do
         get :contact_info
+        get :offer
       end
     end
   end

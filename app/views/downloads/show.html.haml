@@ -1,9 +1,9 @@
-- if @catalog.use_agreement
+- if current_catalog.use_agreement
   %div.use_agreement{ style: 'max-height: 495px; overflow: auto; margin-bottom: 10px;' }
     %h4 Usage Notice
     :markdown
-      #{@catalog.use_agreement.content}
-- elsif @catalog.request_contact_info
+      #{current_catalog.use_agreement.content}
+- elsif current_catalog.request_contact_info
   .alert.alert-info
     %h4 
       To keep you update about changes to this dataset, please take a moment and submit your contact information below.  All submitted information will remain confidential and will not be shared.
@@ -11,10 +11,10 @@
     %h4
       Otherwise click the "Start download now" button below to start your download.
       
-- if @catalog.request_contact_info    
-  = link_to edit_catalog_download_url(@catalog, current_download), class: 'btn btn-large btn-block' do
-    = "#{@contact_info.valid? ? 'Update' : 'Submit'} contact info"
-    - unless @catalog.require_contact_info?
+- if current_catalog.request_contact_info    
+  = link_to edit_catalog_download_url(current_catalog, current_download), class: 'btn btn-large btn-block' do
+    = "#{current_contact_info.valid? ? 'Update' : 'Submit'} contact info"
+    - unless current_catalog.require_contact_info?
       (Optional)
 - else
   .alert.alert-info
@@ -23,8 +23,8 @@
     
   :javascript
     setTimeout(function() {
-      document.location = "#{@download.url}";
+      document.location = "#{offer_catalog_download_url(current_catalog, current_download, key: current_contact_info.offer_key)}";
     }, 1000)  
 
 
-= link_to 'Start download now', current_download.url, class: 'btn btn-primary btn-large btn-block'
+= link_to 'Start download now', offer_catalog_download_url(current_catalog, current_download, key: current_contact_info.offer_key), class: 'btn btn-primary btn-large btn-block'

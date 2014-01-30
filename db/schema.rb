@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140128190854) do
+ActiveRecord::Schema.define(:version => 20140129184150) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -250,6 +250,7 @@ ActiveRecord::Schema.define(:version => 20140128190854) do
     t.integer  "setup_id"
     t.integer  "user_id"
     t.text     "user_agent"
+    t.integer  "activity_log_id"
   end
 
   create_table "contacts", :force => true do |t|

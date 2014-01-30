@@ -1,12 +1,12 @@
 %h4 Contact Information Form
-= form_for @contact_info, url: catalog_download_path(@catalog, current_download), method: 'PUT' do |f|
-  - if @contact_info.errors.count > 0
+= form_for current_contact_info, url: catalog_download_path(current_catalog, current_download), method: 'PUT' do |f|
+  - if current_contact_info.errors.count > 0
     .alert.alert-error
       %h4 Error while trying to save contact information
       %ul
-        - @contact_info.errors.full_messages.each do |msg|
+        - current_contact_info.errors.full_messages.each do |msg|
           %li= msg
-  - if @catalog.require_contact_info? and !@contact_info.valid?
+  - if current_catalog.require_contact_info? and !current_contact_info.valid?
     .alert.alert-info
       %h4 Your contact information is required before the download can begin
     

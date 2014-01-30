@@ -4,6 +4,7 @@ class ActivityLog < ActiveRecord::Base
   serialize :log
 
   belongs_to :loggable, polymorphic: true
+  has_many :contact_infos
   
   validates :activity, presence: true
   
