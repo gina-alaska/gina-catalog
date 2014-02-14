@@ -4,8 +4,8 @@
     %h5 Other agencies
     %ul.nav
       - agency_list.each do |agency|
-        %li{ style: 'width: 100px; text-align: center; margin: 5px; display: inline-block;' }
-          = image_tag agency.logo.thumb('100x').url, alt: agency.name, title: agency.name if agency.logo
+        %li{ style: 'width: 40px; text-align: center; margin: 5px; display: inline-block;' }
+          = image_tag agency.logo.thumb('40x40').url, alt: agency.name, title: agency.name if agency.logo
           %br/
           = agency.acronym
 

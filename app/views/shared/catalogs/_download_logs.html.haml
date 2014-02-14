@@ -1,0 +1,30 @@
+%table.table.table-striped.table-condensed
+  %thead
+    %tr
+      %th Date
+      %th User
+      %th IP
+      %th Name
+      %th Email
+      %th Portal
+  %tbody
+    - catalog.downloads.order('created_at DESC').limit(50).each do |download|
+      - contact = ContactInfo.find(download.log[:contact_info]) if download.log.try('[]', :contact_info).try(:present?)
+      %tr
+        %td
+          = contact.try(:created_at).try(:strftime, "%F %T") 
+        %td
+          = download.user.nil? ? 'Guest' : download.user.fullname
+        %td
+          = contact.try(:user_ip)
+        %td
+          = contact.try(:name)
+        %td
+          = contact.try(:email)
+        %td
+          = contact.try(:setup).try(:acronym)
+      - if contact.try(:usage_description).try(:present?)
+        %tr
+          %td{ colspan: 6 }
+            %b Usage Description: 
+            = contact.try(:usage_description)

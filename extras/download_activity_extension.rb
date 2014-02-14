@@ -1,11 +1,7 @@
 module DownloadActivityExtension
-  def record_download!(contact_info = nil, current_user = nil)
-    log = create({ activity: 'Download', log: { user_id: current_user.try(:id) } })
-    if contact_info
-      contact_info.activity_log = log
-      contact_info.save
-    end
-    
+  def record_download!(contact_info = nil, user = nil, setup = nil)
+    log = create({ activity: 'Download', user: user, log: { contact_info: contact_info.try(:id), setup_id: setup.try(:id) } })
+    contact_info.try(:save, validate: false)
     log
   end 
   

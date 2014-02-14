@@ -40,8 +40,13 @@ class Catalog < ActiveRecord::Base
   belongs_to :owner_setup, :class_name => 'Setup'
   belongs_to :csw_import
   
-  has_many :activity_logs, as: :loggable, order: "created_at DESC", extend: ImportsExtension
-  has_many :uploads
+  has_many :activity_logs, as: :loggable, order: "created_at DESC", dependent: :destroy, extend: ImportsExtension do
+    def updates
+      where(activity: %w{ Update Create Import })
+    end
+  end
+  has_many :uploads, dependent: :destroy
+  has_many :downloads, through: :uploads, source: :logs
   
   has_many :catalogs_setups, uniq: true
   has_many :setups, :through => :catalogs_setups, uniq: true
@@ -136,7 +141,7 @@ class Catalog < ActiveRecord::Base
       'url' => "/catalogs/#{self.to_param}",
       'start_date' => self.start_date,
       'end_date' => self.end_date,
-      'downloads' => self.contact_infos.count
+      'downloads' => self.downloads.count
     }
   end
 

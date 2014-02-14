@@ -2,7 +2,7 @@ class DownloadsController < ApplicationController
   layout 'downloads'
   def offer
     if params[:key].present? and params[:key] == current_contact_info.offer_key
-      current_download.activity_logs.record_download!(current_contact_info, current_user)
+      current_download.logs.record_download!(current_contact_info, current_user, current_setup)
       redirect_to current_download.url
     else
       flash[:error] = 'Could not start download, the download key was invalid'
@@ -39,6 +39,10 @@ class DownloadsController < ApplicationController
   end
   
   protected
+  
+  def reset
+    cookies.signed[:contact_info_id] = nil
+  end
   
   def ask_for_contact_info?
     current_catalog.request_contact_info or current_catalog.require_contact_info
@@ -98,7 +102,7 @@ class DownloadsController < ApplicationController
   end
 
   def contact_info_from_cookie
-    ContactInfo.find(cookies.signed[:contact_info_id]) if cookies.signed[:contact_info_id]
+    @contact_info ||= ContactInfo.where(id: cookies.signed[:contact_info_id], catalog_id: current_catalog.id).first 
   end
   
   def fetch_download_url

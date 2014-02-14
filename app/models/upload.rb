@@ -4,7 +4,7 @@ class Upload < ActiveRecord::Base
   dragonfly_accessor :file
   
   belongs_to :catalog
-  has_many :activity_logs, as: :loggable, order: "created_at DESC", extend: DownloadActivityExtension
+  has_many :logs, as: :loggable, class_name: 'ActivityLog', order: "created_at DESC", dependent: :destroy, extend: DownloadActivityExtension
   
   scope :downloadable, -> { where(downloadable: true) }
   scope :previews, -> { where(preview: true) }

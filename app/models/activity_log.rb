@@ -1,10 +1,12 @@
 class ActivityLog < ActiveRecord::Base
-  attr_accessible :activity, :log, :user_id
+  attr_accessible :activity, :log, :user_id, :user, :contact_info
   
   serialize :log
 
   belongs_to :loggable, polymorphic: true
-  has_many :contact_infos
+  belongs_to :user
+  
+  has_one :contact_info
   
   validates :activity, presence: true
   

@@ -1,10 +1,6 @@
 - if current_member.try(:can_manage_catalog?)
   .navbar.navbar-static-top
     .navbar-inner
-      .btn-group.pull-right
-        %button.btn.btn-primary{data: { toggle:'modal', target:'#file_upload_modal' }}
-          %i.icon-upload.icon-white
-          Upload Files
       .btn-group{ id: dom_id(catalog, 'manage')}
         = render 'shared/catalogs/manage_button', catalog: catalog
 
