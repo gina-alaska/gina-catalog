@@ -33,5 +33,6 @@ db/data
 *.pid
 /uploads
 .zeus.sock
+*.save
 
 dump.rdb
