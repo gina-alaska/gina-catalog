@@ -16,6 +16,7 @@ class Catalog < ActiveRecord::Base
 
   # delegate :downloadable, :to => :license
 
+  scope :active, :conditions => ['catalog.archived_at is null']
   scope :public, :joins => :license, :conditions => { :licenses => { :downloadable => true } }
   scope :restricted, :joins => :license, :conditions => { :licenses => { :downloadable => false } }
 
@@ -227,6 +228,10 @@ class Catalog < ActiveRecord::Base
       self.use_agreement_id? or self.request_contact_info? or self.require_contact_info?
     end
     
+    boolean :active do
+      archived_at.nil?
+    end
+
     integer :archived_at_year do
       archived_at.try(:year)
     end
