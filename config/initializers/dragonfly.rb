@@ -12,6 +12,9 @@ Dragonfly.app.configure do
   datastore :file,
     root_path: Rails.root.join('public/cms'),
     server_root: Rails.root.join('public')
+    
+  processor :page do |content, *args|
+  end
 end
 
 # Logger

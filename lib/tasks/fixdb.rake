@@ -23,7 +23,10 @@ namespace :fixdb do
       next if catalog.repo.nil? or catalog.repo.empty?
       puts "Moving download file for #{catalog}"
       
-      catalog.uploads.create(file: catalog.archive_filenames[:zip], downloadable: true)
+      filename = Pathname.new(catalog.archive_filenames[:zip])
+      puts filename
+      
+      catalog.uploads.create(file: filename, downloadable: true)
     end
   end
   
