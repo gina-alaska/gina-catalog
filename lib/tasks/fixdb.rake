@@ -1,6 +1,6 @@
 namespace :fixdb do
   desc 'run all fixdb tasks'
-  task :all => [:themes, :update_downloads, :create_sitemap, :move_theme_css, :set_default_projection] do
+  task :all => [:themes, :update_downloads, :create_sitemap, :move_theme_css, :set_default_projection, :set_system_pages] do
   end
   
   desc 'convert git repos to new upload paths'
@@ -14,6 +14,16 @@ namespace :fixdb do
       rescue => e
         puts "Error converting repo #{repo.catalog.to_param}: #{e.class}::#{e.message}"
       end
+    end
+  end
+  
+  desc 'convert archive files to new download system'
+  task :convert_downloads => :environment do
+    Catalog.all.each do |catalog|
+      next if catalog.repo.nil? or catalog.repo.empty?
+      puts "Moving download file for #{catalog}"
+      
+      catalog.uploads.create(file: catalog.archive_filenames[:zip], downloadable: true)
     end
   end
   
