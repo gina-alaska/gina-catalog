@@ -189,14 +189,14 @@ class Catalog < ActiveRecord::Base
       source_url.try(:gsub, 'http://', '').try(:split, '/')
     end
 
-    text :links do
-      all_text = ""
-      self.links.where("url ilike ?", "%.pdf").each do |link|
-        all_text << link.pdf_to_text
-      end
-      all_text
-    end
-    
+    # text :links do
+    #   all_text = ""
+    #   self.links.where("url ilike ?", "%.pdf").each do |link|
+    #     all_text << link.pdf_to_text
+    #   end
+    #   all_text
+    # end
+    # 
     string :data_types, :multiple => true do
       data_types.map(&:name)
     end
