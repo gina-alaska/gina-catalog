@@ -81,6 +81,7 @@ module CatalogConcerns
             end
           end
           
+          with :active, true          
           with :sds, true if search[:sds] == 'true'
           
           # unless search[:editable] == 'true' or search[:sds] == 'true'

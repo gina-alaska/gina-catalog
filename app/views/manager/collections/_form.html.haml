@@ -20,13 +20,13 @@
           = f.text_area :description, cols: "80", rows: "4", class: "span12"
 
         = f.submit class: 'btn btn-primary pull-right'
-- unless @catalog_collection.catalogs.empty?
+- unless @records.empty?
   .row-fluid
     .span12
       %table.table.table-bordered.table-striped.table-condensed
         %th Records
         %th Actions
-        - @catalog_collection.catalogs.each do |rec|
+        - @records.each do |rec|
           %tr
             %td.span9
               = rec.title

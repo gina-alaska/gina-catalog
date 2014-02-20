@@ -40,6 +40,7 @@ class Manager::CollectionsController < ManagerController
 
   def edit
     @catalog_collection = current_setup.collections.find(params[:id])
+    @records = @catalog_collection.catalogs.active
   end
 
   def update

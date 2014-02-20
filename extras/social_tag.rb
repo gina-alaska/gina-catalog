@@ -54,7 +54,7 @@ EOHTML
   def social_icons(setup)
     results = ""
     
-    { twitter_url: 'icon-twitter', github_url: 'icon-github', facebook_url: 'icon-facebook', google_plus_url: 'icon-google-plus-sign', instagram_url: 'icon-instagram', linkedin_url: 'icon-linkedin-sign', youtube_url: 'icon-youtube-sign', tumblr_url: 'icon-text-width' }.each do |k,v|
+    { twitter_url: 'icon-twitter', github_url: 'icon-github', facebook_url: 'icon-facebook', google_plus_url: 'icon-google-plus-sign', instagram_url: 'icon-instagram', linkedin_url: 'icon-linkedin-sign', youtube_url: 'icon-youtube-sign', tumblr_url: 'icon-tumblr-sign' }.each do |k,v|
       next if setup.send(k).nil? or setup.send(k).blank?
       results << "<a href=\"#{setup.send(k)}\" target=\"_blank\" title=\"Visit us at #{k.to_s.gsub('_url', '')}\"><i class=\"#{v}\"></i></a>"
     end
