@@ -156,7 +156,7 @@ NSCatalog::Application.routes.draw do
   
   match '/cms/thumbnail/:size/:id(.:format)' => Dragonfly.app.endpoint { |params, app|
     image = Image.find(params[:id]).file.thumb(params[:size])
-    image = image.encode(params[:format]) if params[:format].present?
+    image = image.encode(params[:format]) if params[:format].present? and image.format.to_s != params[:format]
     
     image
   }, as: :thumb
