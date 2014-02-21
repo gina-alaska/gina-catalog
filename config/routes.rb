@@ -153,6 +153,13 @@ NSCatalog::Application.routes.draw do
 
   match '/auth/:service/callback' => 'sessions#create' 
   match '/auth/failure' => 'sessions#failure'
+  
+  match '/cms/thumbnail/:size/:id(.:format)' => Dragonfly.app.endpoint { |params, app|
+    image = Image.find(params[:id]).file.thumb(params[:size])
+    image = image.encode(params[:format]) if params[:format].present?
+    
+    image
+  }, as: :thumb
 
   resources :authentications, :only => [:index, :create, :destroy] do
     collection do

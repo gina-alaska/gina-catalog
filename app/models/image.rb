@@ -7,6 +7,10 @@ class Image < ActiveRecord::Base
   has_many :pages, :through => :page_images, class_name: 'Page::Content'
   has_many :agencies
   
+  def to_param
+    "#{self.id}-#{self.file.name}"
+  end
+  
   def raw_url
     self.file.remote_url
   end
