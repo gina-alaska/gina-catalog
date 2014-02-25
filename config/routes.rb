@@ -156,7 +156,7 @@ NSCatalog::Application.routes.draw do
   
   match '/cms/thumbnail/:size/:id(.:format)' => Dragonfly.app.endpoint { |params, app|
     image = Image.find(params[:id])
-    Rails.logger.info image.inspect
+    format = params[:format] || 'jpg'
     
     begin
       if image.file_stored? and image.file.image?
@@ -165,12 +165,11 @@ NSCatalog::Application.routes.draw do
         image = app.fetch_file(Rails.root.join("app/assets/images/document.png"))
       end
     rescue
-      Rails.logger.info 'foo'
       image = app.fetch_file(Rails.root.join("app/assets/images/document.png"))
     end
 
     image = image.thumb(params[:size])
-    image = image.encode(params[:format]) if params[:format].present? and image.format.to_s != params[:format]
+    image = image.encode(params[:format]) if image.format.to_s != format
     image
   }, as: :thumb
 
