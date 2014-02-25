@@ -155,9 +155,22 @@ NSCatalog::Application.routes.draw do
   match '/auth/failure' => 'sessions#failure'
   
   match '/cms/thumbnail/:size/:id(.:format)' => Dragonfly.app.endpoint { |params, app|
-    image = Image.find(params[:id]).file.thumb(params[:size])
-    image = image.encode(params[:format]) if params[:format].present? and image.format.to_s != params[:format]
+    image = Image.find(params[:id])
+    Rails.logger.info image.inspect
     
+    begin
+      if image.file_stored? and image.file.image?
+        image = image.file
+      else
+        image = app.fetch_file(Rails.root.join("app/assets/images/document.png"))
+      end
+    rescue
+      Rails.logger.info 'foo'
+      image = app.fetch_file(Rails.root.join("app/assets/images/document.png"))
+    end
+
+    image = image.thumb(params[:size])
+    image = image.encode(params[:format]) if params[:format].present? and image.format.to_s != params[:format]
     image
   }, as: :thumb
 
