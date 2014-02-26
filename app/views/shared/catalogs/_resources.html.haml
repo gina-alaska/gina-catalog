@@ -1,4 +1,4 @@
-%h3 Files and Resources
+%h4 Data and Resources
 %ul.media-list.catalog-resources
   - catalog.uploads.downloadable.each do |upload| 
     %li.media
@@ -68,7 +68,6 @@
         %p= link.url
 
 - if catalog.links.where('category = ?', 'Metadata').count > 0
-  %h3 Metadata Source
   %ul.media-list.catalog-resources
     - catalog.links.where('category = ?', 'Metadata').each do |link|
       %li.media

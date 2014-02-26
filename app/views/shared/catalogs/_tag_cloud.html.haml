@@ -1,4 +1,3 @@
-%h3 Keywords
 %div{ style: 'border: 1px solid #afafaf; padding: 10px 10px 5px 10px' }
   - catalog.tags.each do |tag|
-    = link_to tag.text, "/search?search[q]=#{tag.text}", class: 'btn btn-mini btn-info', style: 'margin-bottom: 5px; font-size: 16px;'
+    = link_to tag.text, "/search?search[q]=#{tag.text}", class: 'btn btn-mini', style: 'margin-bottom: 5px; font-size: 16px;'
