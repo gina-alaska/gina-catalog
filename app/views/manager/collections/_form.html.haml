@@ -20,7 +20,7 @@
           = f.text_area :description, cols: "80", rows: "4", class: "span12"
 
         = f.submit class: 'btn btn-primary pull-right'
-- unless @records.empty?
+- unless @records.nil?
   .row-fluid
     .span12
       %table.table.table-bordered.table-striped.table-condensed
