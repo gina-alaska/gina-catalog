@@ -70,7 +70,7 @@ class SearchesController < ApplicationController
     @limit = params[:limit] || 30
     @pagenum = params[:page] || 1
     
-    advanced_opts = @search_params.reject { |k,v| v.blank? or ['q', 'collection_ids', 'order_by', 'limit', 'field', 'direction', 'tags', 'bbox'].include?(k.to_s) }
+    advanced_opts = @search_params.reject { |k,v| v.blank? or ['q', 'collection_ids', 'order_by', 'limit', 'field', 'direction', 'tags', 'bbox', 'published_only'].include?(k.to_s) }
     @is_advanced = advanced_opts.keys.size > 0
     
     @search = solr_search(@search_params, @pagenum, @limit, :collection_ids)
