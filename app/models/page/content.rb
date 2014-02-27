@@ -81,7 +81,8 @@ class Page::Content < ActiveRecord::Base
       c ||= {}
       c[k] ||= ''
     }
-      
+    c.delete_if { |name,content| !self.sections.include?(name) }
+    
     c 
   end
   
