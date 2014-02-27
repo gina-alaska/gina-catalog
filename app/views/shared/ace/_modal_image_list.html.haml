@@ -11,7 +11,7 @@
               - if image.file.nil?
                 %p.lead Broken image
               - else
-                = image_tag thumb_url(image, size: '150x100#'), alt: image.title
+                = image_tag cms_media_url(image.file_uid, size: '150x100#'), alt: image.title
           .span9
             %div{ style: 'height: 68px; overflow: auto;' }
               %strong= image.title
@@ -21,7 +21,7 @@
                 - if image.file.nil?
                   %p.lead Please fix this image before linking
                 - else
-                  = link_to '200x200', '#', class: 'btn btn-small', data: { behavior: 'add', src: thumb_path(image, size: '200x200'), alt: image.title }
-                  = link_to '640x480', '#', class: 'btn btn-small', data: { behavior: 'add', src: thumb_path(image, size: '640x480'), alt: image.title }
-                  = link_to '1024x768', '#', class: 'btn btn-small', data: { behavior: 'add', src: thumb_path(image, size: '1024x768'),  alt: image.title }
+                  = link_to '200x200', '#', class: 'btn btn-small', data: { behavior: 'add', src: cms_media_path(image.file_uid, size: '200x200'), alt: image.title }
+                  = link_to '640x480', '#', class: 'btn btn-small', data: { behavior: 'add', src: cms_media_path(image.file_uid, size: '640x480'), alt: image.title }
+                  = link_to '1024x768', '#', class: 'btn btn-small', data: { behavior: 'add', src: cms_media_path(image.file_uid, size: '1024x768'),  alt: image.title }
                   = link_to 'Original File', '#', class: 'btn btn-small', data: { behavior: 'add', src: image.raw_url, alt: image.title }

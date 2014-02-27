@@ -4,5 +4,5 @@
     - catalog.uploads.previews.each do |preview|
       .preview-image{ style: 'margin-bottom: 5px;' }
         = link_to preview.file.remote_url do
-          = image_tag preview.file.thumb('300x300').url, alt: preview.name, title: preview.name
+          = image_tag cms_media_path(preview.file_uid, size: '300x300'), alt: preview.name, title: preview.name
 
