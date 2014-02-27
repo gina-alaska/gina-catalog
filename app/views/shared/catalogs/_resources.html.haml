@@ -9,7 +9,7 @@
           %i.icon-download-alt.media-object
           Download
           
-        %h4.media-heading Download
+        %h5.media-heading Download
         %p
           = upload.file.name
           = "(#{number_to_human_size upload.file.size})"
@@ -22,7 +22,7 @@
           %i.icon-download-alt.media-object
           Download
           
-        %h4.media-heading Remote Download
+        %h5.media-heading Remote Download
         %p= File.basename(link.url)
                   
   - catalog.links.where('category = ?', 'Download').each do |link|
@@ -34,7 +34,7 @@
           %i.icon-download-alt.media-object
           Download
           
-        %h4.media-heading Download
+        %h5.media-heading Download
         %p= link.url
                         
   - catalog.links.where('category in (?)', ['Report']).each do |link|
@@ -46,7 +46,7 @@
           %i.icon-external-link
           View report
             
-        %h4.media-heading
+        %h5.media-heading
           = link.category
           - unless link.display_text.empty? or link.display_text == link.url
             = " :: #{link.display_text}"
@@ -61,7 +61,7 @@
           View
           = link.category.downcase
             
-        %h4.media-heading
+        %h5.media-heading
           = link.category
           - unless link.display_text.empty? or link.display_text == link.url
             = " :: #{link.display_text}"
@@ -78,7 +78,7 @@
             %i.icon-external-link
             View metadata
             
-          %h4.media-heading
+          %h5.media-heading
             - unless link.display_text.empty? or link.display_text == link.url
               = link.display_text
           %p= link.url          

@@ -16,15 +16,23 @@
 
 .catalog-resources {
   .media > .icon {
-    min-width: 50px; 
-    font-size: 50px; 
-    text-align:center;
+    width: 45px;
+    text-align: center;
+    i { font-size: 45px; }
     &.download { color: #555; }
     &.report { color: #E66C00; }
     &.website { color: #549FCB; }
     &.metadata { color: #2CAD59; }
   }
   
+}
+
+.result .tag {
+  margin-bottom: 5px; 
+  font-size: 15px;
+  &:hover {
+    @extend .btn-primary;    
+  }
 }
 
 label {
@@ -52,7 +60,7 @@ label {
   .result.highlight {
     background: #ffff99;
   }
-    
+  
   .title {
     font-size: 14px;
     margin: 0;
@@ -150,11 +158,22 @@ label {
     position: relative;
     display: block;
     padding: 0;
-    margin-bottom: -1px;
+    padding-left: 35px;
+    padding-right: 200px;
+//    margin-bottom: -1px;
     background-color: #fff;
 //    border: 1px solid #ddd;
+//    border-bottom: 1px solid #cfcfcf;
+    
+    &:nth-child(even) {
+      background-color: #efefef;
+    }
   }
-  
+  .list-group-item .timestamp {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
   .list-group-item .header {
     background-color: #efefef;
     text-align: right;
