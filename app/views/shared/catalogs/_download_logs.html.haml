@@ -4,7 +4,7 @@
       %th &nbsp;
   %tbody
     - catalog.downloads.order('created_at DESC').limit(50).each do |download|
-      - contact = ContactInfo.find(download.log[:contact_info]) if download.log.try('[]', :contact_info).try(:present?)
+      - contact = download.loggable
       %tr
         %td
           %dl.dl-horizontal.contact-info
@@ -19,7 +19,7 @@
               .span6
                 .item
                   %dt File:
-                  %dd= File.basename(download.loggable.file.name)
+                  %dd= File.basename(download.log[:url].to_s)
                 - if contact.try(:setup).try(:present?)
                   .item
                     %dt Portal: 
@@ -29,21 +29,24 @@
             - unless contact.nil?
               .row-fluid
                 .span6
-                  %dt Name:
-                  %dd
-                    = contact.try(:name)
-                    &nbsp;
+                  - unless contact.name.nil?
+                    %dt Name:
+                    %dd
+                      = contact.name
+                      &nbsp;
                   %dt IP:
                   %dd
-                    = contact.try(:user_ip)
+                    = contact.user_ip
                     &nbsp;
                 .span6
-                  %dt Email:
+                  - unless contact.email.nil?
+                    %dt Email:
+                    %dd
+                      = contact.email
+                      &nbsp;
+              - unless contact.usage_description.nil?
+                .item
+                  %dt Description: 
                   %dd
-                    = contact.try(:email)
+                    = contact.usage_description
                     &nbsp;
-              .item
-                %dt Description: 
-                %dd
-                  = contact.try(:usage_description)
-                  &nbsp;

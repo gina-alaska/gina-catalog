@@ -47,7 +47,9 @@ class Catalog < ActiveRecord::Base
     end
   end
   has_many :uploads, dependent: :destroy
-  has_many :downloads, through: :uploads, source: :logs
+  
+  has_many :contact_infos, :dependent => :destroy
+  has_many :downloads, through: :contact_infos, source: :activity_logs
   
   has_many :catalogs_setups, uniq: true
   has_many :setups, :through => :catalogs_setups, uniq: true
@@ -118,7 +120,6 @@ class Catalog < ActiveRecord::Base
   has_many :links, :as => :asset, :dependent => :destroy
   has_many :locations, foreign_key: 'asset_id', :dependent => :destroy
   has_many :map_layers, :dependent => :destroy
-  has_many :contact_infos, :dependent => :destroy
 
   scope :published, lambda { where('published_at <= ?', Time.now.utc) }
   scope :unpublished, where('published_at is null')

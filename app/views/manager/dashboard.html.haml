@@ -25,14 +25,11 @@
           %tr
             %th{colspan: 2} Top downloads
           %tr
-            %th File
             %th Record
             %th= "Last #{((@end_date - @start_date) / 86400).to_i} days"
         %tbody
           - @top_downloads.each do |item|
             %tr
-              %td
-                = item.loggable.file.name.truncate(80)
               %td
                 = link_to item.loggable.catalog do
                   = item.loggable.catalog.title.truncate(80)
@@ -70,7 +67,7 @@
               %td.span3
                 = item.created_at.strftime('%F %T %z')
               %td
-                = item.loggable.file.name
+                = File.basename(item.log[:url].to_s)
               %td
                 = link_to item.loggable.catalog do
                   = item.loggable.catalog.title.truncate(60)
