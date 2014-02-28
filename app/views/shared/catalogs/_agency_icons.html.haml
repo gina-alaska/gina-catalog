@@ -1,6 +1,6 @@
 - agency_list = [catalog.funding_agency, catalog.agencies].flatten.uniq.compact - [catalog.source_agency]
 - unless agency_list.empty?
-  #agency-images
+  #agency-images.content{ style: 'border-bottom: 1px solid #efefef; min-width: 230px;' }
     %h5 Other agencies
     %ul.nav
       - agency_list.each do |agency|

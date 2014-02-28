@@ -3,20 +3,14 @@
 = render '/shared/catalogs/map', catalog: catalog
     
 .result{ data: { wkt: catalog.geometry_collection, type: catalog.type } }
+  = render '/shared/catalogs/catalog_buttons', catalog: catalog
   %table
     %tr
-      %td{ style: 'vertical-align: top; width: 250px;' }
-        = render '/shared/catalogs/catalog_buttons', catalog: catalog
-        .content{ style: 'border-bottom: 1px solid #efefef;' }
-          = render '/shared/catalogs/primary_agency_icon', catalog: catalog
-        .content{ style: 'border-bottom: 1px solid #efefef;' }
-          = render '/shared/catalogs/agency_icons', catalog: catalog
-        .content  
-          = render '/shared/catalogs/map_layers', catalog: catalog
-        .content
-          = render '/shared/catalogs/previews', catalog: catalog
-        
-        .content
+      %td{ style: 'vertical-align: top; max-width: 250px;' }
+        = render '/shared/catalogs/primary_agency_icon', catalog: catalog
+        = render '/shared/catalogs/agency_icons', catalog: catalog
+        = render '/shared/catalogs/map_layers', catalog: catalog
+        = render '/shared/catalogs/previews', catalog: catalog
       %td.content{ style: 'border-left: 1px solid #efefef' }
         #catalog-published
           = render 'catalogs/ispublished', catalog: catalog

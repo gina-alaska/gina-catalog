@@ -1,10 +1,11 @@
 - unless catalog.map_layers.empty?
-  %h4 Map Layers
-  %ul.nav
-    - catalog.map_layers.each do |layer|
-      %li
-        - disabled = layer.supports?(current_setup.projection) ? '' : 'disabled'
-        .layer-toggle.pull-left{ style: 'margin-right: 10px;' }
-          = link_to map_layer_path(layer, :json), class: "map_layer_btn btn #{disabled}", data: { openlayers_action: 'preview' }, title: 'Preview map layer' do
-            %i.check.icon-check-empty
-        = layer.name
+  .content{ style: 'min-width: 230px;' }
+    %h4 Map Layers
+    %ul.nav
+      - catalog.map_layers.each do |layer|
+        %li
+          - disabled = layer.supports?(current_setup.projection) ? '' : 'disabled'
+          .layer-toggle.pull-left{ style: 'margin-right: 10px;' }
+            = link_to map_layer_path(layer, :json), class: "map_layer_btn btn #{disabled}", data: { openlayers_action: 'preview' }, title: 'Preview map layer' do
+              %i.check.icon-check-empty
+          = layer.name
