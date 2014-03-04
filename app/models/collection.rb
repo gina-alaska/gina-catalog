@@ -13,7 +13,7 @@ class Collection < ActiveRecord::Base
   validates :name, length: { maximum: 255 }
   liquid_methods :name, :id  
   
-  scope :including_descendents, ->(setup) {
+  scope :including_descendants, ->(setup) {
     where(setup_id: setup.self_and_descendants.pluck(:id))
   }
   
