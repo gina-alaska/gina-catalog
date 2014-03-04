@@ -1,0 +1,10 @@
+%ul.nav.nav-list.collection-list
+  - collections.each do |coll|
+    %li.clearfix{class: search_params[:collection_ids].include?(coll.id) ? "active" : "" }
+      = link_to "/search?search[collection_ids]=#{coll.id}", data: {behavior: "load_collection", target: "#search_collection_ids", value: coll.id}, title: coll.description do
+        .badge.pull-right{ }
+          = @collection_facets[coll.id] || 0
+          results
+      
+        = coll.name
+  
