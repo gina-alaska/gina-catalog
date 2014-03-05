@@ -30,7 +30,7 @@
     .control-group
       = f.label :owner_id, class: 'control-label'
       .controls
-        = f.collection_select :owner_id, User.order('first_name ASC').all, :id, :fullname, { selected: @catalog.owner_id || current_user.id }
+        = f.collection_select :owner_id, current_setup.users.order('first_name ASC').all, :id, :fullname, { selected: @catalog.owner_id || current_user.id }
     
 :javascript
   $(document).ready( function(){

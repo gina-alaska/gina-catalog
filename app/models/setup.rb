@@ -27,6 +27,7 @@ class Setup < ActiveRecord::Base
   has_many :contacts
   has_many :urls, class_name: 'SiteUrl', dependent: :destroy, order: "id ASC"
   has_many :memberships, dependent: :destroy
+  has_many :users, through: :memberships
   has_many :roles, dependent: :destroy
   has_many :use_agreements, dependent: :destroy
   has_many :csw_imports, dependent: :destroy
