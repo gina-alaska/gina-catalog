@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140109194603) do
+ActiveRecord::Schema.define(:version => 20140306192703) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(:version => 20140109194603) do
     t.string   "loggable_type"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+    t.integer  "catalog_id"
   end
 
   create_table "addresses", :force => true do |t|
@@ -249,6 +250,7 @@ ActiveRecord::Schema.define(:version => 20140109194603) do
     t.integer  "setup_id"
     t.integer  "user_id"
     t.text     "user_agent"
+    t.integer  "activity_log_id"
   end
 
   create_table "contacts", :force => true do |t|
@@ -890,6 +892,8 @@ ActiveRecord::Schema.define(:version => 20140109194603) do
     t.boolean  "permissions_enabled", :default => true
     t.string   "location_projection"
     t.string   "tumblr_url"
+    t.text     "recaptcha_public"
+    t.text     "recaptcha_private"
   end
 
   create_table "setups_snippets", :id => false, :force => true do |t|
@@ -1018,6 +1022,19 @@ ActiveRecord::Schema.define(:version => 20140109194603) do
     t.string   "header_bg_grad"
     t.string   "menu_bg_grad"
     t.string   "footer_bg_grad"
+  end
+
+  create_table "uploads", :force => true do |t|
+    t.string   "name"
+    t.integer  "catalog_id"
+    t.string   "file_uid"
+    t.integer  "file_size"
+    t.string   "file_name"
+    t.boolean  "downloadable"
+    t.boolean  "preview"
+    t.string   "uuid"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "use_agreements", :force => true do |t|
