@@ -48,12 +48,22 @@
         .control-group
           = f.label "Default Invite Text", class: 'control-label'
           .controls
-            = f.text_area :default_invite, rows: 6, cols: 40, class: 'span12'
+            = f.text_area :default_invite, rows: 4, cols: 40, class: 'span12'
 
         .control-group
           = f.label "Google Analytics Account", class: 'control-label'
           .controls
             = f.text_field :analytics_account, class: 'span12'
+
+        .control-group
+          = f.label "Recaptcha Public Key", class: 'control-label'
+          .controls
+            = f.text_field :recaptcha_public, class: 'span12'
+
+        .control-group
+          = f.label "Recaptcha Private Key", class: 'control-label'
+          .controls
+            = f.text_field :recaptcha_private, class: 'span12'
 
         .control-group
           = f.label "Metadata - Description", class: 'control-label'

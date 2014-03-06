@@ -1,5 +1,5 @@
 .row-fluid
-  .span6
+  .span7
     %fieldset.content
       %legend Site settings
       %dl.dl-horizontal
@@ -15,6 +15,10 @@
         %dd=ddtext current_setup.default_invite 
         %dt Google Analytics
         %dd=ddtext current_setup.analytics_account
+        %dt Recaptcha Public Key
+        %dd=ddtext current_setup.recaptcha_public
+        %dt Recaptcha Private Key
+        %dd=ddtext current_setup.recaptcha_private
         %dt Description
         %dd=ddtext current_setup.description
         %dt Keywords
@@ -30,7 +34,7 @@
         %dd=ddtext display_projection(current_setup.location_projection)
         %dt Use Google Layers
         %dd=ddtext current_setup.google_layers==true ? "Yes" : "No"
-  .span6
+  .span5
     %fieldset.content
       %legend Portal Favicon
       - if current_setup.favicon.nil?
