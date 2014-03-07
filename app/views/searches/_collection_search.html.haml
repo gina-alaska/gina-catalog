@@ -3,6 +3,7 @@
   .accordion-group
     .accordion-heading
       %a.accordion-toggle{ data: { toggle: "collapse", parent: "#collection_accordion"}, href: "##{dom_id(current_setup, "collection_collapse")}" }
+        %i.icon-chevron-down
         = "#{current_setup.title} Collections"
     .accordion-body.collapse.in{id: dom_id(current_setup, "collection_collapse")}
       .accordion-inner
@@ -13,6 +14,7 @@
     .accordion-group
       .accordion-heading
         %a.accordion-toggle{ data: { toggle: "collapse", parent: "#collection_accordion"}, href: "##{dom_id(setup, "collection_collapse")}" }
+          %i.icon-chevron-down
           = "#{setup.title} Collections"
       .accordion-body.collapse{id: dom_id(setup, "collection_collapse")}
         .accordion-inner
