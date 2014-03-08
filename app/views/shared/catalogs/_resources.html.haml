@@ -22,7 +22,11 @@
           %i.icon-download-alt.media-object
           Download
           
-        %h5.media-heading Remote Download
+        - if link.name
+          %h5.media-heading 
+            = "#{link.name}"
+        - else
+          %h5.media-heading Remote Download
         %p= File.basename(link.url)
                   
   - catalog.links.where('category = ?', 'Download').each do |link|
