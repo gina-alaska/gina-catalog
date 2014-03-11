@@ -1,4 +1,4 @@
-- cache([:search_result, :v49, catalog]) do
+- cache([:search_result, :v59, catalog]) do
   %div{id: dom_id(catalog, :record), data: { wkt: catalog.geometry_center_collection, type: catalog.type } }
     .row-fluid
       .span10
@@ -18,14 +18,17 @@
     #catalog-published
       = render 'catalogs/ispublished', catalog: catalog
     .description.clearfix
-      .preview.pull-left
-        - if preview = catalog.uploads.previews.first
-          = image_tag preview.file.thumb('150x').url
-      - unless catalog.source_agency.nil?
-        .agency
-          - unless catalog.source_agency.logo.nil?
-            .preview.pull-left
-              = image_tag catalog.source_agency.logo.thumb('x13').url
-          %b= catalog.source_agency.try(:name_with_acronym)
-      :markdown
-        #{catalog.description.try(:truncate, 300).try(:html_safe)}
+      %table{ style: 'width: 100%' }
+        %tr
+          - if preview = catalog.uploads.previews.first
+            %td.preview{ style: 'width:150px; padding-right: 10px;' }
+              = image_tag preview.file.thumb('150x').url
+          %td
+            - unless catalog.source_agency.nil?
+              .agency
+                - unless catalog.source_agency.logo.nil?
+                  .preview.pull-left
+                    = image_tag catalog.source_agency.logo.thumb('x13').url
+                %b= catalog.source_agency.try(:name_with_acronym)
+            :markdown
+              #{catalog.description.try(:truncate, 300).try(:html_safe)}
