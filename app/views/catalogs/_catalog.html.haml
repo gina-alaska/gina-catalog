@@ -1,4 +1,4 @@
-- cache([:search_result, :v59, catalog]) do
+- cache([:search_result, :v67, catalog]) do
   %div{id: dom_id(catalog, :record), data: { wkt: catalog.geometry_center_collection, type: catalog.type } }
     .row-fluid
       .span10
@@ -17,18 +17,18 @@
             %b Data
     #catalog-published
       = render 'catalogs/ispublished', catalog: catalog
-    .description.clearfix
-      %table{ style: 'width: 100%' }
+    %table.table.table-condensed.description
+      %tbody
         %tr
           - if preview = catalog.uploads.previews.first
             %td.preview{ style: 'width:150px; padding-right: 10px;' }
-              = image_tag preview.file.thumb('150x').url
+              = image_tag cms_media_path(preview.file_uid, size: "150x150")
           %td
             - unless catalog.source_agency.nil?
               .agency
                 - unless catalog.source_agency.logo.nil?
                   .preview.pull-left
-                    = image_tag catalog.source_agency.logo.thumb('x13').url
+                    = image_tag cms_media_path(catalog.source_agency.logo_uid, size: 'x13')
                 %b= catalog.source_agency.try(:name_with_acronym)
             :markdown
               #{catalog.description.try(:truncate, 300).try(:html_safe)}

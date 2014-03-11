@@ -47,7 +47,6 @@ label {
   margin-top: 10px;
   .preview img { margin-right: 5px; vertical-align: middle; }
   .agency { font-size: 14px; line-height: normal; }
-  .description { margin-bottom: 10px; }
   .dropdown-menu { text-align: left; }
   .result {
     position: relative;
@@ -81,6 +80,14 @@ label {
     text-align: center;
     @include border-radius(0px);
     @include border-bottom-left-radius(5px);
+  }
+  .description {
+    margin-bottom: 0;
+    td {
+      border: none;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
   }
 }
 
