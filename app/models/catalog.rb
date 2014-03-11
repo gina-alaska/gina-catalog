@@ -382,7 +382,7 @@ Title: #{self.title}
         text = t.respond_to?(:text) ? t.text : t
 
         next if text.size < 3
-        ids << Tag.find_or_create_by_text(text).id
+        ids << Tag.match_or_new(text).id
       end
     end    
     self.tag_ids = ids
