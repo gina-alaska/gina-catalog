@@ -1,0 +1,25 @@
+= form_for [:admin, @tag], html: { class: 'form-horizontal' } do |f|
+  - if @tag.errors.any?
+    #error_explanation.alert.alert-error
+      %h4
+        = pluralize(@tag.errors.count, "error")
+        prohibited this tag from being saved:
+      %ul
+        - @tag.errors.full_messages.each do |msg|
+          %li= msg
+          
+  .control-group
+    = f.label :text, class: 'control-label'
+    .controls
+      = f.text_field :text, class: 'span9'
+
+  .control-group
+    = f.label "Highlight tag", class: 'control-label'
+    .controls
+      = f.check_box :highlight
+
+  .form-actions
+    = link_to admin_tags_path, class: 'btn' do
+      %i.icon-arrow-left
+      Back
+    = f.submit class: 'btn btn-primary pull-right'
