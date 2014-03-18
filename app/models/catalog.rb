@@ -93,7 +93,8 @@ class Catalog < ActiveRecord::Base
   end
   has_and_belongs_to_many :data_types
 
-  has_and_belongs_to_many :tags, :join_table => 'catalog_tags', :order => 'highlight ASC, text ASC' do
+  has_many :catalog_tags
+  has_many :tags, through: :catalog_tags, order: 'highlight ASC, text ASC' do
     def list
       proxy_association.owner.tags.collection.join(', ')
     end
@@ -102,6 +103,16 @@ class Catalog < ActiveRecord::Base
       proxy_association.owner.tags.pluck(:text).compact
     end
   end
+
+#  has_and_belongs_to_many :tags, :join_table => 'catalog_tags', :order => 'highlight ASC, text ASC' do
+#    def list
+#      proxy_association.owner.tags.collection.join(', ')
+#    end
+#
+#    def collection
+#      proxy_association.owner.tags.pluck(:text).compact
+#    end
+#  end
 
   has_and_belongs_to_many :people, :join_table => 'catalog_people'
 
