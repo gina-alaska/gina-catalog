@@ -12,7 +12,7 @@
 %ol.page-list
   %table.table.table-condensed.table-striped
     %tr
-      %td{colspan:3, style: 'padding:5px;'}
+      %td{colspan:4, style: 'padding:5px;'}
         = form_tag admin_tags_path, method: 'GET', style: 'margin-bottom:0px;', class: 'form-inline' do
           .row-fluid
             .span4
@@ -29,8 +29,15 @@
               = submit_tag 'Search', class: 'btn btn-primary btn-block'
             .span2
               = link_to 'Reset', admin_tags_path, class: 'btn btn-primary btn-block'
+          .row-fluid
+            .span4
+              .control-group
+                .controls
+                  = check_box_tag 'search[unused]', nil, @search[:unused]
+                  = label_tag "Unused Tags", nil, class: "label"
+
     %tr
-      %td{colspan:7, style: 'padding:5px;'}
+      %td{colspan:4, style: 'padding:5px;'}
         .btn-group.pull-right
           = link_to_first_page @tags, params: { search: @search }, class: 'btn' do
             %i.icon-double-angle-left
@@ -45,6 +52,7 @@
     %tr
       %th Text
       %th Highlight
+      %th Record Count
       %th Actions
 
     - @tags.each do |tag|
@@ -53,6 +61,8 @@
           = tag.text.html_safe
         %td
           = tag.highlight ? "Yes" : "No"
+        %td
+          = tag.catalogs.count
         %td
           .actions
             .btn-group

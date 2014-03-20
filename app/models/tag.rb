@@ -12,7 +12,7 @@ class Tag < ActiveRecord::Base
     end
 
     integer :record_count do
-      #self.catalogs.count
+      self.catalogs.count
     end
 
     boolean :highlight
