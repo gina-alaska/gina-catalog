@@ -89,11 +89,7 @@ end
 
 gem 'sunspot_solr' #, '~> 1.3.3'
 gem 'sunspot_rails' #, '~> 1.3.3'
-
-group :development do
-  #gem 'sunspot_solr'
-  gem 'progress_bar'
-end
+gem 'progress_bar'
 
 gem 'jquery-rails'
 gem 'bootstrap-datepicker-rails'
