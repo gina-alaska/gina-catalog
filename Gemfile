@@ -87,8 +87,8 @@ group :production do
   gem 'therubyracer'
 end
 
-gem 'sunspot_solr', '~> 1.3.3'
-gem 'sunspot_rails', '~> 1.3.3'
+gem 'sunspot_solr' #, '~> 1.3.3'
+gem 'sunspot_rails' #, '~> 1.3.3'
 
 group :development do
   #gem 'sunspot_solr'
