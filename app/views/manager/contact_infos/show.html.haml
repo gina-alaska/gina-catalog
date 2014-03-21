@@ -1,27 +1,27 @@
 .content
-  = form_tag manager_contact_info_path, method: 'GET', style: "margin-bottom: 0;" do
-    .row-fluid
-      .span3
-        .control-group
-          %label.control-label Start
-          .controls
-            = text_field_tag "start_date", @start_date.strftime('%F'), placeholder: 'YYYY-MM-DD', data: {behavior: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span12"
-      .span3
-        .control-group
-          %label.control-label End
-          .controls
-            = text_field_tag "end_date", @end_date.strftime('%F'), placeholder: 'YYYY-MM-DD', data: { behavior: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span12"
-      .span6
-        .control-group
-          %label.control-label &nbsp;
-          .controls
-            = submit_tag 'Search', class: 'btn btn-primary pull-right'
+  / = form_tag manager_contact_info_path, method: 'GET', style: "margin-bottom: 0;" do
+  /   .row-fluid
+  /     .span3
+  /       .control-group
+  /         %label.control-label Start
+  /         .controls
+  /           = text_field_tag "start_date", @start_date.strftime('%F'), placeholder: 'YYYY-MM-DD', data: {behavior: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span12"
+  /     .span3
+  /       .control-group
+  /         %label.control-label End
+  /         .controls
+  /           = text_field_tag "end_date", @end_date.strftime('%F'), placeholder: 'YYYY-MM-DD', data: { behavior: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span12"
+  /     .span6
+  /       .control-group
+  /         %label.control-label &nbsp;
+  /         .controls
+  /           = submit_tag 'Search', class: 'btn btn-primary pull-right'
   %table.table.table-striped.table-condensed.table-bordered
     %thead
       %tr
         %th{colspan: 5}
-          = link_to manager_catalog_path(@catalog_record), title: "#{@catalog_record.title}" do
-            = @catalog_record.title.truncate(100)
+          = link_to manager_catalog_path(@catalog), title: "#{@catalog.title}" do
+            = @catalog.title.truncate(100)
       %tr
         %th Date
         %th IP
@@ -30,7 +30,9 @@
         %th Usage Description
         %th Downloaded from
     %tbody
-      - @contact_infos.each do |contact|
+      - @catalog.downloads.each do |download|
+        - next unless download.log.try('[]', :contact_info).try(:present?)
+        - contact = ContactInfo.find(download.log[:contact_info])
         %tr
           %td= contact.created_at.strftime("%F %T %z")
           %td= contact.user_ip

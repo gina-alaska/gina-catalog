@@ -4,25 +4,24 @@
 - else
   %ul.nav{ style: 'margin: 0;' }
     - @images.each do |image|
-      - cache(['ace_image_chooser', image, 'v4']) do
-        %li.pull-left.thumbnail{ style: 'width: 46%; margin-left: 10px; margin-top: 10px;' }
-          .row-fluid
-            .span3
-              .image
+      %li.pull-left.thumbnail{ style: 'width: 46%; margin-left: 10px; margin-top: 10px;' }
+        .row-fluid
+          .span3
+            .image
+              - if image.file.nil?
+                %p.lead Broken image
+              - else
+                = image_tag cms_media_url(image.file_uid, size: '150x100#'), alt: image.title
+          .span9
+            %div{ style: 'height: 68px; overflow: auto;' }
+              %strong= image.title
+              %p= image.description
+            .buttons{style:""}
+              .btn-group
                 - if image.file.nil?
-                  %p.lead Broken image
+                  %p.lead Please fix this image before linking
                 - else
-                  = image_tag image.thumbnail('150x100#').url, alt: image.title
-            .span9
-              %div{ style: 'height: 68px; overflow: auto;' }
-                %strong= image.title
-                %p= image.description
-              .buttons{style:""}
-                .btn-group
-                  - if image.file.nil?
-                    %p.lead Please fix this image before linking
-                  - else
-                    = link_to '200x200', '#', class: 'btn btn-small', data: { behavior: 'add', src: image.thumbnail('200x200').try(:url), alt: image.title }
-                    = link_to '640x480', '#', class: 'btn btn-small', data: { behavior: 'add', src: image.thumbnail('640x480').try(:url), alt: image.title }
-                    = link_to '1024x768', '#', class: 'btn btn-small', data: { behavior: 'add', src: image.thumbnail('1024x768').try(:url),  alt: image.title }
-                    = link_to 'Original File', '#', class: 'btn btn-small', data: { behavior: 'add', src: image.raw_url, alt: image.title }
+                  = link_to '200x200', '#', class: 'btn btn-small', data: { behavior: 'add', src: cms_media_path(image.file_uid, size: '200x200'), alt: image.title }
+                  = link_to '640x480', '#', class: 'btn btn-small', data: { behavior: 'add', src: cms_media_path(image.file_uid, size: '640x480'), alt: image.title }
+                  = link_to '1024x768', '#', class: 'btn btn-small', data: { behavior: 'add', src: cms_media_path(image.file_uid, size: '1024x768'),  alt: image.title }
+                  = link_to 'Original File', '#', class: 'btn btn-small', data: { behavior: 'add', src: image.raw_url, alt: image.title }

@@ -1,5 +1,6 @@
 class ContactInfo < ActiveRecord::Base
   belongs_to :catalog
+  has_many :activity_logs, as: :loggable, order: "created_at DESC", dependent: :destroy, extend: DownloadActivityExtension
   belongs_to :setup
   
   validates_presence_of :name
@@ -34,4 +35,8 @@ class ContactInfo < ActiveRecord::Base
 
     data
   }
+  
+  def offer_key
+    UUIDTools::UUID.md5_create(UUIDTools::UUID_OID_NAMESPACE, "#{self.id}|#{self.name}|#{self.email}|#{self.usage_description}").to_s
+  end
 end

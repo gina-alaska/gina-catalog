@@ -1,11 +1,15 @@
 class Image < ActiveRecord::Base
   attr_accessible :description, :file_uid, :link_to_url, :title, :file, :setups
-  image_accessor :file
+  dragonfly_accessor :file
   
   has_and_belongs_to_many :setups
   has_many :page_images, class_name: 'Page::Image'
   has_many :pages, :through => :page_images, class_name: 'Page::Content'
   has_many :agencies
+  
+  def to_param
+    "#{self.id}-#{File.basename(self.file.name.to_s, '.*')}"
+  end
   
   def raw_url
     self.file.remote_url
@@ -19,9 +23,13 @@ class Image < ActiveRecord::Base
   alias_method :image_url, :raw_url
   
   def thumbnail(size = '640x480#')
-    (!%w{ pdf kmz kml }.include?(self.file.format) and self.file.image?) ? self.file.process(:page, 0).thumb(size).png : Image.document_image
-  rescue Dragonfly::DataStorage::DataNotFound => e
-    Image.document_image
+    if self.file.try(:image?) and self.file_stored? and !%w{ pdf kmz kml }.include?(self.file.format)
+      self.file.thumb(size).encode(:png)
+    else
+      Image.document_image
+    end
+  rescue Dragonfly::Job::Fetch::NotFound
+    Image.document_image    
   end
   
   def self.document_image

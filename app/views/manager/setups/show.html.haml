@@ -36,7 +36,7 @@
       - if current_setup.favicon.nil?
         No Favicon Uploaded
       - else
-        = image_tag current_setup.favicon.image.png.thumb('100x100').url unless current_setup.favicon.image.nil?
+        = image_tag current_setup.favicon.image.encode(:png).thumb('100x100').url unless current_setup.favicon.image.nil?
 .row-fluid
   .span12
     %fieldset.content

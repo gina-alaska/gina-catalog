@@ -1,32 +1,48 @@
 - collapse ||= false
-.navbar.navbar-static-top
-  .navbar-inner
-    = render '/shared/catalogs/catalog_buttons', catalog: catalog
                 
 = render '/shared/catalogs/map', catalog: catalog
     
-.content
-  #catalog-published
-    = render 'catalogs/ispublished', catalog: catalog
-  .result{ data: { wkt: catalog.geometry_collection, type: catalog.type } }
-    %h4.title= catalog.title
+.result{ data: { wkt: catalog.geometry_collection, type: catalog.type } }
+  = render '/shared/catalogs/catalog_buttons', catalog: catalog
+  %table
+    %tr
+      %td{ style: 'vertical-align: top; max-width: 250px;' }
+        = render '/shared/catalogs/primary_agency_icon', catalog: catalog
+        = render '/shared/catalogs/agency_icons', catalog: catalog
+        = render '/shared/catalogs/map_layers', catalog: catalog
+        = render '/shared/catalogs/previews', catalog: catalog
+      %td.content{ style: 'border-left: 1px solid #efefef' }
+        #catalog-published
+          = render 'catalogs/ispublished', catalog: catalog
 
-    - if catalog.published? or (current_member and current_member.can_manage_catalog?)
-      .row-fluid
-        .span7
-          = render '/shared/catalogs/status', item: catalog
-          %dl
-            %dt Description
-            %dd
-              :markdown
-                #{catalog.description}
-          = render '/shared/catalogs/collapsed_content', item: catalog, collapse: collapse
-          
-        .span5
-          = render '/shared/catalogs/map_layers', catalog: catalog
-          = render '/shared/catalogs/files', catalog: catalog
+        %h4{ style: 'font-size: 20px; border-bottom: 1px solid #afafaf; padding-bottom: 10px;' }= catalog.title
+  
+        - if catalog.published? or current_member.try(:can_manage_catalog?)
+          :markdown
+            #{catalog.description}
+    
+          = render '/shared/catalogs/resources', catalog: catalog
+          = render '/shared/catalogs/tag_cloud', catalog: catalog
 
-          #agency-images.clear-fix
-            - [catalog.source_agency, catalog.funding_agency, catalog.agencies].flatten.uniq.compact.each do |agency|
-              - next unless agency.logo
-              = image_tag agency.logo.thumb('x75').url, alt: agency.name, title: agency.name, style: 'display: inline; margin: 10px;'
+          .bordered{ style: 'margin-top: 10px;' }
+            %ul.nav.nav-tabs{ style: 'padding-left: 5px; padding-top: 5px; margin-bottom: 0;' }
+              %li.active
+                = link_to '#additional-information', data: { toggle: 'tab' } do
+                  %b Additional Information
+              %li
+                = link_to '#activity-logs', data: { toggle: 'tab' } do
+                  %b Activity Logs
+              - if current_member.try(:can_manage_catalog?)
+                %li
+                  = link_to '#download-logs', data: { toggle: 'tab' } do
+                    %b Download Logs
+              
+            .tab-content
+              #additional-information.tab-pane.active.content
+                = render '/shared/catalogs/status', item: catalog
+                = render '/shared/catalogs/collapsed_content', item: catalog, collapse: collapse
+              #activity-logs.tab-pane
+                = render '/shared/catalogs/activity_logs', catalog: catalog
+              - if current_member.try(:can_manage_catalog?)
+                #download-logs.tab-pane
+                  = render '/shared/catalogs/download_logs', catalog: catalog

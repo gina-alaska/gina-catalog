@@ -1,0 +1,52 @@
+%table.table.table-striped.table-condensed
+  %thead
+    %tr
+      %th &nbsp;
+  %tbody
+    - catalog.downloads.order('created_at DESC').limit(50).each do |download|
+      - contact = download.loggable
+      %tr
+        %td
+          %dl.dl-horizontal.contact-info
+            .row-fluid
+              .span6
+                .item
+                  %dt Date: 
+                  %dd= download.try(:created_at).try(:strftime, "%F %T") 
+                .item
+                  %dt User: 
+                  %dd= download.user.nil? ? 'Guest' : download.user.fullname
+              .span6
+                .item
+                  %dt File:
+                  %dd= File.basename(download.log[:url].to_s)
+                - if contact.try(:setup).try(:present?)
+                  .item
+                    %dt Portal: 
+                    %dd
+                      = contact.try(:setup).try(:acronym)
+                      &nbsp;
+            - unless contact.nil?
+              .row-fluid
+                .span6
+                  - unless contact.name.nil?
+                    %dt Name:
+                    %dd
+                      = contact.name
+                      &nbsp;
+                  %dt IP:
+                  %dd
+                    = contact.user_ip
+                    &nbsp;
+                .span6
+                  - unless contact.email.nil?
+                    %dt Email:
+                    %dd
+                      = contact.email
+                      &nbsp;
+              - unless contact.usage_description.nil?
+                .item
+                  %dt Description: 
+                  %dd
+                    = contact.usage_description
+                    &nbsp;

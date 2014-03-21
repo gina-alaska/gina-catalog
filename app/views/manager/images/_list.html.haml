@@ -8,7 +8,7 @@
           - if image.file.nil?
             %p.lead Broken image
           - else
-            = image_tag image.thumbnail('250x100').try(:url), alt: image.title
+            = image_tag cms_media_url(image.file_uid, size: '250x100'), alt: image.title
         .info
           .caption
             %strong= link_to_unless image.link_to_url.empty?, image.title, image.link_to_url
