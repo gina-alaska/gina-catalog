@@ -4,7 +4,11 @@ NSCatalog::Application.routes.draw do
     resources :geokeywords
     resources :users
     resources :notifications
-    resources :tags
+    resources :tags do
+      collection do
+        post :merge
+      end
+    end
   end
   
   namespace :manager do

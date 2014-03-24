@@ -227,7 +227,7 @@ class Manager::CatalogsController < ManagerController
   end
   
   def fetch_record
-    @catalog = Catalog.includes(:tags, :links, :locations, :agencies, :geokeywords, :people).find(params[:id])
+    @catalog = Catalog.includes(:links, :locations, :agencies, :geokeywords, :people).find(params[:id])
   end
   
   def restrict_to_current_setup
