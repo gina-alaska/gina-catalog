@@ -12,13 +12,18 @@
 %ol.page-list
   %table.table.table-condensed.table-striped
     %tr
-      %td{colspan:4, style: 'padding:5px;'}
+      %td{colspan:5, style: 'padding:5px;'}
         = form_tag admin_tags_path, method: 'GET', style: 'margin-bottom:0px;', class: 'form-inline' do
           .row-fluid
             .span4
               .control-group
                 .controls
                   = text_field_tag 'search[q]', @search[:q], class: 'span12', placeholder: "Search"
+              .control-group
+                .controls
+                  %label.checkbox
+                    = check_box_tag 'search[unused]', nil, @search[:unused]
+                    Unused Tags Only
             .span2
               .control-group
                 = select_tag "limit", options_for_select(limits, @limit), class: 'span12'           
@@ -29,15 +34,10 @@
               = submit_tag 'Search', class: 'btn btn-primary btn-block'
             .span2
               = link_to 'Reset', admin_tags_path, class: 'btn btn-primary btn-block'
-          .row-fluid
-            .span4
-              .control-group
-                .controls
-                  = check_box_tag 'search[unused]', nil, @search[:unused]
-                  = label_tag "Unused Tags", nil, class: "label"
+              = link_to 'Merge Tags', "#", class: 'btn btn-primary btn-block', data: { behavior: "merge_tags" }
 
     %tr
-      %td{colspan:4, style: 'padding:5px;'}
+      %td{colspan:5, style: 'padding:5px;'}
         .btn-group.pull-right
           = link_to_first_page @tags, params: { search: @search }, class: 'btn' do
             %i.icon-double-angle-left
@@ -53,6 +53,7 @@
       %th Text
       %th Highlight
       %th Record Count
+      %th Merge
       %th Actions
 
     - @tags.each do |tag|
@@ -63,6 +64,10 @@
           = tag.highlight ? "Yes" : "No"
         %td
           = tag.catalogs.count
+        %td
+          = check_box_tag "tags[]", tag.id, false, title: "Merge this", class: "merge_this"
+          %i.icon-double-angle-right.icon-2x{style: "vertical-align: -7px;"}
+          = radio_button_tag 'merge_to', tag.id, false, title: "Merge here", class: 'merge_to'
         %td
           .actions
             .btn-group
@@ -83,4 +88,26 @@
             %i.icon-angle-right
           = link_to_last_page @tags, params: { search: @search }, class: 'btn' do
             %i.icon-double-angle-right   
+
+:javascript
+  $(document).on("click", "[data-behavior='merge_tags']", function(e){
+    var ids = [];
+
+    $(".merge_this:checked").each(function(index, input) {
+      ids.push($(input).val())
+    });
+    console.log(ids);
+    var merge_to = $(".merge_to:checked").val();
+    console.log(merge_to);
+
+    $.ajax({
+      url: '#{merge_admin_tags_path}',
+      type: 'POST',
+      dataType: 'script',
+      data: {
+        "tag_ids[]": ids,
+        "merge_tag": merge_to
+      }
+    });
+  })
     

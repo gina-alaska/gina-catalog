@@ -94,7 +94,7 @@ class Catalog < ActiveRecord::Base
   has_and_belongs_to_many :data_types
 
   has_many :catalog_tags
-  has_many :tags, through: :catalog_tags, order: 'highlight ASC, text ASC' do
+  has_many :tags, through: :catalog_tags, order: 'tags.highlight ASC, tags.text ASC' do
     def list
       proxy_association.owner.tags.collection.join(', ')
     end

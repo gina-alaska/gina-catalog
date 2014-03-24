@@ -8,7 +8,7 @@ class Admin::TagsController < AdminController
     @solr_search = Tag.search do
       fulltext search_params[:q] if search_params[:q]
 
-      with(:record_count, 0) if search_params[:unused].present?
+      with(:record_count, 0) if search_params[:unused]
       order_by "text", sortdir.to_sym
       paginate per_page:(limit), page:(page)
     end
@@ -67,6 +67,23 @@ class Admin::TagsController < AdminController
       flash[:success] = "Tag #{tag_text} was successfully deleted."
       format.html { redirect_to admin_tags_path }
       format.json { head :no_content }
+    end
+  end
+
+  def merge
+    catalog_records = Catalog.includes(:tags).where(tags: { id: params[:tag_ids] })
+    merge_tag = Tag.where(id: params[:merge_tag])
+
+    catalog_records.each do |record|
+      unless record.tags.include?(merge_tag)
+        record.tags << merge_tag
+      end
+    end
+
+    Tag.where(id: (params[:tag_ids]-[params[:merge_tag]])).destroy_all
+
+    respond_to do |format|
+      format.js
     end
   end
 
