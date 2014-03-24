@@ -48,6 +48,7 @@ class Manager::CatalogsController < ManagerController
     @catalog.links.build
     @catalog.locations.build
     @catalog.download_urls.build
+    @catalog.uploads.build
     
     respond_to do |format|
       format.html
@@ -70,6 +71,8 @@ class Manager::CatalogsController < ManagerController
     @catalog.setups << current_setup
     
     if @catalog.save
+      @catalog.activity_logs.create(activity: 'Create', user: current_user, log: { message: "New record created" })
+      
       respond_to do |format|
         format.html {
           flash[:success] = 'Created catalog record'
@@ -89,6 +92,7 @@ class Manager::CatalogsController < ManagerController
     @catalog.links.build
     @catalog.locations.build
     @catalog.download_urls.build
+    @catalog.uploads.build
     
     respond_to do |format|
       format.html
@@ -97,6 +101,7 @@ class Manager::CatalogsController < ManagerController
   
   def update
     if @catalog.update_attributes(catalog_params)
+      @catalog.activity_logs.create(activity: 'Update', user: current_user, log: { message: "Updated by #{current_user.first_name}" })
       respond_to do |format|
         format.html {
           flash[:success] = 'Updated catalog record'
@@ -115,6 +120,8 @@ class Manager::CatalogsController < ManagerController
   def unpublish
     respond_to do |format|
       if @catalog.unpublish
+        @catalog.activity_logs.create(activity: 'Update', user: current_user, log: { message: "Unpublished by #{current_user.first_name}" })
+        
         flash.now[:success] = 'Successfully unpublished record'
         format.js { render 'share' }
       else
@@ -127,6 +134,8 @@ class Manager::CatalogsController < ManagerController
   def publish
     respond_to do |format|
       if @catalog.publish(current_user)
+        @catalog.activity_logs.create(activity: 'Update', user: current_user, log: { message: "Published by #{current_user.first_name}" })
+        
         flash.now[:success] = 'Successfully published record'
         format.js { render 'share' }
       else
@@ -191,7 +200,7 @@ class Manager::CatalogsController < ManagerController
     v = params[:catalog].slice(:title, :description, :start_date, :end_date, :status, 
       :owner_id, :primary_contact_id, :contact_ids, :source_agency_id, :funding_agency_id, :data_type_ids,
       :iso_topic_ids, :agency_ids, :tags, :geokeyword_ids, :collection_ids, :type, :links_attributes,
-      :locations_attributes, :download_urls_attributes, :use_agreement_id, :request_contact_info, :require_contact_info)
+      :locations_attributes, :download_urls_attributes, :uploads_attributes, :use_agreement_id, :request_contact_info, :require_contact_info)
     
     
     v['collection_ids'] = clean_param_ids(v['collection_ids'])

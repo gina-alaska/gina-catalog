@@ -33,7 +33,7 @@ NSCatalog::Application.configure do
   config.assets.digest = false
 
   # Use a different cache store in production
-  config.cache_store = :dalli_store, 'localhost', { :namespace => 'glynx-development', :compress => true }
+  config.cache_store = :dalli_store, 'localhost', { :namespace => 'glynx-development', :compress => true, :pool_size => 5, value_max_bytes: 10485760   }
   
   # config.cache_store = :dalli_store, 'flash.x.gina.alaska.edu', { :namespace => 'gLynxCatalogDevelopment', :compress => true }
 

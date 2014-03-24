@@ -1,7 +1,11 @@
 module ApplicationHelper
   def avatar_url(user, size=48)
     default_url = "mm"
-    gravatar_id = Digest::MD5.hexdigest(user.email.downcase)
+    if user.try(:email)
+      gravatar_id = Digest::MD5.hexdigest(user.email.downcase)
+    else
+      gravatar_id = '00000000000000000000000000000000000000000'
+    end
     "http://gravatar.com/avatar/#{gravatar_id}.png?s=#{size}&d=#{CGI.escape(default_url)}"
   end
   

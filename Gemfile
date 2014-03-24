@@ -24,13 +24,14 @@ gem 'turbolinks'
 gem 'jquery-turbolinks'
 gem 'html-pipeline'
 gem 'liquid'
-gem 'dragonfly', '~> 0.9.14'
+gem 'dragonfly', '~> 1.0.1'
 gem 'awesome_nested_set'
 gem 'nested_form', git: 'https://github.com/ryanb/nested_form.git'
 gem 'rcsw', "~> 0.1.1", git: 'https://github.com/gina-alaska/ruby-csw.git'
 gem 'whenever'
 gem 'nokogiri'
 gem 'dalli'
+gem 'connection_pool'
 gem 'rinku'
 gem 'sanitize'
 gem 'rubyzip', require: 'zip'
@@ -86,13 +87,9 @@ group :production do
   gem 'therubyracer'
 end
 
-gem 'sunspot_solr', '~> 1.3.3'
-gem 'sunspot_rails', '~> 1.3.3'
-
-group :development do
-  #gem 'sunspot_solr'
-  gem 'progress_bar'
-end
+gem 'sunspot_solr' #, '~> 1.3.3'
+gem 'sunspot_rails' #, '~> 1.3.3'
+gem 'progress_bar'
 
 gem 'jquery-rails'
 gem 'bootstrap-datepicker-rails'

@@ -138,12 +138,12 @@ NSCatalog::Application.routes.draw do
   resources :contacts, only: [:index, :create]
   resources :catalogs do
     get :more_info, on: :member
-    resources :downloads, :only => [:index, :show] do
+    resources :downloads do
       get :redirect, on: :member 
-      collection do
+      
+      member do
         get :contact_info
-        get :next
-        post :next
+        get :offer
       end
     end
   end
@@ -158,6 +158,40 @@ NSCatalog::Application.routes.draw do
 
   match '/auth/:service/callback' => 'sessions#create' 
   match '/auth/failure' => 'sessions#failure'
+  
+  match '/cms/media/:size/*id(.:format)' => Dragonfly.app.endpoint { |params, app|
+    image = app.fetch(params[:id])    
+    format = params[:format] || 'jpg'
+    
+    begin
+      unless image.image?
+        image = app.fetch_file(Rails.root.join("app/assets/images/document.png"))
+      end
+    rescue
+      image = app.fetch_file(Rails.root.join("app/assets/images/document.png"))
+    end
+
+    image = image.thumb(params[:size])
+    image = image.encode(params[:format]) if image.format.to_s != format
+    image
+  }, as: :cms_media
+  
+  match '/cms/thumbnail/:size/:id(.:format)' => Dragonfly.app.endpoint { |params, app|
+    image = Image.where(id: params[:id]).first.try(:file) 
+    format = params[:format] || 'jpg'
+    
+    begin
+      unless image.image?
+        image = app.fetch_file(Rails.root.join("app/assets/images/document.png"))
+      end
+    rescue
+      image = app.fetch_file(Rails.root.join("app/assets/images/document.png"))
+    end
+
+    image = image.thumb(params[:size])
+    image = image.encode(format) if image.format.to_s != format
+    image    
+  }, as: :thumb
 
   resources :authentications, :only => [:index, :create, :destroy] do
     collection do

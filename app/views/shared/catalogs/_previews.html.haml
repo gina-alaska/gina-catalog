@@ -1,0 +1,8 @@
+- unless catalog.uploads.previews.empty?
+  #preview-images.content{ style: 'min-width: 230px;' }
+    %h5 Record Previews
+    - catalog.uploads.previews.each do |preview|
+      .preview-image{ style: 'margin-bottom: 5px;' }
+        = link_to preview.file.remote_url do
+          = image_tag cms_media_path(preview.file_uid, size: '230x230'), alt: preview.name, title: preview.name
+

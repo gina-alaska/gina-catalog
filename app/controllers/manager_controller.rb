@@ -12,34 +12,18 @@ class ManagerController < ApplicationController
     @start_date = params["start_date"].present? ? Time.zone.parse(params["start_date"]) : 30.days.ago
     @end_date = params["end_date"].present? ? Time.zone.parse(params["end_date"]) : Time.zone.now
 
-    if params["commit"] == "Clear"
-      @start_date = nil
-      @end_date = nil
-    end
-
-#    @contact_infos = ContactInfo.joins(:catalog).where("catalog.owner_setup_id = ? or contact_infos.setup_id = ?", current_setup.id, current_setup.id).uniq
-    @contact_infos = ContactInfo.current_setup(current_setup)
-
-    if params["agency"].present?
-      @contact_infos = @contact_infos.where("catalog.source_agency_id = ?", params["agency"])
-    end
-    
-    @top_downloads = @contact_infos.top_downloads
-#    @top_downloads = @contact_infos.select("contact_infos.catalog_id, count(*) as download_count").created_between(@start_date, @end_date).group("contact_infos.catalog_id")
-#    @top_downloads = @top_downloads.order('download_count DESC').limit(10) 
-    
-    @latest_access = @contact_infos.created_between(@start_date, @end_date).order('contact_infos.created_at DESC')    
-    @latest_access = @latest_access.limit(50)    
-
+    @downloads = current_setup.downloads
+    @filtered_downloads = @downloads.where(created_at: (@start_date..@end_date))
+    @top_downloads = @filtered_downloads.top
 
     @stats = {
       :total_downloads => {
-        :alltime =>  @contact_infos.count,
-        :daterange => @contact_infos.created_between(@start_date, @end_date).count
+        :alltime =>  @downloads.count,
+        :daterange => @filtered_downloads.count
       },
       :unique_downloads => {
-        :alltime => @contact_infos.pluck(:catalog_id).uniq.count,
-        :daterange => @contact_infos.created_between(@start_date, @end_date).pluck(:catalog_id).uniq.count    
+        :alltime => @downloads.pluck(:loggable_id).uniq.count,
+        :daterange => @filtered_downloads.pluck(:loggable_id).uniq.count    
       }
     }
   end

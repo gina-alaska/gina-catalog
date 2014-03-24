@@ -92,6 +92,7 @@ module CatalogConcerns
           with :status, search[:status] if search[:status].present?
           with :long_term_monitoring, ((search[:long_term_monitoring].to_i > 0) ? true : false) if search.include? :long_term_monitoring
           with :archived_at_year, nil unless search[:archived]
+          
           if search[:type].present?
             if search[:type] == 'Data'
               #work around for legacy data

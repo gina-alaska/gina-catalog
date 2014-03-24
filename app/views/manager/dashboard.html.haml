@@ -11,13 +11,6 @@
           %label.control-label End
           .controls
             = text_field_tag "end_date", @end_date.strftime('%F'), placeholder: 'YYYY-MM-DD', data: { behavior: 'datepicker', date_format: 'yyyy-mm-dd'}, class: "span12"
-      .span6
-        .control-group
-          %label.control-label Agency
-          .controls
-            = collection_select_for_agencies("agency", params["agency"], false, class: "span12")
-          :javascript
-            $('#agency').select2({allowClear: true, width: 'copy'});
       .span2
         .control-group
           %label.control-label &nbsp;
@@ -32,14 +25,14 @@
           %tr
             %th{colspan: 2} Top downloads
           %tr
-            %th Data Record
+            %th Record
             %th= "Last #{((@end_date - @start_date) / 86400).to_i} days"
         %tbody
           - @top_downloads.each do |item|
             %tr
               %td
-                = link_to manager_contact_info_path(item.catalog.id, start_date: @start_date, end_date: @end_date), title: "#{item.catalog.title}" do
-                  = item.catalog.title.truncate(80)
+                = link_to item.loggable.catalog do
+                  = item.loggable.catalog.title.truncate(80)
               %td
                 = item.download_count
     .span4
@@ -66,24 +59,18 @@
             %th{colspan: 5} 50 Latest records accessed:
           %tr
             %th Date
-            %th Data Record
-            %th Downloaded from
-            %th Name
-            %th Email
+            %th File
+            %th Record
         %tbody
-          - @latest_access.each do |item|
+          - @downloads.order('created_at DESC').limit(50).each do |item|
             %tr
               %td.span3
                 = item.created_at.strftime('%F %T %z')
               %td
-                = link_to manager_contact_info_path(item.catalog_id, start_date: @start_date, end_date: @end_date), title: "#{item.catalog.title}" do
-                  = item.catalog.title.truncate(60)
+                = File.basename(item.log[:url].to_s)
               %td
-                %abbr{ title: item.setup.try(:title) }= item.setup.try(:acronym)
-              %td.span2
-                = item.name
-              %td.span2
-                = item.email
+                = link_to item.loggable.catalog do
+                  = item.loggable.catalog.title.truncate(60)
 
 :javascript
   $(document).ready( function(){

@@ -1,10 +1,8 @@
-- if user_signed_in?
-  .btn-group{ id: dom_id(catalog, 'manage')}
-    = render 'shared/catalogs/manage_button', catalog: catalog
-- if catalog.downloadable?
-  .btn-group
-    = link_to catalog_downloads_path(catalog), class: 'btn', rel: "nofollow", remote: true do
-      %i.icon-cloud-download
-      Download
-      - if catalog.local_download?
-        = "(#{number_to_human_size(catalog.archive_size)})"
+- if current_member.try(:can_manage_catalog?)
+  .navbar.navbar-static-top
+    .navbar-inner
+      .btn-group{ id: dom_id(catalog, 'manage')}
+        = render 'shared/catalogs/manage_button', catalog: catalog
+
+        
+    

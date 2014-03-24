@@ -16,11 +16,16 @@ class Setup < ActiveRecord::Base
   has_and_belongs_to_many :persons, join_table: 'persons_setups', uniq: true
   has_and_belongs_to_many :agencies, join_table: 'agencies_setups', uniq: true
 
-
+  
   has_many :catalogs_setups, uniq: true, dependent: :destroy
   has_many :catalogs, through: :catalogs_setups
   has_many :owned_catalogs, class_name: 'Catalog', foreign_key: 'owner_setup_id'
 #  has_and_belongs_to_many :catalogs
+  has_many :downloads, through: :owned_catalogs do
+    def top
+      select('activity_logs.loggable_id, activity_logs.loggable_type, count(*) as download_count').group("activity_logs.loggable_id, activity_logs.loggable_type").order('download_count DESC')
+    end
+  end
   
   has_many :catalog_collections, dependent: :destroy
   has_many :collections
