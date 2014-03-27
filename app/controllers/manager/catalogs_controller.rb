@@ -74,10 +74,17 @@ class Manager::CatalogsController < ManagerController
       @catalog.activity_logs.create(activity: 'Create', user: current_user, log: { message: "New record created" })
       
       respond_to do |format|
-        format.html {
-          flash[:success] = 'Created catalog record'
-          redirect_to [:manager, @catalog]
-        }
+        if params["commit"] == "Save Record"
+          format.html {
+            flash[:success] = 'Created catalog record'
+            redirect_to edit_manager_catalog_path(@catalog)
+          }
+        else
+          format.html {
+            flash[:success] = 'Created catalog record'
+            redirect_to [:manager, @catalog]
+          }
+        end
       end
     else
       respond_to do |format|
@@ -104,8 +111,13 @@ class Manager::CatalogsController < ManagerController
       @catalog.activity_logs.create(activity: 'Update', user: current_user, log: { message: "Updated by #{current_user.first_name}" })
       respond_to do |format|
         format.html {
-          flash[:success] = 'Updated catalog record'
-          redirect_to [:manager, @catalog]
+          if params["commit"] == "Save Record"
+            flash[:success] = 'Updated catalog record'
+            redirect_to edit_manager_catalog_path(@catalog)
+          else
+            flash[:success] = 'Updated catalog record'
+            redirect_to [:manager, @catalog]
+          end
         }
       end
     else
