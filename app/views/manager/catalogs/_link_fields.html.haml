@@ -1,9 +1,9 @@
 .row-fluid
-  .span1 
+  .span1.text-center
     - if f.object.valid_link
-      %i.icon-thumbs-up.text-success.text-center
+      %i.icon-thumbs-up.text-success
     - else
-      %i.icon-thumbs-down.text-error.text-center
+      %i.icon-thumbs-down.text-error
   .span2
     = f.select :category, Link::CATEGORIES, {}, { class: 'span12' }
   .span4= f.text_field :display_text, class: 'span12'
