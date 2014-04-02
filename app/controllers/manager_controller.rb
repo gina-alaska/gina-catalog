@@ -26,6 +26,8 @@ class ManagerController < ApplicationController
         :daterange => @filtered_downloads.pluck(:loggable_id).uniq.count    
       }
     }
+
+    @bad_links = Link.where(valid_link: false, asset_type: 'Catalog')
   end
 
   protected
