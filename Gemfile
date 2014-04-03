@@ -50,7 +50,7 @@ gem 'ancestry', '~> 1.2.4'
 # Use unicorn as the web server
 gem 'unicorn'
 gem 'puma'
-gem 'feedzirra'
+gem 'feedjira', '~> 0.9.0'
 
 group :development do
   # Deploy with Capistrano
