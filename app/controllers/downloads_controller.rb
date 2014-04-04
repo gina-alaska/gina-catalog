@@ -15,6 +15,11 @@ class DownloadsController < ApplicationController
       redirect_to catalog_download_path(current_catalog, current_download)
     end
   end
+  
+  def sds
+    @download = fetch_download_url
+    redirect_to edit_catalog_download_path(@download.catalog, @download)
+  end
 
   def show
     respond_to do |format|
