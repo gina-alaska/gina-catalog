@@ -83,6 +83,31 @@ namespace :import do
       }
 
       publications = CSV.new(File.open(ENV['FILE'], 'r'), headers: :first_row)
+      feature_factory = RGeo::Geographic.simple_mercator_factory(srid: 4326)
+
+      publications.each do |publication|
+        collections = []#Collection.where(name: TYPE_FULLNAME[publication['Type']).first_or_create
+
+        catalog_attributes =  {
+          title: publication['Project'],
+          locations_attributes: [{
+            name: publication['Project'],
+            geom: feature_factory.point(publication['LON'], publication['LAT'])
+          }],
+          start_date: Date.new(publication['PubYr'].to_i).beginning_of_year,
+          status: TYPE_FULLNAME[publication['Type']],
+          description: publication['Summary'],
+          links_attributes: [{
+            display_text: publication['Report'],
+            url: publication['RptLink']
+          }],
+          tags: [
+            publication['Community'],
+            publication['Effort']
+          ].reject(&:nil?),
+          collection_ids: collections.collect(&:id)
+        }
+      end
 
     end
 
