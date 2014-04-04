@@ -63,6 +63,8 @@ namespace :import do
   namespace :aea do
     desc 'Import AEA publications'
     task :publications => :environment do
+      require 'csv'
+      publications = CSV.new(File.open(ENV['FILE'], 'r'), headers: :first_row)
 
     end
 
