@@ -64,6 +64,24 @@ namespace :import do
     desc 'Import AEA publications'
     task :publications => :environment do
       require 'csv'
+
+      TYPE_FULLNAME = {
+        'BIO'   => 'Biomass',
+        'DEF'   => 'Diesel Efficiency',
+        'EUE'   => 'End Use Efficiency',
+        'FER'   => 'Federal Energy Regulatory Commssion',
+        'GEO'   => 'Geothermal',
+        'HYD'   => 'Hydroelectric Power',
+        'INF'   => 'Infrastructure',
+        'OCR'   => 'Ocean & River',
+        'PSU'   => 'Power System Upgrades',
+        'REG'   => 'Renewable Energy General',
+        'SOL'   => 'Solar',
+        'SSH'   => 'Site-sepecific Hydro Report',
+        'TAD'   => 'Transmission & Distribution',
+        'WIND'  => 'Wind',
+      }
+
       publications = CSV.new(File.open(ENV['FILE'], 'r'), headers: :first_row)
 
     end
