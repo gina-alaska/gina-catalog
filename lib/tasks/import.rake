@@ -67,7 +67,7 @@ namespace :import do
     end
 
     desc 'Import AEA Project info'
-    task :aea => :environment do
+    task :projects => :environment do
 
       mapping = {}
       locations = {}
