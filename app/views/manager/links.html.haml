@@ -1,0 +1,23 @@
+%table.table.table-striped.table-condensed
+  %thead
+    %tr
+      %th{colspan: 3} Broken Links
+    %tr
+      %th{colspan: 3}
+        = will_paginate @bad_links
+    %tr
+      %th.span5 Link
+      %th.span5 Record
+      %th.span2 Last Checked
+  %tbody
+    - @bad_links.each do |item|
+      %tr
+        %td
+          = link_to breaking_word_wrap(item.url, 60), item.url
+        %td
+          = link_to item.asset, item.asset
+        %td
+          = item.last_checked_at.try(:strftime,'%F')
+    %tr
+      %td{colspan: 3}
+        = will_paginate @bad_links

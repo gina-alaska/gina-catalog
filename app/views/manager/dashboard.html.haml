@@ -56,25 +56,6 @@
       %table.table.table-bordered.table-striped.table-condensed
         %thead
           %tr
-            %th{colspan: 3} Broken Links
-          %tr
-            %th Link
-            %th Record
-            %th Last Checked
-        %tbody
-          - @bad_links.order('url ASC').each do |item|
-            %tr
-              %td
-                = item.url
-              %td
-                = item.asset.source_url
-              %td.span3
-                = item.last_checked_at.strftime('%F %T %z')
-  .row-fluid
-    .span12
-      %table.table.table-bordered.table-striped.table-condensed
-        %thead
-          %tr
             %th{colspan: 5} 50 Latest records accessed:
           %tr
             %th Date

@@ -26,8 +26,10 @@ class ManagerController < ApplicationController
         :daterange => @filtered_downloads.pluck(:loggable_id).uniq.count    
       }
     }
+  end
 
-    @bad_links = Link.where(valid_link: false, asset_type: 'Catalog')
+  def links
+    @bad_links = Link.where(valid_link: false, asset_type: 'Catalog').order("last_checked_at DESC").paginate(page: params[:page], per_page: 30)
   end
 
   protected
