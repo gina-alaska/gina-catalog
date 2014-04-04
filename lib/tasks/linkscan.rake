@@ -8,7 +8,7 @@ namespace :linkscan do
         uri = URI(link.url)
         response = Net::HTTP.get_response(uri)
 
-        link.valid_link = response.code < 400
+        link.valid_link = response.code.to_i < 400
       rescue
         link.valid_link = false
       end
