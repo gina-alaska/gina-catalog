@@ -4,7 +4,17 @@
       %th{colspan: 3} Broken Links
     %tr
       %th{colspan: 3}
-        = will_paginate @bad_links
+        .btn-group.pull-right
+          = link_to_first_page @bad_links, class: 'btn' do
+            %i.icon-double-angle-left
+          = link_to_prev_page @bad_links, class: 'btn' do
+            %i.icon-angle-left
+          %button.btn
+            %span= display_result_info(@bad_links, @page, 30, @total)
+          = link_to_next_page @bad_links, params: {limit: 30}, class: 'btn' do
+            %i.icon-angle-right
+          = link_to_last_page @bad_links, class: 'btn' do
+            %i.icon-double-angle-right   
     %tr
       %th.span5 Link
       %th.span5 Record
@@ -20,4 +30,14 @@
           = item.last_checked_at.try(:strftime,'%F')
     %tr
       %td{colspan: 3}
-        = will_paginate @bad_links
+        .btn-group.pull-right
+          = link_to_first_page @bad_links, class: 'btn' do
+            %i.icon-double-angle-left
+          = link_to_prev_page @bad_links, class: 'btn' do
+            %i.icon-angle-left
+          %button.btn
+            %span= display_result_info(@bad_links, @page, 30, @total)
+          = link_to_next_page @bad_links, params: {limit: 30}, class: 'btn' do
+            %i.icon-angle-right
+          = link_to_last_page @bad_links, class: 'btn' do
+            %i.icon-double-angle-right   
