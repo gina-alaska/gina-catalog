@@ -18,7 +18,12 @@ class DownloadsController < ApplicationController
   
   def sds
     @download = fetch_download_url
-    redirect_to edit_catalog_download_path(@download.catalog, @download)
+    
+    if @download.catalog.require_contact_info? or @download.catalog.request_contact_info?
+      redirect_to edit_catalog_download_path(@download.catalog, @download)
+    else
+      redirect_to catalog_download_path(@download.catalog, @download)
+    end
   end
 
   def show
