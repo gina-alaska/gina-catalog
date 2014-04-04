@@ -107,6 +107,14 @@ namespace :import do
           ].reject(&:nil?),
           collection_ids: collections.collect(&:id)
         }
+        puts "Creating catalog entry for #{catalog_attributes[:title]}"
+        c = Catalog.new(catalog_attributes)
+        puts c.inspect
+        puts c.links.inspect
+        puts c.locations.inspect
+        puts c.collections.inspect
+        puts c.tags.inspect
+        puts "\n"
       end
 
     end
