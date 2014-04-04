@@ -301,7 +301,6 @@ GEM
     whenever (0.9.0)
       activesupport (>= 2.3.4)
       chronic (>= 0.6.3)
-    will_paginate (3.0.5)
 
 PLATFORMS
   ruby
@@ -361,4 +360,3 @@ DEPENDENCIES
   unicorn
   uuidtools
   whenever
-  will_paginate
