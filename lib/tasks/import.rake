@@ -21,6 +21,17 @@ def update_record(c, row)
   c.save
 end
 
+def aea_existing_to_status(value)
+  case value
+  when 0
+    "Ongoing"
+  when 1
+    "Completed"
+  else
+    "Unknown"
+  end
+end
+
 namespace :import do
   desc 'Fix ARMAP Records'
   task :armap => :environment do
@@ -96,7 +107,7 @@ namespace :import do
             geom: feature_factory.point(publication['LON'], publication['LAT'])
           }],
           start_date: Date.new(publication['PubYr'].to_i).beginning_of_year,
-          status: TYPE_FULLNAME[publication['Type']],
+          status: aea_existing_to_status(publication['Existing']),
           description: publication['Summary'],
           links_attributes: [{
             display_text: publication['Report'],
