@@ -22,7 +22,7 @@ def update_record(c, row)
 end
 
 def aea_existing_to_status(value)
-  case value
+  case value.to_i
   when 0
     "Ongoing"
   when 1
