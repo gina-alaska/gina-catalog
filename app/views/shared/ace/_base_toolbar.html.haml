@@ -1,4 +1,4 @@
-- cache([:ace, :base_toolbar, :v9]) do
+- cache([:ace, :base_toolbar, :v10]) do
   .btn-group
     %button.btn.btn-small{ type: 'button', title: 'Undo', data: { action: 'undo' } }
       %i.icon-undo
@@ -92,6 +92,8 @@
             %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ setup.contact_email }}' } } Contact Email
           %li
             %a{ href: "#", type: 'button', data: { action: 'insert', html: "{{ setup.snippets['snippet_name'] }}" } } Snippet
+          %li
+            %a{ href: "#", type: 'button', data: { action: 'insert', start: '{% for portal in setup.portals.list %}', end: '{% endfor %}' } } Portal List
           %li.dropdown-submenu
             %a{ href: "#" } Collections:
             %ul.dropdown-menu
