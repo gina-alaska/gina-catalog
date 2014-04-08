@@ -34,6 +34,7 @@ gem 'dalli'
 gem 'connection_pool'
 gem 'rinku'
 gem 'sanitize'
+gem 'bower-tools', github: 'gina-alaska/bower-tools'
 gem 'rubyzip', require: 'zip'
 
 #gem 'nofxx-georuby'
