@@ -6,6 +6,8 @@
         %ul
           - @contact.errors.full_messages.each do |msg|
             %li= msg
+    = f.hidden_field(:portal, value: current_setup.title)
+    = f.hidden_field(:link, value: current_setup.urls.where(default: true).first.url)
     .control-group
       = f.label :name, class: 'control-label'
       .controls
