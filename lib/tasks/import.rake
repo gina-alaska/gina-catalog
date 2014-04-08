@@ -100,7 +100,7 @@ namespace :import do
       feature_factory = RGeo::Geographic.simple_mercator_factory(srid: 4326)
 
       publications.each do |publication|
-        collections = Collection.where(name: TYPE_FULLNAME[publication['Type']]).first_or_initialize
+        collections = Collection.where(name: TYPE_FULLNAME[publication['Type']]).first_or_create
 
         catalog_attributes =  {
           source_agency: agency,
