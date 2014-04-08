@@ -103,7 +103,7 @@ namespace :import do
         collections = Collection.where(name: TYPE_FULLNAME[publication['Type']]).first_or_create
 
         catalog_attributes =  {
-          source_agency: agency,
+          source_agency_id: agency.id,
           type: "Project",
           title: publication['Project'],
           locations_attributes: [{
