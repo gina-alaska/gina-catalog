@@ -3,8 +3,13 @@ $(".pagetoolbar").html(pagetoolbar);
 var results = $('<%= escape_javascript(render("search_results")) %>');
 $(".search-results").html(results);
 
-var collections = $('<%= escape_javascript(render('collection_search', search_params: @search_params, results: @results)) %>');
-$('.collection-search').html(collections);
+var collections = $('<%= escape_javascript(render( 'collection_item', collections: current_setup.collections, search_params: @search_params)) %>');
+$('#<%= dom_id(current_setup, "collection_collapse") %> .accordion-inner').html(collections);
+
+<% current_setup.descendants.each do |setup| %>
+  var collections = $('<%= escape_javascript(render( 'collection_item', collections: setup.collections, search_params: @search_params)) %>');
+  $('#<%= dom_id(setup, "collection_collapse") %> .accordion-inner').html(collections);
+<% end %>
 
 var parent = $('html, body');
 if ($('html').scrollTop() > 150 || $('body').scrollTop() > 150) {

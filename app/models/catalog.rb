@@ -67,14 +67,14 @@ class Catalog < ActiveRecord::Base
     end
   end
   
-  has_and_belongs_to_many :catalog_collections, uniq: true do
-    def list
-      proxy_association.owner.catalog_collections.collection.join(', ')
-    end
-    def collection
-      proxy_association.owner.catalog_collections.pluck(:name)
-    end
-  end
+#  has_and_belongs_to_many :catalog_collections, uniq: true do
+#    def list
+#      proxy_association.owner.catalog_collections.collection.join(', ')
+#    end
+#    def collection
+#      proxy_association.owner.catalog_collections.pluck(:name)
+#    end
+#  end
   
   has_many :download_urls
   has_one :repo
