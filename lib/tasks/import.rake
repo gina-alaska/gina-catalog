@@ -100,7 +100,7 @@ namespace :import do
       feature_factory = RGeo::Geographic.simple_mercator_factory(srid: 4326)
 
       publications.each do |publication|
-        collections = []#Collection.where(name: TYPE_FULLNAME[publication['Type']).first_or_create
+        collections = Collection.where(name: TYPE_FULLNAME[publication['Type']]).first_or_initialize
 
         catalog_attributes =  {
           type: "Project",
@@ -119,12 +119,12 @@ namespace :import do
           tags: [
             publication['Community'],
             publication['Effort']
-          ].reject(&:nil?),
-          collection_ids: collections.collect(&:id)
+          ].reject(&:nil?)
         }
         puts "Creating catalog entry for #{catalog_attributes[:title]}"
         c = Catalog.new(catalog_attributes)
         c.setups << setup
+        c.collections << collections
         puts c.inspect
         puts c.links.inspect
         puts c.locations.inspect
