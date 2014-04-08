@@ -32,6 +32,15 @@ def aea_existing_to_status(value)
   end
 end
 
+def aea_publication_links(publication)
+  return [] if publication['RptLink'].nil?
+  [{
+    display_text: publication['Report'],
+    url: publication['RptLink'],
+    category: publication['RptLink'].end_with?(".pdf") ? "PDF" : "Download"
+  }]
+end
+
 namespace :import do
   desc 'Fix ARMAP Records'
   task :armap => :environment do
@@ -113,10 +122,7 @@ namespace :import do
           start_date: Date.new(publication['PubYr'].to_i).beginning_of_year,
           status: aea_existing_to_status(publication['Existing']),
           description: "*Author:* #{publication['Author']}\n\n#{publication['Summary']}",
-          links_attributes: [{
-            display_text: publication['Report'],
-            url: publication['RptLink']
-          }],
+          links_attributes: aea_publication_links(publication),
           tags: [
             publication['Community'],
             publication['Effort']
