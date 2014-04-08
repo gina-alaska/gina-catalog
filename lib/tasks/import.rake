@@ -90,7 +90,7 @@ namespace :import do
         'SOL'   => 'Solar',
         'SSH'   => 'Site-sepecific Hydro Report',
         'TAD'   => 'Transmission & Distribution',
-        'WIND'  => 'Wind',
+        'WIND'  => 'Wind'
       }
 
       setup = Setup.where(title: "Alaska Energy Authority").first
