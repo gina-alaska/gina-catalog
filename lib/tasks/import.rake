@@ -138,9 +138,10 @@ namespace :import do
         puts c.collections.inspect
         puts c.tags.inspect
         puts c.setups.collect(&:title)
+        c.save!
         puts "\n"
       end
-
+      Sunspot.commit
     end
 
     desc 'Import AEA Project info'
