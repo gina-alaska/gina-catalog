@@ -130,7 +130,7 @@ namespace :import do
         }
         puts "Creating catalog entry for #{catalog_attributes[:title]}"
         c = Catalog.new(catalog_attributes)
-        c.setups << setup
+        c.owner_setup = setup
         c.collections << collections
         puts c.inspect
         puts c.links.inspect
