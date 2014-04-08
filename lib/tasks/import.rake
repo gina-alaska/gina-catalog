@@ -93,6 +93,9 @@ namespace :import do
         'WIND'  => 'Wind',
       }
 
+      setup = Setup.where(title: "Alaska Energy Authority").first
+      agency = Agency.where(acronym: "AEA").first
+
       publications = CSV.new(File.open(ENV['FILE'], 'r'), headers: :first_row)
       feature_factory = RGeo::Geographic.simple_mercator_factory(srid: 4326)
 
@@ -121,11 +124,13 @@ namespace :import do
         }
         puts "Creating catalog entry for #{catalog_attributes[:title]}"
         c = Catalog.new(catalog_attributes)
+        c.setups << setup
         puts c.inspect
         puts c.links.inspect
         puts c.locations.inspect
         puts c.collections.inspect
         puts c.tags.inspect
+        puts c.setups.collect(&:title)
         puts "\n"
       end
 
