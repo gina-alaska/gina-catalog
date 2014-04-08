@@ -11,7 +11,7 @@
 //= require bootstrap-datepicker/core
 //= require 'bootstrap-colorpicker/bootstrap-colorpicker'
 //= require jquery_nested_form
-//= require 'gina-map-layers/gina-openlayers'
+//= require 'gina-map-layers/adapters/openlayers'
 //= require 'gina-map-layers/projections/all'
 //= require 'projections'
 //= require 'maps/openlayers_map'
