@@ -30,6 +30,7 @@
   })
 
   $('#sort-btn').on('click', function() {
+    $('.page-list-child').removeClass('collapse');
     $('#page-content-list').nestedSortable({
       handle: 'div',
       items: 'li',
