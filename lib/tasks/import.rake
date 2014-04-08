@@ -111,7 +111,7 @@ namespace :import do
           }],
           start_date: Date.new(publication['PubYr'].to_i).beginning_of_year,
           status: aea_existing_to_status(publication['Existing']),
-          description: publication['Summary'],
+          description: "*Author:* #{publication['Author']}\n\n#{publication['Summary']}",
           links_attributes: [{
             display_text: publication['Report'],
             url: publication['RptLink']
