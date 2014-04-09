@@ -110,6 +110,7 @@ namespace :import do
 
       publications.each do |publication|
         collections = Collection.where(name: TYPE_FULLNAME[publication['Type']]).first_or_create
+        publication_year = publication['PubYr'].nil? ? nil : Date.new(publication['PubYr'].to_i).beginning_of_year
 
         catalog_attributes = {
           source_agency_id: agency.id,
@@ -119,7 +120,7 @@ namespace :import do
             name: publication['Project'],
             geom: feature_factory.point(publication['LON'], publication['LAT'])
           }],
-          start_date: Date.new(publication['PubYr'].to_i).beginning_of_year,
+          start_date: publication_year,
           status: aea_existing_to_status(publication['Existing']),
           description: "*Author:* #{publication['Author']}\n\n#{publication['Summary']}",
           links_attributes: aea_publication_links(publication),
