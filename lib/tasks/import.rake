@@ -122,7 +122,7 @@ namespace :import do
           }],
           start_date: publication_year,
           status: aea_existing_to_status(publication['Existing']),
-          description: "*Author:* #{publication['Author']}\n\n#{publication['Summary']}",
+          description: "**Author:** #{publication['Author']}\n\n#{publication['Summary']}",
           links_attributes: aea_publication_links(publication),
           tags: [
             publication['Community'],
