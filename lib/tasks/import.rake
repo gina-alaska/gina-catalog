@@ -129,18 +129,14 @@ namespace :import do
             publication['Effort']
           ].reject(&:nil?)
         }
+
         puts "Creating catalog entry for #{catalog_attributes[:title]}"
+
         c = Catalog.new(catalog_attributes)
         c.owner_setup = setup
         c.collections << collections if collections.valid?
-        puts c.inspect
-        puts c.links.inspect
-        puts c.locations.inspect
-        puts c.collections.inspect
-        puts c.tags.inspect
-        puts c.setups.collect(&:title)
+
         c.save!
-        puts "\n"
       end
       Sunspot.commit
     end
