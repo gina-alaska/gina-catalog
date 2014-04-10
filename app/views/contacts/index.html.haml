@@ -18,7 +18,8 @@
       =f.label :message, class: 'control-label'
       .controls
         = f.text_area :message, {rows: 4, cols: 80, class: "span12"}
-    .control-group
-      .controls
-        = recaptcha_tags(public_key: current_setup.recaptcha_public).html_safe
+    - if current_setup.use_recaptcha
+      .control-group
+        .controls
+          = recaptcha_tags(public_key: current_setup.recaptcha_public).html_safe
     = submit_tag "Send Message", type: 'submit', class: "btn btn-primary pull-right"
