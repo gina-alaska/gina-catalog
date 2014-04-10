@@ -166,6 +166,9 @@ class Catalog < ActiveRecord::Base
     text :funding_agency do
       [funding_agency.name, funding_agency.acronym] unless funding_agency.nil?
     end
+    text :locations do
+      locations.map(&:name)
+    end
     text :geokeywords do
       geokeywords.map(&:name).sort
     end
