@@ -31,4 +31,15 @@ class CatalogsController < ApplicationController
       format.js
     end
   end
+
+  def map
+    @catalog = Catalog.includes(:locations, :source_agency, :agencies, :data_source, :links, :tags, :geokeywords)
+    @catalog = @catalog.includes({ :people => [ :addresses, :phone_numbers ] }).find(params[:id])
+
+    respond_to do |format|
+      format.html {
+        render layout: 'iframe'
+      }
+    end
+  end
 end
