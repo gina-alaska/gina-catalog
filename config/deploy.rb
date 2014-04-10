@@ -11,7 +11,7 @@ set :format, :pretty
 # set :pty, true
 
 set :linked_files, %w{config/database.yml config/initializers/catalog.rb config/resque.yml config/git_hooks_env config/sunspot.yml}
-set :linked_dirs, %w{bin log tmp vendor/bundle public/assets public/system public/cms archive repos uploads git}
+set :linked_dirs, %w{bin log tmp vendor/bundle public/assets public/system public/cms archive repos uploads git solr}
 
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 set :keep_releases, 5

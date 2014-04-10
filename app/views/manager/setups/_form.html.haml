@@ -156,7 +156,7 @@
                 - if current_setup.favicon.image.nil?
                   No Favicon
                 -else
-                  = image_tag current_setup.favicon.image.png.thumb('200x200').url
+                  = image_tag current_setup.favicon.image.encode(:png).thumb('200x200').url
               %div
                 %span.btn.btn-file
                   %span.fileupload-new Select image

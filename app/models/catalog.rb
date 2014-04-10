@@ -4,7 +4,7 @@ class Catalog < ActiveRecord::Base
   
   STATUSES = %w(Complete Ongoing Unknown Funded)
 
-  attr_accessible :links_attributes, :locations_attributes, :download_urls_attributes, 
+  attr_accessible :links_attributes, :locations_attributes, :download_urls_attributes, :uploads_attributes,
     :collection_ids, :title, :description, :start_date, :end_date, :status, :owner_id, 
     :primary_contact_id, :contact_ids, :source_agency_id, :funding_agency_id, :data_type_ids, 
     :iso_topic_ids, :agency_ids, :tags, :geokeyword_ids, :type, :use_agreement_id, :request_contact_info, 
@@ -26,6 +26,7 @@ class Catalog < ActiveRecord::Base
   validates_presence_of :description
   validate :temporal_continuity
   validates :uuid, uniqueness: true
+  validates_associated :uploads
   # validates_presence_of :owner_id
   
   #validates_presence_of :license_id
@@ -40,7 +41,15 @@ class Catalog < ActiveRecord::Base
   belongs_to :owner_setup, :class_name => 'Setup'
   belongs_to :csw_import
   
-  has_many :activity_logs, as: :loggable, order: "created_at DESC", extend: ImportsExtension
+  has_many :activity_logs, as: :loggable, order: "created_at DESC", dependent: :destroy, extend: ImportsExtension do
+    def updates
+      where(activity: %w{ Update Create Import })
+    end
+  end
+  has_many :uploads, dependent: :destroy
+  
+  has_many :contact_infos, :dependent => :destroy
+  has_many :downloads, through: :contact_infos, source: :activity_logs
   
   has_many :catalogs_setups, uniq: true
   has_many :setups, :through => :catalogs_setups, uniq: true
@@ -58,14 +67,14 @@ class Catalog < ActiveRecord::Base
     end
   end
   
-  has_and_belongs_to_many :catalog_collections, uniq: true do
-    def list
-      proxy_association.owner.catalog_collections.collection.join(', ')
-    end
-    def collection
-      proxy_association.owner.catalog_collections.pluck(:name)
-    end
-  end
+#  has_and_belongs_to_many :catalog_collections, uniq: true do
+#    def list
+#      proxy_association.owner.catalog_collections.collection.join(', ')
+#    end
+#    def collection
+#      proxy_association.owner.catalog_collections.pluck(:name)
+#    end
+#  end
   
   has_many :download_urls
   has_one :repo
@@ -111,20 +120,20 @@ class Catalog < ActiveRecord::Base
   has_many :links, :as => :asset, :dependent => :destroy
   has_many :locations, foreign_key: 'asset_id', :dependent => :destroy
   has_many :map_layers, :dependent => :destroy
-  has_many :contact_infos, :dependent => :destroy
 
   scope :published, lambda { where('published_at <= ?', Time.now.utc) }
   scope :unpublished, where('published_at is null')
   scope :archived, lambda { where('archived_at <= ?', Time.now.utc) }
   scope :not_archived, where('archived_at IS NULL')
 
-  before_create :set_data_source
+  before_validation :create_uuid
   # before_create :repohex
   
   accepts_nested_attributes_for :download_urls, reject_if:  proc { |download| download['url'].blank? and download['name'].blank? }, allow_destroy: true
   accepts_nested_attributes_for :links, reject_if:  proc { |link| link['url'].blank? }, allow_destroy: true
   accepts_nested_attributes_for :locations, reject_if:  proc { |location| location['name'].blank? and location['wkt'].blank? }, allow_destroy: true
   accepts_nested_attributes_for :map_layers, reject_if:  proc { |layer| layer['url'].blank? and layer['name'].blank? }, allow_destroy: true
+  accepts_nested_attributes_for :uploads, reject_if:  proc { |upload| upload['file'].blank? and upload['exists'] != 'true' }, allow_destroy: true
   
   def to_liquid
     { 
@@ -134,7 +143,7 @@ class Catalog < ActiveRecord::Base
       'url' => "/catalogs/#{self.to_param}",
       'start_date' => self.start_date,
       'end_date' => self.end_date,
-      'downloads' => self.contact_infos.count
+      'downloads' => self.downloads.count
     }
   end
 
@@ -156,6 +165,9 @@ class Catalog < ActiveRecord::Base
     end
     text :funding_agency do
       [funding_agency.name, funding_agency.acronym] unless funding_agency.nil?
+    end
+    text :locations do
+      locations.map(&:name)
     end
     text :geokeywords do
       geokeywords.map(&:name).sort
@@ -293,6 +305,10 @@ class Catalog < ActiveRecord::Base
     joins(:locations).where("ST_Intersects(geom, ?::geometry)", "SRID=#{srid};#{wkt}")
   end
   
+  def create_uuid
+    self.uuid ||= UUIDTools::UUID.timestamp_create
+  end
+  
   def sds?
     self.remote_download? or !self.use_agreement.nil? or self.request_contact_info? or self.require_contact_info?
   end
@@ -382,7 +398,7 @@ Title: #{self.title}
         text = t.respond_to?(:text) ? t.text : t
 
         next if text.size < 3
-        ids << Tag.find_or_create_by_text(text).id
+        ids << Tag.match_or_new(text).id
       end
     end    
     self.tag_ids = ids

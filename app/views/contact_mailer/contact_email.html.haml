@@ -8,6 +8,12 @@
   %body
     %h1 User Contact
     %p
+      %label Portal:
+      = @comment[:portal]
+    %p
+      %label Link:
+      = @comment[:link]
+    %p
       %label Submitted:
       = Time.now
     %p

@@ -16,17 +16,23 @@ class Setup < ActiveRecord::Base
   has_and_belongs_to_many :persons, join_table: 'persons_setups', uniq: true
   has_and_belongs_to_many :agencies, join_table: 'agencies_setups', uniq: true
 
-
+  
   has_many :catalogs_setups, uniq: true, dependent: :destroy
   has_many :catalogs, through: :catalogs_setups
   has_many :owned_catalogs, class_name: 'Catalog', foreign_key: 'owner_setup_id'
 #  has_and_belongs_to_many :catalogs
+  has_many :downloads, through: :owned_catalogs do
+    def top
+      select('activity_logs.loggable_id, activity_logs.loggable_type, count(*) as download_count').group("activity_logs.loggable_id, activity_logs.loggable_type").order('download_count DESC')
+    end
+  end
   
   has_many :catalog_collections, dependent: :destroy
   has_many :collections
   has_many :contacts
   has_many :urls, class_name: 'SiteUrl', dependent: :destroy, order: "id ASC"
   has_many :memberships, dependent: :destroy
+  has_many :users, through: :memberships
   has_many :roles, dependent: :destroy
   has_many :use_agreements, dependent: :destroy
   has_many :csw_imports, dependent: :destroy
