@@ -66,6 +66,11 @@
             = f.text_field :recaptcha_private, class: 'span12'
 
         .control-group
+          = f.label "Use Recaptcha", class: 'control-label'
+          .controls
+            = f.check_box :use_recaptcha, {}, "true", "false"
+
+        .control-group
           = f.label "Metadata - Description", class: 'control-label'
           .controls
             = f.text_field :description, class: 'span12'
