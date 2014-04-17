@@ -11,7 +11,7 @@ supports "centos", ">= 6.0"
 depends "chruby"
 
 depends "user"
-depends "yum", '~> 3.0.4'
+depends "yum", '~> 3.0'
 depends "yum-epel"
 depends 'unicorn', '~> 1.0.0'
 depends "gina", '~> 0.5.5'

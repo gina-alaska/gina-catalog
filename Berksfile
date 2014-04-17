@@ -4,7 +4,7 @@ group :integration do
 end
 
 cookbook "nginx", '~> 2.2.0'
-cookbook "yum", '~> 3.0.4'
+cookbook "yum", '~> 3.0'
 cookbook "yum-epel"
 cookbook "gina", '~> 0.5.5', chef_api: :config
 cookbook "gina-postgresql", chef_api: :config
