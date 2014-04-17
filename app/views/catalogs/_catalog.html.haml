@@ -1,4 +1,4 @@
-- cache([:search_result, :v67, catalog]) do
+- cache([:search_result, :v68, catalog]) do
   %div{id: dom_id(catalog, :record), data: { wkt: catalog.geometry_center_collection, type: catalog.type } }
     .row-fluid
       .span10
@@ -26,9 +26,9 @@
           %td
             - unless catalog.source_agency.nil?
               .agency
-                - unless catalog.source_agency.logo.nil?
-                  .preview.pull-left
-                    = image_tag cms_media_path(catalog.source_agency.logo_uid, size: 'x13')
+                -# - unless catalog.source_agency.logo.nil?
+                  -# .preview.pull-left
+                    -# = image_tag cms_media_path(catalog.source_agency.logo_uid, size: 'x13')
                 %b= catalog.source_agency.try(:name_with_acronym)
             :markdown
               #{catalog.description.try(:truncate, 300).try(:html_safe)}
