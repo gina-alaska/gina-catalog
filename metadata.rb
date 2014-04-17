@@ -4,17 +4,17 @@ maintainer_email 'will@gina.alaska.edu'
 license          'All rights reserved'
 description      'Installs/Configures glynx'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '1.0.16'
+version          '2.0.0'
 
 supports "centos", ">= 6.0"
 
 depends "chruby"
 
 depends "user"
-depends "application_ruby"
-depends "yum", "~> 2.4.4"
-depends "gina", "= 0.4.6"
-depends "postgresql"
+depends "yum", '~> 3.0.4'
+depends "yum-epel"
+depends 'unicorn', '~> 1.0.0'
+depends "gina", '~> 0.5.5'
 depends "gina-postgresql"
 depends "nginx"
-# depends "gina-webapp"
+depends "sudo", '~> 2.5.2'

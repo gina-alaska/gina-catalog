@@ -3,15 +3,14 @@ group :integration do
   cookbook 'minitest-handler'
 end
 
-cookbook "nginx"
-cookbook "application_ruby"
-cookbook "yum", "~> 2.4.4"
-cookbook "gina", "= 0.4.6", chef_api: :config
-cookbook "postgresql", chef_api: :config
-cookbook "gina-postgresql", "~> 0.3.2", chef_api: :config
+cookbook "nginx", '~> 2.2.0'
+cookbook "yum", '~> 3.0.4'
+cookbook "yum-epel"
+cookbook "gina", '~> 0.5.5', chef_api: :config
+cookbook "gina-postgresql", chef_api: :config
+cookbook "sudo", '~> 2.5.2'
 
-# cookbook "gina-webapp", path: "/Users/scott/workspace/cookbooks/gina-webapp" #chef_api: :config
-
+cookbook 'unicorn', '~> 1.0.0'
 cookbook "chruby"
 cookbook "user", git: 'http://github.com/fnichol/chef-user'
 
