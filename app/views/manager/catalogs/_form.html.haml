@@ -4,7 +4,7 @@
     - sections.each do |section|
       %li{class: (section == sections.first ? 'active' : '')}
         = link_to section.humanize, "##{section}", data: { toggle: 'tab' }
-  = nested_form_for [:manager, @catalog], html: { class: 'form' } do |f|
+  = nested_form_for [:manager, @catalog], remote: true, html: { class: 'form' } do |f|
     .tab-content{ style: 'min-height: 200px;'}      
       - unless @catalog.errors.full_messages.empty?
         .alert.alert-error{ style: 'margin: 5px;' }
