@@ -21,7 +21,7 @@ default['glynx']['database']['search_path'] = "nssi_prod,public"
 default['glynx']['sunspot']['hostname'] = "catalog-web1.x.gina.alaska.edu"
 default['glynx']['sunspot']['port'] = "8983"
 
-default['glynx']['redis']['hostname'] = "peanut.x.gina.alaska.edu"
+# default['glynx']['redis']['hostname'] = "peanut.x.gina.alaska.edu"
 
 default['glynx']['before_fork'] = '
 defined?(ActiveRecord::Base) and
@@ -44,9 +44,9 @@ defined?(ActiveRecord::Base) and
   ActiveRecord::Base.establish_connection
 
 # If you are using Redis but not Resque, change this
-if defined?(Resque)
-  Resque.redis.client.reconnect
-end
+# if defined?(Resque)
+#   Resque.redis.client.reconnect
+# end
 "
 
 default['glynx']['package_deps'] = %w{java-1.7.0-openjdk libicu-devel curl-devel libxml2-devel libxslt-devel nfs-utils geos-devel ImageMagick-devel}
