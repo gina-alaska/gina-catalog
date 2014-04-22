@@ -12,6 +12,7 @@ suites:
   - name: default
     run_list:
       - recipe[glynx::default]
+      - recipe[minitest-handler::default]
     attributes:
       glynx:
         account: "vagrant"
