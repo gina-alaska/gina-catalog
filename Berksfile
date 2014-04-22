@@ -1,17 +1,17 @@
-site :opscode
+source 'https://api.berkshelf.com'
 group :integration do
   cookbook 'minitest-handler'
 end
 
-cookbook "nginx", '~> 2.2.0'
-cookbook "yum", '~> 3.0'
-cookbook "yum-epel"
-cookbook "gina", '~> 0.5.5', chef_api: :config
-cookbook "gina-postgresql", chef_api: :config
+cookbook "nginx", '~> 2.6.0'
+cookbook 'yum'
+cookbook 'yum-epel'
+cookbook 'yum-gina', git: "git@github.com:gina-alaska/yum-gina-cookbook"
+cookbook "gina-postgresql", '~> 0.4.0', git: "git@github.com:gina-alaska/gina-postgresql-cookbook"
 cookbook "sudo", '~> 2.5.2'
 
-cookbook 'unicorn', '~> 1.0.0'
+cookbook 'unicorn', '~> 1.3.0'
 cookbook "chruby"
-cookbook "user", git: 'http://github.com/fnichol/chef-user'
+cookbook "user", github: 'fnichol/chef-user'
 
 metadata

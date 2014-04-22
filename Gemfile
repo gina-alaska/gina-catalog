@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-gem 'berkshelf'
-gem 'ridley'
+gem 'berkshelf', '~> 3.0'
 gem 'test-kitchen'
 gem 'kitchen-vagrant'
