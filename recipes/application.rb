@@ -122,7 +122,7 @@ end
   end
 end
 
-link "/home/webdev/#{app_name}" do
+link "/home/#{account}/#{app_name}" do
   to node[app_name]['deploy_path']
   owner node[app_name]['account']
   group node[app_name]['account']
