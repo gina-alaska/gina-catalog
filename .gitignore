@@ -1,3 +1,8 @@
+#pow stuff
+
+.powenv
+
+
 .bundle
 *.swp
 db/*.sqlite3
