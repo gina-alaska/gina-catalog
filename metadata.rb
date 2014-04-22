@@ -13,8 +13,8 @@ depends "chruby"
 depends "user"
 depends "yum", '~> 3.0'
 depends "yum-epel"
-depends 'unicorn', '~> 1.0.0'
-depends "gina", '~> 0.5.5'
-depends "gina-postgresql"
-depends "nginx"
+depends 'yum-gina'
+depends 'unicorn', '~> 1.3.0'
+depends "gina-postgresql", '~> 0.4.0'
+depends "nginx", '~> 2.6.0'
 depends "sudo", '~> 2.5.2'
