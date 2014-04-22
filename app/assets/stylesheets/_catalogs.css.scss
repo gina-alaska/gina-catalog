@@ -211,3 +211,14 @@ dl.contact-info {
     margin-left: 110px;
   }
 }
+
+.agency-logo-list {
+  display: inline-block;
+  max-width: 45%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.agency-logo-thumb {
+  margin-right: 2px;
+}

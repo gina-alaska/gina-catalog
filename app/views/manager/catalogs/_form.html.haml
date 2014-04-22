@@ -72,7 +72,7 @@
       #map_layers.tab-pane
         .navbar.navbar-static-top
           .navbar-inner
-            .navbar-text.pull-left Map Layers
+            .navbar-text.pull-left Map layers
             = link_to new_manager_catalog_map_layer_path(@catalog), class: 'btn btn-success pull-right', remote: true do
               %i.icon-plus
               Add map layer
@@ -148,7 +148,8 @@
           %button#edit-help.btn{ data: { title: '<nobr>Location editor help</nobr>', content: '<p>Clicking on "Polygon", "Line", or "Point" buttons will clear the current shape, then click in the map to start draw the desired shape.</p><p>For lines and polygons double-click the last point to end drawing or click the edit button again.</p>', placement: 'bottom', html: 'true', container: 'body' } }
             %i.icon-question
             Help
-    #map_canvas{style: "width:100%; height: 359px;", data: { projection: current_setup.location_projection, displayProjection: 'EPSG:4326', layers: 'TILE.EPSG:3572.*' } }
+    - map_projection = current_setup.location_projection || current_setup.projection
+    #map_canvas{style: "width:100%; height: 359px;", data: { projection: map_projection, displayProjection: 'EPSG:4326', layers: "TILE.#{map_projection}.*" } }
   .modal-footer
     = link_to '#', class: 'btn', data: { dismiss: 'modal' } do
       Cancel

@@ -58,10 +58,10 @@
         =select_tag 'search[agency_types]', options_for_select(Agency::CATEGORIES, search_params[:agency_types]), class: 'span12', data: {placeholder: 'All Agency Types', ui: 'select2'}, :include_blank => true
         
         =label_tag 'search[primary_contact_id]', 'Primary Contact'
-        =select_tag 'search[primary_contact_id]', options_from_collection_for_select(current_setup.persons, :id, :contact_string, search_params[:primary_contact_id]),
+        =select_tag 'search[primary_contact_id]', options_from_collection_for_select(current_setup.persons.order(:last_name), :id, :contact_string, search_params[:primary_contact_id]),
           class: 'span12', data: {placeholder: 'All Contacts', ui: 'select2'}, :include_blank => true 
         =label_tag 'search[contact_ids]', 'Contacts'
-        =select_tag 'search[contact_ids]', options_from_collection_for_select(current_setup.persons, :id, :contact_string, search_params[:contact_ids]), multiple: true,
+        =select_tag 'search[contact_ids]', options_from_collection_for_select(current_setup.persons.order(:last_name), :id, :contact_string, search_params[:contact_ids]), multiple: true,
           class: 'span12', data: {placeholder: 'All Contacts', ui: 'select2'}
       .form-actions{style:'margin-bottom: 0;'}
         = submit_tag 'Apply', class: 'btn btn-primary pull-right', data: { title: "Apply Filters", content: "Do another search with the chosen filters applied.", toggle: "popover", trigger: "hover", placement: "right", container: "body" }
