@@ -4,7 +4,7 @@ maintainer_email 'will@gina.alaska.edu'
 license          'All rights reserved'
 description      'Installs/Configures glynx'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '2.0.1'
+version          '2.0.2'
 
 supports "centos", ">= 6.0"
 
