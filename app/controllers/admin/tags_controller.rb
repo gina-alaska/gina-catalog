@@ -23,7 +23,7 @@ class Admin::TagsController < AdminController
 
   def create
     @tag = Tag.new(params[:tag])
-    
+
     if @tag.save
       respond_to do |format|
         flash[:success] = "Tag #{@tag.text} was successfully created."
@@ -72,15 +72,21 @@ class Admin::TagsController < AdminController
 
   def merge
     catalog_records = Catalog.includes(:tags).where(tags: { id: params[:tag_ids] })
-    merge_tag = Tag.where(id: params[:merge_tag])
+    merge_tag = Tag.where(id: params[:merge_tag]).first
 
     catalog_records.each do |record|
+      old_tags = record.tags.where(id: params[:tag_ids]-[params[:merge_tag]])
+      record.tags.destroy(old_tags)
+
+      old_tags.to_a.each(&:touch)
+
       unless record.tags.include?(merge_tag)
         record.tags << merge_tag
       end
     end
 
-    Tag.where(id: (params[:tag_ids]-[params[:merge_tag]])).destroy_all
+    merge_tag.touch
+    # Tag.where(id: (params[:tag_ids]-[params[:merge_tag]])).destroy_all
 
     respond_to do |format|
       format.js

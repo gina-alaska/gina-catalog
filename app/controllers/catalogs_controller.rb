@@ -5,12 +5,12 @@ class CatalogsController < ApplicationController
 
   def show
     @item = Catalog.includes(:locations, :source_agency, :agencies, :data_source, :links, :tags, :geokeywords)
-    @item = @item.includes({ :people => [ :addresses, :phone_numbers ] }).find_by_id(params[:id])
+    @item = @item.includes({ :people => [ :addresses, :phone_numbers ] }).find(params[:id])
 
     respond_to do |format|
-      format.html { 
+      format.html {
         if request.xhr?
-          render :layout => false 
+          render :layout => false
         end
       }
       format.json { render :json => @item.as_json(:format => 'full') }
@@ -22,7 +22,7 @@ class CatalogsController < ApplicationController
       end
     end
   end
-  
+
   def more_info
     @catalog = Catalog.includes(:locations, :source_agency, :agencies, :data_source, :links, :tags, :geokeywords)
     @catalog = @catalog.includes({ :people => [ :addresses, :phone_numbers ] }).find(params[:id])
