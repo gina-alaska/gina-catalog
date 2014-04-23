@@ -23,5 +23,5 @@
     - if current_setup.use_recaptcha
       .control-group
         .controls
-          = recaptcha_tags(public_key: current_setup.recaptcha_public).html_safe
+          = recaptcha_tags(public_key: ENV["RECAPTCHA_PUBLIC_KEY"]).html_safe
     = submit_tag "Send Message", type: 'submit', class: "btn btn-primary pull-right"

@@ -30,7 +30,7 @@ class ContactsController < ApplicationController
 
   def check_recaptcha
     return true unless current_setup.use_recaptcha
-    if verify_recaptcha(private_key: current_setup.recaptcha_private)
+    if verify_recaptcha(private_key: ENV["RECAPTCHA_PRIVATE_KEY"])
       return true
     else
       flash[:error] = 'Recaptcha check failed, please try again.'

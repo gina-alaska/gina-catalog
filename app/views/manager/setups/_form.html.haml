@@ -56,16 +56,6 @@
             = f.text_field :analytics_account, class: 'span12'
 
         .control-group
-          = f.label "Recaptcha Public Key", class: 'control-label'
-          .controls
-            = f.text_field :recaptcha_public, class: 'span12'
-
-        .control-group
-          = f.label "Recaptcha Private Key", class: 'control-label'
-          .controls
-            = f.text_field :recaptcha_private, class: 'span12'
-
-        .control-group
           = f.label "Use Recaptcha", class: 'control-label'
           .controls
             = f.check_box :use_recaptcha, {}, "true", "false"
