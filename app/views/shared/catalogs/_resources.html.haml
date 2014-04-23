@@ -23,10 +23,10 @@
           Download
           
         - if link.name
-          %h5.media-heading 
+          %h5.media-heading.break-url
             = "#{link.name}"
         - else
-          %h5.media-heading Remote Download
+          %h5.media-heading.break-url Remote Download
         %p= File.basename(link.url)
                   
   - catalog.links.where('category = ?', 'Download').each do |link|
@@ -39,7 +39,8 @@
           Download
           
         %h5.media-heading Download
-        %p= link.url
+        .break-url
+          %p= link.url
                         
   - catalog.links.where('category in (?)', ['Report']).each do |link|
     %li.media
@@ -50,11 +51,12 @@
           %i.icon-external-link
           View report
             
-        %h5.media-heading
+        %h5.media-heading.break-url
           = link.category
           - unless link.display_text.empty? or link.display_text == link.url
             = " :: #{link.display_text}"
-        %p= link.url
+        .break-url
+          %p= link.url
   - catalog.links.where('category not in (?)', ['Metadata', 'Download', 'Report']).each do |link|
     %li.media
       .icon.website.pull-left
@@ -65,11 +67,12 @@
           View
           = link.category.downcase
             
-        %h5.media-heading
+        %h5.media-heading.break-url
           = link.category
           - unless link.display_text.empty? or link.display_text == link.url
             = " :: #{link.display_text}"
-        %p= link.url
+        .break-url
+          %p= link.url
 
 - if catalog.links.where('category = ?', 'Metadata').count > 0
   %ul.media-list.catalog-resources
@@ -82,7 +85,9 @@
             %i.icon-external-link
             View metadata
             
-          %h5.media-heading
+          %h5.media-heading.break-url
             - unless link.display_text.empty? or link.display_text == link.url
               = link.display_text
-          %p= link.url          
+          .break-url
+            %p= link.url          
+            
