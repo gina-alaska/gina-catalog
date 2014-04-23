@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140410205130) do
+ActiveRecord::Schema.define(:version => 20140422193251) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -176,7 +176,7 @@ ActiveRecord::Schema.define(:version => 20140410205130) do
     t.integer "catalog_id"
   end
 
-  create_table "catalog_tags", :id => false, :force => true do |t|
+  create_table "catalog_tags", :force => true do |t|
     t.integer "tag_id"
     t.integer "catalog_id"
   end
@@ -894,8 +894,6 @@ ActiveRecord::Schema.define(:version => 20140410205130) do
     t.boolean  "permissions_enabled", :default => true
     t.string   "location_projection"
     t.string   "tumblr_url"
-    t.text     "recaptcha_public"
-    t.text     "recaptcha_private"
     t.boolean  "use_recaptcha",       :default => false
   end
 
@@ -977,8 +975,10 @@ ActiveRecord::Schema.define(:version => 20140410205130) do
   end
 
   create_table "tags", :force => true do |t|
-    t.string  "text"
-    t.boolean "highlight", :default => false
+    t.string   "text"
+    t.boolean  "highlight",  :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "tasks", :force => true do |t|
