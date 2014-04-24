@@ -109,7 +109,7 @@ namespace :import do
       feature_factory = RGeo::Geographic.simple_mercator_factory(srid: 4326)
 
       publications.each do |publication|
-        collections = Collection.where(name: TYPE_FULLNAME[publication['Type']]).first_or_create
+        collections = setup.collections.where(name: TYPE_FULLNAME[publication['Type']]).first_or_create
         publication_year = publication['PubYr'].nil? ? nil : Date.new(publication['PubYr'].to_i).beginning_of_year
 
         catalog_attributes = {
