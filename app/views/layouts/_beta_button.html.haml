@@ -1,4 +1,4 @@
-/ = link_to toggle_beta_users_path, class: 'text-error' do
-/   %i.icon-exclamation
-/   Switch to
-/   = beta? ? 'Production' : 'Beta'
+- if beta?
+  = link_to toggle_beta_users_path, class: 'text-error' do
+    %i.icon-exclamation
+    Switch to Production
