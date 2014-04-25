@@ -1,6 +1,6 @@
 %h4 Data and Resources
 %ul.media-list.catalog-resources
-  - catalog.uploads.downloadable.each do |upload| 
+  - catalog.uploads.downloadable.each do |upload|
     %li.media
       .icon.download.pull-left
         %i.icon-download-alt
@@ -8,9 +8,9 @@
         = link_to catalog_download_path(catalog, upload), class: 'btn tag pull-right', rel: "nofollow", remote: true do
           %i.icon-download-alt.media-object
           Download
-          
+
         %h5.media-heading Download
-        %p
+        %p.break-url
           = upload.file.name
           = "(#{number_to_human_size upload.file.size})"
   - catalog.download_urls.each do |link|
@@ -21,14 +21,14 @@
         = link_to catalog_download_path(catalog, link), class: 'btn tag pull-right', rel: "nofollow", remote: true do
           %i.icon-download-alt.media-object
           Download
-          
+
         - if link.name
           %h5.media-heading.break-url
             = "#{link.name}"
         - else
           %h5.media-heading.break-url Remote Download
-        %p= File.basename(link.url)
-                  
+        %p.break-url= File.basename(link.url)
+
   - catalog.links.where('category = ?', 'Download').each do |link|
     %li.media
       .icon.download.pull-left
@@ -37,11 +37,10 @@
         = link_to link.url, class: 'btn tag pull-right', rel: "nofollow", remote: true do
           %i.icon-download-alt.media-object
           Download
-          
+
         %h5.media-heading Download
-        .break-url
-          %p= link.url
-                        
+        %p.break-url= link.url
+
   - catalog.links.where('category in (?)', ['Report']).each do |link|
     %li.media
       .icon.report.pull-left
@@ -50,13 +49,13 @@
         = link_to link.url, class: 'btn pull-right', :target => :_blank do
           %i.icon-external-link
           View report
-            
-        %h5.media-heading.break-url
+
+        %h5.media-heading
           = link.category
           - unless link.display_text.empty? or link.display_text == link.url
             = " :: #{link.display_text}"
-        .break-url
-          %p= link.url
+
+        %p.break-url= link.url
   - catalog.links.where('category not in (?)', ['Metadata', 'Download', 'Report']).each do |link|
     %li.media
       .icon.website.pull-left
@@ -66,13 +65,12 @@
           %i.icon-external-link
           View
           = link.category.downcase
-            
-        %h5.media-heading.break-url
+
+        %h5.media-heading
           = link.category
           - unless link.display_text.empty? or link.display_text == link.url
             = " :: #{link.display_text}"
-        .break-url
-          %p= link.url
+        %p.break-url= link.url
 
 - if catalog.links.where('category = ?', 'Metadata').count > 0
   %ul.media-list.catalog-resources
@@ -84,10 +82,8 @@
           = link_to link.url, class: 'btn pull-right', :target => :_blank do
             %i.icon-external-link
             View metadata
-            
+
           %h5.media-heading.break-url
             - unless link.display_text.empty? or link.display_text == link.url
               = link.display_text
-          .break-url
-            %p= link.url          
-            
+          %p.break-url= link.url
