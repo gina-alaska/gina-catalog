@@ -11,7 +11,7 @@ class ContactsController < ApplicationController
     @contact = current_setup.contacts.build(params[:contact])
 
     respond_to do |format|
-      if @contact.save
+      if check_recaptcha and @contact.save
         format.html {
           ContactMailer.contact_email(contact_email, params[:contact]).deliver
           flash[:success] = 'Message Sent.'
@@ -26,4 +26,15 @@ class ContactsController < ApplicationController
     end
   end
 
+  private
+
+  def check_recaptcha
+    return true unless current_setup.use_recaptcha
+    if verify_recaptcha(private_key: ENV["RECAPTCHA_PRIVATE_KEY"])
+      return true
+    else
+      flash[:error] = 'Recaptcha check failed, please try again.'
+      return false
+    end
+  end
 end
