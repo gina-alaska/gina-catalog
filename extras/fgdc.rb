@@ -128,7 +128,6 @@ class FGDC
       contact[:phone_numbers] = {
         work: xml_node.search('cntvoice').children.to_s
       }
-
     end
 
     contact
@@ -138,6 +137,8 @@ class FGDC
     @xml.search('idinfo cntorgp cntorg').children.map do |child|
       child.to_s.strip
     end
+
+    contact
   end
 
   def agencies

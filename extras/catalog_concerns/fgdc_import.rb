@@ -30,9 +30,8 @@ module CatalogConcerns
         phone = contact_info.delete(:phone_numbers)
 
         contact = find_contact(contact_info)        
-        if contact.nil?
-          contact = Person.create(contact_info)
-        end
+        contact ||= Person.create(contact_info)
+
         contact.setups << self.owner_setup unless contact.setups.include?(self.owner_setup)
 
         if contact.phone_numbers.where(name: 'work').empty?

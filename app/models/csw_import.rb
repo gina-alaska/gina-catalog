@@ -81,6 +81,7 @@ class CswImport < ActiveRecord::Base
       catalog.activity_logs.create_import_log(message: "Import completed #{Time.zone.now}", changes: catalog.changes).save
       return true
     else
+
       # puts 'Error during save'
       # puts catalog.errors.full_messages.join("\n")
       # 
