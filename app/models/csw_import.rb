@@ -81,15 +81,15 @@ class CswImport < ActiveRecord::Base
       catalog.activity_logs.create_import_log(message: "Import completed #{Time.zone.now}", changes: catalog.changes).save
       return true
     else
-      puts 'Error during save'
-      puts catalog.errors.full_messages.join("\n")
-
-      catalog.activity_logs.create_import_error(message: "Error while try to validate record update: #{catalog.errors.full_messages.join(', ')}")
-
-      # don't publish this record! it's invalid
-      catalog.title = 'No title set' unless catalog.title.present? or catalog.title.empty?
-      catalog.published_at = nil
-      catalog.save(validate: false)
+      # puts 'Error during save'
+      # puts catalog.errors.full_messages.join("\n")
+      # 
+      # catalog.activity_logs.create_import_error(message: "Error while try to validate record update: #{catalog.errors.full_messages.join(', ')}")
+      # 
+      # # don't publish this record! it's invalid
+      # catalog.title = 'No title set' unless catalog.title.present? or catalog.title.empty?
+      # catalog.published_at = nil
+      # catalog.save(validate: false)
       return false
     end
   end
@@ -101,6 +101,7 @@ class CswImport < ActiveRecord::Base
 
     # client = RCSW::Client::Base.new(csw.url)
     # records = client.record(client.records.collect(&:identifier)).all
+    
     total_records = self.records.count
     self.update_attribute(:status, "Importing 0 of #{total_records}")
 
@@ -129,6 +130,10 @@ class CswImport < ActiveRecord::Base
     puts "Completed import"
     self.update_attribute(:status, "Finished")
     Sunspot.commit
+  end
+  
+  def mark_as_complete
+    self.update_attribute(:status, "Finished")
   end
 
   def client
