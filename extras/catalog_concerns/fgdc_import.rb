@@ -9,14 +9,27 @@ module CatalogConcerns
 
         return agency
       end
+      
+      def find_contact(contact_info)
+        return nil if contact_info.nil?
+        
+        contact = nil
+        
+        if contact_info[:email].present?
+          contact = Person.where(first_name: contact_info[:first_name], last_name: contact_info[:last_name], email: contact_info[:email]).first
+        elsif contact_info[:job_title].present?
+          contact = Person.where(first_name: contact_info[:first_name], last_name: contact_info[:last_name], job_title: contact_info[:job_title]).first
+        end
+        
+        contact
+      end
 
       def fgdc_contact(contact_info)
         return nil if contact_info.nil?
 
         phone = contact_info.delete(:phone_numbers)
 
-        # self.primary_contact = Person.where(metadata.primary_contact).first_or_initialize
-        contact = Person.where(first_name: contact_info[:first_name], last_name: contact_info[:last_name], email: contact_info[:email]).first
+        contact = find_contact(contact_info)        
         if contact.nil?
           contact = Person.create(contact_info)
         end
@@ -29,15 +42,22 @@ module CatalogConcerns
         contact
       end
 
-      def fgdc_link(url, default_category = 'Website')
+      def fgdc_link(url, default_category = 'Website', display_text = nil)
+        # default to url if not given
+        display_text ||= url
+        
         case url.split('/').last.try(:downcase)
         when 'mapserver'
           category = 'Map Service'
+          # Add some other related links for this
+          fgdc_link(url + '?f=jsapi', 'Map Service', 'ArcGIS JS')
+          fgdc_link(url + '?f=lyr', 'Map Service', 'ArcMAP')
+          fgdc_link(url + '/kml/mapImage.kmz', 'Map Service', 'Google Earth')
         else
           category = default_category
         end
 
-        attrs = { url: url, display_text: url, category: category }
+        attrs = { url: url, display_text: display_text, category: category }
         if link = self.links.where(url: url).first
           link.update_attributes(attrs)
           link
@@ -75,29 +95,30 @@ module CatalogConcerns
         loc = self.locations.where(geom: metadata.bounds).first_or_initialize(name: 'Record Bounds')
         loc.update_attributes(name: 'Record Bounds')
 
-        # self.locations = [self.locations.first_or_initialize(geom: metadata.bounds, name: 'Record Bounds')]
-        # self.links = metadata.onlinks.collect do |l|
-        #   self.links.where(url: l).first_or_initialize(display_text: l, category: "Website")
-        # end
-        #
-        # self.links.where(url: url).first_or_initialize(display_text: 'Metadata', category: 'Metadata')
+        fgdc_link(url, 'Metadata', 'Source')
         metadata.onlinks.each do |l|
           next if l.downcase == 'none'
 
           if %q{ zip pdf }.include?(l.split('.').last.try(:downcase))
-            self.download_urls << fgdc_download_url(l)
-            # self.links << fgdc_link(l, 'Download')
+            fgdc_download_url(l)
           else
-            self.links << fgdc_link(l, 'Website')
+            fgdc_link(l, 'Website')
           end
 
         end
-        self.links << fgdc_link(url, 'Metadata')
 
         self.start_date = metadata.start_date
         self.end_date = metadata.end_date
 
-        pc = fgdc_contact(metadata.primary_contact)
+        if pc = find_contact(metadata.citation_contact)
+          # if we find a contact from the citation info use that as primary
+          oc = fgdc_contact(metadata.alt_primary_contact)
+          self.people << oc unless oc.nil? or self.people.include?(oc) or pc == oc
+        else
+          # otherwise pull from the metadata point of contact
+          pc = fgdc_contact(metadata.alt_primary_contact)
+        end
+        
         if pc.nil?
           self.primary_contact = nil
         else

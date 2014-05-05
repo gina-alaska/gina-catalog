@@ -80,7 +80,26 @@ class FGDC
     @xml.search('idinfo onlink').children.collect(&:to_s)
   end
 
-  def primary_contact
+  def citation_contact
+    node = @xml.search('idinfo citation citeinfo')
+    
+    contact = nil
+    unless node.children.empty?
+      origin = node.search('origin').children.to_s
+      case origin.split(', ').count
+      when 3
+        name, agency, title = origin.split(', ')
+        contact = { first_name: name.split.first, last_name: name.split.last, job_title: title }
+      when 2
+        # some sort of agency contact...
+        acronym, agency = origin.split(', ')
+      end
+    end
+    
+    contact
+  end
+
+  def alt_primary_contact
     contact(@xml.search('idinfo ptcontac cntinfo'))
   end
 
