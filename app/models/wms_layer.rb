@@ -4,4 +4,8 @@ class WmsLayer < MapLayer
   def supports?(projection)
     true
   end
+  
+  def layers_help
+    "This is required for WMS layers, for example: modis,global_mosaic"
+  end
 end
