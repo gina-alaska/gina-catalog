@@ -26,4 +26,12 @@ class MapLayer < ActiveRecord::Base
     })
     super(opts)
   end
+
+  def layers_help
+    ""
+  end
+
+  def supports_layers?
+    true
+  end
 end
