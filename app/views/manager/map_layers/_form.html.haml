@@ -6,15 +6,11 @@
         %ul
           - @map_layer.errors.full_messages.each do |msg|
             %li= msg
-    = form_for [:manager, @catalog, @map_layer.becomes(MapLayer)], remote: true, html: { style: 'margin: 0;', id: 'map_layer_form' } do |f|
+    = form_for [:manager, @catalog, @map_layer], as: :map_layer, remote: true, html: { style: 'margin: 0;', id: 'map_layer_form' } do |f|
+      = f.hidden_field :type
       %div{ style: 'padding: 5px 10px;' }
         .row-fluid
-          .span3
-            .control-group
-              = f.label :type, 'Type: ', class: 'control-label'
-              .controls
-                = f.select :type, [['WMS', 'WmsLayer']], { include_blank: false }, class: 'span12'
-          .span9
+          .span12
             .control-group
               = f.label :name, 'Name: ', class: 'control-label'
               .controls
@@ -23,18 +19,20 @@
           = f.label :url, 'URL:', class: 'control-label'
           .controls
             = f.text_field :url, class: 'span12'
-        .control-group
-          = f.label :layers, 'Layer Names:', class: 'control-label'
-          .controls
-            = f.text_field :layers, class: 'span12'
-            %span.help-block.muted
-              Only applies to WMS Layers
+        - if @map_layer.supports_layers?
+          .control-group
+            = f.label :layers, 'Layer Names:', class: 'control-label'
+            .controls
+              = f.text_field :layers, class: 'span12'
+              %span.help-block.muted
+                = @map_layer.layers_help
         .control-group
           = f.label :projections, 'Supported Projections: ', class: 'control-label'
           .controls
-            = f.text_field :projections, class: 'span12', placeholder: 'Leave blank to support all projects'
+            = f.text_field :projections, class: 'span12', placeholder: 'Leave blank to support all projections'
             %span.help-block.muted
-              Valid options are EPSG:3857, EPSG: 3338, EPSG: 3572
+              gLynx only supports these projections, EPSG:3857, EPSG:3338, EPSG:3572
   
       .form-actions{ style: 'margin:0;' }
         = f.submit class: 'btn btn-primary pull-right'
+
