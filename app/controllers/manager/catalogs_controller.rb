@@ -91,6 +91,10 @@ class Manager::CatalogsController < ManagerController
         format.html {
           render 'new'
         }
+        format.js { 
+          flash.now[:error] = @catalog.errors.full_messages
+          render 'form_response'
+        }
       end
     end
   end
@@ -124,6 +128,10 @@ class Manager::CatalogsController < ManagerController
       respond_to do |format|
         format.html {
           render 'edit'
+        }
+        format.js { 
+          flash.now[:error] = @catalog.errors.full_messages
+          render 'form_response'
         }
       end
     end
