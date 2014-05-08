@@ -77,7 +77,7 @@ class FGDC
   end
 
   def onlinks
-    @xml.search('idinfo onlink').children.collect(&:to_s)
+    @xml.search('idinfo citation onlink').children.collect(&:to_s)
   end
 
   def citation_contact
@@ -110,35 +110,33 @@ class FGDC
   end
 
   def contact(xml_node)
-    contact = nil
+    cnt = nil
 
     unless xml_node.children.empty?
       name = xml_node.search('cntper').children.to_s
       return nil if name.nil? or name.blank?
 
       if name.split(",").count == 1 #No comma, assume First Last
-        contact = {first_name: name.split.first, last_name: name.split.last}
+        cnt = {first_name: name.split.first, last_name: name.split.last}
       else #Comma in the name, assume Last, First
         split_name = Array.wrap(name.split(","))
-        contact = {first_name: split_name.pop.lstrip, last_name: split_name.join(',') }
+        cnt = {first_name: split_name.pop.lstrip, last_name: split_name.join(',') }
       end
 
-      contact[:email] = xml_node.search('cntemail').children.to_s
-      contact[:job_title] = xml_node.search('cntpos').children.to_s
-      contact[:phone_numbers] = {
+      cnt[:email] = xml_node.search('cntemail').children.to_s
+      cnt[:job_title] = xml_node.search('cntpos').children.to_s
+      cnt[:phone_numbers] = {
         work: xml_node.search('cntvoice').children.to_s
       }
     end
 
-    contact
+    cnt
   end
 
   def primary_agency
     @xml.search('idinfo cntorgp cntorg').children.map do |child|
       child.to_s.strip
     end
-
-    contact
   end
 
   def agencies

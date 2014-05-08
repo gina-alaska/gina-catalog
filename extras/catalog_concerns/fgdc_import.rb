@@ -4,6 +4,10 @@ module CatalogConcerns
 
     module InstanceMethods
       def fgdc_agency(name)
+        return nil if name.nil?
+        
+        name = CGI.unescapeHTML(name)
+        
         agency = Agency.where(name: name).first
         agency ||= Alias.where(text: name, aliasable_type: 'Agency').first.try(:aliasable)
 
@@ -49,8 +53,8 @@ module CatalogConcerns
         when 'mapserver'
           category = 'Map Service'
           # Add some other related links for this
-          fgdc_link(url + '?f=jsapi', 'Map Service', 'ArcGIS JS')
-          fgdc_link(url + '?f=lyr', 'Map Service', 'ArcMAP')
+          fgdc_link(url + '?f=jsapi', 'Map Service', 'ArcGIS JS Map')
+          fgdc_link(url + '?f=lyr', 'Map Service', 'ArcMAP Layer')
           fgdc_link(url + '/kml/mapImage.kmz', 'Map Service', 'Google Earth')
         else
           category = default_category
@@ -64,6 +68,12 @@ module CatalogConcerns
           self.links.build(attrs)
         end
       end
+      
+      def link_template(url, default_category = 'Website',  default_text = nil)
+        url = url.gsub('{{uuid}}', self.uuid)
+        
+        fgdc_link(url, default_category, default_text)
+      end
 
       def fgdc_download_url(url)
         attrs = { url: url }
@@ -75,15 +85,15 @@ module CatalogConcerns
         end
       end
 
-      def import_from_fgdc url
+      def import_from_fgdc(url, import)
         import_errors = {}
 
         #Fetch the record
         metadata = FGDC.new(url)
 
         self.source_url = url
-        self.title = metadata.title
-        self.description = metadata.abstract
+        self.title = CGI.unescapeHTML(metadata.title)
+        self.description = CGI.unescapeHTML(metadata.abstract)
         self.status = metadata.status
 
         self.type = "Asset"
@@ -94,7 +104,9 @@ module CatalogConcerns
         loc = self.locations.where(geom: metadata.bounds).first_or_initialize(name: 'Record Bounds')
         loc.update_attributes(name: 'Record Bounds')
 
+        link_template(import.url_template, 'Website', import.url_description)
         fgdc_link(url, 'Metadata', 'Source')
+        
         metadata.onlinks.each do |l|
           next if l.downcase == 'none'
 
@@ -128,16 +140,15 @@ module CatalogConcerns
           c = fgdc_contact(contact)
           next if self.people.include?(c) or self.primary_contact == c
 
-          puts c.inspect
           self.people << c
         end
 
-        missing_agencies ||= []
+        missing_agencies = []
 
         primary_agency = fgdc_agency(metadata.primary_agency.first)
 
-        if primary_agency.nil?
-          missing_agencies << metadata.primary_agency.first
+        unless primary_agency.nil?
+          missing_agencies << CGI.unescapeHTML(metadata.primary_agency.first) unless metadata.primary_agency.first.nil?
         else
           self.source_agency = primary_agency unless self.source_agency == primary_agency
         end
@@ -147,12 +158,13 @@ module CatalogConcerns
           agency = fgdc_agency(agency_name)
 
           if agency.nil?
-            missing_agencies << agency_name
+            missing_agencies << CGI.unescapeHTML(agency_name)
           else
             self.agencies << agency unless self.agencies.include?(agency)
           end
         end
 
+        missing_agencies = missing_agencies.uniq.compact
         unless missing_agencies.empty?
           self.activity_logs.create_agency_import_error(message: "Could not find the following agencies: #{missing_agencies.join(', ')}", missing_agencies: missing_agencies)
         end

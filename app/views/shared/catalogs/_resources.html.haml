@@ -84,6 +84,7 @@
             View metadata
 
           %h5.media-heading.break-url
+            = link.category
             - unless link.display_text.empty? or link.display_text == link.url
-              = link.display_text
+              = " :: #{link.display_text}"
           %p.break-url= link.url

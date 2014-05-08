@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140422193251) do
+ActiveRecord::Schema.define(:version => 20140506174215) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -282,6 +282,8 @@ ActiveRecord::Schema.define(:version => 20140422193251) do
     t.boolean  "request_contact_info", :default => false
     t.boolean  "require_contact_info", :default => false
     t.string   "status"
+    t.string   "url_template"
+    t.string   "url_description"
   end
 
   create_table "data_sources", :force => true do |t|

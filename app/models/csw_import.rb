@@ -1,7 +1,7 @@
 class CswImport < ActiveRecord::Base
   attr_accessible :title, :sync_frequency, :url, :metadata_field, :metadata_type,
                   :use_agreement_id, :request_contact_info, :require_contact_info,
-                  :collection_ids
+                  :collection_ids, :url_template, :url_description
 
   belongs_to :setup
   has_many :catalogs
@@ -64,13 +64,14 @@ class CswImport < ActiveRecord::Base
           csw_import_id: self.id
         })
       )
+      catalog.collections = self.collections
     end
 
     catalog.setups << setup unless catalog.setups.include?(setup)
 
     catalog.remote_updated_at = record.modified.chomp.strip
 
-    import_errors = catalog.import_from_fgdc(url)
+    import_errors = catalog.import_from_fgdc(url, self)
     puts import_errors.inspect
 
     change_count = catalog.changes.keys.count
