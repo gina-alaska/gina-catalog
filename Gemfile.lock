@@ -14,9 +14,9 @@ GIT
 
 GIT
   remote: https://github.com/gina-alaska/ruby-csw.git
-  revision: 27ca57e4ea78b25b8b1ded38996b891eca676e73
+  revision: df3e003d07c238c1d1d3a0d345adb08b5ffe90b0
   specs:
-    rcsw (0.1.2)
+    rcsw (0.1.4)
       curb
       libxml-ruby
 
