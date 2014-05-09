@@ -47,7 +47,7 @@
             %b.caret
 
           %ul.dropdown-menu
-            - %w{ gina-catalog.dev catalog.northslope.org epscor.alaska.edu southcentral.epscor.alaska.edu southeast.epscor.alaska.edu }.each do |url|
+            - %w{ gina-catalog.dev catalog.northslope.org epscor.alaska.edu southcentral.epscor.alaska.edu southeast.epscor.alaska.edu alaska.portal.gina.alaska.edu northern.epscor.alaska.edu }.each do |url|
               - if s = SiteUrl.where(url: url).first.try(:setup)
                 %li= link_to s.title, "http://#{ s.default_url }"
 
