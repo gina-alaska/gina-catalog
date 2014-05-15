@@ -10,9 +10,10 @@
 # include_recipe 'user'
 # include_recipe 'user::data_bag'
 
-include_recipe "glynx::packages"
-include_recipe "glynx::ruby"
-include_recipe 'glynx::nginx'
-include_recipe 'glynx::unicorn'
-include_recipe 'gina-postgresql::client'
+include_recipe 'glynx::ruby'
+include_recipe 'glynx::packages'
+include_recipe 'glynx::_database_common'
+include_recipe 'postgresql::client'
 include_recipe 'glynx::application'
+include_recipe 'glynx::unicorn'
+include_recipe 'glynx::nginx'

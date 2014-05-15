@@ -12,6 +12,7 @@ suites:
   - name: default
     run_list:
       - recipe[glynx::default]
+      - recipe[glynx::redis]
       - recipe[minitest-handler::default]
     attributes:
       glynx:
