@@ -51,7 +51,7 @@ defined?(ActiveRecord::Base) and
 
 default['glynx']['package_deps'] = %w{java-1.7.0-openjdk libicu-devel curl-devel libxml2-devel libxslt-devel nfs-utils geos-devel ImageMagick-devel}
 
-default['users'] ||= []
-%w{ webdev }.each do |user|
-  default['users'] << user unless default['users'].include?(user)
-end
+# default['users'] ||= []
+# %w{ webdev }.each do |user|
+#   default['users'] << user unless default['users'].include?(user)
+# end
