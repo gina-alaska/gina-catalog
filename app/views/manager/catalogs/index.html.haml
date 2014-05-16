@@ -103,12 +103,11 @@
 
   function CollToggle(coll_id) {  
     check_list = [];
-    $('input:checkbox').attr("checked", function() {
-      if ($(this).attr("checked")) {
-        check_list.push($(this).val());
-      }
+    $('input:checkbox:checked').each( function(index,item) {
+      check_list.push($(item).val());
     });
     
+    console.log(check_list);
     $.ajax({
       url: "#{manager_collections_path}/" + coll_id + '/add',
       type: 'PUT',
