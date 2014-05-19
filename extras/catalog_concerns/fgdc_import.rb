@@ -147,7 +147,7 @@ module CatalogConcerns
 
         primary_agency = fgdc_agency(metadata.primary_agency.first)
 
-        unless primary_agency.nil?
+        if primary_agency.nil?
           missing_agencies << CGI.unescapeHTML(metadata.primary_agency.first) unless metadata.primary_agency.first.nil?
         else
           self.source_agency = primary_agency unless self.source_agency == primary_agency
