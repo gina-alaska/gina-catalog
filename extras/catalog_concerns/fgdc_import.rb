@@ -120,7 +120,7 @@ module CatalogConcerns
 
         self.start_date = metadata.start_date
         self.end_date = metadata.end_date
-
+        
         if pc = find_contact(metadata.citation_contact)
           # if we find a contact from the citation info use that as primary
           oc = fgdc_contact(metadata.alt_primary_contact)
@@ -167,6 +167,10 @@ module CatalogConcerns
         missing_agencies = missing_agencies.uniq.compact
         unless missing_agencies.empty?
           self.activity_logs.create_agency_import_error(message: "Could not find the following agencies: #{missing_agencies.join(', ')}", missing_agencies: missing_agencies)
+        end
+        
+        if metadata.published_at.length > 0
+          self.published_at = Time.zone.now
         end
       rescue => e
         puts "Unhandled error #{e}"
