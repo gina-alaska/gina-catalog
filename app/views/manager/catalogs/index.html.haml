@@ -107,7 +107,6 @@
       check_list.push($(item).val());
     });
     
-    console.log(check_list);
     $.ajax({
       url: "#{manager_collections_path}/" + coll_id + '/add',
       type: 'PUT',
