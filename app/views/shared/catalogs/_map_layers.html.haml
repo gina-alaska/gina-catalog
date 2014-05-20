@@ -3,10 +3,9 @@
     %h4 Map Layers
     %ul.nav
       - catalog.map_layers.each do |layer|
-        .row-fluid
-          %li
-            - disabled = layer.supports?(current_setup.projection) ? '' : 'disabled'
-            .layer-toggle.pull-left{ style: 'margin-right: 10px; margin-bottom: 3px;' }
-              = link_to map_layer_path(layer, :json), class: "map_layer_btn btn #{disabled}", data: { openlayers_action: 'preview' }, title: 'Preview map layer' do
-                %i.check.icon-check-empty
-            = layer.name
+        %li{style: "height: 33px;"}
+          - disabled = layer.supports?(current_setup.projection) ? '' : 'disabled'
+          .layer-toggle.pull-left{ style: 'margin-right: 10px; margin-bottom: 3px;' }
+            = link_to map_layer_path(layer, :json), class: "map_layer_btn btn #{disabled}", data: { openlayers_action: 'preview' }, title: 'Preview map layer' do
+              %i.check.icon-check-empty
+          = layer.name
