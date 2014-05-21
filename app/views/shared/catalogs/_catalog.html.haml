@@ -41,6 +41,7 @@
               #additional-information.tab-pane.active.content
                 = render '/shared/catalogs/status', item: catalog
                 = render '/shared/catalogs/collapsed_content', item: catalog, collapse: collapse
+                = render '/shared/catalogs/map_layers_info', catalog: catalog
               #activity-logs.tab-pane
                 = render '/shared/catalogs/activity_logs', catalog: catalog
               - if current_member.try(:can_manage_catalog?)
