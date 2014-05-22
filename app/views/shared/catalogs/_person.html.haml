@@ -1,8 +1,5 @@
 %address
   = person.full_name
-  - if person.job_title.present?
-    %br
-    = person.job_title
   - person.addresses do |address|
     - next if address.line1.nil? and address.line2.nil? and address.city.nil?
     %br

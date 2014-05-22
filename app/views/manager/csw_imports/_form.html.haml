@@ -6,61 +6,42 @@
         - @csw_import.errors.full_messages.each do |err|
           %li= err
         
-  .control-group
-    = f.label :title
-    = f.text_field :title, class: 'span12'
+  .row-fluid
+    .span12
+      = f.label :title
+      = f.text_field :title, class: 'span12'
 
-  .control-group
-    = f.label :url, 'CSW URL'
-    = f.text_field :url, class: 'span12'  
-    
-  .control-group
-    =f.label :sync_frequency
-    .input-append
-      =f.number_field :sync_frequency, class: 'span12'
-      %span.add-on
-        Hours
-  %fieldset
-    %legend Record defaults
-    .row-fluid
-      .span8
-        .control-group
-          =f.label :metadata_field
-          =f.text_field :metadata_field, class: 'span12'
-        .control-group
-          = f.label :use_agreement_id, class: 'control-label'
-          = f.select :use_agreement_id, options_from_collection_for_select(UseAgreement.all, :id, :title, @csw_import.use_agreement_id), { include_blank: true }, { class: 'span12' }
-      .span4
-        .control-group
-          =f.label :metadata_type
-          =f.select :metadata_type, options_for_select(CswImport::METADATA_TYPES)
-
-        .control-group
-          = f.label :request_contact_info, class: 'control-label' do
-            = f.check_box :request_contact_info
-            Ask for contact info
-          = f.label :require_contact_info, class: 'control-label' do
-            = f.check_box :require_contact_info
-            Contact info required
-          
+  .row-fluid
+    .span12
+      = f.label :url
+      = f.text_field :url, class: 'span12'  
         
-  %fieldset
-    %legend Source Link
-    
-    .row-fluid
-      .span4
-        .control-group
-          = f.label :url_description, 'URL Description'
-          = f.text_field :url_description, class: 'span12', placeholder: 'Enter a default description for source link'
-          
-      .span8
-        .control-group
-          = f.label :url_template, 'URL Template'
-          = f.text_field :url_template, class: 'span12', placeholder: 'http://source.host.com/some/url?uuid={{uuid}}'
-          %span.help-block 
-            Available template fields: {{uuid}}
-          
-          
+  .row-fluid
+    .span12
+      =f.label :sync_frequency
+      .input-append
+        =f.number_field :sync_frequency, class: 'span12'
+        %span.add-on
+          Hours
+  .row-fluid
+    .span12
+      =f.label :metadata_type
+      =f.select :metadata_type, options_for_select(CswImport::METADATA_TYPES)
+  .row-fluid
+    .span12
+      =f.label :metadata_field
+      =f.text_field :metadata_field, class: 'span12'
+      
+  .row-fluid
+    .span12
+      = f.label :use_agreement_id, class: 'control-label'
+      = f.select :use_agreement_id, options_from_collection_for_select(UseAgreement.all, :id, :title, @csw_import.use_agreement_id), { include_blank: true }, { class: 'span12' }
+      = f.label :request_contact_info, class: 'control-label' do
+        = f.check_box :request_contact_info
+        Ask for contact info
+      = f.label :require_contact_info, class: 'control-label' do
+        = f.check_box :require_contact_info
+        Contact info required
   = render "collection_fields", f: f
 
   #actions.form-actions

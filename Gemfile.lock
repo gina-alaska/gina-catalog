@@ -14,9 +14,9 @@ GIT
 
 GIT
   remote: https://github.com/gina-alaska/ruby-csw.git
-  revision: df3e003d07c238c1d1d3a0d345adb08b5ffe90b0
+  revision: 27ca57e4ea78b25b8b1ded38996b891eca676e73
   specs:
-    rcsw (0.1.4)
+    rcsw (0.1.2)
       curb
       libxml-ruby
 
@@ -225,7 +225,6 @@ GEM
     rake (10.2.2)
     rdoc (3.12.2)
       json (~> 1.4)
-    recaptcha (0.3.6)
     redis (3.0.7)
     redis-namespace (1.4.1)
       redis (~> 3.0.4)
@@ -351,7 +350,6 @@ DEPENDENCIES
   quiet_assets
   rails (= 3.2.17)
   rcsw (~> 0.1.1)!
-  recaptcha
   resque
   rgeo
   rgeo-activerecord
