@@ -1,0 +1,29 @@
+- unless catalog.map_layers.empty?
+  %dt Map Layers
+  %dd
+    %table.table
+      %thead
+        %tr
+          %th
+            Type
+          %th
+            Name
+          %th
+            URL
+          %th
+            Layer Names
+          %th
+            Projections
+      %tbody
+        - catalog.map_layers.each do |layer|
+          %tr
+            %td
+              = layer.type_name
+            %td
+              = layer.name
+            %td
+              = layer.url
+            %td
+              = layer.layers
+            %td
+              = layer.projections

@@ -4,4 +4,8 @@ class WmsLayer < MapLayer
   def supports?(projection)
     true
   end
+  
+  def type_name
+    'WMS'
+  end
 end
