@@ -27,7 +27,7 @@ class MapLayer < ActiveRecord::Base
     super(opts)
   end
   
-  def type_name
-    'Map Layer'
+  def to_s
+    self.name
   end
 end

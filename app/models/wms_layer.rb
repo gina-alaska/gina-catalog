@@ -5,7 +5,7 @@ class WmsLayer < MapLayer
     true
   end
   
-  def type_name
-    'WMS'
+  def to_s
+    "WMS :: #{super}"
   end
 end
