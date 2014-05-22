@@ -34,4 +34,8 @@ class MapLayer < ActiveRecord::Base
   def supports_layers?
     true
   end
+  
+  def to_s
+    self.name
+  end
 end
