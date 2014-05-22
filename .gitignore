@@ -49,3 +49,7 @@ db/data
 *.save
 
 dump.rdb
+
+.powenv
+
+.kitchen/logs/kitchen.log
