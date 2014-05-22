@@ -1,7 +1,7 @@
 - unless catalog.map_layers.empty?
-  .content{ style: 'min-width: 230px;' }
-    %h5 Map Layers
-    %table
+  %dt Map Layers
+  %dd
+    %table.table
       %thead
         %tr
           %th
@@ -11,18 +11,19 @@
           %th
             URL
           %th
+            Layer Names
+          %th
             Projections
       %tbody
         - catalog.map_layers.each do |layer|
           %tr
             %td
-              = layer.type
+              = layer.type_name
             %td
               = layer.name
             %td
               = layer.url
             %td
-              - if layer.projections==""
-                EPSG:3857, EPSG: 3338, EPSG: 3572
-              -else
-                = layer.projections
+              = layer.layers
+            %td
+              = layer.projections
