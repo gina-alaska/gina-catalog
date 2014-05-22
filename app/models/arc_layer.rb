@@ -6,4 +6,8 @@ class ArcLayer < MapLayer
   def layers_help
     "Arc Layers are usually numbers, for example: 0,1,2"
   end
+  
+  def to_s
+    "ARC :: #{super}"
+  end
 end
