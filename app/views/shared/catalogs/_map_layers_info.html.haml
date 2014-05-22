@@ -1,7 +1,7 @@
 - unless catalog.map_layers.empty?
   %dt Map Layers
   %dd
-    %table.table
+    %table.table.table-condensed
       %thead
         %tr
           %th
@@ -10,16 +10,12 @@
             URL
           %th
             Layer Names
-          %th
-            Projections
       %tbody
         - catalog.map_layers.each do |layer|
           %tr
             %td
               = layer
-            %td
+            %td.break-url
               = layer.url
-            %td
+            %td.break-url
               = layer.layers
-            %td
-              = layer.projections
