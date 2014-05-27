@@ -1,13 +1,13 @@
 #!/bin/sh
 #
-# Startup script for unicorn
+# Startup script for solr
 #
 # chkconfig: - 86 14
-# processname: unicorn_rails
+# processname: solr_glynx
 # description: Rails application server
 #
 ### BEGIN INIT INFO
-# Provides: <%= @name %>_unicorn
+# Provides: solr_glynx
 # Required-Start: $local_fs $remote_fs $network
 # Required-Stop: $local_fs $remote_fs $network
 # Default-Start: 3
@@ -18,11 +18,10 @@
 # Source function library.
 . /etc/rc.d/init.d/functions
  
-prog=unicorn
+prog="solr"
 RAILS_ROOT="<%= @install_path %>"
-UNICORN_CONF="<%= @unicorn_config_file %>"
-lockfile=${LOCKFILE-/var/lock/subsys/unicorn}
-pidfile=$RAILS_ROOT/tmp/pids/unicorn.pid
+lockfile=${LOCKFILE-/var/lock/subsys/solr}
+pidfile=$RAILS_ROOT/solr/pids/<%=@environment%>/sunspot-solr-<%=@environment%>.pid
 SLEEPMSEC=100000
 RETVAL=0
 ENV=<%=@environment%>
@@ -30,69 +29,61 @@ ENV=<%=@environment%>
 start() {
     echo -n $"Starting $prog: "
     cd $RAILS_ROOT
-    su - <%=@user%> -c "cd $RAILS_ROOT && chruby-exec 1.9.3 -- bundle exec unicorn_rails -c $UNICORN_CONF -E $ENV -D"
+    su - <%=@user%> -c "cd $RAILS_ROOT && chruby-exec 1.9.3 -- bundle exec rake sunspot:solr:start RAILS_ENV=${ENV}"
     RETVAL=$?
     echo
-    [ $RETVAL = 0 ] && touch ${lockfile}
-    return $RETVAL
+    [ $RETVAL = 0 ] || [ $RETVAL = 1 ] && touch ${lockfile}
+    return 0 #$RETVAL
 }
- 
+
 stop() {
     echo -n $"Stopping $prog: "
-    killproc -p ${pidfile} ${prog} -QUIT
+    su - <%=@user%> -c "cd $RAILS_ROOT && chruby-exec 1.9.3 -- bundle exec rake sunspot:solr:stop RAILS_ENV=${ENV}"
     RETVAL=$?
     echo
     [ $RETVAL = 0 ] && rm -f ${lockfile} ${pidfile}
 }
- 
+
+rh_status() {
+    status -p $pidfile java
+} 
+
+rh_status_q() {
+    rh_status >/dev/null 2>&1
+}
+
 restart() {
     echo -n $"Restarting $prog: "
-    killproc -p ${pidfile} ${prog} -USR2
+    stop
+    start
     RETVAL=$?
     echo
-}
- 
-reload() {
-    echo -n $"Reloading $prog: "
-    killproc -p ${pidfile} ${prog} -HUP
-    RETVAL=$?
-    echo
-}
- 
-rh_status() {
-    status -p ${pidfile} ${prog}
 }
  
 # See how we were called.
 case "$1" in
     start)
-        rh_status >/dev/null 2>&1 && exit 0
+        rh_status_q && exit 0
+
         start
         ;;
-    stop)
+    stop)       
+        if ! rh_status_q; then
+            rm -f $lockfile
+            exit 0
+        fi
+
         stop
         ;;
     status)
         rh_status
         RETVAL=$?
-        ;;
+        if [ $RETVAL -eq 3 -a -f $lockfile ] ; then
+            RETVAL=2
+        fi
+        ;;     
     restart)
         restart
-        ;;
-    upgrade)
-        upgrade
-        ;;
-    condrestart|try-restart)
-        if rh_status >/dev/null 2>&1; then
-            stop
-            start
-        fi
-        ;;
-    force-reload|reload)
-        reload
-        ;;
-    configtest)
-        configtest
         ;;
     *)
         echo $"Usage: $prog {start|stop|restart|condrestart|try-restart|force-reload|upgrade|reload|status|help|configtest}"

@@ -7,13 +7,9 @@
 # All rights reserved - Do Not Redistribute
 #
 
-# include_recipe 'user'
-# include_recipe 'user::data_bag'
-
-include_recipe 'glynx::ruby'
-include_recipe 'glynx::packages'
-include_recipe 'glynx::_database_common'
-include_recipe 'postgresql::client'
-include_recipe 'glynx::application'
-include_recipe 'glynx::unicorn'
-include_recipe 'glynx::nginx'
+#Default recipe should only be used for all-in-one deployments of glynx
+include_recipe 'glynx::database'
+include_recipe 'glynx::redis'
+include_recipe 'glynx::solr'
+include_recipe 'glynx::web'
+#include_recipe 'glynx::worker'

@@ -1,5 +1,4 @@
-#  Assuming webapp might use this variable at some point.
-default['unicorn_config_path'] = '/etc/unicorn'
+default['glynx']['environment'] = 'production'
 
 default['glynx']['application_path'] = "/www/glynx"
 default['glynx']['shared_path'] = "#{default['glynx']['application_path']}/shared"
@@ -12,18 +11,48 @@ default['glynx']['dragonfly_uploads_path'] = "#{default['glynx']['shared_path']}
 default['glynx']['account'] = "webdev"
 
 default['glynx']['database']['adapter']  = "postgis"
-default['glynx']['database']['hostname'] = "yin.gina.alaska.edu"
+default['glynx']['database']['hostname'] = "localhost"
 default['glynx']['database']['database'] = "nssi_prod"
 default['glynx']['database']['username'] = "nssi_prod"
-default['glynx']['database']['password'] = "g0d0fn551"
+default['glynx']['database']['password'] = ""
 default['glynx']['database']['search_path'] = "nssi_prod,public"
+default['glynx']['database_setup'] = false
 
-default['glynx']['sunspot']['hostname'] = "catalog-web1.x.gina.alaska.edu"
-default['glynx']['sunspot']['port'] = "8983"
+default['glynx']['sunspot']['solr']['hostname'] = 'localhost'
+default['glynx']['sunspot']['solr']['port'] = '8982'
+default['glynx']['sunspot']['solr']['path'] = '/solr/default'
+default['glynx']['sunspot']['hostname'] = "localhost"
 
-# default['glynx']['redis']['hostname'] = "peanut.x.gina.alaska.edu"
+default['glynx']['redis']['hostname'] = 'localhost'
 
-default['glynx']['before_fork'] = '
+default['glynx']['package_deps'] = %w{
+  java-1.7.0-openjdk 
+  libicu-devel 
+  curl-devel 
+  libxml2-devel 
+  libxslt-devel 
+  nfs-utils 
+  geos-devel 
+  proj-devel
+  ImageMagick-devel
+}
+
+override['chruby']['version'] = '0.3.8'
+override['chruby']['rubies'] = {
+  '1.9.3-p392' => false,
+  '1.9.3-p448' => true
+}
+default['chruby']['default'] = '1.9.3-p448'
+
+default['unicorn']['preload_app'] = true
+default['unicorn']['config_path'] = '/etc/unicorn/glynx.rb'
+default['unicorn']['listen'] = "#{default['glynx']['shared_path']}/tmp/sockets"
+default['unicorn']['pid'] = "#{default['glynx']['shared_path']}/tmp/pids/unicorn.pid"
+default['unicorn']['stderr_path'] = "#{default['glynx']['shared_path']}/log/unicorn.stderr.log"
+default['unicorn']['stdout_path'] = "#{default['glynx']['shared_path']}/log/unicorn.stdout.log"
+default['unicorn']['working_directory'] = "#{default['glynx']['deploy_path']}"
+default['unicorn']['worker_timeout'] = 60
+default['unicorn']['before_fork'] = '
 defined?(ActiveRecord::Base) and
    ActiveRecord::Base.connection.disconnect!
 
@@ -39,7 +68,7 @@ defined?(ActiveRecord::Base) and
 sleep 1
 '
 
-default['glynx']['after_fork'] = "
+default['unicorn']['after_fork'] = "
 defined?(ActiveRecord::Base) and
   ActiveRecord::Base.establish_connection
 
@@ -48,10 +77,3 @@ defined?(ActiveRecord::Base) and
 #   Resque.redis.client.reconnect
 # end
 "
-
-default['glynx']['package_deps'] = %w{java-1.7.0-openjdk libicu-devel curl-devel libxml2-devel libxslt-devel nfs-utils geos-devel ImageMagick-devel}
-
-# default['users'] ||= []
-# %w{ webdev }.each do |user|
-#   default['users'] << user unless default['users'].include?(user)
-# end

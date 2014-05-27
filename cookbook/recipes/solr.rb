@@ -1,30 +1,20 @@
 app_name = "glynx"
 
-cookbook_file "/home/webdev/bundle_wrapper.sh" do
-  owner 'webdev'
-  group 'webdev'
-  mode 0755
+include_recipe "glynx::application"
+include_recipe "java"
+
+template "/etc/init.d/solr_#{app_name}" do
+  source "solr_init.erb"
+  action :create
+  mode 00755
+  variables({
+    install_path: node[app_name]['deploy_path'],
+    user: node[app_name]['account'],
+    ruby_path: "/opt/rubies/ruby-1.9.3-p448",
+    environment: node[app_name]['environment']
+  })
 end
 
-runit_service app_name do
-  run_template_name 'solr'
-  log_template_name 'solr'
-  
-  owner 'webdev'
-  group 'webdev'
-
-  options(
-    app: app_name,
-    path: node[app_name]['deploy_path'],
-    user: 'webdev',
-    group: 'webdev',
-    bundler: true,
-    bundle_command: "/home/webdev/bundle_wrapper.sh",
-    rails_env: "production",
-    smells_like_rack: true
-  )
-end
-
-service app_name do 
-  action [:start]
+service "solr_#{app_name}" do 
+ action [:enable]
 end

@@ -23,13 +23,14 @@ server {
     proxy_pass http://<%= @name %>_proxy;
   }
 
+<% if @environment == 'production' %>
   location ~ ^/(assets)/ {
         root <%= @install_path %>/public;
         gzip_static on;
         expires max;
         add_header Cache-Control public;
   }
-
+<% end %>
   error_page 500 502 503 504 /500.html;
   location = /500.html {
     root <%= @install_path %>/public;

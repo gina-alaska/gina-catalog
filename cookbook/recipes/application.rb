@@ -1,3 +1,8 @@
+include_recipe "glynx::packages"
+include_recipe "glynx::ruby"
+include_recipe "glynx::_database_common"
+include_recipe "postgresql::client"
+
 directory "/www"
 
 app_name = "glynx"
@@ -25,6 +30,7 @@ directory node[app_name]['catalog_silo_path'] do
   recursive true
 end
 
+package 'nfs-utils'
 service 'rpcbind' do
   action [:enable, :start]
 end
@@ -64,10 +70,10 @@ template "#{node[app_name]['shared_path']}/config/sunspot.yml" do
   owner account
   group account
   mode 00644
-  variables(
-    :production_host => node[app_name]["sunspot"]["hostname"],
-    :production_port => node[app_name]["sunspot"]["port"]
-  )
+  variables({
+    environment: node[app_name]['environment'],
+    solr: node[app_name]['sunspot']['solr']
+  })
 end
 
 template "#{node[app_name]['shared_path']}/config/database.yml" do
@@ -75,7 +81,10 @@ template "#{node[app_name]['shared_path']}/config/database.yml" do
   group account
   mode 00644
 
-  variables(node[app_name]["database"])
+  variables({
+    environment: node[app_name]['environment'],
+    database: node[app_name]["database"]
+  })
 end
 
 # template "#{node[app_name]['shared_path']}/config/git_hooks_env" do
