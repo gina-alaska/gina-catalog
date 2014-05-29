@@ -29,7 +29,8 @@ template "/etc/nginx/sites-available/#{app_name}_site" do
     name: app_name,
     user: node[app_name]['account'],
     proxies: proxies,
-    environment: node[app_name]['environment']
+    environment: node[app_name]['environment'],
+    socket: "#{node['unicorn']['listen']}/glynx.socket"
   })
 end
 

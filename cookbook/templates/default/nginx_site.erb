@@ -1,5 +1,5 @@
 upstream <%= @name %>_proxy {
-  server unix:<%= @install_path %>/tmp/sockets/unicorn.socket fail_timeout=0;
+  server unix:<%= @socket %> fail_timeout=0;
 }
 
 server {

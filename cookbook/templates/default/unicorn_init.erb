@@ -29,7 +29,6 @@ ENV=<%=@environment%>
  
 start() {
     echo -n $"Starting $prog: "
-    cd $RAILS_ROOT
     su - <%=@user%> -c "cd $RAILS_ROOT && chruby-exec 1.9.3 -- bundle exec unicorn_rails -c $UNICORN_CONF -E $ENV -D"
     RETVAL=$?
     echo
