@@ -14,6 +14,10 @@ class FGDC
   def abstract
     @xml.search('idinfo abstract').children.to_s
   end
+  
+  def published_at
+    @xml.search('idinfo citation citeinfo pubdate')
+  end
 
   def keywords
     @xml.search('idinfo keywords').search('themekey','placekey').children.collect { |tag|

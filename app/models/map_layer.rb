@@ -26,4 +26,8 @@ class MapLayer < ActiveRecord::Base
     })
     super(opts)
   end
+  
+  def to_s
+    self.name
+  end
 end
