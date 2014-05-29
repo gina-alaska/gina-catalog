@@ -51,3 +51,4 @@ db/data
 dump.rdb
 
 .powenv
+cookbook/.vagrant_ssh_config
