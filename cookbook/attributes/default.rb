@@ -1,12 +1,31 @@
 default['glynx']['environment'] = 'production'
 
-default['glynx']['application_path'] = "/www/glynx"
-default['glynx']['shared_path'] = "#{default['glynx']['application_path']}/shared"
-default['glynx']['config_path'] = "#{default['glynx']['shared_path']}/config"
-default['glynx']['initializers_path'] = "#{default['glynx']['config_path']}/initializers"
-default['glynx']['deploy_path'] = "#{default['glynx']['application_path']}/current"
-default['glynx']['catalog_silo_path'] = "/san/pod/catalog_silo"
-default['glynx']['dragonfly_uploads_path'] = "#{default['glynx']['shared_path']}/uploads"
+default['glynx']['paths'] = {
+  application:        '/www/glynx',
+  deploy:             '/www/glynx/current',
+  shared:             '/www/glynx/shared',
+  config:             '/www/glynx/shared/config',
+  initializers:       '/www/glynx/shared/config/initializers',
+  public:             '/www/glynx/shared/public'
+}
+
+default['glynx']['mounts'] = {
+  catalog_silo: {       
+    device: 'pod.gina.alaska.edu:/pod/nssi_silo',
+    fstype: 'nfs',
+    options: 'rw',
+    action: [:mount, :enable],
+    mount_point: '/san/pod/catalog_silo'
+  }
+}
+
+default['glynx']['links'] = {
+  archive: {name: '/www/glynx/shared/archive',    to: '/san/pod/catalog_silo/archives', action: :create},
+  repos:   {name: '/www/glynx/shared/repos',      to: '/san/pod/catalog_silo/git',      action: :create},
+  uploads: {name: '/www/glynx/shared/uploads',    to: '/san/pod/catalog_silo/uploads',  action: :create},
+  cms:     {name: '/www/glynx/shared/public/cms', to: '/san/pod/catalog_silo/cms',      action: :create}
+}
+
 
 default['glynx']['account'] = "webdev"
 
@@ -46,11 +65,11 @@ default['chruby']['default'] = '1.9.3-p448'
 
 default['unicorn']['preload_app'] = true
 default['unicorn']['config_path'] = '/etc/unicorn/glynx.rb'
-default['unicorn']['listen'] = "#{default['glynx']['shared_path']}/tmp/sockets"
-default['unicorn']['pid'] = "#{default['glynx']['shared_path']}/tmp/pids/unicorn.pid"
-default['unicorn']['stderr_path'] = "#{default['glynx']['shared_path']}/log/unicorn.stderr.log"
-default['unicorn']['stdout_path'] = "#{default['glynx']['shared_path']}/log/unicorn.stdout.log"
-default['unicorn']['working_directory'] = "#{default['glynx']['deploy_path']}"
+default['unicorn']['listen'] = "/www/glynx/shared/tmp/sockets"
+default['unicorn']['pid'] = "/www/glynx/shared/tmp/pids/unicorn.pid"
+default['unicorn']['stderr_path'] = "/www/glynx/shared/log/unicorn.stderr.log"
+default['unicorn']['stdout_path'] = "/www/glynx/shared/log/unicorn.stdout.log"
+default['unicorn']['working_directory'] = "/www/glynx/current"
 default['unicorn']['worker_timeout'] = 60
 default['unicorn']['before_fork'] = '
 defined?(ActiveRecord::Base) and

@@ -26,7 +26,7 @@ template "/etc/init.d/unicorn_glynx" do
   action :create
   mode 00755
   variables({
-    install_path: node['glynx']['deploy_path'],
+    install_path: node['glynx']['paths']['deploy'],
     user: node['glynx']['account'],
     unicorn_config_file: node['unicorn']['config_path'],
     environment: node['glynx']['environment']

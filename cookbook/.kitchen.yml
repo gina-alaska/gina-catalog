@@ -17,3 +17,9 @@ suites:
     attributes:
       glynx:
         account: "vagrant"
+        database:
+          password: nssi_dev_password
+      postgresql:
+        password:
+          postgres: "lskdjfalskjdhflaskjdhfls"
+          

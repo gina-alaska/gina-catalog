@@ -7,8 +7,8 @@ describe 'glynx::default' do
   # Example spec tests can be found at http://git.io/Fahwsw
   describe 'application' do
     it 'should create the application directory' do
-      directory(node['glynx']['application_path']).must_exist.with(:owner, node['glynx']['account'])
-      directory(node['glynx']['shared_path']).must_exist.with(:owner, node['glynx']['account'])
+      directory(node['glynx']['paths']['application']).must_exist.with(:owner, node['glynx']['account'])
+      directory(node['glynx']['paths']['shared']).must_exist.with(:owner, node['glynx']['account'])
     end
 
     it 'should create the sunspot config' do
@@ -19,10 +19,6 @@ describe 'glynx::default' do
       file(rails_dbconfig_file).must_exist.with(:owner, node['glynx']['account'])
     end
 
-    # it 'should create the git_hooks_env file' do
-    #   file(git_hooks_env_file).must_exist.with(:owner, node['glynx']['account'])
-    # end
-
     it 'should create the catalog initializer file' do
       file(catalog_initializer_file).must_exist.with(:owner, node['glynx']['account'])
     end
@@ -32,7 +28,7 @@ describe 'glynx::default' do
     end
 
     it 'should mount the catalog silo shared filesys' do
-      directory(node['glynx']['catalog_silo_path']).must_exist
+      directory(node['glynx']['mounts']['catalog_silo']['mount_point']).must_exist
     end
   end
 end

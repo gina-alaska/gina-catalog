@@ -56,9 +56,24 @@ Vagrant.configure("2") do |config|
           password: 'g0d0fn551',
           search_path: 'nssi_dev,public'
         },
-        shared_path: "/www/glynx/current",
-        config_path: "/www/glynx/current/config",
-        initializers_path: "/www/glynx/current/config/initializers",
+        paths: {
+          shared: "/www/glynx/current",
+          config: "/www/glynx/current/config",
+          initializers: "/www/glynx/current/config/initializers",
+          archive: "/www/glynx/current/archive",
+          uploads: "/www/glynx/current/uploads",
+          cms: "www/glynx/current/public/cms",
+          repos: "www/glynx/current/repos"
+        },
+        links: {
+          archive: {action: :nothing},
+          uploads: {action: :nothing},
+          cms:     {action: :nothing},
+          repos:   {action: :nothing}
+        },
+        mounts: {
+          catalog_silo: {action: :nothing}
+        },
         sunspot: {
           solr: {
             hostname: DEVVM_IP,
@@ -83,9 +98,7 @@ Vagrant.configure("2") do |config|
       "recipe[glynx::memcached]",
       "recipe[glynx::redis]",
       "recipe[glynx::web]",
-      "recipe[glynx::solr]",
-      # "recipe[glynx::default]",
-      # "recipe[glynx::vagrant]"
+      "recipe[glynx::solr]"
     ]
   end
 end

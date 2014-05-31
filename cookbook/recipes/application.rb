@@ -3,31 +3,73 @@ include_recipe "glynx::ruby"
 include_recipe "glynx::_database_common"
 include_recipe "postgresql::client"
 
-directory "/www"
-
 app_name = "glynx"
 account = node[app_name]['account']
 
-%w{ application_path shared_path config_path initializers_path  }.each do |dir|
-  directory node[app_name][dir] do
+# %w{ application_path shared_path config_path initializers_path  }.each do |dir|
+#   directory node[app_name][dir] do
+#     owner account
+#     group account
+#     mode 00755
+#     action :create
+#   end
+# end
+
+
+
+# %w{public solr}.each do |shared_dir|
+#   directory File.join(node[app_name]['shared_path'], shared_dir) do
+#     owner account
+#     group account
+#     mode 00755
+#   end
+# end
+
+
+# directory node[app_name]['catalog_silo_path'] do
+#   action :create
+#   recursive true
+# end
+
+# mount node[app_name]['catalog_silo_path'] do
+#   device 'pod.gina.alaska.edu:/pod/nssi_silo'
+#   fstype 'nfs'
+#   options 'rw'
+#   action [:mount, :enable]
+# end
+
+# link File.join(node[app_name]['shared_path'], 'archive') do
+#   to File.join(node[app_name]['catalog_silo_path'], 'archives')
+#   owner account
+#   group account
+# end
+
+# link File.join(node[app_name]['shared_path'], 'repos') do
+#   to File.join(node[app_name]['catalog_silo_path'], 'git')
+#   owner account
+#   group account
+# end
+
+# link File.join(node[app_name]['shared_path'], 'uploads') do
+#   to File.join(node[app_name]['catalog_silo_path'], 'uploads')
+#   owner account
+#   group account
+# end
+
+# link File.join(node[app_name]['shared_path'], 'public/cms') do
+#   to File.join(node[app_name]['catalog_silo_path'], 'cms')
+#   owner account
+#   group account
+# end
+
+node[app_name]['paths'].each do |name, path|
+  directory path do
     owner account
     group account
     mode 00755
     action :create
+    recursive true
   end
-end
-
-%w{public solr}.each do |shared_dir|
-  directory File.join(node[app_name]['shared_path'], shared_dir) do
-    owner account
-    group account
-    mode 00755
-  end
-end
-
-directory node[app_name]['catalog_silo_path'] do
-  action :create
-  recursive true
 end
 
 package 'nfs-utils'
@@ -35,38 +77,28 @@ service 'rpcbind' do
   action [:enable, :start]
 end
 
-mount node[app_name]['catalog_silo_path'] do
-  device 'pod.gina.alaska.edu:/pod/nssi_silo'
-  fstype 'nfs'
-  options 'rw'
-  action [:mount, :enable]
+node[app_name]['mounts'].each do |name, mnt|
+  directory mnt['mount_point'] do
+    recursive true
+  end
+  mount mnt['mount_point'] do
+    device mnt['device']
+    fstype mnt['fstype'] if mnt['fstype']
+    options mnt['options'] if mnt['options']
+    action mnt['action']
+  end
 end
 
-link File.join(node[app_name]['shared_path'], 'archive') do
-  to File.join(node[app_name]['catalog_silo_path'], 'archives')
-  owner account
-  group account
+node[app_name]['links'].each do |name, lnk|
+  link lnk['name'] do
+    to lnk['to']
+    owner account
+    group account    
+    action lnk['action']
+  end
 end
 
-link File.join(node[app_name]['shared_path'], 'repos') do
-  to File.join(node[app_name]['catalog_silo_path'], 'git')
-  owner account
-  group account
-end
-
-link File.join(node[app_name]['shared_path'], 'uploads') do
-  to File.join(node[app_name]['catalog_silo_path'], 'uploads')
-  owner account
-  group account
-end
-
-link File.join(node[app_name]['shared_path'], 'public/cms') do
-  to File.join(node[app_name]['catalog_silo_path'], 'cms')
-  owner account
-  group account
-end
-
-template "#{node[app_name]['shared_path']}/config/sunspot.yml" do
+template "#{node[app_name]['paths']['shared']}/config/sunspot.yml" do
   owner account
   group account
   mode 00644
@@ -76,11 +108,10 @@ template "#{node[app_name]['shared_path']}/config/sunspot.yml" do
   })
 end
 
-template "#{node[app_name]['shared_path']}/config/database.yml" do
+template "#{node[app_name]['paths']['shared']}/config/database.yml" do
   owner account
   group account
   mode 00644
-
   variables({
     environment: node[app_name]['environment'],
     database: node[app_name]["database"]
@@ -93,12 +124,11 @@ end
 #   mode 00644
 # end
 
-template "#{node[app_name]['shared_path']}/config/initializers/catalog.rb" do
+template "#{node[app_name]['paths']['shared']}/config/initializers/catalog.rb" do
   owner account
   group account
   mode 00644
-
-  variables({ deploy_path: node[app_name]['deploy_path'] })
+  variables({ deploy_path: node[app_name]['paths']['deploy'] })
 end
 
 # template "#{node[app_name]['shared_path']}/config/resque.yml" do
@@ -124,7 +154,7 @@ template "/home/#{account}/.bundle/config" do
 end
 
 %w{log tmp system tmp/pids tmp/sockets}.each do |dir|
-  directory "#{node[app_name]['shared_path']}/#{dir}" do
+  directory "#{node[app_name]['paths']['shared']}/#{dir}" do
     owner node[app_name]['account']
     group node[app_name]['account']
     mode 0755
@@ -132,7 +162,7 @@ end
 end
 
 link "/home/#{account}/#{app_name}" do
-  to node[app_name]['deploy_path']
+  to node[app_name]['paths']['deploy']
   owner node[app_name]['account']
   group node[app_name]['account']
 end
