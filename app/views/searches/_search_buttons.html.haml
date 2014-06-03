@@ -10,7 +10,8 @@
     .span6
       = select_tag 'search[field]', options_for_select(sort_select, @search_params[:field]), class: "btn span12", id: 'sort', style: "margin-bottom: 0px;"
     .span6
-      = select_tag 'search[direction]', options_for_select(direction_select, @search_params[:direction]), { disabled: true, class: "btn span12", id: 'sort_dir', style: "margin-bottom: 0px;" }
+      - disable_select = @search_params[:field] == "relevance" ? true : false
+      = select_tag 'search[direction]', options_for_select(direction_select, @search_params[:direction]), { disabled: disable_select, class: "btn span12", id: 'sort_dir', style: "margin-bottom: 0px;" }
   .row-fluid{style: "margin-top: 5px;"}
     .span6
       = select_tag :limit, options_for_select(limit_select, @limit), class: "btn span12", style: "margin-bottom: 0px;"
