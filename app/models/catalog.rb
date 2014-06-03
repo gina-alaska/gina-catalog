@@ -286,12 +286,29 @@ class Catalog < ActiveRecord::Base
       filtered_words = ['a', 'the', 'and', 'an', 'of', 'i', '' ]
       title.downcase.split(/\s+/).delete_if { |word| filtered_words.include? word }.join(' ').gsub(/["',]/,'')
     end
+
     string :agency_sort do
       source_agency.try(&:name)
     end
     
-    string :source_agency_acronym do
+    string :source_agency_acronym_sort do
       source_agency.try(&:acronym)
+    end
+
+    string :created_at_sort do
+      created_at
+    end
+
+    string :updated_at_sort do
+      updated_at
+    end
+
+    string :type_sort do
+      type
+    end
+
+    string :status_sort do
+      status
     end
   end
   
