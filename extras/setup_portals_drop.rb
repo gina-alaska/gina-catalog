@@ -3,7 +3,15 @@ class SetupPortalsDrop < Liquid::Drop
     @setup = setup
   end
 
-  def list
+  def children
     @setup.descendants
+  end
+
+  def parent
+    @setup.parent
+  end
+
+  def siblings
+    @setup.siblings
   end
 end
