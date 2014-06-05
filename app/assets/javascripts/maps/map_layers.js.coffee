@@ -17,7 +17,7 @@ class @MapLayers
     
   build_arc_layer: ->
     console.log 'test'
-    new OpenLayers.Layer.ArcGIS93Rest(@config['name'], @config['url'], { transparent: true, layers: @config['layers'], srs: 'EPSG:3857', format: ''  }, { isBaseLayer: false })  
+    new OpenLayers.Layer.ArcGIS93Rest(@config['name'], @config['url'], { transparent: true, layers: @config['layers']  }, { isBaseLayer: false })  
     
   build_tile_layer: ->
     opts = {
