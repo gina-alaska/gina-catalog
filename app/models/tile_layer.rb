@@ -1,8 +1,8 @@
 class TileLayer < MapLayer
   validates :projections, presence: true
   
-  def supports?(projection)
-    self.projection == projection ? true : false
+  def supports?(proj)
+    self.projections.split(',').include?(proj)
   end
 
   def supports_layers?
