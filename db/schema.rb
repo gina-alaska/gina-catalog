@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140506174215) do
+ActiveRecord::Schema.define(:version => 20140605004054) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -1040,6 +1040,7 @@ ActiveRecord::Schema.define(:version => 20140506174215) do
     t.string   "uuid"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+    t.string   "description"
   end
 
   create_table "use_agreements", :force => true do |t|
