@@ -8,7 +8,7 @@ class Image < ActiveRecord::Base
   has_many :agencies
   
   def to_param
-    "#{self.id}-#{File.basename(self.file.name.to_s, '.*')}"
+    "#{self.id}-#{File.basename(self.file.try(:name).try(:to_s), '.*')}"
   end
   
   def raw_url
