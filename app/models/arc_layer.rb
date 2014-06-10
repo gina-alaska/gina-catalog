@@ -10,4 +10,16 @@ class ArcLayer < MapLayer
   def to_s
     "ARC :: #{super}"
   end
+
+  def projection_placeholder
+    "Leave blank to support all projections"
+  end
+
+  def layers_placeholder
+    "Leave blank to include all layers"
+  end
+
+  def url_help
+    ""
+  end
 end

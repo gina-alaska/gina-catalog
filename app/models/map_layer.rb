@@ -31,7 +31,19 @@ class MapLayer < ActiveRecord::Base
     ""
   end
 
+  def projection_placeholder
+    ""
+  end
+
+  def layers_placeholder
+    ""
+  end
+
   def supports_layers?
     true
+  end
+
+  def url_help
+    ""
   end
 end
