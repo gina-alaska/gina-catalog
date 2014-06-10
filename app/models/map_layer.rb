@@ -16,15 +16,19 @@ class MapLayer < ActiveRecord::Base
     self.projections.include?(projection)
   end
   
-  def to_s
-    "#{self.name} (#{self.type})"
-  end
-  
   def as_json(opts)
     opts.merge!({
       :only => [:id, :type, :name, :url, :projections, :layers, :catalog_id, :bounds, :created_at, :updated_at]
     })
     super(opts)
+  end
+
+  def layers_help
+    ""
+  end
+
+  def supports_layers?
+    true
   end
   
   def to_s

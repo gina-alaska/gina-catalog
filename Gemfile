@@ -47,7 +47,6 @@ gem "haml-rails"
 gem 'grit', '>= 2.4.1'
 gem 'pdfkit'
 gem 'ancestry', '~> 1.2.4'
-gem "recaptcha", :require => "recaptcha/rails"
 
 # Use unicorn as the web server
 gem 'unicorn'

@@ -6,7 +6,7 @@
         %li{ style: 'margin-bottom: 2px;' }
           .row-fluid
             .span2
-              - disabled = layer.supports?(current_setup.projection) ? '' : 'disabled'
+              - disabled = layer.supports?(current_setup.record_projection) ? '' : 'disabled'
               = link_to map_layer_path(layer, :json), class: "map_layer_btn btn btn-block #{disabled}", data: { openlayers_action: 'preview' }, title: 'Preview map layer' do
                 %i.check.icon-check-empty
             .span10

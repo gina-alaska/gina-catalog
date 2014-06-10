@@ -12,6 +12,10 @@ NSCatalog::Application.routes.draw do
     resources :catalogs do
       resources :repos
       resources :map_layers
+      resources :tile_layers, controller: 'MapLayers'
+      resources :wms_layers, controller: 'MapLayers'
+      resources :arc_layers, controller: 'MapLayers'
+
       member do
         put :publish
         put :unpublish

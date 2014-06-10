@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140506174215) do
+ActiveRecord::Schema.define(:version => 20140129184150) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -176,7 +176,7 @@ ActiveRecord::Schema.define(:version => 20140506174215) do
     t.integer "catalog_id"
   end
 
-  create_table "catalog_tags", :force => true do |t|
+  create_table "catalog_tags", :id => false, :force => true do |t|
     t.integer "tag_id"
     t.integer "catalog_id"
   end
@@ -282,8 +282,6 @@ ActiveRecord::Schema.define(:version => 20140506174215) do
     t.boolean  "request_contact_info", :default => false
     t.boolean  "require_contact_info", :default => false
     t.string   "status"
-    t.string   "url_template"
-    t.string   "url_description"
   end
 
   create_table "data_sources", :force => true do |t|
@@ -478,8 +476,6 @@ ActiveRecord::Schema.define(:version => 20140506174215) do
     t.string   "asset_type"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "valid_link",      :default => true
-    t.date     "last_checked_at"
   end
 
   create_table "locations", :force => true do |t|
@@ -867,8 +863,8 @@ ActiveRecord::Schema.define(:version => 20140506174215) do
     t.string   "by_line"
     t.string   "url"
     t.string   "logo_uid"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
     t.string   "contact_email"
     t.text     "default_invite"
     t.text     "analytics_account"
@@ -896,7 +892,6 @@ ActiveRecord::Schema.define(:version => 20140506174215) do
     t.boolean  "permissions_enabled", :default => true
     t.string   "location_projection"
     t.string   "tumblr_url"
-    t.boolean  "use_recaptcha",       :default => false
   end
 
   create_table "setups_snippets", :id => false, :force => true do |t|
@@ -977,10 +972,8 @@ ActiveRecord::Schema.define(:version => 20140506174215) do
   end
 
   create_table "tags", :force => true do |t|
-    t.string   "text"
-    t.boolean  "highlight",  :default => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string  "text"
+    t.boolean "highlight", :default => false
   end
 
   create_table "tasks", :force => true do |t|

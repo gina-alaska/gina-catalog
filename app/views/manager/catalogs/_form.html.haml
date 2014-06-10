@@ -72,10 +72,23 @@
       #map_layers.tab-pane
         .navbar.navbar-static-top
           .navbar-inner
-            .navbar-text.pull-left Map layers
-            = link_to new_manager_catalog_map_layer_path(@catalog), class: 'btn btn-success pull-right', remote: true do
-              %i.icon-plus
-              Add map layer
+            .navbar-text.pull-left
+              Map layers
+            .pull-right.btn-group
+              = link_to "#", class: 'btn btn-success dropdown-toggle', data: { toggle: "dropdown" }, remote: true do
+                %i.icon-plus
+                Add map layer
+                %span.caret
+              %ul.dropdown-menu
+                %li
+                  = link_to new_manager_catalog_map_layer_path(@catalog, layer_type: "WMS"), remote: true do
+                    WMS Layer
+                %li
+                  = link_to new_manager_catalog_map_layer_path(@catalog, layer_type: "TILE"), remote: true do
+                    TILE Layer
+                %li
+                  = link_to new_manager_catalog_map_layer_path(@catalog, layer_type: "ARC"), remote: true do
+                    ARC Layer
         .fields
           = render '/manager/map_layers/list', map_layers: @catalog.map_layers
           
