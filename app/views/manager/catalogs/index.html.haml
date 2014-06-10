@@ -103,10 +103,8 @@
 
   function CollToggle(coll_id) {  
     check_list = [];
-    $('input:checkbox').attr("checked", function() {
-      if ($(this).attr("checked")) {
-        check_list.push($(this).val());
-      }
+    $('input:checkbox:checked').each( function(index,item) {
+      check_list.push($(item).val());
     });
     
     $.ajax({

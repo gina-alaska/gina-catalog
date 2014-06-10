@@ -22,11 +22,11 @@ class Tag < ActiveRecord::Base
     self.text
   end
 
-  def self.match_or_new(text)
+  def self.match_or_create(text)
     if match = Tag.where("text ILIKE ?", text).first
       return match
     else
-      return Tag.new(text: text)
+      return Tag.create(text: text)
     end
   end
 end

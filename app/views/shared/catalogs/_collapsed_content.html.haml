@@ -45,6 +45,8 @@
   / - else
   /   %dd= link_to item, item, :target => :_blank
   
+  = render '/shared/catalogs/map_layers_info', catalog: item
+  
   - unless item.owner_setup.id == current_setup.id
     %dt Source Portal
     %dd
