@@ -1,14 +1,27 @@
 - unless item.source_agency.nil?
-  %dt Primary Agency
-  %dd= item.source_agency.name
-  %br
+  %table
+    %tr
+      %td.span3
+        %dt Primary Agency
+      %td.span6
+        %dd= item.source_agency.name
+      %td
+        %dt Type
+      %td
+        %dd= item.source_agency.category
 
-- unless item.funding_agency.nil?
-  %dt Funding Agency
-  %dd= item.funding_agency.name
-  %br
-
+    - unless item.funding_agency.nil?
+      %tr
+        %td
+          %dt Funding Agency
+        %td
+          %dd= item.funding_agency.name
+        %td
+          %dt Type
+        %td
+          %dd= item.funding_agency.category
 - unless item.agencies.empty?
+  %br
   %dt Other Agencies
   %dd= item.agencies.pluck(:name).join(', ')
   %br
