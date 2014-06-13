@@ -80,4 +80,4 @@
     =select_tag 'search[collection_ids]', options_from_collection_for_select(current_setup.collections, :id, :name, @search[:collection_ids]), data: {placeholder: 'Collections', ui: 'select2'}, class: 'span12', :include_blank => true, tabindex: 21, multiple: true
   .span6
     =label_tag 'search[owner_setup_id]', 'Record Source'
-    =select_tag 'search[owner_setup_id]', options_for_select(@sources, @search[:owner_setup_id]), class: 'span12', data: {placeholder: 'All Sources'}
+    =select_tag 'search[owner_setup_id]', options_for_select(@sources, @search[:owner_setup_id]), include_blank: true, class: 'span12', data: {placeholder: 'All Sources'}

@@ -73,10 +73,6 @@ class SearchesController < ApplicationController
     @limit = params[:limit] || 30
     @pagenum = params[:page] || 1
     
-    @search_params["owner_setup_id"] = "" if @search_params["owner_setup_id"] == current_setup.id.to_s
-
-    Rails.logger.info(@search_params)
-
     advanced_opts = @search_params.reject { |k,v| v.blank? or ['q', 'collection_ids', 'order_by', 'limit', 'field', 'direction', 'tags', 'bbox', 'published_only'].include?(k.to_s) }
     @is_advanced = advanced_opts.keys.size > 0
     
