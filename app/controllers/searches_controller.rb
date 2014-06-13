@@ -4,7 +4,10 @@ class SearchesController < ApplicationController
   def show
     @agencies = Agency.select([:name,:id]).collect{|a| [a.name, a.id]}.group_by{|a| a.first.first }
      #Agency.all #.group_by{|a| a.name[0]}
-  
+    setup_ids = current_setup.self_and_descendants.pluck(:id)
+    source_catalogs = Catalog.joins(:setups).where(setups: {id: setup_ids}).uniq.pluck(:owner_setup_id)
+    @sources = Setup.where(id: source_catalogs).order(:title).collect{|a| [a.title, a.id]}
+
     search_catalog
     
     respond_to do |format|
@@ -70,6 +73,10 @@ class SearchesController < ApplicationController
     @limit = params[:limit] || 30
     @pagenum = params[:page] || 1
     
+    @search_params["owner_setup_id"] = "" if @search_params["owner_setup_id"] == current_setup.id.to_s
+
+    Rails.logger.info(@search_params)
+
     advanced_opts = @search_params.reject { |k,v| v.blank? or ['q', 'collection_ids', 'order_by', 'limit', 'field', 'direction', 'tags', 'bbox', 'published_only'].include?(k.to_s) }
     @is_advanced = advanced_opts.keys.size > 0
     
