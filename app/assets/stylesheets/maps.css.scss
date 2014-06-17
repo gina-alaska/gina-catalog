@@ -74,6 +74,24 @@
   }  
 }
 
+#record_map.hidden {
+  display: none;
+}
+
+#record_map.small {
+  min-height: 200px;
+  height: 200px;
+  #map_canvas {
+    height: 200px;
+  }
+}
+
+#record_map.large {
+  #map_canvas {
+    height: 500px;
+  }
+}
+
 .search.affix {
   #map {
     position: fixed;

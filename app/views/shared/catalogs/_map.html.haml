@@ -3,6 +3,7 @@
   
   #record_map{ data: { map: 'RecordMap', target: '#map_canvas' } }
     #map_canvas{ data: { projection: map_projection, displayProjection: 'EPSG:4326', google: current_setup.google_layers.to_s, layers: ["TILE.#{map_projection}.*"] } }
+
   :javascript
     $(document).ready(function() {
       var mapwrap = $('[data-map="RecordMap"]');
