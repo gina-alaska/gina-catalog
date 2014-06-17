@@ -93,6 +93,8 @@ class Manager::CatalogsController < ManagerController
     @catalog.locations.build
     @catalog.download_urls.build
     @catalog.uploads.build
+
+    @full_record ||= params["full_record"]
     
     respond_to do |format|
       format.html

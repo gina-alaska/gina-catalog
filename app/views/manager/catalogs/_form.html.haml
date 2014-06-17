@@ -114,7 +114,11 @@
             = f.fields_for :download_urls
             
       .form-actions
-        = link_to [:manager, @catalog], class: 'btn btn-inverse' do
+        - if @full_record
+          - back_path = [:manager, @catalog]
+        -else
+          - back_path = manager_catalogs_path
+        = link_to back_path, class: 'btn btn-inverse' do
           %i.icon-arrow-left.icon-white
           Back
     
