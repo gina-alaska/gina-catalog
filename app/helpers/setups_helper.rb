@@ -11,4 +11,17 @@ module SetupsHelper
         "No Projection"
     end
   end
+
+  def display_map_size(size)
+    case(size)
+      when "normal"
+        "Default"
+      when "large"
+        "Large"
+      when "small"
+        "Small"
+      else 
+        "Unknown map size #{size}"
+    end
+  end
 end
