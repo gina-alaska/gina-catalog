@@ -867,8 +867,8 @@ ActiveRecord::Schema.define(:version => 20140617012953) do
     t.string   "by_line"
     t.string   "url"
     t.string   "logo_uid"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
     t.string   "contact_email"
     t.text     "default_invite"
     t.text     "analytics_account"
@@ -897,7 +897,7 @@ ActiveRecord::Schema.define(:version => 20140617012953) do
     t.string   "location_projection"
     t.string   "tumblr_url"
     t.boolean  "use_recaptcha",       :default => false
-    t.string   "record_map_size"
+    t.string   "record_map_size",     :default => "normal"
   end
 
   create_table "setups_snippets", :id => false, :force => true do |t|
