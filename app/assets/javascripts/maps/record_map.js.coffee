@@ -2,7 +2,7 @@ map_size = { hidden: false, large: false, fullscreen: false }
 map_size_target = null
 
 class @RecordMap extends OpenlayersMap
-  constructor: (@el) ->
+  constructor: (@el, size='normal') ->
     super(@el)
     
     @btnHandlers = {}
@@ -12,7 +12,6 @@ class @RecordMap extends OpenlayersMap
     @setupRecordMap()
     @initListeners()
     @setupHandlers()
-    
     if map_size_target 
       for size, active of map_size when active is true
         @expandMap(map_size_target, size) 
@@ -20,6 +19,9 @@ class @RecordMap extends OpenlayersMap
     # @loadMapState()
     @loadFeatures()
     
+
+    if size? and size != 'normal'
+      $("[data-openlayers-action='expand'][data-size='#{size}']").click()
   # end constructor
   
   initListeners: =>
