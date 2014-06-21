@@ -3,6 +3,14 @@
     %tr
       %th &nbsp;
   %tbody
+    %tr
+      %td
+        %dl.dl-horizontal.contact-info
+          .row-fluid
+            .span12
+              .item
+                %dt{style: "width: 190px;"} Total Downloads: &nbsp; 
+                %dd= catalog.downloads.count
     - catalog.downloads.order('created_at DESC').limit(50).each do |download|
       - contact = download.loggable
       %tr
