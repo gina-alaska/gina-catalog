@@ -8,7 +8,7 @@ class Image < ActiveRecord::Base
   has_many :agencies
   
   def to_param
-    if self.file.nil?
+    if self.file.name.nil? or self.file.name.empty?
       self.id
     else
       "#{self.id}-#{File.basename(self.file.try(:name).try(:to_s), '.*')}"

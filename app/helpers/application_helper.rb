@@ -9,6 +9,16 @@ module ApplicationHelper
     "http://gravatar.com/avatar/#{gravatar_id}.png?s=#{size}&d=#{CGI.escape(default_url)}"
   end
   
+  def collect_image_urls(images)
+    imgs = []
+    images.each do |image| 
+     next if image.file_uid.nil?
+     imgs << ["<img src=\"#{cms_media_url(image.file_uid, size: '50x50#')}\" /> #{image.title} #{(' - ' + truncate(image.description)) unless image.description.empty?}", image.raw_url]
+    end
+  
+    imgs
+  end
+  
   def flashes
     flash.map { |type, content|
       content_tag(:div, content, :class => "alert alert-#{type}")
