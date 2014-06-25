@@ -1,0 +1,23 @@
+= "Record Type: "
+- if item.type
+  = item.type + "; "
+- else
+  ="No record type defined; "
+
+= "Start Date: "
+- if item.start_date
+  = item.start_date.strftime("%D") + "; "
+- else
+  ="No record start date defined; "
+
+= "End Date: "
+- if item.end_date
+  = item.end_date.strftime("%D") + "; "
+- else
+  ="No record end date defined; "
+
+= "Status: "
+- if item.status
+  = item.status
+- else
+  ="No record status defined; "
