@@ -2,10 +2,10 @@
 - if !item.geokeywords.empty?
   = item.geokeywords.collect{|loc| loc.name}.join(", ") + "; "
 - else
-  ="No geokeywords assigned; "
+  ="none; "
 
 = "Location(s): "
 - if !item.locations.empty?
   = item.locations.collect{|loc| loc.name}.join(", ") + "; "
 - else
-  ="No locations assigned; "
+  ="none"

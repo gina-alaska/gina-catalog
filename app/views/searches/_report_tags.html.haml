@@ -1,5 +1,5 @@
 = "Tags: "
-- if item.tags
-  = item.tags.collect{|tag| tag.text}.join(", ") + "; "
+- if !item.tags.empty?
+  = item.tags.collect{|tag| tag.text}.join(", ")
 - else
-  ="No tags assigned; "
+  ="none "

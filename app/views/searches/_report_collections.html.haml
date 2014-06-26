@@ -1,5 +1,5 @@
 = "Collection(s): "
 - if !item.collections.empty?
-  = item.collections.collect{|col| col.name}.join(", ") + "; "
+  = item.collections.collect{|col| col.name}.join(", ")
 - else
-  ="No collections assigned; "
+  ="none"

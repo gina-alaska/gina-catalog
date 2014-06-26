@@ -2,9 +2,9 @@
 - if item.primary_contact
   = "#{item.primary_contact.first_name} #{item.primary_contact.last_name}; "
 - else
-  ="No primary contact defined; "
+  ="none; "
 = "Other contact(s): "
-- if !item.contacts.nil?
-  = item.contacts.collect{|contact| "#{contact.first_name} #{contact.last_name}"}.join(", ") + "; "
+- if !item.contacts.empty?
+  = item.contacts.collect{|contact| "#{contact.first_name} #{contact.last_name}"}.join(", ")
 - else
-  ="No other contact(s) defined"
+  ="none"
