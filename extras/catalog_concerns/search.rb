@@ -2,7 +2,7 @@ module CatalogConcerns
   module Search
     extend ActiveSupport::Concern
     
-    SORT_FIELDS = ["title", "agency", "relevance"]
+    SORT_FIELDS = ["title", "type", "status", "agency", "relevance", "created_at", "updated_at", "source_agency_acronym"]
 
     module InstanceMethods
       def search_params(search={})
@@ -17,7 +17,7 @@ module CatalogConcerns
         search[:field] = "relevance" unless SORT_FIELDS.include?(search[:field])
         search[:direction] = "ascending" unless %w{ascending descending}.include?(search[:direction])
       
-        if (search['q'].nil? or search['q'].blank?)
+        if (search['q'].nil? or search['q'].blank?) and (search['field'].blank? or search['direction'].blank?)
           search[:order_by] = "title_sort-ascending"
         else
           search.delete(:order_by)

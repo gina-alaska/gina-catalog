@@ -1,5 +1,5 @@
-- sortable = [['Sort: Relevance', ''],['Sort: Title', 'title_sort'], ['Sort: Type', 'record_type'], ['Sort: Status', 'status'], ['Sort: Agency', 'source_agency_acronym']]
-- sortdir = [['Ascending', 'asc'], ['Descending', 'desc']]
+- sortable = [['Sort: Title', 'title', {'data-direction' => "ascending"}],['Sort: Relevance', 'relevance', {'data-direction' => "ascending"}], ['Sort: Type', 'type', {'data-direction' => "ascending"}], ['Sort: Status', 'status', {'data-direction' => "ascending"}], ['Sort: Agency', 'source_agency_acronym', {'data-direction' => "ascending"}], ['Sort: Record Age', 'created_at', {'data-direction' => "ascending"}], ['Sort: Last Updated', 'updated_at', {'data-direction' => "descending"}]]
+- sortdir = [['Ascending', 'ascending'], ['Descending', 'descending']]
 
 = form_tag manager_catalogs_path, method: 'GET', style: "margin: 0px;" do
   = hidden_field_tag 'search[editable]', @search[:editable] || 'false', id: 'search_editable'
@@ -16,9 +16,9 @@
       %button.btn{ type: "button", class: @search[:unpublished] == 'true' ? 'active' : '', data: { toggle: 'button', action: 'button-toggle', target: '#search_unpublished' }, title: 'Show unpublished records only', tabindex: 4 }
         %i.icon-folder-close-alt              
     .btn-group
-      = select_tag "sort", options_for_select(sortable, params[:sort]), class: 'span2', title: "Sort by Column", tabindex: 5
+      = select_tag "search[field]", options_for_select(sortable, @search["field"]), class: 'span3', title: "Sort by Column", tabindex: 5, id: "sort"
     .btn-group
-      = select_tag "sort_direction", options_for_select(sortdir, @sortdir), class: 'span2', title: "Sort Direction", tabindex: 6
+      = select_tag "search[direction]", options_for_select(sortdir, @search["direction"]), class: 'span2', title: "Sort Direction", tabindex: 6, id: "sort_dir"
     .pull-right
       .btn-group
         = link_to '.advanced-options', class: 'btn', data: { toggle: 'collapse' }, tabindex: 7 do
@@ -29,3 +29,14 @@
     %fieldset{ class: @is_advanced ? 'in' : '' }
       %legend Advanced Options
       = render 'advanced_search'
+
+:javascript
+  $("select#sort").on('change', function(e) {
+    if($(this).val() == "relevance") {
+      $("select#sort_dir").prop("disabled", true)
+    } else {
+      $("select#sort_dir").prop("disabled", false)
+    }
+    var dir = $("select#sort option:selected").data('direction');
+    $("select#sort_dir").val(dir);
+  })
