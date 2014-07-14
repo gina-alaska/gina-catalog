@@ -1,0 +1,10 @@
+= "Primary Contact: "
+- if item.primary_contact
+  = "#{item.primary_contact.first_name} #{item.primary_contact.last_name}; "
+- else
+  ="none; "
+= "Other contact(s): "
+- if !item.contacts.empty?
+  = item.contacts.collect{|contact| "#{contact.first_name} #{contact.last_name}"}.join(", ")
+- else
+  ="none"

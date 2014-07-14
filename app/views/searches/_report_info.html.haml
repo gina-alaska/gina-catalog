@@ -1,0 +1,17 @@
+= "Start Date: "
+- if item.start_date
+  = item.start_date.strftime("%D") + "; "
+- else
+  ="none; "
+
+= "End Date: "
+- if item.end_date
+  = item.end_date.strftime("%D") + "; "
+- else
+  ="none; "
+
+= "Status: "
+- if item.status
+  = item.status
+- else
+  ="none; "

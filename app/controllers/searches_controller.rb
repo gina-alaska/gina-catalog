@@ -36,7 +36,7 @@ class SearchesController < ApplicationController
 
     respond_to do |format|
       format.html do
-        render layout: "pdf"
+        render "report", locals: {results: @results}, layout: 'pdf.html'
       end
 
       format.json
