@@ -20,6 +20,10 @@ class Manager::CatalogsController < ManagerController
     @sort = params[:sort] || ''
     @sortdir = params[:sort_direction] || "ascending"
 
+    setup_ids = current_setup.self_and_descendants.pluck(:id)
+    source_catalogs = Catalog.joins(:setups).where(setups: {id: setup_ids}).uniq.pluck(:owner_setup_id)
+    @sources = Setup.where(id: source_catalogs).order(:title).collect{|a| [a.title, a.id]}
+    
     @search = search_params(params[:search])
 
     advanced_opts = @search.reject { |k,v| v.blank? or ['q', 'collection_id', 'order_by', 'sds', 'unpublished', 'editable'].include?(k) }

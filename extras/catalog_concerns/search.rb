@@ -115,6 +115,7 @@ module CatalogConcerns
           end
           with :primary_contact_id, search[:primary_contact_id] if search[:primary_contact_id].present?
           with :contact_ids, search[:contact_ids] if search[:contact_ids].present?
+          with :owner_setup_id, search[:owner_setup_id] if search[:owner_setup_id].present?
           with :geokeywords_name, search[:region] if search[:region].present?
           with :data_types, search[:data_types] if search[:data_types].present?
           with :agency_types, search[:agency_types] if search[:agency_types].present?
