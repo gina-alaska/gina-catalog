@@ -38,6 +38,8 @@ class Manager::CatalogsController < ManagerController
   end
   
   def show
+    @back_path = [:manager, @catalog]
+
     respond_to do |format|
       format.html
     end
@@ -94,7 +96,11 @@ class Manager::CatalogsController < ManagerController
     @catalog.download_urls.build
     @catalog.uploads.build
 
-    @full_record ||= params["full_record"]
+    if params["full_record"]
+      @back_path = [:manager, @catalog]
+    else
+      @back_path = manager_catalogs_path
+    end
     
     respond_to do |format|
       format.html
