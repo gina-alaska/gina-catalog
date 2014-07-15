@@ -4,12 +4,7 @@
       .btn-group{ id: dom_id(catalog, 'manage')}
         = render 'shared/catalogs/manage_button', catalog: catalog
       .btn-group
-        %button.btn{ data: { "openlayers-action" => 'expand', target: '#record_map', size: 'hidden' , title: 'Toggle Map', content: "Turn the map on and off.", trigger: "hover", placement: "bottom", toggle: "popover", container: "#record_map" }}
-          %i.icon-eye-close
-        %button.btn{ data: { "openlayers-action" => 'expand', target: '#record_map', size: 'large', title: 'Large Map', content: "Display large size map.", trigger: "hover", placement: "bottom", toggle: "popover", container: "#record_map" }}
-          %i.icon-resize-full
-        %button.btn{ data: { "openlayers-action" => 'expand', target: '#record_map', size: 'small', title: 'Small Map', content: "Display small size map.", trigger: "hover", placement: "bottom", toggle: "popover", container: "#record_map" }}
-          %i.icon-resize-small
+        = render 'shared/catalogs/map_size_buttons', catalog: catalog
 
         
     
