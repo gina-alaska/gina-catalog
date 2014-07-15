@@ -14,6 +14,10 @@ class Upload < ActiveRecord::Base
   def create_uuid
     self.uuid = UUIDTools::UUID.md5_create(UUIDTools::UUID_URL_NAMESPACE, self.file_uid).to_s
   end
+
+  def download_count
+    self.logs.count
+  end
   
   def to_param
     self.uuid
