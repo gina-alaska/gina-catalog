@@ -50,7 +50,7 @@
   - unless item.owner_setup.id == current_setup.id
     %dt Source Portal
     %dd
-      = link_to "//#{item.owner_setup.default_url}" do
+      = link_to "//#{item.owner_setup.default_url.url}" do
         = item.owner_setup.full_title
     %br
   

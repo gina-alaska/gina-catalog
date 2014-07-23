@@ -27,13 +27,20 @@ class Image < ActiveRecord::Base
   alias_method :image_url, :raw_url
   
   def thumbnail(size = '640x480#')
-    if self.file.try(:image?) and self.file_stored? and !%w{ pdf kmz kml }.include?(self.file.format)
-      self.file.thumb(size).encode(:png)
-    else
-      Image.document_image
-    end
-  rescue Dragonfly::Job::Fetch::NotFound
-    Image.document_image    
+  #   if self.file.try(:image?) and self.file_stored? and !%w{ pdf kmz kml }.include?(self.file.format)
+  #     self.file.thumb(size).encode(:png)
+  #   else
+  #     Image.document_image
+  #   end
+  # rescue Dragonfly::Job::Fetch::NotFound
+  #   Image.document_image    
+  # end
+  
+    OpenStruct.new({ url: helpers.cms_media_path(self.file_uid, size: size) })
+  end
+
+  def helpers
+    Rails.application.routes.url_helpers
   end
   
   def self.document_image
