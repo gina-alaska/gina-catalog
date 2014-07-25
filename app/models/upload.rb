@@ -23,4 +23,8 @@ class Upload < ActiveRecord::Base
   def url
     self.file.try(:remote_url)
   end
+  
+  def to_s
+    self.file.try(:name)
+  end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140506174215) do
+ActiveRecord::Schema.define(:version => 20140724194313) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -26,9 +26,11 @@ ActiveRecord::Schema.define(:version => 20140506174215) do
     t.text     "log"
     t.integer  "loggable_id"
     t.string   "loggable_type"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
     t.integer  "catalog_id"
+    t.integer  "setup_id"
+    t.integer  "contact_info_id"
   end
 
   create_table "addresses", :force => true do |t|
@@ -867,8 +869,8 @@ ActiveRecord::Schema.define(:version => 20140506174215) do
     t.string   "by_line"
     t.string   "url"
     t.string   "logo_uid"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
     t.string   "contact_email"
     t.text     "default_invite"
     t.text     "analytics_account"
@@ -897,6 +899,7 @@ ActiveRecord::Schema.define(:version => 20140506174215) do
     t.string   "location_projection"
     t.string   "tumblr_url"
     t.boolean  "use_recaptcha",       :default => false
+    t.string   "record_map_size",     :default => "normal"
   end
 
   create_table "setups_snippets", :id => false, :force => true do |t|
@@ -1040,6 +1043,7 @@ ActiveRecord::Schema.define(:version => 20140506174215) do
     t.string   "uuid"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+    t.string   "description"
   end
 
   create_table "use_agreements", :force => true do |t|
