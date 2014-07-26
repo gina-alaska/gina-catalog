@@ -31,6 +31,7 @@ class Setup < ActiveRecord::Base
   has_many :collections
   has_many :contacts
   has_many :urls, class_name: 'SiteUrl', dependent: :destroy, order: "id ASC"
+  has_one :default_url, class_name: 'SiteUrl', conditions: { default: true }
   has_many :memberships, dependent: :destroy
   has_many :users, through: :memberships
   has_many :roles, dependent: :destroy
@@ -63,10 +64,6 @@ class Setup < ActiveRecord::Base
       'linkedin_url' => self.linkedin_url,
       'tumblr_url' => self.tumblr_url
   	}
-  end
-  
-  def default_url
-    self.urls.where(default: true).first.try(:url) || self.urls.first.try(:url)
   end
   
   def clone(source = nil)

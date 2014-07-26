@@ -1,0 +1,20 @@
+source 'https://api.berkshelf.com'
+group :integration do
+  cookbook 'minitest-handler'
+end
+
+cookbook 'chruby'
+cookbook 'yum-gina', git: 'git@github.com:gina-alaska/yum-gina-cookbook'
+cookbook 'yum-epel'
+cookbook 'unicorn'
+cookbook 'nginx'
+cookbook 'postgresql'
+cookbook 'postgis', github: 'realityforge/chef-postgis'
+cookbook 'database'
+cookbook 'redisio'
+cookbook 'runit'
+cookbook 'java'
+cookbook 'memcached'
+cookbook 'now'
+
+metadata

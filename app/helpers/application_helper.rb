@@ -25,6 +25,11 @@ module ApplicationHelper
     }.join('').html_safe
   end
   
+  def default_sites
+    urls = %w{ alaska.portal.gina.alaska.edu catalog.northslope.org gina-catalog.dev epscor.alaska.edu northern.epscor.alaska.edu southcentral.epscor.alaska.edu southeast.epscor.alaska.edu }    
+    Setup.includes(:urls).where(site_urls: { url: urls })
+  end
+  
   def jsflashes
     flash.map { |type, content| "Ext.gina.Notify.show(\"#{type}\", \"#{content}\");"  }.join(' ')
   end
