@@ -68,7 +68,12 @@ class SearchesController < ApplicationController
   protected
 
   def search_catalog
-    @search_params = search_params(params[:search])
+    if params["serialized_search"].present?
+      @search_params = JSON.parse(params["serialized_search"]).symbolize_keys
+    else
+      @search_params = search_params(params[:search])
+    end
+
     @format = params[:format] || ""
     @limit = params[:limit] || 30
     @pagenum = params[:page] || 1
