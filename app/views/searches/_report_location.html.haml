@@ -1,10 +1,10 @@
-= "Geokeyword(s): "
+%b Geokeyword(s):
 - if !item.geokeywords.empty?
   = item.geokeywords.collect{|loc| loc.name}.join(", ") + "; "
 - else
-  ="none; "
+  ="none"
 
-= "Location(s): "
+%b Location(s):
 - if !item.locations.empty?
   = item.locations.collect{|loc| loc.name}.join(", ") + "; "
 - else
