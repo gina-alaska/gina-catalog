@@ -12,6 +12,10 @@
     width: 25%;
   }
 
+  @media print {
+    .container{display: none;}
+  }
+
 - limit_select = [["Limit: 30", 30], ["Limit:100", 100], ["Limit: 500", 500], ["Limit: 1000", 1000], ["Limit: 2000", 2000], ["Limit: 5000", 5000]]
 .container
   %h3 Select Report Elements to Include
