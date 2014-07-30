@@ -86,8 +86,11 @@
             = check_box_tag 'visible[url]', 'on', check_export_visible_params("url")
             Catalog Record URL
       %tr
-        %td{ colspan: 4 }
+        %td
           = select_tag :limit, options_for_select(limit_select, @limit), class: "btn span12", style: "margin-bottom: 0px;"
+        %td{ colspan: 3 }
+          Characters in Description
+          = text_field_tag :description_chars, params["description_chars"], { placeholder: "500" }
       %tr
         %td{ colspan: 4 }
           &nbsp;
