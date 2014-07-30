@@ -12,6 +12,7 @@
     width: 25%;
   }
 
+- limit_select = [["Limit: 30", 30], ["Limit:100", 100], ["Limit: 500", 500], ["Limit: 1000", 1000], ["Limit: 2000", 2000], ["Limit: 5000", 5000]]
 .container
   %h3 Select Report Elements to Include
   = form_tag export_search_path, method: :get do
@@ -80,6 +81,12 @@
             = hidden_field_tag 'visible[url]', 'off'
             = check_box_tag 'visible[url]', 'on', check_export_visible_params("url")
             Catalog Record URL
+      %tr
+        %td{ colspan: 4 }
+          = select_tag :limit, options_for_select(limit_select, @limit), class: "btn span12", style: "margin-bottom: 0px;"
+      %tr
+        %td{ colspan: 4 }
+          &nbsp;
       %tr
         %td{ colspan: 4 }
           = submit_tag "Submit", class: 'btn btn-primary pull-right'
