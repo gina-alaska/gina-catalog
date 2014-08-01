@@ -163,7 +163,8 @@
 
   $(document).on('map_layers:refresh', function() {
     $.get('#{manager_catalog_map_layers_path(@catalog)}').done(function(data) {
-      $('#map_layers .fields').html(data)
+      $('#map_layers .fields').html(data);
+      formChanged = true;
     })
   });
   
