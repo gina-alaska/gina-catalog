@@ -12,6 +12,8 @@
         .label.label-warning Draft
       - if page.system_page?
         .label.label-important System
+      - if page.global
+        .label.label-success Global
     .span4.actions
       .btn-group
         = link_to edit_manager_page_content_path(page), class: 'btn', title: "Edit" do
