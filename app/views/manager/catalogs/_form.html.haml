@@ -159,9 +159,12 @@
 
 / refresh because of select2 moving things around on the page
 :javascript
+  var formChanged = false;
+
   $(document).on('map_layers:refresh', function() {
     $.get('#{manager_catalog_map_layers_path(@catalog)}').done(function(data) {
-      $('#map_layers .fields').html(data)
+      $('#map_layers .fields').html(data);
+      formChanged = true;
     })
   });
   
@@ -196,5 +199,19 @@
     });
     
     $('#edit-help').popover();
+
+    $('.form').change(function() {
+      formChanged = true;
+    })
+
+    $('.form').submit(function() {
+      formChanged = false;
+    })
+
+    $(window).bind('beforeunload', function() {
+      if (formChanged) {
+        return('There are unsaved changes, you will loose these changes if you leave the page!');
+      }
+    })
   })
   

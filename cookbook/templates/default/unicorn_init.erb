@@ -22,7 +22,7 @@ prog=unicorn
 RAILS_ROOT="<%= @install_path %>"
 UNICORN_CONF="<%= @unicorn_config_file %>"
 lockfile=${LOCKFILE-/var/lock/subsys/unicorn}
-pidfile=$RAILS_ROOT/tmp/pids/unicorn.pid
+pidfile="<%= @pidfile %>"
 SLEEPMSEC=100000
 RETVAL=0
 ENV=<%=@environment%>
