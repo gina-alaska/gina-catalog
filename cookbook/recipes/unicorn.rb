@@ -28,6 +28,7 @@ template "/etc/init.d/unicorn_glynx" do
   variables({
     install_path: node['glynx']['paths']['deploy'],
     user: node['glynx']['account'],
+    pidfile: node['unicorn']['pid'],
     unicorn_config_file: node['unicorn']['config_path'],
     environment: node['glynx']['environment']
   })
