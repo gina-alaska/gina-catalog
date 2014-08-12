@@ -2,7 +2,6 @@
   .row-fluid.group
     .span8.title{ data: { toggle: "collapse", target: "##{dom_id(page)}", behavior: 'toggle-icon' } }
       %i{class: (page.leaf? ? 'icon-file' : 'icon-folder-close') }
-        
       = link_to edit_manager_page_content_path(page) do
         = page.title
         
@@ -14,6 +13,8 @@
         .label.label-important System
       - if page.global
         .label.label-success Global
+      - if page.global_id
+        .label.label-success Linked Global
     .span4.actions
       .btn-group
         = link_to edit_manager_page_content_path(page), class: 'btn', title: "Edit" do

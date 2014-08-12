@@ -22,6 +22,8 @@ class PagesController < ApplicationController
   
   def fetch_page
     @page = current_setup.pages.where(slug: params[:slug]).first
+    @page = Page::Content.find(@page.global_id) if @page.global_id
+
     if @page.nil? or (@page.draft and (!user_signed_in? or !current_member.can_manage_cms?))
       redirect_to page_path('404-not-found')
     end

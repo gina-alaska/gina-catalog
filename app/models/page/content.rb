@@ -1,7 +1,7 @@
 require 'html/pipeline'
 
 class Page::Content < ActiveRecord::Base
-  attr_accessible :content, :layout, :slug, :title, :sections, :page_layout_id, :page_layout, :parent_id, :redirect, :description, :main_menu, :menu_icon, :draft, :updated_by_id, :system_page, :lock_version, :global
+  attr_accessible :content, :layout, :slug, :title, :sections, :page_layout_id, :page_layout, :parent_id, :redirect, :description, :main_menu, :menu_icon, :draft, :updated_by_id, :system_page, :lock_version, :global, :global_id
 
   acts_as_nested_set
   before_save :rebuild_slug
@@ -108,4 +108,20 @@ class Page::Content < ActiveRecord::Base
       'updated_at' => self.updated_at
     }
   end
+
+  def copy_settings_from(page)
+    new_attributes = page.attributes.select { |k,v| %w{ title slug sections content layout page_layout_id depth description main_menu menu_icon draft updated_by_id lock_version make_menu }.include?(k) }
+    new_attributes['global_id'] = page.id
+    
+    self.update_attributes(new_attributes)
+    
+    page.children.each do |child|
+      new_page = self.children.build()
+      new_page.setup_id = self.setup_id
+      
+      new_page.copy_settings_from(child)
+      new_page.save
+    end
+  end
+
 end

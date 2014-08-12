@@ -1,3 +1,4 @@
+- disabled = page.global_id ? true : false
 = form_for [:manager, page], remote: true, html: { id: 'page_content_form' } do |f|
   - if page.errors.any?
     #error_explanation.alert.alert-error
@@ -29,42 +30,54 @@
           .control-group
             = f.label "Redirect to URL", class: 'control-label'
             .controls
-              = f.text_field :redirect, class: 'span12'
+              = f.text_field :redirect, class: 'span12', disabled: disabled
       .row-fluid
         .span6
           .control-group
             = f.label :parent_id, class: 'control-label'
             .controls
-              = f.select :parent_id, nested_set_options(current_setup.pages, page) {|i| "#{'-' * i.level} #{i.title}" }, include_blank: true
+              = f.select :parent_id, nested_set_options(current_setup.pages, page) {|i| "#{'-' * i.level} #{i.title}" }, { include_blank: true }, { disabled: disabled }
           .control-group
             = f.label :page_layout_id, 'Layout', class: 'control-label'
             .controls
-              = f.collection_select :page_layout_id, current_setup.layouts.order("name"), :id, :name, {}, { class: 'span12' }
-          %label.checkbox
-            =f.check_box :main_menu
-            Show in Main Menu
-          .control-group
-            = f.label :menu_icon, 'Menu Icon', class: 'control-label'
-            .controls
-              = f.select :menu_icon, load_icons, {include_blank: true}, class: 'menu-icons span12'
+              = f.collection_select :page_layout_id, current_setup.layouts.order("name"), :id, :name, {}, { class: 'span12', disabled: disabled }
+          .row-fluid
+            .span6
+              %label.checkbox
+                =f.check_box :main_menu
+                Show in Main Menu
+            - if current_user.is_an_admin? and !page.global_id
+              .span6
+                %label.checkbox
+                  =f.check_box :global
+                  Make Page Global
+          .span12
+            .control-group
+              = f.label :menu_icon, 'Menu Icon', class: 'control-label'
+              .controls
+                = f.select :menu_icon, load_icons, {include_blank: true}, class: 'menu-icons span12'
         .span6
           .control-group
             = f.label :description, class: 'control-label'
             .controls
-              = f.text_area :description, class: 'span12', rows: 10
+              = f.text_area :description, class: 'span12', rows: 10, disabled: disabled
 
-  #page_tabs.tabbable
-    %ul.nav.nav-tabs
-      - page.sections.each do |section|
-        = render 'section_tab', section: section, active_class: (section == page.sections.first ? 'active' : '')
-      - unless page.new_record?
-        %li#new_page_tab
-          =link_to add_manager_page_content_path(page), remote: true do
-            %i.icon-plus
+  - unless page.global_id
+    #page_tabs.tabbable
+      %ul.nav.nav-tabs
+        - page.sections.each do |section|
+          = render 'section_tab', section: section, active_class: (section == page.sections.first ? 'active' : '')
+        - unless page.new_record?
+          %li#new_page_tab
+            =link_to add_manager_page_content_path(page), remote: true do
+              %i.icon-plus
       
   #page_content.ace_editors.tab-content
-    - page.content.each do |name,content|
-      = render 'content_fields', name: name, content: content, page: page
+    - if page.global_id
+      %p The content for this page is from a linked global page and can not be edited here.
+    - else
+      - page.content.each do |name,content|
+        = render 'content_fields', name: name, content: content, page: page
             
   .form-actions.form-inline{style:'margin-top: 0;'}
     = link_to manager_page_contents_path, class: 'btn' do 
