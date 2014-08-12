@@ -2,11 +2,12 @@ module CatalogConcerns
   module Search
     extend ActiveSupport::Concern
     
-    SORT_FIELDS = ["title", "agency", "relevance"]
+    SORT_FIELDS = ["title", "type", "status", "agency", "relevance", "created_at", "updated_at", "source_agency_acronym"]
 
     module InstanceMethods
       def search_params(search={})
         search ||= {}
+        search.symbolize_keys
           
         if search.include? :collection_ids
           search[:collection_ids] = search[:collection_ids].split(',') unless search[:collection_ids].is_a?(Array)
@@ -17,7 +18,7 @@ module CatalogConcerns
         search[:field] = "relevance" unless SORT_FIELDS.include?(search[:field])
         search[:direction] = "ascending" unless %w{ascending descending}.include?(search[:direction])
       
-        if (search['q'].nil? or search['q'].blank?)
+        if (search['q'].nil? or search['q'].blank?) and (search['field'].blank? or search['direction'].blank?)
           search[:order_by] = "title_sort-ascending"
         else
           search.delete(:order_by)
@@ -115,6 +116,7 @@ module CatalogConcerns
           end
           with :primary_contact_id, search[:primary_contact_id] if search[:primary_contact_id].present?
           with :contact_ids, search[:contact_ids] if search[:contact_ids].present?
+          with :owner_setup_id, search[:owner_setup_id] if search[:owner_setup_id].present?
           with :geokeywords_name, search[:region] if search[:region].present?
           with :data_types, search[:data_types] if search[:data_types].present?
           with :agency_types, search[:agency_types] if search[:agency_types].present?

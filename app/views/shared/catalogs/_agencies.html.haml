@@ -1,11 +1,21 @@
 - unless item.source_agency.nil?
-  %dt Primary Agency
-  %dd= item.source_agency.name
+  .row-fluid
+    .span6
+      %dt Primary Agency
+      %dd= item.source_agency.name
+    .span6
+      %dt Type
+      %dd= item.source_agency.category
   %br
 
 - unless item.funding_agency.nil?
-  %dt Funding Agency
-  %dd= item.funding_agency.name
+  .row-fluid
+    .span6
+      %dt Funding Agency
+      %dd= item.funding_agency.name
+    .span6
+      %dt Type
+      %dd= item.funding_agency.category
   %br
 
 - unless item.agencies.empty?

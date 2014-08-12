@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
     return [] unless user_signed_in?
     # .sort {|a,b| a.try(:title).to_s <=> b.try(:title).to_s }
     @member_portals ||= {}
-    @member_portals[:all] ||= current_user.setups.order('title ASC')
+    @member_portals[:all] ||= current_user.setups.includes(:default_url).order('title ASC')
     
     if permission.nil?
       return @member_portals[:all]

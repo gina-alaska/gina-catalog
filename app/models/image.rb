@@ -8,7 +8,11 @@ class Image < ActiveRecord::Base
   has_many :agencies
   
   def to_param
-    "#{self.id}-#{File.basename(self.file.name.to_s, '.*')}"
+    if self.file.nil? or self.file.name.nil? or self.file.name.empty?
+      self.id
+    else
+      "#{self.id}-#{File.basename(self.file.name, '.*')}"
+    end
   end
   
   def raw_url
@@ -23,13 +27,20 @@ class Image < ActiveRecord::Base
   alias_method :image_url, :raw_url
   
   def thumbnail(size = '640x480#')
-    if self.file.try(:image?) and self.file_stored? and !%w{ pdf kmz kml }.include?(self.file.format)
-      self.file.thumb(size).encode(:png)
-    else
-      Image.document_image
-    end
-  rescue Dragonfly::Job::Fetch::NotFound
-    Image.document_image    
+  #   if self.file.try(:image?) and self.file_stored? and !%w{ pdf kmz kml }.include?(self.file.format)
+  #     self.file.thumb(size).encode(:png)
+  #   else
+  #     Image.document_image
+  #   end
+  # rescue Dragonfly::Job::Fetch::NotFound
+  #   Image.document_image    
+  # end
+  
+    OpenStruct.new({ url: helpers.cms_media_path(self.file_uid, size: size) })
+  end
+
+  def helpers
+    Rails.application.routes.url_helpers
   end
   
   def self.document_image

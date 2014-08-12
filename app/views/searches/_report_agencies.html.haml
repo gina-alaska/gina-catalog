@@ -1,0 +1,16 @@
+%b Primary Agency: 
+-if item.source_agency
+  = "#{item.source_agency.name} (#{item.source_agency.acronym})"
+-else
+  ="none"
+%br/
+%b Funding Agency: 
+-if item.funding_agency
+  = "#{item.funding_agency.name} (#{item.source_agency.acronym}); "
+-else
+  ="none; "
+%b Other Agency(s):
+-if !item.agencies.empty?
+  = item.agencies.collect{|agency| "#{agency.name} (#{agency.acronym})"}.join(', ')
+-else
+  ="none"

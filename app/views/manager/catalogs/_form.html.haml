@@ -115,7 +115,7 @@
             = f.fields_for :download_urls
             
       .form-actions
-        = link_to [:manager, @catalog], class: 'btn btn-inverse' do
+        = link_to @back_path, class: 'btn btn-inverse' do
           %i.icon-arrow-left.icon-white
           Back
     
@@ -160,9 +160,12 @@
 
 / refresh because of select2 moving things around on the page
 :javascript
+  var formChanged = false;
+
   $(document).on('map_layers:refresh', function() {
     $.get('#{manager_catalog_map_layers_path(@catalog)}').done(function(data) {
-      $('#map_layers .fields').html(data)
+      $('#map_layers .fields').html(data);
+      formChanged = true;
     })
   });
   
@@ -197,5 +200,19 @@
     });
     
     $('#edit-help').popover();
+
+    $('.form').change(function() {
+      formChanged = true;
+    })
+
+    $('.form').submit(function() {
+      formChanged = false;
+    })
+
+    $(window).bind('beforeunload', function() {
+      if (formChanged) {
+        return('There are unsaved changes, you will loose these changes if you leave the page!');
+      }
+    })
   })
   

@@ -63,5 +63,7 @@
         =label_tag 'search[contact_ids]', 'Contacts'
         =select_tag 'search[contact_ids]', options_from_collection_for_select(current_setup.persons.order(:last_name), :id, :contact_string, search_params[:contact_ids]), multiple: true,
           class: 'span12', data: {placeholder: 'All Contacts', ui: 'select2'}
+        =label_tag 'search[owner_setup_id]', 'Record Source'
+        =select_tag 'search[owner_setup_id]', options_for_select(@sources, search_params[:owner_setup_id]), include_blank: true, class: 'span12', data: {placeholder: 'All Sources'}
       .form-actions{style:'margin-bottom: 0;'}
         = submit_tag 'Apply', class: 'btn btn-primary pull-right', data: { title: "Apply Filters", content: "Do another search with the chosen filters applied.", toggle: "popover", trigger: "hover", placement: "right", container: "body" }

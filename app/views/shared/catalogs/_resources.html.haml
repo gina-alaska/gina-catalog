@@ -62,7 +62,7 @@
             = " :: #{link.display_text}"
 
         %p.break-url= link.url
-  - catalog.links.where('category not in (?)', ['Metadata', 'Download', 'Report']).each do |link|
+  - catalog.links.where('category not in (?)', ['Metadata', 'Download', 'Report']).order('category').each do |link|
     %li.media
       .icon.website.pull-left
         %i.icon-cloud
