@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140617012953) do
+ActiveRecord::Schema.define(:version => 20140805193957) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -26,9 +26,11 @@ ActiveRecord::Schema.define(:version => 20140617012953) do
     t.text     "log"
     t.integer  "loggable_id"
     t.string   "loggable_type"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
     t.integer  "catalog_id"
+    t.integer  "setup_id"
+    t.integer  "contact_info_id"
   end
 
   create_table "addresses", :force => true do |t|
@@ -382,7 +384,7 @@ ActiveRecord::Schema.define(:version => 20140617012953) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.spatial  "geom",       :limit => {:srid=>4326, :type=>"point"}
+    t.spatial  "geom",       :limit => {:srid=>4326, :type=>"geometry"}
   end
 
   create_table "geolocations", :force => true do |t|
@@ -690,6 +692,8 @@ ActiveRecord::Schema.define(:version => 20140617012953) do
     t.integer  "setup_id"
     t.integer  "lock_version",   :default => 1
     t.boolean  "make_menu",      :default => false
+    t.boolean  "global",         :default => false
+    t.integer  "global_id"
   end
 
   create_table "page_images", :force => true do |t|

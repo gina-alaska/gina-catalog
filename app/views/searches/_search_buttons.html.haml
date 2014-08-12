@@ -1,62 +1,20 @@
+- sort_select = [["Sort: Title", "title", {'data-direction' => 'ascending'}],
+  ["Sort: Relevance", "relevance", {'data-direction' => 'ascending'}],
+  ["Sort: Agency", "agency", {'data-direction' => 'ascending'}],
+  ["Sort: Last Updated", "updated_at", {'data-direction' => 'descending'}]]
+- direction_select = [["Ascending", "ascending"], ["Descending", "descending"]]
+- limit_select = [["Limit: 30", 30], ["Limit:100", 100], ["Limit: 500", 500], ["Limit: 1000", 1000], ["Limit: 2000", 2000], ["Limit: 5000", 5000]]
+
 #search_buttons
   .row-fluid
     .span6
-      .btn-group.btn-block
-        = link_to '#', class: 'btn', id: 'sort-btn', data: {toggle: "dropdown"}, style: 'width: 90px' do
-          = "Sort: #{@search_params[:field].capitalize}"
-        = link_to '#', class: 'btn dropdown-toggle', data: {toggle: "dropdown"} do
-          %i.caret
-          
-        %ul.dropdown-menu
-          %li
-            = link_to '#', data: {behavior: 'stash', target: '#sort', value: "title", title: 'Sort: Title', title_target: '#sort-btn'} do
-              Title
-          %li
-            = link_to '#', data: {behavior: 'stash', target: '#sort', value: "relevance", title: 'Sort: Relevance', title_target: '#sort-btn'} do
-              Relevance
-          %li
-            = link_to '#', data: {behavior: 'stash', target: '#sort', value: "agency", title: 'Sort: Agency', title_target: '#sort-btn'} do
-              Agency
+      = select_tag 'search[field]', options_for_select(sort_select, @search_params[:field]), class: "btn span12", id: 'sort', style: "margin-bottom: 0px;"
     .span6
-      .btn-group.btn-block
-        = link_to '#', class: "btn #{dir_btn_class(@search_params)}", id: 'sort_dir-btn', data: {toggle: "dropdown"}, style: 'width: 96px' do
-          = @search_params[:direction].capitalize
-        = link_to '#', class: "btn dropdown-toggle #{dir_btn_class(@search_params)}", id: 'sort_dir-toggle', data: {toggle: "dropdown"} do
-          %i.caret
-        %ul.dropdown-menu
-          %li
-            = link_to '#', data: {behavior: 'stash', target: '#sort_dir', value: 'ascending', title: "Ascending", title_target: '#sort_dir-btn'} do
-              Ascending
-          %li
-            = link_to '#', data: {behavior: 'stash', target: '#sort_dir', value: 'descending', title: "Descending", title_target: '#sort_dir-btn'} do
-              Descending
+      - disable_select = @search_params[:field] == "relevance" ? true : false
+      = select_tag 'search[direction]', options_for_select(direction_select, @search_params[:direction]), { disabled: disable_select, class: "btn span12", id: 'sort_dir', style: "margin-bottom: 0px;" }
   .row-fluid{style: "margin-top: 5px;"}
     .span6
-      .btn-group.btn-block
-        = link_to '#', class: "btn", id: 'limit-btn', data: { toggle: "dropdown" }, style: 'width: 90px' do
-          = "Limit: #{@limit}"
-        = link_to '#', class: "btn dropdown-toggle", data: { toggle: "dropdown" } do
-          %i.caret
-    
-        %ul.dropdown-menu
-          %li
-            =link_to '#', data: { behavior: 'stash', target: '#limit', value: 30, title: 'Limit: 30', title_target: '#limit-btn' } do
-              30 Records
-          %li
-            =link_to '#', data: { behavior: 'stash', target: '#limit', value: 100, title: 'Limit: 100', title_target: '#limit-btn' } do
-              100 Records
-          %li
-            =link_to '#', data: { behavior: 'stash', target: '#limit', value: 500, title: 'Limit: 500', title_target: '#limit-btn' } do
-              500 Records
-          %li
-            =link_to '#', data: { behavior: 'stash', target: '#limit', value: 1000, title: 'Limit: 1000', title_target: '#limit-btn' } do
-              1000 Records
-          %li
-            =link_to '#', data: { behavior: 'stash', target: '#limit', value: 2000, title: 'Limit: 2000', title_target: '#limit-btn' } do
-              2000 Records
-          %li
-            =link_to '#', data: { behavior: 'stash', target: '#limit', value: 5000, title: 'Limit: 5000', title_target: '#limit-btn' } do
-              5000 Records
+      = select_tag :limit, options_for_select(limit_select, @limit), class: "btn span12", style: "margin-bottom: 0px;"
     .span6
       = link_to '/search', class: 'btn btn-block' do
         Reset
@@ -81,13 +39,14 @@
     .span6
       %button.btn.btn-primary.btn-block{ type: 'submit'}
         Search
+
 :javascript
-  $("#sort").on('change', function(e) {
+  $("select#sort").on('change', function(e) {
     if($(this).val() == "relevance") {
-      $("#sort_dir-btn").addClass("disabled")
-      $("#sort_dir-toggle").addClass("disabled")      
+      $("select#sort_dir").prop("disabled", true)
     } else {
-      $("#sort_dir-btn").removeClass("disabled")
-      $("#sort_dir-toggle").removeClass("disabled")
+      $("select#sort_dir").prop("disabled", false)
     }
+    var dir = $("select#sort option:selected").data('direction');
+    $("select#sort_dir").val(dir);
   })
