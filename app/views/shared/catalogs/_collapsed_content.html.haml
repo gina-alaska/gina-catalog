@@ -25,6 +25,11 @@
   /     = link_to catalog_url(item, :format => 'zip'), catalog_url(item, :format => 'zip'), :target => :_blank
   /     .spacer
 
+  - unless item.geokeywords.nil? or item.geokeywords.empty?
+    %dt Geo Key Words
+    %dd= item.geokeywords.list
+    %br
+
   - unless item.collections.nil? or item.collections.empty?
     %dt Collection
     %dd= item.collections.visible_to(current_member).list
