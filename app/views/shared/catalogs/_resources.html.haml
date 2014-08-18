@@ -9,7 +9,10 @@
           %i.icon-download-alt.media-object
           Download
 
-        %h5.media-heading Download
+        %h5.media-heading
+          - download_text = "Download"
+          - download_text = download_text + " :: #{upload.description}" unless upload.description.empty?
+          = download_text
         %p.break-url
           = upload.file.name
           = "(#{number_to_human_size upload.file.size})"
@@ -38,7 +41,10 @@
           %i.icon-download-alt.media-object
           Download
 
-        %h5.media-heading Download
+        %h5.media-heading
+          - download_text = "Download"
+          - download_text = download_text + " :: #{link.description}" unless link.description.empty?
+          = download_text
         %p.break-url= link.url
 
   - catalog.links.where('category in (?)', ['Report']).each do |link|

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140801205007) do
+ActiveRecord::Schema.define(:version => 20140805193957) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -693,6 +693,7 @@ ActiveRecord::Schema.define(:version => 20140801205007) do
     t.integer  "lock_version",   :default => 1
     t.boolean  "make_menu",      :default => false
     t.boolean  "global",         :default => false
+    t.integer  "global_id"
   end
 
   create_table "page_images", :force => true do |t|
