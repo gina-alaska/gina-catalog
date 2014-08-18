@@ -55,6 +55,7 @@ class Setup < ActiveRecord::Base
       'page' => SetupSubpageDrop.new(self),
       'catalog' => SetupCatalogRecordsDrop.new(self),
       'snippets' => PageSnippetDrop.new(self),
+      'portals' => SetupPortalsDrop.new(self),
       'twitter_url' => self.twitter_url,
       'github_url' => self.github_url,
       'facebook_url' => self.facebook_url,
