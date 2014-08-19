@@ -22,6 +22,7 @@ class Page::Content < ActiveRecord::Base
   
   belongs_to :page_layout, class_name: 'Page::Layout'
   belongs_to :updated_by, class_name: 'User'
+  belongs_to :global_page, foreign_key: 'global_id', class_name: 'Page::Content'
   
   accepts_nested_attributes_for :images
   
@@ -110,18 +111,10 @@ class Page::Content < ActiveRecord::Base
   end
 
   def copy_settings_from(page)
-    new_attributes = page.attributes.select { |k,v| %w{ title slug sections content layout page_layout_id depth description main_menu menu_icon draft updated_by_id lock_version make_menu }.include?(k) }
+    new_attributes = page.attributes.select { |k,v| %w{ title slug description main_menu menu_icon draft  make_menu }.include?(k) }
     new_attributes['global_id'] = page.id
     
     self.update_attributes(new_attributes)
-    
-    page.children.each do |child|
-      new_page = self.children.build()
-      new_page.setup_id = self.setup_id
-      
-      new_page.copy_settings_from(child)
-      new_page.save
-    end
   end
 
 end

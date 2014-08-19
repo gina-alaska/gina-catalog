@@ -200,8 +200,8 @@ class Manager::PageContentsController < ManagerController
 
     respond_to do |format|
       format.html {
-        if current_setup.pages.where(slug: global.slug, description: global.description, title: global.title, global: false).count > 0
-          flash[:error] = "There is already a page titled the same as the global (#{global.title})!"
+        if current_setup.pages.where(slug: global.slug, description: global.description, global: false).count > 0
+          flash[:error] = "There is already a page that has the same slug as the global (#{global.slug}) page!"
           redirect_to manager_page_contents_path
         else
           new_root_page = current_setup.pages.build()
