@@ -9,6 +9,10 @@
         - page.errors.full_messages.each do |msg|
           %li= msg
   = f.hidden_field :lock_version, class: 'lock_version_field'
+  - if disabled
+    - home_portal = Page::Content.find(page.global_id).setup.title
+    %p{style: "color: red;"}
+      This page is a linked global page, only select items can be edited. To edit the full page, login to the #{home_portal} portal and modify it there.
           
   .control-group
     = f.label :title, class: 'control-label'
@@ -21,7 +25,7 @@
       .control-group
         = f.label :slug, class: 'control-label'
         .controls
-          = f.text_field :slug, value: page.slug_without_path, class: 'span12', readonly: page.system_page?
+          = f.text_field :slug, value: page.slug_without_path, class: 'span12', readonly: page.system_page?, disabled: disabled
       :javascript
         $('#page_content_slug').slugify('#page_content_title');
 
@@ -73,9 +77,7 @@
               %i.icon-plus
       
   #page_content.ace_editors.tab-content
-    - if page.global_id
-      %p The content for this page is from a linked global page and can not be edited here.
-    - else
+    - unless page.global_id
       - page.content.each do |name,content|
         = render 'content_fields', name: name, content: content, page: page
             
