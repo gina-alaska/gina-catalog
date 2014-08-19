@@ -1,11 +1,23 @@
-/ %label Collections
-%ul.nav.nav-tabs.nav-stacked.collection-list
-  - Collection.including_descendents(current_setup).visible_to(current_member).includes(:setup).order('name ASC').each do |coll|
-    %li.clearfix{class: search_params[:collection_ids].include?(coll.id) ? "active" : "" }
-      = link_to "/search?search[collection_ids]=#{coll.id}", data: {behavior: "load_collection", target: "#search_collection_ids", value: coll.id}, title: coll.description do
-        .badge.pull-right{ }
-          = @collection_facets[coll.id] || 0
-          results
-      
-        = coll.name
-        = " (#{coll.setup.acronym})" if coll.setup != current_setup
+//%label Collections
+#collection_accordion.accordion
+  - unless current_setup.collections.blank?
+    .accordion-group
+      .accordion-heading
+        %a.accordion-toggle{ data: { toggle: "collapse", parent: "#collection_accordion"}, href: "##{dom_id(current_setup, "collection_collapse")}" }
+          %i.icon-chevron-down
+          = "#{current_setup.title} Collections"
+      .accordion-body.collapse.in{id: dom_id(current_setup, "collection_collapse")}
+        .accordion-inner
+          = render 'collection_item', collections: current_setup.collections, search_params: @search_params
+
+  - unless current_setup.descendants.nil?
+    - current_setup.descendants.each do |setup|
+      - next if setup.collections.empty?
+      .accordion-group
+        .accordion-heading
+          %a.accordion-toggle{ data: { toggle: "collapse", parent: "#collection_accordion"}, href: "##{dom_id(setup, "collection_collapse")}" }
+            %i.icon-chevron-down
+            = "#{setup.title} Collections"
+        .accordion-body.collapse{id: dom_id(setup, "collection_collapse")}
+          .accordion-inner
+            = render 'collection_item', collections: setup.collections, search_params: @search_params

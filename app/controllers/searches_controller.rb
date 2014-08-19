@@ -4,7 +4,10 @@ class SearchesController < ApplicationController
   def show
     @agencies = Agency.select([:name,:id]).collect{|a| [a.name, a.id]}.group_by{|a| a.first.first }
      #Agency.all #.group_by{|a| a.name[0]}
-  
+    setup_ids = current_setup.self_and_descendants.pluck(:id)
+    source_catalogs = Catalog.joins(:setups).where(setups: {id: setup_ids}).uniq.pluck(:owner_setup_id)
+    @sources = Setup.where(id: source_catalogs).order(:title).collect{|a| [a.title, a.id]}
+
     search_catalog
     
     respond_to do |format|
@@ -36,7 +39,7 @@ class SearchesController < ApplicationController
 
     respond_to do |format|
       format.html do
-        render layout: "pdf"
+        render "report", locals: {results: @results}, layout: 'pdf.html'
       end
 
       format.json
@@ -65,7 +68,12 @@ class SearchesController < ApplicationController
   protected
 
   def search_catalog
-    @search_params = search_params(params[:search])
+    if params["serialized_search"].present?
+      @search_params = JSON.parse(params["serialized_search"]).symbolize_keys
+    else
+      @search_params = search_params(params[:search])
+    end
+
     @format = params[:format] || ""
     @limit = params[:limit] || 30
     @pagenum = params[:page] || 1

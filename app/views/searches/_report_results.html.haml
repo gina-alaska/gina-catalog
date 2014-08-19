@@ -1,0 +1,7 @@
+- parts = ["title", "agencies", "contacts", "info", "tags", "iso", "data", "location", "description", "links", "url", "collections"]
+- results.each do |item|
+  %p
+    - parts.each do |part|
+      - if check_export_visible_params(part)
+        = render partial: "report_#{part}", locals: {item: item}
+        %br/

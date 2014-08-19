@@ -14,13 +14,15 @@
       - else
         = "#{f.object.file.name} (#{number_to_human_size f.object.file.size})"
   .span3
+    = f.text_field :description, class: "span12"
+  .span2
     %label.checkbox
       = f.check_box :downloadable, {}, 'true', 'false'
       Downloadable
-  .span3
+  .span2
     %label.checkbox
       = f.check_box :preview, {}, 'true', 'false'
       Record Preview
-  .span2.actions
+  .span1.actions
     = link_to_remove_fields '<i class="icon-trash icon-white"></i>'.html_safe, f
   

@@ -1,7 +1,7 @@
 class Setup < ActiveRecord::Base
   acts_as_nested_set
   
-  attr_accessible :logo_uid, :primary_color, :title, :by_line, :contact_email, :default_invite, :urls_attributes, :analytics_account, :twitter_url, :github_url, :facebook_url, :parent_id, :acronym, :description, :keywords, :projection, :google_layers, :record_projection, :google_plus_url, :youtube_url, :instagram_url, :linkedin_url, :favicon_attributes, :cms_enabled, :catalog_enabled, :tumblr_url, :location_projection
+  attr_accessible :logo_uid, :primary_color, :title, :by_line, :contact_email, :default_invite, :urls_attributes, :analytics_account, :twitter_url, :github_url, :facebook_url, :parent_id, :acronym, :description, :keywords, :projection, :google_layers, :record_projection, :google_plus_url, :youtube_url, :instagram_url, :linkedin_url, :favicon_attributes, :cms_enabled, :catalog_enabled, :tumblr_url, :location_projection, :recaptcha_public, :recaptcha_private, :use_recaptcha
   
   has_and_belongs_to_many :images
   
@@ -31,7 +31,9 @@ class Setup < ActiveRecord::Base
   has_many :collections
   has_many :contacts
   has_many :urls, class_name: 'SiteUrl', dependent: :destroy, order: "id ASC"
+  has_one :default_url, class_name: 'SiteUrl', conditions: { default: true }
   has_many :memberships, dependent: :destroy
+  has_many :users, through: :memberships
   has_many :roles, dependent: :destroy
   has_many :use_agreements, dependent: :destroy
   has_many :csw_imports, dependent: :destroy
@@ -53,6 +55,7 @@ class Setup < ActiveRecord::Base
       'page' => SetupSubpageDrop.new(self),
       'catalog' => SetupCatalogRecordsDrop.new(self),
       'snippets' => PageSnippetDrop.new(self),
+      'portals' => SetupPortalsDrop.new(self),
       'twitter_url' => self.twitter_url,
       'github_url' => self.github_url,
       'facebook_url' => self.facebook_url,
@@ -62,10 +65,6 @@ class Setup < ActiveRecord::Base
       'linkedin_url' => self.linkedin_url,
       'tumblr_url' => self.tumblr_url
   	}
-  end
-  
-  def default_url
-    self.urls.where(default: true).first.try(:url) || self.urls.first.try(:url)
   end
   
   def clone(source = nil)

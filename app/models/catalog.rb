@@ -67,14 +67,14 @@ class Catalog < ActiveRecord::Base
     end
   end
   
-  has_and_belongs_to_many :catalog_collections, uniq: true do
-    def list
-      proxy_association.owner.catalog_collections.collection.join(', ')
-    end
-    def collection
-      proxy_association.owner.catalog_collections.pluck(:name)
-    end
-  end
+#  has_and_belongs_to_many :catalog_collections, uniq: true do
+#    def list
+#      proxy_association.owner.catalog_collections.collection.join(', ')
+#    end
+#    def collection
+#      proxy_association.owner.catalog_collections.pluck(:name)
+#    end
+#  end
   
   has_many :download_urls
   has_one :repo
@@ -165,6 +165,9 @@ class Catalog < ActiveRecord::Base
     end
     text :funding_agency do
       [funding_agency.name, funding_agency.acronym] unless funding_agency.nil?
+    end
+    text :locations do
+      locations.map(&:name)
     end
     text :geokeywords do
       geokeywords.map(&:name).sort
@@ -283,12 +286,29 @@ class Catalog < ActiveRecord::Base
       filtered_words = ['a', 'the', 'and', 'an', 'of', 'i', '' ]
       title.downcase.split(/\s+/).delete_if { |word| filtered_words.include? word }.join(' ').gsub(/["',]/,'')
     end
+
     string :agency_sort do
       source_agency.try(&:name)
     end
     
-    string :source_agency_acronym do
+    string :source_agency_acronym_sort do
       source_agency.try(&:acronym)
+    end
+
+    string :created_at_sort do
+      created_at
+    end
+
+    string :updated_at_sort do
+      updated_at
+    end
+
+    string :type_sort do
+      type
+    end
+
+    string :status_sort do
+      status
     end
   end
   
@@ -395,7 +415,7 @@ Title: #{self.title}
         text = t.respond_to?(:text) ? t.text : t
 
         next if text.size < 3
-        ids << Tag.find_or_create_by_text(text).id
+        ids << Tag.match_or_create(text).id
       end
     end    
     self.tag_ids = ids

@@ -57,7 +57,7 @@ label {
     background-color: #eee;
   }
   .result.highlight {
-    background: #ffff99;
+    background: #c0e0ff;
   }
   
   .title {
@@ -112,7 +112,7 @@ label {
     width: 300px;
     overflow-y: scroll;
     overflow-x: hidden;
-    z-index: 1;
+    z-index: auto;
   }
   &.affix {
     .search-form {
@@ -210,4 +210,23 @@ dl.contact-info {
   dd {
     margin-left: 110px;
   }
+}
+
+.agency-logo-list {
+  display: inline-block;
+  max-width: 45%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.agency-logo-thumb {
+  margin-right: 2px;
+}
+
+.break-url {
+  word-break: break-all;
+}
+
+#search_buttons {
+  margin-bottom: 10px;
 }

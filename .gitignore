@@ -1,3 +1,18 @@
+#pow stuff
+
+.powenv
+
+#solr stuff
+solr/default/data/index/segment*
+solr/development/data/index/segment*
+solr/development/data/index/*
+!solr/development/data/index/.keep
+
+solr/development/data/tlog/tlog.*
+solr/test/data/index/segment*
+solr/pids
+!solr/conf
+
 .bundle
 *.swp
 db/*.sqlite3
@@ -16,8 +31,6 @@ public/assets
 vendor/nssi-prod
 vendor/cms/public/system
 repos_tmp
-solr
-!solr/conf
 log/solr*
 log/sunspot*
 tools/wkhtmltopdf
@@ -36,3 +49,7 @@ db/data
 *.save
 
 dump.rdb
+
+.powenv
+cookbook/.vagrant_ssh_config
+.kitchen/

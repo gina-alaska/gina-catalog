@@ -1,0 +1,6 @@
+<%=@environment%>:
+  solr:
+    solr_home: solr
+<% @solr.each do |k,v| %>
+    <%=k%>: <%=v%>
+<% end %>

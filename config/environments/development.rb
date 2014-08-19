@@ -27,13 +27,13 @@ NSCatalog::Application.configure do
   config.assets.compress = false
   
   # Expands the lines which load the assets
-  config.assets.debug = true
+  config.assets.debug = false
 
   # Generate digests for assets URLs
   config.assets.digest = false
 
   # Use a different cache store in production
-  config.cache_store = :dalli_store, 'localhost', { :namespace => 'glynx-development', :compress => true, :pool_size => 5, value_max_bytes: 10485760   }
+  config.cache_store = :dalli_store, '127.0.0.1', { :namespace => 'glynx-development', :compress => true, :pool_size => 5, value_max_bytes: 10485760   }
   
   # config.cache_store = :dalli_store, 'flash.x.gina.alaska.edu', { :namespace => 'gLynxCatalogDevelopment', :compress => true }
 

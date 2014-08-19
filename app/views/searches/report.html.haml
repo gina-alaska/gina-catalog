@@ -1,0 +1,101 @@
+:css
+  .container {
+    border-bottom: 1px solid #afafaf;
+    padding-bottom: 20px;
+  }
+
+  table {
+    max-width: 100%;
+  }
+
+  td {
+    width: 25%;
+  }
+
+  @media print {
+    .container{display: none;}
+  }
+
+- limit_select = [["Limit: 30", 30], ["Limit:100", 100], ["Limit: 500", 500], ["Limit: 1000", 1000], ["Limit: 2000", 2000], ["Limit: 5000", 5000]]
+.container
+  %h3 Select Report Elements to Include
+  = form_tag export_search_path, method: :get do
+    = hidden_field_tag 'serialized_search', @search_params.to_json
+    %table
+      %tr
+        %td
+          %label.checkbox
+            = hidden_field_tag 'visible[agencies]', 'off'
+            = check_box_tag 'visible[agencies]', 'on', check_export_visible_params("agencies")
+            Agencies
+        %td
+          %label.checkbox
+            = hidden_field_tag 'visible[collections]', 'off'
+            = check_box_tag 'visible[collections]', 'on', check_export_visible_params("collections")
+            Collections
+        %td
+          %label.checkbox
+            = hidden_field_tag 'visible[contacts]', 'off'
+            = check_box_tag 'visible[contacts]', 'on', check_export_visible_params("contacts")
+            Contacts
+        %td
+          %label.checkbox
+            = hidden_field_tag 'visible[data]', 'off'
+            = check_box_tag 'visible[data]', 'on', check_export_visible_params("data")
+            Data Type
+      %tr
+        %td
+          %label.checkbox
+            = hidden_field_tag 'visible[description]', 'off'
+            = check_box_tag 'visible[description]', 'on', check_export_visible_params("description")
+            Description
+        %td
+          %label.checkbox
+            = hidden_field_tag 'visible[info]', 'off'
+            = check_box_tag 'visible[info]', 'on', check_export_visible_params("info")
+            Dates, Status
+        %td
+          %label.checkbox
+            = hidden_field_tag 'visible[iso]', 'off'
+            = check_box_tag 'visible[iso]', 'on', check_export_visible_params("iso")
+            Iso Topics
+        %td
+          %label.checkbox
+            = hidden_field_tag 'visible[links]', 'off'
+            = check_box_tag 'visible[links]', 'on', check_export_visible_params("links")
+            Links
+      %tr
+        %td
+          %label.checkbox
+            = hidden_field_tag 'visible[location]', 'off'
+            = check_box_tag 'visible[location]', 'on', check_export_visible_params("location")
+            Geokeywords, Location
+        %td
+          %label.checkbox
+            = hidden_field_tag 'visible[tags]', 'off'
+            = check_box_tag 'visible[tags]', 'on', check_export_visible_params("tags")
+            Tags
+        %td
+          %label.checkbox
+            = hidden_field_tag 'visible[title]', 'off'
+            = check_box_tag 'visible[title]', 'on', check_export_visible_params("title")
+            Title
+        %td
+          %label.checkbox
+            = hidden_field_tag 'visible[url]', 'off'
+            = check_box_tag 'visible[url]', 'on', check_export_visible_params("url")
+            Catalog Record URL
+      %tr
+        %td
+          = select_tag :limit, options_for_select(limit_select, @limit), class: "btn span12", style: "margin-bottom: 0px;"
+        %td{ colspan: 3 }
+          Characters in Description
+          = text_field_tag :description_chars, params["description_chars"], { placeholder: "500" }
+      %tr
+        %td{ colspan: 4 }
+          &nbsp;
+      %tr
+        %td{ colspan: 4 }
+          = submit_tag "Submit", class: 'btn btn-primary pull-right'
+
+= render partial: "report_results", locals: { results: @results } 

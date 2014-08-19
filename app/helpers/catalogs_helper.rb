@@ -9,6 +9,10 @@ module CatalogsHelper
       "No results displayed"
     end
   end
+
+  def check_export_visible_params(name)
+    !params['visible'].present? or params['visible'][name] == 'on'
+  end
   
   def link_to_first_page(scope, options = {}, &block)
     # options = name if name.is_a? Hash
