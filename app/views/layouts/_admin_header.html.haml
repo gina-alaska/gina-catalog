@@ -1,0 +1,21 @@
+%nav.navbar.navbar-default.navbar-gina.navbar-static-top
+  .container-fluid
+    .navbar-header
+      %button.navbar-toggle{ type: 'button', data: { toggle: 'collapse', target: '#header-navbar' }}
+        %span.sr-only Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      = link_to root_url, class: 'navbar-brand' do
+        %span.gina gLynx 
+        \:: Admin
+    #header-navbar.collapse.navbar-collapse
+      %ul.nav.navbar-nav.navbar-right
+        - if signed_in?
+          %li
+            = link_to logout_path do
+              Logout
+        - else
+          %li
+            = link_to login_path do
+              Login

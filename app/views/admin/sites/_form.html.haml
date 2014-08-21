@@ -1,0 +1,17 @@
+= bootstrap_form_for [:admin, @site] do |f|
+  = f.alert_message "Please fix the errors below."
+  
+  = f.text_field :title, wrapper_class: 'required'
+  
+  .row
+    .col-sm-6.col-md-6.col-lg-6
+      = f.text_field :acronym, wrapper_class: 'required'
+    .col-sm-6.col-md-6.col-lg-6
+      = f.collection_select :parent_id, Site.active, :id, :title, wrapper_class: 'required'
+  
+  .pull-right
+    = link_to :back, class: 'btn btn-default' do
+      %i.fa.fa-arrow-left
+      Cancel
+      
+    = f.primary

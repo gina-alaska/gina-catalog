@@ -46,3 +46,12 @@ gem "omniauth-github"
 gem "omniauth-google-oauth2"
 gem "omniauth-openid"
 gem "google-api-client"
+gem 'bootstrap_form', git: 'https://github.com/bootstrap-ruby/rails-bootstrap-forms.git'
+gem 'awesome_nested_set'
+
+group :development do
+  gem "better_errors"
+  gem "binding_of_caller"
+end
+
+ruby '2.1.2'
