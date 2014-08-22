@@ -1,1 +1,17 @@
-Wahoo
+.panel.panel-default
+  .panel-heading{ style: 'position: relative' }
+    = link_to new_admin_site_path, class: 'btn btn-sm btn-success panel-btn-right' do
+      New Site
+      
+    .panel-title
+      All Sites
+  
+  %table.table.table-bordered.table-stripped
+    - @sites.each do |site|
+      %tr
+        %td{ colspan: 2 }
+          - site.depth.times do |i|
+            %i.fa.fa-arrow-right
+            
+          = link_to [:admin, site] do
+            = site.title

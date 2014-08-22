@@ -2,6 +2,7 @@ class Admin::SitesController < AdminController
   before_action :set_site, only: [:show, :edit, :update]
   
   def index
+    @sites = Site.active
   end
   
   def show
@@ -26,6 +27,12 @@ class Admin::SitesController < AdminController
         }
       end
     end
+  end
+  
+  def edit
+  end
+  
+  def update
   end
   
   protected

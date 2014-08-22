@@ -3,7 +3,6 @@ class Site < ActiveRecord::Base
   
   validates :title, presence: true
   validates :acronym, presence: true
-  validates :parent_id, presence: true
   
   scope :active, -> { }
 end

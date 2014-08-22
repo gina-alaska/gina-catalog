@@ -7,7 +7,7 @@
     .col-sm-6.col-md-6.col-lg-6
       = f.text_field :acronym, wrapper_class: 'required'
     .col-sm-6.col-md-6.col-lg-6
-      = f.collection_select :parent_id, Site.active, :id, :title, wrapper_class: 'required'
+      = f.collection_select :parent_id, (Site.active - @site.self_and_descendants), :id, :title, prompt: 'Select a parent portal'
   
   .pull-right
     = link_to :back, class: 'btn btn-default' do

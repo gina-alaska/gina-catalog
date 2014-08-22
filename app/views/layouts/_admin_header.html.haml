@@ -6,12 +6,20 @@
         %span.icon-bar
         %span.icon-bar
         %span.icon-bar
-      = link_to root_url, class: 'navbar-brand' do
+      = link_to admin_url, class: 'navbar-brand' do
         %span.gina gLynx 
         \:: Admin
     #header-navbar.collapse.navbar-collapse
       %ul.nav.navbar-nav.navbar-right
         - if signed_in?
+          %li.dropdown
+            = link_to '#', class: 'dropdown-toggle', data: { toggle: 'dropdown' } do
+              Manage 
+              %span.caret
+            %ul.dropdown-menu
+              %li
+                = link_to admin_sites_path do
+                  Sites
           %li
             = link_to logout_path do
               Logout

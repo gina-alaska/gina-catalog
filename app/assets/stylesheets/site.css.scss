@@ -5,3 +5,13 @@
     content: " *";
   }
 }
+
+.panel-heading {
+  position: relative;
+}
+
+.panel-btn-right {
+  position: absolute; 
+  top: 6px; 
+  right: 10px;
+}

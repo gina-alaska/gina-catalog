@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   get '/auth/:provider/callback', to: 'sessions#create'
   get '/auth/failure', to: 'sessions#failure'
 
-  get '/admin' => 'admin/dashboard#index'
+  get '/admin' => 'admin/dashboard#index', as: :admin
 
   resources :sessions
   resources :memberships
