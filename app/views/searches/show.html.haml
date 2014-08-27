@@ -16,7 +16,7 @@
         .search-results
           = render 'search_results'
         .pagetoolbar{style: 'text-align:center'}
-          = render 'pagetoolbar', results: @results, total: @total, page: @pagenum, limit: @limit, params: @search_params
+          /= render 'pagetoolbar', results: @results, total: @total, page: @pagenum, limit: @limit, params: @search_params
 
 :javascript
   $(document).on('openlayers:aoidraw', function(evt) {
