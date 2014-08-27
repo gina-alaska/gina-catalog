@@ -37,10 +37,11 @@ class Page::Content < ActiveRecord::Base
   #   self.slug
   # end
   
-  scope :public, where(draft: false)
+  scope :public, -> { where(draft: false) }
   scope :autolinkable, -> { where({ draft: false, main_menu: true }) }
-  scope :contact, where(slug: "contacts")
-  scope :sitemap, where(slug: "sitemap")
+  scope :contact, -> { where(slug: "contacts") }
+  scope :sitemap, -> { where(slug: "sitemap") }
+  scope :global, -> { where(global: true) }
 
   def rebuild_slug
     parent_slugs = self.ancestors.collect { |p| p.slug.split('/').last } << self.slug_without_path
