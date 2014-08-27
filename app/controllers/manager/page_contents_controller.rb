@@ -1,6 +1,6 @@
 class Manager::PageContentsController < ManagerController
   before_filter :authenticate_access_cms!
-  before_filter :fetch_page, :except => [:new, :create, :index, :sort, :list_images]
+  before_filter :fetch_page, :except => [:new, :create, :index, :sort, :list_images, :global]
 
   include CatalogConcerns::Ace
   before_filter :init_ace_editor, :only => [:new, :edit]
@@ -11,6 +11,8 @@ class Manager::PageContentsController < ManagerController
 
   def index
     fetch_cms_pages
+    setups = current_setup.ancestors.pluck(:id)
+    @globals = Page::Content.where(setup_id: setups, global: true)
   end
   
   def new
@@ -190,6 +192,31 @@ class Manager::PageContentsController < ManagerController
     end
   end
   
+  def global
+    global = Page::Content.find(params["global"].to_i)
+    setups = current_setup.ancestors.pluck(:id)
+    @globals = Page::Content.where(setup_id: setups, global: true)
+    fetch_cms_pages
+
+    respond_to do |format|
+      format.html {
+        if current_setup.pages.where(slug: global.slug, description: global.description, global: false).count > 0
+          flash[:error] = "There is already a page that has the same slug as the global (#{global.slug}) page!"
+          redirect_to manager_page_contents_path
+        else
+          new_root_page = current_setup.pages.build()
+          if new_root_page.copy_settings_from(global)
+            flash[:success] = "#{global.title} page linked."
+          else
+            flash[:error] = "Error in creating linked page (#{global.title})!"
+          end
+
+          redirect_to manager_page_contents_path
+        end
+      }
+    end
+  end
+
   protected
   
   def sort_children(parent, items)

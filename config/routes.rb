@@ -48,6 +48,7 @@ NSCatalog::Application.routes.draw do
       put :remove, :on => :member
       put :preview, :on => :member
       post :sort, :on => :collection
+      get :global, :on => :collection
       
       resources :images, :only => [] do
         member do

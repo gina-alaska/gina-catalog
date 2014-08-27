@@ -11,6 +11,7 @@ solr/development/data/index/*
 solr/development/data/tlog/tlog.*
 solr/test/data/index/segment*
 solr/pids
+solr/data
 !solr/conf
 
 .bundle
