@@ -7,6 +7,8 @@
     = javascript_include_tag "http://glink.gina.alaska.edu/cdn/libs/OpenLayers-2.13.1/OpenLayers.js"
     = javascript_include_tag "application"
     = stylesheet_link_tag 'application'
+    /[if IE 9] 
+      = javascript_include_tag "ie"
     /[if IE 7]
       = stylesheet_link_tag "font-awesome-ie7.min.css", media: "all"
     = render "layouts/#{theme}/analytics" unless current_setup.analytics_account.nil? or Rails.env == 'development'

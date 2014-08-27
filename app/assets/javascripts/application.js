@@ -26,7 +26,6 @@
 //= require 'notifications'
 //= require_self
 
-
 var initialize_page = function(){
   setTimeout(function() {
     $('.carousel').carousel({
