@@ -11,8 +11,7 @@ class Manager::PageContentsController < ManagerController
 
   def index
     fetch_cms_pages
-    setups = current_setup.ancestors.pluck(:id)
-    @globals = Page::Content.where(setup_id: setups, global: true)
+    @globals = Page::Content.global.where('setup_id != ?', current_setup.id)
   end
   
   def new
