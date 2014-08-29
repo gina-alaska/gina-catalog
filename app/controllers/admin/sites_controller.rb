@@ -1,5 +1,6 @@
 class Admin::SitesController < AdminController
   before_action :set_site, only: [:show, :edit, :update]
+  load_and_authorize_resource
   
   def index
     @sites = Site.active

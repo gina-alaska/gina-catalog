@@ -1,0 +1,30 @@
+%nav.navbar.navbar-default.navbar-gina.navbar-static-top
+  .container-fluid
+    .navbar-header
+      %button.navbar-toggle{ type: 'button', data: { toggle: 'collapse', target: '#header-navbar' }}
+        %span.sr-only Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      = link_to root_url, class: 'navbar-brand' do
+        %span.gina gLynx 
+    #header-navbar.collapse.navbar-collapse
+      %ul.nav.navbar-nav.navbar-right
+        - if signed_in?
+          - if can?(:create, { any: [Site] })
+            %li.dropdown
+              = link_to '#', class: 'dropdown-toggle', data: { toggle: 'dropdown' } do
+                Manage 
+                %span.caret
+              %ul.dropdown-menu
+                - if can?(:show, Site)
+                  %li
+                    = link_to admin_sites_path do
+                      Sites
+          %li
+            = link_to logout_path do
+              Logout
+        - else
+          %li
+            = link_to login_path do
+              Login

@@ -52,6 +52,7 @@ gem 'rgeo'
 gem 'rgeo-activerecord'
 gem 'activerecord-postgis-adapter'
 gem 'rgeo-geojson'
+gem 'cancancan', '~> 1.9'
 
 group :development do
   gem "better_errors"
