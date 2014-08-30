@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :users
   namespace :admin do
     resources :sites
+    resources :users
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

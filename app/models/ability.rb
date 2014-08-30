@@ -31,7 +31,8 @@ class Ability
     
     user ||= User.new
     
-    if user.admin?
+    if user.global_admin?
+      can :admin, :sites
       can :manage, :all
     end
   end
