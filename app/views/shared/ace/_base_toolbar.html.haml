@@ -1,4 +1,4 @@
-- cache([:ace, :base_toolbar, :v13]) do
+- cache([:ace, :base_toolbar, :v18]) do
   .btn-group
     %button.btn.btn-small{ type: 'button', title: 'Undo', data: { action: 'undo' } }
       %i.icon-undo
@@ -110,6 +110,8 @@
                 %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ collection.name }}' } } Collection Name
               %li
                 %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ collection.description }}' } } Collection Description
+              %li
+                %a{ href: "#", type: 'button', data: { action: 'insert', start: '{% for record in collection.records %}', end: '{% endfor %}' } } Each Record
           %li
             %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ setup.facebook_url }}' } } Facebook URL
           %li
@@ -146,6 +148,8 @@
             %a{ href: "#", type: 'button', data: { action: 'insert', start: '{% for record in setup.catalog.latest %}', end: '{% endfor %}' } } Each Record
           %li
             %a{ href: "#", type: 'button', data: { action: 'insert', start: '{% for record in setup.catalog.top_downloads %}', end: '{% endfor %}' } } Each Popular Record
+          %li
+            %a{ href: "#", type: 'button', data: { action: 'insert', start: '{% for image in record.previews %}', end: '{% endfor %}' } } Each Preview Image
           %li
             %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ record.title }}' } } Title
           %li
