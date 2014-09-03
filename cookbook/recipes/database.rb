@@ -70,6 +70,8 @@ node['glynx']['database']['environments'].each do |dbenv|
   bash 'enable_postgis' do 
     user 'postgres'
     code <<-EOS
+      psql -d #{dbinfo['database']} -c "ALTER ROLE #{dbinfo['username']} WITH CREATEDB"
+      psql -d #{dbinfo['database']} -c "ALTER ROLE #{dbinfo['username']} WITH SUPERUSER"
       psql -d #{dbinfo['database']} -c "CREATE EXTENSION IF NOT EXISTS postgis;"
       psql -d #{dbinfo['database']} -c "CREATE EXTENSION IF NOT EXISTS postgis_topology;"
     EOS

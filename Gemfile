@@ -53,6 +53,7 @@ gem 'rgeo-activerecord'
 gem 'activerecord-postgis-adapter'
 gem 'rgeo-geojson'
 gem 'cancancan', '~> 1.9'
+gem 'nested_form'
 
 group :development do
   gem "better_errors"

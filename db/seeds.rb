@@ -5,3 +5,12 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+s = Site.create!({ 
+  title: "Catalog Development", 
+  acronym: 'gLynx', 
+  url: 'catalog.192.168.222.225.xip.io', 
+  contact_email: 'support@gina.alaska.edu' 
+})
+
+s.urls.create!({ url: 'catalog.192.168.222.225.xip.io', default: true })
+

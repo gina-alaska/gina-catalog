@@ -11,6 +11,7 @@ class Admin::SitesController < AdminController
 
   def new
     @site = Site.new
+    @site.urls.build
   end
   
   def create
@@ -31,15 +32,23 @@ class Admin::SitesController < AdminController
   end
   
   def edit
+    @site.urls.build
   end
   
   def update
+    respond_to do |format|
+      if @site.update_attributes(site_params)
+        format.html { redirect_to [:admin, @site] }
+      else
+        format.html { render :edit }
+      end
+    end
   end
   
   protected
   
   def site_params
-    params.require(:site).permit(:title, :acronym, :parent_id)
+    params.require(:site).permit(:title, :acronym, :parent_id, urls_attributes: [:id, :url, :default])
   end
   
   def set_site

@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   include GinaAuthentication::AppHelpers
   include GlynxSites
   
-  before_action :load_current_site
+  before_action :check_current_site
   
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.

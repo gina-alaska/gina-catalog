@@ -10,9 +10,11 @@
   %table.table.table-bordered.table-stripped
     - @sites.each do |site|
       %tr
-        %td{ colspan: 2 }
+        %td
           - site.depth.times do |i|
             %i.fa.fa-arrow-right
             
           = link_to [:admin, site] do
             = site.title
+        %td
+          = site.url

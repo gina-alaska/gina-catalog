@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get '/auth/failure', to: 'sessions#failure'
 
   get '/admin' => 'admin/dashboard#index', as: :admin
+  get '/site_not_found' => 'welcome#site_not_found', as: :site_not_found
 
   resources :sessions
   resources :memberships

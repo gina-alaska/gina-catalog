@@ -15,7 +15,7 @@ unicorn_config node['unicorn']['config_path'] do
   stderr_path node['unicorn']['stderr']
   stdout_path node['unicorn']['stdout']
   worker_timeout node['unicorn']['worker_timeout']
-  worker_processes [node['cpu']['total'].to_i * 4, 8].min
+  worker_processes [node['cpu']['total'].to_i * 4, 2].min
   working_directory node['unicorn']['deploy_path']
   before_fork node['unicorn']['before_fork']
   after_fork node['unicorn']['after_fork']

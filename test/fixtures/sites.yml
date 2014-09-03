@@ -9,6 +9,7 @@ one:
   logo_uid: MyString
   contact_email: MyString
   analytics_account: MyString
+  depth: 0
 
 two:
   title: MyString
@@ -19,3 +20,4 @@ two:
   logo_uid: MyString
   contact_email: MyString
   analytics_account: MyString
+  depth: 0

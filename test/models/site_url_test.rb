@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Admin::SitesControllerTest < ActionController::TestCase
+class SiteUrlTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

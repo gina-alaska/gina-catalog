@@ -45,7 +45,7 @@ default['glynx']['database'] = {
   setup: false,
   environments: [:development, :test],
   development: {
-    adapter: 'postgis',
+    adapter: 'postgresql',
     hostname: '192.168.222.225',
     database: 'glynx_development',
     username: 'glynx',
@@ -53,7 +53,7 @@ default['glynx']['database'] = {
     search_path: 'public'
   },
   test: {
-    adapter: 'postgis',
+    adapter: 'postgresql',
     hostname: '192.168.222.225',
     database: 'glynx_test',
     username: 'glynx',
@@ -61,7 +61,7 @@ default['glynx']['database'] = {
     search_path: 'public'    
   },
   production: {
-    adapter: 'postgis',
+    adapter: 'postgresql',
     hostname: '192.168.222.225',
     database: 'glynx_production',
     username: 'glynx',

@@ -15,3 +15,16 @@
   top: 6px; 
   right: 10px;
 }
+
+.nested-form-fields {
+  .form-group {
+    width: 100%;
+  }
+  
+  tr > td {
+    vertical-align: middle !important;
+  }
+  input[type="text"] {
+    width: 100%;
+  }
+}
