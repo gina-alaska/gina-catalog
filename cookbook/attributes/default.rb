@@ -29,12 +29,24 @@ default['glynx']['links'] = {
 
 default['glynx']['account'] = "webdev"
 
+default['glynx']['rails']['secrets'] = {
+  development: {
+    secret_key_base: '208dcab87ee1339b7c7e5ee9dd70f3a6a77814f3e203f959f2207b07a870a9960f095a5c24d2f29d3829c5099e512f1a91adc1d453a5675988694493e533e7b7'
+  },
+  test: {
+    secret_key_base: 'eca191458f7576c2b76a81dca3f81c0436a557f07d322130a4fa9020cd89b1961f851392440942f04721f2dd1499a81c8ab466489c06ab25de446e9e7dd3617f'
+  }, 
+  production: {
+    secret_key_base: '<%= ENV["SECRET_KEY_BASE"] %>'
+  }
+}
+
 default['glynx']['database'] = {
   setup: false,
   environments: [:development, :test],
   development: {
     adapter: 'postgis',
-    hostname: 'localhost',
+    hostname: '192.168.222.225',
     database: 'glynx_development',
     username: 'glynx',
     password: 'fj329rghDDw02jf',
@@ -42,7 +54,7 @@ default['glynx']['database'] = {
   },
   test: {
     adapter: 'postgis',
-    hostname: 'localhost',
+    hostname: '192.168.222.225',
     database: 'glynx_test',
     username: 'glynx',
     password: 'fj329rghDDw02jf',
@@ -50,7 +62,7 @@ default['glynx']['database'] = {
   },
   production: {
     adapter: 'postgis',
-    hostname: 'localhost',
+    hostname: '192.168.222.225',
     database: 'glynx_production',
     username: 'glynx',
     password: '',
@@ -66,12 +78,12 @@ default['glynx']['database'] = {
 # default['glynx']['database']['search_path'] = "nssi_prod,public"
 # default['glynx']['database_setup'] = false
 
-default['glynx']['sunspot']['solr']['hostname'] = 'localhost'
+default['glynx']['sunspot']['solr']['hostname'] = '192.168.222.225'
 default['glynx']['sunspot']['solr']['port'] = '8982'
 default['glynx']['sunspot']['solr']['path'] = '/solr/default'
-default['glynx']['sunspot']['hostname'] = "localhost"
+default['glynx']['sunspot']['hostname'] = "192.168.222.225"
 
-default['glynx']['redis']['hostname'] = 'localhost'
+default['glynx']['redis']['hostname'] = '192.168.222.225'
 
 default['glynx']['package_deps'] = %w{
   java-1.7.0-openjdk 

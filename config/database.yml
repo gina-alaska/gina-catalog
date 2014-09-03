@@ -4,7 +4,7 @@ development:
   username: glynx
   password: fj329rghDDw02jf
   schema_search_path: public
-  host: 192.168.222.225
+  host: localhost
   client_encoding: UTF8
 test:
   adapter: postgis
@@ -12,5 +12,5 @@ test:
   username: glynx
   password: fj329rghDDw02jf
   schema_search_path: public
-  host: 192.168.222.225
+  host: localhost
   client_encoding: UTF8

@@ -117,6 +117,15 @@ template "#{node[app_name]['paths']['shared']}/config/database.yml" do
   })
 end
 
+template "#{node[app_name]['paths']['shared']}/config/secrets.yml" do
+  owner account
+  group account
+  mode 00644
+  variables({
+    secrets: node[app_name]['rails']['secrets']
+  })
+end
+
 # template "#{node[app_name]['shared_path']}/config/git_hooks_env" do
 #   owner account
 #   group account
