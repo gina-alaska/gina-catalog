@@ -1,5 +1,6 @@
-= "Description: "
+%b Description:
 - if !item.description.nil?
-  = item.description
+  - num_chars = params["description_chars"].nil?  ? 500 : params["description_chars"].to_i
+  = item.description.truncate(num_chars)
 - else
   ="none"

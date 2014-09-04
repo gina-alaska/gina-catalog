@@ -1,5 +1,5 @@
 class Upload < ActiveRecord::Base
-  attr_accessible :catalog_id, :downloadable, :preview, :file, :catalog
+  attr_accessible :catalog_id, :downloadable, :preview, :file, :catalog, :description
   
   dragonfly_accessor :file
   

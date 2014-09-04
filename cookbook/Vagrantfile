@@ -35,7 +35,7 @@ Vagrant.configure("2") do |config|
       },        
       unicorn: {
         listen: '/var/run/unicorn/',
-        pid: '/www/glynx/current/tmp/pids/unicorn_glynx.pid',
+        pid: '/www/glynx/current/tmp/pids/unicorn.pid',
         stderr_path: '/www/glynx/current/log/unicorn.stderr.log',
         stdout_path: '/www/glynx/current/log/unicorn.stdout.log'
       },
