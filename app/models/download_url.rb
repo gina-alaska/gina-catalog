@@ -13,4 +13,8 @@ class DownloadUrl < ActiveRecord::Base
   def update_uuid
     self.uuid = UUIDTools::UUID.md5_create(UUIDTools::UUID_URL_NAMESPACE, self.url).to_s
   end
+  
+  def to_s
+    self.url
+  end
 end
