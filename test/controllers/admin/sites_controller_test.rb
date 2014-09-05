@@ -3,10 +3,11 @@ require 'test_helper'
 class Admin::SitesControllerTest < ActionController::TestCase
   def setup
     @site = sites(:one)
+    @site_no_urls = sites(:two)
     @user = users(:admin)
     session[:user_id] = @user.id
   end
-  
+
   test "should get index" do
     get :index
     
@@ -20,6 +21,13 @@ class Admin::SitesControllerTest < ActionController::TestCase
     assert_response :success
     assert_not_nil assigns(:site)
   end 
+
+  test "should show site with no urls" do
+    get :show, id: @site_no_urls.id
+    
+    assert_response :success
+    assert_not_nil assigns(:site)
+  end
   
   test "should show new site form" do
     get :new
