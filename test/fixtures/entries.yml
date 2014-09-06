@@ -12,7 +12,7 @@ one:
   published_at: 1
   start_date: 2014-09-05
   end_date: 2014-09-05
-  owener_site_id: 1
+  owner_site_id: 1
 
 two:
   title: MyString
@@ -26,4 +26,4 @@ two:
   published_at: 1
   start_date: 2014-09-05
   end_date: 2014-09-05
-  owener_site_id: 1
+  owner_site_id: 1
