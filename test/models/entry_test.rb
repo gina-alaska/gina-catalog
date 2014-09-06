@@ -1,7 +1,9 @@
 require 'test_helper'
 
 class EntryTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+	should belong_to(:site)
+	should belong_to(:owner_site)
+  should ensure_length_of(:title).is_at_most(255)
+  should ensure_length_of(:slug).is_at_most(255)
+  should ensure_length_of(:uuid).is_at_most(255)
 end
