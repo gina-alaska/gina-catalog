@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class EntryAliasTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  should ensure_length_of(:slug).is_at_most(255)
+  should validate_numericality_of(:entry_id).only_integer
 end
