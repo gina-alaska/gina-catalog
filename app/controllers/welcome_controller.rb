@@ -6,5 +6,8 @@ class WelcomeController < ApplicationController
   end
   
   def site_not_found
+    unless current_site.nil?
+      redirect_to root_url
+    end
   end
 end

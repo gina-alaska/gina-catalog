@@ -8,10 +8,11 @@
         %span.icon-bar
       = link_to admin_url, class: 'navbar-brand' do
         %span.gina gLynx 
-        \:: Admin
+        \:: Manager
     #header-navbar.collapse.navbar-collapse
       %ul.nav.navbar-nav.navbar-right
         - if signed_in?
+          = render 'layouts/manager_menu'
           = render 'layouts/admin_menu'
           %li
             = link_to logout_path do
