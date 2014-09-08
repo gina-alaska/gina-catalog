@@ -3,7 +3,7 @@ class CreateSiteUrls < ActiveRecord::Migration
     create_table :site_urls do |t|
       t.integer :site_id
       t.string :url
-      t.boolean :default
+      t.boolean :default, default: false
 
       t.timestamps
     end

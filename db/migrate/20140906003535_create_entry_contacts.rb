@@ -3,7 +3,7 @@ class CreateEntryContacts < ActiveRecord::Migration
     create_table :entry_contacts do |t|
       t.integer :contact_id
       t.integer :entry_id
-      t.boolean :primary
+      t.boolean :primary, default: false
 
       t.timestamps
     end

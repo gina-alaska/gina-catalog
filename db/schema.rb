@@ -75,8 +75,8 @@ ActiveRecord::Schema.define(version: 20140908200752) do
   create_table "entry_agencies", force: true do |t|
     t.integer  "entry_id"
     t.integer  "agency_id"
-    t.boolean  "primary"
-    t.boolean  "funding"
+    t.boolean  "primary",    default: false
+    t.boolean  "funding",    default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -91,7 +91,7 @@ ActiveRecord::Schema.define(version: 20140908200752) do
   create_table "entry_contacts", force: true do |t|
     t.integer  "contact_id"
     t.integer  "entry_id"
-    t.boolean  "primary"
+    t.boolean  "primary",    default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -106,7 +106,7 @@ ActiveRecord::Schema.define(version: 20140908200752) do
   create_table "site_urls", force: true do |t|
     t.integer  "site_id"
     t.string   "url"
-    t.boolean  "default"
+    t.boolean  "default",    default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -134,7 +134,7 @@ ActiveRecord::Schema.define(version: 20140908200752) do
     t.string   "avatar"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "global_admin"
+    t.boolean  "global_admin", default: false
   end
 
 end
