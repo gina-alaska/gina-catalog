@@ -11,17 +11,78 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140903212205) do
+ActiveRecord::Schema.define(version: 20140908194054) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "postgis"
   enable_extension "postgis_topology"
 
+  create_table "addresses", force: true do |t|
+    t.string   "line1"
+    t.string   "line2"
+    t.string   "country"
+    t.string   "state"
+    t.string   "city"
+    t.string   "zipcode"
+    t.integer  "addressable_id"
+    t.string   "addressable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "agency_contacts", force: true do |t|
+    t.integer  "contact_id"
+    t.integer  "agency_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "authorizations", force: true do |t|
     t.string   "provider"
     t.string   "uid"
     t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "contacts", force: true do |t|
+    t.string   "name"
+    t.string   "email"
+    t.string   "phone_number"
+    t.string   "job_title"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "entries", force: true do |t|
+    t.string   "title"
+    t.text     "description"
+    t.string   "status"
+    t.string   "slug"
+    t.string   "uuid"
+    t.integer  "site_id"
+    t.integer  "licence_id"
+    t.datetime "archived_at"
+    t.integer  "published_at"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.integer  "owner_site_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "entry_aliases", force: true do |t|
+    t.string   "slug"
+    t.integer  "entry_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "entry_contacts", force: true do |t|
+    t.integer  "contact_id"
+    t.integer  "entry_id"
+    t.boolean  "primary"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
