@@ -7,6 +7,8 @@ class Contact < ActiveRecord::Base
 
   has_many :agency_contacts
   #has_many :agencies, through: :agency_contacts
+  has_many :entry_contacts
+  has_many :entries, through: :entry_contacts
 
   def has_name_email_or_title
   	if self.name.blank? and self.email.blank? and self.job_title.blank?

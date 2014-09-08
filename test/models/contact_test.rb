@@ -11,6 +11,7 @@ class ContactTest < ActiveSupport::TestCase
   should ensure_length_of(:name).is_at_most(255)
   should have_many(:agency_contacts)
   should have_many(:agencies).through(:agency_contacts)
+  should have_many(:entries).through(:entry_contacts)
 
   test "blank contacts are invalid" do
   	assert !@blank_contact.valid?, "Contact was valid when shouldn't be."
