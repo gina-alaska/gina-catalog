@@ -6,7 +6,7 @@ class Contact < ActiveRecord::Base
   validates :phone_number, length: { maximum: 255 }
 
   has_many :agency_contacts
-  #has_many :agencies, through: :agency_contacts
+  has_many :agencies, through: :agency_contacts
   has_many :entry_contacts
   has_many :entries, through: :entry_contacts
 
