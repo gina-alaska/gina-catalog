@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class EntryAgencyTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  should validate_numericality_of(:entry_id).only_integer
+  should validate_numericality_of(:agency_id).only_integer
 end
