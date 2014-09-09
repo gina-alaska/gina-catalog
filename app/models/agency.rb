@@ -8,5 +8,4 @@ class Agency < ActiveRecord::Base
   validates :logo_uid, length: { maximum: 255 }
   validates :logo_name, length: { maximum: 255 }
   validates :url, length: { maximum: 255 }
-  validates :parent_id, numericality: { only_integer: true }
 end
