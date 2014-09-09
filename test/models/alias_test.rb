@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class AliasTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  should ensure_length_of(:text).is_at_most(255)
+  should ensure_length_of(:aliasable_type).is_at_most(255)
+  should validate_numericality_of(:aliasable_id).only_integer
 end
