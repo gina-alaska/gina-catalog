@@ -1,8 +1,8 @@
 require 'test_helper'
 
 class EntryTest < ActiveSupport::TestCase
-	should belong_to(:site)
-	should belong_to(:owner_site)
+  should belong_to(:site)
+  should belong_to(:owner_site)
   should have_many(:entry_contacts)
   should have_many(:contacts).through(:entry_contacts)
 
