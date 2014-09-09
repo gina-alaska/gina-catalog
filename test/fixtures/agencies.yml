@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  category: MyString
+  description: MyString
+  acronym: MyString
+  active: false
+  adiwg_code: MyString
+  adiwg_path: MyString
+  logo_uid: MyString
+  logo_name: MyString
+  url: MyString
+  parent_id: 1
+
+two:
+  name: MyString
+  category: MyString
+  description: MyString
+  acronym: MyString
+  active: false
+  adiwg_code: MyString
+  adiwg_path: MyString
+  logo_uid: MyString
+  logo_name: MyString
+  url: MyString
+  parent_id: 1

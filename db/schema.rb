@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140908200752) do
+ActiveRecord::Schema.define(version: 20140909011301) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,22 @@ ActiveRecord::Schema.define(version: 20140908200752) do
     t.string   "zipcode"
     t.integer  "addressable_id"
     t.string   "addressable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "agencies", force: true do |t|
+    t.string   "name"
+    t.string   "category"
+    t.string   "description"
+    t.string   "acronym",     limit: 15
+    t.boolean  "active",                 default: true
+    t.string   "adiwg_code"
+    t.string   "adiwg_path"
+    t.string   "logo_uid"
+    t.string   "logo_name"
+    t.string   "url"
+    t.integer  "parent_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
