@@ -5,6 +5,9 @@ class EntryTest < ActiveSupport::TestCase
   should belong_to(:owner_site)
   should have_many(:entry_contacts)
   should have_many(:contacts).through(:entry_contacts)
+  should have_many(:entry_aliases)
+  should have_many(:entry_agencies)
+  should have_many(:agencies).through(:entry_agencies)
 
   should ensure_length_of(:title).is_at_most(255)
   should ensure_length_of(:slug).is_at_most(255)
