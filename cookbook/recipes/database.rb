@@ -76,4 +76,14 @@ node['glynx']['database']['environments'].each do |dbenv|
       psql -d #{dbinfo['database']} -c "CREATE EXTENSION IF NOT EXISTS postgis_topology;"
     EOS
   end
+  
+  package 'postgresql92-contrib'
+
+  bash "install-hstore-extension" do
+    user 'postgres'
+    code <<-EOH
+      echo 'CREATE EXTENSION IF NOT EXISTS "hstore";' | psql -d #{dbinfo['database']}
+    EOH
+    action :run
+  end
 end
