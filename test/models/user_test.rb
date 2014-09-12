@@ -9,10 +9,7 @@ class UserTest < ActiveSupport::TestCase
   should have_many(:site_users)
   should have_many(:sites).through(:site_users)
   
-  def setup
-  end
-  
-  test "user should have all manager privs for a site"  do
+  test "user should have all manager privs for site one"  do
     @user = users(:one)
     @site = sites(:one)
     
@@ -21,7 +18,7 @@ class UserTest < ActiveSupport::TestCase
     end
   end
   
-  test "user should have no manager privs for a site"  do
+  test "user should have no manager privs for site two"  do
     @user = users(:one)
     @site = sites(:two)
     
