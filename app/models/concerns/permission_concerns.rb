@@ -12,7 +12,7 @@ module PermissionConcerns
     self.site_users.for(site).update_attribute(:roles, roles)
   end
   
-  def is_a?(role, site)
+  def has_role?(role, site)
     ActiveRecord::ConnectionAdapters::Column.value_to_boolean roles(site).try(:[], role.to_s)
   end
   

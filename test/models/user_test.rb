@@ -14,7 +14,7 @@ class UserTest < ActiveSupport::TestCase
     @site = sites(:one)
     
     User.available_roles.each do |role|
-      assert @user.is_a?(role, @site), "User was not a #{role} when they should have been"
+      assert @user.has_role?(role, @site), "User was not a #{role} when they should have been"
     end
   end
   
@@ -23,7 +23,7 @@ class UserTest < ActiveSupport::TestCase
     @site = sites(:two)
     
     User.available_roles.each do |role|
-      assert !@user.is_a?(role, @site), "User was a #{role} when they should not have been"
+      assert !@user.has_role?(role, @site), "User was a #{role} when they should not have been"
     end
   end
 end

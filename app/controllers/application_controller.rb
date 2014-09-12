@@ -16,4 +16,10 @@ class ApplicationController < ActionController::Base
       redirect_to login_path
     end
   end
+  
+  protected
+  
+  def current_ability
+    @current_ability ||= Ability.new(current_user, current_site)
+  end
 end
