@@ -9,7 +9,8 @@ module PermissionConcerns
   end
   
   def set_roles(site, roles)
-    self.site_users.for(site).update_attribute(:roles, roles)
+    site_user = self.site_users.where(site: site).first_or_initialize
+    site_user.update_attribute(:roles, roles)
   end
   
   def has_role?(role, site)

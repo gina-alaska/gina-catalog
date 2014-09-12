@@ -26,4 +26,12 @@ class UserTest < ActiveSupport::TestCase
       assert !@user.has_role?(role, @site), "User was a #{role} when they should not have been"
     end
   end
+  
+  test "adding permissions to a new user" do
+    user = users(:one)
+    @user = User.new(name: user.name, email: user.email)
+    @site = sites(:one)
+    
+    @user.set_roles(@site, { cms_manager: false })
+  end
 end
