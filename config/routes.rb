@@ -20,6 +20,9 @@ Rails.application.routes.draw do
   end
   
   namespace :manager do
+    resources :users, only: [:autocomplete] do
+      get :autocomplete, on: :collection
+    end
     resources :permissions
   end
 

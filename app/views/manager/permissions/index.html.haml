@@ -1,8 +1,11 @@
 .panel.panel-default
   .panel-heading
+    .navbar-right{ style: 'margin-top: -5px; margin-right: -10px;' }
+      = bootstrap_form_tag url: autocomplete_manager_users_path, layout: :inline do |f|
+        = f.text_field :query, hide_label: true, data: { behavior: 'autocomplete-user' }
     .panel-title
       Permissions
-      
+            
   %table.table.table-bordered.table-striped
     %thead
       %tr
