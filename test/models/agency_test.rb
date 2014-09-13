@@ -10,5 +10,7 @@ class AgencyTest < ActiveSupport::TestCase
   should ensure_length_of(:logo_uid).is_at_most(255)
   should ensure_length_of(:logo_name).is_at_most(255)
   should ensure_length_of(:url).is_at_most(255)
-  should validate_numericality_of(:parent_id).only_integer
+
+  should have_many(:entry_agencies)
+  should have_many(:entries).through(:entry_agencies)
 end

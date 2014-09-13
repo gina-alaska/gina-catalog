@@ -10,12 +10,6 @@
         %span.gina gLynx 
     #header-navbar.collapse.navbar-collapse
       %ul.nav.navbar-nav.navbar-right
-        - if signed_in?
-          = render 'layouts/admin_menu'
-          %li
-            = link_to logout_path do
-              Logout
-        - else
-          %li
-            = link_to login_path do
-              Login
+        = render 'layouts/manager_menu'
+        = render 'layouts/admin_menu'
+        = render 'layouts/authorization_menu'

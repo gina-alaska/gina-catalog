@@ -1,7 +1,7 @@
 class Ability
   include CanCan::Ability
 
-  def initialize(user)
+  def initialize(user, site)
     # Define abilities for the passed in user here. For example:
     #
     #   user ||= User.new # guest user (not logged in)
@@ -32,8 +32,21 @@ class Ability
     user ||= User.new
     
     if user.global_admin?
-      can :admin, :sites
       can :manage, :all
     end
+    
+    
+    if user.has_role?(:cms_manager, site)
+      can :view_manager_menu, User
+    end
+    
+    if user.has_role?(:data_manager, site)
+      can :view_manager_menu, User
+    end
+    
+    if user.has_role?(:site_manager, site)
+      can :view_manager_menu, User
+    end
+        
   end
 end

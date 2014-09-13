@@ -11,12 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140909204412) do
+ActiveRecord::Schema.define(version: 20140911213904) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "postgis"
   enable_extension "postgis_topology"
+  enable_extension "hstore"
 
   create_table "addresses", force: true do |t|
     t.string   "line1"
@@ -129,6 +130,16 @@ ActiveRecord::Schema.define(version: 20140909204412) do
     t.datetime "updated_at"
   end
 
+  create_table "feedbacks", force: true do |t|
+    t.string   "name"
+    t.string   "email"
+    t.text     "message"
+    t.integer  "user_id"
+    t.integer  "site_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "memberships", force: true do |t|
     t.integer  "user_id"
     t.string   "email"
@@ -140,6 +151,14 @@ ActiveRecord::Schema.define(version: 20140909204412) do
     t.integer  "site_id"
     t.string   "url"
     t.boolean  "default",    default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "site_users", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "site_id"
+    t.hstore   "roles"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

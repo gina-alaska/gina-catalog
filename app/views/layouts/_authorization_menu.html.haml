@@ -1,0 +1,8 @@
+- if signed_in?
+  %li
+    = link_to logout_path do
+      Logout
+- else
+  %li
+    = link_to login_path do
+      Login

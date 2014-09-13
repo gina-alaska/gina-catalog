@@ -1,4 +1,7 @@
 class Agency < ActiveRecord::Base
+  has_many :entry_agencies
+  has_many :entries, through: :entry_agencies
+
   validates :name, length: { maximum: 255 }
   validates :category, length: { maximum: 255 }
   validates :description, length: { maximum: 255 }
