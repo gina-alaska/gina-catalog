@@ -6,8 +6,8 @@ class UserTest < ActiveSupport::TestCase
   # end
   should have_one(:membership)
   should have_many(:authorizations)
-  should have_many(:site_users)
-  should have_many(:sites).through(:site_users)
+  should have_many(:permissions)
+  should have_many(:sites).through(:permissions)
   
   test "user should have all manager privs for site one"  do
     @user = users(:one)

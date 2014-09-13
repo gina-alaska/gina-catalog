@@ -1,0 +1,15 @@
+.panel.panel-default
+  .panel-heading
+    .panel-title
+      Permissions
+      
+  %table.table.table-bordered.table-striped
+    %thead
+      %tr
+        %th User
+        %th Actions
+    %tbody
+      - @permissions.each do |permission|
+        %tr
+          %td= link_to permission.user, permission
+          %td

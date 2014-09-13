@@ -2,15 +2,21 @@ module PermissionConcerns
   extend ActiveSupport::Concern
   
   included do
+    has_many :permissions do 
+      def for(site)
+        where(site_id: site).first
+      end
+    end
+    has_many :sites, through: :permissions
   end
   
   def roles(site)
-    self.site_users.for(site).try(:roles)
+    self.permissions.for(site).try(:roles)
   end
   
   def set_roles(site, roles)
-    site_user = self.site_users.where(site: site).first_or_initialize
-    site_user.update_attribute(:roles, roles)
+    permission = self.permissions.where(site_id: site).first_or_initialize
+    permission.update_attribute(:roles, roles)
   end
   
   def has_role?(role, site)

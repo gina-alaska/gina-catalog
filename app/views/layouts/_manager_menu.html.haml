@@ -9,3 +9,8 @@
         = link_to manager_path do
           %i.fa.fa-dashboard
           Dashboard
+      - if can? :manage, current_user.permissions.for(current_site)
+        %li
+          = link_to manager_permissions_path do
+            %i.fa.fa-lock
+            Permissions

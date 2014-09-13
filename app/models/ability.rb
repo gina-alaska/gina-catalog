@@ -46,6 +46,9 @@ class Ability
     
     if user.has_role?(:site_manager, site)
       can :view_manager_menu, User
+      can :manage, SiteUser do |site_user|
+        site_user.site == site
+      end
     end
         
   end
