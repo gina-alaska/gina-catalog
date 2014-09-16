@@ -12,9 +12,9 @@ class Contact < ActiveRecord::Base
 
   def has_name_email_or_title
   	if self.name.blank? and self.email.blank? and self.job_title.blank?
-  		errors.add(:name, "Invalid Contact, must have at least a name, email, or job_title!")
-  		errors.add(:email, "Invalid Contact, must have at least a name, email, or job_title!")
-  		errors.add(:job_title, "Invalid Contact, must have at least a name, email, or job_title!")
+  		errors.add(:name, "must have either a name, email, or job title!")
+  		errors.add(:email, "must have either a name, email, or job title!")
+  		errors.add(:job_title, "must have either a name, email, or job title!")
   	end
   end
 end

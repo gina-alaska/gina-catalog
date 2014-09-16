@@ -6,6 +6,6 @@ one:
   site: one
 
 two:
-  url: MyString
+  url: test.host
   default: false
   site: one
