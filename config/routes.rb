@@ -21,6 +21,7 @@ Rails.application.routes.draw do
 
   namespace :manager do
     resources :contacts
+    resources :agencies
   end
   
   # The priority is based upon order of creation: first created -> highest priority.
