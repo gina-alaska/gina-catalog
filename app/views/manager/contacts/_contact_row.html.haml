@@ -8,7 +8,7 @@
   %td{ class: 'col-lg-2 col-md-2' }
     = contact.phone_number
   %td{ class: 'col-lg-1 col-md-1' }
-    = link_to edit_manager_contact_path(contact), class: 'btn btn-sm btn-primary', title: 'Edit This Contact' do
+    = link_to edit_manager_contact_path(contact), class: 'btn btn-sm btn-primary', title: 'Edit' do
       %i.fa.fa-edit
-    = link_to manager_contact_path(contact), data: { method: :delete, confirm: "Are you sure?" }, class: 'btn btn-sm btn-danger', title: 'Delete This Contact' do
+    = link_to manager_contact_path(contact), data: { method: :delete, confirm: "Are you sure?" }, class: 'btn btn-sm btn-danger', title: 'Delete' do
       %i.fa.fa-trash-o
