@@ -1,4 +1,6 @@
 class Manager::ContactsController < ManagerController
+  load_and_authorize_resource
+
   def index
     @contacts = Contact.all
 
@@ -16,12 +18,9 @@ class Manager::ContactsController < ManagerController
   end
 
   def edit
-    @contact = Contact.find(params[:id])
   end
 
   def create
-    @contact = Contact.new(contact_params)
-
     respond_to do |format|
       if @contact.save
         flash[:success] = "Contact #{@contact.name} was successfully created."
@@ -34,8 +33,6 @@ class Manager::ContactsController < ManagerController
   end
 
   def update
-    @contact = Contact.find(params[:id])
-
     respond_to do |format|
       if @contact.update_attributes(contact_params)
         flash[:success] = "Contact #{@contact.name} was successfully updated."
@@ -49,7 +46,6 @@ class Manager::ContactsController < ManagerController
   end
 
   def destroy
-    @contact = Contact.find(params[:id])
     @contact.destroy
 
     respond_to do |format|
