@@ -10,9 +10,6 @@ class Manager::ContactsController < ManagerController
     end
   end
 
-  def show
-  end
-
   def new
     @contact = Contact.new()
   end
