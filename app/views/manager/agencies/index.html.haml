@@ -15,4 +15,4 @@
         %th Description
         %th Actions
     %tbody
-      = render(partial: "agency_row", collection: @contacts, as: :contact) || "<tr><td colspan=\"4\">There are no agencies available</td></tr>".html_safe
+      = render(partial: "agency_row", collection: @agencies, as: :agency) || "<tr><td colspan=\"4\">There are no agencies available</td></tr>".html_safe
