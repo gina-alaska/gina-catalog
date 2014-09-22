@@ -1,0 +1,10 @@
+.row-fluid
+  .col-sm-8.col-sm-offset-2
+    .panel.panel-default
+      .panel-heading{ style: 'position: relative' }
+        .panel-title
+          %i.fa.fa-university
+          New Agency
+
+      .panel-body
+        = render 'form', agency: @agency 

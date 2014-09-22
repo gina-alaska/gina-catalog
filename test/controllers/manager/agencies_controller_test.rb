@@ -1,6 +1,12 @@
 require 'test_helper'
 
 class Manager::AgenciesControllerTest < ActionController::TestCase
+  def setup
+    @agency = agencies(:one)
+    @user = users(:admin)
+    session[:user_id] = @user.id
+  end
+
   test "should get index" do
     get :index
     assert_response :success

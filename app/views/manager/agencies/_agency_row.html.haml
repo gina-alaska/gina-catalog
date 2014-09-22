@@ -1,0 +1,12 @@
+%tr
+  %td{ class: 'col-lg-3 col-md-3' }
+    = contact.name
+  %td{ class: 'col-lg-3 col-md-3' }
+    = contact.acronym
+  %td{ class: 'col-lg-4 col-md-4' }
+    = contact.description
+  %td{ class: 'col-lg-1 col-md-1' }
+    = link_to edit_manager_agency_path(contact), class: 'btn btn-sm btn-primary', title: 'Edit' do
+      %i.fa.fa-edit
+    = link_to manager_agency_path(agency), data: { method: :delete, confirm: "Are you sure?" }, class: 'btn btn-sm btn-danger', title: 'Delete' do
+      %i.fa.fa-trash-o
