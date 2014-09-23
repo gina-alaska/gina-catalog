@@ -1,1 +1,2 @@
-= f.text_field :text, append: f.link_to_remove('<i class="fa fa-trash"></i>'.html_safe, class: 'btn btn-danger')
+= f.hidden_field :id
+= f.text_field :text, append: f.link_to_remove('<i class="fa fa-trash"></i>'.html_safe, class: 'btn btn-danger'), label: 'Alias'
