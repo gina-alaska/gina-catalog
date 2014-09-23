@@ -13,8 +13,10 @@ class Manager::AgenciesControllerTest < ActionController::TestCase
   end
 
   test "should get show" do
-    get :show
+    get :show, id: @agency.id
+    
     assert_response :success
+    assert_not_nil assigns(:agency)
   end
 
   test "should get new" do
@@ -23,23 +25,32 @@ class Manager::AgenciesControllerTest < ActionController::TestCase
   end
 
   test "should get edit" do
-    get :edit
+    get :edit, id: @agency.id
+    
     assert_response :success
+    assert_not_nil assigns(:agency)
   end
 
-  test "should get create" do
-    get :create
-    assert_response :success
+  test "should post create" do
+    assert_difference('Agency.count') do
+      post :create, agency: @agency.attributes
+      assert assigns(:agency).errors.empty?, assigns(:agency).errors.full_messages
+    end
+
+    assert_redirected_to manager_agency_path(assigns(:agency))
   end
 
-  test "should get update" do
-    get :update
-    assert_response :success
+  test "should patch update" do
+    patch :update, id: @agency.id, agency: { name: 'Testing2' }
+    assert assigns(:agency).errors.empty?, assigns(:agency).errors.full_messages
+    assert_redirected_to manager_agencies_path
   end
 
-  test "should get destroy" do
-    get :destroy
-    assert_response :success
-  end
+  test "should destroy" do
+    assert_difference('Agency.count', -1) do
+      delete :destroy, id: @agency.id
+    end
 
+    assert_redirected_to manager_agencies_path
+  end
 end
