@@ -28,7 +28,7 @@ class Manager::AgenciesController < ApplicationController
     respond_to do |format|
       if @agency.save
         flash[:success] = "Agency #{@agency.name} was successfully created."
-        format.html { redirect_to manager_agencies_path }
+        format.html { redirect_to manager_agency_path(@agency) }
       else
         format.html { render action: "new" }
         format.json { render json: @agency.errors, status: :unprocessable_entity }
@@ -37,14 +37,31 @@ class Manager::AgenciesController < ApplicationController
   end
 
   def update
+    respond_to do |format|
+      if @agency.update_attributes(agency_params)
+        flash[:success] = "Agency #{@agency.name} was successfully updated."
+        format.html { redirect_to manager_agencies_path }
+        format.json { head :nocontent }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @agency.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def destroy
+    @agency.destroy
+
+    respond_to do |format|
+      flash[:success] = "Agency #{@agency.name} was successfully deleted."
+      format.html { redirect_to manager_agencies_path }
+      format.json { head :no_content }
+    end
   end
 
   protected
   
   def agency_params
-    params.require(:agency).permit(:name, :acronym, :description, :category, :url, :active, :logo, aliases_attributes: [:text, :_destroy])
+    params.require(:agency).permit(:name, :acronym, :description, :category, :url, :active, :logo, aliases_attributes: [:id, :text, :_destroy])
   end
 end
