@@ -9,7 +9,7 @@
 = bootstrap_nested_form_for [:manager, @agency], layout: :horizontal do |f|
   .tab-content{ style: 'margin-top: 5px;' }
     #agency_form_fields.tab-pane.active
-      = f.alert_message "Please fix the errors below.", error_summary: false
+      = f.alert_message "Please fix the errors below."
       = f.text_field :name
       = f.text_field :acronym
       = f.text_area :description, cols: 40, rows: 10
