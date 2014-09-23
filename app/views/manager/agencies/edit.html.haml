@@ -2,12 +2,13 @@
   .panel.panel-default
     .panel-heading{ style: 'position: relative' }
       .pull-right
-        New
+        Edit
       %ol.breadcrumb
         %li
           = link_to [:manager, :agencies] do
             %i.fa.fa-university
             Agencies
+        %li.active= @agency.name
 
     .panel-body
       = render 'form', agency: @agency 

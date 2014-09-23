@@ -1,11 +1,11 @@
 .panel.panel-default
   .panel-heading{ style: 'position: relative' }
-    = link_to new_manager_agency_path, class: 'btn btn-sm btn-success panel-btn-right' do
+    = link_to new_manager_agency_path, class: 'btn btn-success panel-btn-right' do
       New Agency
-      
-    .panel-title
-      %i.fa.fa-university
-      All Agencies
+    %ol.breadcrumb
+      %li.active
+        %i.fa.fa-university
+        Agencies 
   
   %table.table.table-striped.table-condensed
     %thead
