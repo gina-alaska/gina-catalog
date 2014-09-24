@@ -54,6 +54,7 @@ gem 'activerecord-postgis-adapter'
 gem 'rgeo-geojson'
 gem 'cancancan', '~> 1.9'
 gem 'nested_form'
+gem 'dragonfly', '~> 1.0.1'
 
 group :development do
   gem "better_errors"

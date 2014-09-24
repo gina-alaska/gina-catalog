@@ -14,5 +14,6 @@
 //= require jquery_ujs
 //= require bootstrap/dist/js/bootstrap
 //= require jquery_nested_form
+//= require jasny-bootstrap/dist/js/jasny-bootstrap
 //= require turbolinks
 //= require_tree .

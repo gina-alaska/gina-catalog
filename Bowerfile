@@ -3,3 +3,4 @@
 
 asset 'bootstrap'
 asset 'font-awesome', '~> 4.2.0'
+asset 'jasny-bootstrap'
