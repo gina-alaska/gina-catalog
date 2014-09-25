@@ -13,6 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap/dist/js/bootstrap
+//= require handlebars/handlebars
+//= require typeahead.js/dist/typeahead.bundle
 //= require jquery_nested_form
 //= require jasny-bootstrap/dist/js/jasny-bootstrap
 //= require turbolinks

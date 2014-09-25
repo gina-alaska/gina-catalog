@@ -3,4 +3,6 @@
 
 asset 'bootstrap'
 asset 'font-awesome', '~> 4.2.0'
+asset 'typeahead.js', '~> 0.10.5'
+asset 'handlebars'
 asset 'jasny-bootstrap'
