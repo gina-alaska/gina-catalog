@@ -16,5 +16,6 @@
 //= require handlebars/handlebars
 //= require typeahead.js/dist/typeahead.bundle
 //= require jquery_nested_form
+//= require jasny-bootstrap/dist/js/jasny-bootstrap
 //= require turbolinks
 //= require_tree .

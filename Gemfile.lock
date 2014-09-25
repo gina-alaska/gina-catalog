@@ -62,6 +62,10 @@ GEM
       execjs
     coffee-script-source (1.8.0)
     debug_inspector (0.0.2)
+    dragonfly (1.0.7)
+      addressable (~> 2.3)
+      multi_json (~> 1.0)
+      rack
     erubis (2.7.0)
     execjs (2.2.1)
     extlib (0.9.16)
@@ -227,6 +231,7 @@ DEPENDENCIES
   bower-rails
   cancancan (~> 1.9)
   coffee-rails (~> 4.0.0)
+  dragonfly (~> 1.0.1)
   google-api-client
   haml
   jbuilder (~> 2.0)

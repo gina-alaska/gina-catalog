@@ -1,0 +1,11 @@
+.container
+  .row
+    .col-lg-8.col-lg-offset-2.col-md-8.col-md-offset-2.col-sm-8.col-sm-offset-2
+      .panel.panel-default
+        .panel-heading{ style: 'position: relative' }
+          .panel-title
+            %i.fa.fa-group
+            Edit Contact #{@contact.name}
+
+        .panel-body
+          = render 'form', contact: @contact 

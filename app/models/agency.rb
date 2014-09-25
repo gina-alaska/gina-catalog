@@ -1,6 +1,20 @@
 class Agency < ActiveRecord::Base
+  CATEGORIES = [
+    'Academic',
+    'Industry/Consultants',
+    'State',
+    'Federal',
+    'Local',
+    'Foundation',
+    'Non-Governmental',
+    'Unknown'
+  ]
+  
+  dragonfly_accessor :logo
+
   has_many :entry_agencies
   has_many :entries, through: :entry_agencies
+  has_many :aliases, as: :aliasable, dependent: :destroy
 
   validates :name, length: { maximum: 255 }
   validates :category, length: { maximum: 255 }
@@ -11,4 +25,8 @@ class Agency < ActiveRecord::Base
   validates :logo_uid, length: { maximum: 255 }
   validates :logo_name, length: { maximum: 255 }
   validates :url, length: { maximum: 255 }
+
+  validates_inclusion_of :category, :in => CATEGORIES, :message => " please select one of following: #{Agency::CATEGORIES.join(', ')}"
+
+  accepts_nested_attributes_for :aliases, reject_if: ->(a) { a[:text].blank? }, allow_destroy: true
 end
