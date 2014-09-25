@@ -1,4 +1,4 @@
-class Manager::AgenciesController < ApplicationController
+class Manager::AgenciesController < ManagerController
   load_and_authorize_resource
 
   def index
