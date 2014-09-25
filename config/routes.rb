@@ -18,12 +18,13 @@ Rails.application.routes.draw do
     resources :sites
     resources :users
   end
-  
+
   namespace :manager do
-    resources :users, only: [:autocomplete] do
+    resources :users do
       get :autocomplete, on: :collection
     end
     resources :permissions
+    resources :invitations
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

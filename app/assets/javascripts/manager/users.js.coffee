@@ -2,29 +2,10 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-$ ->
-  console.log 'foo'
-  
-  user_bloodhound = new Bloodhound({
-    datumTokenizer: (d) ->
-      console.log d
-      tokens = Bloodhound.tokenizers.whitespace(d.name)
-      tokens.push(d.email)
-      tokens
-
-    queryTokenizer: Bloodhound.tokenizers.whitespace
-
-    limit: 10
-
-    remote: { url: '/manager/users/autocomplete.json?query=%QUERY' }
+$(document).on 'ready page:load',  ->
+  usertypeahead = new TypeAheadField('[data-behavior="typeahead"][data-name="user"]', {
+    display_key: (d) ->
+      "#{d.name} (#{d.email})"
   })
-  user_bloodhound.initialize()
-  
-  $('[data-behavior="autocomplete-user"]').typeahead(null, {
-    name: 'user',
-    displayKey: 'name',
-    source: user_bloodhound.ttAdapter(),
-    templates: {
-      suggestion: Handlebars.compile('<p>{{name}} &lt;{{email}}&gt;</p>')
-    }
-  })
+  usertypeahead.on 'typeahead:selected', (e, suggestion, dataset) ->
+    window.location = "/manager/permissions/new?user_id=#{suggestion.id}"
