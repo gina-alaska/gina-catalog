@@ -1,0 +1,18 @@
+.panel.panel-default
+  .panel-heading
+    .navbar-right{ style: 'margin-top: -5px; margin-right: -10px; width: 40%;' }
+      = text_field_tag :query, '', data: { behavior: 'typeahead', name: 'user', query: '/manager/users/autocomplete.json?query=%QUERY', field: 'id' }, class: 'form-control'
+    .panel-title
+      Users
+
+  %table.table.table-bordered.table-striped
+    %thead
+      %tr
+        %th User
+        %th Actions
+    %tbody
+      - @users.each do |user|
+        %tr
+          %td
+            = link_to user, edit_manager_permission_path(user.permissions.find_by(site: current_site))
+          %td

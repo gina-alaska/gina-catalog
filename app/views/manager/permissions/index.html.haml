@@ -1,0 +1,29 @@
+.row-fluid
+  .col-sm-8
+    .panel.panel-default
+      .panel-heading
+        .panel-title Current Users
+      %table.table.table-bordered.table-striped
+        %thead
+          %tr
+            %th User
+            %th Email
+            %th Actions
+        %tbody
+          - @permissions.each do |permission|
+            %tr
+              %td= link_to permission.user, [:edit, :manager, permission]
+              %td= permission.user.email
+              %td
+                = link_to [:manager, permission], method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure?' } do
+                  %i.fa.fa-trash
+  .col-sm-4
+    .panel.panel-default
+      .panel-heading
+        .panel-title Permission menu
+      .panel-body
+        = text_field_tag :query, '', data: { behavior: 'typeahead', name: 'user', query: '/manager/users/autocomplete.json?query=%QUERY', field: 'id' }, class: 'form-control', placeholder: 'Search for existing users'
+      .panel-footer
+        = link_to new_manager_invitation_path, class: 'btn btn-success btn-block' do
+          %i.fa.fa-plus
+          Invite new user

@@ -1,4 +1,10 @@
 module GlynxSites
+  extend ActiveSupport::Concern
+  
+  included do
+    helper_method :current_site
+  end
+  
   def current_site
     @current_site ||= load_current_site
   end

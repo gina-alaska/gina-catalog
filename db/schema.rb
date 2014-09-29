@@ -141,9 +141,25 @@ ActiveRecord::Schema.define(version: 20140924234306) do
     t.datetime "updated_at"
   end
 
+  create_table "invitations", force: true do |t|
+    t.string   "email"
+    t.text     "message"
+    t.integer  "permission_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "memberships", force: true do |t|
     t.integer  "user_id"
     t.string   "email"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "permissions", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "site_id"
+    t.hstore   "roles"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -20,8 +20,14 @@ Rails.application.routes.draw do
   end
 
   namespace :manager do
+    resources :users do
+      get :autocomplete, on: :collection
+    end
+    resources :permissions
+    resources :invitations
     resources :contacts
     resources :use_agreements
+    resources :agencies
   end
   
   # The priority is based upon order of creation: first created -> highest priority.

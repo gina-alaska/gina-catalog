@@ -1,0 +1,2 @@
+module Manager::InvitationsHelper
+end

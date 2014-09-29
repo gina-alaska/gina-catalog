@@ -1,0 +1,44 @@
+%ul.nav.nav-tabs
+  %li.active
+    %a{ href: '#agency_form_fields', data: { toggle: 'tab' } } Agency Form
+  %li
+    %a{ href: '#aliases', data: { toggle: 'tab' } } Aliases
+  %li
+    %a{ href: '#logo', data: { toggle: 'tab' } } Logo
+
+= bootstrap_nested_form_for [:manager, @agency], layout: :horizontal do |f|
+  .tab-content{ style: 'margin-top: 5px;' }
+    #agency_form_fields.tab-pane.active
+      = f.alert_message "Please fix the errors below."
+      = f.text_field :name
+      = f.text_field :acronym
+      = f.text_area :description, cols: 40, rows: 10
+      = f.select :category, Agency::CATEGORIES
+      = f.text_field :url
+      = f.form_group do
+        = f.check_box :active
+
+    #logo.tab-pane
+      .fileinput{ class: (f.object.new_record? ? 'fileinput-new' : 'fileinput-exists'), data: { provides: 'fileinput' } }
+        .fileinput-preview.thumbnail.fileinput-exists{style:'width: 200px; min-height: 50px;'}
+          = image_tag @agency.logo.encode(:png).thumb('200x200').url if @agency.logo
+        %div
+          %span.btn.btn-file.btn-default
+            %span.fileinput-new Select image
+            %span.fileinput-exists Change
+            = f.file_field_without_bootstrap :logo
+
+    #aliases.tab-pane{ style: "min-height: 60px;" }
+      #alias_add{ style: 'text-align: right; margin-bottom: 5px;' }
+        = f.link_to_add :aliases, :data => { :target => "#aliases" }, class: "btn btn-success" do
+          %i.icon-plus.icon-white
+          Add an alias
+      = f.fields_for :aliases 
+
+  .form-action
+    = link_to :back, class: 'btn btn-default' do
+      %i.fa.fa-arrow-left
+      back
+
+    .pull-right
+      = f.primary

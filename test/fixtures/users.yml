@@ -4,6 +4,11 @@ one:
   name: MyString
   email: MyString
   avatar: MyString
+  
+two:
+  name: User 2
+  email: user@user.com
+  avatar: Nothing
 
 admin:
   name: MyString

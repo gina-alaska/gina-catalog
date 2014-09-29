@@ -1,0 +1,13 @@
+.container
+  .panel.panel-default
+    .panel-heading{ style: 'position: relative' }
+      .pull-right
+        New
+      %ol.breadcrumb
+        %li
+          = link_to [:manager, :agencies] do
+            %i.fa.fa-university
+            Agencies
+
+    .panel-body
+      = render 'form', agency: @agency 

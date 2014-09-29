@@ -1,15 +1,24 @@
 - if can? :view_manager_menu, current_user
   %li.dropdown
     = link_to '#', class: 'dropdown-toggle', data: { toggle: 'dropdown' } do
-      Manager 
+      Manager
       %span.caret
-      
+
     %ul.dropdown-menu
       %li
         = link_to manager_path do
           %i.fa.fa-dashboard
           Dashboard
       %li
+        = link_to manager_agencies_path do
+          %i.fa.fa-university
+          Agencies
+      %li
         = link_to manager_contacts_path do
           %i.fa.fa-phone
           Contacts
+      - if can? :manage, current_user.permissions.for(current_site)
+        %li
+          = link_to manager_permissions_path do
+            %i.fa.fa-lock
+            Permissions
