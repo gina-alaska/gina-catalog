@@ -29,19 +29,25 @@ class Manager::ContactsControllerTest < ActionController::TestCase
   end
 
   test "should get create" do
-    post :create, contact: @contact.attributes
-    assert assigns(:contact).errors.empty?, assigns(:contact).errors.full_messages
+    assert_difference('Contact.count') do
+      post :create, contact: @contact.attributes
+      assert assigns(:contact).errors.empty?, assigns(:contact).errors.full_messages
+    end
+
     assert_redirected_to manager_contacts_path
   end
 
   test "should get update" do
-    put :update, id: @contact.id, contact: @contact.attributes
+    patch :update, id: @contact.id, contact: { name: 'Testing2' }
     assert assigns(:contact).errors.empty?, assigns(:contact).errors.full_messages
     assert_redirected_to manager_contacts_path
   end
 
   test "should get destroy" do
-    delete :destroy, id: @contact.id
+    assert_difference('Contact.count', -1) do
+      delete :destroy, id: @contact.id
+    end
+
     assert_redirected_to manager_contacts_path
   end
 
