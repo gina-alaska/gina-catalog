@@ -1,0 +1,13 @@
+.container
+  .panel.panel-default
+    .panel-heading{ style: 'position: relative' }
+      .pull-right
+        Edit
+      %ol.breadcrumb
+        %li
+          = link_to [:manager, :use_agreements] do
+            %i.fa.fa-pencil
+            Use Agreements
+
+    .panel-body
+      = render 'form', agency: @use_agreement 

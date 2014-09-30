@@ -1,0 +1,17 @@
+.panel.panel-default
+  .panel-heading{ style: 'position: relative' }
+    = link_to new_manager_use_agreement_path, class: 'btn btn-sm btn-success panel-btn-right' do
+      New Use Agreement
+      
+    .panel-title
+      %i.fa.fa-pencil
+      All Use Agreements
+  
+  %table.table.table-striped.table-condensed
+    %thead
+      %tr
+        %th Title
+        %th Required
+        %th actions
+    %tbody
+      = render(partial: "use_agreement_row", collection: @use_agreements, as: :use_agreement) || "<tr><td colspan=\"3\">There are no use agreements defined</td></tr>".html_safe
