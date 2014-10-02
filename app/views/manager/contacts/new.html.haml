@@ -1,11 +1,13 @@
 .container
-  .row
-    .col-lg-8.col-lg-offset-2.col-md-8.col-md-offset-2.col-sm-8.col-sm-offset-2
-      .panel.panel-default
-        .panel-heading{ style: 'position: relative' }
-          .panel-title
+  .panel.panel-default
+    .panel-heading{ style: 'position: relative' }
+      %ol.breadcrumb
+        %li
+          = link_to [:manager, :contacts] do
             %i.fa.fa-group
-            New Contact
+            Contacts
+        %li.active
+          New
 
         .panel-body
           = render 'form', contact: @contact 
