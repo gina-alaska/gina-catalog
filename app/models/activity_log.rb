@@ -1,14 +1,19 @@
 class ActivityLog < ActiveRecord::Base
-  attr_accessible :activity, :log, :user_id, :user, :contact_info
+  attr_accessible :activity, :log, :user_id, :user, :contact_info, :setup, :catalog, :loggable, :setup_id
   
   serialize :log
 
   belongs_to :loggable, polymorphic: true
   belongs_to :user
+  belongs_to :setup
+  belongs_to :catalog
+  belongs_to :contact_info
   
-  has_one :contact_info
+  # belongs_to :contact_info
   
   validates :activity, presence: true
+  
+  scope :downloads, -> { where(activity: 'Download') }
   
   def unknown_agencies
     agencies = []

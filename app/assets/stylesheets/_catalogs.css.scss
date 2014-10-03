@@ -112,7 +112,7 @@ label {
     width: 300px;
     overflow-y: scroll;
     overflow-x: hidden;
-    z-index: 1;
+    z-index: auto;
   }
   &.affix {
     .search-form {
@@ -225,4 +225,8 @@ dl.contact-info {
 
 .break-url {
   word-break: break-all;
+}
+
+#search_buttons {
+  margin-bottom: 10px;
 }

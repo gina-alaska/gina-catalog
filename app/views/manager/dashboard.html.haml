@@ -31,10 +31,10 @@
           - @top_downloads.each do |item|
             %tr
               %td
-                = link_to item.loggable.catalog do
-                  = item.loggable.catalog.title.truncate(80)
+                = link_to item.catalog do
+                  = item.catalog.to_s.try(:truncate, 80)
               %td
-                = item.download_count
+                = item.try(:download_count)
     .span4
       %table.table.table-bordered.table-striped.table-condensed
         %thead
@@ -67,10 +67,10 @@
               %td.span3
                 = item.created_at.strftime('%F %T %z')
               %td
-                = File.basename(item.log[:url].to_s)
+                = File.basename(item.log.try(:[], :name).to_s)
               %td
-                = link_to item.loggable.catalog do
-                  = item.loggable.catalog.title.truncate(60)
+                = link_to item.catalog do
+                  = item.catalog.try(:title).try(:truncate, 80)
 
 :javascript
   $(document).ready( function(){

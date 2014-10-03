@@ -1,3 +1,6 @@
+if !@GLYNX?
+  @GLYNX={ IE: false }
+
 @CatalogSearch = {
   update: (el, value) ->
     $(el).val(value)
@@ -15,7 +18,7 @@
     if $('#map')
       state.map_size = $('#map_canvas').data('map').map_state.size
     
-    if track
+    if track and !GLYNX.IE
       History.pushState(state, null, url)
     else
       CatalogSearch.load(url, false)

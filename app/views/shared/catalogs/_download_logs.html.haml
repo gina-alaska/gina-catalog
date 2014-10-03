@@ -4,7 +4,7 @@
       %th &nbsp;
   %tbody
     - catalog.downloads.order('created_at DESC').limit(50).each do |download|
-      - contact = download.loggable
+      - contact = download.contact_info
       %tr
         %td
           %dl.dl-horizontal.contact-info
@@ -19,12 +19,14 @@
               .span6
                 .item
                   %dt File:
-                  %dd= File.basename(download.log[:url].to_s)
-                - if contact.try(:setup).try(:present?)
+                  %dd
+                    = download.log.try(:[], :name)
+                    &nbsp;
+                - if download.setup.present?
                   .item
                     %dt Portal: 
                     %dd
-                      = contact.try(:setup).try(:acronym)
+                      = download.setup.acronym
                       &nbsp;
             - unless contact.nil?
               .row-fluid

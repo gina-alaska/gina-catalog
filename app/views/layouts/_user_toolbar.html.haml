@@ -39,7 +39,7 @@
 
             %ul.dropdown-menu
               - member_portals.each do |s|
-                %li= link_to s.title, "http://#{ s.default_url }"
+                %li= link_to s.title, "http://#{ s.default_url.try(:url) }"
       - else
         %li.dropdown
           = link_to '#', class: 'dropdown-toggle', data: { toggle: 'dropdown' } do
@@ -47,9 +47,8 @@
             %b.caret
 
           %ul.dropdown-menu
-            - %w{ alaska.portal.gina.alaska.edu catalog.northslope.org gina-catalog.dev epscor.alaska.edu northern.epscor.alaska.edu southcentral.epscor.alaska.edu southeast.epscor.alaska.edu }.each do |url|
-              - if s = SiteUrl.where(url: url).first.try(:setup)
-                %li= link_to s.title, "http://#{ s.default_url }"
+            - default_sites.each do |setup|
+              %li= link_to setup.title, "http://#{ setup.default_url.try(:url) }"
 
     .pull-right
       %ul.nav

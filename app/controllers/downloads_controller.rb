@@ -2,7 +2,7 @@ class DownloadsController < ApplicationController
   layout 'downloads'
   def offer
     if params[:key].present? and params[:key] == current_contact_info.offer_key
-      current_contact_info.activity_logs.record_download!(current_download, current_user, current_setup)
+      current_download.logs.record_download!(current_contact_info, current_catalog, current_user, current_setup)
       redirect_to current_download.url
     else
       flash[:error] = 'Could not start download, the download key was invalid'

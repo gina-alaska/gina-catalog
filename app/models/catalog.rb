@@ -49,8 +49,8 @@ class Catalog < ActiveRecord::Base
   has_many :uploads, dependent: :destroy
 
   has_many :contact_infos, :dependent => :destroy
-  has_many :downloads, through: :contact_infos, source: :activity_logs
-
+  has_many :downloads, class_name: 'ActivityLog'
+  
   has_many :catalogs_setups, uniq: true
   has_many :setups, :through => :catalogs_setups, uniq: true
   #has_and_belongs_to_many :setups, uniq: true
@@ -297,12 +297,29 @@ class Catalog < ActiveRecord::Base
       filtered_words = ['a', 'the', 'and', 'an', 'of', 'i', '' ]
       title.downcase.split(/\s+/).delete_if { |word| filtered_words.include? word }.join(' ').gsub(/["',]/,'')
     end
+
     string :agency_sort do
       source_agency.try(&:name)
     end
-
-    string :source_agency_acronym do
+    
+    string :source_agency_acronym_sort do
       source_agency.try(&:acronym)
+    end
+
+    string :created_at_sort do
+      created_at
+    end
+
+    string :updated_at_sort do
+      updated_at
+    end
+
+    string :type_sort do
+      type
+    end
+
+    string :status_sort do
+      status
     end
   end
 
@@ -315,7 +332,11 @@ class Catalog < ActiveRecord::Base
     wkt = wkt.as_text if wkt.respond_to? :as_text
     joins(:locations).where("ST_Intersects(geom, ?::geometry)", "SRID=#{srid};#{wkt}")
   end
-
+  
+  def download_count
+    self.activity_logs.downloads.count
+  end
+  
   def create_uuid
     self.uuid ||= UUIDTools::UUID.timestamp_create
   end

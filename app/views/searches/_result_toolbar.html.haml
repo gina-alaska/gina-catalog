@@ -17,6 +17,7 @@
       - unless catalog.geometry_center_collection.blank?
         = link_to '#', class: 'btn', data: { "openlayers-action" => "select-features", target: "##{dom_id(catalog, :record)}" }, title: 'Zoom To' do
           %i.icon-map-marker
+          Zoom To
           
       = render 'preview_button', catalog: catalog
 

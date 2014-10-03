@@ -1,84 +1,41 @@
 namespace :fixdb do
   desc 'run all fixdb tasks'
-  task :all => [:themes, :update_downloads, :create_sitemap, :move_theme_css, :set_default_projection, :set_system_pages] do
-  end
-  
-  desc 'convert git repos to new upload paths'
-  task :convert_repos => :environment do
-    Repo.all.each do |repo|
-      puts repo.path
-      
-      begin
-        repo.catalog.try(:convert_repo)
-        repo.catalog.create_archive_file
-      rescue => e
-        puts "Error converting repo #{repo.catalog.to_param}: #{e.class}::#{e.message}"
-      end
-    end
-  end
-  
-  desc 'convert archive files to new download system'
-  task :convert_downloads => :environment do
-    Catalog.all.each do |catalog|
-      next if catalog.repo.nil? or catalog.repo.empty?
-      puts "Moving download file for #{catalog}"
-      
-      filename = Pathname.new(catalog.archive_filenames[:zip])
-      puts filename
-      
-      catalog.uploads.create(file: filename, downloadable: true)
-    end
-  end
-  
-  desc 'migrate collections to the new setup'
-  task :collections => :environment do
-    puts "Looking for collections to migrate"
-    
-    CatalogCollection.all.each do |cc|
-      next if Collection.where(name: cc.name).count > 0
-      puts "Creating new collection for #{cc.name}"
-      c = Collection.new({ name: cc.name, description: cc.description, setup_id: cc.setup_id })
-      c.catalogs = cc.catalogs
-      c.save!
-    end
-  end
-    
-  desc 'assign default themes to any setup that is missing one'
-  task :themes => :environment do
-    puts "Looking for setups with missing themes"
-    
-    default = Theme.where(name: 'Default').first
-    
-    Setup.where(:theme_id => nil).all.each do |s|
-      next unless s.theme.nil?
-      puts "Fixing theme for #{s.title}"
-      s.theme = default
-      s.save!
-    end
+  task :all => [:set_system_pages] do
   end
 
-  desc 'copy all download links and add them as download_urls'
-  task :update_downloads => :environment do
-    puts "Looking for download links to copy..."
-    
-    Link.where(category: "Download").each do |link|
-      if link.asset.download_urls.where(url: link.url).empty?
-        puts "Creating new download URL for #{link.asset.title}: #{link.display_text} - #{link.url}"
-        link.asset.download_urls << DownloadUrl.new(name: link.display_text, url: link.url)
-        link.save
+  desc 'convert download counts'
+  task :convert_download_counts => [:environment] do
+    ActivityLog.where(loggable_type: 'ContactInfo').each do |al|
+      catalog = al.loggable.catalog
+      file = File.basename(al.log[:url])
+      download = al.loggable.catalog.uploads.where('file_uid like ?', "%#{file}").first
+      if download.nil?
+        download = al.loggable.catalog.download_urls.where(url: al.log[:url]).first
       end
+      
+      new_al = catalog.activity_logs.downloads.create({
+        user: al.user, contact_info: al.loggable, catalog: catalog, loggable: download, 
+        setup_id: al.log[:setup_id], log: { name: download.try(:to_s) },
+      })
+      new_al.update_attribute(:created_at, al.created_at)
+      # al.destroy
     end
   end
-
-  desc 'copy all links with download text and add them as download_urls'
-  task :download_text => :environment do
-    puts "Looking for links set to download to copy..."
-    
-    Link.where(display_text: "Download").each do |link|
-      if link.asset.download_urls.where(url: link.url).empty?
-        puts "Creating new download URL for #{link.asset.title}: #{link.display_text} - #{link.url}"
-        link.asset.download_urls << DownloadUrl.new(name: link.category, url: link.url)
-        link.save
+  
+  desc 'fix up activity logs'
+  task :fix_activity_logs => [:environment] do
+    ActivityLog.where(catalog_id: nil).each do |al|
+      if al.loggable.respond_to?(:catalog)
+        al.update_attribute(:catalog, al.loggable.catalog)
+      end
+    end
+    ActivityLog.where(setup_id: nil).each do |al|
+      if al.log.try(:[], :setup_id)
+        al.update_attribute(:setup_id, al.log[:setup_id])
+      elsif !al.catalog.nil?
+        al.update_attribute(:setup, al.catalog.try(:owner_setup))
+      elsif al.loggable.respond_to?(:catalog)
+        al.update_attribute(:setup, al.loggable.catalog.try(:owner_setup))
       end
     end
   end
@@ -91,19 +48,6 @@ namespace :fixdb do
       next if setup.pages.where(slug: "sitemap").any?
       page = setup.pages.build(slug: "sitemap", main_menu: false, title: "Sitemap", setup_id: setup, description: "This page has been auto-generated.", system_page: true)
       setup.pages << page
-    end
-  end
-
-  desc 'Move theme css snippet content to theme css field.'
-  task :move_theme_css => :environment do
-    puts "Looking for empty theme css fields..."
-
-    Setup.all.each do |portal|
-      next if portal.theme.css
-      if !portal.snippets.where(slug: "theme").first.nil?
-        portal.theme.css = portal.snippets.where(slug: "theme").first.content
-        portal.theme.save
-      end
     end
   end
 

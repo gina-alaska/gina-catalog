@@ -23,7 +23,13 @@ class Setup < ActiveRecord::Base
 #  has_and_belongs_to_many :catalogs
   has_many :downloads, through: :owned_catalogs do
     def top
-      select('activity_logs.loggable_id, activity_logs.loggable_type, count(*) as download_count').group("activity_logs.loggable_id, activity_logs.loggable_type").order('download_count DESC')
+      select('catalog_id, count(*) as download_count').group("activity_logs.catalog_id").order('download_count DESC')
+    end
+  end
+  
+  has_many :activity_logs do
+    def top_record_downloads
+      downloads.select('catalog_id, count(*) as download_count').group("activity_logs.catalog_id").order('download_count DESC')
     end
   end
   
@@ -31,6 +37,7 @@ class Setup < ActiveRecord::Base
   has_many :collections
   has_many :contacts
   has_many :urls, class_name: 'SiteUrl', dependent: :destroy, order: "id ASC"
+  has_one :default_url, class_name: 'SiteUrl', conditions: { default: true }
   has_many :memberships, dependent: :destroy
   has_many :users, through: :memberships
   has_many :roles, dependent: :destroy
@@ -54,6 +61,7 @@ class Setup < ActiveRecord::Base
       'page' => SetupSubpageDrop.new(self),
       'catalog' => SetupCatalogRecordsDrop.new(self),
       'snippets' => PageSnippetDrop.new(self),
+      'portals' => SetupPortalsDrop.new(self),
       'twitter_url' => self.twitter_url,
       'github_url' => self.github_url,
       'facebook_url' => self.facebook_url,
@@ -63,10 +71,6 @@ class Setup < ActiveRecord::Base
       'linkedin_url' => self.linkedin_url,
       'tumblr_url' => self.tumblr_url
   	}
-  end
-  
-  def default_url
-    self.urls.where(default: true).first.try(:url) || self.urls.first.try(:url)
   end
   
   def clone(source = nil)
