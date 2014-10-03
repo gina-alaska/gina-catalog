@@ -1,0 +1,21 @@
+- unless catalog.map_layers.empty?
+  %dt Map Layers
+  %dd
+    %table.table.table-condensed
+      %thead
+        %tr
+          %th
+            Name
+          %th
+            URL
+          %th
+            Layer Names
+      %tbody
+        - catalog.map_layers.each do |layer|
+          %tr
+            %td
+              = layer
+            %td.break-url
+              = layer.url
+            %td.break-url
+              = layer.layers

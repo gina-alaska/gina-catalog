@@ -1,5 +1,5 @@
 class Upload < ActiveRecord::Base
-  attr_accessible :catalog_id, :downloadable, :preview, :file, :catalog
+  attr_accessible :catalog_id, :downloadable, :preview, :file, :catalog, :description
   
   dragonfly_accessor :file
   
@@ -22,5 +22,9 @@ class Upload < ActiveRecord::Base
   # used to make work similar to the DownloadUrl model which has a url method
   def url
     self.file.try(:remote_url)
+  end
+  
+  def to_s
+    self.file.try(:name)
   end
 end

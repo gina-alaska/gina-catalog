@@ -1,5 +1,5 @@
 class Link < ActiveRecord::Base
-  CATEGORIES = ['Website', 'Download', 'Report', 'Shape File', 'WMS', 'WCS', 'WFS', 'KML', 'Layer', 'Metadata', 'PDF']
+  CATEGORIES = ['Website', 'Download', 'Report', 'Shape File', 'WMS', 'WCS', 'WFS', 'KML', 'Layer', 'Metadata', 'PDF', 'Map Service']
 
   belongs_to :asset, polymorphic: true
 
@@ -11,20 +11,20 @@ class Link < ActiveRecord::Base
     self.url.split(".").last.downcase == "pdf"
   end
 
-  # Pre: 
+  # Pre:
   #   url is a valid pdf file location
   # Post:
   #   returns filename of the the localy cached file
   def cached_pdf(url)
     cache_dir = Rails.root.join('tmp/pdf_cache')
     FileUtils.mkdir_p(cache_dir)
-    
+
     cache_filename = cache_dir.join(url.gsub('http://', '').gsub(/[\/%]/, '_'))
-        
+
     if File.size?(cache_filename).nil?
       pbar = nil
       opts = {
-        read_timeout: 1, 
+        read_timeout: 1,
         content_length_proc: lambda {|t|
           if t && 0 < t
             pbar = ProgressBar.new(t)
@@ -46,9 +46,9 @@ class Link < ActiveRecord::Base
 
   def pdf_to_text
     return "" unless self.is_pdf?
-    
+
     pdf_text = ""
-    begin      
+    begin
       pdf = PDF::Reader.new(cached_pdf(self.url))
       [20, pdf.page_count].min.times do |i|
         pdf_text << pdf.page(i+1).text

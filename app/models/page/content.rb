@@ -1,7 +1,7 @@
 require 'html/pipeline'
 
 class Page::Content < ActiveRecord::Base
-  attr_accessible :content, :layout, :slug, :title, :sections, :page_layout_id, :page_layout, :parent_id, :redirect, :description, :main_menu, :menu_icon, :draft, :updated_by_id, :system_page, :lock_version
+  attr_accessible :content, :layout, :slug, :title, :sections, :page_layout_id, :page_layout, :parent_id, :redirect, :description, :main_menu, :menu_icon, :draft, :updated_by_id, :system_page, :lock_version, :global, :global_id
 
   acts_as_nested_set
   before_save :rebuild_slug
@@ -22,6 +22,7 @@ class Page::Content < ActiveRecord::Base
   
   belongs_to :page_layout, class_name: 'Page::Layout'
   belongs_to :updated_by, class_name: 'User'
+  belongs_to :global_page, foreign_key: 'global_id', class_name: 'Page::Content'
   
   accepts_nested_attributes_for :images
   
@@ -36,10 +37,11 @@ class Page::Content < ActiveRecord::Base
   #   self.slug
   # end
   
-  scope :public, where(draft: false)
+  scope :public, -> { where(draft: false) }
   scope :autolinkable, -> { where({ draft: false, main_menu: true }) }
-  scope :contact, where(slug: "contacts")
-  scope :sitemap, where(slug: "sitemap")
+  scope :contact, -> { where(slug: "contacts") }
+  scope :sitemap, -> { where(slug: "sitemap") }
+  scope :global, -> { where(global: true) }
 
   def rebuild_slug
     parent_slugs = self.ancestors.collect { |p| p.slug.split('/').last } << self.slug_without_path
@@ -103,9 +105,17 @@ class Page::Content < ActiveRecord::Base
       'children' => self.children.public,
       'public' => self.public?,
       'show_in_menu' => self.main_menu,
-      'last_editor' => self.updated_by.fullname,
+      'last_editor' => self.updated_by.try(:fullname),
       'created_at' => self.created_at,
       'updated_at' => self.updated_at
     }
   end
+
+  def copy_settings_from(page)
+    new_attributes = page.attributes.select { |k,v| %w{ title slug description main_menu menu_icon draft  make_menu }.include?(k) }
+    new_attributes['global_id'] = page.id
+    
+    self.update_attributes(new_attributes)
+  end
+
 end

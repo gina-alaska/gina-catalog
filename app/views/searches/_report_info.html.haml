@@ -1,0 +1,17 @@
+%b Start Date:
+- if item.start_date
+  = item.start_date.strftime("%D") + "; "
+- else
+  ="none; "
+
+%b End Date:
+- if item.end_date
+  = item.end_date.strftime("%D") + "; "
+- else
+  ="none; "
+
+%b Status:
+- if item.status
+  = item.status
+- else
+  ="none; "

@@ -10,7 +10,7 @@
 //= require 'jquery-file-upload/jquery.iframe-transport'
 //= require 'jquery-file-upload/tmpl.min'
 //= require 'select2/select2'
-//= require 'gina-map-layers/gina-openlayers'
+//= require 'gina-map-layers/adapters/openlayers'
 //= require 'gina-map-layers/projections/all'
 //= require 'spin'
 //= require 'projections'
@@ -26,25 +26,24 @@
 //= require 'notifications'
 //= require_self
 
-
 var initialize_page = function(){
-  setTimeout(function() { 
+  setTimeout(function() {
     $('.carousel').carousel({
       interval: $('.carousel').data('interval')
-    }); 
+    });
   }, $('.carousel').data('start-delay') || 5000);
-  
+
   $('a.goto-top').hide();
-  
+
   // var features, map = $('#map').data('map').map;
   //   map.addControl(new OpenLayers.Control.MousePosition({ displayProjection: 'EPSG:4326', numDigits: 3 }));
-  //   #{ build_result_layer('map', @results) }        
+  //   #{ build_result_layer('map', @results) }
   // }
-  
+
   // $(document).on('ready', add_search_features);
   // $(document).on('page:change', add_search_features);
   $('select[data-ui="select2"]').select2({ allowClear: true, width:'copy' })
-  
+
   $('.collapse').on('show', function() {
     var icon = $(this).parents('.result').find('i.collapse-icon');
     icon.removeClass('icon-chevron-down');
@@ -69,7 +68,7 @@ $(document).on('click', '[data-action="scroll"]', function(evt) {
   evt.preventDefault();
   var target = $(this).attr('href');
   if(!target) { target = $(this).data('target'); }
-  if (target) { 
+  if (target) {
     var parent = $('body,html');
     var cur_scroll = parent.scrollTop();
     parent.animate({
@@ -95,7 +94,7 @@ $(document).on('ajax:complete', function() {
 
 $(window).scroll(function() {
   var pos = $(window).scrollTop();
-  if(pos > 50) { 
+  if(pos > 50) {
     $('a.goto-top').fadeIn();
   } else {
     $('a.goto-top').fadeOut();

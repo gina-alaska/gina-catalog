@@ -9,10 +9,25 @@ module ApplicationHelper
     "http://gravatar.com/avatar/#{gravatar_id}.png?s=#{size}&d=#{CGI.escape(default_url)}"
   end
   
+  def collect_image_urls(images)
+    imgs = []
+    images.each do |image| 
+     next if image.file_uid.nil?
+     imgs << ["<img src=\"#{cms_media_url(image.file_uid, size: '50x50#')}\" /> #{image.title} #{(' - ' + truncate(image.description)) unless image.description.empty?}", image.raw_url]
+    end
+  
+    imgs
+  end
+  
   def flashes
     flash.map { |type, content|
       content_tag(:div, content, :class => "alert alert-#{type}")
     }.join('').html_safe
+  end
+  
+  def default_sites
+    urls = %w{ alaska.portal.gina.alaska.edu catalog.northslope.org gina-catalog.dev epscor.alaska.edu northern.epscor.alaska.edu southcentral.epscor.alaska.edu southeast.epscor.alaska.edu }    
+    Setup.includes(:urls).where(site_urls: { url: urls })
   end
   
   def jsflashes

@@ -25,7 +25,7 @@ EOHTML
   
   def tumblr_block(setup, tumblr_url)
     
-    feed = Feedzirra::Feed.fetch_and_parse(tumblr_url)  
+    feed = Feedjira::Feed.fetch_and_parse(tumblr_url)  
     
     if feed.respond_to?(:entries)
       entry = feed.entries.first

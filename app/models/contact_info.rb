@@ -1,6 +1,7 @@
 class ContactInfo < ActiveRecord::Base
   belongs_to :catalog
-  has_many :activity_logs, as: :loggable, order: "created_at DESC", dependent: :destroy, extend: DownloadActivityExtension
+  # has_many :activity_logs, order: "created_at DESC", dependent: :destroy, extend: DownloadActivityExtension
+  has_many :activity_logs
   belongs_to :setup
   
   validates_presence_of :name

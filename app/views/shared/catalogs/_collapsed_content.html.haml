@@ -25,6 +25,11 @@
   /     = link_to catalog_url(item, :format => 'zip'), catalog_url(item, :format => 'zip'), :target => :_blank
   /     .spacer
 
+  - unless item.geokeywords.nil? or item.geokeywords.empty?
+    %dt Geo-keywords
+    %dd= item.geokeywords.list
+    %br
+
   - unless item.collections.nil? or item.collections.empty?
     %dt Collection
     %dd= item.collections.visible_to(current_member).list
@@ -45,10 +50,12 @@
   / - else
   /   %dd= link_to item, item, :target => :_blank
   
+  = render '/shared/catalogs/map_layers_info', catalog: item
+  
   - unless item.owner_setup.id == current_setup.id
     %dt Source Portal
     %dd
-      = link_to "//#{item.owner_setup.default_url}" do
+      = link_to "//#{item.owner_setup.default_url.url}" do
         = item.owner_setup.full_title
     %br
   

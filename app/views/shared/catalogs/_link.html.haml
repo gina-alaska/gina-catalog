@@ -1,3 +1,4 @@
 = "#{link.category}:"
-= link_to (link.display_text.empty? ? link.url : link.display_text), link.url, :target => :_blank
+.break-url
+  = link_to (link.display_text.empty? ? link.url : link.display_text), link.url, :target => :_blank
 %br

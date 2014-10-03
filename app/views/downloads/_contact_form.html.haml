@@ -1,4 +1,16 @@
-%h4 Contact Information Form
+%h4 
+  Contact Information Form
+- if current_catalog.require_contact_info?
+  .alert.alert-info
+    %p 
+      %b The data steward has requested contact information for this download.  
+- else
+  .alert.alert-info
+    %p 
+      %b The data steward has requested contact information for this download.  
+      
+    %p You are not required to fill out this form and can proceed with the download by press the "Submit" button below.
+  
 = form_for current_contact_info, url: catalog_download_path(current_catalog, current_download), method: 'PUT' do |f|
   - if current_contact_info.errors.count > 0
     .alert.alert-error
@@ -6,10 +18,6 @@
       %ul
         - current_contact_info.errors.full_messages.each do |msg|
           %li= msg
-  - if current_catalog.require_contact_info? and !current_contact_info.valid?
-    .alert.alert-info
-      %h4 Your contact information is required before the download can begin
-    
   %fieldset
     .control-group
       %label.control-label{for: 'contact_info_name'} Name

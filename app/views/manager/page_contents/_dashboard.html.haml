@@ -1,13 +1,19 @@
 .navbar.navbar-static-top
   .navbar-inner
     .brand Pages
-    #not-sorting.pull-right.btn-group
-      = link_to '#', class: 'btn', id: 'sort-btn' do
-        %i.icon-random
-        Reorder Pages
-      = link_to new_manager_page_content_path, class: 'btn btn-success' do
-        %i.icon-plus.icon-white
-        New Page
+    #not-sorting.pull-right
+      .btn-group
+        = link_to '#', class: 'btn', id: 'sort-btn' do
+          %i.icon-random
+          Reorder Pages
+        = link_to new_manager_page_content_path, class: 'btn btn-success' do
+          %i.icon-plus.icon-white
+          New Page
+    - if current_user.is_an_admin? and !@globals.empty?
+      #not-sorting.pull-right
+        = form_tag global_manager_page_contents_path, method: :get, class: "form-inline", style: "margin-bottom: 0px;" do
+          = submit_tag "Add Global Page", class: 'btn btn-success'
+          = select_tag :global, options_from_collection_for_select(@globals, 'id', 'title'), style: "margin-right: 4px; margin-top: 6px;"
     #sorting.pull-right.btn-group{style: 'display:none;'}
       = link_to manager_page_contents_path, class: 'btn btn-warning', data: {confirm: "Are you sure?"} do
         %i.icon-remove.icon-white
@@ -30,6 +36,7 @@
   })
 
   $('#sort-btn').on('click', function() {
+    $('.page-list-child').addClass('in').css('height', 'auto');
     $('#page-content-list').nestedSortable({
       handle: 'div',
       items: 'li',

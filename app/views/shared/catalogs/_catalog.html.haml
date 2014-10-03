@@ -1,10 +1,10 @@
 - collapse ||= false
-                
+
 = render '/shared/catalogs/map', catalog: catalog
-    
+
 .result{ data: { wkt: catalog.geometry_collection, type: catalog.type } }
   = render '/shared/catalogs/catalog_buttons', catalog: catalog
-  %table
+  %table.table
     %tr
       %td{ style: 'vertical-align: top; max-width: 250px;' }
         = render '/shared/catalogs/primary_agency_icon', catalog: catalog
@@ -16,11 +16,11 @@
           = render 'catalogs/ispublished', catalog: catalog
 
         %h4{ style: 'font-size: 20px; border-bottom: 1px solid #afafaf; padding-bottom: 10px;' }= catalog.title
-  
+
         - if catalog.published? or current_member.try(:can_manage_catalog?)
           :markdown
             #{catalog.description}
-    
+
           = render '/shared/catalogs/resources', catalog: catalog
           = render '/shared/catalogs/tag_cloud', catalog: catalog
 
@@ -36,7 +36,7 @@
                 %li
                   = link_to '#download-logs', data: { toggle: 'tab' } do
                     %b Download Logs
-              
+
             .tab-content
               #additional-information.tab-pane.active.content
                 = render '/shared/catalogs/status', item: catalog

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140401230804) do
+ActiveRecord::Schema.define(:version => 20140805193957) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "project_id"
@@ -26,9 +26,11 @@ ActiveRecord::Schema.define(:version => 20140401230804) do
     t.text     "log"
     t.integer  "loggable_id"
     t.string   "loggable_type"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
     t.integer  "catalog_id"
+    t.integer  "setup_id"
+    t.integer  "contact_info_id"
   end
 
   create_table "addresses", :force => true do |t|
@@ -176,7 +178,7 @@ ActiveRecord::Schema.define(:version => 20140401230804) do
     t.integer "catalog_id"
   end
 
-  create_table "catalog_tags", :id => false, :force => true do |t|
+  create_table "catalog_tags", :force => true do |t|
     t.integer "tag_id"
     t.integer "catalog_id"
   end
@@ -282,6 +284,8 @@ ActiveRecord::Schema.define(:version => 20140401230804) do
     t.boolean  "request_contact_info", :default => false
     t.boolean  "require_contact_info", :default => false
     t.string   "status"
+    t.string   "url_template"
+    t.string   "url_description"
   end
 
   create_table "data_sources", :force => true do |t|
@@ -380,7 +384,7 @@ ActiveRecord::Schema.define(:version => 20140401230804) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.spatial  "geom",       :limit => {:srid=>4326, :type=>"point"}
+    t.spatial  "geom",       :limit => {:srid=>4326, :type=>"geometry"}
   end
 
   create_table "geolocations", :force => true do |t|
@@ -688,6 +692,8 @@ ActiveRecord::Schema.define(:version => 20140401230804) do
     t.integer  "setup_id"
     t.integer  "lock_version",   :default => 1
     t.boolean  "make_menu",      :default => false
+    t.boolean  "global",         :default => false
+    t.integer  "global_id"
   end
 
   create_table "page_images", :force => true do |t|
@@ -865,8 +871,8 @@ ActiveRecord::Schema.define(:version => 20140401230804) do
     t.string   "by_line"
     t.string   "url"
     t.string   "logo_uid"
-    t.datetime "created_at",                            :null => false
-    t.datetime "updated_at",                            :null => false
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
     t.string   "contact_email"
     t.text     "default_invite"
     t.text     "analytics_account"
@@ -894,8 +900,8 @@ ActiveRecord::Schema.define(:version => 20140401230804) do
     t.boolean  "permissions_enabled", :default => true
     t.string   "location_projection"
     t.string   "tumblr_url"
-    t.text     "recaptcha_public"
-    t.text     "recaptcha_private"
+    t.boolean  "use_recaptcha",       :default => false
+    t.string   "record_map_size",     :default => "normal"
   end
 
   create_table "setups_snippets", :id => false, :force => true do |t|
@@ -976,8 +982,10 @@ ActiveRecord::Schema.define(:version => 20140401230804) do
   end
 
   create_table "tags", :force => true do |t|
-    t.string  "text"
-    t.boolean "highlight", :default => false
+    t.string   "text"
+    t.boolean  "highlight",  :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "tasks", :force => true do |t|
@@ -1037,6 +1045,7 @@ ActiveRecord::Schema.define(:version => 20140401230804) do
     t.string   "uuid"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+    t.string   "description"
   end
 
   create_table "use_agreements", :force => true do |t|

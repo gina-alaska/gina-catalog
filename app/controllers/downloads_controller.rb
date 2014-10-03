@@ -2,7 +2,7 @@ class DownloadsController < ApplicationController
   layout 'downloads'
   def offer
     if params[:key].present? and params[:key] == current_contact_info.offer_key
-      current_contact_info.activity_logs.record_download!(current_download, current_user, current_setup)
+      current_download.logs.record_download!(current_contact_info, current_catalog, current_user, current_setup)
       redirect_to current_download.url
     else
       flash[:error] = 'Could not start download, the download key was invalid'
@@ -13,6 +13,16 @@ class DownloadsController < ApplicationController
   def contact_info
     if !ask_for_contact_info?
       redirect_to catalog_download_path(current_catalog, current_download)
+    end
+  end
+  
+  def sds
+    @download = fetch_download_url
+    
+    if @download.catalog.require_contact_info? or @download.catalog.request_contact_info?
+      redirect_to edit_catalog_download_path(@download.catalog, @download)
+    else
+      redirect_to catalog_download_path(@download.catalog, @download)
     end
   end
 

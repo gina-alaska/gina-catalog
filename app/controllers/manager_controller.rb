@@ -12,9 +12,9 @@ class ManagerController < ApplicationController
     @start_date = params["start_date"].present? ? Time.zone.parse(params["start_date"]) : 30.days.ago
     @end_date = params["end_date"].present? ? Time.zone.parse(params["end_date"]) : Time.zone.now
 
-    @downloads = current_setup.downloads
+    @downloads = current_setup.activity_logs.downloads
     @filtered_downloads = @downloads.where(created_at: (@start_date..@end_date))
-    @top_downloads = @filtered_downloads.top
+    @top_downloads = @filtered_downloads.top_record_downloads
 
     @stats = {
       :total_downloads => {

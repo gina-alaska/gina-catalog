@@ -1,5 +1,6 @@
 %title
   = current_setup.title
+  = content_for :page_title
 - if current_setup.favicon.try(:image).nil?
   = favicon_link_tag 'favicon.png', type: 'image/png'
 - else

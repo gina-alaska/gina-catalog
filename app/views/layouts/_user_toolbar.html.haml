@@ -11,9 +11,9 @@
           %li.dropdown
             = link_to '#', class: 'dropdown-toggle', data: { toggle: 'dropdown' } do
               %i.icon-cog.icon-spin
-              Manage Portal 
+              Manage Portal
               %b.caret
-            
+
             %ul.dropdown-menu
               - if current_member.access_catalog? or current_member.access_sds?
                 %li
@@ -36,22 +36,21 @@
             = link_to '#', class: 'dropdown-toggle', data: { toggle: 'dropdown' } do
               Switch Portals
               %b.caret
-          
+
             %ul.dropdown-menu
               - member_portals.each do |s|
-                %li= link_to s.title, "http://#{ s.default_url }"
+                %li= link_to s.title, "http://#{ s.default_url.try(:url) }"
       - else
         %li.dropdown
           = link_to '#', class: 'dropdown-toggle', data: { toggle: 'dropdown' } do
             Switch Portals
             %b.caret
-        
+
           %ul.dropdown-menu
-            - %w{ gina-catalog.dev catalog.northslope.org epscor.alaska.edu southcentral.epscor.alaska.edu southeast.epscor.alaska.edu }.each do |url|
-              - if s = SiteUrl.where(url: url).first.try(:setup)
-                %li= link_to s.title, "http://#{ s.default_url }"
-    
-    .pull-right    
+            - default_sites.each do |setup|
+              %li= link_to setup.title, "http://#{ setup.default_url.try(:url) }"
+
+    .pull-right
       %ul.nav
         - if user_signed_in?
           %li= render 'layouts/beta_button'
@@ -79,11 +78,9 @@
                 = link_to logout_path do
                   %i.icon-lock
                   Logout
-        - else 
-          - if beta?
-            / only show this to logged out users if we are viewing the beta site
-            %li= render 'layouts/beta_button'
-          %li 
+        - else
+          %li= render 'layouts/beta_button'
+          %li
             = link_to login_path do
               %i.icon-lock
               Login

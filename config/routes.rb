@@ -48,6 +48,7 @@ NSCatalog::Application.routes.draw do
       put :remove, :on => :member
       put :preview, :on => :member
       post :sort, :on => :collection
+      get :global, :on => :collection
       
       resources :images, :only => [] do
         member do
@@ -143,7 +144,7 @@ NSCatalog::Application.routes.draw do
       end
     end
   end
-  match '/sds/:catalog_id' => "downloads#index"
+  match '/sds/:catalog_id' => "downloads#sds"
      
   # Omniauth pure
   match "/login" => redirect('/auth/gina')
