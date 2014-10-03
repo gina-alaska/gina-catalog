@@ -10,9 +10,8 @@
           Download
 
         %h5.media-heading
-          - download_text = "Download"
-          - download_text = download_text + " :: #{upload.description}" unless upload.description.empty?
-          = download_text
+          Download
+          = " :: #{upload.description}" if upload.description.present?
         %p.break-url
           = upload.file.name
           = "(#{number_to_human_size upload.file.size})"

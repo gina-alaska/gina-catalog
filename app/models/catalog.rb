@@ -49,7 +49,7 @@ class Catalog < ActiveRecord::Base
   has_many :uploads, dependent: :destroy
   
   has_many :contact_infos, :dependent => :destroy
-  has_many :downloads, through: :contact_infos, source: :activity_logs
+  has_many :downloads, class_name: 'ActivityLog'
   
   has_many :catalogs_setups, uniq: true
   has_many :setups, :through => :catalogs_setups, uniq: true
@@ -322,6 +322,10 @@ class Catalog < ActiveRecord::Base
   def self.location_intersects(wkt, srid=4326)
     wkt = wkt.as_text if wkt.respond_to? :as_text
     joins(:locations).where("ST_Intersects(geom, ?::geometry)", "SRID=#{srid};#{wkt}")
+  end
+  
+  def download_count
+    self.activity_logs.downloads.count
   end
   
   def create_uuid

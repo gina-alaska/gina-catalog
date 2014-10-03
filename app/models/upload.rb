@@ -54,5 +54,8 @@ class Upload < ActiveRecord::Base
       'grayscale' => ::ProcessImageTagDrop.new(self, :grayscale),
       'tag' => "<img src=\"#{self.thumbnail.try(:url)}\" alt=\"#{self.file_name}\" />"
     }
+  
+  def to_s
+    self.file.try(:name)
   end
 end

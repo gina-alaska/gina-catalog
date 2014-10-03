@@ -23,7 +23,13 @@ class Setup < ActiveRecord::Base
 #  has_and_belongs_to_many :catalogs
   has_many :downloads, through: :owned_catalogs do
     def top
-      select('activity_logs.loggable_id, activity_logs.loggable_type, count(*) as download_count').group("activity_logs.loggable_id, activity_logs.loggable_type").order('download_count DESC')
+      select('catalog_id, count(*) as download_count').group("activity_logs.catalog_id").order('download_count DESC')
+    end
+  end
+  
+  has_many :activity_logs do
+    def top_record_downloads
+      downloads.select('catalog_id, count(*) as download_count').group("activity_logs.catalog_id").order('download_count DESC')
     end
   end
   
