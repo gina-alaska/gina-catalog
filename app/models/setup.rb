@@ -59,6 +59,7 @@ class Setup < ActiveRecord::Base
       'contact_email' => self.contact_email, 
   		'collections' => self.collections.visible_to,
       'page' => SetupSubpageDrop.new(self),
+      'top_pages' => SetupSubpageDrop.new(self).top_pages,
       'catalog' => SetupCatalogRecordsDrop.new(self),
       'snippets' => PageSnippetDrop.new(self),
       'portals' => SetupPortalsDrop.new(self),

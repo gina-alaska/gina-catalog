@@ -1,4 +1,4 @@
-- cache([:ace, :base_toolbar, :v13]) do
+- cache([:ace, :base_toolbar, :v16]) do
   .btn-group
     %button.btn.btn-small{ type: 'button', title: 'Undo', data: { action: 'undo' } }
       %i.icon-undo
@@ -61,6 +61,8 @@
             %a{ href: "#", type: 'button', data: { action: 'insert', start: '{% for child in page.children %}', end: '{% endfor %}' } } Each Children
           %li
             %a{ href: "#", type: 'button', data: { action: 'insert', start: '{% for image in page.images %}', end: "{% endfor %}" } } Each Image
+          %li
+            %a{ href: "#", type: 'button', data: { action: 'insert', start: '{% for page in setup.top_pages %}', end: '{% endfor %}' } } Each Top Page
           %li.dropdown-submenu
             %a{ href: "#" } Parent:
             %ul.dropdown-menu
