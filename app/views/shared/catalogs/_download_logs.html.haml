@@ -3,20 +3,41 @@
     %tr
       %th &nbsp;
   %tbody
+    %tr
+      %td
+        %dl.dl-horizontal.contact-info
+          .row-fluid
+            .span12
+              .item
+                %dt{style: "width: 200px;"} Total Downloads: &nbsp; 
+                %dd= catalog.downloads.count
+          .row-fluid
+            .span12
+              .item
+                %dt{style: "width: 191px;"} Downloaded File Counts:
+          - catalog.uploads.each do | item |
+            .row-fluid
+              .span1
+                &nbsp;
+              .span10
+                %b= item.file.name
+              .span1
+                = item.download_count
+
     - catalog.downloads.order('created_at DESC').limit(50).each do |download|
       - contact = download.contact_info
       %tr
         %td
           %dl.dl-horizontal.contact-info
             .row-fluid
-              .span6
+              .span4
                 .item
                   %dt Date: 
                   %dd= download.try(:created_at).try(:strftime, "%F %T") 
                 .item
                   %dt User: 
                   %dd= download.user.nil? ? 'Guest' : download.user.fullname
-              .span6
+              .span8
                 .item
                   %dt File:
                   %dd
