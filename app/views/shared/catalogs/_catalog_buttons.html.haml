@@ -3,6 +3,8 @@
     .navbar-inner
       .btn-group{ id: dom_id(catalog, 'manage')}
         = render 'shared/catalogs/manage_button', catalog: catalog
+      .btn-group
+        = render 'shared/catalogs/map_size_buttons', catalog: catalog
 
         
     

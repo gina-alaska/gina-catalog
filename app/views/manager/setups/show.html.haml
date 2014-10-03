@@ -22,16 +22,18 @@
         %dt Keywords
         %dd=ddtext current_setup.keywords
     %fieldset.content
-      %legend Map Projections
+      %legend Map settings
       %dl.dl-horizontal
-        %dt Search
-        %dd=ddtext display_projection(current_setup.projection)
-        %dt Full Record
-        %dd=ddtext display_projection(current_setup.record_projection)
-        %dt Location Editor
-        %dd=ddtext display_projection(current_setup.location_projection)
         %dt Use Google Layers
         %dd=ddtext current_setup.google_layers==true ? "Yes" : "No"
+        %dt Search
+        %dd=ddtext display_projection(current_setup.projection)
+        %dt Location Editor
+        %dd=ddtext display_projection(current_setup.location_projection)
+        %dt Full Record
+        %dd=ddtext display_projection(current_setup.record_projection)
+        %dt Full Record Map Size
+        %dd=ddtext display_map_size(current_setup.record_map_size)
   .span5
     %fieldset.content
       %legend Portal Favicon
