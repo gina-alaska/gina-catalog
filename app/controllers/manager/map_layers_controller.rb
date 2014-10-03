@@ -17,20 +17,24 @@ class Manager::MapLayersController < ManagerController
   
   def new
     @catalog = Catalog.find(params[:catalog_id])
-    @map_layer = @catalog.map_layers.build
-    
+    case params[:layer_type]
+    when 'WMS'
+      @map_layer = WmsLayer.new     
+    when 'TILE'
+      @map_layer = TileLayer.new     
+    when 'ARC'
+      @map_layer = ArcLayer.new     
+    end
+
     respond_with(@map_layer)
   end
   
   def create
     @catalog = Catalog.find(params[:catalog_id])
-    case params[:map_layer][:type]
-    when 'WmsLayer'
-      @map_layer = WmsLayer.new(map_layer_params)
-      @map_layer.catalog = @catalog
-      # @map_layer = @catalog.map_layers.build(map_layer_params)
-    end
-    
+
+    @map_layer = @catalog.map_layers.build(map_layer_params)
+    @map_layer = @map_layer.becomes(@map_layer.type.constantize)
+
     respond_to do |wants|
       if @map_layer.save
         flash[:notice] = 'Map layer was successfully created.'
@@ -70,7 +74,7 @@ class Manager::MapLayersController < ManagerController
   def destroy
     @catalog = Catalog.find(params[:catalog_id])
     @map_layer = @catalog.map_layers.find(params[:id])
-    
+
     respond_to do |wants|
       if @map_layer.destroy
         flash[:notice] = "#{@map_layer.name} has been deleted"
@@ -84,6 +88,6 @@ class Manager::MapLayersController < ManagerController
   protected
   
   def map_layer_params
-    params[:map_layer].dup.slice(:name, :url, :layers, :projections)
+    params[:map_layer].dup.slice(:name, :url, :layers, :projections, :type)
   end
 end
