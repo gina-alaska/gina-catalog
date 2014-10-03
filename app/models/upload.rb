@@ -23,6 +23,37 @@ class Upload < ActiveRecord::Base
   def url
     self.file.try(:remote_url)
   end
+
+  def thumbnail(size = '640x480#')
+  #   if self.file.try(:image?) and self.file_stored? and !%w{ pdf kmz kml }.include?(self.file.format)
+  #     self.file.thumb(size).encode(:png)
+  #   else
+  #     Image.document_image
+  #   end
+  # rescue Dragonfly::Job::Fetch::NotFound
+  #   Image.document_image    
+  # end
+  
+    OpenStruct.new({ url: helpers.cms_media_path(self.file_uid, size: size) })
+  end
+
+  def helpers
+    Rails.application.routes.url_helpers
+  end
+  
+  def self.document_image
+    OpenStruct.new(url: ActionController::Base.helpers.asset_path('document.png'))
+  end
+
+  def to_liquid
+    {
+      'title' => self.file_name,
+      'link_to_url' => self.file.remote_url,
+      'description' => self.description,
+      'thumb' => ::ImageTagDrop.new(self),
+      'grayscale' => ::ProcessImageTagDrop.new(self, :grayscale),
+      'tag' => "<img src=\"#{self.thumbnail.try(:url)}\" alt=\"#{self.file_name}\" />"
+    }
   
   def to_s
     self.file.try(:name)

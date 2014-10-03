@@ -143,7 +143,9 @@ class Catalog < ActiveRecord::Base
       'url' => "/catalogs/#{self.to_param}",
       'start_date' => self.start_date,
       'end_date' => self.end_date,
-      'downloads' => self.downloads.count
+      'downloads' => self.downloads.count,
+      'previews' => self.uploads.previews
+
     }
   end
 

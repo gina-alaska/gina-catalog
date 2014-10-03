@@ -11,7 +11,6 @@ class Collection < ActiveRecord::Base
   
   validates_presence_of :name
   validates :name, length: { maximum: 255 }
-  liquid_methods :name, :id  
   
   scope :including_descendants, ->(setup) {
     where(setup_id: setup.self_and_descendants.pluck(:id))
@@ -20,4 +19,12 @@ class Collection < ActiveRecord::Base
   scope :visible_to, ->(member = nil) {
     where(hidden: false) unless member.try(:access_catalog?)
   }  
+
+  def to_liquid
+    {
+      'name' => self.name,
+      'id' => self.id,
+      'records' => self.catalogs
+    }
+  end
 end
