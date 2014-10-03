@@ -1,0 +1,10 @@
+%tr
+  %td{ class: 'col-lg-3 col-md-3' }
+    = use_agreement.title
+  %td{ class: 'col-lg-2 col-md-2' }
+    = use_agreement.required.blank? ? "No" : "Yes"
+  %td{ class: 'col-lg-1 col-md-1' }
+    = link_to edit_manager_use_agreement_path(use_agreement), class: 'btn btn-sm btn-primary', title: 'Edit' do
+      %i.fa.fa-edit
+    = link_to manager_use_agreement_path(use_agreement), data: { method: :delete, confirm: "Are you sure?" }, class: 'btn btn-sm btn-danger', title: 'Delete' do
+      %i.fa.fa-trash-o

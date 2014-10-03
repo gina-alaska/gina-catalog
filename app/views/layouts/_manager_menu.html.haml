@@ -17,6 +17,10 @@
         = link_to manager_contacts_path do
           %i.fa.fa-phone
           Contacts
+      %li
+        = link_to manager_use_agreements_path do
+          %i.fa.fa-pencil
+          Use Agreements
       - if can? :manage, current_user.permissions.for(current_site)
         %li
           = link_to manager_permissions_path do
