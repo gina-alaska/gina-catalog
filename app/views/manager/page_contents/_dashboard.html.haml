@@ -9,7 +9,7 @@
         = link_to new_manager_page_content_path, class: 'btn btn-success' do
           %i.icon-plus.icon-white
           New Page
-    - if current_user.is_an_admin? and !@globals.empty?
+    - if current_user.access_cms? and !@globals.empty?
       #not-sorting.pull-right
         = form_tag global_manager_page_contents_path, method: :get, class: "form-inline", style: "margin-bottom: 0px;" do
           = submit_tag "Add Global Page", class: 'btn btn-success'
