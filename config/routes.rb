@@ -24,7 +24,11 @@ Rails.application.routes.draw do
       get :autocomplete, on: :collection
     end
     resources :permissions
-    resources :invitations
+    resources :invitations do 
+      member do
+        patch :resend
+      end
+    end
     resources :contacts
     resources :agencies
   end

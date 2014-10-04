@@ -4,6 +4,7 @@ class Manager::PermissionsController < ManagerController
 
   def index
     @permissions = current_site.permissions
+    @invitations = current_site.invitations
   end
 
   def new

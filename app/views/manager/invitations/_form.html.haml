@@ -1,0 +1,15 @@
+= bootstrap_form_for [:manager, @invitation], layout: :horizontal do |f|
+  = f.email_field :email
+  = f.text_area :message
+  
+  = f.fields_for :permission do |pf|
+    = pf.form_group label: { text: 'Permissions' } do
+      - Permission::AVAILABLE_ROLES.each do |role, description|
+        = pf.check_box role, label: "#{role.to_s.humanize} - #{description}"
+  
+  = link_to :back, class: 'btn btn-default' do
+    %i.fa.fa-arrow-left
+    Cancel
+  .pull-right
+    = f.primary
+  

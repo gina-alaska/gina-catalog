@@ -7,6 +7,7 @@ class Site < ActiveRecord::Base
   has_many :urls, class_name: 'SiteUrl'
   
   has_many :permissions
+  has_many :invitations
   has_many :users, through: :permissions
   
   scope :active, -> { }
