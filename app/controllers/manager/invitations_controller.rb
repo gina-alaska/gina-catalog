@@ -26,6 +26,21 @@ class Manager::InvitationsController < ManagerController
   def edit
   end
   
+  def update
+    respond_to do |format|
+      if @invitation.update_attributes(invitation_params)
+        format.html {
+          flash[:notice] = "Invitation updated"
+          redirect_to manager_permissions_path
+        }
+      else
+        format.html {
+          render :edit
+        }
+      end
+    end
+  end
+  
   def destroy
     respond_to do |format|
       if @invitation.destroy
