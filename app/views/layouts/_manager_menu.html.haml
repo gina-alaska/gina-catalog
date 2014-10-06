@@ -21,6 +21,10 @@
         = link_to manager_collections_path do
           %i.fa.fa-sitemap
           Collections
+      %li
+        = link_to manager_use_agreements_path do
+          %i.fa.fa-pencil
+          Use Agreements
       - if can? :manage, current_user.permissions.for(current_site)
         %li
           = link_to manager_permissions_path do

@@ -1,6 +1,7 @@
 class Entry < ActiveRecord::Base
 	belongs_to :site
 	belongs_to :owner_site, class_name: 'Site'
+  belongs_to :use_agreement
 	
   has_many :entry_contacts
   has_many :contacts, through: :entry_contacts
