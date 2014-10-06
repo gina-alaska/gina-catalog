@@ -1,0 +1,10 @@
+%tr
+  %td{ class: 'col-lg-3 col-md-3' }
+    = collection.name
+  %td{ class: 'col-lg-3 col-md-3' }
+    = collection.hidden.blank? ? "No" : "Yes"
+  %td{ class: 'col-lg-1 col-md-1' }
+    = link_to edit_manager_collection_path(collection), class: 'btn btn-sm btn-primary', title: 'Edit' do
+      %i.fa.fa-edit
+    = link_to manager_collection_path(collection), data: { method: :delete, confirm: "Are you sure?" }, class: 'btn btn-sm btn-danger', title: 'Delete' do
+      %i.fa.fa-trash-o

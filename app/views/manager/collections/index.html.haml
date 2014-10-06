@@ -1,0 +1,18 @@
+.panel.panel-default
+  .panel-heading{ style: 'position: relative' }
+    = link_to new_manager_collection_path, class: 'btn btn-success panel-btn-right' do
+      New Collection
+    %ol.breadcrumb
+      %li.active
+        %i.fa.fa-sitemap
+        Collections 
+  
+  %table.table.table-striped.table-condensed
+    %thead
+      %tr
+        %th Name
+        %th Hidden
+        %th Actions
+    %tbody
+      = render(partial: "collection_row", collection: @collections, as: :collection) || "<tr><td colspan=\"4\">There are no collections defined</td></tr>".html_safe
+
