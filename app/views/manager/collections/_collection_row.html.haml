@@ -1,9 +1,12 @@
 %tr
-  %td{ class: 'col-lg-3 col-md-3' }
+  %td
     = collection.name
-  %td{ class: 'col-lg-3 col-md-3' }
+  %td
     = collection.hidden.blank? ? "No" : "Yes"
-  %td{ class: 'col-lg-1 col-md-1' }
+  %td
+    /TODO: Placeholder for show records assigned to this collection
+    = link_to manager_collections_path, class: 'btn btn-sm btn-primary', title: 'Show Records' do
+      %i.fa.fa-list-alt
     = link_to edit_manager_collection_path(collection), class: 'btn btn-sm btn-primary', title: 'Edit' do
       %i.fa.fa-edit
     = link_to manager_collection_path(collection), data: { method: :delete, confirm: "Are you sure?" }, class: 'btn btn-sm btn-danger', title: 'Delete' do

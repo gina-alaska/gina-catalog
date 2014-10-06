@@ -1,0 +1,14 @@
+= bootstrap_form_for [:manager, @collection], layout: :horizontal do |f|
+  = f.alert_message "Please fix the errors below.", error_summary: false
+  = f.text_field :name
+  = f.text_area :description, cols: 40, rows: 10
+  = f.form_group do
+    = f.check_box :hidden
+
+  .form-action
+    = link_to :back, class: 'btn btn-default' do
+      %i.fa.fa-arrow-left
+      Cancel
+
+    .pull-right
+      = f.primary
