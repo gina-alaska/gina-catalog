@@ -1,9 +1,9 @@
-= bootstrap_form_for [:manager, @contact], layout: :horizontal, label_col: 'col-lg-3 col-md-3', control_col: 'col-lg-9 col-md-9' do |f|
+= bootstrap_form_for [:manager, @collection], layout: :horizontal do |f|
   = f.alert_message "Please fix the errors below.", error_summary: false
   = f.text_field :name
-  = f.text_field :email
-  = f.text_field :phone_number
-  = f.text_field :job_title
+  = f.text_area :description, cols: 40, rows: 10
+  = f.form_group do
+    = f.check_box :hidden
 
   .form-action
     = link_to :back, class: 'btn btn-default' do

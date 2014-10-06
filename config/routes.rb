@@ -26,8 +26,10 @@ Rails.application.routes.draw do
     resources :permissions
     resources :invitations
     resources :contacts
+    resources :use_agreements
     resources :agencies
     resources :entries
+    resources :collections
   end
   
   # The priority is based upon order of creation: first created -> highest priority.

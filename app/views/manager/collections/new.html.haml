@@ -3,11 +3,11 @@
     .panel-heading{ style: 'position: relative' }
       %ol.breadcrumb
         %li
-          = link_to [:manager, :contacts] do
-            %i.fa.fa-group
-            Contacts
+          = link_to [:manager, :collections] do
+            %i.fa.fa-sitemap
+            Collections
         %li.active
           New
 
     .panel-body
-      = render 'form', contact: @contact 
+      = render 'form', collection: @collection 

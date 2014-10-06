@@ -3,11 +3,11 @@
     .panel-heading{ style: 'position: relative' }
       %ol.breadcrumb
         %li
-          = link_to [:manager, :contacts] do
-            %i.fa.fa-group
-            Contacts
+          = link_to [:manager, :use_agreements] do
+            %i.fa.fa-pencil
+            Use Agreements
         %li.active
           New
 
     .panel-body
-      = render 'form', contact: @contact 
+      = render 'form', agency: @use_agreement 
