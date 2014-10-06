@@ -28,6 +28,7 @@ Rails.application.routes.draw do
     resources :contacts
     resources :use_agreements
     resources :agencies
+    resources :collections
   end
   
   # The priority is based upon order of creation: first created -> highest priority.
