@@ -1,15 +1,21 @@
 require 'test_helper'
 
 class Manager::CollectionsControllerTest < ActionController::TestCase
+  def setup
+    @collection = collections(:one)
+    @user = users(:admin)
+    session[:user_id] = @user.id
+  end
+
   test "should get index" do
     get :index
     assert_response :success
   end
 
-  test "should get show" do
-    get :show
-    assert_response :success
-  end
+  #test "should get show" do
+  #  get :show
+  #  assert_response :success
+  #end
 
   test "should get new" do
     get :new
@@ -17,23 +23,31 @@ class Manager::CollectionsControllerTest < ActionController::TestCase
   end
 
   test "should get edit" do
-    get :edit
+    get :edit, id: @collection.id
     assert_response :success
   end
 
   test "should get create" do
-    get :create
-    assert_response :success
+    assert_difference('Collection.count') do
+      post :create, collection: @collection.attributes
+      assert assigns(:collection).errors.empty?, assigns(:collection).errors.full_messages
+    end
+
+    assert_redirected_to manager_collections_path
   end
 
   test "should get update" do
-    get :update
-    assert_response :success
+    patch :update, id: @collection.id, collection: { name: 'Testing2' }
+    assert assigns(:collection).errors.empty?, assigns(:collection).errors.full_messages
+    assert_redirected_to manager_collections_path
   end
 
   test "should get destroy" do
-    get :destroy
-    assert_response :success
+    assert_difference('Collection.count', -1) do
+      delete :destroy, id: @collection.id
+    end
+
+    assert_redirected_to manager_collections_path
   end
 
 end
