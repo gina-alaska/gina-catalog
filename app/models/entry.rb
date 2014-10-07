@@ -1,4 +1,6 @@
 class Entry < ActiveRecord::Base
+  STATUSES = %w(Complete Ongoing Unknown Funded)
+  
 	belongs_to :site
 	belongs_to :owner_site, class_name: 'Site'
   belongs_to :use_agreement
