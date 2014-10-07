@@ -11,7 +11,7 @@ class InvitationMailerTest < ActionMailer::TestCase
     assert_not ActionMailer::Base.deliveries.empty?
     
     assert_equal ['support@gina.alaska.edu'], email.from
-    assert_equal ['test@test.com'], email.to
+    assert_equal ['testing@test.com'], email.to
     assert_equal "[TEST] You have been invitied to join the Test Catalog", email.subject
     assert email.body.multipart?, "Email is not multipart (html and text)"
     assert_equal read_fixture('invite.text').join, get_message_part(email, /plain/).body.to_s

@@ -2,14 +2,16 @@
 
 one:
   name: Test User
-  email: test@test.com
+  email: testing@test.com
+  uuid: 5e9c1347-d18f-4ec0-bf0f-c5f46d79a3a2
   message: Thank you for participating
-  permission: one
+  permission: two
   site: one
 
 two:
   name: Testing User
-  email: testing@test.com
+  email: test@test.com
+  uuid: 5e9c1347-d18f-4ec0-bf0f-c5f46d79a3a3
   message: Wahoo
-  permission: one
+  permission: three
   site: one

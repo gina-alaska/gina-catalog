@@ -9,6 +9,23 @@ one:
     site_manager: true
 
 two:
-  user: two
   site: one
   roles: 
+    cms_manager: true
+    data_manager: false
+    site_manager: false
+    
+three:
+  site: one
+  roles: 
+    cms_manager: false
+    data_manager: true
+    site_manager: false
+        
+four:
+  site: one
+  roles: 
+    cms_manager: false
+    data_manager: false
+    site_manager: true
+                
