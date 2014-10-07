@@ -1,0 +1,11 @@
+.container
+  .panel.panel-default
+    .panel-heading
+      %ol.breadcrumb
+        %li
+          = link_to manager_permissions_path do 
+            %i.fa.fa-lock
+            Permisssions
+        %li New user invitation
+    .panel-body
+      = render 'form'

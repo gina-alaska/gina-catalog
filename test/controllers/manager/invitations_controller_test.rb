@@ -1,7 +1,79 @@
 require 'test_helper'
 
 class Manager::InvitationsControllerTest < ActionController::TestCase
-  # test "the truth" do
-  #   assert true
+  def setup
+    request.host = sites(:one).urls.first.url
+    
+    @invitation = invitations(:two)
+    @permission = permissions(:one)
+    @user = users(:two)
+    
+    login_user(:admin)
+  end
+
+  # test "should get index" do
+  #   get :index
+  #
+  #   assert_response :success
+  #   assert_not_nil assigns(:invitations)
   # end
+  
+  # test "show should redirect to edit" do
+  #   get :show, id: @permission.id
+  #
+  #   assert_redirected_to edit_manager_permission_path(assigns(:permission))
+  # end
+  
+  test "should accept invitation" do
+    login_user(:two)
+    get :accept, id: @invitation
+
+    assert_equal @user.email, @invitation.email
+    assert_equal "You have been granted access to #{@permission.site.title}", flash[:notice]
+    assert_redirected_to manager_path
+  end
+  
+  test "should not accept invitation" do
+    login_user(:one)
+    get :accept, id: @invitation
+    
+    assert_equal "The email address associated with this account does not match the invitation address.  We are unable to give you access to Test Catalog", flash[:error]
+    assert_redirected_to root_path
+  end
+  
+  test "should show new invitation form" do
+    get :new
+    
+    assert_response :success
+    assert_not_nil assigns(:invitation)
+  end
+  
+  test "should create invitation" do
+    assert_difference('Invitation.count') do
+      post :create, invitation: @invitation.attributes.merge({ permission_attributes: @permission.roles })
+      assert assigns(:invitation).errors.empty?, assigns(:invitation).errors.full_messages
+    end
+
+    assert_redirected_to manager_permissions_path
+  end
+  
+  test "should show edit invitation form" do
+    get :edit, id: @invitation
+    
+    assert_response :success
+    assert_not_nil assigns(:invitation)
+  end
+  
+  test "should update invitation" do
+    patch :update, id: @invitation, invitation: { email: 'test@foo.com' }
+    assert_redirected_to manager_permissions_path
+  end
+  
+  test "should destroy invitation" do
+    assert_difference('Invitation.count', -1) do
+      delete :destroy, id: @invitation
+    end
+
+    assert_redirected_to manager_permissions_path
+  end
 end

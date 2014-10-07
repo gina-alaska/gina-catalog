@@ -1,0 +1,11 @@
+%h1 Welcome #{@invitation.name}
+
+%p
+  You have been invited to join the #{@site.title}
+
+%p 
+  To access the site please click the following url: 
+  = link_to @url, @url
+
+:markdown
+  #{@invitation.message}

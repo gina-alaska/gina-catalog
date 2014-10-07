@@ -2,28 +2,38 @@
   .col-sm-8
     .panel.panel-default
       .panel-heading
-        .panel-title Current Users
-      %table.table.table-bordered.table-striped
+        %ol.breadcrumb
+          %li
+            %i.fa.fa-lock
+            Permissions
+      %table.table.table-bordered.table-striped.table-condensed.table-hover
         %thead
           %tr
             %th User
             %th Email
-            %th Actions
-        %tbody
+            %th.text-right Actions
+        %tbody.rowlink{ data: { link: 'row' } }
           - @permissions.each do |permission|
             %tr
               %td= link_to permission.user, [:edit, :manager, permission]
               %td= permission.user.email
-              %td
+              %td.rowlink-skip.text-right
                 = link_to [:manager, permission], method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure?' } do
                   %i.fa.fa-trash
+
+                                    
   .col-sm-4
     .panel.panel-default
       .panel-heading
         .panel-title Permission menu
       .panel-body
         = text_field_tag :query, '', data: { behavior: 'typeahead', name: 'user', query: '/manager/users/autocomplete.json?query=%QUERY', field: 'id' }, class: 'form-control', placeholder: 'Search for existing users'
-      .panel-footer
+        
+        %br/
+        &nbsp;
+        %br/
+        
         = link_to new_manager_invitation_path, class: 'btn btn-success btn-block' do
           %i.fa.fa-plus
-          Invite new user
+          Invite new user        
+    = render 'invitation_list', invitations: @invitations

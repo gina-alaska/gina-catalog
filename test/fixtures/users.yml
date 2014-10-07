@@ -7,7 +7,7 @@ one:
   
 two:
   name: User 2
-  email: user@user.com
+  email: test@test.com
   avatar: Nothing
 
 admin:

@@ -35,6 +35,7 @@ class Ability
       can :manage, :all
     end
     
+    Rails.logger.info user.permissions.inspect
     
     if user.has_role?(:cms_manager, site)
       can :view_manager_menu, User
@@ -42,13 +43,16 @@ class Ability
     
     if user.has_role?(:data_manager, site)
       can :view_manager_menu, User
+      
+      can :manage, Agency
+      can :manage, Contact
     end
     
     if user.has_role?(:site_manager, site)
       can :view_manager_menu, User
-      can :manage, SiteUser do |site_user|
-        site_user.site == site
-      end
+      
+      can :manage, Permission
+      can :manage, Invitation
     end
         
   end
