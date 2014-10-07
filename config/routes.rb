@@ -23,12 +23,12 @@ Rails.application.routes.draw do
     resources :users do
       get :autocomplete, on: :collection
     end
+    resources :entries
     resources :permissions
     resources :invitations
     resources :contacts
     resources :use_agreements
     resources :agencies
-    resources :entries
     resources :collections
   end
   
