@@ -1,0 +1,10 @@
+= bootstrap_form_for [:manager, @entry], layout: :horizontal do |f|
+  = render "general_fields", f: f
+
+  .form-action
+    = link_to :back, class: 'btn btn-default' do
+      %i.fa.fa-arrow-left
+      Cancel
+
+    .pull-right
+      = f.primary

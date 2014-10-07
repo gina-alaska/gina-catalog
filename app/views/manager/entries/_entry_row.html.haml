@@ -1,0 +1,26 @@
+%tr
+  %td
+    = entry.title
+  %td
+    = entry.status
+  %td
+    = entry.start_date
+  %td
+    = entry.end_date
+  %td
+    / placeholder for source agency
+    = entry.end_date
+  %td
+    / placeholder for editable?
+    = entry.end_date
+  %td
+    / placeholder for published?
+    = entry.end_date
+  %td
+    / placeholder for downloads
+    = entry.end_date
+  %td
+    = link_to edit_manager_entry_path(entry), class: 'btn btn-sm btn-primary', title: 'Edit' do
+      %i.fa.fa-edit
+    = link_to manager_entry_path(entry), data: { method: :delete, confirm: "Are you sure?" }, class: 'btn btn-sm btn-danger', title: 'Delete' do
+      %i.fa.fa-trash-o
