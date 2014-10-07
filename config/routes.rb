@@ -27,6 +27,7 @@ Rails.application.routes.draw do
     resources :invitations do 
       member do
         patch :resend
+        get :accept
       end
     end
     resources :contacts

@@ -1,11 +1,15 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  email: MyString
-  message: MyText
-  permission_id: 1
+  name: Test User
+  email: test@test.com
+  message: Thank you for participating
+  permission: one
+  site: one
 
 two:
-  email: MyString
-  message: MyText
-  permission_id: 1
+  name: Testing User
+  email: testing@test.com
+  message: Wahoo
+  permission: one
+  site: one

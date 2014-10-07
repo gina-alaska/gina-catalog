@@ -3,7 +3,7 @@ class Manager::PermissionsController < ManagerController
   load_and_authorize_resource
 
   def index
-    @permissions = current_site.permissions
+    @permissions = current_site.permissions.where.not(user_id: nil)
     @invitations = current_site.invitations
   end
 

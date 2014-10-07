@@ -19,9 +19,13 @@ class Site < ActiveRecord::Base
   def reject_urls(attributed)
     attributed['url'].blank?
   end
+  
+  def default_url
+    self.urls.default_url.first.url
+  end
 
   def single_default_url
-  	unless self.urls.where(default: true).count <= 1
+  	unless self.urls.default_url.count <= 1
   		errors.add(:urls, "can't have more than one default")
   	end
   end
