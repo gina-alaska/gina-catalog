@@ -25,7 +25,12 @@ Rails.application.routes.draw do
     end
     resources :entries
     resources :permissions
-    resources :invitations
+    resources :invitations do 
+      member do
+        patch :resend
+        get :accept
+      end
+    end
     resources :contacts
     resources :use_agreements
     resources :agencies

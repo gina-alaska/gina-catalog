@@ -35,19 +35,25 @@ class Ability
       can :manage, :all
     end
     
-    
     if user.has_role?(:cms_manager, site)
       can :view_manager_menu, User
     end
     
     if user.has_role?(:data_manager, site)
       can :view_manager_menu, User
+      
+      can :manage, Agency
+      can :manage, Contact
     end
     
     if user.has_role?(:site_manager, site)
       can :view_manager_menu, User
-      can :manage, SiteUser do |site_user|
-        site_user.site == site
+      
+      can :manage, Permission do |permission|
+        permission.site == site
+      end
+      can :manage, Invitation do |invitation|
+        invitation.site == site
       end
     end
         
