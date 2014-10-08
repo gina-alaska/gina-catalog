@@ -1,6 +1,11 @@
 class Manager::InvitationsController < ManagerController
-  load_and_authorize_resource :find_by => :uuid
+  load_and_authorize_resource find_by: :uuid
   skip_authorize_resource only: [:accept]
+  
+  rescue_from ActiveRecord::RecordNotFound do |exception|
+    flash[:error] = "We're sorry but the requested invitation is no longer available"
+    redirect_to root_path
+  end
   
   def new
     @invitation = current_site.invitations.build
@@ -13,7 +18,6 @@ class Manager::InvitationsController < ManagerController
   end
   
   def accept
-    
     if current_user.email == @invitation.email
       @permission = @invitation.permission
       @permission.user = current_user
@@ -89,6 +93,10 @@ class Manager::InvitationsController < ManagerController
   end
   
   protected
+  
+  def set_invitation
+    @invitation = Invitation.find_by_uuid(params[:id]) 
+  end
   
   def invitation_params
     params.require(:invitation).permit(:name, :email, :message, :permission_attributes => Permission::AVAILABLE_ROLES.keys + [:id])

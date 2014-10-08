@@ -33,11 +33,20 @@ class Manager::InvitationsControllerTest < ActionController::TestCase
     assert_redirected_to manager_path
   end
   
-  test "should not accept invitation" do
+  test "should not accept invitation from another user" do
     login_user(:one)
     get :accept, id: @invitation
     
     assert_equal "The email address associated with this account does not match the invitation address.  We are unable to give you access to Test Catalog", flash[:error]
+    assert_redirected_to root_path
+  end
+  
+  test "should gracefully handle invitations that no longer exist" do
+    login_user(:two)
+    get :accept, id: "5e9c1347-d18f-4ec0-bf0f-c5f46d79a000"
+    
+    
+    assert_equal "We're sorry but the requested invitation is no longer available", flash[:error]
     assert_redirected_to root_path
   end
   
