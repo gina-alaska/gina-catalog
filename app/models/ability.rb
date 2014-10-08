@@ -44,6 +44,7 @@ class Ability
       
       can :manage, Agency
       can :manage, Contact
+      can :manage, Entry
     end
     
     if user.has_role?(:site_manager, site)
