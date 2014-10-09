@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  entry_id: 1
+  site_id: 1
+  owner: false
+
+two:
+  entry_id: 1
+  site_id: 1
+  owner: false

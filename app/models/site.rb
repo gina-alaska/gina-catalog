@@ -1,32 +1,42 @@
 class Site < ActiveRecord::Base
   acts_as_nested_set  
   
-  validates :title, presence: true
-  validates :acronym, presence: true
-  
   has_many :urls, class_name: 'SiteUrl'
+  has_one :default_url, -> { where default: true }, class_name: 'SiteUrl'
   
   has_many :permissions
   has_many :invitations
   has_many :users, through: :permissions
   
+  has_many :entry_sites
+  has_many :entries, through: :entry_sites
+  
   scope :active, -> { }
   
-  accepts_nested_attributes_for :urls, allow_destroy: true, reject_if: :reject_urls
+  validates :title, presence: true
+  validates :acronym, presence: true
+  validate :single_default_url
+  
+  
+  accepts_nested_attributes_for :urls, allow_destroy: true, reject_if: :blank_url
  
- 	validate :single_default_url
+   # validate :single_default_url
 
-  def reject_urls(attributed)
+  def blank_url(attributed)
     attributed['url'].blank?
   end
   
-  def default_url
-    self.urls.default_url.first.url
+  # def default_url
+  #   self.urls.default_url.first.url
+  # end
+  
+  def default_url_count
+    self.urls.inject(0) { |c,v| c+=1 if v.default; c }
   end
 
   def single_default_url
-  	unless self.urls.default_url.count <= 1
-  		errors.add(:urls, "can't have more than one default")
-  	end
+    if default_url_count > 1
+      errors.add(:urls, "cannot have more than one default url")
+    end
   end
 end
