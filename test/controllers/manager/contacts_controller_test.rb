@@ -3,8 +3,7 @@ require 'test_helper'
 class Manager::ContactsControllerTest < ActionController::TestCase
   def setup
     @contact = contacts(:one)
-    @user = users(:admin)
-    session[:user_id] = @user.id
+    login_user(:portal_admin)
   end
 
   test "should get index" do

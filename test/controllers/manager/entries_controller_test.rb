@@ -3,8 +3,8 @@ require 'test_helper'
 class Manager::EntriesControllerTest < ActionController::TestCase
   def setup
     @entry = entries(:one)
-    @user = users(:admin)
-    session[:user_id] = @user.id
+
+    login_user(:portal_admin)
   end
 
   test "should get index" do
@@ -37,7 +37,7 @@ class Manager::EntriesControllerTest < ActionController::TestCase
     assert_redirected_to manager_entries_path
   end
 
-  test "should get update" do
+  test "should update entry record" do
     patch :update, id: @entry.id, entry: { name: 'Testing2' }
     assert assigns(:entry).errors.empty?, assigns(:entry).errors.full_messages
     assert_redirected_to manager_entries_path
@@ -49,6 +49,13 @@ class Manager::EntriesControllerTest < ActionController::TestCase
     end
 
     assert_redirected_to manager_entries_path
+  end
+
+  test "update should fail if updating editing from site other than owner site" do
+    request.host = sites(:two).default_url.url
+    patch :update, id: @entry.id, entry: { name: 'Testing2' }
+    assert_equal flash[:alert], "You are not authorized to access this page."   
+    assert_redirected_to root_path
   end
 
 end

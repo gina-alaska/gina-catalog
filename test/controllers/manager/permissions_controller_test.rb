@@ -7,8 +7,7 @@ class Manager::PermissionsControllerTest < ActionController::TestCase
     @permission = permissions(:one)
     @user = users(:one)
     
-    @admin = users(:admin)
-    session[:user_id] = @admin.id
+    login_user(:portal_admin)
   end
 
   test "should get index" do
