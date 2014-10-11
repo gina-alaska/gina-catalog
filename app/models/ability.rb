@@ -32,7 +32,8 @@ class Ability
     user ||= User.new
     
     if user.global_admin?
-      can :manage, :all
+      can :manage, Site
+      can :manage, User
     end
     
     if user.has_role?(:cms_manager, site)
@@ -44,17 +45,21 @@ class Ability
       
       can :manage, Agency
       can :manage, Contact
-      can :manage, Entry
+      can :manage, UseAgreement
+      can :manage, Collection
+      can :manage, Entry do |entry|
+        entry.new_record? or entry.owner_site == site
+      end
     end
     
     if user.has_role?(:site_manager, site)
       can :view_manager_menu, User
       
       can :manage, Permission do |permission|
-        permission.site == site
+        permission.new_record? or permission.site == site
       end
       can :manage, Invitation do |invitation|
-        invitation.site == site
+        invitation.new_record? or invitation.site == site
       end
     end
         

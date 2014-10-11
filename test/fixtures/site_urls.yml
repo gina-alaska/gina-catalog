@@ -9,3 +9,8 @@ two:
   url: test.host
   default: false
   site: one
+
+three:
+  url: foo.com
+  default: true
+  site: two
