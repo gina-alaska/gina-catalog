@@ -2,6 +2,7 @@ class Manager::EntriesController < ApplicationController
   load_and_authorize_resource
 
   def index
+    @entries = Entry.all
   end
 
   def show
@@ -14,6 +15,7 @@ class Manager::EntriesController < ApplicationController
   end
 
   def create
+    @entry.sites << current_site
     respond_to do |format|
       if @entry.save
         flash[:success] = "Entry #{@entry.title} was successfully created."
