@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     resources :users do
       get :autocomplete, on: :collection
     end
+    resources :entries
     resources :permissions
     resources :invitations do 
       member do

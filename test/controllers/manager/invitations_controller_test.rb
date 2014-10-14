@@ -8,7 +8,8 @@ class Manager::InvitationsControllerTest < ActionController::TestCase
     @permission = permissions(:one)
     @user = users(:two)
     
-    login_user(:admin)
+    login_user(:portal_admin)
+
   end
 
   # test "should get index" do

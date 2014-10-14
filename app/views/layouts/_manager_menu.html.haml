@@ -9,6 +9,11 @@
         = link_to manager_path do
           %i.fa.fa-dashboard
           Dashboard
+      - if can? :manage, Entry
+        %li
+          = link_to manager_entries_path do
+            %i.fa.fa-cubes
+            Entries
       %li
         = link_to manager_agencies_path do
           %i.fa.fa-university

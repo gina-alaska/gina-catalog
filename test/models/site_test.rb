@@ -13,6 +13,6 @@ class SiteTest < ActiveSupport::TestCase
   end
   
   test "default_url should return the default url" do
-    assert_equal @site.default_url, 'catalog.192.168.222.225.xip.io'
+    assert_equal @site.default_url.url, 'catalog.192.168.222.225.xip.io'
   end
 end

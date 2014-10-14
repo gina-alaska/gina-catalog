@@ -10,6 +10,11 @@ two:
   email: test@test.com
   avatar: Nothing
 
+portal_admin:
+  name: Portal admin
+  email: admin@test.com
+  avatar: Nothing
+
 admin:
   name: MyString
   email: MyString

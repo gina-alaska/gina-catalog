@@ -3,8 +3,7 @@ require 'test_helper'
 class Manager::UseAgreementsControllerTest < ActionController::TestCase
   def setup
     @use_agreement = use_agreements(:one)
-    @user = users(:admin)
-    session[:user_id] = @user.id
+    login_user(:portal_admin)
   end
 
   test "should get index" do

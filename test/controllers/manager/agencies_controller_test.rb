@@ -3,8 +3,7 @@ require 'test_helper'
 class Manager::AgenciesControllerTest < ActionController::TestCase
   def setup
     @agency = agencies(:one)
-    @user = users(:admin)
-    session[:user_id] = @user.id
+    login_user(:portal_admin)
   end
 
   test "should get index" do

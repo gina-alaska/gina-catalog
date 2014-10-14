@@ -4,7 +4,8 @@
     "bootstrap": "latest",
     "font-awesome": "~> 4.2.0",
     "typeahead.js": "~> 0.10.5",
-    "handlebars": "latest"
-    "jasny-bootstrap": "latest"
+    "handlebars": "latest",
+    "jasny-bootstrap": "latest",
+    "eonasdan-bootstrap-datetimepicker": "latest"
   }
 }
