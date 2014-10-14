@@ -2,7 +2,7 @@ class Manager::EntriesController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @entries = Entry.all
+    @entries = Entry.joins(:entry_sites).where(entry_sites: { site_id: current_site.self_and_descendants })
   end
 
   def show
