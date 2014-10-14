@@ -12,7 +12,7 @@
     = entry.end_date
   %td
     / placeholder for editable?
-    = entry.end_date
+    = can?(:manage, entry) ? "Yes" : "No"
   %td
     / placeholder for published?
     = entry.end_date
@@ -20,7 +20,8 @@
     / placeholder for downloads
     = entry.end_date
   %td
-    = link_to edit_manager_entry_path(entry), class: 'btn btn-sm btn-primary', title: 'Edit' do
-      %i.fa.fa-edit
-    = link_to manager_entry_path(entry), data: { method: :delete, confirm: "Are you sure?" }, class: 'btn btn-sm btn-danger', title: 'Delete' do
-      %i.fa.fa-trash-o
+    - if can?(:manage, entry)
+      = link_to edit_manager_entry_path(entry), class: 'btn btn-sm btn-primary', title: 'Edit' do
+        %i.fa.fa-edit
+      = link_to manager_entry_path(entry), data: { method: :delete, confirm: "Are you sure?" }, class: 'btn btn-sm btn-danger', title: 'Delete' do
+        %i.fa.fa-trash-o
