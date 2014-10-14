@@ -19,6 +19,8 @@ class Entry < ActiveRecord::Base
   validates :slug, length: { maximum: 255 }
   validates :sites, length: { minimum: 1, message: 'was empty, entries must belong to at least one site' }
   validate :check_for_single_ownership
+  validates :description, presence: true
+  validates :status, presence: true
   
   after_create :set_owner_site
   
