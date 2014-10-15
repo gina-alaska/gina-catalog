@@ -1,5 +1,17 @@
-= bootstrap_form_for [:manager, @entry], layout: :horizontal do |f|
-  = render "general_fields", f: f
+%ul.nav.nav-tabs
+  - sections = %w{ general sds }
+  - sections.each do |section|
+    %li{class: (section == sections.first ? 'active' : '')}
+      = link_to section.humanize, "##{section}", data: { toggle: 'tab' }
+
+= bootstrap_nested_form_for [:manager, @entry], layout: :horizontal do |f|
+
+  .tab-content{ style: 'margin-top: 5px;' }
+    #general.tab-pane.active
+      = render "general_fields", f: f
+
+    #sds.tab-pane
+      = render "sds_fields", f: f
 
   .form-action
     = link_to :back, class: 'btn btn-default' do
