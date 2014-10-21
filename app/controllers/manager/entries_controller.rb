@@ -9,6 +9,7 @@ class Manager::EntriesController < ApplicationController
   end
 
   def new
+    @entry.links.build
   end
 
   def edit

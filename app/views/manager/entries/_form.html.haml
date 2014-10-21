@@ -1,5 +1,5 @@
 %ul.nav.nav-tabs
-  - sections = %w{ general sds }
+  - sections = %w{ general contacts sds }
   - sections.each do |section|
     %li{class: (section == sections.first ? 'active' : '')}
       = link_to section.humanize, "##{section}", data: { toggle: 'tab' }
@@ -9,6 +9,40 @@
   .tab-content{ style: 'margin-top: 5px;' }
     #general.tab-pane.active
       = render "general_fields", f: f
+
+    #contacts.tab-pane
+      .navbar.navbar-default.navbar-static-top
+        .container-fluid
+          .navbar-right
+            = f.link_to_add :entry_contacts, :data => { :target => "#contact_fields" }, class: "btn btn-success navbar-btn" do
+              %i.fa.fa-plus
+              Add a Contact
+          .navbar-brand Contacts
+      %table.table.table-striped
+        %thead
+          %tr
+            %th.col-sm-6 Contact
+            %th Primary
+            %th.actions Actions
+        %tbody#contact_fields.form-inline
+          = f.fields_for :entry_contacts, wrapper: false
+
+    #links.tab-pane
+      .navbar.navbar-default
+        .container-fluid
+          .navbar-right
+            = f.link_to_add :links, :data => { :target => "#link_fields" }, class: "btn btn-success" do
+              %i.fa.fa-plus
+              Add a Link
+          .navbar-brand Links
+      %table.table.table-striped
+        %tr
+          %th Category
+          %th Display Text
+          %th URL
+          %th.actions Actions
+      #link_fields.fields.form-inline
+        = f.fields_for :links
 
     #sds.tab-pane
       = render "sds_fields", f: f

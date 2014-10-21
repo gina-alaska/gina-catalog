@@ -8,6 +8,7 @@ class Entry < ActiveRecord::Base
   has_many :entry_aliases
   has_many :entry_agencies
   has_many :agencies, through: :entry_agencies
+  has_many :links, :dependent => :destroy
   
   has_many :entry_sites
   has_many :sites, through: :entry_sites
@@ -22,6 +23,9 @@ class Entry < ActiveRecord::Base
   validates :description, presence: true
   validates :status, presence: true
   
+  accepts_nested_attributes_for :links, reject_if:  proc { |link| link['url'].blank? }, allow_destroy: true
+  accepts_nested_attributes_for :entry_contacts
+
   after_create :set_owner_site
   
   def set_owner_site

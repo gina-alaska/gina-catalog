@@ -6,8 +6,7 @@ class CreateLinks < ActiveRecord::Migration
       t.string :url
       t.boolean :valid_link, default: true
       t.date :last_checked_at
-      t.integer :asset_id
-      t.string :asset_type
+      t.integer :entry_id
 
       t.timestamps
     end
