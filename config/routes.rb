@@ -31,7 +31,11 @@ Rails.application.routes.draw do
         get :accept
       end
     end
-    resources :contacts
+    resources :contacts do
+      collection do
+        get :search
+      end
+    end
     resources :use_agreements
     resources :agencies
     resources :collections

@@ -1,8 +1,8 @@
 %tr.fields
   %td
     = f.hidden_field :id
-    = f.hidden_field :contact_id
-    = f.object.contact.try(:name)
+    = f.hidden_field :contact_id, class: 'contact_id'
+    %p.form-control-static.contact_name= f.object.contact.try(:name)
   %td
     = f.check_box :primary, layout: :inline
   %td

@@ -11,13 +11,13 @@
       = render "general_fields", f: f
 
     #contacts.tab-pane
-      .navbar.navbar-default.navbar-static-top
-        .container-fluid
-          .navbar-right
-            = f.link_to_add :entry_contacts, :data => { :target => "#contact_fields" }, class: "btn btn-success navbar-btn" do
-              %i.fa.fa-plus
-              Add a Contact
-          .navbar-brand Contacts
+      .row
+        .col-sm-10
+          = text_field_tag :contact_search, '', data: { name: 'contacts', target: '#add-selected-contact', behavior: 'typeahead', query: search_manager_contacts_path + '?query=%QUERY'.html_safe }, placeholder: 'Search for contact to add', class: 'form-control pull-left'
+        .col-sm-2
+          = f.link_to_add :entry_contacts, :data => { :target => "#contact_fields" }, class: "btn btn-info btn-block disabled", id: 'add-selected-contact' do
+            Add selected
+            %i.fa.fa-arrow-right
       %table.table.table-striped
         %thead
           %tr
