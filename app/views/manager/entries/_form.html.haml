@@ -27,23 +27,6 @@
         %tbody#contact_fields.form-inline
           = f.fields_for :entry_contacts, wrapper: false
 
-    #links.tab-pane
-      .navbar.navbar-default
-        .container-fluid
-          .navbar-right
-            = f.link_to_add :links, :data => { :target => "#link_fields" }, class: "btn btn-success" do
-              %i.fa.fa-plus
-              Add a Link
-          .navbar-brand Links
-      %table.table.table-striped
-        %tr
-          %th Category
-          %th Display Text
-          %th URL
-          %th.actions Actions
-      #link_fields.fields.form-inline
-        = f.fields_for :links
-
     #sds.tab-pane
       = render "sds_fields", f: f
 

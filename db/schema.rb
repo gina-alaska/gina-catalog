@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141016221917) do
+ActiveRecord::Schema.define(version: 20141015194158) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -159,17 +159,6 @@ ActiveRecord::Schema.define(version: 20141016221917) do
     t.integer  "site_id"
     t.string   "name"
     t.uuid     "uuid",          default: "uuid_generate_v4()"
-  end
-
-  create_table "links", force: true do |t|
-    t.string   "category"
-    t.string   "display_text"
-    t.string   "url"
-    t.boolean  "valid_link",      default: true
-    t.date     "last_checked_at"
-    t.integer  "entry_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "memberships", force: true do |t|

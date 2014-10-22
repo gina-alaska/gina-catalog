@@ -1,9 +1,0 @@
-%tr
-  %td{ class: "col-lg-3" }
-    = f.select :category, Link::CATEGORIES, { hide_label: true, layout: :inline }
-  %td
-    = f.text_field :display_text, hide_label: true, layout: :inline
-  %td
-    = f.text_field :url, hide_label: true, layout: :inline
-  %td
-    = f.link_to_remove "Delete", layout: :inline, class: "btn btn-danger"
