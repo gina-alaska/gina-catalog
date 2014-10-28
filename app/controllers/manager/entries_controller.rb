@@ -9,6 +9,7 @@ class Manager::EntriesController < ApplicationController
   end
 
   def new
+    @entry.links.build
   end
 
   def edit
@@ -53,6 +54,6 @@ class Manager::EntriesController < ApplicationController
   protected
   
   def entry_params
-    params.require(:entry).permit(:title, :description, :status, :start_date, :end_date)
+    params.require(:entry).permit(:title, :description, :status, :start_date, :end_date, :use_agreement_id, :request_contact_info, :require_contact_info, entry_contacts_attributes: [:id, :contact_id, :primary, :secondary, :_destroy])
   end
 end
