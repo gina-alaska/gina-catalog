@@ -5,7 +5,7 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-if Rails.env == "development"
+if Rails.env.development? or Rails.env.test?
   s = Site.create({ 
     title: "Catalog Development", 
     acronym: 'gLynx', 
@@ -14,13 +14,4 @@ if Rails.env == "development"
   s.urls.create({ url: 'catalog.192.168.222.225.xip.io', default: true }) unless s.new_record?
 
   Contact.where(name: 'Will Fisher', email: 'will@alaska.edu').first_or_create
-end
-
-if Rails.env == "test"
-  s = Site.create({ 
-    title: "Catalog Test", 
-    acronym: 'gLynx', 
-    contact_email: 'support@gina.alaska.edu' 
-  })
-  s.urls.create({ url: 'catalog.192.168.222.225.xip.io', default: true }) unless s.new_record?
 end
