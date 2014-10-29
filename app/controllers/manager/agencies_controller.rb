@@ -13,6 +13,12 @@ class Manager::AgenciesController < ManagerController
   #def show
   #end
 
+  def search
+    @agencies = Agency.where('name like ?', "%#{params[:query]}%")
+    
+    render json: @agencies
+  end
+
   def new
     @agency = Agency.new
     @agency.aliases.build
