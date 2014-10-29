@@ -8,9 +8,16 @@ namespace :admin do
     end
     
     user = User.where(email: email).first
+    
     if user.nil?
       puts "Could not find user with email: #{email}"
       exit 1
+    end
+    
+    Site.all.each do |site|
+      permission = user.permissions.where(site: site).first_or_initialize
+      permission.roles = { cms_manager: true, data_manager: true, site_manager: true }
+      permission.save
     end
     
     if user.update_attribute(:global_admin, true)
