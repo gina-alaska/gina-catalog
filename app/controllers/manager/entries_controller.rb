@@ -53,6 +53,6 @@ class Manager::EntriesController < ApplicationController
   protected
   
   def entry_params
-    params.require(:entry).permit(:title, :description, :status, :start_date, :end_date)
+    params.require(:entry).permit(:title, :description, :status, :start_date, :end_date, :use_agreement_id, :request_contact_info, :require_contact_info)
   end
 end
