@@ -22,6 +22,7 @@ $(document).on 'nested:fieldAdded:entry_contacts', (e) ->
   suggestion = $('#contact_search').data('suggestion')
   return unless suggestion?
   
+  e.field.parents('form').data('dirty', true)  
   e.field.find('.contact_id').val(suggestion.id)
   e.field.find('.contact_name').html(suggestion.name)
   $('#contact_search').val('')
