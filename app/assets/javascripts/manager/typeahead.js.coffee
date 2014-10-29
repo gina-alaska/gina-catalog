@@ -10,6 +10,9 @@ class @TypeAheadField
   #   limit: 10
   # }
   constructor: (@el, @opts = {}) ->
+    return false unless $(@el).length > 0
+    
+    
     @url = $(el).data('query')
     @name = $(el).data('name')
 
