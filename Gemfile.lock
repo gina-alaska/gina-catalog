@@ -98,7 +98,7 @@ GEM
     kgio (2.9.2)
     launchy (2.4.2)
       addressable (~> 2.3)
-    libv8 (3.16.14.3)
+    libv8 (3.16.14.7)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -139,6 +139,7 @@ GEM
       ruby-openid (>= 2.1.8)
     rack-test (0.6.2)
       rack (>= 1.0)
+    railroady (1.2.0)
     rails (4.1.5)
       actionmailer (= 4.1.5)
       actionpack (= 4.1.5)
@@ -243,6 +244,7 @@ DEPENDENCIES
   omniauth-google-oauth2
   omniauth-openid
   pg
+  railroady
   rails (= 4.1.5)
   rdiscount
   rgeo
