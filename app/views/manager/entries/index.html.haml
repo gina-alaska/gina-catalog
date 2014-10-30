@@ -1,11 +1,11 @@
 .panel.panel-default
   .panel-heading{ style: 'position: relative' }
     = link_to new_manager_entry_path, class: 'btn btn-sm btn-success panel-btn-right' do
-      New Entry
+      New Catalog Record
     %ol.breadcrumb
       %li.active
         %i.fa.fa-cubes
-        Entries
+        Catalog Records
   
   %table.table.table-striped.table-condensed
     %thead
@@ -21,4 +21,4 @@
         %th Actions
 
     %tbody
-      = render(partial: "entry_row", collection: @entries, as: :entry) || "<tr><td colspan=\"9\">There are no entries available</td></tr>".html_safe
+      = render(partial: "entry_row", collection: @entries, as: :entry) || "<tr><td colspan=\"9\">There are no records available</td></tr>".html_safe

@@ -18,7 +18,7 @@ class Manager::EntriesController < ApplicationController
     @entry.sites << current_site
     respond_to do |format|
       if @entry.save
-        flash[:success] = "Entry #{@entry.title} was successfully created."
+        flash[:success] = "Catalog record #{@entry.title} was successfully created."
         format.html { redirect_to manager_entries_path }
       else
         format.html { render action: "new" }
@@ -30,7 +30,7 @@ class Manager::EntriesController < ApplicationController
   def update
     respond_to do |format|
       if @entry.update_attributes(entry_params)
-        flash[:success] = "Entry #{@entry.title} was successfully updated."
+        flash[:success] = "Catalog record #{@entry.title} was successfully updated."
         format.html { redirect_to manager_entries_path }
         format.json { head :nocontent }
       else
@@ -44,7 +44,7 @@ class Manager::EntriesController < ApplicationController
     @entry.destroy
 
     respond_to do |format|
-      flash[:success] = "Entry #{@entry.title} was successfully deleted."
+      flash[:success] = "Catalog record #{@entry.title} was successfully deleted."
       format.html { redirect_to manager_entries_path }
       format.json { head :no_content }
     end

@@ -23,7 +23,7 @@ class Entry < ActiveRecord::Base
 
   validates :title, presence: true, length: { maximum: 255 }
   validates :slug, length: { maximum: 255 }
-  validates :sites, length: { minimum: 1, message: 'was empty, entries must belong to at least one site' }
+  validates :sites, length: { minimum: 1, message: 'was empty, a catalog record must belong to at least one site' }
   validate :check_for_single_ownership
   validates :description, presence: true
   validates :status, presence: true

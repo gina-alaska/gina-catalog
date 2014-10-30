@@ -37,4 +37,4 @@
       Cancel
 
     .pull-right
-      = f.primary
+      = f.primary @entry.new_record? ? "Create Record" : "Update Record"
