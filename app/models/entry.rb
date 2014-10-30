@@ -29,6 +29,7 @@ class Entry < ActiveRecord::Base
   validates :status, presence: true
   
   accepts_nested_attributes_for :entry_contacts, allow_destroy: true
+  accepts_nested_attributes_for :entry_agencies, allow_destroy: true
 
   after_create :set_owner_site
   
