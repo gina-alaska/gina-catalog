@@ -1,5 +1,7 @@
 class Entry < ActiveRecord::Base
   STATUSES = %w(Complete Ongoing Unknown Funded)
+
+  acts_as_taggable_on :tags, :geokeywords, :datatypes
   
   belongs_to :use_agreement
 	
