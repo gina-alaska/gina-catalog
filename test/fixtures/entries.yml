@@ -6,13 +6,11 @@ one:
   status: MyString
   slug: MyString
   uuid: MyString
-  site_id: 1
   licence_id: 1
   archived_at: 2014-09-05 16:00:04
   published_at: 1
   start_date: 2014-09-05
   end_date: 2014-09-05
-  owner_site_id: 1
 
 two:
   title: MyString
@@ -20,10 +18,8 @@ two:
   status: MyString
   slug: MyString
   uuid: MyString
-  site_id: 1
   licence_id: 1
   archived_at: 2014-09-05 16:00:04
   published_at: 1
   start_date: 2014-09-05
   end_date: 2014-09-05
-  owner_site_id: 1
