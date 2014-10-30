@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class EntryTest < ActiveSupport::TestCase
+
   should have_many(:entry_contacts)
   should have_many(:contacts).through(:entry_contacts)
   should have_many(:entry_aliases)
@@ -22,13 +23,13 @@ class EntryTest < ActiveSupport::TestCase
   end
   
   test "ensure length of sites is at least 1" do
-    @entry = Entry.create(title: 'Testing', sites: [sites(:one)])
+    @entry = Entry.create(title: 'Testing', description: "test", status: "Unknown", sites: [sites(:one)])
 
     assert @entry.sites.count == 1, "sites are not 1"
   end
 
   test "shouldn't allow more than one owner site" do
-    @entry = Entry.create(title: 'Testing', sites: [sites(:one)])
+    @entry = Entry.create(title: 'Testing', description: "test", status: "Unknown", sites: [sites(:one)])
     @entry.set_owner_site
     @entry.sites << sites(:two)
     @entry.entry_sites.last.update_attribute(:owner, true)
@@ -37,7 +38,7 @@ class EntryTest < ActiveSupport::TestCase
   end
   
   test "on create the first site should become the owner site" do
-    @entry = Entry.create(title: 'Testing', sites: [sites(:one)])
+    @entry = Entry.create(title: 'Testing', description: "test", status: "Unknown", sites: [sites(:one)])
 
     assert @entry.valid?, "Entry was not valid: #{@entry.errors.full_messages.join(', ')}"
     assert @entry.owner_site.present?, "Owner site was empty"

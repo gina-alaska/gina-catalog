@@ -11,7 +11,7 @@ class Manager::ContactsController < ManagerController
   end
   
   def search
-    @contacts = Contact.where('name like ?', "%#{params[:query]}%")
+    @contacts = Contact.where('name ilike ?', "%#{params[:query]}%")
     
     render json: @contacts
   end
