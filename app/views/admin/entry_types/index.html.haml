@@ -1,0 +1,17 @@
+.panel.panel-default
+  .panel-heading{ style: 'position: relative' }
+    = link_to new_admin_entry_type_path, class: 'btn btn-success panel-btn-right' do
+      New Catalog Type
+    %ol.breadcrumb
+      %li.active
+        %i.fa.fa-cube
+        Catalog Types 
+  
+  %table.table.table-striped.table-condensed
+    %thead
+      %tr
+        %th Name
+        %th Color        
+        %th Actions
+    %tbody
+      = render(partial: "agency_row", collection: @agencies, as: :agency) || "<tr><td colspan=\"4\">There are no agencies available</td></tr>".html_safe
