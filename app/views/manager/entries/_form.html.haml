@@ -1,5 +1,5 @@
 %ul.nav.nav-tabs
-  - sections = %w{ general contacts sds }
+  - sections = %w{ general contacts agencies sds }
   - sections.each do |section|
     %li{class: (section == sections.first ? 'active' : '')}
       = link_to section.humanize, "##{section}", data: { toggle: 'tab' }
@@ -31,10 +31,31 @@
     #sds.tab-pane
       = render "sds_fields", f: f
 
+    #agencies.tab-pane
+      .row
+        .col-sm-10
+          = text_field_tag :agency_search, '', data: { name: 'agencies', target: '#add-selected-agency', behavior: 'typeahead', query: search_manager_agencies_path + '?query=%QUERY'.html_safe }, placeholder: 'Search for agency to add', class: 'form-control pull-left'
+        .col-sm-2
+          = f.link_to_add :entry_agencies, :data => { :target => "#agency_fields" }, class: "btn btn-info btn-block disabled", id: 'add-selected-agency' do
+            Add selected
+            %i.fa.fa-arrow-right
+      %table.table.table-striped
+        %thead
+          %tr
+            %th.col-sm-6 Agency
+            %th Primary
+            %th Funding
+            %th.actions Actions
+        %tbody#agency_fields.form-inline
+          = f.fields_for :entry_agencies, wrapper: false
+
+    #sds.tab-pane
+      = render "sds_fields", f: f
+
   .form-action
     = link_to :back, class: 'btn btn-default' do
       %i.fa.fa-arrow-left
       Cancel
 
     .pull-right
-      = f.primary
+      = f.primary @entry.new_record? ? "Create Record" : "Update Record"
