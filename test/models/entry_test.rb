@@ -16,6 +16,7 @@ class EntryTest < ActiveSupport::TestCase
   test "should have all relationships tested" do
     belong_to(:site)
     belong_to(:owner_site)
+    belong_to(:entry_type)
     have_many(:entry_sites)
     have_many(:sites).through(:entry_sites)
     have_one(:owner_entry_site)
