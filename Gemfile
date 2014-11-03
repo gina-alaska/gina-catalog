@@ -59,7 +59,9 @@ gem 'dragonfly', '~> 1.0.1'
 group :development do
   gem "better_errors"
   gem "binding_of_caller"
-  gem 'railroady'
+  gem "rails-erd"
+  gem "guard"
+  gem 'guard-minitest'
 end
 
 group :test do
