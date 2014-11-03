@@ -34,6 +34,7 @@ class Ability
     if user.global_admin?
       can :manage, Site
       can :manage, User
+      can :manage, EntryType      
     end
     
     if user.has_role?(:cms_manager, site)
