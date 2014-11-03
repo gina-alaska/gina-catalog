@@ -2,7 +2,8 @@ class Entry < ActiveRecord::Base
   STATUSES = %w(Complete Ongoing Unknown Funded)
   
   belongs_to :use_agreement
-	
+  belongs_to :entry_type
+  	
   has_many :entry_contacts
   has_many :contacts, through: :entry_contacts
   has_many :primary_entry_contacts, -> { primary }, class_name: "EntryContact"
