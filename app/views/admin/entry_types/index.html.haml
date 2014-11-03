@@ -12,6 +12,6 @@
       %tr
         %th Name
         %th Color        
-        %th Actions
+        %th.col-lg-2 Actions
     %tbody
       = render(partial: "entry_type_row", collection: @entry_types, as: :entry_type) || "<tr><td colspan=\"3\">There are no catalog types available.</td></tr>".html_safe
