@@ -18,4 +18,10 @@ class Admin::EntryTypesController < ApplicationController
 
   def destroy
   end
+
+  protected
+  
+  def entry_type_params
+    params.require(:entry_type).permit(:name, :description, :color)
+  end
 end
