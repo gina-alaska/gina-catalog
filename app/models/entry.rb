@@ -28,6 +28,7 @@ class Entry < ActiveRecord::Base
   validate :check_for_single_ownership
   validates :description, presence: true
   validates :status, presence: true
+  validates :entry_type_id, presence: true
   
   accepts_nested_attributes_for :entry_contacts, allow_destroy: true
   accepts_nested_attributes_for :entry_agencies, allow_destroy: true
