@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141022005838) do
+ActiveRecord::Schema.define(version: 20141104215229) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -173,6 +173,23 @@ ActiveRecord::Schema.define(version: 20141022005838) do
     t.integer  "user_id"
     t.integer  "site_id"
     t.hstore   "roles"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "portals", force: true do |t|
+    t.string   "title"
+    t.string   "by_line"
+    t.string   "acronym"
+    t.text     "description"
+    t.string   "url"
+    t.string   "logo_uid"
+    t.string   "contact_email"
+    t.string   "analytics_account"
+    t.integer  "parent_id"
+    t.integer  "lft"
+    t.integer  "rft"
+    t.integer  "depth"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
