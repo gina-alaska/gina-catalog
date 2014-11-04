@@ -19,5 +19,6 @@
 //= require moment/moment.js
 //= require jasny-bootstrap/dist/js/jasny-bootstrap
 //= require eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js
+//= require select2/select2.js
 //= require turbolinks
 //= require_tree .

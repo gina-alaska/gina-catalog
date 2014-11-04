@@ -6,6 +6,7 @@
     "typeahead.js": "~> 0.10.5",
     "handlebars": "latest",
     "jasny-bootstrap": "latest",
-    "eonasdan-bootstrap-datetimepicker": "latest"
+    "eonasdan-bootstrap-datetimepicker": "latest",
+    "select2": "~> 3.5.0"
   }
 }
