@@ -1,5 +1,5 @@
 %ul.nav.nav-tabs
-  - sections = %w{ general contacts agencies sds }
+  - sections = %w{ general contacts agencies tags sds }
   - sections.each do |section|
     %li{class: (section == sections.first ? 'active' : '')}
       = link_to section.humanize, "##{section}", data: { toggle: 'tab' }
@@ -28,8 +28,8 @@
         %tbody#contact_fields.form-inline
           = f.fields_for :entry_contacts, wrapper: false
 
-    #sds.tab-pane
-      = render "sds_fields", f: f
+    #tags.tab-pane
+      = render "tag_fields", f: f
 
     #agencies.tab-pane
       .row
