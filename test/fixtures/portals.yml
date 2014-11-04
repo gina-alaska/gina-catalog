@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  by_line: MyString
+  acronym: MyString
+  description: MyText
+  url: MyString
+  logo_uid: MyString
+  contact_email: MyString
+  analytics_account: MyString
+  parent_id: 1
+  lft: 1
+  rft: 1
+  depth: 1
+
+two:
+  title: MyString
+  by_line: MyString
+  acronym: MyString
+  description: MyText
+  url: MyString
+  logo_uid: MyString
+  contact_email: MyString
+  analytics_account: MyString
+  parent_id: 1
+  lft: 1
+  rft: 1
+  depth: 1
