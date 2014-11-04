@@ -1,0 +1,17 @@
+.panel.panel-default
+  .panel-heading{ style: 'position: relative' }
+    = link_to new_admin_entry_type_path, class: 'btn btn-success panel-btn-right' do
+      New Catalog Type
+    %ol.breadcrumb
+      %li.active
+        %i.fa.fa-cube
+        Catalog Types 
+  
+  %table.table.table-striped.table-condensed
+    %thead
+      %tr
+        %th Name
+        %th Color        
+        %th.col-lg-2 Actions
+    %tbody
+      = render(partial: "entry_type_row", collection: @entry_types, as: :entry_type) || "<tr><td colspan=\"3\">There are no catalog types available.</td></tr>".html_safe
