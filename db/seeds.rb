@@ -18,7 +18,7 @@ if Rails.env.development?
     acronym: 'gLynx', 
     contact_email: 'support@gina.alaska.edu' 
   })
-  p.urls.create({ url: 'catalog.192.168.222.225.xip.io', default: true }) unless p.new_record?
+  p.urls.create({ url: 'catalog.192.168.222.227.xip.io', default: true }) unless p.new_record?
 
   Contact.where(name: 'Will Fisher', email: 'will@alaska.edu').first_or_create
 end
