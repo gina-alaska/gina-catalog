@@ -8,8 +8,8 @@ class Portal < ActiveRecord::Base
   has_many :invitations
   has_many :users, through: :permissions
   
-#  has_many :entry_sites
-#  has_many :entries, through: :entry_sites
+  has_many :entry_portals
+  has_many :entries, through: :entry_portals
   
   scope :active, -> { }
   
