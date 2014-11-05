@@ -9,3 +9,13 @@ two:
   entry: one
   site: two
   owner: false
+  
+three:
+  entry: multi_owner
+  site: one
+  owner: true
+
+four:
+  entry: multi_owner
+  site: two
+  owner: true

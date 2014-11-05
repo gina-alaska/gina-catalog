@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   get '/logout', to: 'sessions#destroy'
   get '/login', to: 'sessions#new'
   get '/auth/:provider/disable', to: 'users#disable_provider'
@@ -17,6 +18,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :sites
     resources :users
+    resources :entry_types
   end
 
   namespace :manager do

@@ -4,6 +4,7 @@ one:
   title: MyString
   description: MyText
   status: MyString
+  entry_type: one
   slug: MyString
   uuid: MyString
   licence_id: 1
@@ -16,6 +17,20 @@ two:
   title: MyString
   description: MyText
   status: MyString
+  entry_type: two
+  slug: MyString
+  uuid: MyString
+  licence_id: 1
+  archived_at: 2014-09-05 16:00:04
+  published_at: 1
+  start_date: 2014-09-05
+  end_date: 2014-09-05
+
+multi_owner:
+  title: MyString
+  description: MyText
+  status: MyString
+  entry_type: two
   slug: MyString
   uuid: MyString
   licence_id: 1

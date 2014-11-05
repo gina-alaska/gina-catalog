@@ -2,7 +2,8 @@ class Entry < ActiveRecord::Base
   STATUSES = %w(Complete Ongoing Unknown Funded)
   
   belongs_to :use_agreement
-	
+  belongs_to :entry_type
+  	
   has_many :entry_contacts
   has_many :contacts, through: :entry_contacts
   has_many :primary_entry_contacts, -> { primary }, class_name: "EntryContact"
@@ -27,6 +28,7 @@ class Entry < ActiveRecord::Base
   validate :check_for_single_ownership
   validates :description, presence: true
   validates :status, presence: true
+  validates :entry_type_id, presence: true
   
   accepts_nested_attributes_for :entry_contacts, allow_destroy: true
   accepts_nested_attributes_for :entry_agencies, allow_destroy: true

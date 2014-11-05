@@ -106,6 +106,7 @@ ActiveRecord::Schema.define(version: 20141104215229) do
     t.integer  "use_agreement_id"
     t.boolean  "request_contact_info"
     t.boolean  "require_contact_info"
+    t.integer  "entry_type_id"
   end
 
   create_table "entry_agencies", force: true do |t|
@@ -137,6 +138,14 @@ ActiveRecord::Schema.define(version: 20141104215229) do
     t.integer  "entry_id"
     t.integer  "site_id"
     t.boolean  "owner"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "entry_types", force: true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.string   "color"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

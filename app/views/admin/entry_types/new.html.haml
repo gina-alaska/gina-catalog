@@ -1,0 +1,13 @@
+.container
+  .panel.panel-default
+    .panel-heading{ style: 'position: relative' }
+      %ol.breadcrumb
+        %li
+          = link_to [:admin, :entry_types] do
+            %i.fa.fa-cube
+            Catalog Entries
+        %li.active
+          New
+
+    .panel-body
+      = render 'form', entry_type: @entry_type
