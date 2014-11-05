@@ -1,0 +1,67 @@
+require 'test_helper'
+
+class Admin::PortalsControllerTest < ActionController::TestCase
+  def setup
+    @portal = portals(:one)
+    @portal_no_urls = portals(:two)
+    @user = users(:admin)
+    session[:user_id] = @user.id
+  end
+
+  test "should get index" do
+    get :index
+    
+    assert_response :success
+    assert_not_nil assigns(:portals)
+  end  
+  
+  test "should show portal" do
+    get :show, id: @portal.id
+    
+    assert_response :success
+    assert_not_nil assigns(:portal)
+  end 
+
+  test "should show portal with no urls" do
+    get :show, id: @portal_no_urls.id
+    
+    assert_response :success
+    assert_not_nil assigns(:portal)
+  end
+  
+  test "should show new portal form" do
+    get :new
+    
+    assert_response :success
+    assert_not_nil assigns(:portal)
+  end
+  
+  test "should create portal" do
+    assert_difference('portal.count') do
+      post :create, portal: @portal.attributes
+      assert assigns(:portal).errors.empty?, assigns(:portal).errors.full_messages
+    end
+
+    assert_redirected_to admin_portal_path(assigns(:portal))
+  end
+  
+  test "should show edit portal form" do
+    get :edit, id: @portal.id
+    
+    assert_response :success
+    assert_not_nil assigns(:portal)
+  end
+  
+  test "should update portal" do
+    patch :update, id: @portal.id, portal: { title: 'Testing2' }
+    assert_redirected_to admin_portal_path(assigns(:portal))
+  end
+  
+  test "should destroy portal" do
+    assert_difference('portal.count', -1) do
+      delete :destroy, id: @portal.id
+    end
+
+    assert_redirected_to admin_portals_path
+  end
+end

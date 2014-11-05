@@ -16,8 +16,9 @@ Rails.application.routes.draw do
 
   resources :users
   namespace :admin do
-    resources :sites
     resources :users
+    resources :sites
+    resources :portals
     resources :entry_types
   end
 
