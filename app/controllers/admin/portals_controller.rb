@@ -3,19 +3,19 @@ class Admin::PortalsController < AdminController
   load_and_authorize_resource
   
   def index
-    @portals = portal.active
+    @portals = Portal.active
   end
   
   def show
   end
 
   def new
-    @portal = portal.new
+    @portal = Portal.new
     @portal.urls.build
   end
   
   def create
-    @portal = portal.new(portal_params)
+    @portal = Portal.new(portal_params)
     
     respond_to do |format|
       if @portal.save
@@ -52,6 +52,6 @@ class Admin::PortalsController < AdminController
   end
   
   def set_portal
-    @portal = portal.find(params[:id])
+    @portal = Portal.find(params[:id])
   end
 end

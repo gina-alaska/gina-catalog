@@ -37,7 +37,7 @@ class Admin::PortalsControllerTest < ActionController::TestCase
   end
   
   test "should create portal" do
-    assert_difference('portal.count') do
+    assert_difference('Portal.count') do
       post :create, portal: @portal.attributes
       assert assigns(:portal).errors.empty?, assigns(:portal).errors.full_messages
     end
@@ -58,7 +58,7 @@ class Admin::PortalsControllerTest < ActionController::TestCase
   end
   
   test "should destroy portal" do
-    assert_difference('portal.count', -1) do
+    assert_difference('Portal.count', -1) do
       delete :destroy, id: @portal.id
     end
 
