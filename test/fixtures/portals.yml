@@ -1,9 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  title: MyString
+  title: Test Catalog
   by_line: MyString
-  acronym: MyString
+  acronym: TEST
   description: MyText
   url: MyString
   logo_uid: MyString

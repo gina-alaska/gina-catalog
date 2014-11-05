@@ -13,5 +13,12 @@ if Rails.env.development? or Rails.env.test?
   })
   s.urls.create({ url: 'catalog.192.168.222.225.xip.io', default: true }) unless s.new_record?
 
+  p = Portal.create({ 
+    title: "Catalog Development", 
+    acronym: 'gLynx', 
+    contact_email: 'support@gina.alaska.edu' 
+  })
+  p.urls.create({ url: 'catalog.192.168.222.225.xip.io', default: true }) unless p.new_record?
+  
   Contact.where(name: 'Will Fisher', email: 'will@alaska.edu').first_or_create
 end
