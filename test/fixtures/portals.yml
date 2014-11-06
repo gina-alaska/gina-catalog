@@ -11,7 +11,7 @@ one:
   analytics_account: MyString
   parent_id: 1
   lft: 1
-  rft: 1
+  rgt: 1
   depth: 1
 
 two:
@@ -25,5 +25,5 @@ two:
   analytics_account: MyString
   parent_id: 1
   lft: 1
-  rft: 1
+  rgt: 1
   depth: 1
