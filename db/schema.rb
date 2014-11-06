@@ -150,6 +150,14 @@ ActiveRecord::Schema.define(version: 20141105202916) do
     t.datetime "updated_at"
   end
 
+  create_table "entry_types", force: true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.string   "color"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "feedbacks", force: true do |t|
     t.string   "name"
     t.string   "email"

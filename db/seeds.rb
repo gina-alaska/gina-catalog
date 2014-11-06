@@ -6,7 +6,6 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 if Rails.env.development?
-
   p = Portal.create({ 
     title: "Catalog Development Portal", 
     acronym: 'gLynx Portal', 
