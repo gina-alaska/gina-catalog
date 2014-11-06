@@ -2,20 +2,20 @@
 
 one:
   entry: one
-  site: one
+  portal: one
   owner: true
 
 two:
   entry: one
-  site: two
+  portal: two
   owner: false
   
 three:
   entry: multi_owner
-  site: one
+  portal: one
   owner: true
 
 four:
   entry: multi_owner
-  site: two
+  portal: two
   owner: true
