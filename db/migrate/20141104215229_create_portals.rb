@@ -5,13 +5,12 @@ class CreatePortals < ActiveRecord::Migration
       t.string :by_line
       t.string :acronym
       t.text :description
-      t.string :url
       t.string :logo_uid
       t.string :contact_email
       t.string :analytics_account
       t.integer :parent_id
       t.integer :lft
-      t.integer :rft
+      t.integer :rgt
       t.integer :depth
 
       t.timestamps
