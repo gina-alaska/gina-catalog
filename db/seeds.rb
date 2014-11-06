@@ -6,19 +6,13 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 if Rails.env.development?
-  s = Site.create({ 
-    title: "Catalog Development", 
-    acronym: 'gLynx', 
-    contact_email: 'support@gina.alaska.edu' 
-  })
-  s.urls.create({ url: 'catalog.192.168.222.225.xip.io', default: true }) unless s.new_record?
 
   p = Portal.create({ 
-    title: "Catalog Development", 
-    acronym: 'gLynx', 
+    title: "Catalog Development Portal", 
+    acronym: 'gLynx Portal', 
     contact_email: 'support@gina.alaska.edu' 
   })
-  p.urls.create({ url: 'catalog.192.168.222.227.xip.io', default: true }) unless p.new_record?
+  p.urls.create({ url: 'catalog.192.168.222.225.xip.io', default: true }) unless p.new_record?
 
   Contact.where(name: 'Will Fisher', email: 'will@alaska.edu').first_or_create
 end
