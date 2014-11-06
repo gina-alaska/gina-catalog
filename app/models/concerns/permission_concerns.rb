@@ -3,23 +3,23 @@ module PermissionConcerns
 
   included do
     has_many :permissions do
-      def for(site)
-        where(site_id: site).first
+      def for(portal)
+        where(portal_id: portal).first
       end
     end
-    has_many :sites, through: :permissions
+    has_many :portals, through: :permissions
   end
 
-  def roles(site)
-    self.permissions.for(site).try(:roles)
+  def roles(portal)
+    self.permissions.for(portal).try(:roles)
   end
 
-  def set_roles(site, roles)
-    permission = self.permissions.where(site_id: site).first_or_initialize
+  def set_roles(portal, roles)
+    permission = self.permissions.where(portal_id: portal).first_or_initialize
     permission.update_attribute(:roles, roles)
   end
 
-  def has_role?(role, site)
-    ActiveRecord::ConnectionAdapters::Column.value_to_boolean roles(site).try(:[], role.to_s)
+  def has_role?(role, portal)
+    ActiveRecord::ConnectionAdapters::Column.value_to_boolean roles(portal).try(:[], role.to_s)
   end
 end

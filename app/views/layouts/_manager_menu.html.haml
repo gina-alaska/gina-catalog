@@ -30,7 +30,7 @@
         = link_to manager_use_agreements_path do
           %i.fa.fa-pencil
           Use Agreements
-      - if can? :manage, current_user.permissions.for(current_site)
+      - if can? :manage, current_user.permissions.for(current_portal)
         %li
           = link_to manager_permissions_path do
             %i.fa.fa-lock

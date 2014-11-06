@@ -6,7 +6,7 @@ one:
   uuid: 5e9c1347-d18f-4ec0-bf0f-c5f46d79a3a2
   message: Thank you for participating
   permission: two
-  site: one
+  portal: one
 
 two:
   name: Testing User
@@ -14,4 +14,4 @@ two:
   uuid: 5e9c1347-d18f-4ec0-bf0f-c5f46d79a3a3
   message: Wahoo
   permission: three
-  site: one
+  portal: one
