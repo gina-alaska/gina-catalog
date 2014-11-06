@@ -17,7 +17,6 @@ class Portal < ActiveRecord::Base
   validates :acronym, presence: true
   validate :single_default_url
   
-  
   accepts_nested_attributes_for :urls, allow_destroy: true, reject_if: :blank_url
  
    # validate :single_default_url
