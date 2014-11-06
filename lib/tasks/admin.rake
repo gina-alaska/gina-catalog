@@ -14,9 +14,9 @@ namespace :admin do
       exit 1
     end
     
-    Site.all.each do |site|
-      permission = user.permissions.where(site: site).first_or_initialize
-      permission.roles = { cms_manager: true, data_manager: true, site_manager: true }
+    Portal.all.each do |portal|
+      permission = user.permissions.where(portal: portal).first_or_initialize
+      permission.roles = { cms_manager: true, data_manager: true, portal_manager: true }
       permission.save
     end
     
