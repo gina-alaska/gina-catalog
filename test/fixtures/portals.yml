@@ -8,11 +8,8 @@ one:
   logo_uid: MyString
   contact_email: MyString
   analytics_account: MyString
-  parent_id: 1
-  lft: 1
-  rgt: 1
-  depth: 1
-
+  depth: 0
+  
 two:
   title: MyString
   by_line: MyString
@@ -21,7 +18,4 @@ two:
   logo_uid: MyString
   contact_email: MyString
   analytics_account: MyString
-  parent_id: 1
-  lft: 1
-  rgt: 1
-  depth: 1
+  depth: 0
