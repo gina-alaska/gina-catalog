@@ -11,12 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141103192001) do
+ActiveRecord::Schema.define(version: 20141105202916) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "postgis"
-  enable_extension "postgis_topology"
   enable_extension "hstore"
   enable_extension "uuid-ossp"
 
@@ -75,7 +73,7 @@ ActiveRecord::Schema.define(version: 20141103192001) do
   create_table "collections", force: true do |t|
     t.string   "name"
     t.string   "description"
-    t.integer  "site_id"
+    t.integer  "portal_id"
     t.boolean  "hidden"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -96,11 +94,13 @@ ActiveRecord::Schema.define(version: 20141103192001) do
     t.string   "status"
     t.string   "slug"
     t.string   "uuid"
+    t.integer  "portal_id"
     t.integer  "licence_id"
     t.datetime "archived_at"
     t.integer  "published_at"
     t.date     "start_date"
     t.date     "end_date"
+    t.integer  "owner_portal_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "use_agreement_id"
@@ -134,10 +134,18 @@ ActiveRecord::Schema.define(version: 20141103192001) do
     t.boolean  "secondary",  default: false
   end
 
-  create_table "entry_sites", force: true do |t|
+  create_table "entry_portals", force: true do |t|
+    t.integer  "portal_id"
     t.integer  "entry_id"
-    t.integer  "site_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.boolean  "owner"
+  end
+
+  create_table "entry_types", force: true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.string   "color"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -155,7 +163,7 @@ ActiveRecord::Schema.define(version: 20141103192001) do
     t.string   "email"
     t.text     "message"
     t.integer  "user_id"
-    t.integer  "site_id"
+    t.integer  "portal_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -166,9 +174,9 @@ ActiveRecord::Schema.define(version: 20141103192001) do
     t.integer  "permission_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "site_id"
     t.string   "name"
     t.uuid     "uuid",          default: "uuid_generate_v4()"
+    t.integer  "portal_id"
   end
 
   create_table "memberships", force: true do |t|
@@ -180,42 +188,41 @@ ActiveRecord::Schema.define(version: 20141103192001) do
 
   create_table "permissions", force: true do |t|
     t.integer  "user_id"
-    t.integer  "site_id"
+    t.integer  "portal_id"
     t.hstore   "roles"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "site_urls", force: true do |t|
-    t.integer  "site_id"
+  create_table "portal_urls", force: true do |t|
+    t.integer  "portal_id"
     t.string   "url"
     t.boolean  "default",    default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "sites", force: true do |t|
+  create_table "portals", force: true do |t|
     t.string   "title"
     t.string   "by_line"
     t.string   "acronym"
     t.text     "description"
-    t.string   "url"
     t.string   "logo_uid"
     t.string   "contact_email"
     t.string   "analytics_account"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.integer  "parent_id"
     t.integer  "lft"
     t.integer  "rgt"
     t.integer  "depth"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "use_agreements", force: true do |t|
     t.string   "title"
     t.text     "body"
     t.boolean  "required",   default: true
-    t.integer  "site_id"
+    t.integer  "portal_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

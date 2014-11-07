@@ -1,4 +1,4 @@
-= bootstrap_nested_form_for [:admin, @site] do |f|
+= bootstrap_nested_form_for [:admin, @portal] do |f|
   = f.alert_message "Please fix the errors below."
   
   = f.text_field :title, wrapper_class: 'required'
@@ -7,10 +7,10 @@
     .col-sm-6.col-md-6.col-lg-6
       = f.text_field :acronym, wrapper_class: 'required'
     .col-sm-6.col-md-6.col-lg-6
-      = f.collection_select :parent_id, (Site.active - @site.self_and_descendants), :id, :title, prompt: 'Select a parent portal'
+      = f.collection_select :parent_id, (Portal.active - @portal.self_and_descendants), :id, :title, prompt: 'Select a parent portal'
   
   = f.link_to_add "New url", :urls, data: { target: '#url-form-body' }, class: 'pull-right btn btn-success'
-  %h3 Site Urls
+  %h3 Portal Urls
 
   %table.table.table-bordered.table-striped.table-condensed.form-inline
     %thead

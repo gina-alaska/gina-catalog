@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class SiteTest < ActiveSupport::TestCase
+class PortalTest < ActiveSupport::TestCase
   should validate_presence_of(:title)
   should validate_presence_of(:acronym)
   
@@ -9,10 +9,10 @@ class SiteTest < ActiveSupport::TestCase
   should accept_nested_attributes_for(:urls).allow_destroy(true)
   
   def setup
-    @site = sites(:one)
+    @portal = portals(:one)
   end
   
   test "default_url should return the default url" do
-    assert_equal @site.default_url.url, 'catalog.192.168.222.225.xip.io'
+    assert_equal @portal.default_url.url, 'catalog.192.168.222.225.xip.io'
   end
 end

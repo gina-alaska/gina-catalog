@@ -4,7 +4,7 @@ class CreateUseAgreements < ActiveRecord::Migration
       t.string :title
       t.text :body
       t.boolean :required, default: true
-      t.integer :site_id
+      t.integer :portal_id
 
       t.timestamps
     end

@@ -4,10 +4,10 @@ one:
   title: MyString
   body: MyText
   required: false
-  site_id: 1
+  portal_id: 1
 
 two:
   title: MyString
   body: MyText
   required: false
-  site_id: 1
+  portal_id: 1

@@ -1,22 +1,21 @@
-class Site < ActiveRecord::Base
+class Portal < ActiveRecord::Base
   acts_as_nested_set  
   
-  has_many :urls, class_name: 'SiteUrl'
-  has_one :default_url, -> { where default: true }, class_name: 'SiteUrl'
+  has_many :urls, class_name: 'PortalUrl'
+  has_one :default_url, -> { where default: true }, class_name: 'PortalUrl'
   
   has_many :permissions
   has_many :invitations
   has_many :users, through: :permissions
   
-  has_many :entry_sites
-  has_many :entries, through: :entry_sites
+  has_many :entry_portals
+  has_many :entries, through: :entry_portals
   
   scope :active, -> { }
   
   validates :title, presence: true
   validates :acronym, presence: true
   validate :single_default_url
-  
   
   accepts_nested_attributes_for :urls, allow_destroy: true, reject_if: :blank_url
  

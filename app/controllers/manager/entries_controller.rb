@@ -2,7 +2,7 @@ class Manager::EntriesController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @entries = Entry.joins(:entry_sites).where(entry_sites: { site_id: current_site.self_and_descendants })
+    @entries = Entry.joins(:entry_portals).where(entry_portals: { portal_id: current_portal.self_and_descendants })
   end
 
   def show
@@ -15,7 +15,7 @@ class Manager::EntriesController < ApplicationController
   end
 
   def create
-    @entry.sites << current_site
+    @entry.portals << current_portal
     respond_to do |format|
       if @entry.save
         flash[:success] = "Catalog record #{@entry.title} was successfully created."

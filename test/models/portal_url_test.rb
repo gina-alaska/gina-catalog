@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class EntrySiteTest < ActiveSupport::TestCase
+class PortalUrlTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
