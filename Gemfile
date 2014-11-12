@@ -60,7 +60,9 @@ gem 'acts-as-taggable-on', '~> 3.4'
 group :development do
   gem "better_errors"
   gem "binding_of_caller"
-  gem 'railroady'
+  gem "rails-erd"
+  gem "guard"
+  gem 'guard-minitest'
 end
 
 group :test do

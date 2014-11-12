@@ -1,12 +1,12 @@
 class WelcomeController < ApplicationController
-  skip_before_action :check_current_site, only: [:site_not_found]
+  skip_before_action :check_current_portal, only: [:portal_not_found]
   
   def index
     
   end
   
-  def site_not_found
-    unless current_site.nil?
+  def portal_not_found
+    unless current_portal.nil?
       redirect_to root_url
     end
   end

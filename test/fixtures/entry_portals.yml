@@ -1,0 +1,22 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  entry: one
+  portal: one
+  owner: true
+
+two:
+  entry: one
+  portal: two
+  owner: false
+  
+three:
+  entry: multi_owner
+  portal: one
+  owner: true
+
+four:
+  entry: multi_owner
+  portal: two
+  owner: true
+

@@ -1,7 +1,7 @@
 class Ability
   include CanCan::Ability
 
-  def initialize(user, site)
+  def initialize(user, portal)
     # Define abilities for the passed in user here. For example:
     #
     #   user ||= User.new # guest user (not logged in)
@@ -32,15 +32,16 @@ class Ability
     user ||= User.new
     
     if user.global_admin?
-      can :manage, Site
+      can :manage, Portal
       can :manage, User
+      can :manage, EntryType      
     end
-    
-    if user.has_role?(:cms_manager, site)
+
+    if user.has_role?(:cms_manager, portal)
       can :view_manager_menu, User
     end
-    
-    if user.has_role?(:data_manager, site)
+
+    if user.has_role?(:data_manager, portal)
       can :view_manager_menu, User
       
       can :manage, Agency
@@ -48,20 +49,20 @@ class Ability
       can :manage, UseAgreement
       can :manage, Collection
       can :manage, Entry do |entry|
-        entry.new_record? or entry.owner_site == site
+        entry.new_record? or entry.owner_portal == portal
       end
-    end
-    
-    if user.has_role?(:site_manager, site)
+    end    
+
+    if user.has_role?(:portal_manager, portal)
       can :view_manager_menu, User
       
       can :manage, Permission do |permission|
-        permission.new_record? or permission.site == site
+        permission.new_record? or permission.portal == portal
       end
       can :manage, Invitation do |invitation|
-        invitation.new_record? or invitation.site == site
+        invitation.new_record? or invitation.portal == portal
       end
     end
-        
+           
   end
 end

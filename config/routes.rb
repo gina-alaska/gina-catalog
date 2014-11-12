@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   get '/logout', to: 'sessions#destroy'
   get '/login', to: 'sessions#new'
   get '/auth/:provider/disable', to: 'users#disable_provider'
@@ -8,15 +9,16 @@ Rails.application.routes.draw do
 
   get '/admin' => 'admin/dashboard#index', as: :admin
   get '/manager' => 'manager/dashboard#index', as: :manager
-  get '/site_not_found' => 'welcome#site_not_found', as: :site_not_found
+  get '/portal_not_found' => 'welcome#portal_not_found', as: :portal_not_found
 
   resources :sessions
   resources :memberships
 
   resources :users
   namespace :admin do
-    resources :sites
     resources :users
+    resources :portals
+    resources :entry_types
   end
 
   namespace :manager do
@@ -59,7 +61,7 @@ Rails.application.routes.draw do
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
-  # You can have the root of your site routed with "root"
+  # You can have the root of your portal routed with "root"
   root 'welcome#index'
 
   # Example of regular route:

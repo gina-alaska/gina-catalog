@@ -1,0 +1,7 @@
+%h2= @portal.title
+
+- if can?(:wahoo, Portal)
+  You have access to this portal!
+
+= link_to edit_admin_portal_path(@portal), class: 'btn btn-primary' do
+  Edit 

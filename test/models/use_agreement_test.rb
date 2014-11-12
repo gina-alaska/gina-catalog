@@ -6,6 +6,6 @@ class UseAgreementTest < ActiveSupport::TestCase
   should validate_presence_of(:title)
   should validate_presence_of(:body)
 
-  should belong_to(:site)
+  should belong_to(:portal)
   should have_many(:entries)
 end

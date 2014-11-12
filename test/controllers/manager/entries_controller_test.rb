@@ -51,8 +51,8 @@ class Manager::EntriesControllerTest < ActionController::TestCase
     assert_redirected_to manager_entries_path
   end
 
-  test "update should fail if updating editing from site other than owner site" do
-    request.host = sites(:two).default_url.url
+  test "update should fail if updating editing from portal other than owner portal" do
+    request.host = portals(:two).default_url.url
     patch :update, id: @entry.id, entry: { name: 'Testing2' }
     assert_equal flash[:alert], "You are not authorized to access this page."   
     assert_redirected_to root_path

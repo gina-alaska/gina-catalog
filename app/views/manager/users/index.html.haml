@@ -14,5 +14,5 @@
       - @users.each do |user|
         %tr
           %td
-            = link_to user, edit_manager_permission_path(user.permissions.find_by(site: current_site))
+            = link_to user, edit_manager_permission_path(user.permissions.find_by(portal: current_portal))
           %td

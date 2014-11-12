@@ -2,37 +2,37 @@
 
 one:
   user: one
-  site: one
+  portal: one
   roles: 
     cms_manager: true
     data_manager: true
-    site_manager: true
+    portal_manager: true
 
 two:
-  site: one
+  portal: one
   roles: 
     cms_manager: true
     data_manager: false
-    site_manager: false
+    portal_manager: false
     
 three:
-  site: one
+  portal: one
   roles: 
     cms_manager: false
     data_manager: true
-    site_manager: false
+    portal_manager: false
         
 four:
-  site: one
+  portal: one
   roles: 
     cms_manager: false
     data_manager: false
-    site_manager: true
+    portal_manager: true
                 
 portal_permission:
   user: portal_admin
-  site: one
+  portal: one
   roles: 
     cms_manager: true
     data_manager: true
-    site_manager: true
+    portal_manager: true

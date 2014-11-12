@@ -2,7 +2,7 @@ require 'test_helper'
 
 class Manager::InvitationsControllerTest < ActionController::TestCase
   def setup
-    request.host = sites(:one).urls.first.url
+    request.host = portals(:one).urls.first.url
     
     @invitation = invitations(:two)
     @permission = permissions(:one)
@@ -30,7 +30,7 @@ class Manager::InvitationsControllerTest < ActionController::TestCase
     get :accept, id: @invitation
 
     assert_equal @user.email, @invitation.email
-    assert_equal "You have been granted access to #{@permission.site.title}", flash[:notice]
+    assert_equal "You have been granted access to #{@permission.portal.title}", flash[:notice]
     assert_redirected_to manager_path
   end
   

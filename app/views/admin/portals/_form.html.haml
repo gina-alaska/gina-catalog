@@ -1,0 +1,32 @@
+= bootstrap_nested_form_for [:admin, @portal] do |f|
+  = f.alert_message "Please fix the errors below."
+  
+  = f.text_field :title, wrapper_class: 'required'
+  
+  .row
+    .col-sm-6.col-md-6.col-lg-6
+      = f.text_field :acronym, wrapper_class: 'required'
+    .col-sm-6.col-md-6.col-lg-6
+      = f.collection_select :parent_id, (Portal.active - @portal.self_and_descendants), :id, :title, prompt: 'Select a parent portal'
+  
+  = f.link_to_add "New url", :urls, data: { target: '#url-form-body' }, class: 'pull-right btn btn-success'
+  %h3 Portal Urls
+
+  %table.table.table-bordered.table-striped.table-condensed.form-inline
+    %thead
+      %tr
+        %th URL
+        %th Default?
+    %tbody#url-form-body.nested-form-fields
+      = f.fields_for :urls, wrapper: false do |url_form|
+        %tr
+          %td= url_form.text_field :url, hide_label: true
+          %td
+            = url_form.check_box :default, hide_label: true
+  
+  .pull-right
+    = link_to :back, class: 'btn btn-default' do
+      %i.fa.fa-arrow-left
+      Cancel
+      
+    = f.primary

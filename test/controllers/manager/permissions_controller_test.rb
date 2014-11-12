@@ -2,7 +2,7 @@ require 'test_helper'
 
 class Manager::PermissionsControllerTest < ActionController::TestCase
   def setup
-    request.host = sites(:one).urls.first.url
+    request.host = portals(:one).urls.first.url
     
     @permission = permissions(:one)
     @user = users(:one)

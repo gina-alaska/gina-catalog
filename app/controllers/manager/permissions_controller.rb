@@ -3,17 +3,17 @@ class Manager::PermissionsController < ManagerController
   load_and_authorize_resource
 
   def index
-    @permissions = current_site.permissions.where.not(user_id: nil)
-    @invitations = current_site.invitations
+    @permissions = current_portal.permissions.where.not(user_id: nil)
+    @invitations = current_portal.invitations
   end
 
   def new
     @user = User.find(params[:user_id])
-    @permission = current_site.permissions.build(user: @user)
+    @permission = current_portal.permissions.build(user: @user)
   end
 
   def create
-    @permission = current_site.permissions.build(permission_params)
+    @permission = current_portal.permissions.build(permission_params)
 
     respond_to do |format|
       if @permission.save
@@ -75,6 +75,6 @@ class Manager::PermissionsController < ManagerController
   end
 
   def fetch_permission
-    @permission = Permission.where(id: params[:id], site: current_site).first if params[:id].present?
+    @permission = Permission.where(id: params[:id], portal: current_portal).first if params[:id].present?
   end
 end

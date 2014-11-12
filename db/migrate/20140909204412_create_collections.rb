@@ -3,7 +3,7 @@ class CreateCollections < ActiveRecord::Migration
     create_table :collections do |t|
       t.string :name
       t.string :description
-      t.integer :site_id
+      t.integer :portal_id
       t.boolean :hidden
 
       t.timestamps

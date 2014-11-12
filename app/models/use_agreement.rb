@@ -1,5 +1,5 @@
 class UseAgreement < ActiveRecord::Base
-  belongs_to :site
+  belongs_to :portal
   has_many :entries
 
   validates_presence_of :title

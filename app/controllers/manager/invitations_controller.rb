@@ -8,7 +8,7 @@ class Manager::InvitationsController < ManagerController
   end
   
   def new
-    @invitation = current_site.invitations.build
+    @invitation = current_portal.invitations.build
     @invitation.build_permission
   end
   
@@ -24,23 +24,23 @@ class Manager::InvitationsController < ManagerController
       if @permission.save
         @invitation.destroy
         
-        redirect_to manager_path, notice: "You have been granted access to #{current_site.title}"
+        redirect_to manager_path, notice: "You have been granted access to #{current_portal.title}"
       else
         flash[:error] = "An error was encountered while trying to accept the invitation, please email the administrator to resolve this problem"
         redirect_to root_path
       end
     else
-      flash[:error] = "The email address associated with this account does not match the invitation address.  We are unable to give you access to #{current_site.title}"
+      flash[:error] = "The email address associated with this account does not match the invitation address.  We are unable to give you access to #{current_portal.title}"
       redirect_to root_path
     end
   end
   
   def create
-    @invitation = current_site.invitations.build(invitation_params)
+    @invitation = current_portal.invitations.build(invitation_params)
     
     respond_to do |format|
       if @invitation.save
-        @invitation.permission.update_attribute(:site, current_site)
+        @invitation.permission.update_attribute(:portal, current_portal)
         InvitationMailer.invite_email(@invitation).deliver
         
         format.html {
@@ -61,7 +61,7 @@ class Manager::InvitationsController < ManagerController
   def update
     respond_to do |format|
       if @invitation.update_attributes(invitation_params)
-        @invitation.permission.update_attribute(:site, current_site)
+        @invitation.permission.update_attribute(:portal, current_portal)
         InvitationMailer.invite_email(@invitation).deliver
         
         format.html {

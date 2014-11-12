@@ -5,7 +5,7 @@ class CreateFeedbacks < ActiveRecord::Migration
       t.string :email
       t.text :message
       t.integer :user_id
-      t.integer :site_id
+      t.integer :portal_id
 
       t.timestamps
     end

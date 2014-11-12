@@ -29,7 +29,7 @@ class Manager::AgenciesController < ManagerController
 
   def create
     @agency = Agency.new(agency_params)
-    # TODO: make sure that agencies do not need to be associated with sites. 
+    # TODO: make sure that agencies do not need to be associated with portals. 
 
     respond_to do |format|
       if @agency.save
