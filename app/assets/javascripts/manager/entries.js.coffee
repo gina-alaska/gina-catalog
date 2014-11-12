@@ -12,7 +12,6 @@ $(document).on 'page:change', ->
       data = []
       $(element.val().split(",")).each ->
         data.push(id: this.trim(), name: this.trim())
-      console.log(data)
       callback(data)
 
     createSearchChoice: (term, data) ->
