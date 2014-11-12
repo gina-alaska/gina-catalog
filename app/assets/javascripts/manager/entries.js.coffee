@@ -11,7 +11,8 @@ $(document).on 'page:change', ->
     initSelection: (element, callback) ->
       data = []
       $(element.val().split(",")).each ->
-        data.push(id: this, name: this)
+        data.push(id: this.trim(), name: this.trim())
+      console.log(data)
       callback(data)
 
     createSearchChoice: (term, data) ->
