@@ -49,9 +49,16 @@ class Manager::EntriesController < ApplicationController
       format.json { head :no_content }
     end
   end
-  
+
+  def tags
+    @tags = Entry.all_tags
+    if params[:q].present?
+      @tags = @tags.where('name ilike ?', "%#{params[:q]}%").order(:name)
+    end
+  end
+
   protected
-  
+
   def entry_params
     params.require(:entry).permit(:title, :description, :status, :start_date, :end_date, :use_agreement_id, :request_contact_info, :require_contact_info, :tag_list, entry_contacts_attributes: [:id, :contact_id, :primary, :secondary, :_destroy], entry_agencies_attributes: [:id, :agency_id, :primary, :funding, :_destroy])
   end

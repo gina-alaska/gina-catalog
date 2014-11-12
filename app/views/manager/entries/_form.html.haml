@@ -29,7 +29,10 @@
           = f.fields_for :entry_contacts, wrapper: false
 
     #tags.tab-pane
-      = render "tag_fields", f: f
+      .row
+        .col-sm-10
+          = f.hidden_field :tag_list, data: { name: 'tag', target: 'select2-choice', url: tags_manager_entries_path }, id: 'select-two', class: 'col-sm-12'
+      %br
 
     #agencies.tab-pane
       .row

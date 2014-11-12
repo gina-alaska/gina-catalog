@@ -1,1 +1,7 @@
-= f.select :tag_list, Entry.all_tags.pluck(:name)
+%tr
+  %td
+    = tag.name
+  %td
+    = tag.color
+  %td
+    = tag.description
