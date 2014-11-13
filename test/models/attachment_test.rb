@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class AttachmentTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  should ensure_length_of(:description).is_at_most(255)
+
+  should belong_to(:entries)
 end
