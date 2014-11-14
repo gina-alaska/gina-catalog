@@ -1,7 +1,7 @@
-= f.hidden_field :retained_file
-= f.hidden_field :exists, value: !f.object.new_record?
-.row
-  .span4
+%tr.fields
+  = f.hidden_field :retained_file
+  = f.hidden_field :exists, value: !f.object.new_record?
+  %td
     .fileupload.fileupload-new{data:{provides:'fileupload'}}
       - if f.object.new_record?
         .fileupload-preview
@@ -9,13 +9,13 @@
           %span.fileupload-new
             Select file
           %span.fileupload-exists Change
-          = f.file_field :file
+          = f.file_field :file, layout: :inline
         %a.btn.fileupload-exists{href:'#',data:{dismiss:'fileupload'}} Reset
       - else
         = "#{f.object.file.name} (#{number_to_human_size f.object.file.size})"
-  .span3
-    = f.text_field :description, class: "span12"
-  .span4
-    = f.select :interaction, Attachment::INTERACTIONS
-  .span1.actions
+  %td
+    = f.text_field :description, layout: :inline
+  %td
+    = f.select :interaction, Attachment::INTERACTIONS, layout: :inline
+  %td
     = f.link_to_remove "Delete", layout: :inline, class: "btn btn-danger"
