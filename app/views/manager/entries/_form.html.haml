@@ -1,5 +1,5 @@
 %ul.nav.nav-tabs
-  - sections = %w{ general contacts agencies tags sds }
+  - sections = %w{ general contacts agencies tags attachments sds }
   - sections.each do |section|
     %li{class: (section == sections.first ? 'active' : '')}
       = link_to section.humanize, "##{section}", data: { toggle: 'tab' }
@@ -28,12 +28,6 @@
         %tbody#contact_fields.form-inline
           = f.fields_for :entry_contacts, wrapper: false
 
-    #tags.tab-pane
-      .row
-        .col-sm-10
-          = f.hidden_field :tag_list, data: { name: 'tag', target: 'select2-choice', url: tags_manager_entries_path }, id: 'select-two', class: 'col-sm-12'
-      %br
-
     #agencies.tab-pane
       .row
         .col-sm-10
@@ -52,6 +46,29 @@
         %tbody#agency_fields.form-inline
           = f.fields_for :entry_agencies, wrapper: false
 
+    #tags.tab-pane
+      .row
+        .col-sm-10
+          = f.hidden_field :tag_list, data: { name: 'tag', target: 'select2-choice', url: tags_manager_entries_path }, id: 'select-two', class: 'col-sm-12'
+      %br
+      
+    #attachments.tab-pane
+      .row
+        .col-sm-10
+          Attachments
+        .col-sm-2
+          = f.link_to_add :attachments, :data => { :target => "#attachment_fields" }, class: "btn btn-info btn-block disabled" do
+            %i.fa.fa-plus
+            Attach new file
+      %table.table.table-striped
+        %thead
+          %tr
+            %th.col-sm-6 File Name
+            %th Description
+            %th.actions Actions
+        %tbody#attachment_fields.form-inline
+          = f.fields_for :attachments, wrapper: false
+      
     #sds.tab-pane
       = render "sds_fields", f: f
 
