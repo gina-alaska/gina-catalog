@@ -9,9 +9,11 @@ class Manager::EntriesController < ApplicationController
   end
 
   def new
+    @entry.attachments.build
   end
 
   def edit
+    @entry.attachments.build
   end
 
   def create
