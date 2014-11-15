@@ -2,20 +2,19 @@
   = f.hidden_field :retained_file
   = f.hidden_field :exists, value: !f.object.new_record?
   %td
-    .fileupload.fileupload-new{data:{provides:'fileupload'}}
+    .fileinput.fileinput-new{data:{provides:'fileinput'}}
       - if f.object.new_record?
-        .fileupload-preview
-        %span.btn.btn-file
-          %span.fileupload-new
-            Select file
-          %span.fileupload-exists Change
-          = f.file_field :file, layout: :inline
-        %a.btn.fileupload-exists{href:'#',data:{dismiss:'fileupload'}} Reset
+        %span.btn.btn-default.btn-file
+          %span.fileinput-new Select file
+          %span.fileinput-exists Change
+          = f.file_field_without_bootstrap :file, hide_label: true
+        %span.fileinput-filename
+        %a.close.fileinput-exists{href:'#',style:{float:'none'},data:{dismiss:'fileinput'}} &times;
       - else
         = "#{f.object.file.name} (#{number_to_human_size f.object.file.size})"
   %td
-    = f.text_field :description, layout: :inline
+    = f.text_field :description, hide_label: true, layout: :inline
   %td
-    = f.select :interaction, Attachment::INTERACTIONS, layout: :inline
+    = f.select :interaction, Attachment::INTERACTIONS, hide_label: true, layout: :inline
   %td
-    = f.link_to_remove "Delete", layout: :inline, class: "btn btn-danger"
+    = f.link_to_remove('<i class="fa fa-trash"></i>'.html_safe, layout: :inline, class: 'btn btn-danger')
