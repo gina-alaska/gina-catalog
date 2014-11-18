@@ -17,7 +17,7 @@
 //= require typeahead.js/dist/typeahead.bundle
 //= require jquery_nested_form
 //= require moment/moment.js
-//= require jasny-bootstrap/dist/js/jasny-bootstrap
+//= require jasny-bootstrap/dist/js/jasny-bootstrap.js
 //= require eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js
 //= require select2/select2.js
 //= require turbolinks

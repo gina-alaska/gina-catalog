@@ -6,6 +6,7 @@ class EntryTest < ActiveSupport::TestCase
     @multiowners = entries(:multi_owner)
   end
   
+  should have_many(:attachments)
   should have_many(:entry_contacts)
   should have_many(:contacts).through(:entry_contacts)
   should have_many(:entry_aliases)
