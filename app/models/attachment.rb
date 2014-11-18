@@ -11,7 +11,7 @@ class Attachment < ActiveRecord::Base
   scope :downloadable, -> { where(interaction: "Downloadable") }
   scope :previewable, -> { where(interaction: "Previewable") }
 
-  #before_create :create_uuid
+  before_create :create_uuid
 
   def create_uuid
     self.uuid = UUIDTools::UUID.md5_create(UUIDTools::UUID_URL_NAMESPACE, self.file_uid).to_s
