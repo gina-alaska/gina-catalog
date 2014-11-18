@@ -1,6 +1,4 @@
 %tr.fields
-  = f.hidden_field :retained_file
-  = f.hidden_field :exists, value: !f.object.new_record?
   %td
     .fileinput.fileinput-new{data:{provides:'fileinput'}}
       - if f.object.new_record?
@@ -13,7 +11,7 @@
       - else
         = "#{f.object.file.name} (#{number_to_human_size f.object.file.size})"
   %td
-    = f.text_field :description, hide_label: true, layout: :inline
+    = f.text_field :description, hide_label: true, layout: :inline, style: "width: 360px;"
   %td
     = f.select :interaction, Attachment::INTERACTIONS, hide_label: true, layout: :inline
   %td
