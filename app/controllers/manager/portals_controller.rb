@@ -3,6 +3,7 @@ class Manager::PortalsController < ApplicationController
   end
 
   def edit
+    @portal = current_portal
   end
 
   def update
