@@ -1,11 +1,11 @@
 %tr
-  %td{ class: 'col-lg-3 col-md-3' }
+  %td
     = agency.name
-  %td{ class: 'col-lg-3 col-md-3' }
+  %td
     = agency.acronym
-  %td{ class: 'col-lg-4 col-md-4' }
+  %td
     = agency.description
-  %td{ class: 'col-lg-1 col-md-1' }
+  %td
     = link_to manager_agency_path(agency), class: 'btn btn-sm btn-primary', title: 'Show' do
       %i.fa.fa-file-text
     = link_to edit_manager_agency_path(agency), class: 'btn btn-sm btn-primary', title: 'Edit' do
