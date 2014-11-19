@@ -1,0 +1,82 @@
+- projections = [["Alaskan Albers","EPSG:3338"],["Polar", "EPSG:3572"],["Web Mercator", "EPSG:3857"]]
+- location_projections = [["Alaskan Albers","EPSG:3338"],["Polar", "EPSG:3572"]]
+= bootstrap_form_for @portal, url: manager_portal_path, layout: :horizontal, html: { multipart: true } do |f|
+  - if @portal.errors.any?
+    #error_explanation.alert.alert-error
+      %h4
+        = pluralize(@portal.errors.count, "error")
+        prohibited this portal from being saved:
+      %ul
+        - @portal.errors.full_messages.each do |msg|
+          %li= msg
+          
+  %ul.nav.nav-tabs{ style: 'padding-left: 10px; margin-bottom: 3px;' }
+    %li.active
+      %a{ href: '#setup_information', data: { toggle: 'tab' } } Site Information
+    %li
+      %a{ href: '#maps', data: { toggle: 'tab' } } Map Projections
+    %li
+      %a{ href: '#social', data: { toggle: 'tab' } } Social Links
+    %li
+      %a{ href: '#favicon', data: { toggle: 'tab' } } Favicon
+
+  .tab-content.content
+    #setup_information.tab-pane.active
+      = f.text_field :title, class: 'span12'
+      = f.text_field :acronym, class: 'span12'
+      = f.text_field :by_line, class: 'span12'
+      = f.text_field :contact_email, class: 'span12'
+      //    = f.text_area :default_invite, rows: 4, cols: 40, class: 'span12'
+      = f.text_field :analytics_account, label: "Google analytics", class: 'span12'
+      //    = f.check_box :use_recaptcha, {}, "true", "false"
+      = f.text_field :description, class: 'span12'
+      //    = f.text_field :keywords, class: 'span12'
+
+    #maps.tab-pane
+      //    = f.select :projection, options_for_select(projections, @current_setup.projection), class: 'span12'
+      //    = f.select :record_projection, options_for_select(projections, @current_setup.record_projection), { include_blank: true }
+      //    = f.select :location_projection, options_for_select(location_projections, @current_setup.location_projection)
+      //    = f.check_box :google_layers, {}, "true", "false"
+
+    #social.tab-pane
+      //    = f.text_field :facebook_url, class: 'span12'
+      //    = f.text_field :github_url, class: 'span12'
+      //    = f.text_field :google_plus_url, class: 'span12'
+      //    = f.text_field :instagram_url, class: 'span12'
+      //    = f.text_field :linkedin_url, class: 'span12'
+      //    = f.text_field :tumblr_url, class: 'span12'
+      //    = f.text_field :twitter_url, class: 'span12'
+      //    = f.text_field :youtube_url, class: 'span12'
+
+    #favicon.tab-pane
+      #logo.tab-pane
+        //.fileupload{ class: (current_setup.favicon.new_record? ? 'fileupload-new' : 'fileupload-exists'), data: { provides: 'fileupload' } }
+        //  .fileupload-preview.thumbnail.fileupload-exists{style:'width: 200px; min-height: 50px;'}
+        //    - if current_setup.favicon.image.nil?
+        //      No Favicon
+        //    -else
+        //      = image_tag current_setup.favicon.image.encode(:png).thumb('200x200').url
+        //  %div
+        //    %span.btn.btn-file
+        //      %span.fileupload-new Select image
+        //      %span.fileupload-exists Change
+        //      = f.fields_for :favicon do |attachment|
+        //        = attachment.hidden_field :_destroy, value: 0
+        //        = attachment.file_field :image
+        //    %a.btn.fileupload-exists{href: "#", data: { dismiss: "fileupload" }} Remove
+        %p Note:  Only use .png or .ico images for the favicon.
+
+  .form-actions
+    = link_to manager_portal_path, class: 'btn' do
+      %i.icon-arrow-left
+      Back
+    = f.submit class: 'btn btn-primary pull-right'
+:javascript
+  $('[data-dismiss="fileupload"]').on('click', function() {
+    $('#setup_favicon_attributes__destroy').val(1);
+  })
+  $('#setup_favicon_attributes_image').on('change', function() {
+    if ($(this).val() != '') {
+      $('#setup_favicon_attributes__destroy').val(0);
+    }
+  })
