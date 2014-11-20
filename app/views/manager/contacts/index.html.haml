@@ -10,10 +10,10 @@
   %table.table.table-striped.table-condensed
     %thead
       %tr
-        %th Name
-        %th Job Title
-        %th Email
-        %th Phone
-        %th actions
+        %th.col-lg-3.col-md-3 Name
+        %th.col-lg-3.col-md-3 Job Title
+        %th.col-lg-3.col-md-3 Email
+        %th.col-lg-2.col-md-2 Phone
+        %th.col-lg-1.col-md-1 Actions
     %tbody
       = render(partial: "contact_row", collection: @contacts, as: :contact) || "<tr><td colspan=\"5\">There are no contacts available</td></tr>".html_safe
