@@ -34,7 +34,6 @@ $(document).on 'page:change', ->
 $(document).on 'page:change', ->
   $("#select2-collection").select2
     multiple: true
-    tokenSeparators: [","," "]
     placeholder: "search for a collection"
     minimumInputLength: 1
     initSelection: (element, callback) ->
@@ -42,13 +41,6 @@ $(document).on 'page:change', ->
       $(element.val().split(",")).each ->
         data.push(id: this.trim(), name: this.trim())
       callback(data)
-
-    createSearchChoice: (term, data) ->
-      if $(data).filter(->
-        this.name.localeCompare(term) is 0
-      ).length is 0
-        id: term,
-        name: term
 
     ajax:
       url: -> $(this).data('url')

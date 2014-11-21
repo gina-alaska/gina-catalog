@@ -69,6 +69,6 @@ class Manager::EntriesController < ApplicationController
   protected
 
   def entry_params
-    params.require(:entry).permit(:title, :description, :status, :entry_type_id, :start_date, :end_date, :use_agreement_id, :request_contact_info, :require_contact_info, :tag_list, attachments_attributes: [:id, :file, :description, :interaction, :_destroy], collections: [:id], entry_contacts_attributes: [:id, :contact_id, :primary, :secondary, :_destroy], entry_agencies_attributes: [:id, :agency_id, :primary, :funding, :_destroy])
+    params.require(:entry).permit(:title, :description, :status, :entry_type_id, :start_date, :end_date, :use_agreement_id, :request_contact_info, :require_contact_info, :tag_list, attachments_attributes: [:id, :file, :description, :interaction, :_destroy], entry_collections: [:id], entry_contacts_attributes: [:id, :contact_id, :primary, :secondary, :_destroy], entry_agencies_attributes: [:id, :agency_id, :primary, :funding, :_destroy])
   end
 end

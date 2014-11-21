@@ -38,6 +38,7 @@ class Entry < ActiveRecord::Base
   validates :status, presence: true
   validates :entry_type_id, presence: true
 
+  accepts_nested_attributes_for :entry_collections, allow_destroy: true
   accepts_nested_attributes_for :entry_contacts, allow_destroy: true
   accepts_nested_attributes_for :entry_agencies, allow_destroy: true
   accepts_nested_attributes_for :attachments, allow_destroy: true, reject_if: proc { |attachment| attachment['file'].blank? }
