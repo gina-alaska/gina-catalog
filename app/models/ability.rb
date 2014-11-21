@@ -55,6 +55,9 @@ class Ability
 
     if user.has_role?(:portal_manager, portal)
       can :view_manager_menu, User
+      can :manage, Portal
+      cannot :destroy, Portal
+      cannot :create, Portal
       
       can :manage, Permission do |permission|
         permission.new_record? or permission.portal == portal
