@@ -1,17 +1,5 @@
 Rails.application.routes.draw do
 
-  namespace :manager do
-  get 'portals/show'
-  end
-
-  namespace :manager do
-  get 'portals/edit'
-  end
-
-  namespace :manager do
-  get 'portals/update'
-  end
-
   get '/logout', to: 'sessions#destroy'
   get '/login', to: 'sessions#new'
   get '/auth/:provider/disable', to: 'users#disable_provider'
