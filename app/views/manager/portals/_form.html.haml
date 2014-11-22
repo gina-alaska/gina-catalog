@@ -67,9 +67,9 @@
         %p Note:  Only use .png or .ico images for the favicon.
 
   .form-actions
-    = link_to manager_portal_path, class: 'btn' do
+    = link_to manager_portal_path, class: 'btn btn-default' do
       %i.icon-arrow-left
-      Back
+      Cancel
     = f.submit class: 'btn btn-primary pull-right'
 :javascript
   $('[data-dismiss="fileupload"]').on('click', function() {
