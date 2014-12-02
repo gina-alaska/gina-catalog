@@ -1,0 +1,2 @@
+module Manager::PortalsHelper
+end

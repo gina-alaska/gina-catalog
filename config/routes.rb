@@ -22,6 +22,8 @@ Rails.application.routes.draw do
   end
 
   namespace :manager do
+    resource :portal
+    
     resources :users do
       get :autocomplete, on: :collection
     end
@@ -34,7 +36,7 @@ Rails.application.routes.draw do
 
     resources :permissions
 
-    resources :invitations do 
+    resources :invitations do
       member do
         patch :resend
         get :accept
@@ -54,10 +56,10 @@ Rails.application.routes.draw do
         get :search
       end
     end
-    
+
     resources :collections
   end
-  
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

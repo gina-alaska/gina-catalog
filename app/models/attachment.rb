@@ -13,6 +13,8 @@ class Attachment < ActiveRecord::Base
 
   before_create :create_uuid
 
+  validates :description, length: { maximum: 255 }
+
   def create_uuid
     self.uuid = UUIDTools::UUID.md5_create(UUIDTools::UUID_URL_NAMESPACE, self.file_uid).to_s
   end
