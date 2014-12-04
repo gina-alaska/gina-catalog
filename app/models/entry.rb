@@ -16,6 +16,7 @@ class Entry < ActiveRecord::Base
   has_many :secondary_contacts, through: :secondary_entry_contacts, class_name: "Contact", source: :contact
 
   has_many :entry_aliases
+  has_many :downloads
 
   has_many :entry_agencies
   has_many :agencies, through: :entry_agencies
