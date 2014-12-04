@@ -8,6 +8,7 @@ class UserTest < ActiveSupport::TestCase
   should have_many(:authorizations)
   should have_many(:permissions)
   should have_many(:portals).through(:permissions)
+  should have_many(:activity_logs)
 
   test "user should have all manager privs for portal one"  do
     @user = users(:one)
