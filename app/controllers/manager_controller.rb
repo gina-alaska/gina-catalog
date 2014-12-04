@@ -28,6 +28,13 @@ class ManagerController < ApplicationController
     }
   end
 
+  def links
+    @page = params[:page] || 1
+    @bad_links = Link.where(valid_link: false, asset_type: 'Catalog').order("last_checked_at DESC")
+    @total = @bad_links.count
+    @bad_links = @bad_links.page(@page).per(30)
+  end
+
   protected
   
   def fetch_cms_pages

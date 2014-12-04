@@ -101,6 +101,7 @@ NSCatalog::Application.routes.draw do
   match '/manager' => 'manager#dashboard', as: 'manager'
 #  match '/search' => 'search#search', as: 'search'
   match '/manager/full_contact' => 'manager/contact_infos#full_contact'
+  match '/manager/links' => 'manager#links'
 
   resources :map_layers
 
