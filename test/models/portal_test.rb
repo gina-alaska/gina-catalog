@@ -5,6 +5,7 @@ class PortalTest < ActiveSupport::TestCase
   should validate_presence_of(:acronym)
   
   should have_many(:urls)
+  should have_many(:activity_logs)
   
   should accept_nested_attributes_for(:urls).allow_destroy(true)
   
