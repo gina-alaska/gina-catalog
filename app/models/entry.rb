@@ -7,11 +7,14 @@ class Entry < ActiveRecord::Base
   belongs_to :entry_type
 
   has_many :attachments, dependent: :destroy
+  has_many :activity_logs, as: :loggable
 
   has_many :entry_contacts
   has_many :contacts, through: :entry_contacts
+
   has_many :primary_entry_contacts, -> { primary }, class_name: "EntryContact"
   has_many :primary_contacts, through: :primary_entry_contacts, class_name: "Contact", source: :contact
+
   has_many :secondary_entry_contacts, -> { secondary }, class_name: "EntryContact"
   has_many :secondary_contacts, through: :secondary_entry_contacts, class_name: "Contact", source: :contact
 
