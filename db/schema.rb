@@ -11,12 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141113231850) do
+ActiveRecord::Schema.define(version: 20141204232040) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
   enable_extension "uuid-ossp"
+
+  create_table "activity_logs", force: true do |t|
+    t.string   "activity"
+    t.string   "loggable_type"
+    t.integer  "loggable_id"
+    t.integer  "user_id"
+    t.text     "message"
+    t.integer  "entry_id"
+    t.integer  "portal_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "addresses", force: true do |t|
     t.string   "line1"
@@ -181,6 +193,17 @@ ActiveRecord::Schema.define(version: 20141113231850) do
     t.string   "name"
     t.uuid     "uuid",          default: "uuid_generate_v4()"
     t.integer  "portal_id"
+  end
+
+  create_table "links", force: true do |t|
+    t.string   "category"
+    t.string   "display_text"
+    t.string   "url"
+    t.integer  "entry_id"
+    t.boolean  "valid_link",      default: true
+    t.date     "last_checked_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "memberships", force: true do |t|
