@@ -37,10 +37,10 @@ $(document).on 'page:change', ->
     placeholder: "search for a collection"
     minimumInputLength: 1
     initSelection: (element, callback) ->
-      data = []
-      $(element.val().split(",")).each ->
-        data.push(id: this.trim(), name: this.trim())
-      callback(data)
+      # data = []
+      # $(element.val().split(",")).each ->
+      #   data.push(id: this.trim(), name: this.trim())
+      callback($.parseJSON(element.val()))
 
     ajax:
       url: -> $(this).data('url')
