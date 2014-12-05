@@ -5,8 +5,8 @@ class Manager::EntriesController < ApplicationController
     @entries = Entry.joins(:entry_portals).where(entry_portals: { portal_id: current_portal.self_and_descendants })
   end
 
-  def show
-  end
+  #def show
+  #end
 
   def new
     @entry.attachments.build
