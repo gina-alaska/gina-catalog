@@ -20,6 +20,6 @@ module PermissionConcerns
   end
 
   def has_role?(role, portal)
-    ActiveRecord::ConnectionAdapters::Column.value_to_boolean roles(portal).try(:[], role.to_s)
+    [true, 1, '1', 't', 'T', 'true', 'TRUE'].include?(roles(portal).try(:[], role.to_s))
   end
 end
