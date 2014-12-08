@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   get '/admin' => 'admin/dashboard#index', as: :admin
   get '/manager' => 'manager/dashboard#index', as: :manager
   get '/portal_not_found' => 'welcome#portal_not_found', as: :portal_not_found
-
+  
   resources :sessions
   resources :memberships
 
@@ -31,6 +31,7 @@ Rails.application.routes.draw do
     resources :entries do
       collection do
         get :tags
+        get :collections
       end
     end
 
