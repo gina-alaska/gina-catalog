@@ -1,9 +1,9 @@
 %tr.fields
+  %td.text-center
+    = f.check_box :primary, layout: :inline, label: raw(' ') 
   %td
     = f.hidden_field :id
     = f.hidden_field :contact_id, class: 'contact_id'
     %p.form-control-static.contact_name= f.object.contact.try(:name)
-  %td
-    = f.check_box :primary, layout: :inline
   %td
     = f.link_to_remove "Delete", layout: :inline, class: "btn btn-danger"
