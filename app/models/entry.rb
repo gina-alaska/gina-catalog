@@ -7,6 +7,7 @@ class Entry < ActiveRecord::Base
   belongs_to :entry_type
 
   has_many :attachments, dependent: :destroy
+  has_many :links, dependent: :destroy
 
   has_many :entry_contacts
   has_many :contacts, through: :entry_contacts
@@ -38,6 +39,7 @@ class Entry < ActiveRecord::Base
   accepts_nested_attributes_for :entry_contacts, allow_destroy: true
   accepts_nested_attributes_for :entry_agencies, allow_destroy: true
   accepts_nested_attributes_for :attachments, allow_destroy: true, reject_if: proc { |attachment| attachment['file'].blank? }
+  accepts_nested_attributes_for :links, allow_destroy: true, reject_if: proc { |link| link['url'].blank? }
   
   after_create :set_owner_portal
 
