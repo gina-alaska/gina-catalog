@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141205225904) do
+ActiveRecord::Schema.define(version: 20141210202531) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -150,7 +150,6 @@ ActiveRecord::Schema.define(version: 20141205225904) do
     t.boolean  "primary",    default: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "secondary",  default: false
   end
 
   create_table "entry_portals", force: true do |t|
