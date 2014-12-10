@@ -9,17 +9,20 @@ class Entry < ActiveRecord::Base
   has_many :attachments, dependent: :destroy
   has_many :links, dependent: :destroy
 
+  has_many :entry_agencies
+  has_many :agencies, through: :entry_agencies
+  
+  has_many :entry_aliases
+  
+  has_many :entry_collections
+  has_many :collections, through: :entry_collections
+  
   has_many :entry_contacts
   has_many :contacts, through: :entry_contacts
   has_many :primary_entry_contacts, -> { primary }, class_name: "EntryContact"
   has_many :primary_contacts, through: :primary_entry_contacts, class_name: "Contact", source: :contact
   has_many :secondary_entry_contacts, -> { secondary }, class_name: "EntryContact"
   has_many :secondary_contacts, through: :secondary_entry_contacts, class_name: "Contact", source: :contact
-
-  has_many :entry_aliases
-
-  has_many :entry_agencies
-  has_many :agencies, through: :entry_agencies
 
   has_many :entry_portals
   has_many :portals, through: :entry_portals
@@ -36,6 +39,7 @@ class Entry < ActiveRecord::Base
   validates :status, presence: true
   validates :entry_type_id, presence: true
 
+  accepts_nested_attributes_for :entry_collections, allow_destroy: true
   accepts_nested_attributes_for :entry_contacts, allow_destroy: true
   accepts_nested_attributes_for :entry_agencies, allow_destroy: true
   accepts_nested_attributes_for :attachments, allow_destroy: true, reject_if: proc { |attachment| attachment['file'].blank? }

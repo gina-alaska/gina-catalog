@@ -22,7 +22,8 @@ class Manager::CollectionsController < ApplicationController
 
   def create
     @collection = Collection.new(collection_params)
-
+    current_portal.collections << @collection
+    
     respond_to do |format|
       if @collection.save
         flash[:success] = "Collection #{@collection.name} was successfully created."

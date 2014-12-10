@@ -30,3 +30,24 @@ $(document).on 'page:change', ->
 
     formatResult: (item, page) -> item.name
     formatSelection: (item, page) -> item.name
+
+$(document).on 'page:change', ->
+  $("#select2-collection").select2
+    multiple: true
+    placeholder: "search for a collection"
+    minimumInputLength: 1
+    initSelection: (element, callback) ->
+      # data = []
+      # $(element.val().split(",")).each ->
+      #   data.push(id: this.trim(), name: this.trim())
+      callback($.parseJSON(element.val()))
+
+    ajax:
+      url: -> $(this).data('url')
+      quietMillis: 250
+      dataType: 'json'
+      data: (term) -> q: term
+      results: (data) -> results: data
+
+    formatResult: (item, page) -> item.name
+    formatSelection: (item, page) -> item.name
