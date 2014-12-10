@@ -4,11 +4,12 @@
   %td
     = agency.acronym
   %td
-    = agency.description
-  %td
-    = link_to manager_agency_path(agency), class: 'btn btn-sm btn-primary', title: 'Show' do
-      %i.fa.fa-file-text
-    = link_to edit_manager_agency_path(agency), class: 'btn btn-sm btn-primary', title: 'Edit' do
-      %i.fa.fa-edit
-    = link_to manager_agency_path(agency), data: { method: :delete, confirm: "Are you sure?" }, class: 'btn btn-sm btn-danger', title: 'Delete' do
-      %i.fa.fa-trash-o
+    = agency.category
+  %td.text-right
+    .btn-group
+      = link_to manager_agency_path(agency), class: 'btn btn-sm btn-primary', title: 'Show' do
+        %i.fa.fa-file-text
+      = link_to edit_manager_agency_path(agency), class: 'btn btn-sm btn-primary', title: 'Edit' do
+        %i.fa.fa-edit
+      = link_to manager_agency_path(agency), data: { method: :delete, confirm: "Are you sure?" }, class: 'btn btn-sm btn-danger', title: 'Delete' do
+        %i.fa.fa-trash-o
