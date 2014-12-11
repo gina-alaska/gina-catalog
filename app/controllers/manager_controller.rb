@@ -28,9 +28,19 @@ class ManagerController < ApplicationController
     }
   end
 
-  def links
+  def links 
+    search_params = params[:agency] || {}
     @page = params[:page] || 1
-    @bad_links = Link.where(valid_link: false, asset_type: 'Catalog').order("last_checked_at DESC")
+    @bad_links = Link.where(valid_link: false).includes(:source_agencies).order("last_checked_at DESC")
+    @agencies = @bad_links.collect(&:source_agencies).flatten.uniq.sort { |a,b| a.name <=> b.name }
+
+    unless search_params["id"].blank?
+      @bad_links =  @bad_links.where(
+        agencies: { id: search_params["id"] } 
+      )
+      @agency = Agency.find(search_params["id"]) || nil
+    end
+
     @total = @bad_links.count
     @bad_links = @bad_links.page(@page).per(30)
   end

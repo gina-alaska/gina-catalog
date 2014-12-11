@@ -1,7 +1,9 @@
 class Link < ActiveRecord::Base
   CATEGORIES = ['Website', 'Download', 'Report', 'Shape File', 'WMS', 'WCS', 'WFS', 'KML', 'Layer', 'Metadata', 'PDF', 'Map Service']
 
-  belongs_to :asset, polymorphic: true
+  belongs_to :asset, polymorphic: true 
+  belongs_to :catalog, foreign_key: 'asset_id'
+  has_many :source_agencies, through: :catalog
 
   validates_length_of :display_text, maximum: 255
   validates_length_of :url, in: 11..255, message: "%{value} is not a valid url"
