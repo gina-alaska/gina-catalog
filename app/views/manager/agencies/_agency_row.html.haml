@@ -1,5 +1,7 @@
 %tr
   %td
+    = image_tag agency.logo.try(:thumb, '30x30').try(:url)
+  %td
     = agency.name
   %td
     = agency.acronym
