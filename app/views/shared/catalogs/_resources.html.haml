@@ -42,7 +42,7 @@
 
         %h5.media-heading
           - download_text = "Download"
-          - download_text = download_text + " :: #{link.description}" unless link.description.empty?
+          - download_text = download_text + " :: #{link.display_text}" unless link.display_text.empty?
           = download_text
         %p.break-url= link.url
 
