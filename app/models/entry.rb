@@ -11,7 +11,9 @@ class Entry < ActiveRecord::Base
 
   has_many :entry_agencies
   has_many :agencies, through: :entry_agencies
-  
+  has_many :primary_entry_agencies, -> { primary }, class_name: "EntryAgency"
+  has_many :primary_agencies, through: :primary_entry_agencies, source: :agency
+    
   has_many :entry_aliases
   
   has_many :entry_collections
@@ -20,9 +22,9 @@ class Entry < ActiveRecord::Base
   has_many :entry_contacts
   has_many :contacts, through: :entry_contacts
   has_many :primary_entry_contacts, -> { primary }, class_name: "EntryContact"
-  has_many :primary_contacts, through: :primary_entry_contacts, class_name: "Contact", source: :contact
+  has_many :primary_contacts, through: :primary_entry_contacts, source: :contact
   has_many :secondary_entry_contacts, -> { secondary }, class_name: "EntryContact"
-  has_many :secondary_contacts, through: :secondary_entry_contacts, class_name: "Contact", source: :contact
+  has_many :secondary_contacts, through: :secondary_entry_contacts, source: :contact
 
   has_many :entry_portals
   has_many :portals, through: :entry_portals
