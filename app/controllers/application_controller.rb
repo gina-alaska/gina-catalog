@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   
   rescue_from CanCan::AccessDenied do |exception|
     if signed_in?
-      render template: 'gina_authentication/permission_denied', status: :forbidden
+      render template: 'welcome/permission_denied', status: :forbidden
     else
       session[:redirect_back_to] = request.original_url
       redirect_to login_path
