@@ -19,6 +19,12 @@ class Manager::PortalsControllerTest < ActionController::TestCase
     assert_response :success
     assert_not_nil assigns(:portal)
   end
+  
+  test "should not be allowed to edit a portal they don't have permissions to" do
+    get :edit, id: portals(:two).id
+    
+    assert_redirected_to root_path
+  end
 
   test "should get update" do
     patch :update, id: @portal.id, portal: { title: 'Testing2' }

@@ -13,6 +13,6 @@
   %td
     = f.text_field :description, hide_label: true, label_col: 'col-sm-0'
   %td
-    = f.select :interaction, Attachment::INTERACTIONS, hide_label: true, label_col: 'col-sm-0'
+    = f.select :category, Attachment::CATEGORIES, hide_label: true, label_col: 'col-sm-0'
   %td
     = f.link_to_remove('<i class="fa fa-trash"></i>'.html_safe, class: 'btn btn-danger')
