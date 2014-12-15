@@ -189,6 +189,17 @@ ActiveRecord::Schema.define(version: 20141210202531) do
     t.integer  "portal_id"
   end
 
+  create_table "links", force: true do |t|
+    t.string   "category"
+    t.string   "display_text"
+    t.string   "url"
+    t.integer  "entry_id"
+    t.boolean  "valid_link",      default: true
+    t.date     "last_checked_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "memberships", force: true do |t|
     t.integer  "user_id"
     t.string   "email"
