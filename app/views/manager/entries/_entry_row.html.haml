@@ -9,7 +9,7 @@
     = entry.end_date
   %td
     / placeholder for source agency
-    = entry.end_date
+    = entry.primary_agencies.pluck(:acronym).join(', ')
   %td
     = can?(:manage, entry) ? "Yes" : "No"
   %td
