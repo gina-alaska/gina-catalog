@@ -1,5 +1,5 @@
 %ul.nav.nav-tabs
-  - sections = %w{ general contacts agencies tags attachments sds }
+  - sections = %w{ general contacts agencies tags attachments links sds }
   - sections.each do |section|
     %li{class: (section == sections.first ? 'active' : '')}
       = link_to section.humanize, "##{section}", data: { toggle: 'tab' }
@@ -21,9 +21,10 @@
       %table.table.table-striped
         %thead
           %tr
-            %th.col-sm-1.text-center Primary
-            %th.col-sm-10 Contact
-            %th.actions.col-sm-1.text-center Actions
+            %th.col-sm-6 Contact
+            %th Primary
+            %th Secondary
+            %th.actions Actions
         %tbody#contact_fields.form-inline
           = f.fields_for :entry_contacts, wrapper: false
 
@@ -65,6 +66,25 @@
             %th.actions.col-sm-1 Actions
         %tbody#attachment_fields
           = f.fields_for :attachments, wrapper: false
+
+    #links.tab-pane
+      .row
+        .col-sm-10
+          %h4 Links
+        .col-sm-2
+          = f.link_to_add :links, :data => { :target => "#link_fields" }, class: "btn btn-success btn-block" do
+            %i.fa.fa-plus
+            Attach new link
+      %table.table.table-striped
+        %thead
+          %tr
+            %th.col-sm-2 Category
+            %th.col-sm-4 Display Text
+            %th.col-sm-4 URL
+            %th.col-sm-1 Valid
+            %th.actions.col-sm-1 Actions
+        %tbody#link_fields
+          = f.fields_for :links, wrapper: false
 
     #sds.tab-pane
       = render "sds_fields", f: f
