@@ -7,35 +7,35 @@
     %ul.dropdown-menu
       %li
         = link_to manager_path do
-          %i.fa.fa-dashboard
+          %i.fa.fa-dashboard.fa-fw
           Dashboard
       - if can? :manage, Entry
         %li
           = link_to manager_entries_path do
-            %i.fa.fa-cubes
+            %i.fa.fa-cubes.fa-fw
             Catalog Records
       %li
         = link_to manager_agencies_path do
-          %i.fa.fa-university
+          %i.fa.fa-university.fa-fw
           Agencies
       %li
         = link_to manager_contacts_path do
-          %i.fa.fa-phone
+          %i.fa.fa-phone.fa-fw
           Contacts
       %li
         = link_to manager_collections_path do
-          %i.fa.fa-sitemap
+          %i.fa.fa-sitemap.fa-fw
           Collections
       %li
         = link_to manager_portal_path do
-          %i.fa.fa-cog
+          %i.fa.fa-cog.fa-fw
           Portal Settings
       %li
         = link_to manager_use_agreements_path do
-          %i.fa.fa-pencil
+          %i.fa.fa-pencil.fa-fw
           Use Agreements
       - if can? :manage, current_user.permissions.for(current_portal)
         %li
           = link_to manager_permissions_path do
-            %i.fa.fa-lock
+            %i.fa.fa-lock.fa-fw
             Permissions
