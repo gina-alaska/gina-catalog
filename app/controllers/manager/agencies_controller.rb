@@ -2,11 +2,8 @@ class Manager::AgenciesController < ManagerController
   load_and_authorize_resource
 
   def index
-    @q = Agency.search(params[:q])
-    @q.sorts = 'name asc' if @q.sorts.empty?
-    @agencies = @q.result(distinct: true)
-    @agencies = @agencies.used_by_portal(current_portal) unless params[:all].present?
-      
+    @agencies = Agency.all
+
     respond_to do |format|
       format.html
       format.json { render json: @agencies }
