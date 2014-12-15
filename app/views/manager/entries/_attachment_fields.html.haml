@@ -1,5 +1,6 @@
 %tr.fields
   %td
+    = f.hidden_field :id
     .fileinput.fileinput-new{data:{provides:'fileinput'}}
       - if f.object.new_record?
         %span.btn.btn-default.btn-file
