@@ -14,6 +14,6 @@
       %tr
         %th Title
         %th Required
-        %th actions
+        %th Actions
     %tbody
       = render(partial: "use_agreement_row", collection: @use_agreements, as: :use_agreement) || "<tr><td colspan=\"3\">There are no use agreements defined</td></tr>".html_safe
