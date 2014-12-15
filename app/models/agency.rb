@@ -14,7 +14,9 @@ class Agency < ActiveRecord::Base
 
   has_many :entry_agencies
   has_many :entries, through: :entry_agencies
+  has_many :entry_portals, through: :entries
   has_many :aliases, as: :aliasable, dependent: :destroy
+  
 
   validates :name, length: { maximum: 255 }
   validates :category, length: { maximum: 255 }
@@ -29,4 +31,8 @@ class Agency < ActiveRecord::Base
   validates_inclusion_of :category, :in => CATEGORIES, :message => " please select one of following: #{Agency::CATEGORIES.join(', ')}"
 
   accepts_nested_attributes_for :aliases, reject_if: ->(a) { a[:text].blank? }, allow_destroy: true
+  
+  scope :used_by_portal, ->(portal) { 
+    joins{entry_portals.outer}.where{ (entry_portals.portal == portal) | { created_at.gteq => 1.week.ago } }
+  }
 end
