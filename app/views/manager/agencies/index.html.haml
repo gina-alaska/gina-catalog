@@ -30,8 +30,7 @@
         %ol.breadcrumb
           %li.active
             %i.fa.fa-university
-            Agencies 
-  
+            Agencies   
       %table.table.table-striped.table-condensed
         %thead
           %tr
@@ -42,4 +41,3 @@
             %th.text-right Actions
         %tbody
           = render(partial: "agency_row", collection: @agencies, as: :agency) || "<tr><td colspan=\"4\">There are no agencies available</td></tr>".html_safe
-        
