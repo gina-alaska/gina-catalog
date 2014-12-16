@@ -149,6 +149,13 @@ ActiveRecord::Schema.define(version: 20141205225904) do
     t.datetime "updated_at"
   end
 
+  create_table "entry_collections", force: true do |t|
+    t.integer  "collection_id"
+    t.integer  "entry_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "entry_contacts", force: true do |t|
     t.integer  "contact_id"
     t.integer  "entry_id"
