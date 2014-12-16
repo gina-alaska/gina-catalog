@@ -17,7 +17,6 @@ class Agency < ActiveRecord::Base
   has_many :entry_portals, through: :entries
   has_many :aliases, as: :aliasable, dependent: :destroy
   
-
   validates :name, length: { maximum: 255 }
   validates :category, length: { maximum: 255 }
   validates :description, length: { maximum: 255 }
