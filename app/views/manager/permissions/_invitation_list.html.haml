@@ -13,7 +13,7 @@
         - invitations.each do |invitation|
           %tr
             %td= link_to invitation.name, [:edit, :manager, invitation]
-            %td= invitation.email
+            %td{ style: "word-wrap: break-word;" }= invitation.email
             %td= invitation.updated_at
             %td.rowlink-skip.text-right
               .btn-group
