@@ -1,5 +1,5 @@
 %ul.nav.nav-tabs
-  - sections = %w{ general contacts agencies tags attachments sds }
+  - sections = %w{ general contacts agencies tags attachments links sds }
   - sections.each do |section|
     %li{class: (section == sections.first ? 'active' : '')}
       = link_to section.humanize, "##{section}", data: { toggle: 'tab' }
@@ -47,10 +47,7 @@
           = f.fields_for :entry_agencies, wrapper: false
 
     #tags.tab-pane
-      .row
-        .col-sm-10
-          = f.hidden_field :tag_list, data: { name: 'tag', target: 'select2-choice', url: tags_manager_entries_path }, id: 'select-two', class: 'col-sm-12'
-      %br
+      = render "tag_fields", f: f
 
     #attachments.tab-pane
       .row
@@ -65,10 +62,29 @@
           %tr
             %th.col-sm-5 File
             %th.col-sm-4 Description
-            %th.col-sm-2 Interaction
+            %th.col-sm-2 Category
             %th.actions.col-sm-1 Actions
         %tbody#attachment_fields
           = f.fields_for :attachments, wrapper: false
+
+    #links.tab-pane
+      .row
+        .col-sm-10
+          %h4 Links
+        .col-sm-2
+          = f.link_to_add :links, :data => { :target => "#link_fields" }, class: "btn btn-success btn-block" do
+            %i.fa.fa-plus
+            Attach new link
+      %table.table.table-striped
+        %thead
+          %tr
+            %th.col-sm-2 Category
+            %th.col-sm-4 Display Text
+            %th.col-sm-4 URL
+            %th.col-sm-1 Valid
+            %th.actions.col-sm-1 Actions
+        %tbody#link_fields
+          = f.fields_for :links, wrapper: false
 
     #sds.tab-pane
       = render "sds_fields", f: f

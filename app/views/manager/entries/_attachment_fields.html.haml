@@ -1,5 +1,6 @@
 %tr.fields
   %td
+    = f.hidden_field :id
     .fileinput.fileinput-new{data:{provides:'fileinput'}}
       - if f.object.new_record?
         %span.btn.btn-default.btn-file
@@ -13,6 +14,6 @@
   %td
     = f.text_field :description, hide_label: true, label_col: 'col-sm-0'
   %td
-    = f.select :interaction, Attachment::INTERACTIONS, hide_label: true, label_col: 'col-sm-0'
+    = f.select :category, Attachment::CATEGORIES, hide_label: true, label_col: 'col-sm-0'
   %td
     = f.link_to_remove('<i class="fa fa-trash"></i>'.html_safe, class: 'btn btn-danger')

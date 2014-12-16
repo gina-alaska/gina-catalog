@@ -1,7 +1,7 @@
 class Ability
   include CanCan::Ability
 
-  def initialize(user, portal)
+  def initialize(user, current_portal)
     # Define abilities for the passed in user here. For example:
     #
     #   user ||= User.new # guest user (not logged in)
@@ -30,18 +30,12 @@ class Ability
     # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
     
     user ||= User.new
-    
-    if user.global_admin?
-      can :manage, Portal
-      can :manage, User
-      can :manage, EntryType      
-    end
 
-    if user.has_role?(:cms_manager, portal)
+    if user.has_role?(:cms_manager, current_portal)
       can :view_manager_menu, User
     end
 
-    if user.has_role?(:data_manager, portal)
+    if user.has_role?(:data_manager, current_portal)
       can :view_manager_menu, User
       
       can :manage, Agency
@@ -49,21 +43,28 @@ class Ability
       can :manage, UseAgreement
       can :manage, Collection
       can :manage, Entry do |entry|
-        entry.new_record? or entry.owner_portal == portal
+        entry.new_record? or entry.owner_portal == current_portal
       end
     end    
 
-    if user.has_role?(:portal_manager, portal)
+    if user.has_role?(:portal_manager, current_portal)
       can :view_manager_menu, User
-      can :update, Portal
+      can :update, Portal do |requested_portal|
+        current_portal == current_portal
+      end
       
       can :manage, Permission do |permission|
-        permission.new_record? or permission.portal == portal
+        permission.new_record? or permission.portal == current_portal
       end
       can :manage, Invitation do |invitation|
-        invitation.new_record? or invitation.portal == portal
+        invitation.new_record? or invitation.portal == current_portal
       end
     end
-           
+    
+    if user.global_admin?
+      can :manage, Portal
+      can :manage, User
+      can :manage, EntryType      
+    end
   end
 end

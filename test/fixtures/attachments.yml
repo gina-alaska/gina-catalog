@@ -5,7 +5,7 @@ one:
   file_uid: MyString
   file_size: 1
   file_name: MyString
-  interaction: MyString
+  category: MyString
   uuid: MyString
   description: MyString
 
@@ -14,6 +14,6 @@ two:
   file_uid: MyString
   file_size: 1
   file_name: MyString
-  interaction: MyString
+  category: MyString
   uuid: MyString
   description: MyString

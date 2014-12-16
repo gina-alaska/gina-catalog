@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141204200616) do
+ActiveRecord::Schema.define(version: 20141205225904) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,7 +79,7 @@ ActiveRecord::Schema.define(version: 20141204200616) do
     t.string   "file_uid"
     t.integer  "file_size"
     t.string   "file_name"
-    t.string   "interaction"
+    t.string   "category"
     t.string   "uuid"
     t.string   "description"
     t.datetime "created_at"
@@ -193,6 +193,17 @@ ActiveRecord::Schema.define(version: 20141204200616) do
     t.string   "name"
     t.uuid     "uuid",          default: "uuid_generate_v4()"
     t.integer  "portal_id"
+  end
+
+  create_table "links", force: true do |t|
+    t.string   "category"
+    t.string   "display_text"
+    t.string   "url"
+    t.integer  "entry_id"
+    t.boolean  "valid_link",      default: true
+    t.date     "last_checked_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "memberships", force: true do |t|

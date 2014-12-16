@@ -1,18 +1,43 @@
-.panel.panel-default
-  .panel-heading{ style: 'position: relative' }
-    = link_to new_manager_agency_path, class: 'btn btn-success panel-btn-right' do
-      New Agency
-    %ol.breadcrumb
-      %li.active
-        %i.fa.fa-university
-        Agencies 
-  
-  %table.table.table-striped.table-condensed
-    %thead
-      %tr
-        %th.col-lg-3.col-md-3 Name
-        %th.col-lg-3.col-md-3 Acronym
-        %th.col-lg-4.col-md-4 Description
-        %th.col-lg-1.col-md-1 Actions
-    %tbody
-      = render(partial: "agency_row", collection: @agencies, as: :agency) || "<tr><td colspan=\"4\">There are no agencies available</td></tr>".html_safe
+.row
+  .col-sm-4
+    .panel.panel-default
+      .panel-body
+        = search_form_for [:manager, @q] do |f|
+          .form-group
+            .input-group
+              = f.search_field :name_or_acronym_or_category_cont, class: 'form-control', placeholder: 'Search by name, acronym or category'
+            
+              %span.input-group-btn
+                = f.submit class: 'btn btn-primary'
+          
+          .form-group
+            %label
+              = check_box_tag :all, 'on', params[:all].present?
+              Show all agencies
+            %span.help-block
+              %p
+                %strong Note: 
+                By default, only agencies that are currently assigned to a catalog record or are less than a week old are shown. 
+              %p
+                To see all available agencies check the "Show all agencies" box before searching.
+      .panel-footer
+        = link_to new_manager_agency_path, class: 'btn btn-success btn-block' do
+          %i.fa.fa-plus
+          New Agency
+  .col-sm-8
+    .panel.panel-default
+      .panel-heading{ style: 'position: relative' }
+        %ol.breadcrumb
+          %li.active
+            %i.fa.fa-university
+            Agencies   
+      %table.table.table-striped.table-condensed
+        %thead
+          %tr
+            %th Logo
+            %th= sort_link @q, :name
+            %th= sort_link @q, :acronym
+            %th= sort_link @q, :category
+            %th.text-right Actions
+        %tbody
+          = render(partial: "agency_row", collection: @agencies, as: :agency) || "<tr><td colspan=\"4\">There are no agencies available</td></tr>".html_safe

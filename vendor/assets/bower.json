@@ -7,6 +7,7 @@
     "handlebars": "latest",
     "jasny-bootstrap": "latest",
     "eonasdan-bootstrap-datetimepicker": "latest",
-    "select2": "~> 3.5.0"
+    "select2": "~> 3.5.0",
+    "holderjs": "latest"
   }
 }

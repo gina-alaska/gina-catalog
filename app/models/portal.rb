@@ -4,6 +4,7 @@ class Portal < ActiveRecord::Base
   has_many :urls, class_name: 'PortalUrl'
   has_one :default_url, -> { where default: true }, class_name: 'PortalUrl'
   
+  has_many :collections 
   has_many :permissions
   has_many :invitations
   has_many :users, through: :permissions

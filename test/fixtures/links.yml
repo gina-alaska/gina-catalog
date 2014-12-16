@@ -1,0 +1,33 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  category: MyString
+  display_text: MyString
+  url: MyString
+  entry_id: 1
+  valid_link: false
+  last_checked_at: 2014-12-04
+
+two:
+  category: MyString
+  display_text: MyString
+  url: MyString
+  entry_id: 1
+  valid_link: false
+  last_checked_at: 2014-12-04
+
+good_pdf:
+  category: "PDF"
+  display_text: MyString
+  url: "http://mytest.com/test.pdf"
+  entry_id: 1
+  valid_link: true
+  last_checked_at: 2014-12-04
+
+bad_pdf:
+  category: "PDF"
+  display_text: MyString
+  url: "http://mytest.com/test.doc"
+  entry_id: 1
+  valid_link: true
+  last_checked_at: 2014-12-04

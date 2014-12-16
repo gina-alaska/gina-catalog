@@ -1,15 +1,20 @@
 class Attachment < ActiveRecord::Base
-  INTERACTIONS = [
-    'Previewable',
-    'Downloadable'
+  CATEGORIES = [
+    'Thumbnail',
+    'Geojson',
+    'Public Download',
+    'Private Download',
   ]
 
   dragonfly_accessor :file
 
   belongs_to :entry
 
-  scope :downloadable, -> { where(interaction: "Downloadable") }
-  scope :previewable, -> { where(interaction: "Previewable") }
+  scope :thumbnail, -> { where(category: "Thumbnail") }
+  scope :geojson, -> { where(category: "Geojson") }
+  scope :private_download, -> { where(category: "Private Download") }
+  scope :public_download, -> { where(category: "Public Download") }
+
 
   before_create :create_uuid
 

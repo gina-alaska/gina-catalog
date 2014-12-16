@@ -20,5 +20,6 @@
 //= require jasny-bootstrap/dist/js/jasny-bootstrap.js
 //= require eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js
 //= require select2/select2.js
+//= require holderjs/holder.js
 //= require turbolinks
 //= require_tree .
