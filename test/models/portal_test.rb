@@ -6,8 +6,10 @@ class PortalTest < ActiveSupport::TestCase
   
   should have_many(:urls)
   should have_many(:activity_logs)
+  should have_one(:favicon)
   
   should accept_nested_attributes_for(:urls).allow_destroy(true)
+  should accept_nested_attributes_for(:favicon).allow_destroy(true)
   
   def setup
     @portal = portals(:one)
