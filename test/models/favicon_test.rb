@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class FaviconsTest < ActiveSupport::TestCase
+class FaviconTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

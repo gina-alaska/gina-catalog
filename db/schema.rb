@@ -183,7 +183,7 @@ ActiveRecord::Schema.define(version: 20141217022038) do
   create_table "favicons", force: true do |t|
     t.integer  "portal_id"
     t.string   "image_name"
-    t.integer  "image_uid"
+    t.string   "image_uid"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
