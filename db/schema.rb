@@ -11,12 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141216000446) do
+ActiveRecord::Schema.define(version: 20141217022038) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
   enable_extension "uuid-ossp"
+
+  create_table "activity_logs", force: true do |t|
+    t.string   "activity"
+    t.string   "loggable_type"
+    t.integer  "loggable_id"
+    t.integer  "user_id"
+    t.text     "message"
+    t.integer  "entry_id"
+    t.integer  "portal_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "addresses", force: true do |t|
     t.string   "line1"
@@ -164,6 +176,14 @@ ActiveRecord::Schema.define(version: 20141216000446) do
     t.string   "name"
     t.string   "description"
     t.string   "color"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "favicons", force: true do |t|
+    t.integer  "portal_id"
+    t.string   "image_name"
+    t.integer  "image_uid"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
