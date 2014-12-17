@@ -3,7 +3,7 @@ class CreateFavicons < ActiveRecord::Migration
     create_table :favicons do |t|
       t.integer :portal_id
       t.string :image_name
-      t.integer :image_uid
+      t.string :image_uid
 
       t.timestamps
     end
