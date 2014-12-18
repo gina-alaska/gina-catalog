@@ -12,12 +12,12 @@
       %tbody.rowlink{ data: { link: 'row' } }
         - invitations.each do |invitation|
           %tr
-            %td= link_to invitation.name, [:edit, :manager, invitation]
-            %td= invitation.email
+            %td.break-text= link_to invitation.name, [:edit, :manager, invitation]
+            %td.break-text= invitation.email
             %td= invitation.updated_at
             %td.rowlink-skip.text-right
               .btn-group
                 = link_to [:resend, :manager, invitation], method: :patch, class: 'btn btn-default', title: 'Resend' do
                   %i.fa.fa-refresh
                 = link_to [:manager, invitation], method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure?' } do
-                  %i.fa.fa-trash
+                  %i.fa.fa-times
