@@ -40,10 +40,10 @@
   .span5
   %fieldset.content
     %legend Portal Favicon
-    //- if current_portal.favicon.nil?
-    //  No Favicon Uploaded
-    //- else
-    //  = image_tag current_portal.favicon.image.encode(:png).thumb('100x100').url unless current_portal.favicon.image.nil?
+    - if current_portal.favicon.nil?
+      No Favicon Uploaded
+    - else
+      = image_tag current_portal.favicon.image.encode(:png).thumb('100x100').url unless current_portal.favicon.image.blank?
   %fieldset.content
     %legend Social settings
     %dl.dl-horizontal

@@ -3,6 +3,7 @@ class Portal < ActiveRecord::Base
   
   has_many :urls, class_name: 'PortalUrl'
   has_one :default_url, -> { where default: true }, class_name: 'PortalUrl'
+  has_one :favicon, dependent: :destroy
   
   has_many :collections 
   has_many :permissions
@@ -20,6 +21,7 @@ class Portal < ActiveRecord::Base
   validate :single_default_url
   
   accepts_nested_attributes_for :urls, allow_destroy: true, reject_if: :blank_url
+  accepts_nested_attributes_for :favicon, allow_destroy: true
  
    # validate :single_default_url
 
