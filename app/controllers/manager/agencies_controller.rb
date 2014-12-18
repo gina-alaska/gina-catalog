@@ -59,12 +59,16 @@ class Manager::AgenciesController < ManagerController
   end
 
   def destroy
-    @agency.destroy
-
-    respond_to do |format|
-      flash[:success] = "Agency #{@agency.name} was successfully deleted."
-      format.html { redirect_to manager_agencies_path }
-      format.json { head :no_content }
+    respond_to do |format|    
+      if @agency.destroy
+        flash[:success] = "Agency #{@agency.name} was successfully deleted."
+        format.html { redirect_to manager_agencies_path }
+        format.json { head :no_content }     
+      else
+        flash[:warning] = @agency.errors.full_messages
+        format.html { redirect_to manager_agencies_path }
+#        format.json { head :no_content } 
+      end
     end
   end
 

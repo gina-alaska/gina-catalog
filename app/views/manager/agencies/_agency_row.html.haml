@@ -11,5 +11,9 @@
     .btn-group
       = link_to edit_manager_agency_path(agency), class: 'btn btn-sm btn-primary', title: 'Edit' do
         %i.fa.fa-edit
-      = link_to manager_agency_path(agency), data: { method: :delete, confirm: "Are you sure?" }, class: 'btn btn-sm btn-danger', title: 'Delete' do
-        %i.fa.fa-trash-o
+      - if agency.deletable?
+        = link_to manager_agency_path(agency), data: { method: :delete, confirm: "Are you sure?" }, class: 'btn btn-sm btn-danger', title: 'Delete' do
+          %i.fa.fa-trash-o
+      - else
+        %button.btn.btn-danger.btn-sm.disabled{ data: { title: "Unable to delete agency, #{agency.not_deletable_reason}" } }
+          %i.fa.fa-trash-o

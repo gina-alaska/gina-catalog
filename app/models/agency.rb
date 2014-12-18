@@ -12,12 +12,14 @@ class Agency < ActiveRecord::Base
   
   dragonfly_accessor :logo
 
+  before_destroy :check_if_deletable, prepend: true
+  
   has_many :entry_agencies
   has_many :entries, through: :entry_agencies
+  
   has_many :entry_portals, through: :entries
   has_many :aliases, as: :aliasable, dependent: :destroy
   
-
   validates :name, length: { maximum: 255 }
   validates :category, length: { maximum: 255 }
   validates :description, length: { maximum: 255 }
@@ -35,4 +37,23 @@ class Agency < ActiveRecord::Base
   scope :used_by_portal, ->(portal) { 
     joins{entry_portals.outer}.where{ (entry_portals.portal == portal) | { created_at.gteq => 1.week.ago } }
   }
+  
+  def deletable?
+    self.entries.empty?
+  end
+  
+  def not_deletable_reason
+    if !self.entries.empty?
+      "belongs to one or more catalog records"
+    end
+  end
+
+  private 
+  
+  def check_if_deletable
+    if !deletable?
+      errors.add(:base, "Cannot delete agency, #{not_deletable_reason}")
+      false
+    end
+  end
 end
