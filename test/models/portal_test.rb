@@ -10,6 +10,9 @@ class PortalTest < ActiveSupport::TestCase
 
   should accept_nested_attributes_for(:urls).allow_destroy(true)
   should accept_nested_attributes_for(:social_networks).allow_destroy(true)
+  should accept_nested_attributes_for(:favicon).allow_destroy(true)
+
+  should have_one(:favicon)
   
   def setup
     @portal = portals(:one)

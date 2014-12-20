@@ -7,6 +7,7 @@ class Manager::PortalsController < ApplicationController
   def edit
     @portal = current_portal
     @portal.build_social_networks
+    @portal.build_favicon if @portal.favicon.nil?
   end
 
   def update
@@ -27,6 +28,6 @@ class Manager::PortalsController < ApplicationController
   protected
   
   def portal_params
-    params.require(:portal).permit(:title, :acronym, :description, :by_line, :contact_email, :analytics_account, social_networks_attributes: [:id, :url, :social_network_config_id])
+    params.require(:portal).permit(:title, :acronym, :description, :by_line, :contact_email, :analytics_account, social_networks_attributes: [:id, :url, :social_network_config_id], favicon_attributes: [:id, :image, :_destroy])
   end
 end

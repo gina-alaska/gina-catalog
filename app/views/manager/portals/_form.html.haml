@@ -59,21 +59,22 @@
 
     #favicon.tab-pane
       #logo.tab-pane
-        //.fileupload{ class: (current_setup.favicon.new_record? ? 'fileupload-new' : 'fileupload-exists'), data: { provides: 'fileupload' } }
-        //  .fileupload-preview.thumbnail.fileupload-exists{style:'width: 200px; min-height: 50px;'}
-        //    - if current_setup.favicon.image.nil?
-        //      No Favicon
-        //    -else
-        //      = image_tag current_setup.favicon.image.encode(:png).thumb('200x200').url
-        //  %div
-        //    %span.btn.btn-file
-        //      %span.fileupload-new Select image
-        //      %span.fileupload-exists Change
-        //      = f.fields_for :favicon do |attachment|
-        //        = attachment.hidden_field :_destroy, value: 0
-        //        = attachment.file_field :image
-        //    %a.btn.fileupload-exists{href: "#", data: { dismiss: "fileupload" }} Remove
-        %p Note:  Only use .png or .ico images for the favicon.
+        .fileinput{ style: 'display:block;', class: (f.object.favicon.new_record? ? 'fileinput-new' : 'fileinput-exists'), data: { provides: 'fileinput' } }
+          .row
+            .col-sm-10
+              .fileinput-new.thumbnail
+                %img{ src: 'holder.js/200x200', style: 'width: 200px; height: 200px;' }
+              .fileinput-preview.thumbnail.fileinput-exists{ style: 'max-width:200px; max-height:200px;' }
+                = image_tag @portal.favicon.image.encode(:png).thumb('200x200').url if @portal.favicon.image
+            .col-sm-2.text-right
+              = f.fields_for :favicon do |attachment|
+                = attachment.hidden_field :_destroy, value: 0
+                %span.btn.btn-file.btn-success.btn-block
+                  %span.fileinput-new Add Favicon
+                  %span.fileinput-exists Change Favicon
+                  = attachment.file_field_without_bootstrap :image
+                %a.btn.btn-danger.btn-block.fileinput-exists{href: "#", data: { dismiss: "fileinput" }} Remove
+        %p Note:  It's recommended to use .png or .jpg images for the favicon.
 
   .form-actions
     = link_to manager_portal_path, class: 'btn btn-default' do
@@ -81,11 +82,11 @@
       Cancel
     = f.submit class: 'btn btn-primary pull-right'
 :javascript
-  $('[data-dismiss="fileupload"]').on('click', function() {
-    $('#setup_favicon_attributes__destroy').val(1);
+  $('[data-dismiss="fileinput"]').on('click', function() {
+    $('#portal_favicon_attributes__destroy').val(1);
   })
-  $('#setup_favicon_attributes_image').on('change', function() {
+  $('#portal_favicon_attributes_image').on('change', function() {
     if ($(this).val() != '') {
-      $('#setup_favicon_attributes__destroy').val(0);
+      $('#portal_favicon_attributes__destroy').val(0);
     }
   })
