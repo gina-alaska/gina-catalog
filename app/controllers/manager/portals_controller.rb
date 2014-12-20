@@ -6,6 +6,7 @@ class Manager::PortalsController < ApplicationController
 
   def edit
     @portal = current_portal
+    @portal.build_social_networks
   end
 
   def update
@@ -26,6 +27,6 @@ class Manager::PortalsController < ApplicationController
   protected
   
   def portal_params
-    params.require(:portal).permit(:title, :acronym, :description, :by_line, :contact_email, :analytics_account)
+    params.require(:portal).permit(:title, :acronym, :description, :by_line, :contact_email, :analytics_account, social_networks_attributes: [:id, :url, :social_network_config_id])
   end
 end
