@@ -22,15 +22,15 @@
 
   .tab-content.content
     #setup_information.tab-pane.active
-      = f.text_field :title, class: 'span12'
-      = f.text_field :acronym, class: 'span12'
-      = f.text_field :by_line, class: 'span12'
-      = f.text_field :contact_email, class: 'span12'
-      //    = f.text_area :default_invite, rows: 4, cols: 40, class: 'span12'
-      = f.text_field :analytics_account, label: "Google analytics", class: 'span12'
+      = f.text_field :title
+      = f.text_field :acronym
+      = f.text_field :by_line
+      = f.text_field :contact_email
+      //    = f.text_area :default_invite, rows: 4, cols: 40
+      = f.text_field :analytics_account, label: "Google analytics"
       //    = f.check_box :use_recaptcha, {}, "true", "false"
-      = f.text_field :description, class: 'span12'
-      //    = f.text_field :keywords, class: 'span12'
+      = f.text_field :description
+      //    = f.text_field :keywords
 
     #maps.tab-pane
       //    = f.select :projection, options_for_select(projections, @current_setup.projection), class: 'span12'
@@ -39,14 +39,23 @@
       //    = f.check_box :google_layers, {}, "true", "false"
 
     #social.tab-pane
-      //    = f.text_field :facebook_url, class: 'span12'
-      //    = f.text_field :github_url, class: 'span12'
-      //    = f.text_field :google_plus_url, class: 'span12'
-      //    = f.text_field :instagram_url, class: 'span12'
-      //    = f.text_field :linkedin_url, class: 'span12'
-      //    = f.text_field :tumblr_url, class: 'span12'
-      //    = f.text_field :twitter_url, class: 'span12'
-      //    = f.text_field :youtube_url, class: 'span12'
+      %table.table.table-striped.table-condensed
+        %thead
+          %tr
+            %th.col-sm-3 Site
+            %th URL
+            %th Valid URL
+        = f.fields_for :social_networks do |network|
+          %tr.fields
+            %td
+              %i.fa.fa-fw.fa-2x{ class: "#{network.object.icon}" }
+              %label.hidden-xs #{network.object.name}
+            %td
+              = network.hidden_field :id
+              = network.hidden_field :social_network_config_id
+              = network.text_field :url, hide_label: true, layout: :default
+            %td
+              = network.object.valid_url ? "Yes" : "No" unless network.object.url.blank?
 
     #favicon.tab-pane
       #logo.tab-pane

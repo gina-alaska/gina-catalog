@@ -47,19 +47,6 @@
   %fieldset.content
     %legend Social settings
     %dl.dl-horizontal
-      //%dt Facebook URL
-      //%dd=ddtext current_portal.facebook_url
-      //%dt GitHub URL
-      //%dd=ddtext current_portal.github_url
-      //%dt Google+ URL
-      //%dd=ddtext current_portal.google_plus_url
-      //%dt Instagram URL
-      //%dd=ddtext current_portal.instagram_url
-      //%dt Linkedin URL
-      //%dd=ddtext current_portal.linkedin_url
-      //%dt Tumblr URL
-      //%dd=ddtext current_portal.tumblr_url
-      //%dt Twitter URL
-      //%dd=ddtext current_portal.twitter_url
-      //%dt YouTube URL
-      //%dd=ddtext current_portal.youtube_url
+      - current_portal.social_networks.each do |network|
+        %dt=ddtext network.name
+        %dd=ddtext network.url
