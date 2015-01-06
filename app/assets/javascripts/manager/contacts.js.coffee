@@ -17,6 +17,8 @@ $(document).on 'ready page:load',  ->
     target = this
     $(target).data('suggestion', suggestion)
     $('#add-selected-contact').removeClass('disabled')
+    $('#add-selected-contact').removeClass('btn-info')
+    $('#add-selected-contact').addClass('btn-success')
     
 $(document).on 'nested:fieldAdded:entry_contacts', (e) ->
   suggestion = $('#contact_search').data('suggestion')
@@ -28,3 +30,4 @@ $(document).on 'nested:fieldAdded:entry_contacts', (e) ->
   $('#contact_search').val('')
   $('#contact_search').data('suggestion', null)
   $('#add-selected-contact').addClass('disabled')
+  $('#add-selected-contact').addClass('btn-info')
