@@ -101,7 +101,7 @@ ActiveRecord::Schema.define(version: 20150105204007) do
     t.boolean  "hidden"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "use_count"
+    t.integer  "entry_collections_count"
   end
 
   create_table "contacts", force: true do |t|
