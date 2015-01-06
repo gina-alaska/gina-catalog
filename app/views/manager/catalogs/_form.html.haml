@@ -4,7 +4,7 @@
     - sections.each do |section|
       %li{class: (section == sections.first ? 'active' : '')}
         = link_to section.humanize, "##{section}", data: { toggle: 'tab' }
-  = nested_form_for [:manager, @catalog], html: { class: 'form' } do |f|
+  = nested_form_for [:manager, @catalog], remote: true, html: { class: 'form' } do |f|
     .tab-content{ style: 'min-height: 200px;'}      
       - unless @catalog.errors.full_messages.empty?
         .alert.alert-error{ style: 'margin: 5px;' }
@@ -120,7 +120,10 @@
           %i.icon-arrow-left.icon-white
           Back
     
-        = f.submit "Save Record", class: 'btn btn-primary pull-right'
+        .span2
+          = f.submit "Save Record", class: 'btn btn-primary', data: { 'disable-with' => "Saving..." }
+        .span2
+          = f.submit 'Save and Close', class: 'btn btn-primary', data: { 'disable-with' => "Saving..." }
       
 #location_editor.modal.hide.fade
   .modal-header

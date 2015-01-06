@@ -76,19 +76,32 @@ class Manager::CatalogsController < ManagerController
     @catalog.owner_setup = current_setup
     @catalog.setups << current_setup
     
-    if @catalog.save
-      @catalog.activity_logs.create(activity: 'Create', user: current_user, log: { message: "New record created" })
-      
-      respond_to do |format|
+    respond_to do |format|
+      if @catalog.save
+        @catalog.activity_logs.create(activity: 'Create', user: current_user, log: { message: "New record created" })
+        flash[:success] = 'Created catalog record'
+
         format.html {
-          flash[:success] = 'Created catalog record'
-          redirect_to [:manager, @catalog]
+          if params["commit"] == "Save Record"
+            redirect_to edit_manager_catalog_path(@catalog)
+          else
+            redirect_to [:manager, @catalog]
+          end
         }
-      end
-    else
-      respond_to do |format|
+        format.js {
+          if params["commit"] == "Save Record"
+            render js: "document.location='#{edit_manager_catalog_path(@catalog)}';"
+          else
+            render js: "document.location='#{manager_catalog_path(@catalog)}';"
+          end
+        }
+      else
         format.html {
           render 'new'
+        }
+        format.js { 
+          flash.now[:error] = @catalog.errors.full_messages
+          render 'form_response'
         }
       end
     end
@@ -112,18 +125,32 @@ class Manager::CatalogsController < ManagerController
   end
   
   def update
-    if @catalog.update_attributes(catalog_params)
-      @catalog.activity_logs.create(activity: 'Update', user: current_user, log: { message: "Updated by #{current_user.first_name}" })
-      respond_to do |format|
+    respond_to do |format|
+      if @catalog.update_attributes(catalog_params)
+        @catalog.activity_logs.create(activity: 'Update', user: current_user, log: { message: "Updated by #{current_user.first_name}" })
+        flash[:success] = 'Updated catalog record'
+
         format.html {
-          flash[:success] = 'Updated catalog record'
-          redirect_to [:manager, @catalog]
+          if params["commit"] == "Save Record"
+            redirect_to edit_manager_catalog_path(@catalog)
+          else
+            redirect_to [:manager, @catalog]
+          end
         }
-      end
-    else
-      respond_to do |format|
+        format.js {
+          if params["commit"] == "Save Record"
+            render js: "document.location='#{edit_manager_catalog_path(@catalog)}';"
+          else
+            render js: "document.location='#{manager_catalog_path(@catalog)}';"
+          end
+        }
+      else
         format.html {
           render 'edit'
+        }
+        format.js { 
+          flash.now[:error] = @catalog.errors.full_messages
+          render 'form_response'
         }
       end
     end
