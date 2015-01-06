@@ -7,12 +7,13 @@
     = contact.email
   %td
     = contact.phone_number
-  %td
-    = link_to edit_manager_contact_path(contact), class: 'btn btn-sm btn-primary', title: 'Edit' do
-      %i.fa.fa-edit
-    - if contact.deletable?
-      = link_to manager_contact_path(contact), data: { method: :delete, confirm: "Are you sure?" }, class: 'btn btn-sm btn-danger', title: 'Delete' do
-        %i.fa.fa-trash-o
-    - else
-      %button.btn.btn-danger.btn-sm.disabled{ data: { title: "Unable to delete contact, #{contact.not_deletable_reason}" } }
-        %i.fa.fa-trash-o
+  %td.text-right
+    .btn-group
+      = link_to edit_manager_contact_path(contact), class: 'btn btn-sm btn-primary', title: 'Edit' do
+        %i.fa.fa-edit
+      - if contact.deletable?
+        = link_to manager_contact_path(contact), data: { method: :delete, confirm: "Are you sure?" }, class: 'btn btn-sm btn-danger', title: 'Delete' do
+          %i.fa.fa-trash-o
+      - else
+        %button.btn.btn-danger.btn-sm.disabled{ data: { title: "Unable to delete contact, #{contact.not_deletable_reason}" } }
+          %i.fa.fa-trash-o
