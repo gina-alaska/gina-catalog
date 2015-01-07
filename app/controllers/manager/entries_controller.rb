@@ -23,10 +23,29 @@ class Manager::EntriesController < ApplicationController
     respond_to do |format|
       if @entry.save
         flash[:success] = "Catalog record #{@entry.title} was successfully created."
-        format.html { redirect_to manager_entries_path }
+
+        format.html {
+          if params["commit"] == "Save"
+            redirect_to edit_manager_entries_path(@entry)
+          else
+            redirect_via_turbolinks_to manager_entries_path(@entry)
+          end
+          }
+
+        format.js {
+          if params["commit"] == "Save"
+            redirect_via_turbolinks_to edit_manager_entry_path(@entry)
+          else
+            render js: "document.location='#{manager_entries_path(@entry)}';"
+          end
+          }
       else
         format.html { render action: "new" }
         format.json { render json: @entry.errors, status: :unprocessable_entity }
+        format.js { 
+          flash.now[:error] = @entry.errors.full_messages
+          render 'form_response'
+        }
       end
     end
   end
@@ -35,11 +54,30 @@ class Manager::EntriesController < ApplicationController
     respond_to do |format|
       if @entry.update_attributes(entry_params)
         flash[:success] = "Catalog record #{@entry.title} was successfully updated."
-        format.html { redirect_to manager_entries_path }
-        format.json { head :nocontent }
+
+        format.html {
+          if params["commit"] == "Save"
+            redirect_to edit_manager_entries_path(@entry)
+          else
+            format.html { redirect_to manager_entries_path }
+            format.json { head :nocontent }
+          end
+          }
+
+        format.js {
+          if params["commit"] == "Save"
+            redirect_via_turbolinks_to edit_manager_entry_path(@entry)
+          else
+            redirect_via_turbolinks_to manager_entries_path(@entry)
+          end
+        }
       else
         format.html { render action: "edit" }
         format.json { render json: @entry.errors, status: :unprocessable_entity }
+        format.js { 
+          flash.now[:error] = @entry.errors.full_messages
+          render 'form_response'
+        }
       end
     end
   end
