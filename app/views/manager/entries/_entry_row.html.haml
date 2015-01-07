@@ -13,8 +13,7 @@
   %td
     = can?(:manage, entry) ? "Yes" : "No"
   %td
-    / placeholder for published?
-    = entry.end_date
+    = entry.published? ? "Yes" : "No"
   %td
     / placeholder for downloads
     = entry.end_date
