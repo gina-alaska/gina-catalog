@@ -62,4 +62,24 @@ class Entry < ActiveRecord::Base
       errors.add(:portals, 'cannot specify more than one owner')
     end
   end
+  
+  def publish(current_user = nil)
+    return true if self.published?
+
+    self.published_at = Time.zone.now
+    # self.published_by = current_user.id
+    save
+  end
+
+  def unpublish
+    return true unless self.published?
+
+    self.published_at = nil
+    # self.published_by = nil
+    save
+  end
+
+  def published?
+    !self.published_at.nil? && self.published_at <= Time.now.utc
+  end
 end
