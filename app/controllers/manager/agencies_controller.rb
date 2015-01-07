@@ -17,7 +17,9 @@ class Manager::AgenciesController < ManagerController
   #end
 
   def search
-    @agencies = Agency.where('name ilike ?', "%#{params[:query]}%")
+    query = params[:query].split(/\s+/)
+    @q = Agency.search(name_or_acronym_or_category_cont_any: query)
+    @agencies = @q.result(distinct: true)
     
     render json: @agencies
   end
