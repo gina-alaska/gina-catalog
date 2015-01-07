@@ -5,8 +5,7 @@
 $(document).on 'ready page:load',  ->
   agenciestypehead = new TypeAheadField('[data-behavior="typeahead"][data-name="agencies"]', {
     display_key: (d) ->
-      display = d.name
-      display
+      "#{d.name} (#{d.acronym})"
   })
   agenciestypehead.on 'typeahead:selected', (e, suggestion, dataset) ->
     target = this
