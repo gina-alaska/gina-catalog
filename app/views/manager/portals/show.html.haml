@@ -48,6 +48,6 @@
   %fieldset.content
     %legend Social settings
     %dl.dl-horizontal
-      - current_portal.social_networks.each do |network|
+      - current_portal.social_networks.active.each do |network|
         %dt=ddtext network.name
         %dd=ddtext network.url
