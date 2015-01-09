@@ -19,7 +19,15 @@ $(document).on 'ready page:load',  ->
     $('#add-selected-contact').removeClass('disabled')
     $('#add-selected-contact').removeClass('btn-info')
     $('#add-selected-contact').addClass('btn-success')
-    
+
+  contactstypehead.on 'keyup', -> 
+    if $(this).val() == ""
+      target = this
+      $(target).data('suggestion', "")
+      $('#add-selected-contact').removeClass('btn-success')
+      $('#add-selected-contact').addClass('disabled')
+      $('#add-selected-contact').addClass('btn-info')
+
 $(document).on 'nested:fieldAdded:entry_contacts', (e) ->
   suggestion = $('#contact_search').data('suggestion')
   return unless suggestion?
