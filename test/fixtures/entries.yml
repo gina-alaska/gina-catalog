@@ -10,7 +10,7 @@ one:
   uuid: MyString
   licence_id: 1
   archived_at: 2014-09-05 16:00:04
-  published_at: 1
+  published_at: 2014-09-05 16:00:04
   start_date: 2014-09-05
   end_date: 2014-09-05
 
@@ -23,7 +23,7 @@ two:
   uuid: MyString
   licence_id: 1
   archived_at: 2014-09-05 16:00:04
-  published_at: 1
+  published_at: 2014-09-05 16:00:04
   start_date: 2014-09-05
   end_date: 2014-09-05
 
@@ -36,6 +36,32 @@ multi_owner:
   uuid: MyString
   licence_id: 1
   archived_at: 2014-09-05 16:00:04
-  published_at: 1
+  published_at: 2014-09-05 16:00:04
+  start_date: 2014-09-05
+  end_date: 2014-09-05
+
+published:
+  title: MyString
+  description: MyText
+  status: MyString
+  entry_type: two
+  slug: MyString
+  uuid: MyString
+  licence_id: 1
+  archived_at: 2014-09-05 16:00:04
+  published_at: 2014-09-05 16:00:04
+  start_date: 2014-09-05
+  end_date: 2014-09-05
+
+unpublished:
+  title: MyString
+  description: MyText
+  status: MyString
+  entry_type: two
+  slug: MyString
+  uuid: MyString
+  licence_id: 1
+  archived_at: 2014-09-05 16:00:04
+  published_at: null
   start_date: 2014-09-05
   end_date: 2014-09-05

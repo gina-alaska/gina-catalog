@@ -22,15 +22,15 @@
 
   .tab-content.content
     #setup_information.tab-pane.active
-      = f.text_field :title, class: 'span12'
-      = f.text_field :acronym, class: 'span12'
-      = f.text_field :by_line, class: 'span12'
-      = f.text_field :contact_email, class: 'span12'
-      //    = f.text_area :default_invite, rows: 4, cols: 40, class: 'span12'
-      = f.text_field :analytics_account, label: "Google analytics", class: 'span12'
+      = f.text_field :title
+      = f.text_field :acronym
+      = f.text_field :by_line
+      = f.text_field :contact_email
+      //    = f.text_area :default_invite, rows: 4, cols: 40
+      = f.text_field :analytics_account, label: "Google analytics"
       //    = f.check_box :use_recaptcha, {}, "true", "false"
-      = f.text_field :description, class: 'span12'
-      //    = f.text_field :keywords, class: 'span12'
+      = f.text_field :description
+      //    = f.text_field :keywords
 
     #maps.tab-pane
       //    = f.select :projection, options_for_select(projections, @current_setup.projection), class: 'span12'
@@ -39,32 +39,42 @@
       //    = f.check_box :google_layers, {}, "true", "false"
 
     #social.tab-pane
-      //    = f.text_field :facebook_url, class: 'span12'
-      //    = f.text_field :github_url, class: 'span12'
-      //    = f.text_field :google_plus_url, class: 'span12'
-      //    = f.text_field :instagram_url, class: 'span12'
-      //    = f.text_field :linkedin_url, class: 'span12'
-      //    = f.text_field :tumblr_url, class: 'span12'
-      //    = f.text_field :twitter_url, class: 'span12'
-      //    = f.text_field :youtube_url, class: 'span12'
+      %table.table.table-striped.table-condensed
+        %thead
+          %tr
+            %th.col-sm-3 Site
+            %th URL
+            %th Valid URL
+        = f.fields_for :social_networks do |network|
+          %tr.fields
+            %td
+              %i.fa.fa-fw.fa-2x{ class: "#{network.object.icon}" }
+              %label.hidden-xs #{network.object.name}
+            %td
+              = network.hidden_field :id
+              = network.hidden_field :social_network_config_id
+              = network.text_field :url, hide_label: true, layout: :default
+            %td
+              = network.object.valid_url ? "Yes" : "No" unless network.object.url.blank?
 
     #favicon.tab-pane
       #logo.tab-pane
-        //.fileupload{ class: (current_setup.favicon.new_record? ? 'fileupload-new' : 'fileupload-exists'), data: { provides: 'fileupload' } }
-        //  .fileupload-preview.thumbnail.fileupload-exists{style:'width: 200px; min-height: 50px;'}
-        //    - if current_setup.favicon.image.nil?
-        //      No Favicon
-        //    -else
-        //      = image_tag current_setup.favicon.image.encode(:png).thumb('200x200').url
-        //  %div
-        //    %span.btn.btn-file
-        //      %span.fileupload-new Select image
-        //      %span.fileupload-exists Change
-        //      = f.fields_for :favicon do |attachment|
-        //        = attachment.hidden_field :_destroy, value: 0
-        //        = attachment.file_field :image
-        //    %a.btn.fileupload-exists{href: "#", data: { dismiss: "fileupload" }} Remove
-        %p Note:  Only use .png or .ico images for the favicon.
+        .fileinput{ style: 'display:block;', class: (f.object.favicon.new_record? ? 'fileinput-new' : 'fileinput-exists'), data: { provides: 'fileinput' } }
+          .row
+            .col-sm-10
+              .fileinput-new.thumbnail
+                %img{ src: 'holder.js/200x200', style: 'width: 200px; height: 200px;' }
+              .fileinput-preview.thumbnail.fileinput-exists{ style: 'max-width:200px; max-height:200px;' }
+                = image_tag @portal.favicon.image.encode(:png).thumb('200x200').url if @portal.favicon.image
+            .col-sm-2.text-right
+              = f.fields_for :favicon do |attachment|
+                = attachment.hidden_field :_destroy, value: 0
+                %span.btn.btn-file.btn-success.btn-block
+                  %span.fileinput-new Add Favicon
+                  %span.fileinput-exists Change Favicon
+                  = attachment.file_field_without_bootstrap :image
+                %a.btn.btn-danger.btn-block.fileinput-exists{href: "#", data: { dismiss: "fileinput" }} Remove
+        %p Note:  It's recommended to use .png or .jpg images for the favicon.
 
   .form-actions
     = link_to manager_portal_path, class: 'btn btn-default' do
@@ -72,11 +82,11 @@
       Cancel
     = f.submit class: 'btn btn-primary pull-right'
 :javascript
-  $('[data-dismiss="fileupload"]').on('click', function() {
-    $('#setup_favicon_attributes__destroy').val(1);
+  $('[data-dismiss="fileinput"]').on('click', function() {
+    $('#portal_favicon_attributes__destroy').val(1);
   })
-  $('#setup_favicon_attributes_image').on('change', function() {
+  $('#portal_favicon_attributes_image').on('change', function() {
     if ($(this).val() != '') {
-      $('#setup_favicon_attributes__destroy').val(0);
+      $('#portal_favicon_attributes__destroy').val(0);
     }
   })

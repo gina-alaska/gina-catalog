@@ -1,4 +1,3 @@
-= f.alert_message "Please fix the errors below.", error_summary: false
 = f.text_field :title, wrapper_class: 'required'
 = f.text_area :description, cols: 40, rows: 10, wrapper_class: 'required'
 = f.select :status, @entry.class::STATUSES, { selected: @entry.status, prompt: 'Please select a status', wrapper_class: 'required' }

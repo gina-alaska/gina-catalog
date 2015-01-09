@@ -51,4 +51,30 @@ class EntryTest < ActiveSupport::TestCase
     assert_equal 1, @entry.owner_portal_count
     assert_equal 2, @multiowners.owner_portal_count
   end
+
+  test "is entry published?" do
+    entry = entries(:published)
+
+    assert entry.published?, "Entry is not published when it should be."
+  end
+
+  test "is entry unpublished?" do
+    entry = entries(:unpublished)
+
+    assert !entry.published?, "Entry is published when it should not be."
+  end
+
+  test "publish an entry" do
+    entry = entries(:unpublished)
+    entry.publish
+
+    assert entry.published?, "Entry has not been published when it should be."
+  end
+
+  test "unpublish an entry" do
+    entry = entries(:published)
+    entry.unpublish
+
+    assert !entry.published?, "Entry is still published when it should not be."
+  end
 end

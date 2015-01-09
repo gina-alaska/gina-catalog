@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  portal: one 
+  social_network_config: one
+  url: MyString
+  valid_url: false
+
+two:
+  portal: one
+  social_network_config: two
+  url: MyString
+  valid_url: false
