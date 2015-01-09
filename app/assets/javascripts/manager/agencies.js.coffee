@@ -15,6 +15,14 @@ $(document).on 'ready page:load',  ->
     $('#add-selected-agency').removeClass('btn-info')
     $('#add-selected-agency').addClass('btn-success')
     
+  agenciestypehead.on 'keyup', -> 
+    if $(this).val() == ""
+      target = this
+      $(target).data('suggestion', "")
+      $('#add-selected-agency').removeClass('btn-success')
+      $('#add-selected-agency').addClass('disabled')
+      $('#add-selected-agency').addClass('btn-info')
+
 $(document).on 'nested:fieldAdded:entry_agencies', (e) ->
   suggestion = $('#agency_search').data('suggestion')
   return unless suggestion?
@@ -24,6 +32,5 @@ $(document).on 'nested:fieldAdded:entry_agencies', (e) ->
   e.field.find('.agency_name').html(suggestion.name)
   $('#agency_search').val('')
   $('#agency_search').data('suggestion', null)
-  $('#add-selected-agency').addClass('disabled')
   $('#add-selected-agency').addClass('disabled')
   $('#add-selected-agency').addClass('btn-info')
