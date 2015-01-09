@@ -16,4 +16,10 @@ class ContactTest < ActiveSupport::TestCase
   test "blank contacts are invalid" do
   	assert !@blank_contact.valid?, "Contact was valid when shouldn't be."
   end
+
+  test "contact should not be deletable if assigned" do
+    contact = contacts(:one)
+
+    assert contact.deletable?, "contact is deletable but should not be"
+  end
 end
