@@ -13,4 +13,10 @@ class AgencyTest < ActiveSupport::TestCase
 
   should have_many(:entry_agencies)
   should have_many(:entries).through(:entry_agencies)
+  
+  test "agency should not be deletable if assigned" do
+    agency = agencies(:one)
+
+    assert !agency.deletable?, "agency is deletable but should not be"
+  end
 end

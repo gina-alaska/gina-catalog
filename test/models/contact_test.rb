@@ -20,6 +20,6 @@ class ContactTest < ActiveSupport::TestCase
   test "contact should not be deletable if assigned" do
     contact = contacts(:one)
 
-    assert contact.deletable?, "contact is deletable but should not be"
+    assert !contact.deletable?, "contact is deletable but should not be"
   end
 end
