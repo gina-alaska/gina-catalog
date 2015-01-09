@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150107183713) do
+ActiveRecord::Schema.define(version: 20150108203306) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -122,7 +122,6 @@ ActiveRecord::Schema.define(version: 20150107183713) do
     t.integer  "portal_id"
     t.integer  "licence_id"
     t.datetime "archived_at"
-    t.integer  "published_at"
     t.date     "start_date"
     t.date     "end_date"
     t.integer  "owner_portal_id"
@@ -132,6 +131,7 @@ ActiveRecord::Schema.define(version: 20150107183713) do
     t.boolean  "request_contact_info"
     t.boolean  "require_contact_info"
     t.integer  "entry_type_id"
+    t.datetime "published_at"
   end
 
   create_table "entry_agencies", force: true do |t|
