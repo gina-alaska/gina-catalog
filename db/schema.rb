@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141205225904) do
+ActiveRecord::Schema.define(version: 20150108203306) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -101,6 +101,7 @@ ActiveRecord::Schema.define(version: 20141205225904) do
     t.boolean  "hidden"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "entry_collections_count", default: 0
   end
 
   create_table "contacts", force: true do |t|
@@ -121,7 +122,6 @@ ActiveRecord::Schema.define(version: 20141205225904) do
     t.integer  "portal_id"
     t.integer  "licence_id"
     t.datetime "archived_at"
-    t.integer  "published_at"
     t.date     "start_date"
     t.date     "end_date"
     t.integer  "owner_portal_id"
@@ -131,6 +131,7 @@ ActiveRecord::Schema.define(version: 20141205225904) do
     t.boolean  "request_contact_info"
     t.boolean  "require_contact_info"
     t.integer  "entry_type_id"
+    t.datetime "published_at"
   end
 
   create_table "entry_agencies", force: true do |t|
@@ -149,13 +150,19 @@ ActiveRecord::Schema.define(version: 20141205225904) do
     t.datetime "updated_at"
   end
 
+  create_table "entry_collections", force: true do |t|
+    t.integer  "collection_id"
+    t.integer  "entry_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "entry_contacts", force: true do |t|
     t.integer  "contact_id"
     t.integer  "entry_id"
     t.boolean  "primary",    default: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "secondary",  default: false
   end
 
   create_table "entry_portals", force: true do |t|
@@ -170,6 +177,14 @@ ActiveRecord::Schema.define(version: 20141205225904) do
     t.string   "name"
     t.string   "description"
     t.string   "color"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "favicons", force: true do |t|
+    t.integer  "portal_id"
+    t.string   "image_name"
+    t.string   "image_uid"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -241,6 +256,22 @@ ActiveRecord::Schema.define(version: 20141205225904) do
     t.integer  "lft"
     t.integer  "rgt"
     t.integer  "depth"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "social_network_configs", force: true do |t|
+    t.string   "name"
+    t.string   "icon"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "social_networks", force: true do |t|
+    t.integer  "portal_id"
+    t.integer  "social_network_config_id"
+    t.string   "url"
+    t.boolean  "valid_url",                default: true
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -17,7 +17,17 @@ $(document).on 'ready page:load',  ->
     target = this
     $(target).data('suggestion', suggestion)
     $('#add-selected-contact').removeClass('disabled')
-    
+    $('#add-selected-contact').removeClass('btn-info')
+    $('#add-selected-contact').addClass('btn-success')
+
+  contactstypehead.on 'keyup', -> 
+    if $(this).val() == ""
+      target = this
+      $(target).data('suggestion', "")
+      $('#add-selected-contact').removeClass('btn-success')
+      $('#add-selected-contact').addClass('disabled')
+      $('#add-selected-contact').addClass('btn-info')
+
 $(document).on 'nested:fieldAdded:entry_contacts', (e) ->
   suggestion = $('#contact_search').data('suggestion')
   return unless suggestion?
@@ -28,3 +38,4 @@ $(document).on 'nested:fieldAdded:entry_contacts', (e) ->
   $('#contact_search').val('')
   $('#contact_search').data('suggestion', null)
   $('#add-selected-contact').addClass('disabled')
+  $('#add-selected-contact').addClass('btn-info')

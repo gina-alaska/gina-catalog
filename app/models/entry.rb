@@ -7,6 +7,7 @@ class Entry < ActiveRecord::Base
   belongs_to :entry_type
 
   has_many :attachments, dependent: :destroy
+  has_many :activity_logs, as: :loggable
   has_many :links, dependent: :destroy
 
   has_many :entry_agencies
@@ -21,10 +22,9 @@ class Entry < ActiveRecord::Base
   
   has_many :entry_contacts
   has_many :contacts, through: :entry_contacts
+
   has_many :primary_entry_contacts, -> { primary }, class_name: "EntryContact"
   has_many :primary_contacts, through: :primary_entry_contacts, source: :contact
-  has_many :secondary_entry_contacts, -> { secondary }, class_name: "EntryContact"
-  has_many :secondary_contacts, through: :secondary_entry_contacts, source: :contact
 
   has_many :entry_portals
   has_many :portals, through: :entry_portals
@@ -61,5 +61,25 @@ class Entry < ActiveRecord::Base
     if owner_portal_count > 1
       errors.add(:portals, 'cannot specify more than one owner')
     end
+  end
+  
+  def publish(current_user = nil)
+    return true if self.published?
+
+    self.published_at = Time.zone.now
+    # self.published_by = current_user.id
+    save
+  end
+
+  def unpublish
+    return true unless self.published?
+
+    self.published_at = nil
+    # self.published_by = nil
+    save
+  end
+
+  def published?
+    !self.published_at.nil? && self.published_at <= Time.now.utc
   end
 end

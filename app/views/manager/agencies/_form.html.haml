@@ -19,11 +19,20 @@
         = f.check_box :active
 
     #aliases.tab-pane{ style: "min-height: 60px;" }
-      #alias_add{ style: 'text-align: right; margin-bottom: 5px;' }
-        = f.link_to_add :aliases, :data => { :target => "#aliases" }, class: "btn btn-success" do
-          %i.icon-plus.icon-white
-          Add an alias
-      = f.fields_for :aliases 
+      .row
+        .col-sm-10
+          %h4 Aliases
+        .col-sm-2
+          = f.link_to_add :aliases, :data => { :target => "#aliases_add" }, class: "btn btn-success btn-block" do
+            %i.icon-plus.icon-white
+            Add alias
+      %table.table.table-striped
+        %thead
+          %tr
+            %th Alias
+            %th.text-right Actions
+        %tbody#aliases_add
+          = f.fields_for :aliases, wrapper: false
 
     #logo.tab-pane
       .fileinput{ style: 'display:block;', class: (f.object.logo.nil? ? 'fileinput-new' : 'fileinput-exists'), data: { provides: 'fileinput' } }

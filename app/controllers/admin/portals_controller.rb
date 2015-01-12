@@ -12,6 +12,7 @@ class Admin::PortalsController < AdminController
   def new
     @portal = Portal.new
     @portal.urls.build
+    @portal.build_favicon
   end
   
   def create
@@ -48,7 +49,7 @@ class Admin::PortalsController < AdminController
   protected
   
   def portal_params
-    params.require(:portal).permit(:title, :acronym, :parent_id, urls_attributes: [:id, :url, :default])
+    params.require(:portal).permit(:title, :acronym, :parent_id, urls_attributes: [:id, :url, :default], favicon: [:id, :image_name, :image_uid])
   end
   
   def set_portal

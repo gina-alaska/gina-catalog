@@ -12,17 +12,19 @@ class EntryTest < ActiveSupport::TestCase
   should have_many(:entry_aliases)
   should have_many(:entry_agencies)
   should have_many(:agencies).through(:entry_agencies)
+  should have_many(:entry_portals)
+  should have_many(:portals).through(:entry_portals)
+  should have_many(:activity_logs)
 
-  should ensure_length_of(:title).is_at_most(255)
   should validate_presence_of(:title)
   should validate_presence_of(:status)  
   should validate_presence_of(:entry_type_id)    
+
   should ensure_length_of(:slug).is_at_most(255)
+  should ensure_length_of(:title).is_at_most(255)
   #should ensure_length_of(:portals).is_at_least(1)
   
   should belong_to(:entry_type)
-  should have_many(:entry_portals)
-  should have_many(:portals).through(:entry_portals)
   should have_one(:owner_entry_portal)
   should have_one(:owner_portal).through(:owner_entry_portal)
   
@@ -48,5 +50,31 @@ class EntryTest < ActiveSupport::TestCase
   test "owner_portal_count should return the correct counts" do
     assert_equal 1, @entry.owner_portal_count
     assert_equal 2, @multiowners.owner_portal_count
+  end
+
+  test "is entry published?" do
+    entry = entries(:published)
+
+    assert entry.published?, "Entry is not published when it should be."
+  end
+
+  test "is entry unpublished?" do
+    entry = entries(:unpublished)
+
+    assert !entry.published?, "Entry is published when it should not be."
+  end
+
+  test "publish an entry" do
+    entry = entries(:unpublished)
+    entry.publish
+
+    assert entry.published?, "Entry has not been published when it should be."
+  end
+
+  test "unpublish an entry" do
+    entry = entries(:published)
+    entry.unpublish
+
+    assert !entry.published?, "Entry is still published when it should not be."
   end
 end
