@@ -1,6 +1,8 @@
 class Entry < ActiveRecord::Base
   STATUSES = %w(Complete Ongoing Unknown Funded)
 
+  searchkick
+  
   acts_as_taggable_on :tags
 
   belongs_to :use_agreement
@@ -14,12 +16,12 @@ class Entry < ActiveRecord::Base
   has_many :agencies, through: :entry_agencies
   has_many :primary_entry_agencies, -> { primary }, class_name: "EntryAgency"
   has_many :primary_agencies, through: :primary_entry_agencies, source: :agency
-    
+
   has_many :entry_aliases
-  
+
   has_many :entry_collections
   has_many :collections, through: :entry_collections
-  
+
   has_many :entry_contacts
   has_many :contacts, through: :entry_contacts
 
@@ -46,7 +48,7 @@ class Entry < ActiveRecord::Base
   accepts_nested_attributes_for :entry_agencies, allow_destroy: true
   accepts_nested_attributes_for :attachments, allow_destroy: true, reject_if: proc { |attachment| attachment['file'].blank? }
   accepts_nested_attributes_for :links, allow_destroy: true, reject_if: proc { |link| link['url'].blank? }
-  
+
   after_create :set_owner_portal
 
   def set_owner_portal

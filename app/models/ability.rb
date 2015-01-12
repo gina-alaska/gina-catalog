@@ -28,7 +28,7 @@ class Ability
     #
     # See the wiki for details:
     # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
-    
+
     user ||= User.new
 
     if user.has_role?(:cms_manager, current_portal)
@@ -37,7 +37,7 @@ class Ability
 
     if user.has_role?(:data_manager, current_portal)
       can :view_manager_menu, User
-      
+
       can :manage, Agency
       can :manage, Contact
       can :manage, UseAgreement
@@ -45,14 +45,14 @@ class Ability
       can :manage, Entry do |entry|
         entry.new_record? or entry.owner_portal == current_portal
       end
-    end    
+    end
 
     if user.has_role?(:portal_manager, current_portal)
       can :view_manager_menu, User
       can :update, Portal do |requested_portal|
         current_portal == current_portal
       end
-      
+
       can :manage, Permission do |permission|
         permission.new_record? or permission.portal == current_portal
       end
@@ -60,11 +60,11 @@ class Ability
         invitation.new_record? or invitation.portal == current_portal
       end
     end
-    
+
     if user.global_admin?
       can :manage, Portal
       can :manage, User
-      can :manage, EntryType      
+      can :manage, EntryType
     end
   end
 end

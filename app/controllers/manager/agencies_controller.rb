@@ -2,11 +2,11 @@ class Manager::AgenciesController < ManagerController
   load_and_authorize_resource
 
   def index
-    @q = Agency.search(params[:q])
+    @q = Agency.ransack(params[:q])
     @q.sorts = 'name asc' if @q.sorts.empty?
     @agencies = @q.result(distinct: true)
     @agencies = @agencies.used_by_portal(current_portal) unless params[:all].present?
-      
+
     respond_to do |format|
       format.html
       format.json { render json: @agencies }
@@ -18,9 +18,9 @@ class Manager::AgenciesController < ManagerController
 
   def search
     query = params[:query].split(/\s+/)
-    @q = Agency.search(name_or_acronym_or_category_cont_any: query)
+    @q = Agency.ransack(name_or_acronym_or_category_cont_any: query)
     @agencies = @q.result(distinct: true)
-    
+
     render json: @agencies
   end
 
@@ -34,7 +34,7 @@ class Manager::AgenciesController < ManagerController
 
   def create
     @agency = Agency.new(agency_params)
-    # TODO: make sure that agencies do not need to be associated with portals. 
+    # TODO: make sure that agencies do not need to be associated with portals.
 
     respond_to do |format|
       if @agency.save
@@ -71,7 +71,7 @@ class Manager::AgenciesController < ManagerController
   end
 
   protected
-  
+
   def agency_params
     params.require(:agency).permit(:name, :acronym, :description, :category, :url, :active, :logo, aliases_attributes: [:id, :text, :_destroy])
   end
