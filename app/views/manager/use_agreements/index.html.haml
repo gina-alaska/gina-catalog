@@ -12,8 +12,9 @@
   %table.table.table-striped.table-condensed
     %thead
       %tr
-        %th Title
-        %th Required
-        %th Actions
+        %th.col-sm-6 Title
+        %th.col-sm-2 Required
+        %th.col-sm-2 Archived
+        %th.text-right Actions
     %tbody
       = render(partial: "use_agreement_row", collection: @use_agreements, as: :use_agreement) || "<tr><td colspan=\"3\">There are no use agreements defined</td></tr>".html_safe
