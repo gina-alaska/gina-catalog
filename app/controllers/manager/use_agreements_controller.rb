@@ -43,18 +43,22 @@ class Manager::UseAgreementsController < ApplicationController
   end
 
   def destroy
-    @use_agreement.destroy
-
     respond_to do |format|
-      flash[:success] = "Use agreement #{@use_agreement.title} was successfully deleted."
-      format.html { redirect_to manager_use_agreements_path }
-      format.json { head :no_content }
+      if @use_agreement.deletable?
+        @use_agreement.destroy
+        flash[:success] = "use agreement #{@use_agreement.title} was successfully deleted."
+        format.html { redirect_to manager_use_agreements_path }
+        format.json { head :no_content }
+      else
+        flash[:error] = "use agreement #{@use_agreement.title} was not deleted, make sure that it is not used in any catalog records."
+        format.html { redirect_to manager_use_agreements_path }
+      end
     end
   end
 
   protected
   
   def use_agreement_params
-    params.require(:use_agreement).permit(:title, :body, :required)
+    params.require(:use_agreement).permit(:title, :body, :required, :archived)
   end
 end
