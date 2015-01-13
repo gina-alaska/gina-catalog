@@ -1,4 +1,6 @@
 class UseAgreement < ActiveRecord::Base
+  include EntryDependentConcerns
+  
   belongs_to :portal
   has_many :entries
 

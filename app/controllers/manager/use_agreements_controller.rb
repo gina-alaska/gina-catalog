@@ -50,7 +50,7 @@ class Manager::UseAgreementsController < ApplicationController
         format.html { redirect_to manager_use_agreements_path }
         format.json { head :no_content }
       else
-        flash[:error] = "use agreement #{@use_agreement.title} was not deleted, make sure that it is not used in any catalog records."
+        flash[:error] = @use_agreement.errors.full_messages.join('<br />'.html_safe)
         format.html { redirect_to manager_use_agreements_path }
       end
     end

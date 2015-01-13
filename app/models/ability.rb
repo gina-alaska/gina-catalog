@@ -62,9 +62,10 @@ class Ability
     end
     
     if user.global_admin?
+      can :view_admin_menu, User
       can :manage, Portal
       can :manage, User
-      can :manage, EntryType      
+      can :manage, EntryType
     end
   end
 end
