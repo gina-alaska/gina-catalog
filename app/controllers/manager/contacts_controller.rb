@@ -56,7 +56,7 @@ class Manager::ContactsController < ManagerController
         format.html { redirect_to manager_contacts_path }
         format.json { head :no_content }     
       else
-        flash[:error] = @agency.errors.full_messages.join('<br />'.html_safe)
+        flash[:error] = @contact.errors.full_messages.join('<br />'.html_safe)
         format.html { redirect_to manager_contacts_path }
 #        format.json { head :no_content } 
       end
