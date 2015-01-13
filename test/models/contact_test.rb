@@ -22,4 +22,5 @@ class ContactTest < ActiveSupport::TestCase
 
     assert !contact.deletable?, "contact is deletable but should not be"
   end
+  
 end

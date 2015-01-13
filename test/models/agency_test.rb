@@ -19,4 +19,5 @@ class AgencyTest < ActiveSupport::TestCase
 
     assert !agency.deletable?, "agency is deletable but should not be"
   end
+
 end
