@@ -44,13 +44,12 @@ class Manager::UseAgreementsController < ApplicationController
 
   def destroy
     respond_to do |format|
-      if @use_agreement.deletable?
-        @use_agreement.destroy
+      if @use_agreement.destroy
         flash[:success] = "use agreement #{@use_agreement.title} was successfully deleted."
         format.html { redirect_to manager_use_agreements_path }
         format.json { head :no_content }
       else
-        flash[:error] = @use_agreement.errors.full_messages.join('<br />'.html_safe)
+        flash[:error] = @use_agreement.errors.full_messages.join('<br />').html_safe
         format.html { redirect_to manager_use_agreements_path }
       end
     end

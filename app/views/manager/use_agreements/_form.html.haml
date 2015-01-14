@@ -1,4 +1,4 @@
-= bootstrap_form_for [:manager, @use_agreement], layout: :horizontal do |f|
+= bootstrap_form_for [:manager, @use_agreement], label_errors: true, layout: :horizontal do |f|
   = f.alert_message "Please fix the errors below.", error_summary: false
   = f.text_field :title
   = f.text_area :body, cols: 40, rows: 10
