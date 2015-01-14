@@ -3,7 +3,7 @@ class Collection < ActiveRecord::Base
   
   belongs_to :portal
   
-  has_many :entry_collections
+  has_many :entry_collections, dependent: :delete_all
   has_many :entries, through: :entry_collections
   
 end
