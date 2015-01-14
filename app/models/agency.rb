@@ -1,4 +1,6 @@
 class Agency < ActiveRecord::Base
+  include EntryDependentConcerns
+  
   CATEGORIES = [
     'Academic',
     'Industry/Consultants',
@@ -11,12 +13,13 @@ class Agency < ActiveRecord::Base
   ]
   
   dragonfly_accessor :logo
-
+  
   has_many :entry_agencies
   has_many :entries, through: :entry_agencies
+  
   has_many :entry_portals, through: :entries
   has_many :aliases, as: :aliasable, dependent: :destroy
-  
+    
   validates :name, length: { maximum: 255 }
   validates :category, length: { maximum: 255 }
   validates :description, length: { maximum: 255 }

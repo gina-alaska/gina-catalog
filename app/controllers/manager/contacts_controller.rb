@@ -49,13 +49,19 @@ class Manager::ContactsController < ManagerController
   end
 
   def destroy
-    @contact.destroy
 
-    respond_to do |format|
-      flash[:success] = "Contact #{@contact.name} was successfully deleted."
-      format.html { redirect_to manager_contacts_path }
-      format.json { head :no_content }
+    respond_to do |format|    
+      if @contact.destroy
+        flash[:success] = "Contact #{@contact.name} was successfully deleted."
+        format.html { redirect_to manager_contacts_path }
+        format.json { head :no_content }     
+      else
+        flash[:error] = @contact.errors.full_messages.join('<br />').html_safe
+        format.html { redirect_to manager_contacts_path }
+#        format.json { head :no_content } 
+      end
     end
+
   end
   
   protected
