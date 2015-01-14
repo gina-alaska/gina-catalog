@@ -5,7 +5,6 @@ one:
   category: Academic
   description: MyString
   acronym: MyString
-  active: false
   adiwg_code: MyString
   adiwg_path: MyString
   logo_uid: MyString
@@ -18,7 +17,6 @@ two:
   category: Academic
   description: MyString
   acronym: MyString
-  active: false
   adiwg_code: MyString
   adiwg_path: MyString
   logo_uid: MyString

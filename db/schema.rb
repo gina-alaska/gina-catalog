@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150113225110) do
+ActiveRecord::Schema.define(version: 20150113231837) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,7 +48,6 @@ ActiveRecord::Schema.define(version: 20150113225110) do
     t.string   "category"
     t.string   "description"
     t.string   "acronym",     limit: 15
-    t.boolean  "active",                 default: true
     t.string   "adiwg_code"
     t.string   "adiwg_path"
     t.string   "logo_uid"

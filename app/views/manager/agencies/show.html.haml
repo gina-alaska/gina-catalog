@@ -17,8 +17,6 @@
       %dd= @agency.category
       %dt Url
       %dd= @agency.url
-      %dt Active
-      %dd= @agency.active.blank? ? "No" : "Yes"
       %dt Aliases
       - @agency.aliases.each do |item|
         %dd= item.text
