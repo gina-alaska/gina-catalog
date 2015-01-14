@@ -67,7 +67,7 @@ class Manager::AgenciesController < ManagerController
         format.html { redirect_to manager_agencies_path }
         format.json { head :no_content }     
       else
-        flash[:error] = @agency.errors.full_messages.join('<br />'.html_safe)
+        flash[:error] = @agency.errors.full_messages.join('<br />').html_safe
         format.html { redirect_to manager_agencies_path }
 #        format.json { head :no_content } 
       end
