@@ -1,13 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  entry_id: 1
-  agency_id: 1
+  entry: :one
+  agency: :one
   primary: false
   funding: false
 
 two:
-  entry_id: 1
-  agency_id: 1
+  entry: :two
+  agency: :two
   primary: false
   funding: false

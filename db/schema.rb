@@ -15,6 +15,8 @@ ActiveRecord::Schema.define(version: 20150114013706) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "postgis"
+  enable_extension "postgis_topology"
   enable_extension "hstore"
   enable_extension "uuid-ossp"
 
@@ -48,7 +50,6 @@ ActiveRecord::Schema.define(version: 20150114013706) do
     t.string   "category"
     t.string   "description"
     t.string   "acronym",     limit: 15
-    t.boolean  "active",                 default: true
     t.string   "adiwg_code"
     t.string   "adiwg_path"
     t.string   "logo_uid"
