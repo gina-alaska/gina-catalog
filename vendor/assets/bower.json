@@ -1,13 +1,15 @@
 {
   "name": "dsl-generated dependencies",
   "dependencies": {
-    "bootstrap": "latest",
+    "bootstrap": "~> 3.3.0",
     "font-awesome": "~> 4.2.0",
     "typeahead.js": "~> 0.10.5",
     "handlebars": "latest",
     "jasny-bootstrap": "latest",
     "eonasdan-bootstrap-datetimepicker": "latest",
     "select2": "~> 3.5.0",
-    "holderjs": "latest"
+    "holderjs": "latest",
+    "leaflet.markercluster": "latest",
+    "wicket": "https://github.com/arthur-e/Wicket.git"
   }
 }

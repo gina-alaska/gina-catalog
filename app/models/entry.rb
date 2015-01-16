@@ -1,14 +1,16 @@
 class Entry < ActiveRecord::Base
+  include EntrySearchConcerns
+
   STATUSES = %w(Complete Ongoing Unknown Funded)
 
-  searchkick
-  
   acts_as_taggable_on :tags
 
   belongs_to :use_agreement
   belongs_to :entry_type
 
   has_many :attachments, dependent: :destroy
+  has_many :bboxes, through: :attachments
+
   has_many :activity_logs, as: :loggable
   has_many :links, dependent: :destroy
 
@@ -16,6 +18,8 @@ class Entry < ActiveRecord::Base
   has_many :agencies, through: :entry_agencies
   has_many :primary_entry_agencies, -> { primary }, class_name: "EntryAgency"
   has_many :primary_agencies, through: :primary_entry_agencies, source: :agency
+  has_many :funding_entry_agencies, -> { funding }, class_name: "EntryAgency"
+  has_many :funding_agencies, through: :funding_entry_agencies, source: :agency
 
   has_many :entry_aliases
 
@@ -64,7 +68,7 @@ class Entry < ActiveRecord::Base
       errors.add(:portals, 'cannot specify more than one owner')
     end
   end
-  
+
   def publish(current_user = nil)
     return true if self.published?
 
@@ -79,6 +83,17 @@ class Entry < ActiveRecord::Base
     self.published_at = nil
     # self.published_by = nil
     save
+  end
+
+  def bbox
+    srs_database = RGeo::CoordSys::SRSDatabase::ActiveRecordTable.new
+    factory = RGeo::Geos.factory(:srs_database => srs_database, :srid => 4326)
+    bounds = RGeo::Cartesian::BoundingBox.new(factory)
+    self.bboxes.each do |box|
+      bounds.add(box.geom)
+    end
+
+    bounds.to_geometry
   end
 
   def published?

@@ -21,5 +21,8 @@
 //= require eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js
 //= require select2/select2.js
 //= require holderjs/holder.js
+//= require leaflet.markercluster/dist/leaflet.markercluster
+//= require wicket/wicket
+//= require wicket/wicket-leaflet
 //= require turbolinks
 //= require_tree .

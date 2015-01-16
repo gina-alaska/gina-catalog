@@ -11,10 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150108203306) do
+ActiveRecord::Schema.define(version: 20150115233848) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "postgis"
+  enable_extension "postgis_topology"
   enable_extension "hstore"
   enable_extension "uuid-ossp"
 
@@ -92,6 +94,14 @@ ActiveRecord::Schema.define(version: 20150108203306) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "bounds", force: true do |t|
+    t.integer  "boundable_id"
+    t.string   "boundable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.spatial  "geom",           limit: {:srid=>4326, :type=>"geometry"}
   end
 
   create_table "collections", force: true do |t|

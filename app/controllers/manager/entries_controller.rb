@@ -1,8 +1,16 @@
 class Manager::EntriesController < ApplicationController
   load_and_authorize_resource
 
+  include EntriesControllerSearchConcerns
+
   def index
-    @entries = Entry.joins(:entry_portals).where(entry_portals: { portal_id: current_portal.self_and_descendants })
+    search
+
+    respond_to do |format|
+      format.html
+      format.geojson
+      format.json
+    end
   end
 
   #def show
@@ -42,7 +50,7 @@ class Manager::EntriesController < ApplicationController
       else
         format.html { render action: "new" }
         format.json { render json: @entry.errors, status: :unprocessable_entity }
-        format.js { 
+        format.js {
           flash.now[:error] = @entry.errors.full_messages
           render 'form_response'
         }
@@ -55,26 +63,18 @@ class Manager::EntriesController < ApplicationController
       if @entry.update_attributes(entry_params)
         flash[:success] = "Catalog record #{@entry.title} was successfully updated."
 
-        format.html {
-          if params["commit"] == "Save"
-            redirect_to edit_manager_entries_path(@entry)
-          else
-            format.html { redirect_to manager_entries_path }
-            format.json { head :nocontent }
-          end
-          }
-
-        format.js {
-          if params["commit"] == "Save"
-            redirect_via_turbolinks_to edit_manager_entry_path(@entry)
-          else
-            redirect_via_turbolinks_to manager_entries_path(@entry)
-          end
-        }
+        if params["commit"] == "Save"
+          format.html { redirect_to edit_manager_entry_path(@entry) }
+          format.js { redirect_via_turbolinks_to edit_manager_entry_path(@entry) }
+        else
+          format.html { redirect_to manager_entries_path }
+          format.js { redirect_via_turbolinks_to manager_entries_path(@entry) }
+        end
+        format.json { head :nocontent }
       else
         format.html { render action: "edit" }
         format.json { render json: @entry.errors, status: :unprocessable_entity }
-        format.js { 
+        format.js {
           flash.now[:error] = @entry.errors.full_messages
           render 'form_response'
         }
@@ -83,7 +83,7 @@ class Manager::EntriesController < ApplicationController
   end
 
   def destroy
-    @entry.destroy
+    # @entry.destroy
 
     respond_to do |format|
       flash[:success] = "Catalog record #{@entry.title} was successfully deleted."
@@ -98,7 +98,7 @@ class Manager::EntriesController < ApplicationController
       @collections = @collections.where('name ilike ?', "%#{params[:q]}%").order(:name)
     end
   end
-  
+
   def tags
     @tags = Entry.all_tags
     if params[:q].present?
@@ -111,18 +111,16 @@ class Manager::EntriesController < ApplicationController
   def entry_params
 
     values = params.require(:entry).permit(
-      :title, :description, :status, :entry_type_id, :start_date, :end_date, 
+      :title, :description, :status, :entry_type_id, :start_date, :end_date,
       :use_agreement_id, :request_contact_info, :require_contact_info, :tag_list, :collection_ids,
       links_attributes: [:id, :link_id, :category, :display_text, :url, :_destroy],
-      attachments_attributes: [:id, :file, :description, :interaction, :_destroy], 
-      entry_contacts_attributes: [:id, :contact_id, :primary, :_destroy], 
+      attachments_attributes: [:id, :file, :description, :interaction, :category, :_destroy],
+      entry_contacts_attributes: [:id, :contact_id, :primary, :_destroy],
       entry_agencies_attributes: [:id, :agency_id, :primary, :funding, :_destroy])
-      
+
     if values[:collection_ids].present?
       values[:collection_ids] = values.delete(:collection_ids).split(',').map(&:to_i).reject { |v| v == 0 }
     end
-      
     values
-
   end
 end

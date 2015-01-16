@@ -58,10 +58,10 @@ gem 'dragonfly', '~> 1.0.1'
 gem 'acts-as-taggable-on', '~> 3.4'
 gem 'uuidtools'
 gem 'searchkick'
-gem 'typhoeus'
 gem 'ransack'
 gem 'squeel'
 gem 'quiet_assets'
+gem 'georuby'
 
 group :development do
   gem "better_errors"

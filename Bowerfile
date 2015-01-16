@@ -1,7 +1,7 @@
 # A sample Bowerfile
 # Check out https://github.com/42dev/bower-rails#ruby-dsl-configuration for more options
 
-asset 'bootstrap'
+asset 'bootstrap', '~> 3.3.0'
 asset 'font-awesome', '~> 4.2.0'
 asset 'typeahead.js', '~> 0.10.5'
 asset 'handlebars'
@@ -9,3 +9,5 @@ asset 'jasny-bootstrap'
 asset 'eonasdan-bootstrap-datetimepicker'
 asset 'select2', '~> 3.5.0'
 asset 'holderjs'
+asset "leaflet.markercluster"
+asset 'wicket', git: 'https://github.com/arthur-e/Wicket.git'

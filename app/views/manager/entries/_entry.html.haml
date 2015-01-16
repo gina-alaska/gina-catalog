@@ -1,0 +1,37 @@
+%li.entry.media{ id: dom_id(entry), style: 'border-bottom: 1px solid #efefef;' }
+  .media-body
+    %h4.media-heading
+      = link_to entry.title, edit_manager_entry_path(entry)
+    %p
+      - if entry.primary_agencies.any?
+        %em
+          = entry.primary_agencies.map(&:name_with_acronym).join(', ')
+          \-
+      #{truncate entry.description, length: 200, separator: ' '}
+    %p
+      .detail-block
+        %label Status:
+        = entry.status
+      - if entry.start_date
+        .detail-block
+          %label Starts:
+          = entry.start_date
+      - if entry.end_date
+        .detail-block
+          %label Ends:
+          = entry.start_date
+  .media-actions.text-right
+    - unless entry.bboxes.empty?
+      %button.btn.btn-default{ data: { behavior: 'highlight-markers', target: ".#{dom_id(entry, 'marker')}", zoomTo: entry.bbox.to_s } }
+        %i.fa.fa-map-marker
+        Zoom To
+    - if can?(:manage, entry)
+      .btn-group
+        = link_to edit_manager_entry_path(entry), class: 'btn btn-default' do
+          %i.fa.fa-edit
+          Edit
+        = link_to manager_entry_path(entry), class: 'btn btn-danger', data: { confirm: 'Are you sure?' } do
+          %i.fa.fa-trash
+          Archive
+  .entry-type{ style: "background: #{entry.entry_type.color}"}
+    = entry.entry_type
