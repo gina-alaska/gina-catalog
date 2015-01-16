@@ -7,5 +7,5 @@
     = f.check_box :primary, layout: :inline
   %td
     = f.check_box :funding, layout: :inline
-  %td
-    = f.link_to_remove "Delete", layout: :inline, class: "btn btn-danger"
+  %td.text-right
+    = f.link_to_remove('<i class="fa fa-times"></i>'.html_safe, class: 'btn btn-danger')
