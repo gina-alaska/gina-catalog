@@ -1,9 +1,13 @@
-= bootstrap_form_for [:manager, @use_agreement], layout: :horizontal do |f|
+= bootstrap_form_for [:manager, @use_agreement], label_errors: true, layout: :horizontal do |f|
   = f.alert_message "Please fix the errors below.", error_summary: false
   = f.text_field :title
   = f.text_area :body, cols: 40, rows: 10
+
   = f.form_group do
     = f.check_box :required
+
+  = f.form_group do
+    = f.check_box :archived
 
   .form-action
     = link_to :back, class: 'btn btn-default' do

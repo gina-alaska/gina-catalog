@@ -11,11 +11,13 @@ class Manager::EntriesController < ApplicationController
   def new
     @entry.attachments.build
     @entry.links.build
+    @use_agreements = UseAgreement.where(archived_at: nil) || []
   end
 
   def edit
     @entry.attachments.build
     @entry.links.build
+    @use_agreements = UseAgreement.where(archived_at: nil) || []
   end
 
   def create
