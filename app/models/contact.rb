@@ -1,4 +1,6 @@
 class Contact < ActiveRecord::Base
+  include EntryDependentConcerns
+    
   validate :has_name_email_or_title
   validates :name, length: { maximum: 255 }
   validates :email, length: { maximum: 255 }
@@ -7,6 +9,7 @@ class Contact < ActiveRecord::Base
 
   has_many :agency_contacts
   has_many :agencies, through: :agency_contacts
+  
   has_many :entry_contacts
   has_many :entries, through: :entry_contacts
 
@@ -17,4 +20,5 @@ class Contact < ActiveRecord::Base
   		errors.add(:job_title, "must have either a name, email, or job title!")
   	end
   end
+  
 end
