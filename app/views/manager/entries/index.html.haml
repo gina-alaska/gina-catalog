@@ -18,7 +18,7 @@
         %th Editable?
         %th Published?
         %th DLs
-        %th Actions
+        %th.text-right Actions
 
     %tbody
       = render(partial: "entry_row", collection: @entries, as: :entry) || "<tr><td colspan=\"9\">There are no records available</td></tr>".html_safe
