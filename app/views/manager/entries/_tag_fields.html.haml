@@ -1,3 +1,2 @@
-= f.text_field :tag_list, data: { name: 'tag', target: 'select2-choice', url: tags_manager_entries_path }, id: 'select-two', label: 'Tags', class: 'col-sm-12'
-= f.text_field :collection_ids, value: @entry.collections.collect { |col| { id: col.id, name: col.name }}.to_json, data: { name: 'entry_collections', target: 's2-collection-choice', url: collections_manager_entries_path }, id: 'select2-collection', label: 'Collections', class: 'col-sm-12'
-
+= f.text_field :tag_list, label: 'Tags', data: { behavior: 'selectize-tags' }
+= f.collection_select :collection_ids, @entry.collections, :id, :name, { label: 'Collections' }, { data: { behavior: 'selectize-collections' }, multiple: true }

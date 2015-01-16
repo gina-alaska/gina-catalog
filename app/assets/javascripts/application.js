@@ -16,10 +16,11 @@
 //= require handlebars/handlebars
 //= require typeahead.js/dist/typeahead.bundle
 //= require jquery_nested_form
-//= require moment/moment.js
-//= require jasny-bootstrap/dist/js/jasny-bootstrap.js
-//= require eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js
-//= require select2/select2.js
-//= require holderjs/holder.js
+//= require moment/moment
+//= require jasny-bootstrap/dist/js/jasny-bootstrap
+//= require eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker
+//= require select2/select2
+//= require selectize/dist/js/standalone/selectize
+//= require holderjs/holder
 //= require turbolinks
 //= require_tree .
