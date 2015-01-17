@@ -14,26 +14,31 @@
           = link_to manager_entries_path do
             %i.fa.fa-cubes.fa-fw
             Catalog Records
-      %li
-        = link_to manager_agencies_path do
-          %i.fa.fa-university.fa-fw
-          Agencies
-      %li
-        = link_to manager_contacts_path do
-          %i.fa.fa-phone.fa-fw
-          Contacts
-      %li
-        = link_to manager_collections_path do
-          %i.fa.fa-sitemap.fa-fw
-          Collections
-      %li
-        = link_to manager_portal_path do
-          %i.fa.fa-cog.fa-fw
-          Portal Settings
-      %li
-        = link_to manager_use_agreements_path do
-          %i.fa.fa-pencil.fa-fw
-          Use Agreements
+      - if can? :manage, Agency
+        %li
+          = link_to manager_agencies_path do
+            %i.fa.fa-university.fa-fw
+            Agencies
+      - if can? :manage, Contact
+        %li
+          = link_to manager_contacts_path do
+            %i.fa.fa-phone.fa-fw
+            Contacts
+      - if can? :manage, Collection
+        %li
+          = link_to manager_collections_path do
+            %i.fa.fa-sitemap.fa-fw
+            Collections
+      - if can? :update, Portal
+        %li
+          = link_to manager_portal_path do
+            %i.fa.fa-cog.fa-fw
+            Portal Settings
+      - if can? :manage, UseAgreement
+        %li
+          = link_to manager_use_agreements_path do
+            %i.fa.fa-pencil.fa-fw
+            Use Agreements
       - if can? :manage, current_user.permissions.for(current_portal)
         %li
           = link_to manager_permissions_path do
