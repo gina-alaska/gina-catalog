@@ -1,19 +1,19 @@
 %ul.nav.nav-tabs
   %li.active
-    %a{ href: '#agency_form_fields', data: { toggle: 'tab' } } Agency Form
+    %a{ href: '#organization_form_fields', data: { toggle: 'tab' } } Organization Form
   %li
     %a{ href: '#aliases', data: { toggle: 'tab' } } Aliases
   %li
     %a{ href: '#logo', data: { toggle: 'tab' } } Logo
 
-= bootstrap_nested_form_for [:manager, @agency], layout: :horizontal do |f|
+= bootstrap_nested_form_for [:manager, @organization], layout: :horizontal do |f|
   .tab-content{ style: 'margin-top: 5px;' }
-    #agency_form_fields.tab-pane.active
+    #organization_form_fields.tab-pane.active
       = f.alert_message "Please fix the errors below."
       = f.text_field :name
       = f.text_field :acronym
       = f.text_area :description, cols: 40, rows: 10
-      = f.select :category, Agency::CATEGORIES
+      = f.select :category, Organization::CATEGORIES
       = f.text_field :url
 
     #aliases.tab-pane{ style: "min-height: 60px;" }
@@ -39,7 +39,7 @@
             .fileinput-new.thumbnail
               %img{ src: 'holder.js/200x200', style: 'width: 200px; height: 200px;' }
             .fileinput-preview.thumbnail.fileinput-exists{ style: 'max-width:200px; max-height:200px;' }
-              = image_tag @agency.logo.encode(:png).thumb('200x200').url if @agency.logo
+              = image_tag @organization.logo.encode(:png).thumb('200x200').url if @organization.logo
           .col-sm-2.text-right
             %span.btn.btn-file.btn-success.btn-block
               %span.fileinput-new Add logo

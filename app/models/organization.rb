@@ -1,4 +1,4 @@
-class Agency < ActiveRecord::Base
+class Organization < ActiveRecord::Base
   include EntryDependentConcerns
   
   CATEGORIES = [
@@ -14,8 +14,8 @@ class Agency < ActiveRecord::Base
   
   dragonfly_accessor :logo
   
-  has_many :entry_agencies
-  has_many :entries, through: :entry_agencies
+  has_many :entry_organizations
+  has_many :entries, through: :entry_organizations
   
   has_many :entry_portals, through: :entries
   has_many :aliases, as: :aliasable, dependent: :destroy
@@ -30,7 +30,7 @@ class Agency < ActiveRecord::Base
   validates :logo_name, length: { maximum: 255 }
   validates :url, length: { maximum: 255 }
 
-  validates_inclusion_of :category, :in => CATEGORIES, :message => " please select one of following: #{Agency::CATEGORIES.join(', ')}"
+  validates_inclusion_of :category, :in => CATEGORIES, :message => " please select one of following: #{Organization::CATEGORIES.join(', ')}"
 
   accepts_nested_attributes_for :aliases, reject_if: ->(a) { a[:text].blank? }, allow_destroy: true
   

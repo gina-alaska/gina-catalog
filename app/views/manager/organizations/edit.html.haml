@@ -3,11 +3,11 @@
     .panel-heading{ style: 'position: relative' }
       %ol.breadcrumb
         %li
-          = link_to [:manager, :agencies] do
+          = link_to [:manager, :organizations] do
             %i.fa.fa-university
-            Agencies
+            Organizations
         %li.active
-          New
+          Edit #{@organization.name}
 
     .panel-body
-      = render 'form', agency: @agency 
+      = render 'form', organization: @organization 
