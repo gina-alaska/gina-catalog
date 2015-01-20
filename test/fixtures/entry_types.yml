@@ -9,3 +9,8 @@ two:
   name: MyString
   description: MyString
   color: MyString
+  
+no_associated_entry:
+  name: MyString
+  description: MyString
+  color: MyString
