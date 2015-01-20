@@ -23,6 +23,13 @@
   padding: 10px 15px;
 }
 
+.panel-form {
+  padding-bottom: 0px;
+  padding-top: 8px;
+
+  label.control-label { text-align: left; }
+}
+
 .expand {
   max-height: 80px;
   overflow: hidden;

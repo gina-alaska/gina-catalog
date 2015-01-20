@@ -47,26 +47,40 @@ module EntriesControllerSearchConcerns
   }
 
   def search_params
-    fields = FACET_FIELDS.keys.inject({}) { |c,f| c[f] = []; c }
+    fields = [:starts_before, :starts_after, :ends_before, :ends_after]
+    fields << FACET_FIELDS.keys.inject({}) { |c,f| c[f] = []; c }
 
     if params[:search].present?
-      params.require(:search).permit(:query, fields)
+      params.require(:search).permit(:query, *fields)
     else
       {}
     end
   end
 
+  def date_search_params(after, before)
+    date_search = {}
+    if search_params[after].present?
+      date_search[:gte] = Date.parse(search_params[after])
+    end
+    if search_params[before].present?
+      date_search[:lte] = Date.parse(search_params[before])
+    end
+
+    date_search
+  end
+
   def elasticsearch_params
     opts = {
-      where: {
-        portal_ids: current_portal.id
-      },
       facets: FACET_FIELDS.values,
       smart_facets: true,
       page: params[:page] || 1,
       per_page: params[:limit] || 20
     }
-    where = {}
+
+    where = { portal_ids: current_portal.id }
+
+    where[:start_date] = date_search_params(:starts_after, :starts_before)
+    where[:end_date] = date_search_params(:ends_after, :ends_before)
 
     #items that must match all selected
     [:tags, :collections, :agency_categories].each do |param|
@@ -86,7 +100,8 @@ module EntriesControllerSearchConcerns
         # flags: 'OR|AND|PREFIX|NOT'
       }
     } if search_params[:query].present?
-    opts[:where] = where if where.keys.count > 0
+
+    opts[:where] = where
 
     query = search_params[:query]
     query = '*' if query.blank?
