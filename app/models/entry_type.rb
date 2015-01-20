@@ -1,4 +1,5 @@
 class EntryType < ActiveRecord::Base
+  include EntryDependentConcerns
   
   has_many :entries
 
@@ -7,5 +8,10 @@ class EntryType < ActiveRecord::Base
   validates :description, length: { maximum: 255 }
   validates :color, presence: true  
   validates :color, length: { maximum: 255 }  
-      
+
+  before_destroy :deletable?
+  
+  def deletable?
+    self.entries.empty?
+  end    
 end
