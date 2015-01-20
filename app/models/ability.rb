@@ -38,7 +38,7 @@ class Ability
     if user.has_role?(:data_manager, current_portal)
       can :view_manager_menu, User
       
-      can :manage, Agency
+      can :manage, Organization
       can :manage, Contact
       can :manage, UseAgreement
       can :manage, Collection

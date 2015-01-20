@@ -52,7 +52,7 @@ Rails.application.routes.draw do
 
     resources :use_agreements
 
-    resources :agencies do
+    resources :organizations do
       collection do
         get :search
       end

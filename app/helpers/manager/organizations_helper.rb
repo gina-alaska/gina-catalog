@@ -1,0 +1,2 @@
+module Manager::OrganizationsHelper
+end

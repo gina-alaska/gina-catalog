@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class AgencyTest < ActiveSupport::TestCase
+class OrganizationTest < ActiveSupport::TestCase
   should ensure_length_of(:name).is_at_most(255)
   should ensure_length_of(:category).is_at_most(255)
   should ensure_length_of(:description).is_at_most(255)
@@ -11,13 +11,13 @@ class AgencyTest < ActiveSupport::TestCase
   should ensure_length_of(:logo_name).is_at_most(255)
   should ensure_length_of(:url).is_at_most(255)
 
-  should have_many(:entry_agencies)
-  should have_many(:entries).through(:entry_agencies)
+  should have_many(:entry_organizations)
+  should have_many(:entries).through(:entry_organizations)
   
-  test "agency should not be deletable if assigned" do
-    agency = agencies(:one)
+  test "organization should not be deletable if assigned" do
+    organization = organizations(:one)
 
-    assert !agency.deletable?, "agency is deletable but should not be"
+    assert !organization.deletable?, "organization is deletable but should not be"
   end
 
 end

@@ -1,0 +1,55 @@
+require 'test_helper'
+
+class Manager::OrganizationsControllerTest < ActionController::TestCase
+  def setup
+    @organization = organizations(:one)
+    login_user(:portal_admin)
+  end
+
+  test "should get index" do
+    get :index
+    assert_response :success
+  end
+
+  test "should get show" do
+    get :show, id: @organization.id
+    
+    assert_response :success
+    assert_not_nil assigns(:organization)
+  end
+
+  test "should get new" do
+    get :new
+    assert_response :success
+  end
+
+  test "should get edit" do
+    get :edit, id: @organization.id
+    
+    assert_response :success
+    assert_not_nil assigns(:organization)
+  end
+
+  test "should post create" do
+    assert_difference('Organization.count') do
+      post :create, organization: @organization.attributes
+      assert assigns(:organization).errors.empty?, assigns(:organization).errors.full_messages
+    end
+
+    assert_redirected_to manager_organization_path(assigns(:organization))
+  end
+
+  test "should patch update" do
+    patch :update, id: @organization.id, organization: { name: 'Testing2' }
+    assert assigns(:organization).errors.empty?, assigns(:organization).errors.full_messages
+    assert_redirected_to manager_organizations_path
+  end
+
+  test "should destroy" do
+    assert_difference('Organization.count', -1) do
+      delete :destroy, id: @organization.id
+    end
+
+    assert_redirected_to manager_organizations_path
+  end
+end

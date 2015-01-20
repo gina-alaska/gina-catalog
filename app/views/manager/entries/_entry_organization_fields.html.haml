@@ -1,8 +1,8 @@
 %tr.fields
   %td
     = f.hidden_field :id
-    = f.hidden_field :agency_id, class: 'agency_id'
-    %p.form-control-static.agency_name= f.object.agency.try(:name)
+    = f.hidden_field :organization_id, class: 'organization_id'
+    %p.form-control-static.organization_name= f.object.organization.try(:name)
   %td
     = f.check_box :primary, layout: :inline
   %td

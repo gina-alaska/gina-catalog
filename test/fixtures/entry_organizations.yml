@@ -2,12 +2,12 @@
 
 one:
   entry: :one
-  agency: :one
+  organization: :one
   primary: false
   funding: false
 
 two:
   entry: :two
-  agency: :two
+  organization: :two
   primary: false
   funding: false
