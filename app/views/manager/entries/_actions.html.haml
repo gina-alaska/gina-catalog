@@ -3,14 +3,6 @@
     %button.btn.btn-default{ data: { behavior: 'highlight-markers', target: ".#{dom_id(entry, 'marker')}", zoomTo: entry.bbox.to_s } }
       %i.fa.fa-map-marker
       Zoom To
-  - if can?(:manage, entry)
-    .btn-group
-      = link_to edit_manager_entry_path(entry), class: 'btn btn-default' do
-        %i.fa.fa-edit
-        Edit
-      = link_to manager_entry_path(entry), class: 'btn btn-danger', data: { confirm: 'Are you sure?' } do
-        %i.fa.fa-trash
-        Archive
   = link_to manager_entry_path(entry), class: 'btn btn-primary' do
     Full Record
     %i.fa.fa-arrow-right

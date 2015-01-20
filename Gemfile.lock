@@ -121,6 +121,9 @@ GEM
       thor (>= 0.14, < 2.0)
     json (1.8.1)
     jwt (1.0.0)
+    kaminari (0.16.2)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
     kgio (2.9.2)
     launchy (2.4.2)
       addressable (~> 2.3)
@@ -307,6 +310,7 @@ DEPENDENCIES
   haml
   jbuilder (~> 2.0)
   jquery-rails
+  kaminari
   nested_form
   omniauth
   omniauth-github

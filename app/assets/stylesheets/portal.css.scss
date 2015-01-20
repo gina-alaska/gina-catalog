@@ -125,52 +125,9 @@ tr.fields {
   }
 }
 
-.entries.media-list {
-  .entry.media {
-    margin-left: -20px;
-    padding-left: 10px;
-    margin-top: 0px;
-    padding-top: 15px;
-    position: relative;
-    overflow: hidden;
-
-    &:hover {
-      background-color: #efefef;
-    }
-  }
-
-  .entry .detail-block {
-    display: inline-block;
-    margin-right: 10px;
-  }
-  .media-body {
-    padding-left: 5px;
-    padding-right: 80px;
-    display: block;
-  }
-  .media-heading {
-  }
-  .active {
-    background-color: #cfcfcf;
-  }
-  .media-actions {
-    margin-bottom: 5px;
-    margin-right: 5px;
-  }
-  .entry-type {
-    transform: rotate(45deg);
-    transform-origin: top left;
-
-    background: #aaf;
-    position: absolute;
-    right: -54px;
-    top: -18px;
-    width: 120px;
-    height: 26px;
-    line-height: 26px;
-    color: #fff;
-    text-align: center;
-    font-size: 12px;
-    font-weight: bold;
+.paginator {
+  padding-bottom: 8px;
+  .pagination {
+    margin: 0px;
   }
 }

@@ -1,20 +1,21 @@
-%h4.media-heading
-  = link_to entry.title, edit_manager_entry_path(entry)
-%p
-  - if entry.primary_agencies.any?
-    %em
-      = entry.primary_agencies.map(&:name_with_acronym).join(', ')
-      \-
-  #{truncate entry.description, length: 200, separator: ' '}
-%p
-  .detail-block
-    %label Status:
-    = entry.status
-  - if entry.start_date
+- cache entry do
+  %h4.media-heading
+    = link_to entry.title, entry
+  %p
+    - if entry.primary_agencies.any?
+      %em
+        = entry.primary_agencies.map(&:name_with_acronym).join(', ')
+        \-
+    #{truncate entry.description, length: 200, separator: ' '}
+  %p
     .detail-block
-      %label Starts:
-      = entry.start_date
-  - if entry.end_date
-    .detail-block
-      %label Ends:
-      = entry.start_date
+      %label Status:
+      = entry.status
+    - if entry.start_date
+      .detail-block
+        %label Starts:
+        = entry.start_date
+    - if entry.end_date
+      .detail-block
+        %label Ends:
+        = entry.start_date

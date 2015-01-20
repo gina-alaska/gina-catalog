@@ -1,9 +1,9 @@
 module EntriesControllerSearchConcerns
   extend ActiveSupport::Concern
 
-  def search
+  def search(page, per_page = 20)
     @search_params = search_params
-    @entries = Entry.search *elasticsearch_params
+    @entries = Entry.search *elasticsearch_params(page,per_page)
 
     @facets = OpenStruct.new(
       tags: organize_facets(@entries.facets['tag_list']),
@@ -69,12 +69,12 @@ module EntriesControllerSearchConcerns
     date_search
   end
 
-  def elasticsearch_params
+  def elasticsearch_params(page, per_page = 20)
     opts = {
       facets: FACET_FIELDS.values,
       smart_facets: true,
-      page: params[:page] || 1,
-      per_page: params[:limit] || 20
+      page: page,
+      per_page: params[:limit] || per_page
     }
 
     where = { portal_ids: current_portal.id }

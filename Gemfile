@@ -62,6 +62,7 @@ gem 'ransack'
 gem 'squeel'
 gem 'quiet_assets'
 gem 'georuby'
+gem 'kaminari'
 
 group :development do
   gem "better_errors"

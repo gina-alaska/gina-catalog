@@ -8,7 +8,7 @@ class Attachment < ActiveRecord::Base
 
   dragonfly_accessor :file
 
-  belongs_to :entry
+  belongs_to :entry, touch: true
   has_one :bbox, class_name: 'Bound', as: :boundable
 
   scope :thumbnail, -> { where(category: "Thumbnail") }

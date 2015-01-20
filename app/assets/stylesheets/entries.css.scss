@@ -1,3 +1,57 @@
 // Place all the styles related to the entries controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.search-results {
+  padding-left: 0px;
+}
+
+.entries.media-list {
+  clear: both;
+
+  .entry.media {
+    padding-left: 8px;
+    margin-top: 0px;
+    padding-top: 8px;
+    position: relative;
+    overflow: hidden;
+    border-top: 1px solid #dfdfdf;
+
+    &:hover {
+      background-color: #efefef;
+    }
+  }
+
+  .entry .detail-block {
+    display: inline-block;
+    margin-right: 10px;
+  }
+  .media-body {
+    padding-right: 80px;
+    display: block;
+  }
+  .media-heading {
+  }
+  .active {
+    background-color: #cfcfcf;
+  }
+  .media-actions {
+    margin-bottom: 5px;
+    margin-right: 5px;
+  }
+  .entry-type {
+    transform: rotate(45deg);
+    transform-origin: top left;
+
+    background: #aaf;
+    position: absolute;
+    right: -54px;
+    top: -18px;
+    width: 120px;
+    height: 26px;
+    line-height: 26px;
+    color: #fff;
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+  }
+}

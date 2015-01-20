@@ -4,11 +4,10 @@ class Manager::EntriesController < ApplicationController
   include EntriesControllerSearchConcerns
 
   def index
-    search
 
     respond_to do |format|
-      format.html
-      format.geojson
+      format.html { search(params[:page]) }
+      format.geojson { search(1, 10000) }
       format.json
     end
   end
