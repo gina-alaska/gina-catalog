@@ -23,12 +23,17 @@ class CustomMarker extends CustomPopup
 
     opts.pointToLayer = (feature, ll) ->
       params.color = feature.properties['marker-color'] || '#00f'
+      if params.hideMarkerLabel or !feature.properties[params.markerLabelField]?
+        label = ''
+      else
+        label = feature.properties[params.markerLabelField]
+
       L.marker(ll, {
         icon: L.divIcon({
           className: "",
           html: "
             <div class='marker_#{feature.properties['id']} #{params.iconClass}' style='background: #{params.color}'>
-              #{feature.properties[params.markerLabelField]}
+              #{label}
             </div>",
           iconSize: params.iconSize
         })
@@ -71,29 +76,34 @@ class Layer
 
     geojson
 
-  @from_element: (el, map) ->
+  @load: (el, parent) ->
+    config = @config_from_element(el)
+
+    if config.cluster
+      cluster = @cluster_layer()
+      cluster.addTo(parent)
+      @build_layer(config, cluster)
+    else
+      @build_layer(config, parent)
+
+
+  @build_layer: (config, parent) ->
+    layer = @get_geojson_layer(config)
+    layer.on 'ready', =>
+      layer.addTo(parent)
+
+
+  @config_from_element: (el) ->
     config = $(el).data()
     if $(el).find('popup').length > 0
       config.popup = $(el).find('popup').html()
 
-    if config.cluster
-      layer = new L.MarkerClusterGroup({
-        maxClusterRadius: 25
-      })
-      _layer = @get_geojson_layer(config)
-      _layer.on 'ready', =>
-        # need to wait until ready so we know the data is available
-        layer.addLayer(_layer)
-        if config.fit
-          @zoomTo(map, layer, config.maxAutoZoom)
+    config
 
-    else
-      layer = @get_geojson_layer(config)
-      if config.fit
-        layer.on 'ready', =>
-          @zoomTo(map, layer, config.maxAutoZoom)
-
-    layer
+  @cluster_layer: (layer = null) ->
+    new L.MarkerClusterGroup({
+      maxClusterRadius: 25
+    })
 
   @zoomTo: (map, layer, max = 10) ->
     map.whenReady =>
@@ -107,15 +117,24 @@ $(document).on 'ready page:load', ->
     L.mapbox.accessToken = config.accessToken || 'pk.eyJ1IjoiZ2luYS1hbGFza2EiLCJhIjoiN0lJVnk5QSJ9.CsQYpUUXtdCpnUdwurAYcQ';
     @map = L.mapbox.map(mapel.data('target'), config.mapboxId, config);
     mapel.data('map', @map)
-    @group = L.featureGroup().addTo(@map)
 
-    for layer in mapel.find('layer')
-      l = Layer.from_element(layer, @map)
-      @group.addLayer(l)
-      if config.fitAll
-        l.on 'ready', =>
-          @map.whenReady =>
-            @map.fitBounds(@group.getBounds(), { padding: [10,10] })
+    if config.cluster
+      @group = Layer.cluster_layer()
+    else
+      @group = L.featureGroup()
+
+    @group.addTo(@map)
+
+    for el in mapel.find('layer')
+      layer = Layer.load(el, @group)
+      if $(el).data('fit')
+        layer.on 'ready', =>
+          Layer.zoomTo(@map, layer, $(el).data('maxZoom'))
+
+    setTimeout(=>
+      Layer.zoomTo(@map, @group, config.maxZoom) if config.fitAll
+    , 1000)
+
 
 $(document).on 'click', '[data-behavior="highlight-markers"]', (e) =>
   e.preventDefault()
@@ -129,6 +148,7 @@ $(document).on 'click', '[data-behavior="highlight-markers"]', (e) =>
     , 150
 
   $(el).parents('.leaflet-marker-pane').find('.active').removeClass('active')
+  $(el).addClass('active')
 
   wkt = new Wkt.Wkt($(e.target).data('zoomto'))
   map.fitBounds(wkt.toObject().getBounds(), { padding: [10,10] })

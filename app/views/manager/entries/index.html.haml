@@ -9,23 +9,13 @@
       .panel-body
         = link_to new_manager_entry_path, class: 'btn btn-success btn-block' do
           New Catalog Record
-    = render 'search'
+    = render 'search/form'
   .col-sm-8
     %ul.media-list.entries
-      = render @entries
-
-      -# %table.table.table-striped.table-condensed
-      -#   %thead
-      -#     %tr
-      -#       %th.col-md-2 Title
-      -#       %th Status
-      -#       %th Start Date
-      -#       %th End Date
-      -#       %th Primary Agency
-      -#       %th Editable?
-      -#       %th Published?
-      -#       %th DLs
-      -#       %th.text-right Actions
-      -#
-      -#   %tbody
-      -#     = render(partial: "entry_row", collection: @entries, as: :entry) || "<tr><td colspan=\"9\">There are no records available</td></tr>".html_safe
+      - @entries.each do |entry|
+        %li.entry.media{ id: dom_id(entry), style: 'border-bottom: 1px solid #efefef;' }
+          .media-body
+            = render 'search/entry', entry: entry
+          = render 'actions', entry: entry
+          .entry-type{ style: "background: #{entry.entry_type.color}"}
+            = entry.entry_type

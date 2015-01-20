@@ -1,4 +1,4 @@
-.map-container
+.map-container.small
   #search-map.search-map{ data: { behavior: 'map', target: 'search-map', 'mapbox-id' => 'gina-alaska.knb7oi02', 'max-zoom' => 15 } }
     %layer{ data: { url: url_for(params.merge(format: :geojson)), fit: 'true', 'geojson-options' => 'custom-marker', 'marker-label-field' => 'index', cluster: 'true' }}
       %popup
