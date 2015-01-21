@@ -118,7 +118,7 @@ class Manager::EntriesController < ApplicationController
       links_attributes: [:id, :link_id, :category, :display_text, :url, :_destroy],
       attachments_attributes: [:id, :file, :category, :description, :interaction, :_destroy],
       entry_contacts_attributes: [:id, :contact_id, :primary, :_destroy],
-      entry_agencies_attributes: [:id, :agency_id, :primary, :funding, :_destroy])
+      entry_organizations_attributes: [:id, :organization_id, :primary, :funding, :_destroy])
 
     if values[:collection_ids].present?
       values[:collection_ids] = values.delete(:collection_ids).split(',').map(&:to_i).reject { |v| v == 0 }

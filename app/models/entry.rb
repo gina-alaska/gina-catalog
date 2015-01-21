@@ -14,12 +14,12 @@ class Entry < ActiveRecord::Base
   has_many :activity_logs, as: :loggable
   has_many :links, dependent: :destroy
 
-  has_many :entry_agencies
-  has_many :agencies, through: :entry_agencies
-  has_many :primary_entry_agencies, -> { primary }, class_name: "EntryAgency"
-  has_many :primary_agencies, through: :primary_entry_agencies, source: :agency
-  has_many :funding_entry_agencies, -> { funding }, class_name: "EntryAgency"
-  has_many :funding_agencies, through: :funding_entry_agencies, source: :agency
+  has_many :entry_organizations
+  has_many :organizations, through: :entry_organizations
+  has_many :primary_entry_organizations, -> { primary }, class_name: "EntryOrganization"
+  has_many :primary_organizations, through: :primary_entry_organizations, source: :organization
+  has_many :funding_entry_organizations, -> { funding }, class_name: "EntryOrganization"
+  has_many :funding_organizations, through: :funding_entry_organizations, source: :organization
 
   has_many :entry_aliases
 
@@ -49,7 +49,7 @@ class Entry < ActiveRecord::Base
 
   accepts_nested_attributes_for :entry_collections, allow_destroy: true
   accepts_nested_attributes_for :entry_contacts, allow_destroy: true
-  accepts_nested_attributes_for :entry_agencies, allow_destroy: true
+  accepts_nested_attributes_for :entry_organizations, allow_destroy: true
   accepts_nested_attributes_for :attachments, allow_destroy: true, reject_if: proc { |attachment| attachment['file'].blank? }
   accepts_nested_attributes_for :links, allow_destroy: true, reject_if: proc { |link| link['url'].blank? }
 

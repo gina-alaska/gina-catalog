@@ -13,24 +13,24 @@
           .form-group
             %label
               = check_box_tag :all, 'on', params[:all].present?
-              Show all agencies
+              Show all organizations
             %span.help-block
               %p
                 %strong Note: 
-                By default, only agencies that are currently assigned to a catalog record or are less than a week old are shown. 
+                By default, only organizations that are currently assigned to a catalog record or are less than a week old are shown. 
               %p
-                To see all available agencies check the "Show all agencies" box before searching.
+                To see all available organizations check the "Show all organizations" box before searching.
       .panel-footer
-        = link_to new_manager_agency_path, class: 'btn btn-success btn-block' do
+        = link_to new_manager_organization_path, class: 'btn btn-success btn-block' do
           %i.fa.fa-plus
-          New Agency
+          New Organization
   .col-sm-8
     .panel.panel-default
       .panel-heading{ style: 'position: relative' }
         %ol.breadcrumb
           %li.active
             %i.fa.fa-university
-            Agencies   
+            Organizations   
       %table.table.table-striped.table-condensed
         %thead
           %tr
@@ -40,4 +40,4 @@
             %th= sort_link @q, :category
             %th.text-right Actions
         %tbody
-          = render(partial: "agency_row", collection: @agencies, as: :agency) || "<tr><td colspan=\"4\">There are no agencies available</td></tr>".html_safe
+          = render(partial: "organization_row", collection: @organizations, as: :organization) || "<tr><td colspan=\"4\">There are no organizations available</td></tr>".html_safe

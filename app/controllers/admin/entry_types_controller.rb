@@ -37,12 +37,16 @@ class Admin::EntryTypesController < AdminController
   end
 
   def destroy
-    @entry_type.destroy
-
     respond_to do |format|
-      flash[:success] = "Catalog type #{@entry_type.name} was deleted."
-      format.html { redirect_to admin_entry_types_path }
-      format.json { head :no_content }
+      if @entry_type.destroy
+        flash[:success] = "Catalog type #{@entry_type.name} was successfully deleted."
+        format.html { redirect_to admin_entry_types_path }
+        format.json { head :no_content }     
+      else
+        flash[:error] = @entry_type.errors.full_messages.join('<br />').html_safe
+        format.html { redirect_to admin_entry_types_path }
+#         format.json { head :no_content } 
+      end
     end
   end
 
