@@ -10,6 +10,7 @@
     "select2": "~> 3.5.0",
     "holderjs": "latest",
     "leaflet.markercluster": "latest",
-    "wicket": "https://github.com/arthur-e/Wicket.git"
+    "wicket": "https://github.com/arthur-e/Wicket.git",
+    "selectize": "latest"
   }
 }

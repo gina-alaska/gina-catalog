@@ -13,10 +13,12 @@
  *= require bootstrap/dist/css/bootstrap
  *= require font-awesome/css/font-awesome
  *= require rails_bootstrap_forms
- *= require jasny-bootstrap/dist/css/jasny-bootstrap.css
- *= require eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css
- *= require select2/select2.css
- *= require select2/select2-bootstrap.css
+ *= require jasny-bootstrap/dist/css/jasny-bootstrap
+ *= require eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker
+ *= require select2/select2
+ *= require select2/select2-bootstrap
+ *= require selectize/dist/css/selectize
+ *= require selectize/dist/css/selectize.bootstrap3
  *= require leaflet.markercluster/dist/MarkerCluster
  *= require leaflet.markercluster/dist/MarkerCluster.Default
  *= require_tree .

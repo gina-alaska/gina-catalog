@@ -1,11 +1,7 @@
-%h4.media-heading
+%h4
   = link_to entry.title, edit_manager_entry_path(entry)
-%p
-  - if entry.primary_agencies.any?
-    %em
-      = entry.primary_agencies.map(&:name_with_acronym).join(', ')
-      \-
-  #{truncate entry.description, length: 200, separator: ' '}
+:markdown
+  #{entry.description}
 %p
   .detail-block
     %label Status:

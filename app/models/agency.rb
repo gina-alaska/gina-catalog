@@ -1,4 +1,6 @@
 class Agency < ActiveRecord::Base
+  include EntryDependentConcerns
+
   CATEGORIES = [
     'Academic',
     'Industry/Consultants',
@@ -14,6 +16,7 @@ class Agency < ActiveRecord::Base
 
   has_many :entry_agencies
   has_many :entries, through: :entry_agencies
+
   has_many :entry_portals, through: :entries
   has_many :aliases, as: :aliasable, dependent: :destroy
 

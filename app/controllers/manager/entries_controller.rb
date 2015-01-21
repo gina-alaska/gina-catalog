@@ -19,11 +19,13 @@ class Manager::EntriesController < ApplicationController
   def new
     @entry.attachments.build
     @entry.links.build
+    @use_agreements = UseAgreement.where(archived_at: nil) || []
   end
 
   def edit
     @entry.attachments.build
     @entry.links.build
+    @use_agreements = UseAgreement.where(archived_at: nil) || []
   end
 
   def create
@@ -93,16 +95,16 @@ class Manager::EntriesController < ApplicationController
   end
 
   def collections
-    @collections = current_portal.collections
+    @collections = current_portal.collections.order(:name)
     if params[:q].present?
-      @collections = @collections.where('name ilike ?', "%#{params[:q]}%").order(:name)
+      @collections = @collections.where('name ilike ?', "%#{params[:q]}%")
     end
   end
 
   def tags
-    @tags = Entry.all_tags
+    @tags = Entry.all_tags.order(:name)
     if params[:q].present?
-      @tags = @tags.where('name ilike ?', "%#{params[:q]}%").order(:name)
+      @tags = @tags.where('name ilike ?', "%#{params[:q]}%")
     end
   end
 
@@ -114,7 +116,7 @@ class Manager::EntriesController < ApplicationController
       :title, :description, :status, :entry_type_id, :start_date, :end_date,
       :use_agreement_id, :request_contact_info, :require_contact_info, :tag_list, :collection_ids,
       links_attributes: [:id, :link_id, :category, :display_text, :url, :_destroy],
-      attachments_attributes: [:id, :file, :description, :interaction, :category, :_destroy],
+      attachments_attributes: [:id, :file, :category, :description, :interaction, :_destroy],
       entry_contacts_attributes: [:id, :contact_id, :primary, :_destroy],
       entry_agencies_attributes: [:id, :agency_id, :primary, :funding, :_destroy])
 

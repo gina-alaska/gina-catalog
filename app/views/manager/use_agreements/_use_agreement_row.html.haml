@@ -1,10 +1,13 @@
 %tr
-  %td{ class: 'col-lg-3 col-md-3' }
+  %td
     = use_agreement.title
-  %td{ class: 'col-lg-2 col-md-2' }
+  %td
     = use_agreement.required.blank? ? "No" : "Yes"
-  %td{ class: 'col-lg-1 col-md-1' }
-    = link_to edit_manager_use_agreement_path(use_agreement), class: 'btn btn-sm btn-primary', title: 'Edit' do
-      %i.fa.fa-edit
-    = link_to manager_use_agreement_path(use_agreement), data: { method: :delete, confirm: "Are you sure?" }, class: 'btn btn-sm btn-danger', title: 'Delete' do
-      %i.fa.fa-trash-o
+  %td
+    = use_agreement.archived_at.blank? ? "No" : "Yes"
+  %td.text-right
+    .btn-group
+      = link_to edit_manager_use_agreement_path(use_agreement), class: 'btn btn-sm btn-primary', title: 'Edit' do
+        %i.fa.fa-edit
+      = link_to manager_use_agreement_path(use_agreement), data: { method: :delete, confirm: "Are you sure?" }, class: 'btn btn-sm btn-danger', title: 'Archive' do
+        %i.fa.fa-trash-o

@@ -47,14 +47,14 @@ module EntriesControllerSearchConcerns
   }
 
   def search_params
-    fields = [:starts_before, :starts_after, :ends_before, :ends_after]
+    fields = [:starts_before, :starts_after, :ends_before, :ends_after, :order, :limit]
     fields << FACET_FIELDS.keys.inject({}) { |c,f| c[f] = []; c }
 
     if params[:search].present?
-      params.require(:search).permit(:query, *fields)
-    else
-      {}
+      @search_params ||= params.require(:search).permit(:query, *fields)
     end
+
+    @search_params || {}
   end
 
   def date_search_params(after, before)
@@ -76,6 +76,17 @@ module EntriesControllerSearchConcerns
       page: page,
       per_page: params[:limit] || per_page
     }
+
+    opts[:order] = case search_params[:order]
+    when 'start_date'
+      { start_date: :asc }
+    when 'end_date'
+      { end_date: :asc }
+    when 'title'
+      { title: :asc }
+    when 'updated_at'
+      { updated_at: :desc }
+    end
 
     where = { portal_ids: current_portal.id }
 

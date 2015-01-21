@@ -24,7 +24,7 @@
       %table.table.table-striped
         %thead
           %tr
-            %th.col-sm-6 Contact
+            %th Contact
             %th Primary
             %th.actions.text-right Actions
         %tbody#contact_fields.form-inline
@@ -41,10 +41,10 @@
       %table.table.table-striped
         %thead
           %tr
-            %th.col-sm-6 Agency
+            %th Agency
             %th Primary
             %th Funding
-            %th.actions Actions
+            %th.actions.text-right Actions
         %tbody#agency_fields.form-inline
           = f.fields_for :entry_agencies, wrapper: false
 
@@ -62,10 +62,10 @@
       %table.table.table-striped
         %thead
           %tr
-            %th.col-sm-5 File
-            %th.col-sm-4 Description
-            %th.col-sm-2 Category
-            %th.actions.col-sm-1 Actions
+            %th File
+            %th Description
+            %th Category
+            %th.actions.text-right Actions
         %tbody#attachment_fields
           = f.fields_for :attachments, wrapper: false
 
@@ -74,17 +74,17 @@
         .col-sm-10
           %h4 Links
         .col-sm-2
-          = f.link_to_add :links, :data => { :target => "#link_fields" }, class: "btn btn-success btn-block" do
+          = f.link_to_add :links, :data => { :target => "#link_fields" }, class: "btn btn-info btn-block" do
             %i.fa.fa-plus
             Attach new link
       %table.table.table-striped
         %thead
           %tr
-            %th.col-sm-2 Category
-            %th.col-sm-4 Display Text
-            %th.col-sm-4 URL
-            %th.col-sm-1 Valid
-            %th.actions.col-sm-1 Actions
+            %th Category
+            %th Display Text
+            %th URL
+            %th Valid
+            %th.actions.col-sm-1.text-right Actions
         %tbody#link_fields
           = f.fields_for :links, wrapper: false
 

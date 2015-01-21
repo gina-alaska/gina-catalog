@@ -5,9 +5,18 @@ one:
   body: MyText
   required: false
   portal_id: 1
+  archived_at: null
 
 two:
   title: MyString
   body: MyText
   required: false
   portal_id: 1
+  archived_at: null
+
+archived:
+  title: MyString
+  body: MyText
+  required: false
+  portal_id: 1
+  archived_at: 2014-09-05 16:00:04

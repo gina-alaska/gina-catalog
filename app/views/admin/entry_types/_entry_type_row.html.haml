@@ -3,8 +3,9 @@
     = entry_type.name
   %td
     = entry_type.color
-  %td
-    = link_to edit_admin_entry_type_path(entry_type), class: 'btn btn-sm btn-primary', title: 'Edit' do
-      %i.fa.fa-edit
-    = link_to admin_entry_type_path(entry_type), data: { method: :delete, confirm: "Are you sure?" }, class: 'btn btn-sm btn-danger', title: 'Delete' do
-      %i.fa.fa-trash-o
+  %td.text-right
+    .btn-group
+      = link_to edit_admin_entry_type_path(entry_type), class: 'btn btn-sm btn-primary', title: 'Edit' do
+        %i.fa.fa-edit
+      = link_to admin_entry_type_path(entry_type), data: { method: :delete, confirm: "Are you sure?" }, class: 'btn btn-sm btn-danger', title: 'Delete' do
+        %i.fa.fa-trash-o

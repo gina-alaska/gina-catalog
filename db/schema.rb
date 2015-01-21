@@ -50,20 +50,12 @@ ActiveRecord::Schema.define(version: 20150115233848) do
     t.string   "category"
     t.string   "description"
     t.string   "acronym",     limit: 15
-    t.boolean  "active",                 default: true
     t.string   "adiwg_code"
     t.string   "adiwg_path"
     t.string   "logo_uid"
     t.string   "logo_name"
     t.string   "url"
     t.integer  "parent_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "agency_contacts", force: true do |t|
-    t.integer  "contact_id"
-    t.integer  "agency_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -129,12 +121,10 @@ ActiveRecord::Schema.define(version: 20150115233848) do
     t.string   "status"
     t.string   "slug"
     t.string   "uuid"
-    t.integer  "portal_id"
     t.integer  "licence_id"
     t.datetime "archived_at"
     t.date     "start_date"
     t.date     "end_date"
-    t.integer  "owner_portal_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "use_agreement_id"
@@ -309,10 +299,11 @@ ActiveRecord::Schema.define(version: 20150115233848) do
   create_table "use_agreements", force: true do |t|
     t.string   "title"
     t.text     "body"
-    t.boolean  "required",   default: true
+    t.boolean  "required",    default: true
     t.integer  "portal_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "archived_at"
   end
 
   create_table "users", force: true do |t|
