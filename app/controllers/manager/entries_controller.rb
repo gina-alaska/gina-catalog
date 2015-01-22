@@ -28,9 +28,9 @@ class Manager::EntriesController < ApplicationController
 
         format.html {
           if params["commit"] == "Save"
-            redirect_to edit_manager_entries_path(@entry)
+            redirect_to edit_manager_entry_path(@entry)
           else
-            redirect_via_turbolinks_to manager_entries_path(@entry)
+            redirect_to manager_entries_path
           end
           }
 
@@ -38,7 +38,7 @@ class Manager::EntriesController < ApplicationController
           if params["commit"] == "Save"
             redirect_via_turbolinks_to edit_manager_entry_path(@entry)
           else
-            render js: "document.location='#{manager_entries_path(@entry)}';"
+            redirect_via_turbolinks_to manager_entries_path
           end
           }
       else
@@ -70,7 +70,7 @@ class Manager::EntriesController < ApplicationController
           if params["commit"] == "Save"
             redirect_via_turbolinks_to edit_manager_entry_path(@entry)
           else
-            redirect_via_turbolinks_to manager_entries_path(@entry)
+            redirect_via_turbolinks_to manager_entries_path
           end
         }
       else
