@@ -1,16 +1,16 @@
 development:
-  adapter: postgresql
+  adapter: postgis
   database: glynx_development
   username: glynx
   password: fj329rghDDw02jf
-  schema_search_path: public
+  schema_search_path: public,postgis
   host: 192.168.222.225
   client_encoding: UTF8
 test:
-  adapter: postgresql
+  adapter: postgis
   database: glynx_test
   username: glynx
   password: fj329rghDDw02jf
-  schema_search_path: public
+  schema_search_path: public,postgis
   host: 192.168.222.225
   client_encoding: UTF8
