@@ -52,7 +52,9 @@ class Ability
       can :update, Portal do |requested_portal|
         current_portal == current_portal
       end
-      
+      can :read, Portal do |requested_portal|
+        current_portal == current_portal
+      end      
       can :manage, Permission do |permission|
         permission.new_record? or permission.portal == current_portal
       end
