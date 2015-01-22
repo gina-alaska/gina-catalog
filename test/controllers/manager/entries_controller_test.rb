@@ -53,9 +53,8 @@ class Manager::EntriesControllerTest < ActionController::TestCase
 
   test "update should fail if updating editing from portal other than owner portal" do
     request.host = portals(:two).default_url.url
-    patch :update, id: @entry.id, entry: { name: 'Testing2' }
-    assert_equal flash[:alert], "You are not authorized to access this page."   
-    assert_redirected_to root_path
+    patch :update, id: @entry.id, entry: { name: 'Testing2' }  
+    render_template "app/views/welcome/permission_denied"
   end
 
 end
