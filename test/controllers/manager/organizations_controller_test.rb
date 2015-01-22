@@ -3,6 +3,7 @@ require 'test_helper'
 class Manager::OrganizationsControllerTest < ActionController::TestCase
   def setup
     @organization = organizations(:one)
+    @organization_no_assoc = organizations(:no_associated_entry)
     login_user(:portal_admin)
   end
 
@@ -47,7 +48,7 @@ class Manager::OrganizationsControllerTest < ActionController::TestCase
 
   test "should destroy" do
     assert_difference('Organization.count', -1) do
-      delete :destroy, id: @organization.id
+      delete :destroy, id: @organization_no_assoc.id
     end
 
     assert_redirected_to manager_organizations_path

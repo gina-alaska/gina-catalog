@@ -23,3 +23,15 @@ two:
   logo_name: MyString
   url: MyString
   parent_id: 1
+
+no_associated_entry:
+  name: MyString
+  category: Academic
+  description: MyString
+  acronym: MyString
+  adiwg_code: MyString
+  adiwg_path: MyString
+  logo_uid: MyString
+  logo_name: MyString
+  url: MyString
+  parent_id: 1
