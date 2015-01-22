@@ -3,7 +3,6 @@ require 'test_helper'
 class Manager::EntriesControllerTest < ActionController::TestCase
   def setup
     @entry = entries(:one)
-
     login_user(:portal_admin)
   end
 
@@ -28,21 +27,48 @@ class Manager::EntriesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "should get create" do
+  test "should get create with save" do
     assert_difference('Entry.count') do
-      post :create, entry: @entry.attributes
+      post :create, entry: @entry.attributes, commit: "Save"
+      assert assigns(:entry).errors.empty?, assigns(:entry).errors.full_messages
+    end
+
+    assert_redirected_to edit_manager_entry_path(assigns(:entry))
+  end
+
+  test "should get create with ajax save" do
+    assert_difference('Entry.count') do
+      xhr :post, :create, entry: @entry.attributes, commit: "Save"
+      assert assigns(:entry).errors.empty?, assigns(:entry).errors.full_messages
+    end
+
+    assert_response :success
+  end
+
+  test "should get create with save and close" do
+    assert_difference('Entry.count') do
+      post :create, entry: @entry.attributes, commit: "Save & Close"
       assert assigns(:entry).errors.empty?, assigns(:entry).errors.full_messages
     end
 
     assert_redirected_to manager_entries_path
   end
 
+  test "should get create with ajax save and close" do
+    assert_difference('Entry.count') do
+      xhr :post, :create, entry: @entry.attributes, commit: "Save & Close"
+      assert assigns(:entry).errors.empty?, assigns(:entry).errors.full_messages
+    end
+
+    assert_response :success
+  end
+   
   test "should update entry record" do
     patch :update, id: @entry.id, entry: { name: 'Testing2' }
     assert assigns(:entry).errors.empty?, assigns(:entry).errors.full_messages
     assert_redirected_to manager_entries_path
   end
-
+  
   test "should get destroy" do
     assert_difference('Entry.count', -1) do
       delete :destroy, id: @entry.id
