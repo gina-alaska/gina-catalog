@@ -4,8 +4,7 @@ class Admin::PortalsControllerTest < ActionController::TestCase
   def setup
     @portal = portals(:one)
     # @portal_no_urls = portals(:two)
-    @user = users(:admin)
-    session[:user_id] = @user.id
+    login_user(:admin)
   end
 
   test "should get index" do
