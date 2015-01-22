@@ -3,6 +3,7 @@ require 'test_helper'
 class Manager::ContactsControllerTest < ActionController::TestCase
   def setup
     @contact = contacts(:one)
+    @contact_no_assoc = contacts(:no_associated_entry)    
     login_user(:portal_admin)
   end
 
@@ -44,7 +45,7 @@ class Manager::ContactsControllerTest < ActionController::TestCase
 
   test "should get destroy" do
     assert_difference('Contact.count', -1) do
-      delete :destroy, id: @contact.id
+      delete :destroy, id: @contact_no_assoc.id
     end
 
     assert_redirected_to manager_contacts_path
