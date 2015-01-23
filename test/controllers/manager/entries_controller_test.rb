@@ -63,12 +63,34 @@ class Manager::EntriesControllerTest < ActionController::TestCase
     assert_response :success
   end
    
-  test "should update entry record" do
-    patch :update, id: @entry.id, entry: { name: 'Testing2' }
+  test "should update entry record with save" do
+    patch :update, id: @entry.id, entry: { name: 'Testing2' }, commit: "Save"
+
+    assert assigns(:entry).errors.empty?, assigns(:entry).errors.full_messages
+    assert_redirected_to edit_manager_entry_path(assigns(:entry))
+  end
+
+  test "should update entry record with ajax save" do
+    xhr :patch, :update, id: @entry.id, entry: { name: 'Testing2' }, commit: "Save"
+
+    assert assigns(:entry).errors.empty?, assigns(:entry).errors.full_messages
+    assert_response :success
+  end
+
+  test "should update entry record with save and close" do
+    patch :update, id: @entry.id, entry: { name: 'Testing2' }, commit: "Save & Close"
+
     assert assigns(:entry).errors.empty?, assigns(:entry).errors.full_messages
     assert_redirected_to manager_entries_path
   end
-  
+
+  test "should update entry record with ajax save and close" do
+    xhr :patch, :update, id: @entry.id, entry: { name: 'Testing2' }, commit: "Save & Close"
+
+    assert assigns(:entry).errors.empty?, assigns(:entry).errors.full_messages
+    assert_response :success
+  end
+           
   test "should get destroy" do
     assert_difference('Entry.count', -1) do
       delete :destroy, id: @entry.id
