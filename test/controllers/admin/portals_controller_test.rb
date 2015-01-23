@@ -55,12 +55,13 @@ class Admin::PortalsControllerTest < ActionController::TestCase
     patch :update, id: @portal.id, portal: { title: 'Testing2' }
     assert_redirected_to admin_portal_path(assigns(:portal))
   end
-  
-  test "should destroy portal" do
-    assert_difference('Portal.count', -1) do
-      delete :destroy, id: @portal.id
-    end
+ 
+# Currently there is no destroy portal 
+#  test "should destroy portal" do
+#    assert_difference('Portal.count', -1) do
+#      delete :destroy, id: @portal.id
+#    end
 
-    assert_redirected_to admin_portals_path
-  end
+#    assert_redirected_to admin_portals_path
+#  end
 end
