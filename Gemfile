@@ -72,6 +72,10 @@ group :development do
   gem 'guard-minitest'
 end
 
+
+gem "mocha", require: false, group: [:development, :test]
 group :test do
   gem "shoulda"
+  gem "poltergeist"
+  gem "minitest-rails-capybara"
 end

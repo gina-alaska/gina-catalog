@@ -45,6 +45,21 @@ ActiveRecord::Schema.define(version: 20150119195749) do
     t.datetime "updated_at"
   end
 
+  create_table "agencies", force: true do |t|
+    t.string   "name"
+    t.string   "category"
+    t.string   "description"
+    t.string   "acronym",     limit: 15
+    t.string   "adiwg_code"
+    t.string   "adiwg_path"
+    t.string   "logo_uid"
+    t.string   "logo_name"
+    t.string   "url"
+    t.integer  "parent_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "aliases", force: true do |t|
     t.string   "text"
     t.integer  "aliasable_id"
@@ -117,6 +132,15 @@ ActiveRecord::Schema.define(version: 20150119195749) do
     t.boolean  "require_contact_info"
     t.integer  "entry_type_id"
     t.datetime "published_at"
+  end
+
+  create_table "entry_agencies", force: true do |t|
+    t.integer  "entry_id"
+    t.integer  "agency_id"
+    t.boolean  "primary",    default: false
+    t.boolean  "funding",    default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "entry_aliases", force: true do |t|

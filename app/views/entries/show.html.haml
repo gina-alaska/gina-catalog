@@ -7,21 +7,21 @@
       - if @entry.attachments.geojson.any?
         = render 'map', entry: @entry
       .panel-heading
-        %h1.panel-title Agencies
+        %h1.panel-title Organizations
       .panel-body
-        - @entry.primary_agencies.each do |agency|
+        - @entry.primary_organizations.each do |org|
           .text-center
-            = image_tag agency.logo.thumb('300x150').url unless agency.logo.nil?
-            %h4= agency.name
+            = image_tag org.logo.thumb('300x150').url unless org.logo.nil?
+            %h4= org.name
       .panel-body
-        %h5 Other Agencies
-        - (@entry.funding_agencies-@entry.primary_agencies).each do |agency|
+        %h5 Other Organizations
+        - (@entry.funding_organizations-@entry.primary_organizations).each do |org|
           .pull-left.text-center
-            = image_tag agency.logo.thumb('80x80').url unless agency.logo.nil?
-            %div= agency.acronym
-        - (@entry.agencies - @entry.primary_agencies - @entry.funding_agencies).each do |agency|
+            = image_tag org.logo.thumb('80x80').url unless org.logo.nil?
+            %div= org.acronym
+        - (@entry.organizations - @entry.primary_organizations - @entry.funding_organizations).each do |org|
           .pull-left.text-center
-            = image_tag agency.logo.thumb('80x80').url unless agency.logo.nil?
-            %div= agency.acronym
+            = image_tag org.logo.thumb('80x80').url unless org.logo.nil?
+            %div= org.acronym
   .col-sm-8
     = render @entry

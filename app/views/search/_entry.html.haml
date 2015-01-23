@@ -2,9 +2,9 @@
   %h4.media-heading
     = link_to entry.title, entry
   %p
-    - if entry.primary_agencies.any?
+    - if entry.primary_organizations.any?
       %em
-        = entry.primary_agencies.map(&:name_with_acronym).join(', ')
+        = entry.primary_organizations.map(&:name_with_acronym).join(', ')
         \-
     #{truncate entry.description, length: 200, separator: ' '}
   %p
