@@ -59,10 +59,9 @@ class Manager::EntriesController < ApplicationController
 
         format.html {
           if params["commit"] == "Save"
-            redirect_to edit_manager_entries_path(@entry)
+            redirect_to edit_manager_entry_path(@entry)
           else
-            format.html { redirect_to manager_entries_path }
-            format.json { head :nocontent }
+            redirect_to manager_entries_path
           end
           }
 
