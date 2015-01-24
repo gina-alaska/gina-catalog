@@ -15,6 +15,8 @@ class EntryTest < ActiveSupport::TestCase
   should have_many(:entry_portals)
   should have_many(:portals).through(:entry_portals)
   should have_many(:activity_logs)
+  should have_many(:entry_regions)
+  should have_many(:regions).through(:entry_regions)
 
   should validate_presence_of(:title)
   should validate_presence_of(:status)  
