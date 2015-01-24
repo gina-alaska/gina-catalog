@@ -5,7 +5,8 @@ require 'minitest/rails/capybara'
 require 'mocha/mini_test'
 require 'capybara/poltergeist'
 
-Capybara.javascript_driver = :poltergeist
+# Capybara.javascript_driver = :poltergeist
+Capybara.default_wait_time = 5
 
 class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
@@ -23,3 +24,5 @@ class ActionDispatch::IntegrationTest
   # Make the Capybara DSL available in all integration tests
   include Capybara::DSL
 end
+
+ActionController::Base.asset_host = "http://catalog.192.168.222.225.xip.io"

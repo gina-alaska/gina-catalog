@@ -29,8 +29,8 @@ class ManagerEntriesBehaviorsTest < ActionDispatch::IntegrationTest
 
     def update_entry(commit)
       visit edit_manager_entry_path(@entry)
-      page.save_and_open_screenshot('/Users/Will/gits/manager.png')
       click_button commit
+      page.save_and_open_screenshot('/Users/Will/gits/manager.png')
     end
 
     def login(user)

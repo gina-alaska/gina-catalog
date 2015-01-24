@@ -6,16 +6,8 @@ BowerRails.configure do |bower_rails|
   # bower_rails.install_before_precompile = true
 
   # Invokes rake bower:resolve before precompilation. Defaults to false
-  # bower_rails.resolve_before_precompile = true
+  bower_rails.resolve_before_precompile = true
 
   # Invokes rake bower:clean before precompilation. Defaults to false
   # bower_rails.clean_before_precompile = true
-end
-
-# This is here specifically for font awesome. It causes QT and capybara-webkit
-# to crash while trying to load the font.
-# If you are aware of any better way to take care of this problem, let
-# me know!
-if Rails.env.test?
-  Rails.application.config.assets.paths.reject! { |path| path.to_s =~ /fonts/ }
 end

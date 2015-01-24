@@ -60,7 +60,7 @@ gem 'uuidtools'
 gem 'searchkick'
 gem 'ransack'
 gem 'squeel'
-gem 'quiet_assets'
+gem 'quiet_assets', group: [:development, :test]
 gem 'georuby'
 gem 'kaminari'
 
@@ -77,5 +77,6 @@ gem "mocha", require: false, group: [:development, :test]
 group :test do
   gem "shoulda"
   gem "poltergeist"
+  gem "selenium-webdriver"
   gem "minitest-rails-capybara"
 end
