@@ -4,8 +4,8 @@ class Invitation < ActiveRecord::Base
   
   accepts_nested_attributes_for :permission
   
-  validates :name, presence: true
-  validates :email, presence: true
+  validates_presence_of :name
+  validates_presence_of :email
   
   def to_param
     self.uuid
