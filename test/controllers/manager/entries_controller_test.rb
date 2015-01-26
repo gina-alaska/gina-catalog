@@ -19,6 +19,7 @@ class Manager::EntriesControllerTest < ActionController::TestCase
 
   test "should get new" do
     get :new
+    assert_nil flash[:error]
     assert_response :success
   end
 
@@ -62,7 +63,7 @@ class Manager::EntriesControllerTest < ActionController::TestCase
 
     assert_response :success
   end
-   
+
   test "should update entry record with save" do
     patch :update, id: @entry.id, entry: { name: 'Testing2' }, commit: "Save"
 
@@ -90,7 +91,7 @@ class Manager::EntriesControllerTest < ActionController::TestCase
     assert assigns(:entry).errors.empty?, assigns(:entry).errors.full_messages
     assert_response :success
   end
-           
+
   test "should get destroy" do
     assert_difference('Entry.count', -1) do
       delete :destroy, id: @entry.id
@@ -101,7 +102,7 @@ class Manager::EntriesControllerTest < ActionController::TestCase
 
   test "update should fail if updating editing from portal other than owner portal" do
     request.host = portals(:two).default_url.url
-    patch :update, id: @entry.id, entry: { name: 'Testing2' }  
+    patch :update, id: @entry.id, entry: { name: 'Testing2' }
     render_template "app/views/welcome/permission_denied"
   end
 
