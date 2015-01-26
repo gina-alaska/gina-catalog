@@ -34,21 +34,13 @@ class Manager::EntriesController < ApplicationController
       if @entry.save
         flash[:success] = "Catalog record #{@entry.title} was successfully created."
 
-        format.html {
-          if params["commit"] == "Save"
-            redirect_to edit_manager_entries_path(@entry)
-          else
-            redirect_via_turbolinks_to manager_entries_path(@entry)
-          end
-          }
-
-        format.js {
-          if params["commit"] == "Save"
-            redirect_via_turbolinks_to edit_manager_entry_path(@entry)
-          else
-            render js: "document.location='#{manager_entries_path(@entry)}';"
-          end
-          }
+        if params["commit"] == "Save"
+          format.html { redirect_to edit_manager_entries_path(@entry) }
+          format.js { redirect_via_turbolinks_to edit_manager_entry_path(@entry) }
+        else
+          format.html { redirect_to manager_entries_path }
+          format.js { redirect_via_turbolinks_to manager_entries_path }
+        end
       else
         format.html { render action: "new" }
         format.json { render json: @entry.errors, status: :unprocessable_entity }
@@ -70,7 +62,7 @@ class Manager::EntriesController < ApplicationController
           format.js { redirect_via_turbolinks_to edit_manager_entry_path(@entry) }
         else
           format.html { redirect_to manager_entries_path }
-          format.js { redirect_via_turbolinks_to manager_entries_path(@entry) }
+          format.js { redirect_via_turbolinks_to manager_entries_path }
         end
         format.json { head :nocontent }
       else

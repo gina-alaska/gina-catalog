@@ -107,13 +107,16 @@ class Layer
 
   @zoomTo: (map, layer, max = 10) ->
     map.whenReady =>
-      map.fitBounds(layer.getBounds(), { padding: [30,30], maxZoom: max })
+      bounds = layer.getBounds()
+      if bounds.isValid()
+        map.fitBounds(layer.getBounds(), { padding: [30,30], maxZoom: max })
+        
 
 $(document).on 'ready page:load', ->
   mapel = $('[data-behavior="map"]')
-  config = mapel.data()
 
   if mapel.length > 0
+    config = mapel.data()
     L.mapbox.accessToken = config.accessToken || 'pk.eyJ1IjoiZ2luYS1hbGFza2EiLCJhIjoiN0lJVnk5QSJ9.CsQYpUUXtdCpnUdwurAYcQ';
     @map = L.mapbox.map(mapel.data('target'), config.mapboxId, config);
     mapel.data('map', @map)

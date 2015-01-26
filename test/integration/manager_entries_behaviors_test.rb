@@ -23,14 +23,10 @@ class ManagerEntriesBehaviorsTest < ActionDispatch::IntegrationTest
   end
 
   private
-    def xhr_update_entry(commit)
-      xhr :patch, manager_entry_path(@entry), entry: { title: 'Testing' }, commit: commit
-    end
-
     def update_entry(commit)
       visit edit_manager_entry_path(@entry)
       click_button commit
-      page.save_and_open_screenshot('/Users/Will/gits/manager.png')
+      sleep 1 # need to wait for ajax request to finish
     end
 
     def login(user)
