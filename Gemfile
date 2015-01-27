@@ -63,6 +63,7 @@ gem 'squeel'
 gem 'quiet_assets', group: [:development, :test]
 gem 'georuby'
 gem 'kaminari'
+gem 'stamp'
 
 group :development do
   gem "better_errors"

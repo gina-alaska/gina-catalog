@@ -305,6 +305,7 @@ GEM
       activerecord (>= 3.0)
       activesupport (>= 3.0)
       polyamorous (~> 1.1.0)
+    stamp (0.6.0)
     therubyracer (0.12.1)
       libv8 (~> 3.16.14.0)
       ref
@@ -382,6 +383,7 @@ DEPENDENCIES
   shoulda-matchers
   spring
   squeel
+  stamp
   therubyracer
   turbolinks
   uglifier (>= 1.3.0)
