@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class Manager::UseAgreementsControllerTest < ActionController::TestCase
-  def setup
+  setup do
     @use_agreement = use_agreements(:one)
     login_user(:portal_admin)
   end
@@ -23,7 +23,7 @@ class Manager::UseAgreementsControllerTest < ActionController::TestCase
 
   test "should get edit" do
     get :edit, id: @use_agreement.id
-    
+
     assert_response :success
     assert_not_nil assigns(:use_agreement)
   end

@@ -1,9 +1,9 @@
 require 'test_helper'
 
 class Manager::ContactsControllerTest < ActionController::TestCase
-  def setup
+  setup do
     @contact = contacts(:one)
-    @contact_no_assoc = contacts(:no_associated_entry)    
+    @contact_no_assoc = contacts(:no_associated_entry)
     login_user(:portal_admin)
   end
 

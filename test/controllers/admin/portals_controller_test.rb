@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class Admin::PortalsControllerTest < ActionController::TestCase
-  def setup
+  setup do
     @portal = portals(:one)
     # @portal_no_urls = portals(:two)
     login_user(:admin)

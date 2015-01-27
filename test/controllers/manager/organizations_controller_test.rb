@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class Manager::OrganizationsControllerTest < ActionController::TestCase
-  def setup
+  setup do
     @organization = organizations(:one)
     @organization_no_assoc = organizations(:no_associated_entry)
     login_user(:portal_admin)
@@ -14,7 +14,7 @@ class Manager::OrganizationsControllerTest < ActionController::TestCase
 
   test "should get show" do
     get :show, id: @organization.id
-    
+
     assert_response :success
     assert_not_nil assigns(:organization)
   end
@@ -26,7 +26,7 @@ class Manager::OrganizationsControllerTest < ActionController::TestCase
 
   test "should get edit" do
     get :edit, id: @organization.id
-    
+
     assert_response :success
     assert_not_nil assigns(:organization)
   end

@@ -14,7 +14,7 @@ class PortalTest < ActiveSupport::TestCase
 
   should have_one(:favicon)
 
-  def setup
+  setup do
     @portal = portals(:one)
   end
 

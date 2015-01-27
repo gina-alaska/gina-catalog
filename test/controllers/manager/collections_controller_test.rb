@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class Manager::CollectionsControllerTest < ActionController::TestCase
-  def setup
+  setup do
     @collection = collections(:one)
     login_user(:portal_admin)
   end

@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class EntrySearchConcernsTest < ActiveSupport::TestCase
-  def setup
+  setup do
     @entry = entries(:one)
   end
 

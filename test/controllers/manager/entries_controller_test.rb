@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class Manager::EntriesControllerTest < ActionController::TestCase
-  def setup
+  setup do
     @entry = entries(:one)
     login_user(:portal_admin)
   end
