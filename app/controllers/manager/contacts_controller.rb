@@ -22,7 +22,7 @@ class Manager::ContactsController < ManagerController
   end
 
   def new
-    @contact = Contact.new
+    @contact = Contact.new()
   end
 
   def edit
