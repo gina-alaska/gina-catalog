@@ -35,7 +35,7 @@ class Manager::EntriesController < ApplicationController
         flash[:success] = "Catalog record #{@entry.title} was successfully created."
 
         if params["commit"] == "Save"
-          format.html { redirect_to edit_manager_entries_path(@entry) }
+          format.html { redirect_to edit_manager_entry_path(@entry) }
           format.js { redirect_via_turbolinks_to edit_manager_entry_path(@entry) }
         else
           format.html { redirect_to manager_entries_path }
@@ -77,7 +77,7 @@ class Manager::EntriesController < ApplicationController
   end
 
   def destroy
-    # @entry.destroy
+    @entry.destroy
 
     respond_to do |format|
       flash[:success] = "Catalog record #{@entry.title} was successfully deleted."

@@ -75,7 +75,8 @@ end
 
 gem "mocha", require: false, group: [:development, :test]
 group :test do
-  gem "shoulda"
+  gem "shoulda", require: false
+  gem "shoulda-matchers", require: false
   gem "poltergeist"
   gem "selenium-webdriver"
   gem "minitest-rails-capybara"

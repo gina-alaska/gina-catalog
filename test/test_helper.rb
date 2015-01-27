@@ -4,6 +4,8 @@ require 'rails/test_help'
 require 'minitest/rails/capybara'
 require 'mocha/mini_test'
 require 'capybara/poltergeist'
+require 'shoulda'
+# require 'shoulda-matchers'
 
 Capybara.javascript_driver = :poltergeist
 Capybara.default_wait_time = 5

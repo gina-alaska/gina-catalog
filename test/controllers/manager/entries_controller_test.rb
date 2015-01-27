@@ -3,7 +3,6 @@ require 'test_helper'
 class Manager::EntriesControllerTest < ActionController::TestCase
   def setup
     @entry = entries(:one)
-
     login_user(:portal_admin)
   end
 
@@ -13,13 +12,14 @@ class Manager::EntriesControllerTest < ActionController::TestCase
     assert_not_nil assigns(:entries)
   end
 
-  test "should get show" do
-    get :show
-    assert_response :success
-  end
+#  test "should get show" do
+#    get :show
+#    assert_response :success
+#  end
 
   test "should get new" do
     get :new
+    assert_nil flash[:error]
     assert_response :success
   end
 
@@ -28,19 +28,68 @@ class Manager::EntriesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "should get create" do
+  test "should get create with save" do
     assert_difference('Entry.count') do
-      post :create, entry: @entry.attributes
+      post :create, entry: @entry.attributes, commit: "Save"
+      assert assigns(:entry).errors.empty?, assigns(:entry).errors.full_messages
+    end
+
+    assert_redirected_to edit_manager_entry_path(assigns(:entry))
+  end
+
+  test "should get create with ajax save" do
+    assert_difference('Entry.count') do
+      xhr :post, :create, entry: @entry.attributes, commit: "Save"
+      assert assigns(:entry).errors.empty?, assigns(:entry).errors.full_messages
+    end
+
+    assert_response :success
+  end
+
+  test "should get create with save and close" do
+    assert_difference('Entry.count') do
+      post :create, entry: @entry.attributes, commit: "Save & Close"
       assert assigns(:entry).errors.empty?, assigns(:entry).errors.full_messages
     end
 
     assert_redirected_to manager_entries_path
   end
 
-  test "should update entry record" do
-    patch :update, id: @entry.id, entry: { name: 'Testing2' }
+  test "should get create with ajax save and close" do
+    assert_difference('Entry.count') do
+      xhr :post, :create, entry: @entry.attributes, commit: "Save & Close"
+      assert assigns(:entry).errors.empty?, assigns(:entry).errors.full_messages
+    end
+
+    assert_response :success
+  end
+
+  test "should update entry record with save" do
+    patch :update, id: @entry.id, entry: { name: 'Testing2' }, commit: "Save"
+
+    assert assigns(:entry).errors.empty?, assigns(:entry).errors.full_messages
+    assert_redirected_to edit_manager_entry_path(assigns(:entry))
+  end
+
+  test "should update entry record with ajax save" do
+    xhr :patch, :update, id: @entry.id, entry: { name: 'Testing2' }, commit: "Save"
+
+    assert assigns(:entry).errors.empty?, assigns(:entry).errors.full_messages
+    assert_response :success
+  end
+
+  test "should update entry record with save and close" do
+    patch :update, id: @entry.id, entry: { name: 'Testing2' }, commit: "Save & Close"
+
     assert assigns(:entry).errors.empty?, assigns(:entry).errors.full_messages
     assert_redirected_to manager_entries_path
+  end
+
+  test "should update entry record with ajax save and close" do
+    xhr :patch, :update, id: @entry.id, entry: { name: 'Testing2' }, commit: "Save & Close"
+
+    assert assigns(:entry).errors.empty?, assigns(:entry).errors.full_messages
+    assert_response :success
   end
 
   test "should get destroy" do
@@ -54,8 +103,7 @@ class Manager::EntriesControllerTest < ActionController::TestCase
   test "update should fail if updating editing from portal other than owner portal" do
     request.host = portals(:two).default_url.url
     patch :update, id: @entry.id, entry: { name: 'Testing2' }
-    assert_equal flash[:alert], "You are not authorized to access this page."   
-    assert_redirected_to root_path
+    render_template "app/views/welcome/permission_denied"
   end
 
 end

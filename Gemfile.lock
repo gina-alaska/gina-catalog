@@ -379,6 +379,7 @@ DEPENDENCIES
   searchkick
   selenium-webdriver
   shoulda
+  shoulda-matchers
   spring
   squeel
   therubyracer

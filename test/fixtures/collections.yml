@@ -3,11 +3,11 @@
 one:
   name: MyString
   description: MyString
-  portal_id: 1
+  portal: one
   hidden: false
 
 two:
   name: MyString
   description: MyString
-  portal_id: 1
+  portal: one
   hidden: false

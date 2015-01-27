@@ -3,7 +3,7 @@ require 'test_helper'
 class PortalTest < ActiveSupport::TestCase
   should validate_presence_of(:title)
   should validate_presence_of(:acronym)
-  
+
   should have_many(:urls)
   should have_many(:activity_logs)
   should have_many(:social_networks)
@@ -13,11 +13,11 @@ class PortalTest < ActiveSupport::TestCase
   should accept_nested_attributes_for(:favicon).allow_destroy(true)
 
   should have_one(:favicon)
-  
+
   def setup
     @portal = portals(:one)
   end
-  
+
   test "default_url should return the default url" do
     assert_equal @portal.default_url.url, 'catalog.192.168.222.225.xip.io'
   end
