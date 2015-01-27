@@ -1,19 +1,46 @@
-.panel.panel-default
-  .panel-heading{ style: 'position: relative' }
-    = link_to new_manager_contact_path, class: 'btn btn-sm btn-success panel-btn-right' do
-      New Contact
-    %ol.breadcrumb
-      %li.active
-        %i.fa.fa-group
-        Contacts
-  
-  %table.table.table-striped.table-condensed
-    %thead
-      %tr
-        %th Name
-        %th Job Title
-        %th Email
-        %th Phone
-        %th.text-right Actions
-    %tbody
-      = render(partial: "contact_row", collection: @contacts, as: :contact) || "<tr><td colspan=\"5\">There are no contacts available</td></tr>".html_safe
+.row
+  .col-sm-4
+    .panel.panel-default
+      .panel-body
+        = search_form_for [:manager, @q] do |f|
+          .form-group
+            .input-group
+              = f.search_field :name_or_email_or_job_title_cont, class: 'form-control', placeholder: 'Search by name, email, or job title'
+            
+              %span.input-group-btn
+                = f.submit class: 'btn btn-primary'
+          
+          .form-group
+            %label
+              = check_box_tag :all, 'on', params[:all].present?
+              Show all contacts
+            %span.help-block
+              %p
+                %strong Note: 
+                By default, only contacts that are currently assigned to a catalog record or are less than a week old are shown. 
+              %p
+                To see all available contacts check the "Show all contacts" box before searching.
+      .panel-footer
+        = link_to new_manager_contact_path, class: 'btn btn-success btn-block' do
+          %i.fa.fa-plus
+          New Contacts
+  .col-sm-8
+    .panel.panel-default
+      .panel-heading{ style: 'position: relative' }
+        = link_to new_manager_contact_path, class: 'btn btn-sm btn-success panel-btn-right' do
+          New Contact
+        %ol.breadcrumb
+          %li.active
+            %i.fa.fa-group
+            Contacts
+      
+      %table.table.table-striped.table-condensed
+        %thead
+          %tr
+            %th Name
+            %th Job Title
+            %th Email
+            %th Phone
+            %th.text-right Actions
+        %tbody
+          = render(partial: "contact_row", collection: @contacts, as: :contact) || "<tr><td colspan=\"5\">There are no contacts available</td></tr>".html_safe

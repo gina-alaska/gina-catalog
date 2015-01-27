@@ -2,22 +2,27 @@ class Manager::ContactsController < ManagerController
   load_and_authorize_resource
 
   def index
-    @contacts = Contact.all
-
+    @q = Contact.search(params[:q])
+    @q.sorts = 'name asc' if @q.sorts.empty?
+    @contacts = @q.result(distinct: true)
+    @contacts = @contacts.used_by_portal(current_portal) unless params[:all].present?
+      
     respond_to do |format|
       format.html
-      format.json { render json: @contacts }
+      format.json { render json: @contacts}
     end
   end
   
   def search
-    @contacts = Contact.where('name ilike ?', "%#{params[:query]}%")
+    query = params[:query].split(/\s+/)
+    @q = Contact.search(name_or_email_or_job_title_cont_any: query)
+    @contacts = @q.result(distinct: true)
     
     render json: @contacts
   end
 
   def new
-    @contact = Contact.new()
+    @contact = Contact.new
   end
 
   def edit
