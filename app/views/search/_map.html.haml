@@ -1,0 +1,9 @@
+.map-container.small
+  #search-map.search-map{ data: { behavior: 'map', target: 'search-map', 'mapbox-id' => 'gina-alaska.knb7oi02', 'max-zoom' => 15 } }
+    %layer{ data: { url: url_for(params.merge(format: :geojson)), fit: 'true', 'geojson-options' => 'custom-marker', 'marker-label-field' => 'index', cluster: 'true' }}
+      %popup
+        %h1 {{title}}
+        <a href="\#{{id}}" data-behavior="highlight" data-group=".entries" class="btn btn-primary btn-block btn-sm">
+        Highlight
+        </a>
+        <a href="{{url}}" class="btn btn-primary btn-block btn-sm">View Record</a>

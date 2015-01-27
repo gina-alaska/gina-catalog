@@ -4,7 +4,7 @@ one:
   name: MyString
   email: MyString
   avatar: MyString
-  
+
 two:
   name: User 2
   email: test@test.com
@@ -16,7 +16,7 @@ portal_admin:
   avatar: Nothing
 
 admin:
-  name: MyString
-  email: MyString
+  name: admin
+  email: admin@testing.com
   avatar: MyString
   global_admin: true

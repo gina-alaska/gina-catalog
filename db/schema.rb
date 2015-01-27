@@ -15,6 +15,8 @@ ActiveRecord::Schema.define(version: 20150119195749) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "postgis"
+  enable_extension "postgis_topology"
   enable_extension "hstore"
   enable_extension "uuid-ossp"
 
@@ -39,6 +41,21 @@ ActiveRecord::Schema.define(version: 20150119195749) do
     t.string   "zipcode"
     t.integer  "addressable_id"
     t.string   "addressable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "agencies", force: true do |t|
+    t.string   "name"
+    t.string   "category"
+    t.string   "description"
+    t.string   "acronym",     limit: 15
+    t.string   "adiwg_code"
+    t.string   "adiwg_path"
+    t.string   "logo_uid"
+    t.string   "logo_name"
+    t.string   "url"
+    t.integer  "parent_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -69,6 +86,14 @@ ActiveRecord::Schema.define(version: 20150119195749) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "bounds", force: true do |t|
+    t.integer  "boundable_id"
+    t.string   "boundable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.spatial  "geom",           limit: {:srid=>4326, :type=>"geometry"}
   end
 
   create_table "collections", force: true do |t|
@@ -109,6 +134,15 @@ ActiveRecord::Schema.define(version: 20150119195749) do
     t.datetime "published_at"
   end
 
+  create_table "entry_agencies", force: true do |t|
+    t.integer  "entry_id"
+    t.integer  "agency_id"
+    t.boolean  "primary",    default: false
+    t.boolean  "funding",    default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "entry_aliases", force: true do |t|
     t.string   "slug"
     t.integer  "entry_id"
@@ -130,8 +164,6 @@ ActiveRecord::Schema.define(version: 20150119195749) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "entry_contacts", ["entry_id", "contact_id"], :name => "index_entry_contacts_on_entry_id_and_contact_id", :unique => true
 
   create_table "entry_organizations", force: true do |t|
     t.integer  "entry_id"
