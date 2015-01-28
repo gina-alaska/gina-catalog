@@ -3,7 +3,6 @@ require 'test_helper'
 class ManagerEntriesBehaviorsTest < ActionDispatch::IntegrationTest
   setup do
     @entry = entries(:one)
-    Searchkick.disable_callbacks
     Capybara.current_driver = Capybara.javascript_driver
   end
 
