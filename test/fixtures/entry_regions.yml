@@ -1,9 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  entry_id: 1
-  region_id: 1
+  entry_id: one
+  region_id: one
 
 two:
-  entry_id: 1
-  region_id: 1
+  entry_id: one
+  region_id: one

@@ -6,9 +6,9 @@ class RegionTest < ActiveSupport::TestCase
   should validate_uniqueness_of(:name)
 
   test "WKT point should intersect polygons" do
-    regions = Region.intersects("POINT(5 5)")
+    regions = Region.intersects("POINT(4 4)")
 
-    assert_equal 2, regions.count
+    assert_equal 1, regions.count
   end
 
   test "WKT point should not intersect polygons" do
