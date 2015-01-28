@@ -31,24 +31,24 @@ class Ability
 
     user ||= User.new
 
-    if user.has_role?(:cms_manager, current_portal)
+    if user.role?(:cms_manager, current_portal)
       can :view_manager_menu, User
     end
 
-    if user.has_role?(:data_manager, current_portal)
+    if user.role?(:data_manager, current_portal)
       can :view_manager_menu, User
 
       can :manage, [Organization, Contact]
-      can :manage, [UseAgreement, Collection], { portal_id: current_portal.id }
+      can :manage, [UseAgreement, Collection],  portal_id: current_portal.id
       can :manage, Entry do |entry|
-        entry.new_record? or entry.owner_portal == current_portal
+        entry.new_record? || entry.owner_portal == current_portal
       end
     end
 
-    if user.has_role?(:portal_manager, current_portal)
+    if user.role?(:portal_manager, current_portal)
       can :view_manager_menu, User
-      can [:read, :update], Portal, { id: current_portal.id }
-      can :manage, [Permission, Invitation], { portal_id: current_portal.id }
+      can [:read, :update], Portal,  id: current_portal.id
+      can :manage, [Permission, Invitation],  portal_id: current_portal.id
     end
 
     if user.global_admin?

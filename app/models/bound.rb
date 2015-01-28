@@ -10,10 +10,10 @@ class Bound < ActiveRecord::Base
 
   def from_geojson(data)
     srs_database = RGeo::CoordSys::SRSDatabase::ActiveRecordTable.new
-    factory = RGeo::Geos.factory(:srs_database => srs_database, :srid => 4326)
+    factory = RGeo::Geos.factory(srs_database: srs_database, srid: 4326)
     cartesian_preferred_factory = Bound.rgeo_factory_for_column(:geom)
 
-    geojson = RGeo::GeoJSON.decode(data, :json_parser => :json)
+    geojson = RGeo::GeoJSON.decode(data, json_parser: :json)
 
     bbox = RGeo::Cartesian::BoundingBox.new(factory)
     geojson.each { |feature| bbox.add(feature.geometry) }
@@ -23,7 +23,7 @@ class Bound < ActiveRecord::Base
   end
 
   def centroid
-    self.geom.envelope.point_on_surface
+    geom.envelope.point_on_surface
   end
 
   def as_geojson

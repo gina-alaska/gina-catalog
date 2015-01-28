@@ -1,11 +1,11 @@
 class Admin::PortalsController < AdminController
   before_action :set_portal, only: [:show, :edit, :update]
   load_and_authorize_resource
-  
+
   def index
     @portals = Portal.active
   end
-  
+
   def show
   end
 
@@ -14,28 +14,28 @@ class Admin::PortalsController < AdminController
     @portal.urls.build
     @portal.build_favicon
   end
-  
+
   def create
     @portal = Portal.new(portal_params)
-    
+
     respond_to do |format|
       if @portal.save
-        format.html {
+        format.html do
           flash[:notice] = "Created portal: #{@portal.title}"
           redirect_to [:admin, @portal]
-        }
+        end
       else
-        format.html {
+        format.html do
           render 'new'
-        }
+        end
       end
     end
   end
-  
+
   def edit
     @portal.urls.build
   end
-  
+
   def update
     respond_to do |format|
       if @portal.update_attributes(portal_params)
@@ -45,13 +45,13 @@ class Admin::PortalsController < AdminController
       end
     end
   end
-  
+
   protected
-  
+
   def portal_params
     params.require(:portal).permit(:title, :acronym, :parent_id, urls_attributes: [:id, :url, :default], favicon: [:id, :image_name, :image_uid])
   end
-  
+
   def set_portal
     @portal = Portal.find(params[:id])
   end

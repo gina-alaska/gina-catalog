@@ -4,10 +4,9 @@ class Manager::EntriesController < ApplicationController
   include EntriesControllerSearchConcerns
 
   def index
-
     respond_to do |format|
       format.html { search(params[:page]) }
-      format.geojson { search(1, 10000) }
+      format.geojson { search(1, 10_000) }
       format.json
     end
   end
@@ -34,7 +33,7 @@ class Manager::EntriesController < ApplicationController
       if @entry.save
         flash[:success] = "Catalog record #{@entry.title} was successfully created."
 
-        if params["commit"] == "Save"
+        if params['commit'] == 'Save'
           format.html { redirect_to edit_manager_entry_path(@entry) }
           format.js { redirect_via_turbolinks_to edit_manager_entry_path(@entry) }
         else
@@ -42,12 +41,12 @@ class Manager::EntriesController < ApplicationController
           format.js { redirect_via_turbolinks_to manager_entries_path }
         end
       else
-        format.html { render action: "new" }
+        format.html { render action: 'new' }
         format.json { render json: @entry.errors, status: :unprocessable_entity }
-        format.js {
+        format.js do
           flash.now[:error] = @entry.errors.full_messages
           render 'form_response'
-        }
+        end
       end
     end
   end
@@ -57,7 +56,7 @@ class Manager::EntriesController < ApplicationController
       if @entry.update_attributes(entry_params)
         flash[:success] = "Catalog record #{@entry.title} was successfully updated."
 
-        if params["commit"] == "Save"
+        if params['commit'] == 'Save'
           format.html { redirect_to edit_manager_entry_path(@entry) }
           format.js { redirect_via_turbolinks_to edit_manager_entry_path(@entry) }
         else
@@ -66,12 +65,12 @@ class Manager::EntriesController < ApplicationController
         end
         format.json { head :nocontent }
       else
-        format.html { render action: "edit" }
+        format.html { render action: 'edit' }
         format.json { render json: @entry.errors, status: :unprocessable_entity }
-        format.js {
+        format.js do
           flash.now[:error] = @entry.errors.full_messages
           render 'form_response'
-        }
+        end
       end
     end
   end
@@ -103,7 +102,6 @@ class Manager::EntriesController < ApplicationController
   protected
 
   def entry_params
-
     values = params.require(:entry).permit(
       :title, :description, :status, :entry_type_id, :start_date, :end_date,
       :use_agreement_id, :request_contact_info, :require_contact_info, :tag_list, :collection_ids,

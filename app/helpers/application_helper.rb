@@ -9,8 +9,8 @@ module ApplicationHelper
       'info'
     end
   end
-  
+
   def ddtext(string)
-    string.blank? ? "&nbsp;".html_safe : string
+    string.blank? ? '&nbsp;'.html_safe : string
   end
 end

@@ -11,15 +11,15 @@ module PermissionConcerns
   end
 
   def roles(portal)
-    self.permissions.for(portal).try(:roles)
+    permissions.for(portal).try(:roles)
   end
 
   def set_roles(portal, roles)
-    permission = self.permissions.where(portal_id: portal).first_or_initialize
+    permission = permissions.where(portal_id: portal).first_or_initialize
     permission.update_attribute(:roles, roles)
   end
 
-  def has_role?(role, portal)
+  def role?(role, portal)
     [true, 1, '1', 't', 'T', 'true', 'TRUE'].include?(roles(portal).try(:[], role.to_s))
   end
 end

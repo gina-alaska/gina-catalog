@@ -10,29 +10,29 @@ class UserTest < ActiveSupport::TestCase
   should have_many(:portals).through(:permissions)
   should have_many(:activity_logs)
 
-  test "user should have all manager privs for portal one"  do
+  test 'user should have all manager privs for portal one'  do
     @user = users(:one)
     @portal = portals(:one)
 
     Permission::AVAILABLE_ROLES.keys.each do |role|
-      assert @user.has_role?(role, @portal), "User was not a #{role} when they should have been"
+      assert @user.role?(role, @portal), "User was not a #{role} when they should have been"
     end
   end
 
-  test "user should have no manager privs for portal two"  do
+  test 'user should have no manager privs for portal two'  do
     @user = users(:one)
     @portal = portals(:two)
 
     Permission::AVAILABLE_ROLES.keys.each do |role|
-      assert !@user.has_role?(role, @portal), "User was a #{role} when they should not have been"
+      assert !@user.role?(role, @portal), "User was a #{role} when they should not have been"
     end
   end
 
-  test "adding permissions to a new user" do
+  test 'adding permissions to a new user' do
     user = users(:one)
     @user = User.new(name: user.name, email: user.email)
     @portal = portals(:one)
 
-    @user.set_roles(@portal, { cms_manager: false })
+    @user.set_roles(@portal,  cms_manager: false)
   end
 end

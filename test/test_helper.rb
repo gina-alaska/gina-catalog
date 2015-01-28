@@ -27,4 +27,4 @@ class ActionDispatch::IntegrationTest
   include Capybara::DSL
 end
 
-ActionController::Base.asset_host = "http://catalog.192.168.222.225.xip.io"
+ActionController::Base.asset_host = 'http://catalog.192.168.222.225.xip.io'

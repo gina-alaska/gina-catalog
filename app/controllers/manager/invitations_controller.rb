@@ -2,7 +2,7 @@ class Manager::InvitationsController < ManagerController
   load_and_authorize_resource find_by: :uuid
   skip_authorize_resource only: [:accept]
 
-  rescue_from ActiveRecord::RecordNotFound do |exception|
+  rescue_from ActiveRecord::RecordNotFound do |_exception|
     flash[:error] = "We're sorry but the requested invitation is no longer available"
     redirect_to root_path
   end
@@ -14,7 +14,7 @@ class Manager::InvitationsController < ManagerController
 
   def resend
     InvitationMailer.invite_email(@invitation).deliver_later
-    redirect_to manager_permissions_path, notice: "Invitation has been resent"
+    redirect_to manager_permissions_path, notice: 'Invitation has been resent'
   end
 
   def accept
@@ -26,7 +26,7 @@ class Manager::InvitationsController < ManagerController
 
         redirect_to manager_path, notice: "You have been granted access to #{current_portal.title}"
       else
-        flash[:error] = "An error was encountered while trying to accept the invitation, please email the administrator to resolve this problem"
+        flash[:error] = 'An error was encountered while trying to accept the invitation, please email the administrator to resolve this problem'
         redirect_to root_path
       end
     else
@@ -43,14 +43,14 @@ class Manager::InvitationsController < ManagerController
         @invitation.permission.update_attribute(:portal, current_portal)
         InvitationMailer.invite_email(@invitation).deliver_later
 
-        format.html {
+        format.html do
           flash[:notice] = "Invitation sent to #{@invitation.email}"
           redirect_to manager_permissions_path
-        }
+        end
       else
-        format.html {
+        format.html do
           render :new
-        }
+        end
       end
     end
   end
@@ -64,14 +64,14 @@ class Manager::InvitationsController < ManagerController
         @invitation.permission.update_attribute(:portal, current_portal)
         InvitationMailer.invite_email(@invitation).deliver_later
 
-        format.html {
-          flash[:notice] = "Invitation updated"
+        format.html do
+          flash[:notice] = 'Invitation updated'
           redirect_to manager_permissions_path
-        }
+        end
       else
-        format.html {
+        format.html do
           render :edit
-        }
+        end
       end
     end
   end
@@ -79,15 +79,15 @@ class Manager::InvitationsController < ManagerController
   def destroy
     respond_to do |format|
       if @invitation.destroy
-        format.html {
+        format.html do
           flash[:notice] = "Inviation for #{@invitation.email} has been removed"
           redirect_to manager_permissions_path
-        }
+        end
       else
-        format.html {
+        format.html do
           flash[:notice] = "There was a problem removing invitation for #{@invitation.email}"
           redirect_to manager_permissions_path
-        }
+        end
       end
     end
   end
@@ -99,6 +99,6 @@ class Manager::InvitationsController < ManagerController
   end
 
   def invitation_params
-    params.require(:invitation).permit(:name, :email, :message, :permission_attributes => Permission::AVAILABLE_ROLES.keys + [:id])
+    params.require(:invitation).permit(:name, :email, :message, permission_attributes: Permission::AVAILABLE_ROLES.keys + [:id])
   end
 end

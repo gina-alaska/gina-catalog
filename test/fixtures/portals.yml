@@ -9,8 +9,18 @@ one:
   contact_email: MyString
   analytics_account: MyString
   depth: 0
-  
+
 two:
+  title: MyString
+  by_line: MyString
+  acronym: MyString
+  description: MyText
+  logo_uid: MyString
+  contact_email: MyString
+  analytics_account: MyString
+  depth: 0
+
+bad_default_urls:
   title: MyString
   by_line: MyString
   acronym: MyString

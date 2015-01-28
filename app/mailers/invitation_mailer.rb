@@ -1,5 +1,5 @@
 class InvitationMailer < ActionMailer::Base
-  default from: "support@gina.alaska.edu"
+  default from: 'support@gina.alaska.edu'
 
   def invite_email(invitation)
     @invitation = invitation.reload

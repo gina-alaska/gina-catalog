@@ -10,6 +10,6 @@ class EntryType < ActiveRecord::Base
   validates :color, length: { maximum: 255 }
 
   def to_s
-    self.name
+    name
   end
 end

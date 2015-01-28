@@ -3,23 +3,28 @@ module EntriesControllerSearchConcerns
 
   def search(page, per_page = 20)
     @search_params = search_params
-    @entries = Entry.search *elasticsearch_params(page,per_page)
+    @entries = Entry.search *elasticsearch_params(page, per_page)
 
     @facets = OpenStruct.new(
       tags: organize_facets(@entries.facets['tag_list']),
-      collections: organize_facets(@entries.facets['collection_ids']) { |id|
-        Collection.where(id: id).first.try(:name) },
+      collections: organize_facets(@entries.facets['collection_ids']) do |id|
+        Collection.where(id: id).first.try(:name)
+      end,
       entry_types: organize_facets(@entries.facets['entry_type_name']),
       status: organize_facets(@entries.facets['status']),
-      primary_agencies: organize_facets(@entries.facets['primary_agency_ids']) { |id|
-        Agency.where(id: id).first.try(:name) },
-      funding_agencies: organize_facets(@entries.facets['funding_agency_ids']) { |id|
-        Agency.where(id: id).first.try(:name) },
+      primary_agencies: organize_facets(@entries.facets['primary_agency_ids']) do |id|
+        Agency.where(id: id).first.try(:name)
+      end,
+      funding_agencies: organize_facets(@entries.facets['funding_agency_ids']) do |id|
+        Agency.where(id: id).first.try(:name)
+      end,
       agency_categories: organize_facets(@entries.facets['agency_categories']),
-      primary_contacts: organize_facets(@entries.facets['primary_contact_ids']) { |id|
-        Contact.where(id: id).first.try(:name) },
-      other_contacts: organize_facets(@entries.facets['contact_ids']) { |id|
-        Contact.where(id: id).first.try(:name) }
+      primary_contacts: organize_facets(@entries.facets['primary_contact_ids']) do |id|
+        Contact.where(id: id).first.try(:name)
+      end,
+      other_contacts: organize_facets(@entries.facets['contact_ids']) do |id|
+        Contact.where(id: id).first.try(:name)
+      end
     )
     # @collections = Collection.where(id: @facets.collections.keys)
     # @entry_types = EntryType.order(name: :asc)
@@ -28,16 +33,16 @@ module EntriesControllerSearchConcerns
 
   protected
 
-  def organize_facets(facets, &block)
+  def organize_facets(facets, &_block)
     return [] if facets.nil?
 
-    facets['terms'].collect { |f|
+    facets['terms'].collect do |f|
       {
         term: f['term'],
         count: f['count'],
         display_name: block_given? ? yield(f['term']) : f['term']
       }
-    }.sort { |a,b| a[:count] == b[:count] ? a[:term] <=> b[:term] : b[:count] <=> a[:count] }
+    end.sort { |a, b| a[:count] == b[:count] ? a[:term] <=> b[:term] : b[:count] <=> a[:count] }
   end
 
   FACET_FIELDS = {
@@ -48,7 +53,7 @@ module EntriesControllerSearchConcerns
 
   def search_params
     fields = [:starts_before, :starts_after, :ends_before, :ends_after, :order, :limit]
-    fields << FACET_FIELDS.keys.inject({}) { |c,f| c[f] = []; c }
+    fields << FACET_FIELDS.keys.inject({}) { |c, f| c[f] = []; c }
 
     if params[:search].present?
       @search_params ||= params.require(:search).permit(:query, *fields)
@@ -93,12 +98,12 @@ module EntriesControllerSearchConcerns
     where[:start_date] = date_search_params(:starts_after, :starts_before)
     where[:end_date] = date_search_params(:ends_after, :ends_before)
 
-    #items that must match all selected
+    # items that must match all selected
     [:tags, :collections, :agency_categories].each do |param|
       where[FACET_FIELDS[param]] = { all: search_params[param] } if search_params[param].present?
     end
 
-    #items that can match any selected
+    # items that can match any selected
     [:entry_type_name, :status, :primary_agencies, :funding_agencies, :primary_contacts, :other_contacts].each do |param|
       where[FACET_FIELDS[param]] = search_params[param] if search_params[param].present?
     end
@@ -106,7 +111,7 @@ module EntriesControllerSearchConcerns
     opts[:query] = {
       query_string: {
         query: search_params[:query],
-        analyzer: "snowball",
+        analyzer: 'snowball',
         # default_operator: "AND",
         # flags: 'OR|AND|PREFIX|NOT'
       }

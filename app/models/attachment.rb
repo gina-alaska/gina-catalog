@@ -3,7 +3,7 @@ class Attachment < ActiveRecord::Base
     'Thumbnail',
     'Geojson',
     'Public Download',
-    'Private Download',
+    'Private Download'
   ]
 
   dragonfly_accessor :file
@@ -11,26 +11,25 @@ class Attachment < ActiveRecord::Base
   belongs_to :entry, touch: true
   has_one :bbox, class_name: 'Bound', as: :boundable
 
-  scope :thumbnail, -> { where(category: "Thumbnail") }
-  scope :geojson, -> { where(category: "Geojson") }
-  scope :private_download, -> { where(category: "Private Download") }
-  scope :public_download, -> { where(category: "Public Download") }
+  scope :thumbnail, -> { where(category: 'Thumbnail') }
+  scope :geojson, -> { where(category: 'Geojson') }
+  scope :private_download, -> { where(category: 'Private Download') }
+  scope :public_download, -> { where(category: 'Public Download') }
 
-
-  before_create :create_uuid
+  before_save :create_uuid
   after_save :create_bbox
 
   validates :description, length: { maximum: 255 }
 
   def create_uuid
-    self.uuid = UUIDTools::UUID.md5_create(UUIDTools::UUID_URL_NAMESPACE, self.file_uid).to_s
+    self.uuid ||= UUIDTools::UUID.md5_create(UUIDTools::UUID_URL_NAMESPACE, file_uid).to_s
   end
 
   def to_param
-    self.uuid
+    uuid
   end
 
   def create_bbox
-    self.build_bbox.from_geojson(file.data).save
+    build_bbox.from_geojson(file.data).save
   end
 end

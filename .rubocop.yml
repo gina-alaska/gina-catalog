@@ -1,0 +1,26 @@
+AllCops:
+  Exclude:
+    - 'vendor/**/*'
+    - 'test/fixtures/**/*'
+    - 'db/schema.rb'
+    - 'db/seeds.rb'
+    - 'cookbook/**/*'
+    - 'Gemfile'
+    - 'bin/*'
+    - 'Guardfile'
+
+Documentation:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Metrics/LineLength:
+  Max: 120
+
+Metrics/MethodLength:
+  CountComments: false  # count full line comments?
+  Max: 15
+
+Metrics/AbcSize:
+  Max: 20

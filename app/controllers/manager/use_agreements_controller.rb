@@ -5,8 +5,8 @@ class Manager::UseAgreementsController < ApplicationController
     @use_agreements = UseAgreement.all
   end
 
-#  def show
-#  end
+  #  def show
+  #  end
 
   def new
     @use_agreement = UseAgreement.new
@@ -23,7 +23,7 @@ class Manager::UseAgreementsController < ApplicationController
         flash[:success] = "Use agreement #{@use_agreement.title} was successfully created."
         format.html { redirect_to manager_use_agreements_path }
       else
-        format.html { render action: "new" }
+        format.html { render action: 'new' }
         format.json { render json: @use_agreement.errors, status: :unprocessable_entity }
       end
     end
@@ -36,7 +36,7 @@ class Manager::UseAgreementsController < ApplicationController
         format.html { redirect_to manager_use_agreements_path }
         format.json { head :nocontent }
       else
-        format.html { render action: "edit" }
+        format.html { render action: 'edit' }
         format.json { render json: @use_agreement.errors, status: :unprocessable_entity }
       end
     end
@@ -56,7 +56,7 @@ class Manager::UseAgreementsController < ApplicationController
   end
 
   protected
-  
+
   def use_agreement_params
     params.require(:use_agreement).permit(:title, :body, :required, :archived)
   end

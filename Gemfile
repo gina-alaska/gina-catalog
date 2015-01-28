@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0'
 # Use postgresql as the database for Active Record
@@ -35,19 +34,19 @@ gem 'unicorn'
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
-gem "rdiscount"
-gem "haml"
-gem "bower-rails"
-gem "omniauth"
-gem "omniauth-github"
-gem "omniauth-google-oauth2"
-gem "omniauth-openid"
-gem "google-api-client"
+gem 'rdiscount'
+gem 'haml'
+gem 'bower-rails'
+gem 'omniauth'
+gem 'omniauth-github'
+gem 'omniauth-google-oauth2'
+gem 'omniauth-openid'
+gem 'google-api-client'
 gem 'bootstrap_form', git: 'https://github.com/bootstrap-ruby/rails-bootstrap-forms.git'
 gem 'awesome_nested_set'
 gem 'rgeo'
 gem 'rgeo-activerecord'
-gem 'activerecord-postgis-adapter', github:'rgeo/activerecord-postgis-adapter', branch: 'activerecord42'#, '~> 3.0'
+gem 'activerecord-postgis-adapter', github: 'rgeo/activerecord-postgis-adapter', branch: 'activerecord42' # , '~> 3.0'
 gem 'rgeo-geojson'
 gem 'cancancan', '~> 1.9'
 gem 'nested_form'
@@ -70,15 +69,16 @@ group :development, :test do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 
-  gem "better_errors"
-  gem "binding_of_caller"
-  gem "rails-erd"
-  gem "guard"
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'rails-erd'
+  gem 'guard'
   gem 'guard-minitest'
-  gem "mocha", require: false
-  gem "shoulda", require: false
-  gem "shoulda-matchers", require: false
-  gem "poltergeist"
-  gem "selenium-webdriver"
-  gem "minitest-rails-capybara"
+  gem 'mocha', require: false
+  gem 'shoulda', require: false
+  gem 'shoulda-matchers', require: false
+  gem 'poltergeist'
+  gem 'selenium-webdriver'
+  gem 'minitest-rails-capybara'
+  gem 'guard-rubocop'
 end

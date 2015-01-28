@@ -10,18 +10,23 @@ module EntrySearchConcerns
   end
 
   def collection_names
-    self.collections.pluck(:name)
+    collections.pluck(:name)
   end
 
   def organization_categories
-    self.organizations.pluck(:category)
+    organizations.pluck(:category)
   end
 
   def organization_name
-    self.organizations.map { |org| "#{org.name} #{org.acronym}"}
+    organizations.map { |org| "#{org.name} #{org.acronym}" }
   end
 
   def search_data_with_entries
-    as_json(methods: [:portal_ids, :tag_list, :collection_ids, :collection_names, :entry_type_name, :primary_organization_ids, :funding_organization_ids, :organization_categories, :organization_name, :primary_contact_ids, :contact_ids])
+    as_json(methods: [
+      :portal_ids, :tag_list, :collection_ids, :collection_names,
+      :entry_type_name, :primary_organization_ids, :funding_organization_ids,
+      :organization_categories, :organization_name, :primary_contact_ids,
+      :contact_ids
+    ])
   end
 end
