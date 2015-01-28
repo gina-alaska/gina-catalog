@@ -1,4 +1,4 @@
-json.type "FeatureCollection"
+json.type 'FeatureCollection'
 
 json.features @entries.map(&:bboxes).flatten do |bbox|
   json.type 'Feature'

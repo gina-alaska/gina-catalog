@@ -3,7 +3,7 @@ class CreateEntryPortals < ActiveRecord::Migration
     create_table :entry_portals do |t|
       t.integer :portal_id
       t.integer :entry_id
-      
+
       t.timestamps
     end
   end

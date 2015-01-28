@@ -24,3 +24,13 @@ five:
   url: 127.0.0.1
   default: false
   portal: one
+
+six:
+  url: bar.com
+  default: true
+  portal: bad_default_urls
+
+seven:
+  url: bag.com
+  default: true
+  portal: bad_default_urls

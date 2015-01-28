@@ -13,8 +13,8 @@ class Manager::OrganizationsController < ManagerController
     end
   end
 
-  #def show
-  #end
+  # def show
+  # end
 
   def search
     query = params[:query].split(/\s+/)
@@ -41,7 +41,7 @@ class Manager::OrganizationsController < ManagerController
         flash[:success] = "Organization #{@organization.name} was successfully created."
         format.html { redirect_to manager_organization_path(@organization) }
       else
-        format.html { render action: "new" }
+        format.html { render action: 'new' }
         format.json { render json: @organization.errors, status: :unprocessable_entity }
       end
     end
@@ -54,7 +54,7 @@ class Manager::OrganizationsController < ManagerController
         format.html { redirect_to manager_organizations_path }
         format.json { head :nocontent }
       else
-        format.html { render action: "edit" }
+        format.html { render action: 'edit' }
         format.json { render json: @organization.errors, status: :unprocessable_entity }
       end
     end
@@ -69,7 +69,7 @@ class Manager::OrganizationsController < ManagerController
       else
         flash[:error] = @organization.errors.full_messages.join('<br />').html_safe
         format.html { redirect_to manager_organizations_path }
-#        format.json { head :no_content }
+        #        format.json { head :no_content }
       end
     end
   end

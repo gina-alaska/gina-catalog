@@ -20,14 +20,13 @@ default['glynx']['mounts'] = {
 }
 
 default['glynx']['links'] = {
-  archive: {name: '/www/glynx/shared/archive',    to: '/san/pod/catalog_silo/archives', action: :create},
-  repos:   {name: '/www/glynx/shared/repos',      to: '/san/pod/catalog_silo/git',      action: :create},
-  uploads: {name: '/www/glynx/shared/uploads',    to: '/san/pod/catalog_silo/uploads',  action: :create},
-  cms:     {name: '/www/glynx/shared/public/cms', to: '/san/pod/catalog_silo/cms',      action: :create}
+  archive: { name: '/www/glynx/shared/archive',    to: '/san/pod/catalog_silo/archives', action: :create },
+  repos:   { name: '/www/glynx/shared/repos',      to: '/san/pod/catalog_silo/git',      action: :create },
+  uploads: { name: '/www/glynx/shared/uploads',    to: '/san/pod/catalog_silo/uploads',  action: :create },
+  cms:     { name: '/www/glynx/shared/public/cms', to: '/san/pod/catalog_silo/cms',      action: :create }
 }
 
-
-default['glynx']['account'] = "webdev"
+default['glynx']['account'] = 'webdev'
 
 default['glynx']['rails']['secrets'] = {
   development: {
@@ -81,16 +80,16 @@ default['glynx']['database'] = {
 default['glynx']['sunspot']['solr']['hostname'] = '192.168.222.225'
 default['glynx']['sunspot']['solr']['port'] = '8982'
 default['glynx']['sunspot']['solr']['path'] = '/solr/default'
-default['glynx']['sunspot']['hostname'] = "192.168.222.225"
+default['glynx']['sunspot']['hostname'] = '192.168.222.225'
 
 default['glynx']['redis']['hostname'] = '192.168.222.225'
 
-default['java']["install_flavor"] = "openjdk"
-default['java']["jdk_version"] = "7"
+default['java']['install_flavor'] = 'openjdk'
+default['java']['jdk_version'] = '7'
 
-default["elasticsearch"]["cluster"]["name"] = "elasticsearch_glynx"
+default['elasticsearch']['cluster']['name'] = 'elasticsearch_glynx'
 
-default['glynx']['package_deps'] = %w{
+default['glynx']['package_deps'] = %w(
   libicu-devel
   curl-devel
   libxml2-devel
@@ -99,7 +98,7 @@ default['glynx']['package_deps'] = %w{
   geos-devel
   proj-devel
   ImageMagick-devel
-}
+)
 
 override['chruby']['version'] = '0.3.8'
 override['chruby']['rubies'] = {
@@ -113,11 +112,11 @@ default['glynx']['ruby_version'] = '2.1'
 
 default['unicorn']['preload_app'] = true
 default['unicorn']['config_path'] = '/etc/unicorn/glynx.rb'
-default['unicorn']['listen'] = "/www/glynx/shared/tmp/sockets"
-default['unicorn']['pid'] = "/www/glynx/shared/tmp/pids/unicorn.pid"
-default['unicorn']['stderr_path'] = "/www/glynx/shared/log/unicorn.stderr.log"
-default['unicorn']['stdout_path'] = "/www/glynx/shared/log/unicorn.stdout.log"
-default['unicorn']['working_directory'] = "/www/glynx/current"
+default['unicorn']['listen'] = '/www/glynx/shared/tmp/sockets'
+default['unicorn']['pid'] = '/www/glynx/shared/tmp/pids/unicorn.pid'
+default['unicorn']['stderr_path'] = '/www/glynx/shared/log/unicorn.stderr.log'
+default['unicorn']['stdout_path'] = '/www/glynx/shared/log/unicorn.stdout.log'
+default['unicorn']['working_directory'] = '/www/glynx/current'
 default['unicorn']['worker_timeout'] = 60
 default['unicorn']['before_fork'] = '
 defined?(ActiveRecord::Base) and

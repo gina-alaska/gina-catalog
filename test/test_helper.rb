@@ -5,7 +5,7 @@ require 'minitest/rails/capybara'
 require 'mocha/mini_test'
 require 'capybara/poltergeist'
 require 'shoulda'
-# require 'shoulda-matchers'
+require 'shoulda-matchers'
 
 Capybara.javascript_driver = :poltergeist
 Capybara.default_wait_time = 5
@@ -27,4 +27,5 @@ class ActionDispatch::IntegrationTest
   include Capybara::DSL
 end
 
-ActionController::Base.asset_host = "http://catalog.192.168.222.225.xip.io"
+ActionController::Base.asset_host = 'http://catalog.192.168.222.225.xip.io'
+Searchkick.disable_callbacks

@@ -17,53 +17,52 @@ class Manager::PermissionsController < ManagerController
 
     respond_to do |format|
       if @permission.save
-        format.html {
-          flash[:notice] = "Permissions saved"
+        format.html do
+          flash[:notice] = 'Permissions saved'
           redirect_to manager_permissions_path
-        }
+        end
       else
-        format.html {
+        format.html do
           render :new
-        }
+        end
       end
     end
   end
-  
+
   def edit
-    
   end
-  
+
   def update
     respond_to do |format|
       if @permission.update_attributes(permission_params)
-        format.html {
-          flash[:notice] = "Permissions updated"
+        format.html do
+          flash[:notice] = 'Permissions updated'
           redirect_to manager_permissions_path
-        }
+        end
       else
-        format.html {
+        format.html do
           render :edit
-        }
+        end
       end
     end
   end
-  
+
   def destroy
     respond_to do |format|
       if @permission.destroy
-        format.html { 
+        format.html do
           flash[:notice] = "User #{@permission.user} access has been removed"
           redirect_to manager_permissions_path
-        }
+        end
       else
-        format.html { 
+        format.html do
           flash[:notice] = "There was a problem removing access for #{@permission.user}"
           redirect_to manager_permissions_path
-        }
+        end
       end
     end
   end
-  
+
   def show
     redirect_to edit_manager_permission_path(@permission)
   end

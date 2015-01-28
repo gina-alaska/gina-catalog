@@ -10,7 +10,6 @@ one:
   logo_uid: MyString
   logo_name: MyString
   url: MyString
-  parent_id: 1
 
 two:
   name: MyString
@@ -22,7 +21,6 @@ two:
   logo_uid: MyString
   logo_name: MyString
   url: MyString
-  parent_id: 1
 
 no_associated_entry:
   name: MyString
@@ -34,4 +32,17 @@ no_associated_entry:
   logo_uid: MyString
   logo_name: MyString
   url: MyString
-  parent_id: 1
+
+recent:
+  name: Recently Organized
+  category: Federal
+  description: This org is guaranteed to be less than a week old
+  acronym: recent
+  created_at: <%= 1.day.ago %>
+
+old:
+  name: Old Organized
+  category: Federal
+  description: This org is guaranteed to be more than a week old
+  acronym: old
+  created_at: <%= 1.month.ago %>
