@@ -5,8 +5,6 @@ class WelcomeController < ApplicationController
   end
 
   def portal_not_found
-    unless current_portal.nil?
-      redirect_to root_url
-    end
+    redirect_to root_url unless current_portal.nil?
   end
 end

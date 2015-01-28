@@ -28,13 +28,15 @@ class Link < ActiveRecord::Base
       pbar = nil
       opts = {
         read_timeout: 1,
-        content_length_proc: lambda do|t|
+        content_length_proc: lambda do |t|
           if t && 0 < t
             pbar = ProgressBar.new(t)
             # pbar.file_transfer_mode
           end
         end,
-        progress_proc: lambda { |s| pbar.increment! s if pbar }
+        progress_proc: lambda do |s|
+          pbar.increment! s if pbar
+        end
       }
       # puts "Caching #{url}"
       open(cache_filename, 'wb') do |output|
@@ -60,6 +62,7 @@ class Link < ActiveRecord::Base
       # don't die because of pdf or http error
       # puts url
       # puts 'Error: ' + e.message
+      Rails.logger.info "Error: #{e.message}"
     end
 
     pdf_text

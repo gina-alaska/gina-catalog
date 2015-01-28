@@ -23,7 +23,6 @@ class PortalTest < ActiveSupport::TestCase
     assert_equal 2, portals(:bad_default_urls).default_url_count
   end
 
-
   test 'default_url should return the default url' do
     assert_equal @portal.default_url.url, 'catalog.192.168.222.225.xip.io'
   end
