@@ -1,0 +1,13 @@
+= bootstrap_form_for [:admin, @user], layout: :horizontal, label_col: 'col-lg-3 col-md-3', control_col: 'col-lg-9 col-md-9' do |f|
+  = f.alert_message "Please fix the errors below.", error_summary: false
+  = f.text_field :name
+  = f.static_control label: 'Email' do
+    = @user.email
+
+  .form-action
+    = link_to :back, class: 'btn btn-default' do
+      %i.fa.fa-arrow-left
+      Cancel
+
+    .pull-right
+      = f.primary @user.new_record? ? "Create User" : "Update User"
