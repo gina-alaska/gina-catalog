@@ -57,9 +57,13 @@ gem 'nested_form'
 gem 'dragonfly', '~> 1.0.1'
 gem 'acts-as-taggable-on', '~> 3.4'
 gem 'uuidtools'
+gem 'searchkick'
 gem 'ransack'
 gem 'squeel'
-gem 'quiet_assets'
+gem 'quiet_assets', group: [:development, :test]
+gem 'georuby'
+gem 'kaminari'
+gem 'stamp'
 
 group :development do
   gem "better_errors"
@@ -69,6 +73,12 @@ group :development do
   gem 'guard-minitest'
 end
 
+
+gem "mocha", require: false, group: [:development, :test]
 group :test do
-  gem "shoulda"
+  gem "shoulda", require: false
+  gem "shoulda-matchers", require: false
+  gem "poltergeist"
+  gem "selenium-webdriver"
+  gem "minitest-rails-capybara"
 end

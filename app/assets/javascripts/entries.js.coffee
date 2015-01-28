@@ -12,7 +12,7 @@ $(document).on 'ready page:load', ->
         error: -> callback(),
         success: (res) -> callback(res)
       })
-    create: (input) -> 
+    create: (input) ->
       { value: input, text: input }
   })
 
@@ -31,3 +31,4 @@ $(document).on 'ready page:load', ->
       })
     create: false
   })
+  

@@ -13,10 +13,13 @@
   ],
   "main": [
     "./css/font-awesome.css",
-    "./fonts/*"
+    "./fonts/fontawesome-webfont.eot",
+    "./fonts/fontawesome-webfont.svg",
+    "./fonts/fontawesome-webfont.ttf",
+    "./fonts/fontawesome-webfont.woff"
   ],
   "ignore": [
-    "*/.*",
+    "/.*",
     "*.json",
     "src",
     "*.yml",

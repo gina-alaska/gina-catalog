@@ -1,6 +1,18 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  name: Geographic Information Network of Alaska
+  category: Academic
+  description: MyString
+  acronym: GINA
+  adiwg_code: MyString
+  adiwg_path: MyString
+  logo_uid: MyString
+  logo_name: MyString
+  url: MyString
+  parent_id: 1
+
+two:
   name: MyString
   category: Academic
   description: MyString
@@ -12,7 +24,7 @@ one:
   url: MyString
   parent_id: 1
 
-two:
+no_associated_entry:
   name: MyString
   category: Academic
   description: MyString

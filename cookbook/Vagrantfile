@@ -87,7 +87,7 @@ Vagrant.configure("2") do |config|
       "recipe[glynx::memcached]",
       "recipe[glynx::redis]",
       "recipe[glynx::web]",
-      "recipe[glynx::solr]"
+      "recipe[glynx::elasticsearch]"
     ]
   end
 end

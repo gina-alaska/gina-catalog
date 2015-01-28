@@ -1,0 +1,37 @@
+.row
+  .col-sm-4
+    - if can? :manage, @entry
+      .panel.panel-default
+        .panel-heading
+          %h1.panel-title Manager Menu
+        .panel-body
+          = link_to edit_manager_entry_path(@entry), class: 'btn btn-default btn-block' do
+            %i.fa.fa-edit
+            Edit
+          = link_to manager_entry_path(@entry), method: :destroy, class: 'btn btn-danger btn-block' do
+            %i.fa.fa-trash
+            Archive
+
+    .panel.panel-default
+      .map-container.small
+        #map.entry-map{ data: { behavior: 'map', target: 'map', 'mapbox-id' => 'gina-alaska.knb7oi02', 'max-zoom' => 15 } }
+        %div{ style: 'height:40px; bottom:0px;' } Testing navbar style
+      .panel-heading
+        %h1.panel-title Agencies
+      .panel-body
+        - @entry.primary_agencies.each do |agency|
+          .text-center
+            = image_tag agency.logo.thumb('300x150').url unless agency.logo.nil?
+            %h4= agency.name
+      .panel-body
+        %h5 Other Agencies
+        - (@entry.funding_agencies-@entry.primary_agencies).each do |agency|
+          .pull-left.text-center
+            = image_tag agency.logo.thumb('80x80').url unless agency.logo.nil?
+            %div= agency.acronym
+        - (@entry.agencies - @entry.primary_agencies - @entry.funding_agencies).each do |agency|
+          .pull-left.text-center
+            = image_tag agency.logo.thumb('80x80').url unless agency.logo.nil?
+            %div= agency.acronym
+  .col-sm-8
+    = render @entry

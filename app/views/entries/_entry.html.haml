@@ -1,0 +1,16 @@
+%h4
+  = link_to entry.title, edit_manager_entry_path(entry)
+:markdown
+  #{entry.description}
+%p
+  .detail-block
+    %label Status:
+    = entry.status
+  - if entry.start_date
+    .detail-block
+      %label Starts:
+      = entry.start_date
+  - if entry.end_date
+    .detail-block
+      %label Ends:
+      = entry.start_date

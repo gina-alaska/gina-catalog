@@ -23,7 +23,7 @@ class Manager::PortalsControllerTest < ActionController::TestCase
   test "should not be allowed to edit a portal they don't have permissions to" do
     get :edit, id: portals(:two).id
     
-    assert_redirected_to root_path
+    render_template "app/views/welcome/permission_denied"
   end
 
   test "should get update" do

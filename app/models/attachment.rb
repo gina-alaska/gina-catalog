@@ -8,7 +8,8 @@ class Attachment < ActiveRecord::Base
 
   dragonfly_accessor :file
 
-  belongs_to :entry
+  belongs_to :entry, touch: true
+  has_one :bbox, class_name: 'Bound', as: :boundable
 
   scope :thumbnail, -> { where(category: "Thumbnail") }
   scope :geojson, -> { where(category: "Geojson") }
@@ -17,6 +18,7 @@ class Attachment < ActiveRecord::Base
 
 
   before_create :create_uuid
+  after_save :create_bbox
 
   validates :description, length: { maximum: 255 }
 
@@ -28,4 +30,7 @@ class Attachment < ActiveRecord::Base
     self.uuid
   end
 
+  def create_bbox
+    self.build_bbox.from_geojson(file.data).save
+  end
 end

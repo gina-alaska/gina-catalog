@@ -1,16 +1,16 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
+  name: Project
   description: MyString
   color: MyString
 
 two:
-  name: MyString
+  name: Data
   description: MyString
   color: MyString
-  
+
 no_associated_entry:
-  name: MyString
+  name: Service
   description: MyString
   color: MyString

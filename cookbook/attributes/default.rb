@@ -10,7 +10,7 @@ default['glynx']['paths'] = {
 }
 
 default['glynx']['mounts'] = {
-  catalog_silo: {       
+  catalog_silo: {
     device: 'pod.gina.alaska.edu:/pod/nssi_silo',
     fstype: 'nfs',
     options: 'rw',
@@ -35,7 +35,7 @@ default['glynx']['rails']['secrets'] = {
   },
   test: {
     secret_key_base: 'eca191458f7576c2b76a81dca3f81c0436a557f07d322130a4fa9020cd89b1961f851392440942f04721f2dd1499a81c8ab466489c06ab25de446e9e7dd3617f'
-  }, 
+  },
   production: {
     secret_key_base: '<%= ENV["SECRET_KEY_BASE"] %>'
   }
@@ -58,7 +58,7 @@ default['glynx']['database'] = {
     database: 'glynx_test',
     username: 'glynx',
     password: 'fj329rghDDw02jf',
-    search_path: 'public'    
+    search_path: 'public'
   },
   production: {
     adapter: 'postgresql',
@@ -85,14 +85,18 @@ default['glynx']['sunspot']['hostname'] = "192.168.222.225"
 
 default['glynx']['redis']['hostname'] = '192.168.222.225'
 
+default['java']["install_flavor"] = "openjdk"
+default['java']["jdk_version"] = "7"
+
+default["elasticsearch"]["cluster"]["name"] = "elasticsearch_glynx"
+
 default['glynx']['package_deps'] = %w{
-  java-1.7.0-openjdk 
-  libicu-devel 
-  curl-devel 
-  libxml2-devel 
-  libxslt-devel 
-  nfs-utils 
-  geos-devel 
+  libicu-devel
+  curl-devel
+  libxml2-devel
+  libxslt-devel
+  nfs-utils
+  geos-devel
   proj-devel
   ImageMagick-devel
 }

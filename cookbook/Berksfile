@@ -17,5 +17,6 @@ cookbook 'java'
 cookbook 'memcached'
 cookbook 'now'
 cookbook 'magic_shell'
+cookbook 'elasticsearch', '~> 0.3.10'
 
 metadata

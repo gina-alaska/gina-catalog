@@ -3,8 +3,8 @@ require 'test_helper'
 class Admin::EntryTypesControllerTest < ActionController::TestCase
   def setup
     @entry_type = entry_types(:one)
-    @user = users(:admin)
-    session[:user_id] = @user.id
+    @entry_type_no_assoc = entry_types(:no_associated_entry)
+    login_user(:admin)
   end
 
   test "should get index" do
@@ -13,11 +13,11 @@ class Admin::EntryTypesControllerTest < ActionController::TestCase
     assert_response :success
   end  
   
-  test "should show entry_type" do
-    get :show, id: @entry_type.id
+#  test "should show entry_type" do
+#    get :show, id: @entry_type.id
     
-    assert_response :success
-  end 
+#    assert_response :success
+#  end 
   
   test "should show new entry_type form" do
     get :new
@@ -47,7 +47,7 @@ class Admin::EntryTypesControllerTest < ActionController::TestCase
   
   test "should destroy entry_type" do
     assert_difference('EntryType.count', -1) do
-      delete :destroy, id: @entry_type.id
+      delete :destroy, id: @entry_type_no_assoc.id
     end
 
     assert_redirected_to admin_entry_types_path
