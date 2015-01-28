@@ -16,13 +16,18 @@ class Attachment < ActiveRecord::Base
   scope :private_download, -> { where(category: 'Private Download') }
   scope :public_download, -> { where(category: 'Public Download') }
 
-  before_save :create_uuid
+  before_validation :create_uuid
   after_save :create_bbox
 
   validates :description, length: { maximum: 255 }
+  validates :file_uid, presence: true
+  validates :uuid, presence: true
 
   def create_uuid
-    self.uuid ||= UUIDTools::UUID.md5_create(UUIDTools::UUID_URL_NAMESPACE, file_uid).to_s
+    return unless uuid.nil?
+    return if file_uid.nil?
+
+    self.uuid = UUIDTools::UUID.md5_create(UUIDTools::UUID_URL_NAMESPACE, file_uid).to_s
   end
 
   def to_param

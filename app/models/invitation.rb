@@ -8,9 +8,12 @@ class Invitation < ActiveRecord::Base
   validates :email, presence: true
   validates :uuid, presence: true
 
-  before_create :create_uuid
+  before_validation :create_uuid
 
   def create_uuid
+    return unless uuid.nil?
+    return if email.nil?
+
     self.uuid = UUIDTools::UUID.md5_create(UUIDTools::UUID_URL_NAMESPACE, email).to_s
   end
 
