@@ -47,7 +47,7 @@ GRAPH
     java (>= 0.0.0)
     monit (>= 0.0.0)
     xml (>= 0.0.0)
-  glynx (3.0.0)
+  glynx (3.0.2)
     chruby (>= 0.0.0)
     database (>= 0.0.0)
     elasticsearch (~> 0.3.10)
