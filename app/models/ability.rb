@@ -66,6 +66,7 @@ class Ability
       can :manage, Portal
       can :manage, User
       can :manage, EntryType
+      can :manage, Region
     end
   end
 end
