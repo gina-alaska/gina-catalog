@@ -30,12 +30,16 @@ class Organization < ActiveRecord::Base
   validates :logo_name, length: { maximum: 255 }
   validates :url, length: { maximum: 255 }
 
-  validates_inclusion_of :category, :in => CATEGORIES, :message => " please select one of following: #{Organization::CATEGORIES.join(', ')}"
+  validates_inclusion_of :category, in: CATEGORIES, message: " please select one of following: #{Organization::CATEGORIES.join(', ')}"
 
   accepts_nested_attributes_for :aliases, reject_if: ->(a) { a[:text].blank? }, allow_destroy: true
 
+  # squeel doesn't work currently so having to disable this
+  # scope :used_by_portal, ->(portal) {
+  #   joins{entry_portals.outer}.where{ (entry_portals.portal == portal) | { created_at.gteq => 1.week.ago } }
+  # }
   scope :used_by_portal, ->(portal) {
-    joins{entry_portals.outer}.where{ (entry_portals.portal == portal) | { created_at.gteq => 1.week.ago } }
+    includes(:entry_portals).references(:entry_portals).where('entry_portals.id = ? or organizations.created_at >= ?', portal.id, 1.week.ago)
   }
 
   def name_with_acronym

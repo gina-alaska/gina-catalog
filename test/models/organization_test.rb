@@ -13,11 +13,24 @@ class OrganizationTest < ActiveSupport::TestCase
 
   should have_many(:entry_organizations)
   should have_many(:entries).through(:entry_organizations)
-  
-  test "organization should not be deletable if assigned" do
+
+  test 'organization should not be deletable if assigned' do
     organization = organizations(:one)
 
-    assert !organization.deletable?, "organization is deletable but should not be"
+    assert !organization.deletable?, 'organization is deletable but should not be'
   end
 
+  test 'used_by_portal should include recent org' do
+    recent = organizations(:recent)
+    portal = portals(:one)
+
+    assert Organization.used_by_portal(portal).include?(recent), 'Did not find recent organization'
+  end
+
+  test 'used_by_portal should not include old org' do
+    old = organizations(:old)
+    portal = portals(:one)
+
+    assert !Organization.used_by_portal(portal).include?(old), 'Found old organization'
+  end
 end

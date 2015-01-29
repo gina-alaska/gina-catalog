@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   get '/logout', to: 'sessions#destroy'
   get '/login', to: 'sessions#new'
   get '/auth/:provider/disable', to: 'users#disable_provider'
