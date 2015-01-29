@@ -17,7 +17,7 @@ class Manager::OrganizationsController < ManagerController
   # end
 
   def search
-    # Ransack metho
+    # Ransack method
     #    query = params[:query].split(/\s+/)
     #    @q = Organization.search(name_or_acronym_or_category_cont_any: query)
     #    @organizations = @q.result(distinct: true)
