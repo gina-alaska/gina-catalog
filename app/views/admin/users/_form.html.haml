@@ -1,8 +1,11 @@
-= bootstrap_form_for [:admin, @user], layout: :horizontal, label_col: 'col-lg-3 col-md-3', control_col: 'col-lg-9 col-md-9' do |f|
+= bootstrap_form_for [:admin, @user], layout: :horizontal do |f|
   = f.alert_message "Please fix the errors below.", error_summary: false
-  = f.text_field :name
+  = f.static_control label: 'Name' do
+    = @user.name
   = f.static_control label: 'Email' do
     = @user.email
+  = f.form_group label: { text: 'Global Admin' } do
+    = f.check_box :global_admin, label: ''
 
   .form-action
     = link_to :back, class: 'btn btn-default' do
@@ -10,4 +13,4 @@
       Cancel
 
     .pull-right
-      = f.primary @user.new_record? ? "Create User" : "Update User"
+      = f.primary 
