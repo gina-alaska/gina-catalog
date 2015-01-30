@@ -10,9 +10,8 @@
     #   prompt: 'consent'
     # }
     # provider :github, ENV['GITHUB_KEY'], ENV['GITHUB_SECRET']
-    provider :openid, {
-      store: OpenID::Store::Filesystem.new('./tmp'),
-      name: 'gina',
-      identifier: 'https://id.gina.alaska.edu'
-    }
+    provider :openid,
+             store: OpenID::Store::Filesystem.new('./tmp'),
+             name: 'gina',
+             identifier: 'https://id.gina.alaska.edu'
   end

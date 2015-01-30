@@ -16,7 +16,7 @@ module EntryDependentConcerns
 
   def check_for_entries
     return if entries.empty?
-    
+
     errors.add(:base, 'Could not delete, belongs to one or more catalog records')
     false
   end
