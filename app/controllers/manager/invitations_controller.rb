@@ -99,6 +99,8 @@ class Manager::InvitationsController < ManagerController
   end
 
   def invitation_params
-    params.require(:invitation).permit(:name, :email, :message, permission_attributes: Permission::AVAILABLE_ROLES.keys + [:id])
+    params.require(:invitation).permit(
+      :name, :email, :message,
+      permission_attributes: Permission::AVAILABLE_ROLES.keys + [:id])
   end
 end
