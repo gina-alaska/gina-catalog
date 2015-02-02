@@ -18,7 +18,7 @@ module GinaAuthentication
       if current_user.id
         flash[:success] = 'Logged in succesfully'
       else
-        flash[:danger] = 'Unable to create your account, if you have logged in previously using a different method please login using that method instead.'
+        flash[:error] = 'Unable to create your account, if you have logged in previously using a different method please login using that method instead.'
       end
 
       redirect_back_or_default('/')
