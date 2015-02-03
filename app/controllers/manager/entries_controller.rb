@@ -87,16 +87,12 @@ class Manager::EntriesController < ApplicationController
 
   def collections
     @collections = current_portal.collections.order(:name)
-    if params[:q].present?
-      @collections = @collections.where('name ilike ?', "%#{params[:q]}%")
-    end
+    @collections = @collections.where('name ilike ?', "%#{params[:q]}%") if params[:q].present?
   end
 
   def tags
     @tags = Entry.all_tags.order(:name)
-    if params[:q].present?
-      @tags = @tags.where('name ilike ?', "%#{params[:q]}%")
-    end
+    @tags = @tags.where('name ilike ?', "%#{params[:q]}%") if params[:q].present?
   end
 
   protected
