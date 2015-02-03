@@ -10,5 +10,13 @@ class Region < ActiveRecord::Base
   def self.intersects(wkt, srid=4326)
     wkt = wkt.as_text if wkt.respond_to? :as_text
     where("ST_Intersects(geom, ?::geometry)", "SRID=#{srid};#{wkt}")
-  end  
+  end
+
+  def geojson=(file)
+    from_geojson(file.read)
+  end
+
+  def from_geojson(data)
+    self.geom = RGeo::GeoJSON.decode(data, json_parser: :json).first.geometry
+  end
 end
