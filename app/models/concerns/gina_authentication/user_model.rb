@@ -13,7 +13,7 @@ module GinaAuthentication
       update_attributes(self.class.params_from_hash(hash))
 
       # attempt to associate with membership
-      return if membership.any?
+      return unless membership.nil?
       membership = Membership.where(email: email).first
       self.membership = membership unless membership.nil?
     end
