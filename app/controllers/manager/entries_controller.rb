@@ -54,6 +54,7 @@ class Manager::EntriesController < ApplicationController
   def update
     respond_to do |format|
       if @entry.update_attributes(entry_params)
+
         flash[:success] = "Catalog record #{@entry.title} was successfully updated."
 
         if params['commit'] == 'Save'
@@ -87,15 +88,25 @@ class Manager::EntriesController < ApplicationController
 
   def collections
     @collections = current_portal.collections.order(:name)
+
     if params[:q].present?
       @collections = @collections.where('name ilike ?', "%#{params[:q]}%")
+    end
+    
+    respond_to do |format|
+      format.json 
     end
   end
 
   def tags
     @tags = Entry.all_tags.order(:name)
+
     if params[:q].present?
       @tags = @tags.where('name ilike ?', "%#{params[:q]}%")
+    end
+
+    respond_to do |format|
+      format.json 
     end
   end
 
