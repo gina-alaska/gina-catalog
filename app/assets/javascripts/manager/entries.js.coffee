@@ -19,7 +19,7 @@ $(document).on 'ready page:load', ->
     load: (query, callback) ->
       return callback() if query.length == 0
       $.ajax({
-        url: "/manager/collections/search",
+        url: "/manager/tags/search",
         dataType: 'json',
         data: { 
           q: encodeURIComponent(query)
