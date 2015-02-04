@@ -1,0 +1,2 @@
+module Manager::TagsHelper
+end
