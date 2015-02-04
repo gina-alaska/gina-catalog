@@ -60,7 +60,14 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :collections
+    resources :collections do
+      collection do
+        get :search
+      end
+    end
+  
+    get 'tags/search'
+    
   end
 
   resources :entries do
