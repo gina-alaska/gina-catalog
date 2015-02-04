@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 20150122204851) do
   enable_extension "postgis"
   enable_extension "postgis_topology"
 
-  create_table "activity_logs", force: true do |t|
+  create_table "activity_logs", force: :cascade do |t|
     t.string   "activity"
     t.string   "loggable_type"
     t.integer  "loggable_id"
@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 20150122204851) do
     t.datetime "updated_at"
   end
 
-  create_table "addresses", force: true do |t|
+  create_table "addresses", force: :cascade do |t|
     t.string   "line1"
     t.string   "line2"
     t.string   "country"
@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 20150122204851) do
     t.datetime "updated_at"
   end
 
-  create_table "aliases", force: true do |t|
+  create_table "aliases", force: :cascade do |t|
     t.string   "text"
     t.integer  "aliasable_id"
     t.string   "aliasable_type"
@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(version: 20150122204851) do
     t.datetime "updated_at"
   end
 
-  create_table "attachments", force: true do |t|
+  create_table "attachments", force: :cascade do |t|
     t.integer  "entry_id"
     t.string   "file_uid"
     t.integer  "file_size"
@@ -65,7 +65,7 @@ ActiveRecord::Schema.define(version: 20150122204851) do
     t.datetime "updated_at"
   end
 
-  create_table "authorizations", force: true do |t|
+  create_table "authorizations", force: :cascade do |t|
     t.string   "provider"
     t.string   "uid"
     t.integer  "user_id"
@@ -73,7 +73,15 @@ ActiveRecord::Schema.define(version: 20150122204851) do
     t.datetime "updated_at"
   end
 
-  create_table "collections", force: true do |t|
+  create_table "bounds", force: :cascade do |t|
+    t.integer  "boundable_id"
+    t.string   "boundable_type"
+    t.geometry "geom",           limit: {:srid=>4326, :type=>"geometry"}
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "collections", force: :cascade do |t|
     t.string   "name"
     t.string   "description"
     t.integer  "portal_id"
@@ -83,7 +91,7 @@ ActiveRecord::Schema.define(version: 20150122204851) do
     t.integer  "entry_collections_count", default: 0
   end
 
-  create_table "contacts", force: true do |t|
+  create_table "contacts", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
     t.string   "phone_number"
@@ -92,7 +100,7 @@ ActiveRecord::Schema.define(version: 20150122204851) do
     t.datetime "updated_at"
   end
 
-  create_table "entries", force: true do |t|
+  create_table "entries", force: :cascade do |t|
     t.string   "title"
     t.text     "description"
     t.string   "status"
@@ -111,21 +119,21 @@ ActiveRecord::Schema.define(version: 20150122204851) do
     t.datetime "published_at"
   end
 
-  create_table "entry_aliases", force: true do |t|
+  create_table "entry_aliases", force: :cascade do |t|
     t.string   "slug"
     t.integer  "entry_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "entry_collections", force: true do |t|
+  create_table "entry_collections", force: :cascade do |t|
     t.integer  "collection_id"
     t.integer  "entry_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "entry_contacts", force: true do |t|
+  create_table "entry_contacts", force: :cascade do |t|
     t.integer  "contact_id"
     t.integer  "entry_id"
     t.boolean  "primary",    default: false
@@ -133,7 +141,7 @@ ActiveRecord::Schema.define(version: 20150122204851) do
     t.datetime "updated_at"
   end
 
-  create_table "entry_organizations", force: true do |t|
+  create_table "entry_organizations", force: :cascade do |t|
     t.integer  "entry_id"
     t.integer  "organization_id"
     t.boolean  "primary",         default: false
@@ -142,7 +150,7 @@ ActiveRecord::Schema.define(version: 20150122204851) do
     t.datetime "updated_at"
   end
 
-  create_table "entry_portals", force: true do |t|
+  create_table "entry_portals", force: :cascade do |t|
     t.integer  "portal_id"
     t.integer  "entry_id"
     t.datetime "created_at"
@@ -150,14 +158,14 @@ ActiveRecord::Schema.define(version: 20150122204851) do
     t.boolean  "owner"
   end
 
-  create_table "entry_regions", force: true do |t|
+  create_table "entry_regions", force: :cascade do |t|
     t.integer  "entry_id"
     t.integer  "region_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "entry_types", force: true do |t|
+  create_table "entry_types", force: :cascade do |t|
     t.string   "name"
     t.string   "description"
     t.string   "color"
@@ -165,7 +173,7 @@ ActiveRecord::Schema.define(version: 20150122204851) do
     t.datetime "updated_at"
   end
 
-  create_table "favicons", force: true do |t|
+  create_table "favicons", force: :cascade do |t|
     t.integer  "portal_id"
     t.string   "image_name"
     t.string   "image_uid"
@@ -173,7 +181,7 @@ ActiveRecord::Schema.define(version: 20150122204851) do
     t.datetime "updated_at"
   end
 
-  create_table "feedbacks", force: true do |t|
+  create_table "feedbacks", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
     t.text     "message"
@@ -183,18 +191,18 @@ ActiveRecord::Schema.define(version: 20150122204851) do
     t.datetime "updated_at"
   end
 
-  create_table "invitations", force: true do |t|
+  create_table "invitations", force: :cascade do |t|
     t.string   "email"
     t.text     "message"
     t.integer  "permission_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
-    t.uuid     "uuid",          default: "uuid_generate_v4()"
+    t.uuid     "uuid"
     t.integer  "portal_id"
   end
 
-  create_table "links", force: true do |t|
+  create_table "links", force: :cascade do |t|
     t.string   "category"
     t.string   "display_text"
     t.string   "url"
@@ -205,18 +213,18 @@ ActiveRecord::Schema.define(version: 20150122204851) do
     t.datetime "updated_at"
   end
 
-  create_table "memberships", force: true do |t|
+  create_table "memberships", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "organizations", force: true do |t|
+  create_table "organizations", force: :cascade do |t|
     t.string   "name"
     t.string   "category"
     t.string   "description"
-    t.string   "acronym",     limit: 15
+    t.string   "acronym"
     t.string   "adiwg_code"
     t.string   "adiwg_path"
     t.string   "logo_uid"
@@ -227,7 +235,7 @@ ActiveRecord::Schema.define(version: 20150122204851) do
     t.datetime "updated_at"
   end
 
-  create_table "permissions", force: true do |t|
+  create_table "permissions", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "portal_id"
     t.hstore   "roles"
@@ -235,7 +243,7 @@ ActiveRecord::Schema.define(version: 20150122204851) do
     t.datetime "updated_at"
   end
 
-  create_table "portal_urls", force: true do |t|
+  create_table "portal_urls", force: :cascade do |t|
     t.integer  "portal_id"
     t.string   "url"
     t.boolean  "default",    default: false
@@ -243,7 +251,7 @@ ActiveRecord::Schema.define(version: 20150122204851) do
     t.datetime "updated_at"
   end
 
-  create_table "portals", force: true do |t|
+  create_table "portals", force: :cascade do |t|
     t.string   "title"
     t.string   "by_line"
     t.string   "acronym"
@@ -259,21 +267,21 @@ ActiveRecord::Schema.define(version: 20150122204851) do
     t.datetime "updated_at"
   end
 
-  create_table "regions", force: true do |t|
+  create_table "regions", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.spatial  "geom",       limit: {:srid=>4326, :type=>"geometry"}
+    t.geometry "geom",       limit: {:srid=>4326, :type=>"geometry"}
   end
 
-  create_table "social_network_configs", force: true do |t|
+  create_table "social_network_configs", force: :cascade do |t|
     t.string   "name"
     t.string   "icon"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "social_networks", force: true do |t|
+  create_table "social_networks", force: :cascade do |t|
     t.integer  "portal_id"
     t.integer  "social_network_config_id"
     t.string   "url"
@@ -282,27 +290,27 @@ ActiveRecord::Schema.define(version: 20150122204851) do
     t.datetime "updated_at"
   end
 
-  create_table "taggings", force: true do |t|
+  create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"
     t.integer  "taggable_id"
     t.string   "taggable_type"
     t.integer  "tagger_id"
     t.string   "tagger_type"
-    t.string   "context",       limit: 128
+    t.string   "context"
     t.datetime "created_at"
   end
 
-  add_index "taggings", ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], :name => "taggings_idx", :unique => true
-  add_index "taggings", ["taggable_id", "taggable_type", "context"], :name => "index_taggings_on_taggable_id_and_taggable_type_and_context"
+  add_index "taggings", ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true
+  add_index "taggings", ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context"
 
-  create_table "tags", force: true do |t|
+  create_table "tags", force: :cascade do |t|
     t.string  "name"
     t.integer "taggings_count", default: 0
   end
 
-  add_index "tags", ["name"], :name => "index_tags_on_name", :unique => true
+  add_index "tags", ["name"], name: "index_tags_on_name", unique: true
 
-  create_table "use_agreements", force: true do |t|
+  create_table "use_agreements", force: :cascade do |t|
     t.string   "title"
     t.text     "body"
     t.boolean  "required",    default: true
@@ -312,7 +320,7 @@ ActiveRecord::Schema.define(version: 20150122204851) do
     t.datetime "archived_at"
   end
 
-  create_table "users", force: true do |t|
+  create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
     t.string   "avatar"

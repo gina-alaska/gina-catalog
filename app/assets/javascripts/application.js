@@ -22,5 +22,8 @@
 //= require select2/select2
 //= require selectize/dist/js/standalone/selectize
 //= require holderjs/holder
+//= require leaflet.markercluster/dist/leaflet.markercluster
+//= require wicket/wicket
+//= require wicket/wicket-leaflet
 //= require turbolinks
 //= require_tree .

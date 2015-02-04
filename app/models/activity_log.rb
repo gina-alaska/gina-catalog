@@ -7,6 +7,6 @@ class ActivityLog < ActiveRecord::Base
   validates :activity, presence: true
   validates :activity, length: { maximum: 255 }
   validates :loggable_type, length: { maximum: 255 }
-  
+
   scope :downloads, -> { where(activity: 'Download') }
 end

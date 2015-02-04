@@ -1,0 +1,24 @@
+- cache entry do
+  %h4.media-heading
+    = link_to entry.title, entry
+  %p
+    - if entry.primary_organizations.any?
+      %em
+        = entry.primary_organizations.map(&:name_with_acronym).join(', ')
+        \-
+    #{truncate entry.description, length: 200, separator: ' '}
+  %p
+    .detail-block
+      %label Status:
+      = entry.status
+    - if entry.start_date
+      .detail-block
+        %label Starts:
+        = entry.start_date
+    - if entry.end_date
+      .detail-block
+        %label Ends:
+        = entry.start_date
+    .detail-block
+      %label Updated:
+      = entry.updated_at

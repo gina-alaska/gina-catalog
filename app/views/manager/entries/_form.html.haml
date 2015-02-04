@@ -1,4 +1,4 @@
-= bootstrap_nested_form_for [:manager, @entry], layout: :horizontal, remote: true, html: { class: "form", id: 'entry_form', data: { behavior: 'confirm-unsaved-changes' }, "tg-remote" => "", "refresh-on-error" => ".entry-form-container" } do |f|
+= bootstrap_nested_form_for [:manager, @entry], layout: :horizontal, html: { class: "form", id: 'entry_form', data: { behavior: 'confirm-unsaved-changes' } } do |f|
 
   = f.alert_message "The catalog record could not be saved because of the following errors..."
 

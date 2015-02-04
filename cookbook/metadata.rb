@@ -1,12 +1,12 @@
-name             'glynx'
-maintainer       'Will Fisher'
+name 'glynx'
+maintainer 'Will Fisher'
 maintainer_email 'will@gina.alaska.edu'
-license          'All rights reserved'
-description      'Installs/Configures glynx'
+license 'All rights reserved'
+description 'Installs/Configures glynx'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '3.0.0'
+version '3.0.2'
 
-supports "centos", ">= 6.0"
+supports 'centos', '>= 6.0'
 
 depends 'chruby'
 depends 'yum-gina'
@@ -22,3 +22,4 @@ depends 'java'
 depends 'memcached'
 depends 'now'
 depends 'magic_shell'
+depends 'elasticsearch', '~> 0.3.10'

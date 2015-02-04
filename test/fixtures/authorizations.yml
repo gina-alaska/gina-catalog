@@ -9,3 +9,8 @@ two:
   provider: MyString
   uid: MyString
   user_id: 1
+
+admin:
+  provider: developer
+  uid: admin@testing.com
+  user: admin
