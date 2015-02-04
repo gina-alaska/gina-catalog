@@ -86,30 +86,6 @@ class Manager::EntriesController < ApplicationController
     end
   end
 
-  def collections
-    @collections = current_portal.collections.order(:name)
-
-    if params[:q].present?
-      @collections = @collections.where('name ilike ?', "%#{params[:q]}%")
-    end
-    
-    respond_to do |format|
-      format.json 
-    end
-  end
-
-  def tags
-    @tags = Entry.all_tags.order(:name)
-
-    if params[:q].present?
-      @tags = @tags.where('name ilike ?', "%#{params[:q]}%")
-    end
-
-    respond_to do |format|
-      format.json 
-    end
-  end
-
   protected
 
   def entry_params
