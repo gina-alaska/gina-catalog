@@ -17,10 +17,11 @@ class Manager::OrganizationsController < ManagerController
   # end
 
   def search
-    query = params[:query].split(/\s+/)
-    @q = Organization.search(name_or_acronym_or_category_cont_any: query)
-    @organizations = @q.result(distinct: true)
-
+    # Ransack method
+    #    query = params[:query].split(/\s+/)
+    #    @q = Organization.search(name_or_acronym_or_category_cont_any: query)
+    #    @organizations = @q.result(distinct: true)
+    @organizations = Organization.search(params[:query])
     render json: @organizations
   end
 
