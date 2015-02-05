@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   get '/logout', to: 'sessions#destroy'
   get '/login', to: 'sessions#new'
   get '/auth/:provider/disable', to: 'users#disable_provider'
@@ -10,7 +9,7 @@ Rails.application.routes.draw do
   get '/admin' => 'admin/dashboard#index', as: :admin
   get '/manager' => 'manager/dashboard#index', as: :manager
   get '/portal_not_found' => 'welcome#portal_not_found', as: :portal_not_found
-  
+
   resources :sessions
   resources :memberships
 
@@ -23,7 +22,7 @@ Rails.application.routes.draw do
 
   namespace :manager do
     resource :portal
-    
+
     resources :users do
       get :autocomplete, on: :collection
     end
@@ -32,6 +31,9 @@ Rails.application.routes.draw do
       collection do
         get :tags
         get :collections
+      end
+      member do
+        resources :attachments
       end
     end
 
@@ -59,6 +61,10 @@ Rails.application.routes.draw do
     end
 
     resources :collections
+  end
+
+  resources :entries do
+    resources :attachments
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

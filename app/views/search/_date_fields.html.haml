@@ -1,0 +1,13 @@
+.panel-body.panel-break
+  %h3.panel-title Dates
+.panel-body.panel-form
+  .row-fluid
+    .col-sm-6
+      = f.date_field :starts_after, label: 'Starts after', layout: :default, value: @search_params[:starts_after]
+    .col-sm-6
+      = f.date_field :starts_before, label: 'Starts before', layout: :default, value: @search_params[:starts_before]
+  .row-fluid
+    .col-sm-6
+      = f.date_field :ends_after, label: 'Ends after', layout: :default, value: @search_params[:ends_after]
+    .col-sm-6
+      = f.date_field :ends_before, label: 'Ends before', layout: :default, value: @search_params[:ends_before]

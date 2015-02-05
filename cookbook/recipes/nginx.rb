@@ -1,4 +1,4 @@
-app_name = "glynx"
+app_name = 'glynx'
 node.default!['nginx']['default_site_enabled'] = false
 
 include_recipe 'nginx'
@@ -11,27 +11,27 @@ include_recipe 'nginx'
 #   end
 # end
 
-directory '/etc/nginx/conf.d' do 
+directory '/etc/nginx/conf.d' do
   action :delete
   recursive true
 end
 
 proxies = if Chef::Config[:solo]
-  []
-else
-  search(:node, 'role:haproxy').collect{|n| n['ipaddress'] }
+            []
+          else
+            search(:node, 'role:haproxy').collect { |n| n['ipaddress'] }
 end
 
 template "/etc/nginx/sites-available/#{app_name}_site" do
   source 'nginx_site.erb'
-  variables({
+  variables(
     install_path: node[app_name]['paths']['deploy'],
     name: app_name,
     user: node[app_name]['account'],
     proxies: proxies,
     environment: node[app_name]['environment'],
     socket: "#{node['unicorn']['listen']}/glynx.socket"
-  })
+  )
 end
 
 nginx_site "#{app_name}_site"

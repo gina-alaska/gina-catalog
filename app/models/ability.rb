@@ -28,44 +28,32 @@ class Ability
     #
     # See the wiki for details:
     # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
-    
+
     user ||= User.new
 
-    if user.has_role?(:cms_manager, current_portal)
+    if user.role?(:cms_manager, current_portal)
       can :view_manager_menu, User
     end
 
-    if user.has_role?(:data_manager, current_portal)
+    if user.role?(:data_manager, current_portal)
       can :view_manager_menu, User
-      
-      can :manage, Organization
-      can :manage, Contact
-      can :manage, UseAgreement
-      can :manage, Collection
+
+      can :manage, [Organization, Contact]
+      can :manage, [UseAgreement, Collection],  portal_id: current_portal.id
       can :manage, Entry do |entry|
-        entry.new_record? or entry.owner_portal == current_portal
-      end
-    end    
-
-    if user.has_role?(:portal_manager, current_portal)
-      can :view_manager_menu, User
-      can :update, Portal do |requested_portal|
-        current_portal == current_portal
-      end
-      
-      can :manage, Permission do |permission|
-        permission.new_record? or permission.portal == current_portal
-      end
-      can :manage, Invitation do |invitation|
-        invitation.new_record? or invitation.portal == current_portal
+        entry.new_record? || entry.owner_portal == current_portal
       end
     end
-    
+
+    if user.role?(:portal_manager, current_portal)
+      can :view_manager_menu, User
+      can [:read, :update], Portal,  id: current_portal.id
+      can :manage, [Permission, Invitation],  portal_id: current_portal.id
+    end
+
     if user.global_admin?
       can :view_admin_menu, User
-      can :manage, Portal
-      can :manage, User
-      can :manage, EntryType
+      can :manage, [Portal, User, EntryType]
     end
   end
 end

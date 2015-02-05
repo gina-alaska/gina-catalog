@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  boundable_id: 1
+  boundable_type: MyString
+  geom: 
+
+two:
+  boundable_id: 1
+  boundable_type: MyString
+  geom: 

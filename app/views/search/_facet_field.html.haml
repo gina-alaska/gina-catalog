@@ -1,0 +1,16 @@
+- if facets.empty?
+  .panel-body.text-center{ style: 'padding: 5px 15px; '}
+    %strong None found for current search
+- else
+  - selected = Array.wrap(@search_params[field])
+  .panel-body.expand{ id: "#{field}-search", style: 'padding-top: 5px; padding-bottom: 0px; '}
+    - facets.each do |facet|
+      %div
+        %label{ style: 'width: 100%;' }
+          = check_box_tag "search[#{field}][]", facet['term'], selected.try(:include?, facet['term'].to_s)
+          = facet['term']
+          = facet['display_name']
+          %span.badge.badge-default= facet['count']
+  - if facets.count > 3
+    .panel-body{ style: 'padding-top: 0px; '}
+      = link_to 'show more...', "##{field.to_s.dasherize}-search", data: { toggle: 'expand', 'toggletext' => 'show less...' }

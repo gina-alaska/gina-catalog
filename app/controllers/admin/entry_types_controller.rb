@@ -1,5 +1,4 @@
 class Admin::EntryTypesController < AdminController
-
   load_and_authorize_resource
 
   def index
@@ -17,7 +16,7 @@ class Admin::EntryTypesController < AdminController
         flash[:success] = "Catalog type #{@entry_type.name} was created."
         format.html { redirect_to admin_entry_types_path }
       else
-        format.html { render action: "new" }
+        format.html { render action: 'new' }
         format.json { render json: @entry_type.errors, status: :unprocessable_entity }
       end
     end
@@ -30,7 +29,7 @@ class Admin::EntryTypesController < AdminController
         format.html { redirect_to admin_entry_types_path }
         format.json { head :nocontent }
       else
-        format.html { render action: "edit" }
+        format.html { render action: 'edit' }
         format.json { render json: @entry_type.errors, status: :unprocessable_entity }
       end
     end
@@ -41,17 +40,17 @@ class Admin::EntryTypesController < AdminController
       if @entry_type.destroy
         flash[:success] = "Catalog type #{@entry_type.name} was successfully deleted."
         format.html { redirect_to admin_entry_types_path }
-        format.json { head :no_content }     
+        format.json { head :no_content }
       else
         flash[:error] = @entry_type.errors.full_messages.join('<br />').html_safe
         format.html { redirect_to admin_entry_types_path }
-#         format.json { head :no_content } 
+        #         format.json { head :no_content }
       end
     end
   end
 
   protected
-  
+
   def entry_type_params
     params.require(:entry_type).permit(:name, :description, :color)
   end

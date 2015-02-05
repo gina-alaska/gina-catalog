@@ -17,3 +17,9 @@ blank:
   email: ""
   phone_number: ""
   job_title: ""
+
+no_associated_entry:
+  name: MyString
+  email: MyString
+  phone_number: MyString
+  job_title: MyString
