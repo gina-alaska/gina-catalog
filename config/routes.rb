@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+
+
   get '/logout', to: 'sessions#destroy'
   get '/login', to: 'sessions#new'
   get '/auth/:provider/disable', to: 'users#disable_provider'
@@ -12,8 +14,9 @@ Rails.application.routes.draw do
 
   resources :sessions
   resources :memberships
-
   resources :users
+  resources :regions
+
   namespace :admin do
     resources :users
     resources :portals
