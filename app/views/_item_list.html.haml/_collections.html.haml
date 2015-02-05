@@ -1,0 +1,16 @@
+- unless @facets.collections.empty?
+  .panel-body.panel-break
+    %h3.panel-title Collections
+  #collection-search.panel-body.expand{ style: 'padding-top: 5px; padding-bottom: 0px;' }
+    - @facets.collections.each do |facet|
+      - next if facet[:record].try(:hidden?)
+      - collection = facet[:record]
+
+      %div
+        %label{ style: 'width: 100%;' }
+          = check_box_tag 'search[collection_ids][]', collection.id, @search_params.try(:[], 'collection_ids').try(:include?, collection.id.to_s)
+          = collection.name
+          %span.badge.badge-default= facet[:count]
+  - if @facets.collections.count > 3
+    .panel-body{ style: 'padding-top: 0px; '}
+      = link_to 'show more...', '#collection-search', data: { toggle: 'expand' }

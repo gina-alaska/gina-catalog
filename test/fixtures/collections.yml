@@ -1,13 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
+  name: Alaska
   description: MyString
-  portal_id: 1
+  portal: one
   hidden: false
 
 two:
-  name: MyString
+  name: Map Data
   description: MyString
-  portal_id: 1
+  portal: one
   hidden: false

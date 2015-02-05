@@ -19,6 +19,8 @@
  *= require select2/select2-bootstrap
  *= require selectize/dist/css/selectize
  *= require selectize/dist/css/selectize.bootstrap3
+ *= require leaflet.markercluster/dist/MarkerCluster
+ *= require leaflet.markercluster/dist/MarkerCluster.Default
  *= require_tree .
  *= require_self
  */

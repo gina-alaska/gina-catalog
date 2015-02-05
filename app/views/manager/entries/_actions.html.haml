@@ -1,0 +1,8 @@
+.media-actions.text-right
+  - unless entry.bboxes.empty?
+    %button.btn.btn-default{ data: { behavior: 'highlight-markers', target: ".#{dom_id(entry, 'marker')}", zoomTo: entry.bbox.to_s } }
+      %i.fa.fa-map-marker
+      Zoom To
+  = link_to manager_entry_path(entry), class: 'btn btn-primary' do
+    Full Record
+    %i.fa.fa-arrow-right

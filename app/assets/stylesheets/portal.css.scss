@@ -16,6 +16,33 @@
   right: 10px;
 }
 
+.panel-break {
+  border-top: 1px solid darken(#efefef, 10%);
+  border-bottom: 1px solid darken(#efefef, 10%);
+  background: #efefef;
+  padding: 10px 15px;
+}
+
+.panel-form {
+  padding-bottom: 0px;
+  padding-top: 8px;
+
+  label.control-label { text-align: left; }
+}
+
+.expand {
+  max-height: 80px;
+  overflow: hidden;
+  -webkit-transition: max-height 1s linear;
+	-moz-transition: max-height 1s linear;
+  transition: max-height 1s linear;
+
+  &.in {
+    max-height: 1500px;
+    overflow: auto;
+  }
+}
+
 .nested-form-fields {
   .form-group {
     width: 100%;
@@ -94,6 +121,13 @@
 
 tr.fields {
   .form-group {
+    margin: 0px;
+  }
+}
+
+.paginator {
+  padding-bottom: 8px;
+  .pagination {
     margin: 0px;
   }
 }

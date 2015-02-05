@@ -1,6 +1,6 @@
 class UseAgreement < ActiveRecord::Base
   include EntryDependentConcerns
-  
+
   belongs_to :portal
   has_many :entries
 
@@ -9,13 +9,13 @@ class UseAgreement < ActiveRecord::Base
   validates_presence_of :body
 
   before_destroy :deletable?
-  
+
   def deletable?
-    self.entries.empty?
+    entries.empty?
   end
 
   def archive
-    self.archived_at = Time.zone.now if self.archived_at.nil?
+    self.archived_at = Time.zone.now if archived_at.nil?
   end
 
   def unarchive
@@ -23,10 +23,10 @@ class UseAgreement < ActiveRecord::Base
   end
 
   def archived
-    !self.archived_at.blank?
+    !archived_at.blank?
   end
 
   def archived=(value)
-    value.to_i==1 ? archive : unarchive
+    value.to_i == 1 ? archive : unarchive
   end
 end
