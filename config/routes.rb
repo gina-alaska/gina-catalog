@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :memberships
 
   resources :users
+  resources :tags
   namespace :admin do
     resources :users
     resources :portals
@@ -66,7 +67,6 @@ Rails.application.routes.draw do
       end
     end
   
-    get 'tags/search'
     
   end
 

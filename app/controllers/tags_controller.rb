@@ -1,5 +1,5 @@
-class Manager::TagsController < ApplicationController
-  def search
+class TagsController < ApplicationController
+  def index
     @tags = Entry.all_tags.order(:name)
     if params[:q].present?
       @tags = @tags.where('name ilike ?', "%#{params[:q]}%")
