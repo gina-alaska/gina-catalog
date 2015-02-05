@@ -5,9 +5,9 @@ class CollectionsController < ApplicationController
     if params[:q].present?
       @collections = @collections.where('name ilike ?', "%#{params[:q]}%")
     end
-    
+
     respond_to do |format|
-      format.json 
+      format.json
     end
   end
 end

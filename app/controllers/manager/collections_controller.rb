@@ -57,7 +57,7 @@ class Manager::CollectionsController < ApplicationController
       format.json { head :no_content }
     end
   end
-  
+
   protected
 
   def collection_params

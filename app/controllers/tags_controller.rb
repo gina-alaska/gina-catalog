@@ -6,7 +6,7 @@ class TagsController < ApplicationController
     end
 
     respond_to do |format|
-      format.json 
+      format.json
     end
   end
 end
