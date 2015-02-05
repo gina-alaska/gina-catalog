@@ -111,7 +111,8 @@ module EntriesControllerSearchConcerns
     end
 
     # items that can match any selected
-    [:entry_type_name, :status, :primary_organizations, :funding_organizations, :primary_contacts, :other_contacts].each do |param|
+    [:entry_type_name, :status, :primary_organizations, :funding_organizations,
+     :primary_contacts, :other_contacts].each do |param|
       opts[:where][FACET_FIELDS[param]] = search_params[param] if search_params[param].present?
     end
 

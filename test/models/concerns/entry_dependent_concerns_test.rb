@@ -44,6 +44,7 @@ class EntryDependentConcernsTest < ActiveSupport::TestCase
 
   test 'should add error to base if entries are present' do
     @with_entries.destroy
-    assert @with_entries.errors[:base].include?('Could not delete, belongs to one or more catalog records'), 'Could not find error message'
+    assert @with_entries.errors[:base].include?('Could not delete, belongs to one or more catalog records'),
+           'Could not find error message'
   end
 end
