@@ -1,7 +1,8 @@
 require "test_helper"
 
 class TagsControllerTest < ActionController::TestCase
-  def test_sanity
-    flunk "Need real tests"
-  end
+  test 'should get index' do
+    get :index, :format => :json
+    assert_response :success
+  end  
 end
