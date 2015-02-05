@@ -78,6 +78,8 @@ class Manager::OrganizationsController < ManagerController
   protected
 
   def organization_params
-    params.require(:organization).permit(:name, :acronym, :description, :category, :url, :active, :logo, aliases_attributes: [:id, :text, :_destroy])
+    params.require(:organization).permit(
+      :name, :acronym, :description, :category, :url, :active, :logo,
+      aliases_attributes: [:id, :text, :_destroy])
   end
 end
