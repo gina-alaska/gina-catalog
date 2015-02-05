@@ -12,9 +12,11 @@ Rails.application.routes.draw do
 
   resources :sessions
   resources :memberships
-
+  
   resources :users
   resources :tags
+  resources :collections
+  
   namespace :admin do
     resources :users
     resources :portals
@@ -61,12 +63,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :collections do
-      collection do
-        get :search
-      end
-    end
-  
+    resources :collections
     
   end
 
