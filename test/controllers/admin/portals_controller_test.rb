@@ -64,4 +64,21 @@ class Admin::PortalsControllerTest < ActionController::TestCase
 
   #    assert_redirected_to admin_portals_path
   #  end
+
+  test 'non global admin user should not be able to create portal' do
+    login_user :portal_admin
+
+    assert_difference('Portal.count', 0) do
+      post :create, portal: @portal.attributes
+      assert assigns(:portal).errors.empty?, assigns(:portal).errors.full_messages
+    end
+  end
+
+  test 'non global admin user should not be able to access new portal method' do
+    login_user :portal_admin
+
+    get :new
+
+    assert_response(403)
+  end
 end
