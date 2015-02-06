@@ -10,3 +10,27 @@ AllCops:
     - 'Gemfile'
     - 'bin/*'
     - 'Guardfile'
+
+# Offense count: 58
+# Configuration parameters: EnforcedStyle, SupportedStyles.
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+# Offense count: 176
+Style/Documentation:
+  Enabled: false
+
+# Offense count: 1
+Style/Lambda:
+  Enabled: false
+
+# # Offense count: 1
+# # Configuration parameters: NamePrefix, NamePrefixBlacklist.
+# Style/PredicateName:
+#   Enabled: false
+
+
+# Offense count: 2
+# Configuration parameters: Methods.
+Style/SingleLineBlockParams:
+  Enabled: false
