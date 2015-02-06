@@ -19,6 +19,7 @@ Style/ClassAndModuleChildren:
   Enabled: false
 
 Metrics/LineLength:
+  Severity: warning
   Max: 120
 
 Metrics/MethodLength:

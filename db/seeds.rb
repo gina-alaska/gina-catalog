@@ -14,6 +14,7 @@ if Rails.env.development?
   p.urls.create(url: 'catalog.192.168.222.225.xip.io', default: true) unless p.new_record?
 
   Contact.where(name: 'Will Fisher', email: 'will@alaska.edu').first_or_create
+  Entry.reindex
 end
 
 EntryType.where(name: 'Project', description: 'catalog record for projects with no associated data/observation files', color: '#c09853').first_or_create
@@ -25,3 +26,4 @@ networks = [['Facebook', 'fa-facebook'], ['GitHub', 'fa-github'], ['Google+', 'f
 networks.each do |network|
   SocialNetworkConfig.where(name: network[0], icon: network[1]).first_or_create
 end
+

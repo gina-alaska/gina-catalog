@@ -22,6 +22,7 @@
 //= require select2/select2
 //= require selectize/dist/js/standalone/selectize
 //= require holderjs/holder
+//= require mapbox.js/mapbox
 //= require leaflet.markercluster/dist/leaflet.markercluster
 //= require wicket/wicket
 //= require wicket/wicket-leaflet

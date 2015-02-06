@@ -54,6 +54,6 @@
     "commit": "74e89539c8f3a8b4e3bcb51c2cb1209e0658248f"
   },
   "_source": "git://github.com/brianreavis/selectize.js.git",
-  "_target": "*",
+  "_target": "~> 0.11.2",
   "_originalSource": "selectize"
 }
