@@ -18,7 +18,6 @@
 //= require jquery_nested_form
 //= require moment/moment
 //= require jasny-bootstrap/dist/js/jasny-bootstrap
-//= require eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker
 //= require select2/select2
 //= require selectize/dist/js/standalone/selectize
 //= require holderjs/holder
