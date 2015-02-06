@@ -1,4 +1,5 @@
 class Manager::EntriesController < ApplicationController
+  before_action :get_use_agreements, only: [:new, :create, :edit, :update]
   load_and_authorize_resource
 
   include EntriesControllerSearchConcerns
@@ -18,13 +19,11 @@ class Manager::EntriesController < ApplicationController
   def new
     @entry.attachments.build
     @entry.links.build
-    @use_agreements = UseAgreement.where(archived_at: nil) || []
   end
 
   def edit
     @entry.attachments.build
     @entry.links.build
-    @use_agreements = UseAgreement.where(archived_at: nil) || []
   end
 
   def create
@@ -111,5 +110,9 @@ class Manager::EntriesController < ApplicationController
       values[:collection_ids] = values.delete(:collection_ids).map(&:to_i).reject { |v| v == 0 }
     end
     values
+  end
+
+  def get_use_agreements
+    @use_agreements = UseAgreement.where(archived_at: nil) || []
   end
 end
