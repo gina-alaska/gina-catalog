@@ -1,3 +1,5 @@
+inherit_from: .rubocop_todo.yml
+
 AllCops:
   Exclude:
     - 'vendor/**/*'
@@ -8,23 +10,3 @@ AllCops:
     - 'Gemfile'
     - 'bin/*'
     - 'Guardfile'
-
-Documentation:
-  Enabled: false
-
-Style/SingleLineBlockParams:
-  Enabled: false
-
-Style/ClassAndModuleChildren:
-  Enabled: false
-
-Metrics/LineLength:
-  Severity: warning
-  Max: 120
-
-Metrics/MethodLength:
-  CountComments: false  # count full line comments?
-  Max: 20
-
-Metrics/AbcSize:
-  Max: 20
