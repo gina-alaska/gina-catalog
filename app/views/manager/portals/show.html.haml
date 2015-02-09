@@ -7,47 +7,48 @@
         %i.fa.fa-cog
         Portal Settings
   
-  %dl.dl-horizontal
-    %dt Title
-    %dd=ddtext current_portal.title
-    %dt Acronym
-    %dd=ddtext current_portal.acronym
-    %dt By line
-    %dd=ddtext current_portal.by_line
-    %dt Contact Email
-    %dd=ddtext current_portal.contact_email
-    //%dt Default Invite Text
-    //%dd=ddtext current_portal.default_invite 
-    %dt Google Analytics
-    %dd=ddtext current_portal.analytics_account
-    //%dt Use Recaptcha
-    //%dd=ddtext current_portal.use_recaptcha==true ? "Yes" : "No"
-    %dt Description
-    %dd=ddtext current_portal.description
-    %dt Keywords
-    //%dd=ddtext current_portal.keywords
-  %fieldset.content
-    %legend Map Projections
+  .panel-body
     %dl.dl-horizontal
-      //%dt Search
-      //%dd=ddtext display_projection(current_portal.projection)
-      //%dt Full Record
-      //%dd=ddtext display_projection(current_portal.record_projection)
-      //%dt Location Editor
-      //%dd=ddtext display_projection(current_portal.location_projection)
-      //%dt Use Google Layers
-      //%dd=ddtext current_portal.google_layers==true ? "Yes" : "No"
-  .span5
-  %fieldset.content
-    %legend Portal Favicon
-    - if current_portal.favicon.nil?
+      %dt Title
+      %dd=ddtext current_portal.title
+      %dt Acronym
+      %dd=ddtext current_portal.acronym
+      %dt By line
+      %dd=ddtext current_portal.by_line
+      %dt Contact Email
+      %dd=ddtext current_portal.contact_email
+      //%dt Default Invite Text
+      //%dd=ddtext current_portal.default_invite 
+      %dt Google Analytics
+      %dd=ddtext current_portal.analytics_account
+      //%dt Use Recaptcha
+      //%dd=ddtext current_portal.use_recaptcha==true ? "Yes" : "No"
+      %dt Description
+      %dd=ddtext current_portal.description
+      %dt Keywords
+      //%dd=ddtext current_portal.keywords
+    //%fieldset.content
+    //  %legend Map Projections
+    //  %dl.dl-horizontal
+    //    %dt Search
+    //    %dd=ddtext display_projection(current_portal.projection)
+    //    %dt Full Record
+    //    %dd=ddtext display_projection(current_portal.record_projection)
+    //    %dt Location Editor
+    //    %dd=ddtext display_projection(current_portal.location_projection)
+    //    %dt Use Google Layers
+    //    %dd=ddtext current_portal.google_layers==true ? "Yes" : "No"
+    .span5
+    %fieldset.content
+      %legend Portal Favicon
       %dl.dl-horizontal
-        %dd No Favicon Specified
-    - else
-      = image_tag current_portal.favicon.image.encode(:png).thumb('100x100').url unless current_portal.favicon.image.blank?
-  %fieldset.content
-    %legend Social settings
-    %dl.dl-horizontal
-      - current_portal.social_networks.active.each do |network|
-        %dt=ddtext network.name
-        %dd=ddtext network.url
+        - if current_portal.favicon.nil?
+          %dd No Favicon Specified
+        - else
+          %dd= image_tag current_portal.favicon.image.encode(:png).thumb('100x100').url unless current_portal.favicon.image.blank?
+    %fieldset.content
+      %legend Social settings
+      %dl.dl-horizontal
+        - current_portal.social_networks.active.each do |network|
+          %dt=ddtext network.name
+          %dd=ddtext network.url
