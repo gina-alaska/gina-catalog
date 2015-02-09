@@ -20,6 +20,10 @@ class ActiveSupport::TestCase
     user = users(user_id)
     session[:user_id] = user.id
   end
+
+  def logger
+    Rails.logger
+  end
 end
 
 class ActionDispatch::IntegrationTest

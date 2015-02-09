@@ -1,7 +1,7 @@
 class Organization < ActiveRecord::Base
   include EntryDependentConcerns
   searchkick
-  
+
   CATEGORIES = [
     'Academic',
     'Industry/Consultants',

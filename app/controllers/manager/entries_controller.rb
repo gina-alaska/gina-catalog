@@ -54,6 +54,7 @@ class Manager::EntriesController < ApplicationController
   def update
     respond_to do |format|
       if @entry.update_attributes(entry_params)
+
         flash[:success] = "Catalog record #{@entry.title} was successfully updated."
 
         if params['commit'] == 'Save'
@@ -85,23 +86,13 @@ class Manager::EntriesController < ApplicationController
     end
   end
 
-  def collections
-    @collections = current_portal.collections.order(:name)
-    @collections = @collections.where('name ilike ?', "%#{params[:q]}%") if params[:q].present?
-  end
-
-  def tags
-    @tags = Entry.all_tags.order(:name)
-    @tags = @tags.where('name ilike ?', "%#{params[:q]}%") if params[:q].present?
-  end
-
   protected
 
   def entry_params
     values = params.require(:entry).permit(
       :title, :description, :status, :entry_type_id, :start_date, :end_date,
-      :use_agreement_id, :request_contact_info, :require_contact_info, :tag_list, 
-      :collection_ids => [],
+      :use_agreement_id, :request_contact_info, :require_contact_info, :tag_list,
+      collection_ids: [],
       links_attributes: [:id, :link_id, :category, :display_text, :url, :_destroy],
       attachments_attributes: [:id, :file, :category, :description, :interaction, :_destroy],
       entry_contacts_attributes: [:id, :contact_id, :primary, :_destroy],
