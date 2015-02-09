@@ -46,7 +46,7 @@ gem 'bootstrap_form', git: 'https://github.com/bootstrap-ruby/rails-bootstrap-fo
 gem 'awesome_nested_set'
 gem 'rgeo'
 gem 'rgeo-activerecord'
-gem 'activerecord-postgis-adapter', github: 'rgeo/activerecord-postgis-adapter', branch: 'activerecord42' # , '~> 3.0'
+gem 'activerecord-postgis-adapter', '3.0.0.beta1'
 gem 'rgeo-geojson'
 gem 'cancancan', '~> 1.9'
 gem 'nested_form'
