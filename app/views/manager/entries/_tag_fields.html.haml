@@ -1,2 +1,2 @@
-= f.text_field :tag_list, label: 'Tags', data: { behavior: 'selectize-tags' }
+= f.text_field :tag_list, value: f.object.tag_list.to_s, label: 'Tags', data: { behavior: 'selectize-tags' }
 = f.collection_select :collection_ids, @entry.collections, :id, :name, { label: 'Collections' }, { data: { behavior: 'selectize-collections' }, multiple: true }

@@ -1,0 +1,16 @@
+= bootstrap_form_for [:admin, @user], layout: :horizontal do |f|
+  = f.alert_message "Please fix the errors below.", error_summary: false
+  = f.static_control label: 'Name' do
+    = @user.name
+  = f.static_control label: 'Email' do
+    = @user.email
+  = f.form_group label: { text: 'Global Admin' } do
+    = f.check_box :global_admin, label: ''
+
+  .form-action
+    = link_to :back, class: 'btn btn-default' do
+      %i.fa.fa-arrow-left
+      Cancel
+
+    .pull-right
+      = f.primary 

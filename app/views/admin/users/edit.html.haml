@@ -1,0 +1,13 @@
+.container
+  .panel.panel-default
+    .panel-heading{ style: 'position: relative' }
+      %ol.breadcrumb
+        %li
+          = link_to [:admin, :users] do
+            %i.fa.fa-users
+            Users
+        %li.active
+          Edit #{@user.name}
+
+    .panel-body
+      = render 'form', user: @user

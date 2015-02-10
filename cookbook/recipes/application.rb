@@ -1,9 +1,9 @@
-include_recipe "glynx::packages"
-include_recipe "glynx::ruby"
-include_recipe "glynx::_database_common"
-include_recipe "postgresql::client"
+include_recipe 'glynx::packages'
+include_recipe 'glynx::ruby'
+include_recipe 'glynx::_database_common'
+include_recipe 'postgresql::client'
 
-app_name = "glynx"
+app_name = 'glynx'
 account = node[app_name]['account']
 
 # %w{ application_path shared_path config_path initializers_path  }.each do |dir|
@@ -15,8 +15,6 @@ account = node[app_name]['account']
 #   end
 # end
 
-
-
 # %w{public solr}.each do |shared_dir|
 #   directory File.join(node[app_name]['shared_path'], shared_dir) do
 #     owner account
@@ -24,7 +22,6 @@ account = node[app_name]['account']
 #     mode 00755
 #   end
 # end
-
 
 # directory node[app_name]['catalog_silo_path'] do
 #   action :create
@@ -62,7 +59,7 @@ account = node[app_name]['account']
 #   group account
 # end
 
-node[app_name]['paths'].each do |name, path|
+node[app_name]['paths'].each do |_name, path|
   directory path do
     owner account
     group account
@@ -77,7 +74,7 @@ service 'rpcbind' do
   action [:enable, :start]
 end
 
-node[app_name]['mounts'].each do |name, mnt|
+node[app_name]['mounts'].each do |_name, mnt|
   directory mnt['mount_point'] do
     recursive true
   end
@@ -89,11 +86,11 @@ node[app_name]['mounts'].each do |name, mnt|
   end
 end
 
-node[app_name]['links'].each do |name, lnk|
+node[app_name]['links'].each do |_name, lnk|
   link lnk['name'] do
     to lnk['to']
     owner account
-    group account    
+    group account
     action lnk['action']
   end
 end
@@ -102,28 +99,28 @@ template "#{node[app_name]['paths']['shared']}/config/sunspot.yml" do
   owner account
   group account
   mode 00644
-  variables({
+  variables(
     environment: node[app_name]['environment'],
     solr: node[app_name]['sunspot']['solr']
-  })
+  )
 end
 
 template "#{node[app_name]['paths']['shared']}/config/database.yml" do
   owner account
   group account
   mode 00644
-  variables({
+  variables(
     databases: node[app_name]['database']
-  })
+  )
 end
 
 template "#{node[app_name]['paths']['shared']}/config/secrets.yml" do
   owner account
   group account
   mode 00644
-  variables({
+  variables(
     secrets: node[app_name]['rails']['secrets']
-  })
+  )
 end
 
 # template "#{node[app_name]['shared_path']}/config/git_hooks_env" do
@@ -132,12 +129,12 @@ end
 #   mode 00644
 # end
 
-template "#{node[app_name]['paths']['shared']}/config/initializers/catalog.rb" do
-  owner account
-  group account
-  mode 00644
-  variables({ deploy_path: node[app_name]['paths']['deploy'] })
-end
+# template "#{node[app_name]['paths']['shared']}/config/initializers/catalog.rb" do
+#   owner account
+#   group account
+#   mode 00644
+#   variables(deploy_path: node[app_name]['paths']['deploy'])
+# end
 
 # template "#{node[app_name]['shared_path']}/config/resque.yml" do
 #   owner account
@@ -155,13 +152,13 @@ directory "/home/#{account}/.bundle" do
 end
 
 template "/home/#{account}/.bundle/config" do
-  source "bundle/config.erb"
+  source 'bundle/config.erb'
   owner account
   group account
   mode 00644
 end
 
-%w{log tmp system tmp/pids tmp/sockets}.each do |dir|
+%w(log tmp system tmp/pids tmp/sockets).each do |dir|
   directory "#{node[app_name]['paths']['shared']}/#{dir}" do
     owner node[app_name]['account']
     group node[app_name]['account']

@@ -1,0 +1,14 @@
+- unless @facets.entry_types.empty?
+  .panel-body.panel-break
+    %h3.panel-title Record Type
+  #entry-type-search.panel-body.expand{ style: 'padding-top: 5px; padding-bottom: 0px; '}
+    - @facets.entry_types.each do |facet|
+      - entry_type = facet[:record]
+      %div
+        %label{ style: 'width: 100%;' }
+          = check_box_tag 'search[entry_type_id]', entry_type.id, @search_params.try(:[], 'entry_type_id').to_i == entry_type.id
+          = entry_type.name
+          %span.badge.badge-default= facet[:count]
+  - if @facets.entry_types.count > 3
+    .panel-body{ style: 'padding-top: 0px; '}
+      = link_to 'show more...', '#entry-type-search', data: { toggle: 'expand', 'toggletext' => 'show less...' }

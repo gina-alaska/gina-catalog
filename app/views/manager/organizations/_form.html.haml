@@ -2,9 +2,9 @@
   %li.active
     %a{ href: '#organization_form_fields', data: { toggle: 'tab' } } Organization Form
   %li
-    %a{ href: '#aliases', data: { toggle: 'tab' } } Aliases
-  %li
     %a{ href: '#logo', data: { toggle: 'tab' } } Logo
+  %li
+    %a{ href: '#aliases', data: { toggle: 'tab' } } Aliases
 
 = bootstrap_nested_form_for [:manager, @organization], layout: :horizontal do |f|
   .tab-content{ style: 'margin-top: 5px;' }
@@ -16,6 +16,20 @@
       = f.select :category, Organization::CATEGORIES
       = f.text_field :url
 
+    #logo.tab-pane
+      .fileinput{ style: 'display:block;', class: (f.object.logo.nil? ? 'fileinput-new' : 'fileinput-exists'), data: { provides: 'fileinput' } }
+        .row
+          .col-sm-10
+            .fileinput-new.thumbnail
+              %img{ src: 'holder.js/200x200', style: 'width: 200px; height: 200px;' }
+            .fileinput-preview.thumbnail.fileinput-exists{ style: 'max-width:200px; max-height:200px;' }
+              = image_tag @organization.logo.encode(:png).thumb('200x200').url if @organization.logo
+          .col-sm-2.text-right
+            %span.btn.btn-file.btn-success.btn-block
+              %span.fileinput-new Add logo
+              %span.fileinput-exists Change logo
+              = f.file_field_without_bootstrap :logo
+              
     #aliases.tab-pane{ style: "min-height: 60px;" }
       .row
         .col-sm-10
@@ -31,20 +45,6 @@
             %th.text-right Actions
         %tbody#aliases_add
           = f.fields_for :aliases, wrapper: false
-
-    #logo.tab-pane
-      .fileinput{ style: 'display:block;', class: (f.object.logo.nil? ? 'fileinput-new' : 'fileinput-exists'), data: { provides: 'fileinput' } }
-        .row
-          .col-sm-10
-            .fileinput-new.thumbnail
-              %img{ src: 'holder.js/200x200', style: 'width: 200px; height: 200px;' }
-            .fileinput-preview.thumbnail.fileinput-exists{ style: 'max-width:200px; max-height:200px;' }
-              = image_tag @organization.logo.encode(:png).thumb('200x200').url if @organization.logo
-          .col-sm-2.text-right
-            %span.btn.btn-file.btn-success.btn-block
-              %span.fileinput-new Add logo
-              %span.fileinput-exists Change logo
-              = f.file_field_without_bootstrap :logo
             
   .form-action
     = link_to :back, class: 'btn btn-default' do
