@@ -49,7 +49,7 @@ default['glynx']['database'] = {
     database: 'glynx_development',
     username: 'glynx',
     password: 'fj329rghDDw02jf',
-    search_path: 'public'
+    search_path: 'public,postgis'
   },
   test: {
     adapter: 'postgis',
@@ -57,7 +57,7 @@ default['glynx']['database'] = {
     database: 'glynx_test',
     username: 'glynx',
     password: 'fj329rghDDw02jf',
-    search_path: 'public'
+    search_path: 'public,postgis'    
   },
   production: {
     adapter: 'postgis',
@@ -65,7 +65,7 @@ default['glynx']['database'] = {
     database: 'glynx_production',
     username: 'glynx',
     password: '',
-    search_path: 'public'
+    search_path: 'public,postgis'
   }
 }
 

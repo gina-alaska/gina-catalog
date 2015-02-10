@@ -35,6 +35,9 @@ class Entry < ActiveRecord::Base
   has_many :entry_portals
   has_many :portals, through: :entry_portals
 
+  has_many :entry_regions
+  has_many :regions, through: :entry_regions
+
   has_one :owner_entry_portal, -> { where owner: true }, class_name: 'EntryPortal'
   has_one :owner_portal, through: :owner_entry_portal, source: :portal, class_name: 'Portal'
 
