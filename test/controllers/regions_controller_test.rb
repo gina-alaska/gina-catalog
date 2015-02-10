@@ -1,9 +1,8 @@
-require "test_helper"
+require 'test_helper'
 
 class RegionsControllerTest < ActionController::TestCase
-  def test_index
-    get :index
+  test 'Should get index' do
+    get :index, format: :json
     assert_response :success
   end
-
 end

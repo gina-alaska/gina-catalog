@@ -5,16 +5,16 @@ class Region < ActiveRecord::Base
   end
 
   validates :name, length: { maximum: 255 }
-  validates_uniqueness_of :name
-  
+  validates :name, uniqueness: true
+
   has_many :entry_regions
   has_many :entries, through: :entry_regions
-  
+
   set_rgeo_factory_for_column(:geom, Factories::PROJECTED)
 
-  def self.intersects(wkt, srid=4326)
+  def self.intersects(wkt, srid = 4326)
     wkt = wkt.as_text if wkt.respond_to? :as_text
-    where("ST_Intersects(geom, ?::geometry)", "SRID=#{srid};#{wkt}")
+    where('ST_Intersects(geom, ?::geometry)', "SRID=#{srid};#{wkt}")
   end
 
   def geojson=(file)

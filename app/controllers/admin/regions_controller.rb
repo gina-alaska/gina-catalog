@@ -22,7 +22,7 @@ class Admin::RegionsController < ApplicationController
         flash[:success] = "Region #{@region.name} was created."
         format.html { redirect_to admin_regions_path }
       else
-        format.html { render action: "new" }
+        format.html { render action: 'new' }
         format.json { render json: @region.errors, status: :unprocessable_entity }
       end
     end
@@ -34,7 +34,7 @@ class Admin::RegionsController < ApplicationController
         flash[:success] = "Region #{@region.name} was updated."
         format.html { redirect_to admin_regions_path }
       else
-        format.html { render action: "edit" }
+        format.html { render action: 'edit' }
         format.json { render json: @region.errors, status: :unprocessable_entity }
       end
     end
@@ -54,7 +54,7 @@ class Admin::RegionsController < ApplicationController
   end
 
   protected
-  
+
   def region_params
     params.require(:region).permit(:name, :geojson)
   end

@@ -1,5 +1,5 @@
 class Manager::EntriesController < ApplicationController
-  before_action :get_use_agreements, only: [:new, :create, :edit, :update]
+  before_action :load_use_agreements, only: [:new, :create, :edit, :update]
   load_and_authorize_resource
 
   include EntriesControllerSearchConcerns
@@ -91,7 +91,7 @@ class Manager::EntriesController < ApplicationController
     values = params.require(:entry).permit(
       :title, :description, :status, :entry_type_id, :start_date, :end_date,
       :use_agreement_id, :request_contact_info, :require_contact_info, :tag_list,
-      collection_ids: [], :region_ids: [],
+      collection_ids: [], region_ids: [],
       links_attributes: [:id, :link_id, :category, :display_text, :url, :_destroy],
       attachments_attributes: [:id, :file, :category, :description, :interaction, :_destroy],
       entry_contacts_attributes: [:id, :contact_id, :primary, :_destroy],
@@ -108,7 +108,7 @@ class Manager::EntriesController < ApplicationController
     values
   end
 
-  def get_use_agreements
+  def load_use_agreements
     @use_agreements = UseAgreement.where(archived_at: nil) || []
   end
 end
