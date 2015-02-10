@@ -1,8 +1,8 @@
 = bootstrap_form_for [:manager, @contact], layout: :horizontal, label_col: 'col-lg-3 col-md-3', control_col: 'col-lg-9 col-md-9' do |f|
   = f.alert_message "Please fix the errors below.", error_summary: false
   = f.text_field :name
-  = f.text_field :email
-  = f.text_field :phone_number
+  = f.email_field :email
+  = f.phone_field :phone_number, placeholder: "(999)999-9999", pattern: "[0-9()-]+", title: "Please use only numerals,(,), and -."
   = f.text_field :job_title
 
   .form-action
