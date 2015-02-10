@@ -129,12 +129,12 @@ end
 #   mode 00644
 # end
 
-template "#{node[app_name]['paths']['shared']}/config/initializers/catalog.rb" do
-  owner account
-  group account
-  mode 00644
-  variables(deploy_path: node[app_name]['paths']['deploy'])
-end
+# template "#{node[app_name]['paths']['shared']}/config/initializers/catalog.rb" do
+#   owner account
+#   group account
+#   mode 00644
+#   variables(deploy_path: node[app_name]['paths']['deploy'])
+# end
 
 # template "#{node[app_name]['shared_path']}/config/resque.yml" do
 #   owner account
