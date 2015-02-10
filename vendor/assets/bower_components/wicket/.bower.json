@@ -1,0 +1,23 @@
+{
+  "name": "Wicket",
+  "main": [
+    "wicket.js",
+    "wicket-arcgis.js",
+    "wicket-gmap3.js",
+    "wicket-leaflet.js"
+  ],
+  "ignore": [
+    "doc/*",
+    "tests/*"
+  ],
+  "homepage": "https://github.com/arthur-e/Wicket",
+  "_release": "f6d5dd1ba7",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "f6d5dd1ba7fde222cfbc8d57278a7a4ba6393aeb"
+  },
+  "_source": "https://github.com/arthur-e/Wicket.git",
+  "_target": "*",
+  "_originalSource": "https://github.com/arthur-e/Wicket.git"
+}

@@ -1,16 +1,15 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
+  name: Geographic Information Network of Alaska
   category: Academic
   description: MyString
-  acronym: MyString
+  acronym: GINA
   adiwg_code: MyString
   adiwg_path: MyString
   logo_uid: MyString
   logo_name: MyString
   url: MyString
-  parent_id: 1
 
 two:
   name: MyString
@@ -22,4 +21,28 @@ two:
   logo_uid: MyString
   logo_name: MyString
   url: MyString
-  parent_id: 1
+
+no_associated_entry:
+  name: MyString
+  category: Academic
+  description: MyString
+  acronym: MyString
+  adiwg_code: MyString
+  adiwg_path: MyString
+  logo_uid: MyString
+  logo_name: MyString
+  url: MyString
+
+recent:
+  name: Recently Organized
+  category: Federal
+  description: This org is guaranteed to be less than a week old
+  acronym: recent
+  created_at: <%= 1.day.ago %>
+
+old:
+  name: Old Organized
+  category: Federal
+  description: This org is guaranteed to be more than a week old
+  acronym: old
+  created_at: <%= 1.month.ago %>

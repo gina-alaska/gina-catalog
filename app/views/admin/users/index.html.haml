@@ -1,19 +1,17 @@
 .panel.panel-default
-  .panel-heading
-    .panel-title
-      %i.fa.fa-users
-      Users
+  .panel-heading{ style: 'position: relative' }
+    %ol.breadcrumb
+      %li.active
+        %i.fa.fa-users
+        Users
     
-  %table.table.table-bordered.table-striped
+  %table.table.table-striped.table-condensed
     %thead
       %tr
         %th Name
-        %th Email
-        %th Global admin?
+        %th Email       
+        %th.text-right Global Admin?
     %tbody
-      - @users.each do |user|
-        %tr
-          %td= link_to user, admin_user_path(user)
-          %td= user.email
-          %td= user.global_admin? ? 'Yes' : 'No'
-    
+      = render(partial: "user_row", collection: @users, as: :user) || "<tr><td colspan=\"3\">There are no users available.</td></tr>".html_safe
+
+  

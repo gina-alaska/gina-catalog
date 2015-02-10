@@ -10,8 +10,8 @@ class Manager::CollectionsController < ApplicationController
     end
   end
 
-#  def show
-#  end
+  #  def show
+  #  end
 
   def new
     @collection = Collection.new
@@ -23,13 +23,13 @@ class Manager::CollectionsController < ApplicationController
   def create
     @collection = Collection.new(collection_params)
     current_portal.collections << @collection
-    
+
     respond_to do |format|
       if @collection.save
         flash[:success] = "Collection #{@collection.name} was successfully created."
         format.html { redirect_to manager_collections_path }
       else
-        format.html { render action: "new" }
+        format.html { render action: 'new' }
         format.json { render json: @collection.errors, status: :unprocessable_entity }
       end
     end
@@ -42,7 +42,7 @@ class Manager::CollectionsController < ApplicationController
         format.html { redirect_to manager_collections_path }
         format.json { head :nocontent }
       else
-        format.html { render action: "edit" }
+        format.html { render action: 'edit' }
         format.json { render json: @collection.errors, status: :unprocessable_entity }
       end
     end
@@ -59,7 +59,7 @@ class Manager::CollectionsController < ApplicationController
   end
 
   protected
-  
+
   def collection_params
     params.require(:collection).permit(:name, :description, :hidden)
   end
