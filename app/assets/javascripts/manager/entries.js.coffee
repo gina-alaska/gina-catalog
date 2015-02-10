@@ -2,52 +2,84 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-$(document).on 'page:change', ->
-  $("#select-two").select2
-    multiple: true
-    tokenSeparators: [","," "]
-    placeholder: "search for a tag"
-    minimumInputLength: 1
-    initSelection: (element, callback) ->
-      data = []
-      $(element.val().split(",")).each ->
-        data.push(id: this.trim(), name: this.trim())
-      callback(data)
+$(document).on 'ready page:load', ->
+  $('[data-behavior="selectize-tags"]').selectize({
+    plugins: ['remove_button'],
+    delimiter: ',',
+    create: true,
+    persist: false,
+    valueField: 'name',
+    labelField: 'name',
+    searchField: 'name',
+    hideSelected: true,
+    render: {
+      option: (item, escape) ->
+        "<div>#{item.name}</div>"
+    },
+    load: (query, callback) ->
+      return callback() if query.length == 0
+      $.ajax({
+        url: "/tags",
+        dataType: 'json',
+        data: { 
+          q: encodeURIComponent(query)
+        },
+        type: 'GET',
+        error: -> 
+          callback()
+        success: (res) -> 
+          callback(res)
+      })
+  })
 
-    createSearchChoice: (term, data) ->
-      if $(data).filter(->
-        this.name.localeCompare(term) is 0
-      ).length is 0
-        id: term,
-        name: term
+  $('[data-behavior="selectize-collections"]').selectize({
+    plugins: ['remove_button'],
+    valueField: 'id',
+    labelField: 'name',
+    searchField: 'name',
+    render: {
+      option: (item, escape) ->
+        "<div>#{item.name}</div>"
+    },
+    load: (query, callback) ->
+      return callback() if query.length == 0
+      $.ajax({
+        url: '/collections',
+        dataType: 'json',
+        data: { 
+          q: encodeURIComponent(query)
+        },
+        type: 'GET',
+        error: -> 
+          callback()
+        success: (res) -> 
+          callback(res)
+      })
+    create: false
+  })
 
-    ajax:
-      url: -> $(this).data('url')
-      quietMillis: 250
-      dataType: 'json'
-      data: (term) -> q: term
-      results: (data) -> results: data
-
-    formatResult: (item, page) -> item.name
-    formatSelection: (item, page) -> item.name
-
-$(document).on 'page:change', ->
-  $("#select2-collection").select2
-    multiple: true
-    placeholder: "search for a collection"
-    minimumInputLength: 1
-    initSelection: (element, callback) ->
-      # data = []
-      # $(element.val().split(",")).each ->
-      #   data.push(id: this.trim(), name: this.trim())
-      callback($.parseJSON(element.val()))
-
-    ajax:
-      url: -> $(this).data('url')
-      quietMillis: 250
-      dataType: 'json'
-      data: (term) -> q: term
-      results: (data) -> results: data
-
-    formatResult: (item, page) -> item.name
-    formatSelection: (item, page) -> item.name
+  $('[data-behavior="selectize-regions"]').selectize({
+    plugins: ['remove_button'],
+    valueField: 'id',
+    labelField: 'name',
+    searchField: 'name',
+    render: {
+      option: (item, escape) ->
+        "<div>#{item.name}</div>"
+    },
+    load: (query, callback) ->
+      return callback() if query.length == 0
+      $.ajax({
+        url: '/regions',
+        dataType: 'json',
+        data: {
+          q: encodeURIComponent(query)
+        },
+        type: 'GET',
+        error: ->
+          callback()
+        success: (res) ->
+          callback(res)
+      })
+    create: false
+  })

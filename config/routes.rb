@@ -16,6 +16,8 @@ Rails.application.routes.draw do
   resources :memberships
   resources :users
   resources :regions
+  resources :tags
+  resources :collections
 
   namespace :admin do
     resources :users

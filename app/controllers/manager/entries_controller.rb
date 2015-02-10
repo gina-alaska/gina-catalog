@@ -1,4 +1,5 @@
 class Manager::EntriesController < ApplicationController
+  before_action :get_use_agreements, only: [:new, :create, :edit, :update]
   load_and_authorize_resource
 
   include EntriesControllerSearchConcerns
@@ -18,13 +19,11 @@ class Manager::EntriesController < ApplicationController
   def new
     @entry.attachments.build
     @entry.links.build
-    @use_agreements = UseAgreement.where(archived_at: nil) || []
   end
 
   def edit
     @entry.attachments.build
     @entry.links.build
-    @use_agreements = UseAgreement.where(archived_at: nil) || []
   end
 
   def create
@@ -54,6 +53,7 @@ class Manager::EntriesController < ApplicationController
   def update
     respond_to do |format|
       if @entry.update_attributes(entry_params)
+
         flash[:success] = "Catalog record #{@entry.title} was successfully updated."
 
         if params['commit'] == 'Save'
@@ -85,27 +85,13 @@ class Manager::EntriesController < ApplicationController
     end
   end
 
-  def collections
-    @collections = current_portal.collections.order(:name)
-    if params[:q].present?
-      @collections = @collections.where('name ilike ?', "%#{params[:q]}%")
-    end
-  end
-
-  def tags
-    @tags = Entry.all_tags.order(:name)
-    if params[:q].present?
-      @tags = @tags.where('name ilike ?', "%#{params[:q]}%")
-    end
-  end
-
   protected
 
   def entry_params
     values = params.require(:entry).permit(
       :title, :description, :status, :entry_type_id, :start_date, :end_date,
       :use_agreement_id, :request_contact_info, :require_contact_info, :tag_list,
-      :collection_ids => [], :region_ids => [],
+      collection_ids: [], :region_ids: [],
       links_attributes: [:id, :link_id, :category, :display_text, :url, :_destroy],
       attachments_attributes: [:id, :file, :category, :description, :interaction, :_destroy],
       entry_contacts_attributes: [:id, :contact_id, :primary, :_destroy],
@@ -120,5 +106,9 @@ class Manager::EntriesController < ApplicationController
     end
 
     values
+  end
+
+  def get_use_agreements
+    @use_agreements = UseAgreement.where(archived_at: nil) || []
   end
 end

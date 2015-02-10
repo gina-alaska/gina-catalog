@@ -1,3 +1,5 @@
+inherit_from: .rubocop_todo.yml
+
 AllCops:
   Exclude:
     - 'vendor/**/*'
@@ -9,21 +11,26 @@ AllCops:
     - 'bin/*'
     - 'Guardfile'
 
-Documentation:
-  Enabled: false
-
-Style/SingleLineBlockParams:
-  Enabled: false
-
+# Offense count: 58
+# Configuration parameters: EnforcedStyle, SupportedStyles.
 Style/ClassAndModuleChildren:
   Enabled: false
 
-Metrics/LineLength:
-  Max: 120
+# Offense count: 176
+Style/Documentation:
+  Enabled: false
 
-Metrics/MethodLength:
-  CountComments: false  # count full line comments?
-  Max: 20
+# Offense count: 1
+Style/Lambda:
+  Enabled: false
 
-Metrics/AbcSize:
-  Max: 20
+# # Offense count: 1
+# # Configuration parameters: NamePrefix, NamePrefixBlacklist.
+# Style/PredicateName:
+#   Enabled: false
+
+
+# Offense count: 2
+# Configuration parameters: Methods.
+Style/SingleLineBlockParams:
+  Enabled: false

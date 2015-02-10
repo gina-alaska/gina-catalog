@@ -28,6 +28,9 @@ class Manager::PortalsController < ApplicationController
   protected
 
   def portal_params
-    params.require(:portal).permit(:title, :acronym, :description, :by_line, :contact_email, :analytics_account, social_networks_attributes: [:id, :url, :social_network_config_id], favicon_attributes: [:id, :image, :_destroy])
+    params.require(:portal).permit(:title, :acronym, :description, :by_line,
+                                   :contact_email, :analytics_account,
+                                   social_networks_attributes: [:id, :url, :social_network_config_id],
+                                   favicon_attributes: [:id, :image, :_destroy])
   end
 end

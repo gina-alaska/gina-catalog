@@ -11,10 +11,9 @@ class Contact < ActiveRecord::Base
   has_many :entries, through: :entry_contacts
 
   def name_email_or_title?
-    if name.blank? && email.blank? && job_title.blank?
-      errors.add(:name, 'must have either a name, email, or job title!')
-      errors.add(:email, 'must have either a name, email, or job title!')
-      errors.add(:job_title, 'must have either a name, email, or job title!')
-    end
+    return if name.present? || email.present? || job_title.present?
+    errors.add(:name, 'must have either a name, email, or job title!')
+    errors.add(:email, 'must have either a name, email, or job title!')
+    errors.add(:job_title, 'must have either a name, email, or job title!')
   end
 end

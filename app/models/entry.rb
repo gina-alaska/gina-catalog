@@ -53,8 +53,10 @@ class Entry < ActiveRecord::Base
   accepts_nested_attributes_for :entry_collections, allow_destroy: true
   accepts_nested_attributes_for :entry_contacts, allow_destroy: true
   accepts_nested_attributes_for :entry_organizations, allow_destroy: true
-  accepts_nested_attributes_for :attachments, allow_destroy: true, reject_if: proc { |attachment| attachment['file'].blank? }
-  accepts_nested_attributes_for :links, allow_destroy: true, reject_if: proc { |link| link['url'].blank? }
+  accepts_nested_attributes_for :attachments, allow_destroy: true,
+                                              reject_if: proc { |attachment| attachment['file'].blank? }
+  accepts_nested_attributes_for :links, allow_destroy: true,
+                                        reject_if: proc { |link| link['url'].blank? }
 
   after_create :set_owner_portal
 

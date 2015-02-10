@@ -8,20 +8,6 @@ module GinaAuthentication
 
     protected
 
-    def login_required!
-      unless signed_in?
-        flash[:warning] = 'You must be logged in to view this page'
-        redirect_to '/'
-      end
-    end
-
-    def membership_required!
-      unless signed_in? && current_user.member?
-        flash[:warning] = 'You do not have permission to view this page'
-        redirect_to '/'
-      end
-    end
-
     def current_user
       @current_user ||= User.find_by_id(session[:user_id])
 

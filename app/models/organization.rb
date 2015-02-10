@@ -1,5 +1,6 @@
 class Organization < ActiveRecord::Base
   include EntryDependentConcerns
+  searchkick
 
   CATEGORIES = [
     'Academic',
@@ -30,7 +31,8 @@ class Organization < ActiveRecord::Base
   validates :logo_name, length: { maximum: 255 }
   validates :url, length: { maximum: 255 }
 
-  validates_inclusion_of :category, in: CATEGORIES, message: " please select one of following: #{Organization::CATEGORIES.join(', ')}"
+  validates_inclusion_of :category, in: CATEGORIES,
+                                    message: " please select one of following: #{Organization::CATEGORIES.join(', ')}"
 
   accepts_nested_attributes_for :aliases, reject_if: ->(a) { a[:text].blank? }, allow_destroy: true
 

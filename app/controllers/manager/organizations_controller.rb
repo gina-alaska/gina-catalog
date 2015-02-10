@@ -17,10 +17,11 @@ class Manager::OrganizationsController < ManagerController
   # end
 
   def search
-    query = params[:query].split(/\s+/)
-    @q = Organization.search(name_or_acronym_or_category_cont_any: query)
-    @organizations = @q.result(distinct: true)
-
+    # Ransack method
+    #    query = params[:query].split(/\s+/)
+    #    @q = Organization.search(name_or_acronym_or_category_cont_any: query)
+    #    @organizations = @q.result(distinct: true)
+    @organizations = Organization.search(params[:query])
     render json: @organizations
   end
 
@@ -77,6 +78,8 @@ class Manager::OrganizationsController < ManagerController
   protected
 
   def organization_params
-    params.require(:organization).permit(:name, :acronym, :description, :category, :url, :active, :logo, aliases_attributes: [:id, :text, :_destroy])
+    params.require(:organization).permit(
+      :name, :acronym, :description, :category, :url, :active, :logo,
+      aliases_attributes: [:id, :text, :_destroy])
   end
 end

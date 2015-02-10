@@ -89,7 +89,7 @@
           = f.fields_for :links, wrapper: false
 
     #sds.tab-pane
-      = render "sds_fields", f: f
+      = render partial: "sds_fields", locals: { f: f, use_agreements: @use_agreements }
 
   .form-action
     = link_to :back, class: 'btn btn-default' do

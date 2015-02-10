@@ -1,8 +1,8 @@
 = bootstrap_form_for [:manager, @invitation], layout: :horizontal do |f|
   = f.alert_message "Please fix the errors below."
 
-  = f.text_field :name
-  = f.email_field :email
+  = f.text_field :name, wrapper_class: 'required'
+  = f.email_field :email, wrapper_class: 'required'
   = f.text_area :message
   
   = f.fields_for :permission do |pf|

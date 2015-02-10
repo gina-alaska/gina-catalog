@@ -20,6 +20,10 @@ class ActiveSupport::TestCase
     user = users(user_id)
     session[:user_id] = user.id
   end
+
+  def logger
+    Rails.logger
+  end
 end
 
 class ActionDispatch::IntegrationTest
@@ -27,5 +31,5 @@ class ActionDispatch::IntegrationTest
   include Capybara::DSL
 end
 
-ActionController::Base.asset_host = 'http://catalog.192.168.222.225.xip.io'
+# ActionController::Base.asset_host = 'http://catalog.192.168.222.225.xip.io'
 Searchkick.disable_callbacks
