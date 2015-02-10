@@ -2,23 +2,29 @@ class Manager::ContactsController < ManagerController
   load_and_authorize_resource
 
   def index
-    @q = Contact.search(params[:q])
+    @q = Contact.ransack(params[:q])
     @q.sorts = 'name asc' if @q.sorts.empty?
     @contacts = @q.result(distinct: true)
     @contacts = @contacts.used_by_portal(current_portal) unless params[:all].present?
-      
+
     respond_to do |format|
       format.html
-      format.json { render json: @contacts}
+      format.json { render json: @contacts }
     end
   end
 
   def search
-    query = params[:query].split(/\s+/)
-    @q = Contact.search(name_or_email_or_job_title_cont_any: query)
-    @contacts = @q.result(distinct: true)
-    
-    render json: @contacts
+    # Ransack method
+    #   query = params[:query].split(/\s+/)
+    #   @q = Contact.search(name_or_email_or_job_title_cont_any: query)
+    #   @contacts = @q.result(distinct: true)
+
+    @contacts = Contact.search(params[:query])
+    # render json: @contacts
+
+    respond_to do |format|
+      format.json
+    end
   end
 
   def new

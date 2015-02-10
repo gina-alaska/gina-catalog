@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  namespace :api do
+    get 'contacts/index'
+  end
+
   get '/logout', to: 'sessions#destroy'
   get '/login', to: 'sessions#new'
   get '/auth/:provider/disable', to: 'users#disable_provider'
@@ -72,6 +76,7 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     resources :organizations
+    resources :contacts
   end
 
   # The priority is based upon order of creation: first created -> highest priority.
