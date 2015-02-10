@@ -22,7 +22,11 @@ class Manager::OrganizationsController < ManagerController
     #    @q = Organization.search(name_or_acronym_or_category_cont_any: query)
     #    @organizations = @q.result(distinct: true)
     @organizations = Organization.search(params[:query])
-    render json: @organizations
+    # render json: @organizations
+
+    respond_to do |format|
+      format.json
+    end
   end
 
   def new

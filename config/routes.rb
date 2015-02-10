@@ -59,7 +59,7 @@ Rails.application.routes.draw do
 
     resources :organizations do
       collection do
-        get :search
+        get :search, defaults: { format: :json }
       end
     end
 
@@ -68,6 +68,10 @@ Rails.application.routes.draw do
 
   resources :entries do
     resources :attachments
+  end
+
+  namespace :api, defaults: { format: :json } do
+    resources :organizations
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

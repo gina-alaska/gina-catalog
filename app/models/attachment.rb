@@ -20,8 +20,8 @@ class Attachment < ActiveRecord::Base
   after_save :create_bbox
 
   validates :description, length: { maximum: 255 }
-  validates :file_uid, presence: true
-  validates :uuid, presence: true
+  # validates :file_uid, presence: true
+  # validates :uuid, presence: true
 
   def create_uuid
     return unless uuid.nil?
