@@ -35,6 +35,7 @@ class Attachment < ActiveRecord::Base
   end
 
   def create_bbox
+    return unless category == 'Geojson'
     build_bbox.from_geojson(file.data).save
   end
 end

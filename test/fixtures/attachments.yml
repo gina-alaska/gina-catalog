@@ -17,3 +17,39 @@ two:
   category: MyString
   uuid: MyString
   description: MyString
+
+thumbnail:
+  entry_id: one
+  file_uid: MyString
+  file_size: 1
+  file_name: MyString
+  category: "Thumbnail"
+  uuid: MyString
+  description: MyString
+
+geojson:
+  entry_id: one
+  file_uid: MyString
+  file_size: 1
+  file_name: MyString
+  category: "Geojson"
+  uuid: MyString
+  description: MyString
+
+public_download:
+  entry_id: one
+  file_uid: MyString
+  file_size: 1
+  file_name: MyString
+  category: "Public Download"
+  uuid: MyString
+  description: MyString
+
+private_download:
+  entry_id: one
+  file_uid: MyString
+  file_size: 1
+  file_name: MyString
+  category: "Private Download"
+  uuid: MyString
+  description: MyString
