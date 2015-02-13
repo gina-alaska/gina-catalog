@@ -25,6 +25,10 @@ module GinaAuthentication
       session[:user_id] = user.id
     end
 
+    def save_referrer_location
+      session[:redirect_back_to] = request.referer if session[:redirect_back_to].nil?
+    end
+    
     def redirect_back_or_default(default_url)
       if session[:redirect_back_to]
         redirect_to session.delete(:redirect_back_to)
