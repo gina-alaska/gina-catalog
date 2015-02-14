@@ -16,7 +16,7 @@ class Attachment < ActiveRecord::Base
   scope :private_download, -> { where(category: 'Private Download') }
   scope :public_download, -> { where(category: 'Public Download') }
 
-  before_validation :create_uuid
+  before_save :create_uuid
   after_save :create_bbox
 
   validates :description, length: { maximum: 255 }
