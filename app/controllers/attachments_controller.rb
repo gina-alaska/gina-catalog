@@ -6,4 +6,7 @@ class AttachmentsController < ApplicationController
       format.geojson { send_data @attachment.file.data }
     end
   end
+
+  def map
+  end
 end

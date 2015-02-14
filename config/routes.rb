@@ -70,6 +70,12 @@ Rails.application.routes.draw do
     resources :attachments
   end
 
+  resources :attachments do
+    member do
+      get :map
+    end
+  end
+  
   namespace :api, defaults: { format: :json }, only: [:index, :show] do
     resources :organizations
     resources :contacts
