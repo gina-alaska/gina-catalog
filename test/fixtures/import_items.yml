@@ -1,0 +1,12 @@
+# Read about fixtures at
+# http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  import_id: 1
+  importable_id: 1
+  importable_type: MyString
+
+two:
+  import_id: 1
+  importable_id: 1
+  importable_type: MyString
