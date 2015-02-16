@@ -16,11 +16,11 @@ class Entry < ActiveRecord::Base
   has_many :links, dependent: :destroy
 
   has_many :entry_organizations
-  has_many :organizations, through: :entry_organizations
+  has_many :organizations, -> { uniq }, through: :entry_organizations
   has_many :primary_entry_organizations, -> { primary }, class_name: 'EntryOrganization'
-  has_many :primary_organizations, through: :primary_entry_organizations, source: :organization
+  has_many :primary_organizations, -> { uniq }, through: :primary_entry_organizations, source: :organization
   has_many :funding_entry_organizations, -> { funding }, class_name: 'EntryOrganization'
-  has_many :funding_organizations, through: :funding_entry_organizations, source: :organization
+  has_many :funding_organizations, -> { uniq }, through: :funding_entry_organizations, source: :organization
 
   has_many :entry_aliases
 
