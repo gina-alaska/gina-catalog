@@ -6,18 +6,18 @@
           .form-group
             .input-group
               = f.search_field :name_or_acronym_or_category_cont, class: 'form-control', placeholder: 'Search by name, acronym or category'
-            
+
               %span.input-group-btn
                 = f.submit class: 'btn btn-primary'
-          
+
           .form-group
             %label
               = check_box_tag :all, 'on', params[:all].present?
               Show all organizations
             %span.help-block
               %p
-                %strong Note: 
-                By default, only organizations that are currently assigned to a catalog record or are less than a week old are shown. 
+                %strong Note:
+                By default, only organizations that are currently assigned to a catalog record or are less than a week old are shown.
               %p
                 To see all available organizations check the "Show all organizations" box before searching.
       .panel-footer
@@ -27,10 +27,13 @@
   .col-sm-8
     .panel.panel-default
       .panel-heading{ style: 'position: relative' }
+        .pull-right
+          = page_entries_info @organizations
         %ol.breadcrumb
           %li.active
             %i.fa.fa-university
-            Organizations   
+            Organizations
+
       %table.table.table-striped.table-condensed
         %thead
           %tr
@@ -41,3 +44,6 @@
             %th.text-right Actions
         %tbody
           = render(partial: "organization_row", collection: @organizations, as: :organization) || "<tr><td colspan=\"4\">There are no organizations available</td></tr>".html_safe
+    .text-center
+      %div= paginate @organizations
+      = page_entries_info @organizations

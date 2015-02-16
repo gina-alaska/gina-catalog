@@ -1,6 +1,6 @@
 class Organization < ActiveRecord::Base
   include EntryDependentConcerns
-  searchkick
+  searchkick word_start: [:name, :acronym]
 
   CATEGORIES = [
     'Academic',

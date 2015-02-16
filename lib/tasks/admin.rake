@@ -42,18 +42,46 @@ namespace :admin do
       end
     end
 
+    def get_catalog_records(page)
+      JSON.load(open("http://glynx2-api.127.0.0.1.xip.io/catalogs.json?page=#{page}"))
+    end
+
+    def import_record(portal, json)
+      import = ImportItem.where(import_id: json['id']).first_or_initialize
+      import.importable ||= Entry.new do |e|
+        %w{ title description start_date end_date status }.each do |field|
+          e.send("#{field}=", json[field])
+        end
+        e.entry_type = EntryType.where('name ilike ?', json['type'] ).first
+        e.portals << portal unless e.portals.include?(portal)
+      end
+
+      if json['primary_agency'].present?
+        org = Organization.where(name: json['primary_agency']['name']).first
+        import.importable.primary_organizations << org unless org.nil? or import.importable.primary_organizations.include?(org)
+      end
+
+      if json['funding_agency'].present?
+        org = Organization.where(name: json['funding_agency']['name']).first
+        import.importable.funding_organizations << org unless org.nil? or import.importable.primary_organizations.include?(org)
+      end
+
+      json['agencies'].each do |agency_json|
+        org = Organization.where(name: json['name']).first
+        import.importable.organizations << org unless org.nil? or import.importable.organizations.include?(org)
+      end
+
+      import.save
+    end
+
     task :entries => :environment do
       require 'open-uri'
-      catalogs = JSON.load(open('http://glynx2-api.127.0.0.1.xip.io/catalogs.json'))
-      catalogs.each do |catalog_json|
-        entry = Entry.includes(:import).where(import_items: { import_id: catalog_json['id'] }).first_or_create do |e|
-          %w{ title description start_date end_date status }.each do |field|
-            e.send("#{field}=", catalog_json[field])
-          end
-          e.entry_type = EntryType.where('name ilike ?', catalog_json['type'] ).first
-          e.portals << Portal.first
-        end
-        puts entry.errors.full_messages
+      portal = Portal.first
+      page = 1
+      while ( catalogs = get_catalog_records(page) )
+        puts "Processing page #{page} - #{catalogs.count}"
+        page += 1
+        catalogs.each { |json| import_record(portal, json) }
       end
     end
   end
