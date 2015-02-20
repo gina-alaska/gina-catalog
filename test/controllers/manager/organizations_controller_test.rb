@@ -30,14 +30,14 @@ class Manager::OrganizationsControllerTest < ActionController::TestCase
     assert_response :success
     assert_not_nil assigns(:organization)
   end
-
-  test 'should post create' do
+  
+  test 'should get create' do
     assert_difference('Organization.count') do
       post :create, organization: @organization.attributes
       assert assigns(:organization).errors.empty?, assigns(:organization).errors.full_messages
     end
 
-    assert_redirected_to manager_organization_path(assigns(:organization))
+    assert_redirected_to manager_organizations_path
   end
 
   test 'should patch update' do
