@@ -3,7 +3,7 @@ class Api::ContactsController < ApplicationController
     @contacts = Contact.search(
       search_params,
       fields: [
-        { "name^2" => :word_start },
+        { 'name^2' => :word_start },
         { email: :word_start },
         { job_title: :word_start }
       ]
