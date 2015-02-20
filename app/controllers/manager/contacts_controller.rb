@@ -62,7 +62,7 @@ class Manager::ContactsController < ManagerController
 
   def destroy
     save_referrer_location
-    
+
     respond_to do |format|
       if @contact.destroy
         flash[:success] = "Contact #{@contact.name} was successfully deleted."

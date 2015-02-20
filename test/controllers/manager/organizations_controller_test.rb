@@ -30,7 +30,7 @@ class Manager::OrganizationsControllerTest < ActionController::TestCase
     assert_response :success
     assert_not_nil assigns(:organization)
   end
-  
+
   test 'should get create' do
     assert_difference('Organization.count') do
       post :create, organization: @organization.attributes

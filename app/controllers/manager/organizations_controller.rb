@@ -68,7 +68,7 @@ class Manager::OrganizationsController < ManagerController
 
   def destroy
     save_referrer_location
-    
+
     respond_to do |format|
       if @organization.destroy
         flash[:success] = "Organization #{@organization.name} was successfully deleted."
