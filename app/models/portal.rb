@@ -9,7 +9,7 @@ class Portal < ActiveRecord::Base
   has_many :use_agreements
   has_many :permissions
   has_many :invitations
-  
+
   has_many :users, through: :permissions
   has_many :activity_logs, as: :loggable
   has_many :social_networks, -> { joins(:social_network_config).order('social_network_configs.name ASC') }

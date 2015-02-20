@@ -13,7 +13,7 @@ class UseAgreement < ActiveRecord::Base
   scope :used_by_portal, ->(portal) {
     where(portal: portal)
   }
-  
+
   def deletable?
     entries.empty?
   end

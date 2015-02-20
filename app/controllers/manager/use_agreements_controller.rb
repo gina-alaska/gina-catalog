@@ -26,7 +26,7 @@ class Manager::UseAgreementsController < ApplicationController
   def create
     @use_agreement = UseAgreement.new(use_agreement_params)
     current_portal.use_agreements << @use_agreement
-    
+
     respond_to do |format|
       if @use_agreement.save
         flash[:success] = "Use agreement #{@use_agreement.title} was successfully created."
@@ -36,7 +36,6 @@ class Manager::UseAgreementsController < ApplicationController
         format.json { render json: @use_agreement.errors, status: :unprocessable_entity }
       end
     end
-
   end
 
   def update
