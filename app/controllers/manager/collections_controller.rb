@@ -4,7 +4,7 @@ class Manager::CollectionsController < ApplicationController
   def index
     @q = Collection.ransack(params[:q])
     @q.sorts = 'name asc' if @q.sorts.empty?
-    @collections = @q.result(distinct: true)
+    @collections = @q.result(distinct: true).page(params[:page])
     @collections = @collections.used_by_portal(current_portal) unless params[:all].present?
 
     respond_to do |format|
