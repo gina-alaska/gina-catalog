@@ -33,7 +33,7 @@ namespace :admin do
       require 'open-uri'
       agencies = JSON.load(open('http://glynx2-api.127.0.0.1.xip.io/agencies.json'))
       agencies.each do |agency_json|
-        org = Organization.where(name: agency_json['name']).first_or_create do |o|
+        Organization.where(name: agency_json['name']).first_or_create do |o|
           %w(acronym category description url).each do |field|
             o.send("#{field}=", agency_json[field])
           end
@@ -42,8 +42,33 @@ namespace :admin do
       end
     end
 
-    def get_catalog_records(page)
+    def fetch_catalog_records(page)
       JSON.load(open("http://glynx2-api.127.0.0.1.xip.io/catalogs.json?page=#{page}"))
+    end
+
+    def entry_type(name)
+      EntryType.where('name ilike :name', name: name).first
+    end
+
+    def add_primary_org(record, agency)
+      return if agency.nil?
+
+      org = Organization.where(name: agency['name']).first
+      record.primary_organizations << org unless org.nil? || record.primary_organizations.include?(org)
+    end
+
+    def add_funding_org(record, agency)
+      return if agency.nil?
+
+      org = Organization.where(name: agency['name']).first
+      record.funding_organizations << org unless org.nil? || record.funding_organizations.include?(org)
+    end
+
+    def add_other_orgs(record, agencies)
+      agencies.each do |json|
+        org = Organization.where(name: json['name']).first
+        record.organizations << org unless org.nil? || record.organizations.include?(org)
+      end
     end
 
     def import_record(portal, json)
@@ -53,23 +78,12 @@ namespace :admin do
       %w(title description start_date end_date status tag_list).each do |field|
         import.importable.send("#{field}=", json[field])
       end
-      import.importable.entry_type = EntryType.where('name ilike ?', json['type']).first
+      import.importable.entry_type = entry_type(json['type'])
       import.importable.portals << portal unless import.importable.portals.include?(portal)
 
-      if json['primary_agency'].present?
-        org = Organization.where(name: json['primary_agency']['name']).first
-        import.importable.primary_organizations << org unless org.nil? || import.importable.primary_organizations.include?(org)
-      end
-
-      if json['funding_agency'].present?
-        org = Organization.where(name: json['funding_agency']['name']).first
-        import.importable.funding_organizations << org unless org.nil? || import.importable.primary_organizations.include?(org)
-      end
-
-      json['agencies'].each do |_agency_json|
-        org = Organization.where(name: json['name']).first
-        import.importable.organizations << org unless org.nil? || import.importable.organizations.include?(org)
-      end
+      add_primary_org(import.importable, json['primary_agency'])
+      add_funding_org(import.importable, json['funding_agency'])
+      add_other_orgs(import.importable, json['agencies'])
 
       import.save
       import.importable.save
