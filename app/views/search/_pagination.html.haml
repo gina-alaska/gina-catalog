@@ -1,5 +1,4 @@
 - if entries.total_count > 1
-  %section.paginator
-    .pull-right
-      = page_entries_info entries
+  %section.paginator.text-center
     = paginate entries
+    %div= page_entries_info entries

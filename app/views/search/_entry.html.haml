@@ -1,13 +1,13 @@
 - cache entry do
-  %h4.media-heading
+  %h4
     = link_to entry.title, entry
-  %p
+  .entry-body
     - if entry.primary_organizations.any?
       %em
         = entry.primary_organizations.map(&:name_with_acronym).join(', ')
         \-
     #{truncate entry.description, length: 200, separator: ' '}
-  %p
+  .entry-details
     .detail-block
       %label Status:
       = entry.status

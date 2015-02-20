@@ -4,7 +4,7 @@ class Manager::OrganizationsController < ManagerController
   def index
     @q = Organization.ransack(params[:q])
     @q.sorts = 'name asc' if @q.sorts.empty?
-    @organizations = @q.result(distinct: true)
+    @organizations = @q.result(distinct: true).page(params[:page])
     @organizations = @organizations.used_by_portal(current_portal) unless params[:all].present?
 
     respond_to do |format|
@@ -30,11 +30,11 @@ class Manager::OrganizationsController < ManagerController
   end
 
   def new
-    @organization = Organization.new
     @organization.aliases.build
   end
 
   def edit
+    @organization.aliases.build
   end
 
   def create
