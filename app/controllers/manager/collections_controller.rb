@@ -2,7 +2,10 @@ class Manager::CollectionsController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @collections = Collection.all
+    @q = Collection.ransack(params[:q])
+    @q.sorts = 'name asc' if @q.sorts.empty?
+    @collections = @q.result(distinct: true)
+    @collections = @collections.used_by_portal(current_portal) unless params[:all].present?
 
     respond_to do |format|
       format.html

@@ -30,7 +30,6 @@ class Manager::OrganizationsController < ManagerController
   end
 
   def new
-    @organization = Organization.new
     @organization.aliases.build
   end
 
