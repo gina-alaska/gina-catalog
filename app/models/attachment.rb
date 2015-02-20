@@ -9,7 +9,7 @@ class Attachment < ActiveRecord::Base
   dragonfly_accessor :file
 
   belongs_to :entry, touch: true
-  has_one :bbox, class_name: 'Bound', as: :boundable
+  has_one :bbox, class_name: 'Bound', as: :boundable, dependent: :destroy
 
   scope :thumbnail, -> { where(category: 'Thumbnail') }
   scope :geojson, -> { where(category: 'Geojson') }

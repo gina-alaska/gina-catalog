@@ -1,4 +1,4 @@
-.media-actions.text-right
+.entry-actions.text-right
   - unless entry.bboxes.empty?
     %button.btn.btn-default{ data: { behavior: 'highlight-markers', target: ".#{dom_id(entry, 'marker')}", zoomTo: entry.bbox.to_s } }
       %i.fa.fa-map-marker
