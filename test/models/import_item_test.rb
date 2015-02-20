@@ -1,7 +1,6 @@
-require "test_helper"
+require 'test_helper'
 
 class ImportItemTest < ActiveSupport::TestCase
-
   def import_item
     @import_item ||= ImportItem.new
   end
@@ -9,5 +8,4 @@ class ImportItemTest < ActiveSupport::TestCase
   def test_valid
     assert import_item.valid?
   end
-
 end

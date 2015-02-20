@@ -1,5 +1,5 @@
 class Manager::EntriesController < ApplicationController
-  before_action :get_use_agreements, only: [:new, :create, :edit, :update]
+  before_action :gather_use_agreements, only: [:new, :create, :edit, :update]
   load_and_authorize_resource
 
   include EntriesControllerSearchConcerns
@@ -103,7 +103,7 @@ class Manager::EntriesController < ApplicationController
     values
   end
 
-  def get_use_agreements
+  def gather_use_agreements
     @use_agreements = UseAgreement.where(archived_at: nil) || []
   end
 end

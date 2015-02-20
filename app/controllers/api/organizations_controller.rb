@@ -3,7 +3,7 @@ class Api::OrganizationsController < ApplicationController
     @organizations = Organization.search(
       search_params,
       fields: [
-        { "name^2" => :word_start },
+        { 'name^2' => :word_start },
         { acronym: :word_start }
       ]
     )

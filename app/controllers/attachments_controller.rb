@@ -1,6 +1,6 @@
 class AttachmentsController < ApplicationController
   def show
-    response.headers["Access-Control-Allow-Origin"] = '*'
+    response.headers['Access-Control-Allow-Origin'] = '*'
 
     @attachment = Attachment.where(uuid: params[:id]).first
 
