@@ -10,6 +10,10 @@ class UseAgreement < ActiveRecord::Base
 
   before_destroy :deletable?
 
+  scope :used_by_portal, ->(portal) {
+    where(portal: portal)
+  }
+  
   def deletable?
     entries.empty?
   end
