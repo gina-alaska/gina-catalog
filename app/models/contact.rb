@@ -14,7 +14,8 @@ class Contact < ActiveRecord::Base
   has_many :entry_portals, through: :entries
 
   scope :used_by_portal, ->(portal) {
-    includes(:entry_portals).references(:entry_portals).where("portal_id = :portal_id or contacts.created_at >= :start_date", portal_id: portal.id, start_date: 1.week.ago)
+    query = 'entry_portals.portal_id = :portal_id or contacts.created_at >= :start_date'
+    includes(:entry_portals).references(:entry_portals).where(query, portal_id: portal.id, start_date: 1.week.ago)
   }
 
   def name_email_or_title?
