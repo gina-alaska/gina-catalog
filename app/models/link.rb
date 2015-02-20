@@ -4,7 +4,7 @@ class Link < ActiveRecord::Base
     'Layer', 'Metadata', 'PDF', 'Map Service'
   ]
 
-  belongs_to :entry
+  belongs_to :entry, touch: true
 
   validates_length_of :display_text, maximum: 255
   validates_length_of :url, in: 11..255, message: 'is not a valid url'
