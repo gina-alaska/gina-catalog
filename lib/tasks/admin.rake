@@ -48,13 +48,13 @@ namespace :admin do
 
     def import_record(portal, json)
       import = ImportItem.where(import_id: json['id']).first_or_initialize
-      import.importable ||= Entry.new do |e|
-        %w{ title description start_date end_date status }.each do |field|
-          e.send("#{field}=", json[field])
-        end
-        e.entry_type = EntryType.where('name ilike ?', json['type'] ).first
-        e.portals << portal unless e.portals.include?(portal)
+      import.importable ||= Entry.new
+
+      %w{ title description start_date end_date status tag_list }.each do |field|
+        import.importable.send("#{field}=", json[field])
       end
+      import.importable.entry_type = EntryType.where('name ilike ?', json['type'] ).first
+      import.importable.portals << portal unless import.importable.portals.include?(portal)
 
       if json['primary_agency'].present?
         org = Organization.where(name: json['primary_agency']['name']).first
@@ -72,6 +72,7 @@ namespace :admin do
       end
 
       import.save
+      import.importable.save
     end
 
     task :entries => :environment do
