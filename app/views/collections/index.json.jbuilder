@@ -1,4 +1,3 @@
 json.array! @collections do |collection|
-  json.id collection.id
-  json.name collection.name
+  json.extract! collection, :id, :name
 end

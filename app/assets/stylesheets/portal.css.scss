@@ -33,12 +33,12 @@
 .expand {
   max-height: 80px;
   overflow: hidden;
-  -webkit-transition: max-height 1s linear;
-	-moz-transition: max-height 1s linear;
-  transition: max-height 1s linear;
+  -webkit-transition: max-height 0.2s linear;
+	-moz-transition: max-height 0.2s linear;
+  transition: max-height 0.2s linear;
 
   &.in {
-    max-height: 1500px;
+    max-height: 500px;
     overflow: auto;
   }
 }

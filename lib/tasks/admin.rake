@@ -26,4 +26,64 @@ namespace :admin do
       puts 'There was an error trying to set the user as a global admin'
     end
   end
+
+  namespace :load do
+    desc 'Load agencies from api'
+    task agencies: :environment do
+      require 'open-uri'
+      agencies = JSON.load(open('http://glynx2-api.127.0.0.1.xip.io/agencies.json'))
+      agencies.each do |agency_json|
+        org = Organization.where(name: agency_json['name']).first_or_create do |o|
+          %w(acronym category description url).each do |field|
+            o.send("#{field}=", agency_json[field])
+          end
+          o.logo_url = agency_json['logo_url']
+        end
+      end
+    end
+
+    def get_catalog_records(page)
+      JSON.load(open("http://glynx2-api.127.0.0.1.xip.io/catalogs.json?page=#{page}"))
+    end
+
+    def import_record(portal, json)
+      import = ImportItem.where(import_id: json['id']).first_or_initialize
+      import.importable ||= Entry.new
+
+      %w(title description start_date end_date status tag_list).each do |field|
+        import.importable.send("#{field}=", json[field])
+      end
+      import.importable.entry_type = EntryType.where('name ilike ?', json['type']).first
+      import.importable.portals << portal unless import.importable.portals.include?(portal)
+
+      if json['primary_agency'].present?
+        org = Organization.where(name: json['primary_agency']['name']).first
+        import.importable.primary_organizations << org unless org.nil? || import.importable.primary_organizations.include?(org)
+      end
+
+      if json['funding_agency'].present?
+        org = Organization.where(name: json['funding_agency']['name']).first
+        import.importable.funding_organizations << org unless org.nil? || import.importable.primary_organizations.include?(org)
+      end
+
+      json['agencies'].each do |_agency_json|
+        org = Organization.where(name: json['name']).first
+        import.importable.organizations << org unless org.nil? || import.importable.organizations.include?(org)
+      end
+
+      import.save
+      import.importable.save
+    end
+
+    task entries: :environment do
+      require 'open-uri'
+      portal = Portal.first
+      page = 1
+      while (catalogs = get_catalog_records(page))
+        puts "Processing page #{page} - #{catalogs.count}"
+        page += 1
+        catalogs.each { |json| import_record(portal, json) }
+      end
+    end
+  end
 end

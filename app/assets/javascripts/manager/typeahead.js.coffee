@@ -10,11 +10,10 @@ class @TypeAheadField
   #   limit: 10
   # }
   constructor: (@el, @opts = {}) ->
-    return false unless $(@el).length > 0
-    
-    
-    @url = $(el).data('query')
-    @name = $(el).data('name')
+    return false if $(@el).length == 0
+
+    @url = $(@el).data('query')
+    @name = $(@el).data('name')
 
     default_tokenizer = (d) ->
       Bloodhound.tokenizers.whitespace(d[@display_field])

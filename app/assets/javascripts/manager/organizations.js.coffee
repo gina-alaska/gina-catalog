@@ -5,16 +5,18 @@
 $(document).on 'ready page:load',  ->
   organizationstypehead = new TypeAheadField('[data-behavior="typeahead"][data-name="organizations"]', {
     display_key: (d) ->
+      console.log "#{d.name} (#{d.acronym})"
       "#{d.name} (#{d.acronym})"
   })
+
   organizationstypehead.on 'typeahead:selected', (e, suggestion, dataset) ->
     target = this
     $(target).data('suggestion', suggestion)
     $('#add-selected-organization').removeClass('disabled')
     $('#add-selected-organization').removeClass('btn-info')
     $('#add-selected-organization').addClass('btn-success')
-    
-  organizationstypehead.on 'keyup', -> 
+
+  organizationstypehead.on 'keyup', ->
     if $(this).val() == ""
       target = this
       $(target).data('suggestion', "")
@@ -26,7 +28,7 @@ $(document).on 'nested:fieldAdded:entry_organizations', (e) ->
   suggestion = $('#organization_search').data('suggestion')
   return unless suggestion?
 
-  e.field.parents('form').data('dirty', true)  
+  e.field.parents('form').data('dirty', true)
   e.field.find('.organization_id').val(suggestion.id)
   e.field.find('.organization_name').html(suggestion.name)
   $('#organization_search').val('')

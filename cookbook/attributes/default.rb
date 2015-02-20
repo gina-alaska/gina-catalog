@@ -90,6 +90,7 @@ default['java']['jdk_version'] = '7'
 default['elasticsearch']['cluster']['name'] = 'elasticsearch_glynx'
 
 default['glynx']['package_deps'] = %w(
+  patch
   libicu-devel
   curl-devel
   libxml2-devel

@@ -10,8 +10,8 @@ module EntriesControllerSearchConcerns
       collections: organize_facets(@entries.facets['collection_ids'], Collection),
       entry_types: organize_facets(@entries.facets['entry_type_name']),
       status: organize_facets(@entries.facets['status']),
-      primary_organizations: organize_facets(@entries.facets['primary_organization_ids'], Organization),
-      funding_organizations: organize_facets(@entries.facets['funding_organization_ids'], Organization),
+      primary_organizations: organize_facets(@entries.facets['primary_organization_ids'], Organization, :id, :acronym_with_name),
+      funding_organizations: organize_facets(@entries.facets['funding_organization_ids'], Organization, :id, :acronym_with_name),
       organization_categories: organize_facets(@entries.facets['organization_categories']),
       primary_contacts: organize_facets(@entries.facets['primary_contact_ids'], Contact),
       other_contacts: organize_facets(@entries.facets['contact_ids'], Contact)

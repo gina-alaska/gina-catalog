@@ -1,0 +1,3 @@
+- entry.organizations.each do |org|
+  - next if org.logo.nil?
+  = image_tag org.logo.thumb('25x25').url

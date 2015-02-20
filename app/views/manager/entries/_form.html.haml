@@ -16,7 +16,7 @@
     #contacts.tab-pane
       .row
         .col-sm-10
-          = text_field_tag :contact_search, '', data: { name: 'contacts', target: '#add-selected-contact', behavior: 'typeahead', query: search_manager_contacts_path + '?query=%QUERY'.html_safe }, placeholder: 'Search for contact to add', class: 'form-control pull-left'
+          = text_field_tag :contact_search, '', data: { name: 'contacts', target: '#add-selected-contact', behavior: 'typeahead', query: api_contacts_path }, placeholder: 'Search for contact to add', class: 'form-control pull-left'
         .col-sm-2
           = f.link_to_add :entry_contacts, :data => { :target => "#contact_fields" }, class: "btn btn-info btn-block disabled", id: 'add-selected-contact' do
             Add selected
@@ -33,7 +33,7 @@
     #organizations.tab-pane
       .row
         .col-sm-10
-          = text_field_tag :organization_search, '', data: { name: 'organizations', target: '#add-selected-organization', behavior: 'typeahead', query: search_manager_organizations_path + '?query=%QUERY'.html_safe }, placeholder: 'Search for organization to add', class: 'form-control pull-left'
+          = text_field_tag :organization_search, '', data: { name: 'organizations', target: '#add-selected-organization', behavior: 'typeahead', query: api_organizations_path + '?query=%QUERY'.html_safe }, placeholder: 'Search for organization to add', class: 'form-control pull-left'
         .col-sm-2
           = f.link_to_add :entry_organizations, :data => { :target => "#organization_fields" }, class: "btn btn-info btn-block disabled", id: 'add-selected-organization' do
             Add selected
@@ -76,7 +76,7 @@
         .col-sm-2
           = f.link_to_add :links, :data => { :target => "#link_fields" }, class: "btn btn-info btn-block" do
             %i.fa.fa-plus
-            Attach new link
+            Add new link
       %table.table.table-striped
         %thead
           %tr
