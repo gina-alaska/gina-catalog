@@ -9,14 +9,14 @@ class Attachment < ActiveRecord::Base
   dragonfly_accessor :file
 
   belongs_to :entry, touch: true
-  has_one :bbox, class_name: 'Bound', as: :boundable
+  has_one :bbox, class_name: 'Bound', as: :boundable, dependent: :destroy
 
   scope :thumbnail, -> { where(category: 'Thumbnail') }
   scope :geojson, -> { where(category: 'Geojson') }
   scope :private_download, -> { where(category: 'Private Download') }
   scope :public_download, -> { where(category: 'Public Download') }
 
-  before_validation :create_uuid
+  before_save :create_uuid
   after_save :create_bbox
 
   validates :description, length: { maximum: 255 }

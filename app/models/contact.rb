@@ -1,6 +1,6 @@
 class Contact < ActiveRecord::Base
   include EntryDependentConcerns
-  searchkick
+  searchkick word_start: [:name, :email, :job_title]
 
   validate :name_email_or_title?
   validates :name, length: { maximum: 255 }

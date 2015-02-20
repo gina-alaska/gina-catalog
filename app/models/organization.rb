@@ -1,6 +1,6 @@
 class Organization < ActiveRecord::Base
   include EntryDependentConcerns
-  searchkick
+  searchkick word_start: [:name, :acronym]
 
   CATEGORIES = [
     'Academic',
@@ -47,5 +47,9 @@ class Organization < ActiveRecord::Base
 
   def name_with_acronym
     "#{name} (#{acronym})"
+  end
+
+  def acronym_with_name
+    "(#{acronym}) #{name}"
   end
 end

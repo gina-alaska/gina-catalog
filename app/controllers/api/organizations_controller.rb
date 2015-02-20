@@ -1,6 +1,12 @@
 class Api::OrganizationsController < ApplicationController
   def index
-    @organizations = Organization.search(search_params)
+    @organizations = Organization.search(
+      search_params,
+      fields: [
+        { "name^2" => :word_start },
+        { acronym: :word_start }
+      ]
+    )
 
     respond_to do |format|
       format.json
