@@ -42,8 +42,8 @@ namespace :admin do
       end
     end
 
-    def fetch_catalog_records(page)
-      JSON.load(open("http://glynx2-api.127.0.0.1.xip.io/catalogs.json?page=#{page}"))
+    def fetch_catalog_records(url, page)
+      JSON.load(open("http://glynx2-api.127.0.0.1.xip.io/setups/#{url}/catalogs.json?page=#{page}"))
     end
 
     def entry_type(name)
@@ -93,7 +93,8 @@ namespace :admin do
       require 'open-uri'
       portal = Portal.first
       page = 1
-      while (catalogs = get_catalog_records(page))
+      while (catalogs = fetch_catalog_records(ENV['catalog'], page))
+        break if catalogs.count == 0
         puts "Processing page #{page} - #{catalogs.count}"
         page += 1
         catalogs.each { |json| import_record(portal, json) }
