@@ -1,4 +1,4 @@
-class RegionsController < ApplicationController
+class Api::RegionsController < ApplicationController
   def index
     @regions = Region.all.order(:name)
     if params[:q].present?

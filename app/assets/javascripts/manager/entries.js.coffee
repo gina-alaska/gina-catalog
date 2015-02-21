@@ -70,7 +70,7 @@ $(document).on 'ready page:load', ->
     load: (query, callback) ->
       return callback() if query.length == 0
       $.ajax({
-        url: '/regions',
+        url: '/api/regions',
         dataType: 'json',
         data: {
           q: encodeURIComponent(query)

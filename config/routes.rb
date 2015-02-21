@@ -13,7 +13,6 @@ Rails.application.routes.draw do
   resources :sessions
   resources :memberships
   resources :users
-  resources :regions
   resources :tags
   resources :collections
 
@@ -74,6 +73,7 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: :json }, only: [:index, :show] do
     resources :organizations
     resources :contacts
+    resources :regions
   end
 
   # The priority is based upon order of creation: first created -> highest priority.
