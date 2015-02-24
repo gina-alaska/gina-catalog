@@ -59,19 +59,23 @@ module Import
     end
 
     def add_locations(record, locations)
-      tf = Tempfile.new(['locations', '.geojson'])
-      return unless locations.present?
+      return if !locations.present? or locations.to_json.blank?
 
-      tf << locations.to_json
+      begin
+        tf = Tempfile.new(['locations', '.geojson'])
 
-      attachment = record.attachments.where(description: 'gLynx locations').first_or_initialize do |a|
-        a.category = 'Geojson'
-        a.file = tf
+        tf << locations.to_json
+
+        attachment = record.attachments.where(description: 'gLynx locations').first_or_initialize do |a|
+          a.category = 'Geojson'
+          a.file = tf
+        end
+        record.attachments << attachment if attachment.new_record?
+        attachment.save
+      ensure
+        tf.close
+        tf.unlink
       end
-      record.attachments << attachment if attachment.new_record?
-    ensure
-      tf.close
-      tf.unlink
     end
   end
 end
