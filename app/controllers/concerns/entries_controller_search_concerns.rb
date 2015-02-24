@@ -96,8 +96,9 @@ module EntriesControllerSearchConcerns
       facets: FACET_FIELDS.values,
       smart_facets: true,
       page: page,
-      per_page: params[:limit] || per_page,
+      per_page: per_page,
       order: order_params,
+      include: [:bboxes],
       where: {
         portal_ids: current_portal.id,
         start_date: date_search_params(:starts_after, :starts_before),

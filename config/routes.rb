@@ -36,9 +36,7 @@ Rails.application.routes.draw do
         get :tags
         get :collections
       end
-      member do
-        resources :attachments
-      end
+      resources :attachments
     end
 
     resources :permissions
