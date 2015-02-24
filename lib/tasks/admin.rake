@@ -28,7 +28,7 @@ namespace :admin do
     end
   end
 
-  task load: ["load:organizations", "load:contacts", "load:entries"]
+  task load: ['load:organizations', 'load:contacts', 'load:entries']
 
   namespace :load do
     desc 'Load agencies from api'

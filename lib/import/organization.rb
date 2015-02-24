@@ -3,7 +3,7 @@ require 'import/base'
 module Import
   class Organization < Base
     def self.fetch
-      organizations = self.new
+      organizations = Organization.new
 
       Client.results('Agencies', Client.agencies_url) do |json|
         organizations.create(json)
