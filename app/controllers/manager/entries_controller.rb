@@ -7,7 +7,7 @@ class Manager::EntriesController < ApplicationController
   def index
     respond_to do |format|
       format.html { search(params[:page], params[:limit] || 20) }
-      format.geojson { search(1, 10000) }
+      format.geojson { search(1, 10_000) }
       format.json
     end
   end
