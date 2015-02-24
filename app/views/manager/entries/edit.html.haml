@@ -6,8 +6,10 @@
           = link_to [:manager, :entries] do
             %i.fa.fa-cubes
             Catalog Records
-        %li.active
-          Edit #{@entry.title}
-
+        %li
+          = link_to @entry do
+            #{@entry.title}            
+        %li
+          Editing 
     .panel-body.entry-form-container
       = render 'form', collection: @entry 
