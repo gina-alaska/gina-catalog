@@ -11,6 +11,7 @@
     "holderjs": "~> 2.4.0",
     "mapbox.js": "~> 2.1.5",
     "leaflet.markercluster": "latest",
-    "wicket": "https://github.com/arthur-e/Wicket.git"
+    "wicket": "https://github.com/arthur-e/Wicket.git",
+    "uri.js": "latest"
   }
 }

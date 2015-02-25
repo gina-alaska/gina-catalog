@@ -34,7 +34,7 @@ class Entry < ActiveRecord::Base
   has_many :primary_contacts, through: :primary_entry_contacts, source: :contact
 
   has_many :entry_portals
-  has_many :portals, through: :entry_portals
+  has_many :portals, -> { uniq }, through: :entry_portals
 
   has_one :owner_entry_portal, -> { where owner: true }, class_name: 'EntryPortal'
   has_one :owner_portal, through: :owner_entry_portal, source: :portal, class_name: 'Portal'

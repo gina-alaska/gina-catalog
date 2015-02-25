@@ -19,9 +19,5 @@
       - @entries.each do |entry|
         .entry{ id: dom_id(entry) }
           = render 'search/entry', entry: entry
-          .pull-left
-            = render 'search/organization_logos', entry: entry
           = render 'actions', entry: entry
-          .entry-type{ style: "background: #{entry.entry_type.color}"}
-            = entry.entry_type
     = render 'search/pagination', entries: @entries

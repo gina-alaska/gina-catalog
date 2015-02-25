@@ -3,10 +3,10 @@
 
 one:
   import_id: 1
-  importable_id: 1
-  importable_type: MyString
+  importable_id: one
+  importable_type: Entry
 
 two:
-  import_id: 1
-  importable_id: 1
-  importable_type: MyString
+  import_id: 2
+  importable_id: one
+  importable_type: Contact

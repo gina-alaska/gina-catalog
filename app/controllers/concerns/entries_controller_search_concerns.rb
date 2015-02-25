@@ -15,10 +15,14 @@ module EntriesControllerSearchConcerns
       organization_categories: organize_facets(@entries.facets['organization_categories']),
       primary_contacts: organize_facets(@entries.facets['primary_contact_ids'], Contact),
       other_contacts: organize_facets(@entries.facets['contact_ids'], Contact)
-    )
+    ) if facets?
   end
 
   protected
+
+  def facets?
+    params[:format] != 'geojson'
+  end
 
   def organize_facets(elastic_facets, model = nil, term_field = :id, display_field = :name)
     return [] if elastic_facets.nil?
@@ -91,19 +95,24 @@ module EntriesControllerSearchConcerns
     }
   end
 
+  def search_facets
+    FACET_FIELDS.values.each_with_object({}) { |f, c| c[f] = { limit: 50 } }
+  end
+
   def elasticsearch_params(page, per_page = 20)
     opts = {
-      facets: FACET_FIELDS.values,
       smart_facets: true,
       page: page,
-      per_page: params[:limit] || per_page,
+      per_page: per_page,
       order: order_params,
+      include: [:bboxes],
       where: {
         portal_ids: current_portal.id,
         start_date: date_search_params(:starts_after, :starts_before),
         end_date: date_search_params(:ends_after, :ends_before)
       }
     }
+    opts[:facets] = search_facets if facets?
 
     # items that must match all selected
     [:tags, :collections, :organization_categories].each do |param|
