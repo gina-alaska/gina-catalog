@@ -4,9 +4,9 @@ class UseAgreement < ActiveRecord::Base
   belongs_to :portal
   has_many :entries
 
-  validates_presence_of :title
+  validates :title, presence: true
   validates :title, length: { maximum: 255 }
-  validates_presence_of :body
+  validates :body, presence: true
 
   before_destroy :deletable?
 
