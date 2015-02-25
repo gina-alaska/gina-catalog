@@ -9,6 +9,7 @@ module EntriesControllerSearchConcerns
       tags: organize_facets(@entries.facets['tag_list']),
       collections: organize_facets(@entries.facets['collection_ids'], Collection),
       entry_types: organize_facets(@entries.facets['entry_type_name']),
+      data_types: organize_facets(@entries.facets['data_type_name']),
       status: organize_facets(@entries.facets['status']),
       primary_organizations: organize_facets(@entries.facets['primary_organization_ids'], Organization, :id, :acronym_with_name),
       funding_organizations: organize_facets(@entries.facets['funding_organization_ids'], Organization, :id, :acronym_with_name),
@@ -40,6 +41,7 @@ module EntriesControllerSearchConcerns
     tags:                     :tag_list,
     collections:              :collection_ids,
     entry_type_name:          :entry_type_name,
+    data_type_name:           :data_type_name,
     status:                   :status,
     primary_organizations:    :primary_organization_ids,
     funding_organizations:    :funding_organization_ids,
@@ -120,7 +122,7 @@ module EntriesControllerSearchConcerns
     end
 
     # items that can match any selected
-    [:entry_type_name, :status, :primary_organizations, :funding_organizations,
+    [:entry_type_name, :data_type_name, :status, :primary_organizations, :funding_organizations,
      :primary_contacts, :other_contacts].each do |param|
       opts[:where][FACET_FIELDS[param]] = search_params[param] if search_params[param].present?
     end

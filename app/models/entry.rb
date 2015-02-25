@@ -8,6 +8,7 @@ class Entry < ActiveRecord::Base
 
   belongs_to :use_agreement
   belongs_to :entry_type
+  belongs_to :data_type
 
   has_many :attachments, dependent: :destroy
   has_many :bboxes, through: :attachments

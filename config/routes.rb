@@ -21,6 +21,7 @@ Rails.application.routes.draw do
     resources :users
     resources :portals
     resources :entry_types
+    resources :data_types
   end
 
   namespace :manager do
