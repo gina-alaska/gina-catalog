@@ -37,7 +37,7 @@ module EntriesControllerSearchConcerns
     tags:                     :tag_list,
     collections:              :collection_ids,
     entry_type_name:          :entry_type_name,
-    data_type_name:           :data_type_name,    
+    data_type_name:           :data_type_name,
     status:                   :status,
     primary_organizations:    :primary_organization_ids,
     funding_organizations:    :funding_organization_ids,

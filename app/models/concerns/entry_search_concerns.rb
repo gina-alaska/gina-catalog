@@ -4,8 +4,8 @@ module EntrySearchConcerns
   included do
     scope :search_import, -> { includes(:portals, :collections, :organizations) }
     delegate :name, to: :entry_type, prefix: true
-    delegate :name, to: :data_type, prefix: true   
- 
+    delegate :name, to: :data_type, prefix: true
+
     searchkick
     alias_method_chain :search_data, :entries
   end
