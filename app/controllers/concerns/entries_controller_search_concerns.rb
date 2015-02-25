@@ -5,20 +5,26 @@ module EntriesControllerSearchConcerns
     @search_params = search_params
     @entries = Entry.search elasticsearch_params(page, per_page)
 
-    @facets = OpenStruct.new(
-      tags: organize_facets(@entries.facets['tag_list']),
-      collections: organize_facets(@entries.facets['collection_ids'], Collection),
-      entry_types: organize_facets(@entries.facets['entry_type_name']),
-      status: organize_facets(@entries.facets['status']),
-      primary_organizations: organize_facets(@entries.facets['primary_organization_ids'], Organization, :id, :acronym_with_name),
-      funding_organizations: organize_facets(@entries.facets['funding_organization_ids'], Organization, :id, :acronym_with_name),
-      organization_categories: organize_facets(@entries.facets['organization_categories']),
-      primary_contacts: organize_facets(@entries.facets['primary_contact_ids'], Contact),
-      other_contacts: organize_facets(@entries.facets['contact_ids'], Contact)
-    )
+    if facets?
+      @facets = OpenStruct.new(
+        tags: organize_facets(@entries.facets['tag_list']),
+        collections: organize_facets(@entries.facets['collection_ids'], Collection),
+        entry_types: organize_facets(@entries.facets['entry_type_name']),
+        status: organize_facets(@entries.facets['status']),
+        primary_organizations: organize_facets(@entries.facets['primary_organization_ids'], Organization, :id, :acronym_with_name),
+        funding_organizations: organize_facets(@entries.facets['funding_organization_ids'], Organization, :id, :acronym_with_name),
+        organization_categories: organize_facets(@entries.facets['organization_categories']),
+        primary_contacts: organize_facets(@entries.facets['primary_contact_ids'], Contact),
+        other_contacts: organize_facets(@entries.facets['contact_ids'], Contact)
+      )
+    end
   end
 
   protected
+
+  def facets?
+    params[:format] != 'geojson'
+  end
 
   def organize_facets(elastic_facets, model = nil, term_field = :id, display_field = :name)
     return [] if elastic_facets.nil?
@@ -91,9 +97,12 @@ module EntriesControllerSearchConcerns
     }
   end
 
+  def search_facets
+    FACET_FIELDS.values.inject({}) { |c,f| c[f] = { limit: 50 }; c }
+  end
+
   def elasticsearch_params(page, per_page = 20)
     opts = {
-      facets: FACET_FIELDS.values,
       smart_facets: true,
       page: page,
       per_page: per_page,
@@ -105,6 +114,7 @@ module EntriesControllerSearchConcerns
         end_date: date_search_params(:ends_after, :ends_before)
       }
     }
+    opts[:facets] = search_facets if facets?
 
     # items that must match all selected
     [:tags, :collections, :organization_categories].each do |param|
