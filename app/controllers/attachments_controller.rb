@@ -4,9 +4,7 @@ class AttachmentsController < ApplicationController
 
     respond_to do |format|
       format.geojson { send_data @attachment.file.data }
+      format.js
     end
-  end
-
-  def map
   end
 end

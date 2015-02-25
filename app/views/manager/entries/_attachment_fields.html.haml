@@ -18,7 +18,7 @@
   %td.text-right
     - unless f.object.new_record?
       - if f.object.category == "Geojson"
-        = link_to map_attachment_path(f), class: 'btn btn-primary', title: 'Show Map' do
+        = link_to manager_entry_attachment_path(f.object.entry, f.object), remote: true, class: 'btn btn-primary', title: 'Show Map' do
           %i.fa.fa-image
       = link_to f.object.file.remote_url, class: 'btn btn-primary', title: 'Download File' do
         %i.fa.fa-download
