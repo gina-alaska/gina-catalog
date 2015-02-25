@@ -59,7 +59,7 @@ module Import
     end
 
     def add_locations(record, locations)
-      return if !locations.present? or locations.to_json.blank?
+      return if !locations.present? || locations.to_json.blank?
 
       begin
         tf = Tempfile.new(['locations', '.geojson'])

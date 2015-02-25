@@ -15,7 +15,7 @@ module EntriesControllerSearchConcerns
       organization_categories: organize_facets(@entries.facets['organization_categories']),
       primary_contacts: organize_facets(@entries.facets['primary_contact_ids'], Contact),
       other_contacts: organize_facets(@entries.facets['contact_ids'], Contact)
-    )
+    ) if facets?
   end
 
   protected
@@ -89,6 +89,10 @@ module EntriesControllerSearchConcerns
         # flags: 'OR|AND|PREFIX|NOT'
       }
     }
+  end
+
+  def search_facets
+    FACET_FIELDS.values.each_with_object({}) { |f, c| c[f] = { limit: 50 } }
   end
 
   def elasticsearch_params(page, per_page = 20)
