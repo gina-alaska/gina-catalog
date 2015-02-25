@@ -7,8 +7,11 @@
             .input-group
               = f.search_field :name_or_email_or_job_title_cont, class: 'form-control', placeholder: 'Search by name, email, or job title'
             
-              %span.input-group-btn
-                = f.submit class: 'btn btn-primary'
+              .input-group-btn
+                = button_tag type: 'submit', class: 'btn btn-primary' do
+                  %i.fa.fa-search
+                = link_to manager_contacts_path, class: 'btn btn-danger ' do
+                  %i.fa.fa-search-minus
           
           .form-group
             %label
@@ -27,6 +30,8 @@
   .col-sm-8
     .panel.panel-default
       .panel-heading{ style: 'position: relative' }
+        .pull-right.muted{ style: 'font-size: 1em;' }
+          = page_entries_info @contacts
         %ol.breadcrumb
           %li.active
             %i.fa.fa-group
@@ -41,4 +46,7 @@
             %th Phone
             %th.text-right Actions
         %tbody
-          = render(partial: "contact_row", collection: @contacts, as: :contact) || "<tr><td colspan=\"5\">There are no contacts available</td></tr>".html_safe
+          = render(partial: "contact_row", collection: @contacts, as: :contact) || "<tr><td colspan=\"5\">There are no contacts found!</td></tr>".html_safe
+    .text-center
+      %div= paginate @contacts
+      = page_entries_info @contacts
