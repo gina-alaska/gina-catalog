@@ -27,6 +27,8 @@
   .col-sm-8
     .panel.panel-default
       .panel-heading{ style: 'position: relative' }
+        .pull-right.muted{ style: 'font-size: 1em;' }
+          = page_entries_info @contacts
         %ol.breadcrumb
           %li.active
             %i.fa.fa-group
@@ -42,3 +44,6 @@
             %th.text-right Actions
         %tbody
           = render(partial: "contact_row", collection: @contacts, as: :contact) || "<tr><td colspan=\"5\">There are no contacts available</td></tr>".html_safe
+    .text-center
+      %div= paginate @contacts
+      = page_entries_info @contacts

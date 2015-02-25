@@ -4,7 +4,7 @@ class Manager::ContactsController < ManagerController
   def index
     @q = Contact.ransack(params[:q])
     @q.sorts = 'name asc' if @q.sorts.empty?
-    @contacts = @q.result(distinct: true)
+    @contacts = @q.result(distinct: true).page(params[:page])
     @contacts = @contacts.used_by_portal(current_portal) unless params[:all].present?
 
     respond_to do |format|
