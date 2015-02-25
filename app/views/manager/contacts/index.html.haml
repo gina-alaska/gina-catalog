@@ -41,4 +41,4 @@
             %th Phone
             %th.text-right Actions
         %tbody
-          = render(partial: "contact_row", collection: @contacts, as: :contact) || "<tr><td colspan=\"5\">There are no contacts available</td></tr>".html_safe
+          = render(partial: "contact_row", collection: @contacts, as: :contact) || "<tr><td colspan=\"5\">There are no contacts found!</td></tr>".html_safe

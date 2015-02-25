@@ -31,7 +31,7 @@
             %th Count
             %th.text-right Actions 
         %tbody
-          = render(partial: "collection_row", collection: @collections, as: :collection) || "<tr><td colspan=\"4\">There are no collections defined</td></tr>".html_safe 
+          = render(partial: "collection_row", collection: @collections, as: :collection) || "<tr><td colspan=\"4\">There are no collections found!</td></tr>".html_safe 
     .text-center
       %div= paginate @collections
       = page_entries_info @collections

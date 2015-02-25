@@ -43,7 +43,7 @@
             %th= sort_link @q, :category
             %th.text-right Actions
         %tbody
-          = render(partial: "organization_row", collection: @organizations, as: :organization) || "<tr><td colspan=\"4\">There are no organizations available</td></tr>".html_safe
+          = render(partial: "organization_row", collection: @organizations, as: :organization) || "<tr><td colspan=\"4\">There are no organizations found!</td></tr>".html_safe
     .text-center
       %div= paginate @organizations
       = page_entries_info @organizations
