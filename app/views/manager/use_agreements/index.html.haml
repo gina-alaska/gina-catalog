@@ -6,8 +6,13 @@
           .form-group
             .input-group
               = f.search_field :title_cont, class: 'form-control', placeholder: 'Search by use agreement title'
-              %span.input-group-btn
-                = f.submit class: 'btn btn-primary'
+
+              .input-group-btn
+                = button_tag type: 'submit', class: 'btn btn-primary' do
+                  %i.fa.fa-search
+                = link_to manager_use_agreements_path, class: 'btn btn-danger ' do
+                  %i.fa.fa-search-minus
+
       .panel-footer
         = link_to new_manager_use_agreement_path, class: 'btn btn-success btn-block' do
           %i.fa.fa-pencil
