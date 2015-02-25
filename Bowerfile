@@ -13,3 +13,4 @@ asset 'holderjs', '~> 2.4.0'
 asset 'mapbox.js', '~> 2.1.5'
 asset "leaflet.markercluster"
 asset 'wicket', git: 'https://github.com/arthur-e/Wicket.git'
+asset 'uri.js'
