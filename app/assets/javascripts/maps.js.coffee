@@ -57,6 +57,14 @@ class Layer
     Layer.geojson_options[name]?
 
   @get_geojson_layer: (config = {}) ->
+    if config.paged?
+      url = new URI(config.url)
+      data = url.search(true)
+      data.page = parseInt(data.page) + 1 || 1
+      data.limit = 500
+      url.search(data)
+
+      config.url = url.toString()
     featureLayer = L.mapbox.featureLayer(config.url)
 
     if @valid_geojson_options_builder(config.geojsonOptions)
@@ -91,6 +99,8 @@ class Layer
     layer = @get_geojson_layer(config)
     layer.on 'ready', =>
       layer.addTo(parent)
+      if config.paged? && layer.getLayers().length > 0
+        @build_layer(config, parent)
 
 
   @config_from_element: (el) ->
@@ -110,7 +120,7 @@ class Layer
       bounds = layer.getBounds()
       if bounds.isValid()
         map.fitBounds(layer.getBounds(), { padding: [30,30], maxZoom: max })
-        
+
 
 $(document).on 'ready page:load', ->
   mapel = $('[data-behavior="map"]')

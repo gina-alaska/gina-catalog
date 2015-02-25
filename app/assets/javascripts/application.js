@@ -25,5 +25,6 @@
 //= require leaflet.markercluster/dist/leaflet.markercluster
 //= require wicket/wicket
 //= require wicket/wicket-leaflet
+//= require uri.js/src/URI
 //= require turbolinks
 //= require_tree .

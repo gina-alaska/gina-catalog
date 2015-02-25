@@ -20,6 +20,10 @@ module EntriesControllerSearchConcerns
 
   protected
 
+  def facets?
+    params[:format] != 'geojson'
+  end
+
   def organize_facets(elastic_facets, model = nil, term_field = :id, display_field = :name)
     return [] if elastic_facets.nil?
 
@@ -97,7 +101,6 @@ module EntriesControllerSearchConcerns
 
   def elasticsearch_params(page, per_page = 20)
     opts = {
-      facets: FACET_FIELDS.values,
       smart_facets: true,
       page: page,
       per_page: per_page,
@@ -109,6 +112,7 @@ module EntriesControllerSearchConcerns
         end_date: date_search_params(:ends_after, :ends_before)
       }
     }
+    opts[:facets] = search_facets if facets?
 
     # items that must match all selected
     [:tags, :collections, :organization_categories].each do |param|
