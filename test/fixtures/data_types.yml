@@ -2,9 +2,13 @@
 # http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  name: MyString
+  name: Database
   description: MyString
 
 two:
-  name: MyString
+  name: Map
   description: MyString
+
+no_associated_entry:
+  name: 'TestType'
+  description: 'Test data type'

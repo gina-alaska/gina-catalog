@@ -3,6 +3,7 @@ require 'test_helper'
 class Admin::DataTypesControllerTest < ActionController::TestCase
   setup do
     @data_type = data_types(:one)
+    @data_type_no_assoc = data_types(:no_associated_entry)
     login_user(:admin)
   end
 
@@ -46,7 +47,7 @@ class Admin::DataTypesControllerTest < ActionController::TestCase
 
   test 'should destroy data_type' do
     assert_difference('DataType.count', -1) do
-      delete :destroy, id: @data_type.id
+      delete :destroy, id: @data_type_no_assoc.id
       assert assigns(:data_type).errors.empty?, assigns(:data_type).errors.full_messages
     end
 
