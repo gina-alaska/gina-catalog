@@ -57,3 +57,14 @@ $(document).on 'ready page:load', ->
       })
     create: false
   })
+  
+$(document).on 'click', '[data-behavior="clear-field"]', (e) ->
+  e.preventDefault();
+  
+  el = $(this).data('target')
+
+  if $(el).val() != ''
+    $(el).val('');
+    
+    if $(this).data('autosubmit')
+      $(el).parents('form').submit();
