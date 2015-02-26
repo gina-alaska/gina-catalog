@@ -9,7 +9,7 @@
         .input-group
           = f.text_field_without_bootstrap :query, value: @search_params[:query], placeholder: 'Keyword search', class: 'form-control'
           .input-group-btn{ style: 'width:1%;' }
-            %button.btn.btn-default{ type: 'button', data: { behavior: 'clear-form' } }
+            %button.btn.btn-default{ type: 'button', data: { behavior: 'clear-field', target: '#search_query', autosubmit: 'true' } }
               %i.fa.fa-times
             %button.btn.btn-primary{ type: 'submit' }
               %i.fa.fa-search
