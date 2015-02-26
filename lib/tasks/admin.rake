@@ -1,3 +1,4 @@
+require 'import'
 namespace :admin do
   desc 'Set user to global admin'
   task :set, [:email] => :environment do |_t, args|
@@ -24,6 +25,29 @@ namespace :admin do
       puts "Succesfully set #{email} as global admin"
     else
       puts 'There was an error trying to set the user as a global admin'
+    end
+  end
+
+  task load: ['load:organizations', 'load:contacts', 'load:entries']
+
+  namespace :load do
+    desc 'Load agencies from api'
+    task organizations: :environment do
+      Import::Organization.fetch
+    end
+
+    desc 'Load contacts from api'
+    task contacts: :environment do
+      Import::Contact.fetch
+    end
+
+    desc 'Import entries from api'
+    task entries: :environment do
+      if ENV['catalog'].nil?
+        puts 'Please specify the catalog to load (rake admin:load:entries catalog=catalog.northslope.org)'
+        next
+      end
+      Import::Entry.fetch(ENV['catalog'])
     end
   end
 end

@@ -4,7 +4,7 @@ class Manager::OrganizationsController < ManagerController
   def index
     @q = Organization.ransack(params[:q])
     @q.sorts = 'name asc' if @q.sorts.empty?
-    @organizations = @q.result(distinct: true)
+    @organizations = @q.result(distinct: true).page(params[:page])
     @organizations = @organizations.used_by_portal(current_portal) unless params[:all].present?
 
     respond_to do |format|
@@ -30,11 +30,11 @@ class Manager::OrganizationsController < ManagerController
   end
 
   def new
-    @organization = Organization.new
     @organization.aliases.build
   end
 
   def edit
+    save_referrer_location
   end
 
   def create
@@ -44,7 +44,7 @@ class Manager::OrganizationsController < ManagerController
     respond_to do |format|
       if @organization.save
         flash[:success] = "Organization #{@organization.name} was successfully created."
-        format.html { redirect_to manager_organization_path(@organization) }
+        format.html { redirect_back_or_default manager_organizations_path }
       else
         format.html { render action: 'new' }
         format.json { render json: @organization.errors, status: :unprocessable_entity }
@@ -56,7 +56,7 @@ class Manager::OrganizationsController < ManagerController
     respond_to do |format|
       if @organization.update_attributes(organization_params)
         flash[:success] = "Organization #{@organization.name} was successfully updated."
-        format.html { redirect_to manager_organizations_path }
+        format.html { redirect_back_or_default manager_organizations_path }
         format.json { head :nocontent }
       else
         format.html { render action: 'edit' }
@@ -66,14 +66,16 @@ class Manager::OrganizationsController < ManagerController
   end
 
   def destroy
+    save_referrer_location
+
     respond_to do |format|
       if @organization.destroy
         flash[:success] = "Organization #{@organization.name} was successfully deleted."
-        format.html { redirect_to manager_organizations_path }
+        format.html { redirect_back_or_default manager_organizations_path }
         format.json { head :no_content }
       else
         flash[:error] = @organization.errors.full_messages.join('<br />').html_safe
-        format.html { redirect_to manager_organizations_path }
+        format.html { redirect_back_or_default manager_organizations_path }
         #        format.json { head :no_content }
       end
     end

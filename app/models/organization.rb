@@ -1,6 +1,6 @@
 class Organization < ActiveRecord::Base
   include EntryDependentConcerns
-  searchkick
+  searchkick word_start: [:name, :acronym]
 
   CATEGORIES = [
     'Academic',
@@ -41,10 +41,15 @@ class Organization < ActiveRecord::Base
   #   joins{entry_portals.outer}.where{ (entry_portals.portal == portal) | { created_at.gteq => 1.week.ago } }
   # }
   scope :used_by_portal, ->(portal) {
-    includes(:entry_portals).references(:entry_portals).where('entry_portals.id = ? or organizations.created_at >= ?', portal.id, 1.week.ago)
+    query = 'entry_portals.portal_id = :portal_id or organizations.created_at >= :start_date'
+    includes(:entry_portals).references(:entry_portals).where(query, portal_id: portal.id, start_date: 1.week.ago)
   }
 
   def name_with_acronym
     "#{name} (#{acronym})"
+  end
+
+  def acronym_with_name
+    "(#{acronym}) #{name}"
   end
 end

@@ -1,3 +1,4 @@
+.map-top
 .row
   .col-sm-4
     .panel.panel-default
@@ -14,12 +15,9 @@
       #{pluralize @entries.total_count, 'result'} found
       - if @entries.total_count > 1
         %small.pull-right= page_entries_info @entries
-    %ul.media-list.entries.clear-fix
+    .entry-results.clear-fix
       - @entries.each do |entry|
-        %li.entry.media{ id: dom_id(entry) }
-          .media-body
-            = render 'search/entry', entry: entry
+        .entry{ id: dom_id(entry) }
+          = render 'search/entry', entry: entry
           = render 'actions', entry: entry
-          .entry-type{ style: "background: #{entry.entry_type.color}"}
-            = entry.entry_type
     = render 'search/pagination', entries: @entries

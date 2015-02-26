@@ -2,7 +2,8 @@
   .panel.panel-default
     .panel-heading
       %h1.panel-title Search
-    = render 'search/map'
+    .map-left
+      = render 'search/map'
     .panel-body
       .form-group.form-inline
         .input-group
@@ -16,7 +17,7 @@
         .col-sm-6
           = f.select_without_bootstrap :order, [['Sort: Relevance', 'relevance'], ['Sort: Title', 'title'], ['Sort: Last Updated', 'updated_at']], { selected: @search_params[:order] }, { class: 'form-control' }
         .col-sm-6
-          = f.select_without_bootstrap :limit, [['Limit: 20', 20], ['Limit: 50', 50], ['Limit: 100', 100], ['Limit: 500', 500], ['Limit: 1000', 1000]], { selected: @search_params[:limit] }, { class: 'form-control'}
+          = select_tag :limit, options_for_select([['Limit: 20', 20], ['Limit: 50', 50], ['Limit: 100', 100], ['Limit: 500', 500], ['Limit: 1000', 1000]], selected: params[:limit]), class: 'form-control'
     .panel-body.panel-break
       %h3.panel-title Collections
     = render 'search/facet_field', facets: @facets.collections, field: :collections
@@ -28,13 +29,16 @@
       %h3.panel-title Record Type
     = render 'search/facet_field', facets: @facets.entry_types, field: :entry_type_name
     .panel-body.panel-break
+      %h3.panel-title Data Type
+    = render 'search/facet_field', facets: @facets.data_types, field: :data_type_name
+    .panel-body.panel-break
       %h3.panel-title Status
     = render 'search/facet_field', facets: @facets.status, field: :status
     .panel-body.panel-break
-      %h3.panel-title Primary organization
+      %h3.panel-title Primary Organization
     = render 'search/facet_field', facets: @facets.primary_organizations, field: :primary_organizations
     .panel-body.panel-break
-      %h3.panel-title Funding organization
+      %h3.panel-title Funding Organization
     = render 'search/facet_field', facets: @facets.funding_organizations, field: :funding_organizations
     .panel-body.panel-break
       %h3.panel-title Organization Category

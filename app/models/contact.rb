@@ -1,6 +1,8 @@
 class Contact < ActiveRecord::Base
   include EntryDependentConcerns
-  searchkick
+  include LegacyConcerns
+
+  searchkick word_start: [:name, :email, :job_title]
 
   validate :name_email_or_title?
   validates :name, length: { maximum: 255 }
@@ -14,7 +16,8 @@ class Contact < ActiveRecord::Base
   has_many :entry_portals, through: :entries
 
   scope :used_by_portal, ->(portal) {
-    includes(:entry_portals).references(:entry_portals).where('entry_portals.id = ? or contacts.created_at >= ?', portal.id, 1.week.ago)
+    query = 'entry_portals.portal_id = :portal_id or contacts.created_at >= :start_date'
+    includes(:entry_portals).references(:entry_portals).where(query, portal_id: portal.id, start_date: 1.week.ago)
   }
 
   def name_email_or_title?

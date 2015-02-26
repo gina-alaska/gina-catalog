@@ -1,0 +1,17 @@
+.panel.panel-default
+  .panel-heading{ style: 'position: relative' }
+    = link_to new_admin_data_type_path, class: 'btn btn-success panel-btn-right' do
+      New Data Type
+    %ol.breadcrumb
+      %li.active
+        %i.fa.fa-folder-open
+        Data Types 
+  
+  %table.table.table-striped.table-condensed
+    %thead
+      %tr
+        %th Name
+        %th Description        
+        %th.text-right Actions
+    %tbody
+      = render(partial: "data_type_row", collection: @data_types, as: :data_type) || "<tr><td colspan=\"3\">There are no data types available.</td></tr>".html_safe

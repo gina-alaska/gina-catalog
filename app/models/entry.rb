@@ -1,5 +1,6 @@
 class Entry < ActiveRecord::Base
   include EntrySearchConcerns
+  include LegacyConcerns
 
   STATUSES = %w(Complete Ongoing Unknown Funded)
 
@@ -7,6 +8,7 @@ class Entry < ActiveRecord::Base
 
   belongs_to :use_agreement
   belongs_to :entry_type
+  belongs_to :data_type
 
   has_many :attachments, dependent: :destroy
   has_many :bboxes, through: :attachments
@@ -15,11 +17,11 @@ class Entry < ActiveRecord::Base
   has_many :links, dependent: :destroy
 
   has_many :entry_organizations
-  has_many :organizations, through: :entry_organizations
+  has_many :organizations, -> { uniq }, through: :entry_organizations
   has_many :primary_entry_organizations, -> { primary }, class_name: 'EntryOrganization'
-  has_many :primary_organizations, through: :primary_entry_organizations, source: :organization
+  has_many :primary_organizations, -> { uniq }, through: :primary_entry_organizations, source: :organization
   has_many :funding_entry_organizations, -> { funding }, class_name: 'EntryOrganization'
-  has_many :funding_organizations, through: :funding_entry_organizations, source: :organization
+  has_many :funding_organizations, -> { uniq }, through: :funding_entry_organizations, source: :organization
 
   has_many :entry_aliases
 
@@ -33,7 +35,7 @@ class Entry < ActiveRecord::Base
   has_many :primary_contacts, through: :primary_entry_contacts, source: :contact
 
   has_many :entry_portals
-  has_many :portals, through: :entry_portals
+  has_many :portals, -> { uniq }, through: :entry_portals
 
   has_one :owner_entry_portal, -> { where owner: true }, class_name: 'EntryPortal'
   has_one :owner_portal, through: :owner_entry_portal, source: :portal, class_name: 'Portal'

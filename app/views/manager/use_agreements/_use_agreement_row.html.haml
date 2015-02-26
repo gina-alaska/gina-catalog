@@ -5,7 +5,7 @@
     = use_agreement.required.blank? ? "No" : "Yes"
   %td
     = use_agreement.archived_at.blank? ? "No" : "Yes"
-  %td.text-right
+  %td.text-right.col-sm-2
     .btn-group
       = link_to edit_manager_use_agreement_path(use_agreement), class: 'btn btn-sm btn-primary', title: 'Edit' do
         %i.fa.fa-edit
