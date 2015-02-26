@@ -166,13 +166,6 @@ ActiveRecord::Schema.define(version: 20150225191703) do
     t.boolean  "owner"
   end
 
-  create_table "entry_regions", force: :cascade do |t|
-    t.integer  "entry_id"
-    t.integer  "region_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "entry_types", force: :cascade do |t|
     t.string   "name"
     t.string   "description"
@@ -279,13 +272,6 @@ ActiveRecord::Schema.define(version: 20150225191703) do
     t.integer  "lft"
     t.integer  "rgt"
     t.integer  "depth"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "regions", force: :cascade do |t|
-    t.string   "name"
-    t.geometry "geom",       limit: {:srid=>4326, :type=>"geometry"}
     t.datetime "created_at"
     t.datetime "updated_at"
   end
