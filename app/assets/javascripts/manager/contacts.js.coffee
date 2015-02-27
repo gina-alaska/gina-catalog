@@ -5,8 +5,9 @@
 $(document).on 'ready page:load',  ->
   contactstypehead = new TypeAheadField('[data-behavior="typeahead"][data-name="contacts"]', {
     display_key: (d) ->
-      display = d.name
-      if d.email.length > 0
+      display = "#{d.name}"
+
+      if d.email 
         display += " (#{d.email})"
       else
         display += " (No email set)"
