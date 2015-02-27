@@ -5,5 +5,5 @@ require 'import/contact'
 require 'import/organization'
 
 module Import
-  API_URL = 'http://glynx2-api.127.0.0.1.xip.io'
+  API_URL = Rails.application.secrets.glynx2_api || 'http://glynx2-api.127.0.0.1.xip.io'
 end
