@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  geom: SRID=4326;POLYGON((0 0, 10 0, 10 10, 0 10, 0 0))
+
+two:
+  name: MyString
+  geom: SRID=4326;POLYGON((5 5, 15 5, 15 15, 5 15, 5 5))

@@ -24,6 +24,11 @@ end
 EntryType.where(name: 'Project', description: 'catalog record for projects with no associated data/observation files', color: '#c09853').first_or_create
 EntryType.where(name: 'Data', description: 'catalog record for projects with associated data/observation files', color: '#3a87ad').first_or_create
 
+data_types = ['Database', 'GIS', 'Image', 'Map', 'Other', 'Report', 'Web Service']
+data_types.each do |data_type|
+  DataType.where(name: data_type).first_or_create
+end
+
 networks = [['Facebook', 'fa-facebook'], ['GitHub', 'fa-github'], ['Google+', 'fa-google-plus'],
             ['Instagram', 'fa-instagram'], ['Linkedin', 'fa-linkedin'], ['Tumblr', 'fa-tumblr'],
             ['Twitter', 'fa-twitter'], ['YouTube', 'fa-youtube']]

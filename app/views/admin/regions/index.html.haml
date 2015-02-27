@@ -1,0 +1,24 @@
+.panel.panel-default
+  .panel-heading{ style: 'position: relative' }
+    = link_to new_admin_region_path, class: 'btn btn-sm btn-success panel-btn-right' do
+      New Region
+      
+    .panel-title
+      %i.fa.fa-puzzle-piece
+      All Regions
+  
+  %table.table.table-stripped.table-condensed
+    %tr
+      %th Name
+      %th.text-right Actions
+
+    - @regions.each do |region|
+      %tr
+        %td
+          = region.name
+        %td.text-right
+          .btn-group
+            = link_to edit_admin_region_path(region), class: 'btn btn-sm btn-primary', title: 'Edit' do
+              %i.fa.fa-edit
+            = link_to admin_region_path(region), data: { method: :delete, confirm: "Are you sure?" }, class: 'btn btn-sm btn-danger', title: 'Delete' do
+              %i.fa.fa-trash-o
