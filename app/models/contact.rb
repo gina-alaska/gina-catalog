@@ -1,5 +1,7 @@
 class Contact < ActiveRecord::Base
   include EntryDependentConcerns
+  include LegacyConcerns
+
   searchkick word_start: [:name, :email, :job_title]
 
   validate :name_email_or_title?

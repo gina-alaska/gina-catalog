@@ -1,0 +1,13 @@
+.container
+  .panel.panel-default
+    .panel-heading{ style: 'position: relative' }
+      %ol.breadcrumb
+        %li
+          = link_to [:admin, :entry_types] do
+            %i.fa.fa-folder-open
+            Data Types
+        %li.active
+          Edit #{@data_type.name}
+
+    .panel-body
+      = render 'form', data_type: @data_type

@@ -21,7 +21,15 @@ class Bound < ActiveRecord::Base
   end
 
   def centroid
-    geom.envelope.point_on_surface
+    case geom.geometry_type
+    when RGeo::Feature::Point
+      geom
+    when RGeo::Feature::Polygon
+      geom.point_on_surface
+    else
+      logger.info geom.geometry_type
+      nil
+    end
   end
 
   def as_geojson

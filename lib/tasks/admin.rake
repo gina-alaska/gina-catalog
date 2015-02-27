@@ -1,3 +1,4 @@
+require 'import'
 namespace :admin do
   desc 'Set user to global admin'
   task :set, [:email] => :environment do |_t, args|
@@ -27,63 +28,26 @@ namespace :admin do
     end
   end
 
+  task load: ['load:organizations', 'load:contacts', 'load:entries']
+
   namespace :load do
     desc 'Load agencies from api'
-    task agencies: :environment do
-      require 'open-uri'
-      agencies = JSON.load(open('http://glynx2-api.127.0.0.1.xip.io/agencies.json'))
-      agencies.each do |agency_json|
-        org = Organization.where(name: agency_json['name']).first_or_create do |o|
-          %w(acronym category description url).each do |field|
-            o.send("#{field}=", agency_json[field])
-          end
-          o.logo_url = agency_json['logo_url']
-        end
-      end
+    task organizations: :environment do
+      Import::Organization.fetch
     end
 
-    def get_catalog_records(page)
-      JSON.load(open("http://glynx2-api.127.0.0.1.xip.io/catalogs.json?page=#{page}"))
+    desc 'Load contacts from api'
+    task contacts: :environment do
+      Import::Contact.fetch
     end
 
-    def import_record(portal, json)
-      import = ImportItem.where(import_id: json['id']).first_or_initialize
-      import.importable ||= Entry.new
-
-      %w(title description start_date end_date status tag_list).each do |field|
-        import.importable.send("#{field}=", json[field])
-      end
-      import.importable.entry_type = EntryType.where('name ilike ?', json['type']).first
-      import.importable.portals << portal unless import.importable.portals.include?(portal)
-
-      if json['primary_agency'].present?
-        org = Organization.where(name: json['primary_agency']['name']).first
-        import.importable.primary_organizations << org unless org.nil? || import.importable.primary_organizations.include?(org)
-      end
-
-      if json['funding_agency'].present?
-        org = Organization.where(name: json['funding_agency']['name']).first
-        import.importable.funding_organizations << org unless org.nil? || import.importable.primary_organizations.include?(org)
-      end
-
-      json['agencies'].each do |_agency_json|
-        org = Organization.where(name: json['name']).first
-        import.importable.organizations << org unless org.nil? || import.importable.organizations.include?(org)
-      end
-
-      import.save
-      import.importable.save
-    end
-
+    desc 'Import entries from api'
     task entries: :environment do
-      require 'open-uri'
-      portal = Portal.first
-      page = 1
-      while (catalogs = get_catalog_records(page))
-        puts "Processing page #{page} - #{catalogs.count}"
-        page += 1
-        catalogs.each { |json| import_record(portal, json) }
+      if ENV['catalog'].nil?
+        puts 'Please specify the catalog to load (rake admin:load:entries catalog=catalog.northslope.org)'
+        next
       end
+      Import::Entry.fetch(ENV['catalog'])
     end
   end
 end

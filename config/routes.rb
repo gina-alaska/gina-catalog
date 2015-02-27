@@ -21,6 +21,7 @@ Rails.application.routes.draw do
     resources :portals
     resources :entry_types
     resources :regions
+    resources :data_types
   end
 
   namespace :manager do
@@ -35,9 +36,7 @@ Rails.application.routes.draw do
         get :tags
         get :collections
       end
-      member do
-        resources :attachments
-      end
+      resources :attachments
     end
 
     resources :permissions

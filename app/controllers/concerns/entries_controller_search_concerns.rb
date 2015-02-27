@@ -9,16 +9,21 @@ module EntriesControllerSearchConcerns
       tags: organize_facets(@entries.facets['tag_list']),
       collections: organize_facets(@entries.facets['collection_ids'], Collection),
       entry_types: organize_facets(@entries.facets['entry_type_name']),
+      data_types: organize_facets(@entries.facets['data_type_name']),
       status: organize_facets(@entries.facets['status']),
       primary_organizations: organize_facets(@entries.facets['primary_organization_ids'], Organization, :id, :acronym_with_name),
       funding_organizations: organize_facets(@entries.facets['funding_organization_ids'], Organization, :id, :acronym_with_name),
       organization_categories: organize_facets(@entries.facets['organization_categories']),
       primary_contacts: organize_facets(@entries.facets['primary_contact_ids'], Contact),
       other_contacts: organize_facets(@entries.facets['contact_ids'], Contact)
-    )
+    ) if facets?
   end
 
   protected
+
+  def facets?
+    params[:format] != 'geojson'
+  end
 
   def organize_facets(elastic_facets, model = nil, term_field = :id, display_field = :name)
     return [] if elastic_facets.nil?
@@ -36,6 +41,7 @@ module EntriesControllerSearchConcerns
     tags:                     :tag_list,
     collections:              :collection_ids,
     entry_type_name:          :entry_type_name,
+    data_type_name:           :data_type_name,
     status:                   :status,
     primary_organizations:    :primary_organization_ids,
     funding_organizations:    :funding_organization_ids,
@@ -91,19 +97,24 @@ module EntriesControllerSearchConcerns
     }
   end
 
+  def search_facets
+    FACET_FIELDS.values.each_with_object({}) { |f, c| c[f] = { limit: 50 } }
+  end
+
   def elasticsearch_params(page, per_page = 20)
     opts = {
-      facets: FACET_FIELDS.values,
       smart_facets: true,
       page: page,
-      per_page: params[:limit] || per_page,
+      per_page: per_page,
       order: order_params,
+      include: [:bboxes],
       where: {
         portal_ids: current_portal.id,
         start_date: date_search_params(:starts_after, :starts_before),
         end_date: date_search_params(:ends_after, :ends_before)
       }
     }
+    opts[:facets] = search_facets if facets?
 
     # items that must match all selected
     [:tags, :collections, :organization_categories].each do |param|
@@ -111,7 +122,7 @@ module EntriesControllerSearchConcerns
     end
 
     # items that can match any selected
-    [:entry_type_name, :status, :primary_organizations, :funding_organizations,
+    [:entry_type_name, :data_type_name, :status, :primary_organizations, :funding_organizations,
      :primary_contacts, :other_contacts].each do |param|
       opts[:where][FACET_FIELDS[param]] = search_params[param] if search_params[param].present?
     end

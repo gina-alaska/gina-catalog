@@ -8,6 +8,7 @@ class Entry < ActiveRecord::Base
 
   belongs_to :use_agreement
   belongs_to :entry_type
+  belongs_to :data_type
 
   has_many :attachments, dependent: :destroy
   has_many :bboxes, through: :attachments
@@ -34,7 +35,7 @@ class Entry < ActiveRecord::Base
   has_many :primary_contacts, through: :primary_entry_contacts, source: :contact
 
   has_many :entry_portals
-  has_many :portals, through: :entry_portals
+  has_many :portals, -> { uniq }, through: :entry_portals
 
   has_many :entry_regions
   has_many :regions, through: :entry_regions
