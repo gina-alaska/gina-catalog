@@ -8,10 +8,10 @@
               = f.search_field :name_or_acronym_or_category_cont, class: 'form-control', placeholder: 'Search by name, acronym or category'
 
               .input-group-btn
+                = link_to manager_organizations_path, class: 'btn btn-default', data: { behavior: 'clear-field', target: '#q_name_or_acronym_or_category_cont', autosubmit: 'true' }  do
+                  %i.fa.fa-times
                 = button_tag type: 'submit', class: 'btn btn-primary' do
                   %i.fa.fa-search
-                = link_to manager_organizations_path, class: 'btn btn-danger ' do
-                  %i.fa.fa-search-minus
 
           .form-group
             %label
