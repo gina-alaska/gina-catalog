@@ -1,4 +1,4 @@
 require 'test_helper'
 
-class EntriesControllerSearchConcernsTest < ActiveSupport::TestCase
+class Concerns::EntriesControllerSearchConcernsTest < ActiveSupport::TestCase
 end
