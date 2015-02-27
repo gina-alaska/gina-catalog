@@ -1,7 +1,7 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  entry_id: 1
+  entry: one
   file_uid: MyString
   file_size: 1
   file_name: MyString
@@ -10,7 +10,7 @@ one:
   description: MyString
 
 two:
-  entry_id: 1
+  entry: one
   file_uid: MyString
   file_size: 1
   file_name: MyString
@@ -19,7 +19,7 @@ two:
   description: MyString
 
 thumbnail:
-  entry_id: one
+  entry: one
   file_uid: MyString
   file_size: 1
   file_name: MyString
@@ -28,7 +28,7 @@ thumbnail:
   description: MyString
 
 geojson:
-  entry_id: one
+  entry: one
   file_uid: MyString
   file_size: 1
   file_name: MyString
@@ -37,7 +37,7 @@ geojson:
   description: MyString
 
 public_download:
-  entry_id: one
+  entry: one
   file_uid: MyString
   file_size: 1
   file_name: MyString
@@ -46,7 +46,7 @@ public_download:
   description: MyString
 
 private_download:
-  entry_id: one
+  entry: one
   file_uid: MyString
   file_size: 1
   file_name: MyString

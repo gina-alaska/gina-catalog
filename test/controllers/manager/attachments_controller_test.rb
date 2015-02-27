@@ -1,14 +1,12 @@
-require "test_helper"
+require 'test_helper'
 
 class Manager::AttachmentsControllerTest < ActionController::TestCase
   def test_show
-    get :show
+    login_user(:portal_admin)
+
+    @attachment = attachments(:one)
+
+    xhr :get, :show, entry_id: @attachment.entry, id: @attachment
     assert_response :success
   end
-
-  def test_map
-    get :map
-    assert_response :success
-  end
-
 end
