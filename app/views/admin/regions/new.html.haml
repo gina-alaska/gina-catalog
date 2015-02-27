@@ -1,0 +1,13 @@
+.container
+  .panel.panel-default
+    .panel-heading{ style: 'position: relative' }
+      %ol.breadcrumb
+        %li
+          = link_to [:admin, :regions] do
+            %i.fa.fa-puzzle-piece
+            Regions
+        %li.active
+          New
+
+    .panel-body
+      = render 'form', region: @region

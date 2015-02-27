@@ -1,3 +1,4 @@
 = f.text_field :tag_list, value: f.object.tag_list.to_s, label: 'Tags', data: { behavior: 'selectize-tags' }
 = f.collection_select :collection_ids, @entry.collections, :id, :name, { label: 'Collections' }, { data: { behavior: 'selectize-collections' }, multiple: true }
+= f.collection_select :region_ids, @entry.regions, :id, :name, { label: 'Regions' }, { data: { behavior: 'selectize-regions' }, multiple: true }
 = f.collection_select :data_type_id, DataType.all, :id, :name, { prompt: 'Please select a data type' }
