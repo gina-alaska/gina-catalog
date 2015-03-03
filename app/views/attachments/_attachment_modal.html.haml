@@ -1,0 +1,13 @@
+#map-modal{ class: 'modal fade', role: 'dialog', 'aria-hidden' => 'true' }
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{ data: { dismiss: 'modal' }}
+          %i.fa.fa-close
+        %h4{ class: "modal-title" } Map of GeoJSON Attachment
+      .modal-body
+        .map-container.small
+          #map.entry-map{ data: { behavior: 'map', target: 'map', 'mapbox-id' => 'gina-alaska.knb7oi02', 'max-zoom' => 15, 'fit-all' => 'true' }}
+            %layer{ data: { url: attachment_url(attachment, format: :geojson) }}
+      .modal-footer
+        foo

@@ -1,0 +1,6 @@
+$('<%= escape_javascript(render('attachment_modal', attachment: @attachment)) %>').modal().on('hidden.bs.modal', function() {
+  $(this).remove();
+}).on('shown.bs.modal', function() {
+  $(document).trigger('init_map');
+})
+
