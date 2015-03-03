@@ -14,3 +14,26 @@
     .detail-block
       %label Ends:
       = entry.start_date
+
+.bordered{ style: 'margin-top: 10px;' }
+  %ul.nav.nav-tabs{ style: 'padding-left: 5px; padding-top: 5px; margin-bottom: 0;' }
+    %li.active
+      = link_to '#additional-information', data: { toggle: 'tab' } do
+        %b Additional Information
+    %li
+      = link_to '#activity-logs', data: { toggle: 'tab' } do
+        %b Activity Logs
+    - if can? :manage, entry
+      %li
+        = link_to '#download-logs', data: { toggle: 'tab' } do
+          %b Download Logs
+
+  .tab-content
+    #additional-information.tab-pane.active.content
+      = render 'status', entry: entry
+    /  = render '/shared/catalogs/collapsed_content', entry: entry, collapse: collapse
+    /#activity-logs.tab-pane
+    /  = render '/shared/catalogs/activity_logs', entry: entry
+    /- if current_member.try(:can_manage_catalog?)
+    /  #download-logs.tab-pane
+    /    = render '/shared/catalogs/download_logs', entry: entry
