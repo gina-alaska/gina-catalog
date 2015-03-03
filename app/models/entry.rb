@@ -22,6 +22,8 @@ class Entry < ActiveRecord::Base
   has_many :primary_organizations, -> { uniq }, through: :primary_entry_organizations, source: :organization
   has_many :funding_entry_organizations, -> { funding }, class_name: 'EntryOrganization'
   has_many :funding_organizations, -> { uniq }, through: :funding_entry_organizations, source: :organization
+  has_many :other_entry_organizations, -> { other }, class_name: 'EntryOrganization'
+  has_many :other_organizations, -> { uniq }, through: :other_entry_organizations, source: :organization
 
   has_many :entry_aliases
 
