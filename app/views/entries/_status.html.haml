@@ -1,5 +1,5 @@
-.row-fluid
-  .span6 
+.row
+  .col-sm-6
     %div
       %strong Status:
       = entry.status
@@ -7,7 +7,7 @@
       %div
         %strong Start Date:
         = entry.start_date.strftime('%Y/%m/%d')
-  .span6 
+  .col-sm-6
     %div
       %strong Type:
       = entry.entry_type
@@ -16,7 +16,7 @@
         %strong End Date:
         = entry.end_date.strftime('%Y/%m/%d')  
 - unless entry.data_type.nil?
-  .row-fluid
-    .span12
+  .row
+    .col-sm-12
       %strong Data Type:
       = entry.data_type

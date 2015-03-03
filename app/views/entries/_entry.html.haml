@@ -31,7 +31,7 @@
   .tab-content
     #additional-information.tab-pane.active.content
       = render 'status', entry: entry
-    /  = render '/shared/catalogs/collapsed_content', entry: entry, collapse: collapse
+      = render 'collapsed_content', entry: entry, collapse: false
     /#activity-logs.tab-pane
     /  = render '/shared/catalogs/activity_logs', entry: entry
     /- if current_member.try(:can_manage_catalog?)
