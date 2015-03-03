@@ -1,7 +1,7 @@
 - collapse ||= false
 .collapsed_content{class: collapse ? 'collapse' : '', id:"#{entry.class}-#{entry.id}" }
   = render 'contacts', entry: entry
-  /= render '/shared/catalogs/agencies', item: item
+  = render 'organizations', entry: entry
 
   /- unless entry.iso_topic_ids.empty?
   /  %dt ISO Topics

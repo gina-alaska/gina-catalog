@@ -1,0 +1,27 @@
+- unless entry.primary_organizations.blank?
+  .row
+    .col-sm-6
+      %dt Primary Organizations
+    .col-sm-6
+      %dt Type
+    - entry.primary_organizations.each do |org|
+      .col-sm-6
+        %dd= org.name
+      .col-sm-6
+        %dd= org.category
+  %br
+
+- unless entry.funding_organizations.blank?
+  .row
+    .col-sm-6
+      %dt Funding Organization
+      %dd= entry.funding_organizations.pluck(:name).join(', ')
+    .col-sm-6
+      %dt Type
+      %dd= entry.funding_organizations.pluck(:category).join(', ')
+  %br
+
+- unless entry.other_organizations.blank?
+  %dt Other Organizations
+  %dd= entry.other_organizations.pluck(:name).join(', ')
+  %br
