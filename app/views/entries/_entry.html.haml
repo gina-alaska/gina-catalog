@@ -23,10 +23,10 @@
     %li
       = link_to '#activity-logs', data: { toggle: 'tab' } do
         %b Activity Logs
-    - if can? :manage, entry
-      %li
-        = link_to '#download-logs', data: { toggle: 'tab' } do
-          %b Download Logs
+    /- if can? :manage, entry
+    /  %li
+    /    = link_to '#download-logs', data: { toggle: 'tab' } do
+    /      %b Download Logs
 
   .tab-content
     #additional-information.tab-pane.active.content
@@ -34,6 +34,6 @@
       = render 'collapsed_content', entry: entry, collapse: false
     #activity-logs.tab-pane
       = render 'activity_logs', entry: entry
-    /- if current_member.try(:can_manage_catalog?)
+    /- if can? :manage, @entry
     /  #download-logs.tab-pane
-    /    = render '/shared/catalogs/download_logs', entry: entry
+    /    = render 'download_logs', entry: entry
