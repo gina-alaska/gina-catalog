@@ -34,6 +34,9 @@ class Entry < ActiveRecord::Base
   has_many :primary_entry_contacts, -> { primary }, class_name: 'EntryContact'
   has_many :primary_contacts, through: :primary_entry_contacts, source: :contact
 
+  has_many :other_entry_contacts, -> { other }, class_name: 'EntryContact'
+  has_many :other_contacts, through: :other_entry_contacts, source: :contact
+
   has_many :entry_portals
   has_many :portals, -> { uniq }, through: :entry_portals
 
