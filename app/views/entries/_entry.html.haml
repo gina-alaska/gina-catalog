@@ -1,4 +1,4 @@
-%h4
+%h3
   = link_to entry.title, edit_manager_entry_path(entry)
 :markdown
   #{entry.description}
@@ -13,7 +13,10 @@
   - if entry.end_date
     .detail-block
       %label Ends:
-      = entry.start_date
+      = entry.end_date
+
+  = render 'resources', entry: entry
+  /= render '/shared/catalogs/tag_cloud', entry: entry
 
 .bordered{ style: 'margin-top: 10px;' }
   %ul.nav.nav-tabs{ style: 'padding-left: 5px; padding-top: 5px; margin-bottom: 0;' }

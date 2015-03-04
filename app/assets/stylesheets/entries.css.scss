@@ -63,3 +63,15 @@
   margin-left: 20px;
   margin-bottom: 5px;
 }
+
+.entry-resources {
+  .media .icon {
+    width: 45px;
+    text-align: center;
+    i { font-size: 45px; }
+    &.download { color: #555; }
+    &.report { color: #E66C00; }
+    &.website { color: #549FCB; }
+    &.metadata { color: #2CAD59; }
+  }
+}
