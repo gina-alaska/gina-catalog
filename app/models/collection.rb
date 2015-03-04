@@ -9,4 +9,8 @@ class Collection < ActiveRecord::Base
   scope :used_by_portal, ->(portal) {
     where(portal: portal)
   }
+
+  scope :visible, -> {
+    where(hidden: false).pluck(:name)
+  }  
 end

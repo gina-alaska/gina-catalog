@@ -9,4 +9,5 @@ class ActivityLog < ActiveRecord::Base
   validates :loggable_type, length: { maximum: 255 }
 
   scope :downloads, -> { where(activity: 'Download') }
+  scope :updates, -> { where(activity: 'Update') }
 end

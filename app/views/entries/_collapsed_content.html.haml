@@ -1,0 +1,33 @@
+- collapse ||= false
+.collapsed_content{class: collapse ? 'collapse' : '', id:"#{entry.class}-#{entry.id}" }
+  = render 'contacts', entry: entry
+  = render 'organizations', entry: entry
+
+  /- unless entry.iso_topic_ids.empty?
+  /  %dt ISO Topics
+  /  %dd= item.iso_topics.list
+  /  %br
+
+  - unless entry.regions.nil? or entry.regions.empty?
+    %dt Regions
+    %dd= list_regions(entry)
+    %br
+
+  - unless entry.collections.nil? or entry.collections.empty?
+    %dt Collections
+    %dd= entry.collections.visible.join(', ')
+    %br
+
+  /= render '/shared/catalogs/map_layers_info', catalog: item
+  
+  - unless entry.owner_portal.id == current_portal.id
+    %dt Source Portal
+    %dd
+      = link_to "//#{entry.owner_portal.default_url.url}" do
+        = entry.owner_portal.full_title
+    %br
+  
+  %dt Direct Record Link
+  %dd
+    = link_to entry_url(entry) do
+      = entry_url(entry)
