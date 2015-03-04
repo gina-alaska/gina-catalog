@@ -9,15 +9,23 @@
         .input-group
           = f.text_field_without_bootstrap :query, value: @search_params[:query], placeholder: 'Keyword search', class: 'form-control'
           .input-group-btn{ style: 'width:1%;' }
-            %button.btn.btn-default{ type: 'button', data: { behavior: 'clear-form' } }
+            %button.btn.btn-default{ type: 'button', data: { behavior: 'clear-field', target: '#search_query', autosubmit: 'true' } }
               %i.fa.fa-times
             %button.btn.btn-primary{ type: 'submit' }
-              %i.fa.fa-search
+              %i.fa.fa-search    
       .row
         .col-sm-6
-          = f.select_without_bootstrap :order, [['Sort: Relevance', 'relevance'], ['Sort: Title', 'title'], ['Sort: Last Updated', 'updated_at']], { selected: @search_params[:order] }, { class: 'form-control' }
+          .form-group
+            = f.select_without_bootstrap :order, [['Sort: Relevance', 'relevance'], ['Sort: Title', 'title'], ['Sort: Last Updated', 'updated_at']], { selected: @search_params[:order] }, { class: 'form-control' }
+
         .col-sm-6
-          = select_tag :limit, options_for_select([['Limit: 20', 20], ['Limit: 50', 50], ['Limit: 100', 100], ['Limit: 500', 500], ['Limit: 1000', 1000]], selected: params[:limit]), class: 'form-control'
+          .form-group
+            = select_tag :limit, options_for_select([['Limit: 20', 20], ['Limit: 50', 50], ['Limit: 100', 100], ['Limit: 500', 500], ['Limit: 1000', 1000]], selected: params[:limit]), class: 'form-control'
+
+          = link_to manager_entries_path, class: 'btn btn-default btn-block' do
+            %i.fa.fa-times
+            Reset all              
+            
     .panel-body.panel-break
       %h3.panel-title Collections
     = render 'search/facet_field', facets: @facets.collections, field: :collections

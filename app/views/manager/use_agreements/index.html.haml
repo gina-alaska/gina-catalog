@@ -8,10 +8,10 @@
               = f.search_field :title_cont, class: 'form-control', placeholder: 'Search by use agreement title'
 
               .input-group-btn
+                %button.btn.btn-default{ type: 'button', data: { behavior: 'clear-field', target: '#q_title_cont', autosubmit: 'true' } }
+                  %i.fa.fa-times
                 = button_tag type: 'submit', class: 'btn btn-primary' do
                   %i.fa.fa-search
-                = link_to manager_use_agreements_path, class: 'btn btn-danger ' do
-                  %i.fa.fa-search-minus
 
       .panel-footer
         = link_to new_manager_use_agreement_path, class: 'btn btn-success btn-block' do

@@ -122,7 +122,7 @@ class Layer
         map.fitBounds(layer.getBounds(), { padding: [30,30], maxZoom: max })
 
 
-$(document).on 'ready page:load', ->
+$(document).on 'ready page:load init_map', ->
   mapel = $('[data-behavior="map"]')
 
   if mapel.length > 0

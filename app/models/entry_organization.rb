@@ -4,4 +4,5 @@ class EntryOrganization < ActiveRecord::Base
 
   scope :primary, -> { where(primary: true) }
   scope :funding, -> { where(funding: true) }
+  scope :other, -> { where(funding: false, primary: false) }
 end
