@@ -1,0 +1,7 @@
+- unless entry.primary_contacts.empty?
+  %dt Primary Contacts
+  %dd= render entry.primary_contacts
+
+- unless entry.other_contacts.empty?
+  %dt Other Contacts
+  %dd= render entry.other_contacts

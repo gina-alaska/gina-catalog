@@ -15,13 +15,11 @@
             %h4= org.name
       .panel-body
         %h5 Other Organizations
-        - (@entry.funding_organizations-@entry.primary_organizations).each do |org|
+        - @entry.other_organizations.each do |org|
           .pull-left.text-center
             = image_tag org.logo.thumb('80x80').url unless org.logo.nil?
-            %div= org.acronym
-        - (@entry.organizations - @entry.primary_organizations - @entry.funding_organizations).each do |org|
-          .pull-left.text-center
-            = image_tag org.logo.thumb('80x80').url unless org.logo.nil?
-            %div= org.acronym
+            %div
+              = org.acronym
+              &nbsp;
   .col-sm-8
     = render @entry
