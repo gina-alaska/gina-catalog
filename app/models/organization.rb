@@ -21,10 +21,10 @@ class Organization < ActiveRecord::Base
   has_many :entry_portals, through: :entries
   has_many :aliases, as: :aliasable, dependent: :destroy
 
-  validates :name, length: { maximum: 255 }
+  validates :name, length: { maximum: 255 }, uniqueness: true
   validates :category, length: { maximum: 255 }
   validates :description, length: { maximum: 255 }
-  validates :acronym, length: { maximum: 15 }
+  validates :acronym, length: { maximum: 15 }, uniqueness: true
   validates :adiwg_code, length: { maximum: 255 }
   validates :adiwg_path, length: { maximum: 255 }
   validates :logo_uid, length: { maximum: 255 }
