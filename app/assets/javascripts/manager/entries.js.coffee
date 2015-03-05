@@ -37,12 +37,14 @@ $(document).on 'ready page:load', ->
     valueField: 'id',
     labelField: 'name',
     searchField: 'name',
+    sortField: 'name',
+    preload: true,
     render: {
       option: (item, escape) ->
         "<div>#{item.name}</div>"
     },
     load: (query, callback) ->
-      return callback() if query.length == 0
+      # return callback() if query.length == 0
       $.ajax({
         url: '/collections',
         dataType: 'json',
