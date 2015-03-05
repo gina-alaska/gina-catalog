@@ -12,5 +12,5 @@ class Collection < ActiveRecord::Base
 
   scope :visible, -> {
     where(hidden: false).pluck(:name)
-  }  
+  }
 end
