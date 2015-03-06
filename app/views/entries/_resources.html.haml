@@ -6,7 +6,7 @@
         .icon.download.pull-left
           %i.fa.fa-download
       .media-body
-        = link_to entry_attachment_path(entry, download), class: 'btn tag pull-right', rel: "nofollow", remote: true do
+        = link_to entry_attachment_path(entry, download), class: 'btn btn-default tag pull-right', rel: "nofollow", remote: true do
           %i.fa.fa-download.media-object
           Download
 
@@ -24,7 +24,7 @@
           .icon.download
             %i.fa.fa-user-secret
         .media-body
-          = link_to entry_attachment_path(entry, download), class: 'btn tag pull-right', rel: "nofollow", remote: true do
+          = link_to entry_attachment_path(entry, download), class: 'btn btn-default tag pull-right', rel: "nofollow", remote: true do
             %i.fa.fa-download.media-object
             Download
 
@@ -41,7 +41,7 @@
         .icon.download
           %i.fa.fa-download
       .media-body
-        = link_to link.url, class: 'btn tag pull-right', rel: "nofollow", remote: true do
+        = link_to link.url, class: 'btn btn-default tag pull-right', rel: "nofollow", remote: true do
           %i.fa.fa-download.media-object
           Download
 
@@ -57,7 +57,7 @@
         .icon.report
           %i.fa.fa-code-o
       .media-body
-        = link_to link.url, class: 'btn pull-right', :target => :_blank do
+        = link_to link.url, class: 'btn btn-default pull-right', :target => :_blank do
           %i.fa.fa-external-link
           View report
 
@@ -73,7 +73,7 @@
         .icon.website
           %i.fa.fa-cloud
       .media-body
-        = link_to link.url, class: 'btn pull-right', :target => :_blank do
+        = link_to link.url, class: 'btn btn-default pull-right', :target => :_blank do
           %i.fa.fa-external-link
           View
           = link.category.downcase
@@ -92,7 +92,7 @@
           .icon.metadata
             %i.fa.fa-file
         .media-body
-          = link_to link.url, class: 'btn pull-right', :target => :_blank do
+          = link_to link.url, class: 'btn btn-default pull-right', :target => :_blank do
             %i.fa.fa-external-link
             View metadata
 
