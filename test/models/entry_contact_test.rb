@@ -1,9 +1,15 @@
 require 'test_helper'
 
 class EntryContactTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  should belong_to(:entry)
+  should belong_to(:contact)
+
+  test 'should allow contact if email is blank' do
+    entry = entries(:one)
+    contact = contacts(:no_email)
+
+    assert entry.entry_contacts.create(contact: contact)
+  end
 
   test 'should not allow duplicate contacts on the same entry' do
     entry = entries(:one)
