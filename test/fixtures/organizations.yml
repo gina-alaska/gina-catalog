@@ -12,10 +12,10 @@ one:
   url: MyString
 
 two:
-  name: MyString
+  name: MyString2
   category: Academic
   description: MyString
-  acronym: MyString
+  acronym: MyString2
   adiwg_code: MyString
   adiwg_path: MyString
   logo_uid: MyString
@@ -23,10 +23,10 @@ two:
   url: MyString
 
 no_associated_entry:
-  name: MyString
+  name: MyString3
   category: Academic
   description: MyString
-  acronym: MyString
+  acronym: MyString3
   adiwg_code: MyString
   adiwg_path: MyString
   logo_uid: MyString

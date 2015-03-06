@@ -2,13 +2,13 @@
 
 one:
   name: MyString
-  email: MyString
+  email: Email1
   phone_number: MyString
   job_title: MyString
 
 two:
   name: MyString
-  email: MyString
+  email: Email2
   phone_number: MyString
   job_title: MyString
 
@@ -20,6 +20,12 @@ blank:
 
 no_associated_entry:
   name: MyString
-  email: MyString
+  email: Email3
+  phone_number: MyString
+  job_title: MyString
+
+no_email:
+  name: MyString
+  email: ""
   phone_number: MyString
   job_title: MyString

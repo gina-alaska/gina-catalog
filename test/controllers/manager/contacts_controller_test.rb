@@ -30,7 +30,7 @@ class Manager::ContactsControllerTest < ActionController::TestCase
 
   test 'should get create' do
     assert_difference('Contact.count') do
-      post :create, contact: @contact.attributes
+      post :create, contact: { name: 'create_test', email: 'create_test_email' }
       assert assigns(:contact).errors.empty?, assigns(:contact).errors.full_messages
     end
 
