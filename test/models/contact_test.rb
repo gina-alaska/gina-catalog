@@ -1,10 +1,11 @@
 require 'test_helper'
 
 class ContactTest < ActiveSupport::TestCase
-  should ensure_length_of(:phone_number).is_at_most(255)
-  should ensure_length_of(:job_title).is_at_most(255)
-  should ensure_length_of(:email).is_at_most(255)
-  should ensure_length_of(:name).is_at_most(255)
+  should validate_length_of(:phone_number).is_at_most(255)
+  should validate_length_of(:job_title).is_at_most(255)
+  should validate_length_of(:email).is_at_most(255)
+  should validate_length_of(:name).is_at_most(255)
+  should validate_uniqueness_of(:email).allow_blank
   should have_many(:entries).through(:entry_contacts)
 
   test 'blank contacts are invalid' do

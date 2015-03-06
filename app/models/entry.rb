@@ -16,7 +16,7 @@ class Entry < ActiveRecord::Base
   has_many :activity_logs, as: :loggable
   has_many :links, dependent: :destroy
 
-  has_many :entry_organizations
+  has_many :entry_organizations, validate: true
   has_many :organizations, -> { uniq }, through: :entry_organizations
   has_many :primary_entry_organizations, -> { primary }, class_name: 'EntryOrganization'
   has_many :primary_organizations, -> { uniq }, through: :primary_entry_organizations, source: :organization
@@ -30,7 +30,7 @@ class Entry < ActiveRecord::Base
   has_many :entry_collections
   has_many :collections, through: :entry_collections
 
-  has_many :entry_contacts
+  has_many :entry_contacts, validate: true
   has_many :contacts, through: :entry_contacts
 
   has_many :primary_entry_contacts, -> { primary }, class_name: 'EntryContact'

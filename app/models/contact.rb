@@ -6,7 +6,7 @@ class Contact < ActiveRecord::Base
 
   validate :name_email_or_title?
   validates :name, length: { maximum: 255 }
-  validates :email, length: { maximum: 255 }
+  validates :email, length: { maximum: 255 }, uniqueness: true, allow_blank: true
   validates :job_title, length: { maximum: 255 }
   validates :phone_number, length: { maximum: 255 }
 

@@ -33,7 +33,7 @@ class Manager::OrganizationsControllerTest < ActionController::TestCase
 
   test 'should get create' do
     assert_difference('Organization.count') do
-      post :create, organization: @organization.attributes
+      post :create, organization: { name: 'test_create', acronym: 'tc', category: 'Academic' }
       assert assigns(:organization).errors.empty?, assigns(:organization).errors.full_messages
     end
 
