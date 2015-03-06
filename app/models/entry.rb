@@ -30,7 +30,7 @@ class Entry < ActiveRecord::Base
   has_many :entry_collections
   has_many :collections, through: :entry_collections
 
-  has_many :entry_contacts
+  has_many :entry_contacts, validate: true
   has_many :contacts, through: :entry_contacts
 
   has_many :primary_entry_contacts, -> { primary }, class_name: 'EntryContact'
