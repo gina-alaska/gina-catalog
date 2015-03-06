@@ -30,6 +30,7 @@ module Import
       add_orgs(import.importable, json)
       add_locations(import.importable, json['locations'])
       add_contacts(import.importable, json)
+      add_links(import.importable, json)
 
       import.importable.portals << @portal
 
@@ -75,6 +76,15 @@ module Import
       ensure
         tf.close
         tf.unlink
+      end
+    end
+
+    def add_links(record, json)
+      return unless json['links'].present?
+
+      json['links'].each do |link|
+        link.delete(:id)
+        record.links.build(link)
       end
     end
   end
