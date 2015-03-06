@@ -9,13 +9,13 @@ $ ->
   $(document).on 'change', 'form[data-behavior="confirm-unsaved-changes"]', ->
     $(this).data("dirty", true)
 
-  $(document).on 'page:before-change page:before-unload', (e) ->
+  $(document).on 'page:before-change', (e) ->
     form = $('form[data-behavior="confirm-unsaved-changes"]')
 
     if form.length > 0 and form.data("dirty")
       msg = form.data("message") || "There are unsaved changes, you will lose these changes if you leave the page!"
-      confirm(msg)
-
+      return confirm(msg)      
+  
   $(window).on 'beforeunload', (e) ->
     form = $('form[data-behavior="confirm-unsaved-changes"]')
 
