@@ -1,58 +1,59 @@
 - if can? :view_manager_menu, current_user
-  %li.dropdown
-    = link_to '#', class: 'dropdown-toggle', data: { toggle: 'dropdown' } do
-      Catalog
-      %span.caret
+  - if can? :manage, Entry
+    %li.dropdown
+      = link_to '#', class: 'dropdown-toggle', data: { toggle: 'dropdown' } do
+        Catalog
+        %span.caret
 
-    %ul.dropdown-menu
-      - if can? :manage, Entry
-        %li
-          = link_to new_manager_entry_path do
-            %i.fa.fa-plus.fa-fw
-            New Record
-        %li
-          = link_to manager_entries_path do
-            %i.fa.fa-cubes.fa-fw
-            Search Records
-        %li.divider{ role: 'presentation' }
-      - if can? :manage, Collection
-        %li
-          = link_to manager_collections_path do
-            %i.fa.fa-sitemap.fa-fw
-            Collections
-      - if can? :manage, Contact
-        %li
-          = link_to manager_contacts_path do
-            %i.fa.fa-phone.fa-fw
-            Contacts
-      - if can? :manage, Organization
-        %li
-          = link_to manager_organizations_path do
-            %i.fa.fa-university.fa-fw
-            Organizations
-      - if can? :manage, UseAgreement
-        %li
-          = link_to manager_use_agreements_path do
-            %i.fa.fa-pencil.fa-fw
-            Use Agreements
+      %ul.dropdown-menu
+        - if can? :manage, Entry
+          %li
+            = link_to new_manager_entry_path do
+              %i.fa.fa-plus.fa-fw
+              New Record
+          %li
+            = link_to manager_entries_path do
+              %i.fa.fa-cubes.fa-fw
+              Search Records
+          %li.divider{ role: 'presentation' }
+        - if can? :manage, Collection
+          %li
+            = link_to manager_collections_path do
+              %i.fa.fa-sitemap.fa-fw
+              Collections
+        - if can? :manage, Contact
+          %li
+            = link_to manager_contacts_path do
+              %i.fa.fa-phone.fa-fw
+              Contacts
+        - if can? :manage, Organization
+          %li
+            = link_to manager_organizations_path do
+              %i.fa.fa-university.fa-fw
+              Organizations
+        - if can? :manage, UseAgreement
+          %li
+            = link_to manager_use_agreements_path do
+              %i.fa.fa-pencil.fa-fw
+              Use Agreements
+  - if can? :manage, Portal
+    %li.dropdown
+      = link_to '#', class: 'dropdown-toggle', data: { toggle: 'dropdown' } do
+        Portal
+        %span.caret
 
-  %li.dropdown
-    = link_to '#', class: 'dropdown-toggle', data: { toggle: 'dropdown' } do
-      Portal
-      %span.caret
-
-    %ul.dropdown-menu
-      %li
-        = link_to manager_path do
-          %i.fa.fa-dashboard.fa-fw
-          Dashboard
-      - if can? :update, Portal
+      %ul.dropdown-menu
         %li
-          = link_to manager_portal_path do
-            %i.fa.fa-cog.fa-fw
-            Settings
-      - if can? :manage, current_user.permissions.for(current_portal)
-        %li
-          = link_to manager_permissions_path do
-            %i.fa.fa-lock.fa-fw
-            Permissions
+          = link_to manager_path do
+            %i.fa.fa-dashboard.fa-fw
+            Dashboard
+        - if can? :update, Portal
+          %li
+            = link_to manager_portal_path do
+              %i.fa.fa-cog.fa-fw
+              Settings
+        - if can? :manage, current_user.permissions.for(current_portal)
+          %li
+            = link_to manager_permissions_path do
+              %i.fa.fa-lock.fa-fw
+              Permissions
