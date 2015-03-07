@@ -1,4 +1,4 @@
-= bootstrap_form_for :search, url: manager_entries_path, method: :get do |f|
+= bootstrap_form_for :search, url: entries_path, method: :get do |f|
   .panel.panel-default
     .panel-heading
       %h1.panel-title Search
@@ -12,7 +12,7 @@
             %button.btn.btn-default{ type: 'button', data: { behavior: 'clear-field', target: '#search_query', autosubmit: 'true' } }
               %i.fa.fa-times
             %button.btn.btn-primary{ type: 'submit' }
-              %i.fa.fa-search    
+              %i.fa.fa-search
       .row
         .col-sm-6
           .form-group
@@ -24,8 +24,8 @@
 
           = link_to manager_entries_path, class: 'btn btn-default btn-block' do
             %i.fa.fa-times
-            Reset all              
-            
+            Reset all
+
     .panel-body.panel-break
       %h3.panel-title Collections
     = render 'search/facet_field', facets: @facets.collections, field: :collections
