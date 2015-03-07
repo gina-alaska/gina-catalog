@@ -2,16 +2,6 @@ class Manager::EntriesController < ApplicationController
   before_action :gather_use_agreements, only: [:new, :create, :edit, :update]
   load_and_authorize_resource
 
-  include EntriesControllerSearchConcerns
-
-  def index
-    respond_to do |format|
-      format.html { search(params[:page], params[:limit] || 20) }
-      format.geojson { search(params[:page], params[:limit] || 500) }
-      format.json
-    end
-  end
-
   def show
     redirect_to @entry
   end
