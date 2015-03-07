@@ -16,3 +16,7 @@ $(document).on 'click', '[data-behavior="highlight"]', (e) ->
     $("#{group} .active").removeClass('active')
 
   $(target).toggleClass('active')
+
+$(document).on 'ready page:load', ->
+  for item in $('[data-behavior="float-checked"] input:checked')
+    $(item).parents('.facet-item').prependTo($(item).parents('.facet-list'))
