@@ -1,14 +1,6 @@
 .map-top
 .row
   .col-sm-4
-    .panel.panel-default
-      .panel-heading
-        %h1.panel-title
-          %i.fa.fa-cubes
-          Catalog Records
-      .panel-body
-        = link_to new_manager_entry_path, class: 'btn btn-success btn-block' do
-          New Catalog Record
     = render 'search/form'
   .col-sm-8.search-results
     %h1{ style: 'margin-top: 0px;' }
