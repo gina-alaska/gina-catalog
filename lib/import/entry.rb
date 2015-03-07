@@ -65,8 +65,8 @@ module Import
     end
 
     def add_contacts(model, json = {})
-      contact = find_contact(json['primary_contact']) if json['primary_contact'].present?
-      model.primary_contacts << contact unless contact.nil? || model.primary_contacts.include?(contact)
+      pcontact = find_contact(json['primary_contact']) if json['primary_contact'].present?
+      model.primary_contacts << pcontact unless pcontact.nil? || model.primary_contacts.include?(pcontact)
 
       json['contacts'].each do |contact|
         contact = find_contact(contact)
