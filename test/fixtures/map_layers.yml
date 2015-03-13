@@ -1,0 +1,20 @@
+# Read about fixtures at
+# http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  url: MyString
+  type: 
+  layers: MyString
+  projections: MyString
+  entry_id: 1
+  bounds: 
+
+two:
+  name: MyString
+  url: MyString
+  type: 
+  layers: MyString
+  projections: MyString
+  entry_id: 1
+  bounds: 
