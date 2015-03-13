@@ -28,6 +28,11 @@ class Import::EntryTest < ActiveSupport::TestCase
                                  },
                                  'contacts' => [{
                                    'id' => 2
+                                 }],
+                                 'links' => [{
+                                   'display_text' => 'website',
+                                   'url' => 'http://test.com',
+                                   'category' => 'Website'
                                  }]
     )
     assert import.importable.valid?, import.importable.errors.full_messages
@@ -35,6 +40,7 @@ class Import::EntryTest < ActiveSupport::TestCase
     assert_not_empty import.importable.funding_organizations
     assert_not_empty import.importable.primary_contacts
     assert_not_empty import.importable.contacts
+    assert_not_empty import.importable.links
   end
 
   test 'should add contacts to model' do

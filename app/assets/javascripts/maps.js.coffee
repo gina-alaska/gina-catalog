@@ -56,16 +56,26 @@ class Layer
   @valid_geojson_options_builder: (name) ->
     Layer.geojson_options[name]?
 
-  @get_geojson_layer: (config = {}) ->
-    if config.paged?
-      url = new URI(config.url)
-      data = url.search(true)
-      data.page = parseInt(data.page) + 1 || 1
-      data.limit = 500
-      url.search(data)
+  @next_page: (uri) ->
+    url = new URI(uri)
+    data = url.search(true)
+    @url_defaults(uri, { page: parseInt(data.page) + 1 || 1 })
 
-      config.url = url.toString()
-    featureLayer = L.mapbox.featureLayer(config.url)
+  @url_defaults: (uri, defaults = nil) ->
+    url = new URI(uri)
+
+    data = url.search(true)
+    params = $.extend(data, defaults) if defaults?
+
+    url.search(params)
+    url.toString()
+
+
+  @get_geojson_layer: (config = {}) ->
+    featureLayer = L.mapbox.featureLayer(@url_defaults(config.url, { limit: 500 }))
+
+    if config.paged?
+      config.url = @next_page(config.url)
 
     if @valid_geojson_options_builder(config.geojsonOptions)
       geojson = L.geoJson(

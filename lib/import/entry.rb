@@ -30,6 +30,7 @@ module Import
       add_orgs(import.importable, json)
       add_locations(import.importable, json['locations'])
       add_contacts(import.importable, json)
+      add_links(import.importable, json)
 
       import.importable.portals << @portal
 
@@ -42,19 +43,34 @@ module Import
       EntryType.where('name ilike :name', name: name).first
     end
 
+    def add_primary_org(model, org)
+      return if org.nil? || model.primary_organizations.include?(org)
+      model.primary_organizations << org
+    end
+
+    def add_funding_org(model, org)
+      return if org.nil? || model.funding_organizations.include?(org)
+      model.funding_organizations << org
+    end
+
     def add_orgs(model, json)
-      model.primary_organizations << find_org(json['primary_agency']) if json['primary_agency'].present?
-      model.funding_organizations << find_org(json['funding_agency']) if json['funding_agency'].present?
+      add_primary_org model, find_org(json['primary_agency']) if json['primary_agency'].present?
+      add_funding_org model, find_org(json['funding_agency']) if json['funding_agency'].present?
+
       json['agencies'].each do |agency|
-        model.organizations << find_org(agency)
+        org =  find_org(agency)
+        next if model.organizations.include?(org)
+        model.organizations << org
       end if json['agencies'].present?
     end
 
     def add_contacts(model, json = {})
-      model.primary_contacts << find_contact(json['primary_contact']) if json['primary_contact'].present?
+      pcontact = find_contact(json['primary_contact']) if json['primary_contact'].present?
+      model.primary_contacts << pcontact unless pcontact.nil? || model.primary_contacts.include?(pcontact)
 
       json['contacts'].each do |contact|
-        model.contacts << find_contact(contact)
+        contact = find_contact(contact)
+        model.contacts << contact unless contact.nil? || model.contacts.include?(contact)
       end if json['contacts'].present?
     end
 
@@ -69,12 +85,22 @@ module Import
         attachment = record.attachments.where(description: 'gLynx locations').first_or_initialize do |a|
           a.category = 'Geojson'
           a.file = tf
+          a.file_name = 'imported_locations'
         end
         record.attachments << attachment if attachment.new_record?
         attachment.save
       ensure
         tf.close
         tf.unlink
+      end
+    end
+
+    def add_links(record, json)
+      return unless json['links'].present?
+      json['links'].each do |link|
+        link.delete('id')
+        next if !record.new_record? && record.links.where(url: link['url']).count > 0
+        record.links.build(link)
       end
     end
   end
