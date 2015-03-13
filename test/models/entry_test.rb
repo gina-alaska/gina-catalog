@@ -85,4 +85,12 @@ class EntryTest < ActiveSupport::TestCase
 
     assert !entry.published?, 'Entry is still published when it should not be.'
   end
+  
+  test 'is the entry archived?' do
+    archived = entries(:archived)
+    entry = entries(:one)
+    
+    assert archived.archived?
+    assert_not entry.archived?
+  end
 end

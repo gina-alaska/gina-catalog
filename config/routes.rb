@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'archive_items/create'
+
+  get 'archives/create'
+
   get '/logout', to: 'sessions#destroy'
   get '/login', to: 'sessions#new'
   get '/auth/:provider/disable', to: 'users#disable_provider'
@@ -15,6 +19,7 @@ Rails.application.routes.draw do
   resources :users
   resources :tags
   resources :collections
+  resource :archive_items
 
   namespace :admin do
     resources :users
