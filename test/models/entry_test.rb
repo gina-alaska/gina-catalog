@@ -85,12 +85,34 @@ class EntryTest < ActiveSupport::TestCase
 
     assert !entry.published?, 'Entry is still published when it should not be.'
   end
-  
+
   test 'is the entry archived?' do
     archived = entries(:archived)
     entry = entries(:one)
-    
-    assert archived.archived?
-    assert_not entry.archived?
+
+    assert archived.archived?, 'Entry should have been archived'
+    assert_not entry.archived?, 'Entry should not be archived'
+  end
+
+  test 'should have archived flag in the elastic search search data' do
+    entry = entries(:one)
+    assert entry.search_data.keys.include?('archived?'), 'Did not find archived flag in ES search data'
+  end
+
+  test 'should archive entry' do
+    entry = entries(:one)
+    user = users(:one)
+
+    assert_difference('ArchiveItem.count') do
+      entry.archive!('Testing archiving', user)
+    end
+  end
+
+  test 'should unarchive entry' do
+    entry = entries(:archived)
+
+    assert_difference('ArchiveItem.count', -1) do
+      entry.unarchive!
+    end
   end
 end

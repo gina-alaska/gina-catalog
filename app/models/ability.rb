@@ -41,8 +41,7 @@ class Ability
       can :manage, [Organization, Contact]
       can :read, Attachment
       can :manage, [UseAgreement, Collection],  portal_id: current_portal.id
-      can :manage, ArchiveItem
-      can :manage, Entry do |entry|
+      can [:manage, :archive], Entry do |entry|
         entry.new_record? || entry.owner_portal == current_portal
       end
     end

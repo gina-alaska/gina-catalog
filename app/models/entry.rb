@@ -62,7 +62,7 @@ class Entry < ActiveRecord::Base
   accepts_nested_attributes_for :entry_contacts, allow_destroy: true
   accepts_nested_attributes_for :entry_organizations, allow_destroy: true
   accepts_nested_attributes_for :attachments, allow_destroy: true,
-            reject_if: proc { |attachment| attachment['id'].blank? && attachment['file'].blank? }
+                                              reject_if: proc { |attachment| attachment['id'].blank? && attachment['file'].blank? }
   accepts_nested_attributes_for :links, allow_destroy: true,
                                         reject_if: proc { |link| link['url'].blank? }
 

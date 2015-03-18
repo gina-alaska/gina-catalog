@@ -1,6 +1,8 @@
 - cache entry do
   %h4
     = link_to entry.title, entry
+    - if entry.archived?
+      %span{style: "color: red;"} (Archived)
   .entry-body
     - if entry.primary_organizations.any?
       %em

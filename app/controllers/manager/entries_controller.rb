@@ -65,6 +65,26 @@ class Manager::EntriesController < ApplicationController
     end
   end
 
+  def archive
+    @entry.archive!(params[:message], current_user)
+
+    respond_to do |format|
+      flash[:success] = "Catalog record #{@entry.title} has been archived."
+      format.html { redirect_to @entry }
+      format.json { head :no_content }
+    end
+  end
+
+  def unarchive
+    @entry.unarchive!
+
+    respond_to do |format|
+      flash[:success] = "Catalog record #{@entry.title} has been restored."
+      format.html { redirect_to @entry }
+      format.json { head :no_content }
+    end
+  end
+
   def destroy
     @entry.destroy
 

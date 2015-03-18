@@ -19,7 +19,6 @@ Rails.application.routes.draw do
   resources :users
   resources :tags
   resources :collections
-  resource :archive_items
 
   namespace :admin do
     resources :users
@@ -40,6 +39,10 @@ Rails.application.routes.draw do
       collection do
         get :tags
         get :collections
+      end
+      member do
+        patch :archive
+        patch :unarchive
       end
       resources :attachments
     end

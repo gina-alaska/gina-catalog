@@ -1,18 +1,15 @@
 #archive-modal.modal.fade{ role: 'dialog', 'aria-hidden' => 'true' }
   .modal-dialog
     .modal-content
-      .modal-header
-        %button.close{ data: { dismiss: 'modal' }}
-          %i.fa.fa-close
-        %h4{ class: "modal-title" } Archive Catalog Record: #{@entry.title}
-      .modal-body
-        %p
-          Add archival notes to the record, including reasons for archiving record, references to newer records, etc.
-          = bootstrap_form_for @archive_item do |f| 
-            = f.hidden_field :archived_id, value: @entry.id
-            = f.hidden_field :archived_type, value: 'Entry'
-            = f.text_area :message, cols: 40, rows: 10
-            .modal-footer
-              .form-action
-                .pull-right
-                  = f.primary "Archive Record"
+      = bootstrap_form_for [:archive, :manager, @entry] do |f| 
+        .modal-header
+          %button.close{ data: { dismiss: 'modal' }}
+            %i.fa.fa-close
+          %h4{ class: "modal-title" } Archive Catalog Record: #{@entry.title}
+        .modal-body
+          %p
+            Add archival notes to the record, including reasons for archiving record, references to newer records, etc.
+          .form-group
+            = text_area_tag :message, params[:message], rows: 10, class: 'form-control', placeholder: 'Please enter the reason for archiving the catalog record'
+        .modal-footer.text-right
+          = f.primary "Archive Record"
