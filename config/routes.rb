@@ -38,7 +38,7 @@ Rails.application.routes.draw do
     end
 
     resources :collections
-    
+
     resources :use_agreements
   end
 
@@ -77,8 +77,6 @@ Rails.application.routes.draw do
         get :search, defaults: { format: :json }
       end
     end
-
-    resources :collections
   end
 
   resources :entries do

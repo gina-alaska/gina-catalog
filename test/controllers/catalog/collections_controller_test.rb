@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Manager::CollectionsControllerTest < ActionController::TestCase
+class Catalog::CollectionsControllerTest < ActionController::TestCase
   setup do
     @collection = collections(:one)
     login_user(:portal_admin)
@@ -32,13 +32,13 @@ class Manager::CollectionsControllerTest < ActionController::TestCase
       assert assigns(:collection).errors.empty?, assigns(:collection).errors.full_messages
     end
 
-    assert_redirected_to manager_collections_path
+    assert_redirected_to catalog_collections_path
   end
 
   test 'should get update' do
     patch :update, id: @collection.id, collection: { name: 'Testing2' }
     assert assigns(:collection).errors.empty?, assigns(:collection).errors.full_messages
-    assert_redirected_to manager_collections_path
+    assert_redirected_to catalog_collections_path
   end
 
   test 'should get destroy' do
@@ -46,6 +46,6 @@ class Manager::CollectionsControllerTest < ActionController::TestCase
       delete :destroy, id: @collection.id
     end
 
-    assert_redirected_to manager_collections_path
+    assert_redirected_to catalog_collections_path
   end
 end

@@ -1,4 +1,4 @@
-require "test_helper"
+require 'test_helper'
 
 class Catalog::UseAgreementsControllerTest < ActionController::TestCase
   setup do
