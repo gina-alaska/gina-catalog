@@ -2,7 +2,7 @@
   .col-sm-4
     .panel.panel-default
       .panel-body
-        = search_form_for [:catalog, @q] do |f|
+        = search_form_for [:manager, @q] do |f|
           .form-group
             .input-group
               = f.search_field :name_cont, class: 'form-control', placeholder: 'Search by collection name'
@@ -14,7 +14,7 @@
                   %i.fa.fa-search
 
       .panel-footer
-        = link_to new_catalog_collection_path, class: 'btn btn-success btn-block' do
+        = link_to new_manager_collection_path, class: 'btn btn-success btn-block' do
           %i.fa.fa-sitemap
           New Collection
   .col-sm-8

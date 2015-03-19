@@ -35,7 +35,7 @@ module Import
       import.importable.portals << @portal
 
       import.save
-      unless import.importable.save
+      if !import.importable.save
         puts "Error saving entry #{import.import_id}"
         puts import.importable.errors.full_messages
       end
