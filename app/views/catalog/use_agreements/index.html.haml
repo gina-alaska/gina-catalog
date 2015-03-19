@@ -2,7 +2,7 @@
   .col-sm-4
     .panel.panel-default
       .panel-body
-        = search_form_for [:manager, @q] do |f|
+        = search_form_for [:catalog, @q] do |f|
           .form-group
             .input-group
               = f.search_field :title_cont, class: 'form-control', placeholder: 'Search by use agreement title'
@@ -14,7 +14,7 @@
                   %i.fa.fa-search
 
       .panel-footer
-        = link_to new_manager_use_agreement_path, class: 'btn btn-success btn-block' do
+        = link_to new_catalog_use_agreement_path, class: 'btn btn-success btn-block' do
           %i.fa.fa-pencil
           New Use Agreement
   .col-sm-8

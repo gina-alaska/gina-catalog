@@ -1,6 +1,6 @@
-require 'test_helper'
+require "test_helper"
 
-class Manager::UseAgreementsControllerTest < ActionController::TestCase
+class Catalog::UseAgreementsControllerTest < ActionController::TestCase
   setup do
     @use_agreement = use_agreements(:one)
     login_user(:portal_admin)
@@ -34,13 +34,13 @@ class Manager::UseAgreementsControllerTest < ActionController::TestCase
       assert assigns(:use_agreement).errors.empty?, assigns(:use_agreement).errors.full_messages
     end
 
-    assert_redirected_to manager_use_agreements_path
+    assert_redirected_to catalog_use_agreements_path
   end
 
   test 'should get update' do
     patch :update, id: @use_agreement.id, use_agreement: { name: 'Testing2' }
     assert assigns(:use_agreement).errors.empty?, assigns(:use_agreement).errors.full_messages
-    assert_redirected_to manager_use_agreements_path
+    assert_redirected_to catalog_use_agreements_path
   end
 
   test 'should get destroy' do
@@ -48,6 +48,6 @@ class Manager::UseAgreementsControllerTest < ActionController::TestCase
       delete :destroy, id: @use_agreement.id
     end
 
-    assert_redirected_to manager_use_agreements_path
+    assert_redirected_to catalog_use_agreements_path
   end
 end

@@ -24,6 +24,24 @@ Rails.application.routes.draw do
     resources :data_types
   end
 
+  namespace :catalog do
+    resources :contacts do
+      collection do
+        get :search
+      end
+    end
+
+    resources :organizations do
+      collection do
+        get :search, defaults: { format: :json }
+      end
+    end
+
+    resources :collections
+    
+    resources :use_agreements
+  end
+
   namespace :manager do
     resource :portal
 
