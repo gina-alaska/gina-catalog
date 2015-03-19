@@ -72,8 +72,6 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :use_agreements
-
     resources :organizations do
       collection do
         get :search, defaults: { format: :json }
