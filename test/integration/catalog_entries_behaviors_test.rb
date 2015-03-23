@@ -10,20 +10,20 @@ class ManagerEntriesBehaviorsTest < ActionDispatch::IntegrationTest
     login(:admin)
 
     update_entry('Save')
-    assert_equal edit_manager_entry_path(@entry), current_path
+    assert_equal edit_catalog_entry_path(@entry), current_path
   end
 
   test 'redirects when clicking the save & close button' do
     login(:admin)
 
     update_entry('Save & Close')
-    assert_equal manager_entries_path, current_path
+    assert_equal entries_path, current_path
   end
 
   private
 
   def update_entry(commit)
-    visit edit_manager_entry_path(@entry)
+    visit edit_catalog_entry_path(@entry)
     click_button commit
     sleep 1 # need to wait for ajax request to finish
   end

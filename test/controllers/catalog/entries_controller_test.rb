@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Manager::EntriesControllerTest < ActionController::TestCase
+class Catalog::EntriesControllerTest < ActionController::TestCase
   setup do
     @entry = entries(:one)
     login_user(:portal_admin)
@@ -28,7 +28,7 @@ class Manager::EntriesControllerTest < ActionController::TestCase
       assert assigns(:entry).errors.empty?, assigns(:entry).errors.full_messages
     end
 
-    assert_redirected_to edit_manager_entry_path(assigns(:entry))
+    assert_redirected_to edit_catalog_entry_path(assigns(:entry))
   end
 
   test 'should get create with ajax save' do
@@ -46,7 +46,7 @@ class Manager::EntriesControllerTest < ActionController::TestCase
       assert assigns(:entry).errors.empty?, assigns(:entry).errors.full_messages
     end
 
-    assert_redirected_to manager_entries_path
+    assert_redirected_to entries_path
   end
 
   test 'should get create with ajax save and close' do
@@ -62,7 +62,7 @@ class Manager::EntriesControllerTest < ActionController::TestCase
     patch :update, id: @entry.id, entry: { name: 'Testing2' }, commit: 'Save'
 
     assert assigns(:entry).errors.empty?, assigns(:entry).errors.full_messages
-    assert_redirected_to edit_manager_entry_path(assigns(:entry))
+    assert_redirected_to edit_catalog_entry_path(assigns(:entry))
   end
 
   test 'should update entry record with ajax save' do
@@ -76,7 +76,7 @@ class Manager::EntriesControllerTest < ActionController::TestCase
     patch :update, id: @entry.id, entry: { name: 'Testing2' }, commit: 'Save & Close'
 
     assert assigns(:entry).errors.empty?, assigns(:entry).errors.full_messages
-    assert_redirected_to manager_entries_path
+    assert_redirected_to entries_path
   end
 
   test 'should update entry record with ajax save and close' do
@@ -91,7 +91,7 @@ class Manager::EntriesControllerTest < ActionController::TestCase
       delete :destroy, id: @entry.id
     end
 
-    assert_redirected_to manager_entries_path
+    assert_redirected_to entries_path
   end
 
   test 'update should fail if updating editing from portal other than owner portal' do

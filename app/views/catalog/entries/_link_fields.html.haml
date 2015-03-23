@@ -1,0 +1,14 @@
+%tr.fields
+  %td
+    = f.select :category, Link::CATEGORIES, hide_label: true, label_col: 'col-sm-0'
+  %td
+    = f.text_field :display_text, hide_label: true, label_col: 'col-sm-0'
+  %td
+    = f.text_field :url, hide_label: true, label_col: 'col-sm-0'
+  %td
+    - if f.object.valid_link
+      %i.fa.fa-thumbs-up.fa-2x.text-success
+    - else
+      %i.fa.fa-thumbs-down.fa-2x.text-danger
+  %td.text-right
+    = f.link_to_remove('<i class="fa fa-times"></i>'.html_safe, class: 'btn btn-danger')

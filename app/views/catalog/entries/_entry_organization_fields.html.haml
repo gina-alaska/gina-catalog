@@ -1,0 +1,11 @@
+%tr.fields
+  %td
+    = f.hidden_field :id
+    = f.hidden_field :organization_id, class: 'organization_id'
+    %p.form-control-static.organization_name= f.object.organization.try(:name)
+  %td
+    = f.check_box :primary, layout: :inline
+  %td
+    = f.check_box :funding, layout: :inline
+  %td.text-right
+    = f.link_to_remove('<i class="fa fa-times"></i>'.html_safe, class: 'btn btn-danger')

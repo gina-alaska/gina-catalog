@@ -25,10 +25,20 @@ Rails.application.routes.draw do
   end
 
   namespace :catalog do
+    resources :collections
+
     resources :contacts do
       collection do
         get :search
       end
+    end
+
+    resources :entries do
+      collection do
+        get :tags
+        get :collections
+      end
+      resources :attachments
     end
 
     resources :organizations do
@@ -36,8 +46,6 @@ Rails.application.routes.draw do
         get :search, defaults: { format: :json }
       end
     end
-
-    resources :collections
 
     resources :use_agreements
   end
@@ -47,14 +55,6 @@ Rails.application.routes.draw do
 
     resources :users do
       get :autocomplete, on: :collection
-    end
-
-    resources :entries do
-      collection do
-        get :tags
-        get :collections
-      end
-      resources :attachments
     end
 
     resources :permissions

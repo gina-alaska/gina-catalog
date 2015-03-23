@@ -1,0 +1,5 @@
+= f.collection_select :use_agreement_id, use_agreements, :id, :title, { selected: f.object.use_agreement_id, include_blank: true }, { class: 'span12' }
+= f.form_group do
+  = f.check_box :request_contact_info
+= f.form_group do
+  = f.check_box :require_contact_info

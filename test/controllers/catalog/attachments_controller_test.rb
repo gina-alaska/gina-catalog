@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Manager::AttachmentsControllerTest < ActionController::TestCase
+class Catalog::AttachmentsControllerTest < ActionController::TestCase
   def test_show
     login_user(:portal_admin)
 
