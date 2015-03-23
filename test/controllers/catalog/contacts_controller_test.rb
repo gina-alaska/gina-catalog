@@ -1,6 +1,6 @@
-require 'test_helper'
+require "test_helper"
 
-class Manager::ContactsControllerTest < ActionController::TestCase
+class Catalog::ContactsControllerTest < ActionController::TestCase
   setup do
     @contact = contacts(:one)
     @contact_no_assoc = contacts(:no_associated_entry)
@@ -34,13 +34,13 @@ class Manager::ContactsControllerTest < ActionController::TestCase
       assert assigns(:contact).errors.empty?, assigns(:contact).errors.full_messages
     end
 
-    assert_redirected_to manager_contacts_path
+    assert_redirected_to catalog_contacts_path
   end
 
   test 'should get update' do
     patch :update, id: @contact.id, contact: { name: 'Testing2' }
     assert assigns(:contact).errors.empty?, assigns(:contact).errors.full_messages
-    assert_redirected_to manager_contacts_path
+    assert_redirected_to catalog_contacts_path
   end
 
   test 'should get destroy' do
@@ -48,6 +48,6 @@ class Manager::ContactsControllerTest < ActionController::TestCase
       delete :destroy, id: @contact_no_assoc.id
     end
 
-    assert_redirected_to manager_contacts_path
+    assert_redirected_to catalog_contacts_path
   end
 end

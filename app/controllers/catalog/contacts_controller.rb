@@ -1,4 +1,4 @@
-class Manager::ContactsController < ManagerController
+class Catalog::ContactsController < ApplicationController
   load_and_authorize_resource
 
   def index
@@ -39,7 +39,7 @@ class Manager::ContactsController < ManagerController
     respond_to do |format|
       if @contact.save
         flash[:success] = "Contact #{@contact.name} was successfully created."
-        format.html { redirect_back_or_default manager_contacts_path }
+        format.html { redirect_back_or_default catalog_contacts_path }
       else
         format.html { render action: 'new' }
         format.json { render json: @contact.errors, status: :unprocessable_entity }
@@ -51,7 +51,7 @@ class Manager::ContactsController < ManagerController
     respond_to do |format|
       if @contact.update_attributes(contact_params)
         flash[:success] = "Contact #{@contact.name} was successfully updated."
-        format.html { redirect_back_or_default manager_contacts_path }
+        format.html { redirect_back_or_default catalog_contacts_path }
         format.json { head :nocontent }
       else
         format.html { render action: 'edit' }
@@ -66,11 +66,11 @@ class Manager::ContactsController < ManagerController
     respond_to do |format|
       if @contact.destroy
         flash[:success] = "Contact #{@contact.name} was successfully deleted."
-        format.html { redirect_back_or_default manager_contacts_path }
+        format.html { redirect_back_or_default catalog_contacts_path }
         format.json { head :no_content }
       else
         flash[:error] = @contact.errors.full_messages.join('<br />').html_safe
-        format.html { redirect_back_or_default manager_contacts_path }
+        format.html { redirect_back_or_default catalog_contacts_path }
         #        format.json { head :no_content }
       end
     end

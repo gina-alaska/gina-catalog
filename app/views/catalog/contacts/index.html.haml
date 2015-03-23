@@ -2,7 +2,7 @@
   .col-sm-4
     .panel.panel-default
       .panel-body
-        = search_form_for [:manager, @q] do |f|
+        = search_form_for [:catalog, @q] do |f|
           .form-group
             .input-group
               = f.search_field :name_or_email_or_job_title_cont, class: 'form-control', placeholder: 'Search by name, email, or job title'
@@ -24,7 +24,7 @@
               %p
                 To see all available contacts check the "Show all contacts" box before searching.
       .panel-footer
-        = link_to new_manager_contact_path, class: 'btn btn-success btn-block' do
+        = link_to new_catalog_contact_path, class: 'btn btn-success btn-block' do
           %i.fa.fa-plus
           New Contact
   .col-sm-8
