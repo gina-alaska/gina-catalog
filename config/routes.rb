@@ -34,10 +34,6 @@ Rails.application.routes.draw do
     end
 
     resources :entries do
-      collection do
-        get :tags
-        get :collections
-      end
       resources :attachments
     end
 
