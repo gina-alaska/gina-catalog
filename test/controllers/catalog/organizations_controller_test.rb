@@ -1,6 +1,6 @@
-require 'test_helper'
+require "test_helper"
 
-class Manager::OrganizationsControllerTest < ActionController::TestCase
+class Catalog::OrganizationsControllerTest < ActionController::TestCase
   setup do
     @organization = organizations(:one)
     @organization_no_assoc = organizations(:no_associated_entry)
@@ -37,13 +37,13 @@ class Manager::OrganizationsControllerTest < ActionController::TestCase
       assert assigns(:organization).errors.empty?, assigns(:organization).errors.full_messages
     end
 
-    assert_redirected_to manager_organizations_path
+    assert_redirected_to catalog_organizations_path
   end
 
   test 'should patch update' do
     patch :update, id: @organization.id, organization: { name: 'Testing2' }
     assert assigns(:organization).errors.empty?, assigns(:organization).errors.full_messages
-    assert_redirected_to manager_organizations_path
+    assert_redirected_to catalog_organizations_path
   end
 
   test 'should destroy' do
@@ -51,6 +51,6 @@ class Manager::OrganizationsControllerTest < ActionController::TestCase
       delete :destroy, id: @organization_no_assoc.id
     end
 
-    assert_redirected_to manager_organizations_path
+    assert_redirected_to catalog_organizations_path
   end
 end

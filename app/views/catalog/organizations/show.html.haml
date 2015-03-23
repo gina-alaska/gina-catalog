@@ -2,7 +2,7 @@
   .panel-heading{ style: 'position: relative' }
     %ol.breadcrumb
       %li
-        = link_to [:manager, :organizations] do
+        = link_to [:catalog, :organizations] do
           %i.fa.fa-university
           Organizations
       %li.active= @organization.name
