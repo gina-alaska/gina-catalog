@@ -2,26 +2,33 @@
   %h4
     = link_to entry.title, entry
   .entry-body
-    - if entry.primary_organizations.any?
-      %em
-        = entry.primary_organizations.map(&:name_with_acronym).join(', ')
-        \-
-    #{truncate entry.description, length: 200, separator: ' '}
-  .entry-details
-    .detail-block
-      %label Status:
-      = entry.status
-    - if entry.start_date
-      .detail-block
-        %label Starts:
-        = entry.start_date
-    - if entry.end_date
-      .detail-block
-        %label Ends:
-        = entry.start_date
-    .detail-block
-      %label Updated:
-      = entry.updated_at
+    %table.table-condensed.description
+      %tbody
+        %tr
+          - if preview = entry.attachments.primary_thumbnail.first
+            %td.preview{ style: 'width:150px; padding-right: 10px;' }
+              = image_tag preview.file.thumb('300x150').url 
+          %td
+            - if entry.primary_organizations.any?
+              %em
+                = entry.primary_organizations.map(&:name_with_acronym).join(', ')
+                \-
+            #{truncate entry.description, length: 400, separator: ' '}
+            .entry-details
+              .detail-block
+                %label Status:
+                = entry.status
+              - if entry.start_date
+                .detail-block
+                  %label Starts:
+                  = entry.start_date
+              - if entry.end_date
+                .detail-block
+                  %label Ends:
+                  = entry.start_date
+              .detail-block
+                %label Updated:
+                = entry.updated_at
   .pull-left
     = render 'search/organization_logos', entry: entry
   .entry-type{ style: "background: #{entry.entry_type.color}"}
