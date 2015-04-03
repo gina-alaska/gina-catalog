@@ -1,4 +1,5 @@
 class IsoTopic < ActiveRecord::Base
+  include EntryDependentConcerns
   self.table_name = 'iso_topic_categories'
 
   validates :name, length: { maximum: 50 }

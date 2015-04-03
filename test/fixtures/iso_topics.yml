@@ -5,9 +5,14 @@
 one:
   name: IsoTopic
   long_name: MyString
-  iso_theme_code: One
+  iso_theme_code: '123'
 
 two:
   name: IsoTopic
   long_name: MyString
-  iso_theme_code: Two
+  iso_theme_code: '456'
+  
+no_associated_entry:
+  name: IsoTopicDelete
+  long_name: MyString
+  iso_theme_code: '789'
