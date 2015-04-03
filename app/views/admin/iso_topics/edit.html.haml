@@ -1,0 +1,13 @@
+.container
+  .panel.panel-default
+    .panel-heading{ style: 'position: relative' }
+      %ol.breadcrumb
+        %li
+          = link_to [:admin, :entry_types] do
+            %i.fa.fa-file-code-o
+            ISO Topics
+        %li.active
+          Edit #{@iso_topic.name}
+
+    .panel-body
+      = render 'form', iso_topic: @iso_topic
