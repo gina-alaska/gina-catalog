@@ -22,6 +22,7 @@ Rails.application.routes.draw do
     resources :entry_types
     resources :regions
     resources :data_types
+    resources :iso_topics
   end
 
   namespace :manager do

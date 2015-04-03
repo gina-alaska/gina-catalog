@@ -54,7 +54,7 @@ class Ability
 
     if user.global_admin?
       can :view_admin_menu, User
-      can :manage, [Portal, User, EntryType, Region, DataType]
+      can :manage, [Portal, User, EntryType, Region, DataType, IsoTopic]
     end
   end
 end
