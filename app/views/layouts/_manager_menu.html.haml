@@ -8,7 +8,7 @@
       %ul.dropdown-menu
         - if can? :manage, Entry
           %li
-            = link_to new_manager_entry_path do
+            = link_to new_catalog_entry_path do
               %i.fa.fa-plus.fa-fw
               New Record
           %li
@@ -18,22 +18,22 @@
           %li.divider{ role: 'presentation' }
         - if can? :manage, Collection
           %li
-            = link_to manager_collections_path do
+            = link_to catalog_collections_path do
               %i.fa.fa-sitemap.fa-fw
               Collections
         - if can? :manage, Contact
           %li
-            = link_to manager_contacts_path do
+            = link_to catalog_contacts_path do
               %i.fa.fa-phone.fa-fw
               Contacts
         - if can? :manage, Organization
           %li
-            = link_to manager_organizations_path do
+            = link_to catalog_organizations_path do
               %i.fa.fa-university.fa-fw
               Organizations
         - if can? :manage, UseAgreement
           %li
-            = link_to manager_use_agreements_path do
+            = link_to catalog_use_agreements_path do
               %i.fa.fa-pencil.fa-fw
               Use Agreements
   - if can? :manage, Portal

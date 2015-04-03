@@ -2,9 +2,9 @@
   .panel-heading
     %h1.panel-title Manager Menu
   .panel-body
-    = link_to edit_manager_entry_path(entry), class: 'btn btn-default btn-block' do
+    = link_to edit_catalog_entry_path(entry), class: 'btn btn-default btn-block' do
       %i.fa.fa-edit
       Edit
-    = link_to manager_entry_path(entry), method: :destroy, class: 'btn btn-danger btn-block', data: { confirm: 'Are you sure?' } do
+    = link_to catalog_entry_path(entry), method: :destroy, class: 'btn btn-danger btn-block', data: { confirm: 'Are you sure?' } do
       %i.fa.fa-trash
       Archive

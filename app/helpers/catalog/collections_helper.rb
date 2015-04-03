@@ -1,0 +1,2 @@
+module Catalog::CollectionsHelper
+end

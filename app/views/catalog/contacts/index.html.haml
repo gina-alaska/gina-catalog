@@ -1,0 +1,52 @@
+.row
+  .col-sm-4
+    .panel.panel-default
+      .panel-body
+        = search_form_for [:catalog, @q] do |f|
+          .form-group
+            .input-group
+              = f.search_field :name_or_email_or_job_title_cont, class: 'form-control', placeholder: 'Search by name, email, or job title'
+            
+              .input-group-btn
+                %button.btn.btn-default{ type: 'button', data: { behavior: 'clear-field', target: '#q_name_or_email_or_job_title_cont', autosubmit: 'true' } }
+                  %i.fa.fa-times
+                = button_tag type: 'submit', class: 'btn btn-primary' do
+                  %i.fa.fa-search
+          
+          .form-group
+            %label
+              = check_box_tag :all, 'on', params[:all].present?
+              Show all contacts
+            %span.help-block
+              %p
+                %strong Note: 
+                By default, only contacts that are currently assigned to a catalog record or are less than a week old are shown. 
+              %p
+                To see all available contacts check the "Show all contacts" box before searching.
+      .panel-footer
+        = link_to new_catalog_contact_path, class: 'btn btn-success btn-block' do
+          %i.fa.fa-plus
+          New Contact
+  .col-sm-8
+    .panel.panel-default
+      .panel-heading{ style: 'position: relative' }
+        .pull-right.muted{ style: 'font-size: 1em;' }
+          = page_entries_info @contacts
+        %ol.breadcrumb
+          %li.active
+            %i.fa.fa-group
+            Contacts
+      
+      %table.table.table-striped.table-condensed
+        %thead
+          %tr
+            %th Name
+            %th Job Title
+            %th Email
+            %th Phone
+            %th.text-right Actions
+        %tbody
+          = render(partial: "contact_row", collection: @contacts, as: :contact) || "<tr><td colspan=\"5\">There are no contacts found!</td></tr>".html_safe
+    .text-center
+      %div= paginate @contacts
+      = page_entries_info @contacts
