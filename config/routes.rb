@@ -84,6 +84,7 @@ Rails.application.routes.draw do
     resources :organizations
     resources :contacts
     resources :regions
+    resources :iso_topics
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

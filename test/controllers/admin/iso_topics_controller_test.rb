@@ -21,7 +21,7 @@ class Admin::IsoTopicsControllerTest < ActionController::TestCase
 
   test 'should create iso_topic' do
     assert_difference('IsoTopic.count') do
-      post :create, iso_topic: @iso_topic.attributes
+      post :create, iso_topic: { name: 'New', iso_theme_code: '111', long_name: 'Really New Again' }
       assert assigns(:iso_topic).errors.empty?, assigns(:iso_topic).errors.full_messages
     end
 

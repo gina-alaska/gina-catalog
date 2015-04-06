@@ -3,14 +3,9 @@
 
 #
 one:
-  name: IsoTopic
-  long_name: MyString
+  name: One
+  long_name: MyStringOne
   iso_theme_code: '123'
-
-two:
-  name: IsoTopic
-  long_name: MyString
-  iso_theme_code: '456'
   
 no_associated_entry:
   name: IsoTopicDelete
