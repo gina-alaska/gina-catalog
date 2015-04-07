@@ -21,11 +21,11 @@ module EntrySearchConcerns
   def organization_name
     organizations.map { |org| "#{org.name} #{org.acronym}" }
   end
-  
-  def iso_topic_names 
+
+  def iso_topic_names
     iso_topics.pluck(:name)
   end
-  
+
   def iso_topic_codes
     iso_topics.pluck(:iso_theme_code)
   end
