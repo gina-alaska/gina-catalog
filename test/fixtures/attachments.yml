@@ -5,7 +5,7 @@ one:
   file_uid: MyString
   file_size: 1
   file_name: MyString
-  category: MyString
+  category: Thumbnail
   uuid: MyString
   description: MyString
 
@@ -14,7 +14,7 @@ two:
   file_uid: MyString
   file_size: 1
   file_name: MyString
-  category: MyString
+  category: Thumbnail
   uuid: MyString
   description: MyString
 
@@ -23,7 +23,7 @@ thumbnail:
   file_uid: MyString
   file_size: 1
   file_name: MyString
-  category: "Thumbnail"
+  category: Thumbnail
   uuid: MyString
   description: MyString
 

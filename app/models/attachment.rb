@@ -21,6 +21,7 @@ class Attachment < ActiveRecord::Base
   before_save :create_uuid
   after_save :create_bbox
 
+  validates :category, inclusion: { in: Attachment::CATEGORIES }
   validates :description, length: { maximum: 255 }
   # validates :file_uid, presence: true
   # validates :uuid, presence: true
