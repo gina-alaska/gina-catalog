@@ -8,6 +8,7 @@ module EntriesControllerSearchConcerns
     @facets = OpenStruct.new(
       tags: organize_facets(@entries.facets['tag_list']),
       collections: organize_facets(@entries.facets['collection_ids'], Collection),
+      iso_topics: organize_facets(@entries.facets['iso_topic_ids'], IsoTopic),      
       entry_types: organize_facets(@entries.facets['entry_type_name']),
       data_types: organize_facets(@entries.facets['data_type_name']),
       status: organize_facets(@entries.facets['status']),
@@ -16,7 +17,7 @@ module EntriesControllerSearchConcerns
       organization_categories: organize_facets(@entries.facets['organization_categories']),
       primary_contacts: organize_facets(@entries.facets['primary_contact_ids'], Contact),
       other_contacts: organize_facets(@entries.facets['contact_ids'], Contact)
-    ) if facets?
+    ) if facets?    
   end
 
   protected
@@ -40,6 +41,7 @@ module EntriesControllerSearchConcerns
     # search_field            # model_field_name
     tags:                     :tag_list,
     collections:              :collection_ids,
+    iso_topics:               :iso_topic_ids,    
     entry_type_name:          :entry_type_name,
     data_type_name:           :data_type_name,
     status:                   :status,
@@ -117,7 +119,7 @@ module EntriesControllerSearchConcerns
     opts[:facets] = search_facets if facets?
 
     # items that must match all selected
-    [:tags, :collections, :organization_categories].each do |param|
+    [:tags, :collections, :iso_topics, :organization_categories].each do |param|
       opts[:where][FACET_FIELDS[param]] = { all: search_params[param] } if search_params[param].present?
     end
 
