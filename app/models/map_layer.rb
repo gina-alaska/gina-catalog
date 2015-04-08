@@ -4,16 +4,20 @@ class MapLayer < ActiveRecord::Base
     PROJECTED = GEO.projection_factory
   end
 
+  validates :name, length: { maximum: 255 }, presence: true
+  validates :url, length: { maximum: 255 }, presence: true
+  validates :type, length: { maximum: 255 }
+  validates :layers, length: { maximum: 255 }
+  validates :projections, length: { maximum: 255 }
+
+  belongs_to :entry
+
   set_rgeo_factory_for_column(:bounds, Factories::PROJECTED)
 
   scope :wms, -> { where(type: 'WmsLayer') }
-  
+
   def supports?(projection)
     self.projections.include?(projection)
-  end
-  
-  def to_s
-    "#{self.name} (#{self.type})"
   end
   
   def as_json(opts)
@@ -21,9 +25,5 @@ class MapLayer < ActiveRecord::Base
       :only => [:id, :type, :name, :url, :projections, :layers, :catalog_id, :bounds, :created_at, :updated_at]
     })
     super(opts)
-  end
-  
-  def to_s
-    self.name
   end
 end
