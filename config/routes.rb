@@ -37,6 +37,7 @@ Rails.application.routes.draw do
         get :collections
       end
       resources :attachments
+      resources :map_layers
     end
 
     resources :permissions
