@@ -4,17 +4,17 @@
 one:
   name: MyString
   url: MyString
-  type: 
+  type: WmsLayer
   layers: MyString
   projections: MyString
-  entry_id: 1
+  entry: one
   bounds: 
 
 two:
   name: MyString
   url: MyString
-  type: 
+  type: WmsLayer
   layers: MyString
   projections: MyString
-  entry_id: 1
+  entry: one
   bounds: 
