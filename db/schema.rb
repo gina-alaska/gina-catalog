@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150225191703) do
+ActiveRecord::Schema.define(version: 20150310182534) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -227,6 +227,18 @@ ActiveRecord::Schema.define(version: 20150225191703) do
     t.date     "last_checked_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "map_layers", force: :cascade do |t|
+    t.string   "name"
+    t.string   "url"
+    t.string   "type"
+    t.string   "layers"
+    t.string   "projections"
+    t.integer  "entry_id"
+    t.geometry "bounds",      limit: {:srid=>4326, :type=>"geometry"}
+    t.datetime "created_at",                                           null: false
+    t.datetime "updated_at",                                           null: false
   end
 
   create_table "memberships", force: :cascade do |t|
