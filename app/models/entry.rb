@@ -48,6 +48,8 @@ class Entry < ActiveRecord::Base
   has_one :owner_entry_portal, -> { where owner: true }, class_name: 'EntryPortal'
   has_one :owner_portal, through: :owner_entry_portal, source: :portal, class_name: 'Portal'
 
+  has_many :map_layers, :dependent => :destroy
+
   validates_associated :attachments
   validates :title, presence: true, length: { maximum: 255 }
   validates :slug, length: { maximum: 255 }
