@@ -1,6 +1,7 @@
 class Entry < ActiveRecord::Base
   include EntrySearchConcerns
   include LegacyConcerns
+  include ArchiveConcerns
 
   STATUSES = %w(Complete Ongoing Unknown Funded)
 

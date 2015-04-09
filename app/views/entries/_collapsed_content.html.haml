@@ -15,7 +15,9 @@
 
   - unless entry.collections.nil? or entry.collections.empty?
     %dt Collections
-    %dd= entry.collections.visible.join(', ')
+    - entry.collections.each do |collection|
+      %dd
+        = link_to collection.name, entries_path(search: { collections: [collection.id] })
     %br
 
   /= render '/shared/catalogs/map_layers_info', catalog: item
