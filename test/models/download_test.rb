@@ -1,13 +1,8 @@
 require "test_helper"
 
 class DownloadTest < ActiveSupport::TestCase
-
-  def download
-    @download ||= Download.new
-  end
-
-  def test_valid
-    assert download.valid?
-  end
+  should belong_to(:attachment)
+  should belong_to(:entry)
+  should ensure_length_of(:type).is_at_most(255)
 
 end
