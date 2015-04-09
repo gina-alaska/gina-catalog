@@ -1,10 +1,19 @@
-.panel.panel-default
-  .panel-heading
-    %h1.panel-title Manager Menu
-  .panel-body
-    = link_to edit_manager_entry_path(entry), class: 'btn btn-default btn-block' do
-      %i.fa.fa-edit
-      Edit
-    = link_to manager_entry_path(entry), method: :destroy, class: 'btn btn-danger btn-block', data: { confirm: 'Are you sure?' } do
-      %i.fa.fa-trash
-      Archive
+- if can? :manage, @entry
+  .panel.panel-default
+    .panel-heading
+      %h1.panel-title Manager Menu
+    .panel-body
+      = link_to edit_manager_entry_path(entry), class: 'btn btn-default btn-block' do
+        %i.fa.fa-edit
+        Edit
+      - if entry.archived?
+        = link_to unarchive_manager_entry_path(entry), method: :patch, class: 'btn btn-default btn-block', data: { confirm: 'Are you sure?' } do
+          %i.fa.fa-archive
+          Restore Record
+      - else
+        = button_tag class: 'btn btn-default btn-block', data: { toggle: 'modal', target: '#archive-modal' } do
+          %i.fa.fa-archive
+          Archive          
+      = link_to manager_entry_path(entry), method: :destroy, class: 'btn btn-danger btn-block', data: { confirm: 'Are you sure?' } do
+        %i.fa.fa-trash
+        Delete

@@ -99,4 +99,21 @@ class Manager::EntriesControllerTest < ActionController::TestCase
     patch :update, id: @entry.id, entry: { name: 'Testing2' }
     render_template 'app/views/welcome/permission_denied'
   end
+
+  test 'should archive entry' do
+    assert_difference('ArchiveItem.count') do
+      patch :archive, id: @entry.id, message: 'Testing'
+    end
+
+    assert_redirected_to assigns(:entry)
+  end
+
+  test 'should unarchive entry' do
+    patch :archive, id: @entry.id, message: 'Testing'
+    assert_difference('ArchiveItem.count', -1) do
+      patch :unarchive, id: @entry.id, archive: {}
+    end
+
+    assert_redirected_to assigns(:entry)
+  end
 end
