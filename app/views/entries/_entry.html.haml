@@ -1,5 +1,9 @@
 %h3
   = link_to entry.title, edit_catalog_entry_path(entry)
+  - if entry.archived?
+    %span{style: "color: red;"} (Archived)
+    %h4
+      Archive Message: #{entry.archive.message}
 :markdown
   #{entry.description}
 %p

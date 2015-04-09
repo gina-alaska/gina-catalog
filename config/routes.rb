@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'archive_items/create'
+
+  get 'archives/create'
+
   get '/logout', to: 'sessions#destroy'
   get '/login', to: 'sessions#new'
   get '/auth/:provider/disable', to: 'users#disable_provider'
@@ -34,6 +38,10 @@ Rails.application.routes.draw do
     end
 
     resources :entries do
+      member do
+        patch :archive
+        patch :unarchive
+      end
       resources :attachments
     end
 

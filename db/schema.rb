@@ -11,14 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150225191703) do
+ActiveRecord::Schema.define(version: 20150305010346) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "hstore"
-  enable_extension "uuid-ossp"
   enable_extension "postgis"
   enable_extension "postgis_topology"
+  enable_extension "hstore"
+  enable_extension "uuid-ossp"
 
   create_table "activity_logs", force: :cascade do |t|
     t.string   "activity"
@@ -51,6 +51,15 @@ ActiveRecord::Schema.define(version: 20150225191703) do
     t.string   "aliasable_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "archive_items", force: :cascade do |t|
+    t.text     "message"
+    t.integer  "archived_id"
+    t.string   "archived_type"
+    t.integer  "user_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   create_table "attachments", force: :cascade do |t|
@@ -285,9 +294,9 @@ ActiveRecord::Schema.define(version: 20150225191703) do
 
   create_table "regions", force: :cascade do |t|
     t.string   "name"
+    t.geometry "geom",       limit: {:srid=>4326, :type=>"geometry"}
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.geometry "geom",       limit: {:srid=>4326, :type=>"geometry"}
   end
 
   create_table "social_network_configs", force: :cascade do |t|
