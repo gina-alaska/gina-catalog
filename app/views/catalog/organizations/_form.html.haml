@@ -1,0 +1,55 @@
+%ul.nav.nav-tabs
+  %li.active
+    %a{ href: '#organization_form_fields', data: { toggle: 'tab' } } Organization Form
+  %li
+    %a{ href: '#logo', data: { toggle: 'tab' } } Logo
+  %li
+    %a{ href: '#aliases', data: { toggle: 'tab' } } Aliases
+
+= bootstrap_nested_form_for [:catalog, @organization], layout: :horizontal do |f|
+  .tab-content{ style: 'margin-top: 5px;' }
+    #organization_form_fields.tab-pane.active
+      = f.alert_message "Please fix the errors below."
+      = f.text_field :name
+      = f.text_field :acronym
+      = f.text_area :description, cols: 40, rows: 10
+      = f.select :category, Organization::CATEGORIES
+      = f.text_field :url
+
+    #logo.tab-pane
+      .fileinput{ style: 'display:block;', class: (f.object.logo.nil? ? 'fileinput-new' : 'fileinput-exists'), data: { provides: 'fileinput' } }
+        .row
+          .col-sm-10
+            .fileinput-new.thumbnail
+              %img{ src: 'holder.js/200x200', style: 'width: 200px; height: 200px;' }
+            .fileinput-preview.thumbnail.fileinput-exists{ style: 'max-width:200px; max-height:200px;' }
+              = image_tag @organization.logo.encode(:png).thumb('200x200').url if @organization.logo
+          .col-sm-2.text-right
+            %span.btn.btn-file.btn-success.btn-block
+              %span.fileinput-new Add logo
+              %span.fileinput-exists Change logo
+              = f.file_field_without_bootstrap :logo
+              
+    #aliases.tab-pane{ style: "min-height: 60px;" }
+      .row
+        .col-sm-10
+          %h4 Aliases
+        .col-sm-2
+          = f.link_to_add :aliases, :data => { :target => "#aliases_add" }, class: "btn btn-success btn-block" do
+            %i.icon-plus.icon-white
+            Add alias
+      %table.table.table-striped
+        %thead
+          %tr
+            %th Alias
+            %th.text-right Actions
+        %tbody#aliases_add
+          = f.fields_for :aliases, wrapper: false
+            
+  .form-action
+    = link_to :back, class: 'btn btn-default' do
+      %i.fa.fa-arrow-left
+      Cancel
+
+    .pull-right
+      = f.primary

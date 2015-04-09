@@ -28,23 +28,41 @@ Rails.application.routes.draw do
     resources :data_types
   end
 
-  namespace :manager do
-    resource :portal
+  namespace :catalog do
+    resources :collections
 
-    resources :users do
-      get :autocomplete, on: :collection
+    resources :contacts do
+      collection do
+        get :search
+      end
     end
 
     resources :entries do
-      collection do
-        get :tags
-        get :collections
+      member do
+        patch :archive
+        patch :unarchive
       end
       member do
         patch :archive
         patch :unarchive
       end
       resources :attachments
+    end
+
+    resources :organizations do
+      collection do
+        get :search, defaults: { format: :json }
+      end
+    end
+
+    resources :use_agreements
+  end
+
+  namespace :manager do
+    resource :portal
+
+    resources :users do
+      get :autocomplete, on: :collection
     end
 
     resources :permissions
@@ -62,15 +80,11 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :use_agreements
-
     resources :organizations do
       collection do
         get :search, defaults: { format: :json }
       end
     end
-
-    resources :collections
   end
 
   resources :entries do

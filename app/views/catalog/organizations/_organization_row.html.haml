@@ -1,0 +1,15 @@
+%tr
+  %td
+    = image_tag organization.logo.try(:thumb, '30x30').try(:url)
+  %td
+    = organization.name
+  %td
+    = organization.acronym
+  %td
+    = organization.category
+  %td.text-right.col-sm-2
+    .btn-group
+      = link_to edit_catalog_organization_path(organization), class: 'btn btn-sm btn-primary', title: 'Edit' do
+        %i.fa.fa-edit
+      = link_to catalog_organization_path(organization), data: { method: :delete, confirm: "Are you sure?" }, class: 'btn btn-sm btn-danger', title: 'Delete' do
+        %i.fa.fa-trash-o

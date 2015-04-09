@@ -1,0 +1,13 @@
+.container
+  .panel.panel-default
+    .panel-heading{ style: 'position: relative' }
+      %ol.breadcrumb
+        %li
+          = link_to [:catalog, :organizations] do
+            %i.fa.fa-university
+            Organizations
+        %li.active
+          Edit #{@organization.name}
+
+    .panel-body
+      = render 'form', organization: @organization 
