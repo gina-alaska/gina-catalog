@@ -1,0 +1,24 @@
+- if @map_layer.errors.count > 0
+  .alert.alert-error{ style: 'margin: 5px;' }
+    %h4 Error while saving map layer
+    %ul
+      - @map_layer.errors.full_messages.each do |msg|
+        %li= msg
+= bootstrap_form_for [:catalog, @entry, @map_layer.becomes(MapLayer)], remote: true, layout: :horizontal, label_col: 'col-sm-2', control_col: 'col-sm-10', id: 'map-layer-form' do |f|
+  .form-group.form-group-sm
+    = f.select :type, [['WMS', 'WmsLayer']], { include_blank: false }, class: 'form-control'
+  .form-group.form-group-sm
+    = f.text_field :name, class: 'form-control'
+  .form-group.form-group-sm
+    = f.text_field :url, class: 'form-control'
+  .form-group.form-group-sm
+    = f.text_field :layers, class: 'form-control'
+    %span.help-block.muted{style: 'padding-left: 110px;' }
+      Only applies to WMS Layers
+  .form-group.form-group-sm
+    = f.text_field :projections, placeholder: 'Leave blank to support all projects', class: 'form-control'
+    %span.help-block.muted{style: 'padding-left: 110px;' }
+      Valid options are EPSG:3857, EPSG: 3338, EPSG: 3572
+
+  .form-actions{ style: 'margin:0;' }
+    = f.submit class: 'btn btn-primary pull-right'

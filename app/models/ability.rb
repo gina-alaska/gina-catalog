@@ -38,7 +38,7 @@ class Ability
     if user.role?(:data_manager, current_portal)
       can :view_manager_menu, User
 
-      can :manage, [Organization, Contact]
+      can :manage, [Organization, Contact, MapLayer]
       can :read, Attachment
       can :manage, [UseAgreement, Collection],  portal_id: current_portal.id
       can [:manage, :archive], Entry do |entry|
