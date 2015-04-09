@@ -1,0 +1,14 @@
+# Read about fixtures at
+# http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  download_date: 2015-04-09
+  user: 1
+  agent: MyString
+  type: 
+
+two:
+  download_date: 2015-04-09
+  user: 1
+  agent: MyString
+  type: 
