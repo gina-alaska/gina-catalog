@@ -3,7 +3,7 @@ class CreateDownloads < ActiveRecord::Migration
     create_table :downloads do |t|
       t.date :download_date
       t.integer :user
-      t.text :useragent
+      t.text :user_agent
       t.string :type
 
       t.timestamps null: false
