@@ -16,7 +16,6 @@ ActiveRecord::Schema.define(version: 20150305010346) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "postgis"
-  enable_extension "postgis_topology"
   enable_extension "hstore"
   enable_extension "uuid-ossp"
 
