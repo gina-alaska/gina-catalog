@@ -1,4 +1,4 @@
-class Manager::MapLayersController < ApplicationController
+class Catalog::MapLayersController < ApplicationController
   load_and_authorize_resource
   respond_to :json, :js, :html
 

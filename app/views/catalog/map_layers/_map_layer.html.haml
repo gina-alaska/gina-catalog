@@ -1,0 +1,11 @@
+%tr
+  %td= map_layer.read_attribute(:type).underscore.humanize
+  %td= map_layer.name
+  %td= map_layer.url
+  %td
+    .btn-group
+      = link_to edit_catalog_entry_map_layer_path(map_layer.entry, map_layer), class: 'btn btn-default', remote: true, title: 'Edit' do
+        %i.fa.fa-edit
+      = link_to catalog_entry_map_layer_path(map_layer.entry, map_layer), method: :delete, title: 'Delete', data: { confirm: 'Are you sure?' }, class: 'btn btn-danger', remote: true do
+        %i.fa.fa-trash
+        

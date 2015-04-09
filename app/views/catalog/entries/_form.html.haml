@@ -93,11 +93,11 @@
         .col-sm-10
           %h4 Map Layers
         .col-sm-2
-          = link_to new_manager_entry_map_layer_path(@entry), class: 'btn btn-success pull-right', remote: true do
+          = link_to new_catalog_entry_map_layer_path(@entry), class: 'btn btn-success pull-right', remote: true do
             %i.fa.fa-plus
             Add new Map Layer
       .fields
-        = render '/manager/map_layers/list', map_layers: @entry.map_layers
+        = render '/catalog/map_layers/list', map_layers: @entry.map_layers
 
     #sds.tab-pane
       = render partial: "sds_fields", locals: { f: f, use_agreements: @use_agreements }
