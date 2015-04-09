@@ -119,7 +119,7 @@ ActiveRecord::Schema.define(version: 20150409172745) do
   create_table "downloads", force: :cascade do |t|
     t.date     "download_date"
     t.integer  "user"
-    t.string   "agent"
+    t.text     "agent"
     t.string   "type"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
