@@ -42,6 +42,10 @@ Rails.application.routes.draw do
         patch :archive
         patch :unarchive
       end
+      member do
+        patch :archive
+        patch :unarchive
+      end
       resources :attachments
     end
 
