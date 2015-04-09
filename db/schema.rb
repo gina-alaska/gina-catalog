@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150310182534) do
+ActiveRecord::Schema.define(version: 20150409172745) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,6 +51,15 @@ ActiveRecord::Schema.define(version: 20150310182534) do
     t.string   "aliasable_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "archive_items", force: :cascade do |t|
+    t.text     "message"
+    t.integer  "archived_id"
+    t.string   "archived_type"
+    t.integer  "user_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   create_table "attachments", force: :cascade do |t|
@@ -107,6 +116,15 @@ ActiveRecord::Schema.define(version: 20150310182534) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "downloads", force: :cascade do |t|
+    t.date     "download_date"
+    t.integer  "user"
+    t.text     "user_agent"
+    t.string   "type"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
   create_table "entries", force: :cascade do |t|
     t.string   "title"
     t.text     "description"
@@ -147,6 +165,13 @@ ActiveRecord::Schema.define(version: 20150310182534) do
     t.boolean  "primary",    default: false
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "entry_iso_topics", force: :cascade do |t|
+    t.integer  "entry_id"
+    t.integer  "iso_topic_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "entry_organizations", force: :cascade do |t|
@@ -216,6 +241,14 @@ ActiveRecord::Schema.define(version: 20150310182534) do
     t.string   "name"
     t.uuid     "uuid"
     t.integer  "portal_id"
+  end
+
+  create_table "iso_topic_categories", force: :cascade do |t|
+    t.string   "name"
+    t.string   "long_name"
+    t.string   "iso_theme_code"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "links", force: :cascade do |t|

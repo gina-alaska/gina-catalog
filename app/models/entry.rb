@@ -1,6 +1,7 @@
 class Entry < ActiveRecord::Base
   include EntrySearchConcerns
   include LegacyConcerns
+  include ArchiveConcerns
 
   STATUSES = %w(Complete Ongoing Unknown Funded)
 
@@ -39,6 +40,9 @@ class Entry < ActiveRecord::Base
   has_many :other_entry_contacts, -> { other }, class_name: 'EntryContact'
   has_many :other_contacts, through: :other_entry_contacts, source: :contact
 
+  has_many :entry_iso_topics
+  has_many :iso_topics, through: :entry_iso_topics
+
   has_many :entry_portals
   has_many :portals, -> { uniq }, through: :entry_portals
 
@@ -63,7 +67,7 @@ class Entry < ActiveRecord::Base
   accepts_nested_attributes_for :entry_contacts, allow_destroy: true
   accepts_nested_attributes_for :entry_organizations, allow_destroy: true
   accepts_nested_attributes_for :attachments, allow_destroy: true,
-            reject_if: proc { |attachment| attachment['id'].blank? && attachment['file'].blank? }
+                                              reject_if: proc { |attachment| attachment['id'].blank? && attachment['file'].blank? }
   accepts_nested_attributes_for :links, allow_destroy: true,
                                         reject_if: proc { |link| link['url'].blank? }
 

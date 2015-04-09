@@ -1,0 +1,9 @@
+# Read about fixtures at
+# http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  message: MyText
+  user: admin
+  archived_id: archived.id (Entry)
+  archived_type: Entry
+  archived: archived (Entry)

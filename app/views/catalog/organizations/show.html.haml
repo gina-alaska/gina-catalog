@@ -1,0 +1,26 @@
+.panel.panel-default
+  .panel-heading{ style: 'position: relative' }
+    %ol.breadcrumb
+      %li
+        = link_to [:catalog, :organizations] do
+          %i.fa.fa-university
+          Organizations
+      %li.active= @organization.name
+  
+  .panel-body
+    %dl.dl-horizontal
+      %dt Acronym
+      %dd= @organization.acronym
+      %dt Description
+      %dd= @organization.description
+      %dt Category
+      %dd= @organization.category
+      %dt Url
+      %dd= @organization.url
+      %dt Aliases
+      - @organization.aliases.each do |item|
+        %dd= item.text
+      %dt Logo
+      %dd= image_tag @organization.logo.thumb('150x150#').url unless @organization.logo.blank?
+
+  .panel-footer

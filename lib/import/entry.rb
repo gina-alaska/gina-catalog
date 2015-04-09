@@ -35,7 +35,10 @@ module Import
       import.importable.portals << @portal
 
       import.save
-      import.importable.save
+      unless import.importable.save
+        puts "Error saving entry #{import.import_id}"
+        puts import.importable.errors.full_messages
+      end
       import
     end
 
@@ -76,6 +79,7 @@ module Import
 
     def add_locations(record, locations)
       return if !locations.present? || locations.to_json.blank?
+      return if locations['features'].empty?
 
       begin
         tf = Tempfile.new(['locations', '.geojson'])
