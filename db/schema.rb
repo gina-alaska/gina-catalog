@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150305010346) do
+ActiveRecord::Schema.define(version: 20150403220136) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -158,6 +158,13 @@ ActiveRecord::Schema.define(version: 20150305010346) do
     t.datetime "updated_at"
   end
 
+  create_table "entry_iso_topics", force: :cascade do |t|
+    t.integer  "entry_id"
+    t.integer  "iso_topic_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
   create_table "entry_organizations", force: :cascade do |t|
     t.integer  "entry_id"
     t.integer  "organization_id"
@@ -225,6 +232,14 @@ ActiveRecord::Schema.define(version: 20150305010346) do
     t.string   "name"
     t.uuid     "uuid"
     t.integer  "portal_id"
+  end
+
+  create_table "iso_topic_categories", force: :cascade do |t|
+    t.string   "name"
+    t.string   "long_name"
+    t.string   "iso_theme_code"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "links", force: :cascade do |t|

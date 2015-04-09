@@ -1,0 +1,18 @@
+.panel.panel-default
+  .panel-heading{ style: 'position: relative' }
+    = link_to new_admin_iso_topic_path, class: 'btn btn-success panel-btn-right' do
+      New ISO Topic
+    %ol.breadcrumb
+      %li.active
+        %i.fa.fa-folder-code-o
+        ISO Topics
+  
+  %table.table.table-striped.table-condensed
+    %thead
+      %tr
+        %th Theme Category Code
+        %th Topic Category Name        
+        %th Topic Category Long Name
+        %th.text-right Action
+    %tbody
+      = render(partial: "iso_topic_row", collection: @iso_topics, as: :iso_topic) || "<tr><td colspan=\"3\">There are no ISO topics available.</td></tr>".html_safe

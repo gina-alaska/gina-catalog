@@ -1,0 +1,13 @@
+%tr
+  %td
+    = iso_topic.iso_theme_code
+  %td
+    = iso_topic.name
+  %td
+    = iso_topic.long_name
+  %td.text-right
+    .btn-group
+      = link_to edit_admin_iso_topic_path(iso_topic), class: 'btn btn-sm btn-primary', title: 'Edit' do
+        %i.fa.fa-edit
+      = link_to admin_iso_topic_path(iso_topic), data: { method: :delete, confirm: "Are you sure?" }, class: 'btn btn-sm btn-danger', title: 'Delete' do
+        %i.fa.fa-trash-o

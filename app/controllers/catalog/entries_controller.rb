@@ -102,7 +102,7 @@ class Catalog::EntriesController < ApplicationController
       :title, :description, :status, :entry_type_id, :start_date, :end_date,
       :use_agreement_id, :request_contact_info, :require_contact_info,
       :data_type_id, :tag_list,
-      collection_ids: [], region_ids: [],
+      collection_ids: [], region_ids: [], iso_topic_ids: [],
       links_attributes: [:id, :link_id, :category, :display_text, :url, :_destroy],
       attachments_attributes: [:id, :file, :category, :description, :interaction, :_destroy],
       entry_contacts_attributes: [:id, :contact_id, :primary, :_destroy],
@@ -114,6 +114,10 @@ class Catalog::EntriesController < ApplicationController
 
     if values[:region_ids].present?
       values[:region_ids] = values.delete(:region_ids).map(&:to_i).reject { |v| v == 0 }
+    end
+
+    if values[:iso_topic_ids].present?
+      values[:iso_topic_ids] = values.delete(:iso_topic_ids).map(&:to_i).reject { |v| v == 0 }
     end
 
     values
