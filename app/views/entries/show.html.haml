@@ -1,7 +1,6 @@
 .row
   .col-sm-4
-    - if can? :manage, @entry
-      = render 'manager_menu', entry: @entry
+    = render 'manager_menu', entry: @entry
 
     .panel.panel-default
       - if @entry.attachments.geojson.any?
@@ -34,3 +33,5 @@
               = image_tag thumbnail.file.thumb('300x150').url  
   .col-sm-8
     = render @entry
+
+= render 'archive_modal', entry: @entry

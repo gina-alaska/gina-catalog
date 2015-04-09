@@ -2,12 +2,12 @@ module EntriesControllerSearchConcerns
   extend ActiveSupport::Concern
 
   def search(page, per_page = 20)
-    @search_params = search_params
+    # search_params
     @entries = Entry.search elasticsearch_params(page, per_page)
-
     @facets = OpenStruct.new(
       tags: organize_facets(@entries.facets['tag_list']),
       collections: organize_facets(@entries.facets['collection_ids'], Collection),
+      iso_topics: organize_facets(@entries.facets['iso_topic_ids'], IsoTopic),
       entry_types: organize_facets(@entries.facets['entry_type_name']),
       data_types: organize_facets(@entries.facets['data_type_name']),
       status: organize_facets(@entries.facets['status']),
@@ -15,8 +15,11 @@ module EntriesControllerSearchConcerns
       funding_organizations: organize_facets(@entries.facets['funding_organization_ids'], Organization, :id, :acronym_with_name),
       organization_categories: organize_facets(@entries.facets['organization_categories']),
       primary_contacts: organize_facets(@entries.facets['primary_contact_ids'], Contact),
-      other_contacts: organize_facets(@entries.facets['contact_ids'], Contact)
+      other_contacts: organize_facets(@entries.facets['contact_ids'], Contact),
+      archived?: organize_facets(@entries.facets['archived?'])
     ) if facets?
+
+    # logger.info "*****FACETS*******" + @entries.facets['archived?'].inspect
   end
 
   protected
@@ -31,6 +34,7 @@ module EntriesControllerSearchConcerns
     facets = elastic_facets['terms'].each_with_object([]) do |f, memo|
       f['display_name'] = model.nil? ? f['term'] : model.where(term_field => f['term']).first.try(display_field)
       memo << f
+      logger.info "*********DISPLAY NAME #{memo}***********"
     end
 
     facets.sort { |a, b| a['count'] == b['count'] ? a['term'] <=> b['term'] : b['count'] <=> a['count'] }
@@ -40,6 +44,7 @@ module EntriesControllerSearchConcerns
     # search_field            # model_field_name
     tags:                     :tag_list,
     collections:              :collection_ids,
+    iso_topics:               :iso_topic_ids,
     entry_type_name:          :entry_type_name,
     data_type_name:           :data_type_name,
     status:                   :status,
@@ -47,18 +52,23 @@ module EntriesControllerSearchConcerns
     funding_organizations:    :funding_organization_ids,
     organization_categories:  :organization_categories,
     primary_contacts:         :primary_contact_ids,
-    other_contacts:           :contact_ids
+    other_contacts:           :contact_ids,
+    archived:                :archived?
   }
 
   def search_params
-    fields = [:starts_before, :starts_after, :ends_before, :ends_after, :order, :limit]
-    fields << FACET_FIELDS.keys.each_with_object({}) { |f, c| c[f] = [] }
+    if @search_params.nil?
+      fields = [:starts_before, :starts_after, :ends_before, :ends_after, :order, :limit, :archived]
+      fields << FACET_FIELDS.keys.each_with_object({}) { |f, c| c[f] = [] }
 
-    if params[:search].present?
-      @search_params ||= params.require(:search).permit(:query, *fields)
+      @search_params = {}
+      if params[:search].present?
+        @search_params = params.require(:search).permit(:query, *fields)
+      end
+      @search_params[:archived?] ||= false
     end
 
-    @search_params || {}
+    @search_params
   end
 
   def date_search_params(after, before)
@@ -98,7 +108,9 @@ module EntriesControllerSearchConcerns
   end
 
   def search_facets
-    FACET_FIELDS.values.each_with_object({}) { |f, c| c[f] = { limit: 50 } }
+    a = FACET_FIELDS.values.each_with_object({}) { |f, c| c[f.to_s] = { limit: 50 } }
+    logger.info a.inspect
+    a
   end
 
   def elasticsearch_params(page, per_page = 20)
@@ -117,15 +129,16 @@ module EntriesControllerSearchConcerns
     opts[:facets] = search_facets if facets?
 
     # items that must match all selected
-    [:tags, :collections, :organization_categories].each do |param|
+    [:tags, :collections, :iso_topics, :organization_categories].each do |param|
       opts[:where][FACET_FIELDS[param]] = { all: search_params[param] } if search_params[param].present?
     end
 
     # items that can match any selected
     [:entry_type_name, :data_type_name, :status, :primary_organizations, :funding_organizations,
-     :primary_contacts, :other_contacts].each do |param|
+     :primary_contacts, :other_contacts, :archived].each do |param|
       opts[:where][FACET_FIELDS[param]] = search_params[param] if search_params[param].present?
     end
+    opts[:where][:archived?] ||= false
 
     opts[:query] = query_params if search_params[:query].present?
 

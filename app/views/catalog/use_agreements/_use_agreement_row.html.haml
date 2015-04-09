@@ -1,0 +1,13 @@
+%tr
+  %td
+    = use_agreement.title
+  %td
+    = use_agreement.required.blank? ? "No" : "Yes"
+  %td
+    = use_agreement.archived_at.blank? ? "No" : "Yes"
+  %td.text-right.col-sm-2
+    .btn-group
+      = link_to edit_catalog_use_agreement_path(use_agreement), class: 'btn btn-sm btn-primary', title: 'Edit' do
+        %i.fa.fa-edit
+      = link_to catalog_use_agreement_path(use_agreement), data: { method: :delete, confirm: "Are you sure?" }, class: 'btn btn-sm btn-danger', title: 'Archive' do
+        %i.fa.fa-trash-o

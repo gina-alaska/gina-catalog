@@ -1,0 +1,17 @@
+%tr
+  %td
+    = contact.name
+  %td
+    = contact.job_title
+  %td
+    = contact.email
+  %td
+    = contact.phone_number
+  %td.text-right.col-sm-2
+    .btn-group
+      = link_to edit_catalog_contact_path(contact), class: 'btn btn-sm btn-primary', title: 'Edit' do
+        %i.fa.fa-edit
+      = link_to catalog_contact_path(contact), data: { method: :delete, confirm: "Are you sure?" }, class: 'btn btn-sm btn-danger', title: 'Delete' do
+        %i.fa.fa-trash-o
+
+

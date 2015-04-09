@@ -1,2 +1,0 @@
-module Manager::UseAgreementsHelper
-end

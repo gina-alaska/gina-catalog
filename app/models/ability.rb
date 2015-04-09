@@ -41,7 +41,7 @@ class Ability
       can :manage, [Organization, Contact]
       can :read, Attachment
       can :manage, [UseAgreement, Collection],  portal_id: current_portal.id
-      can :manage, Entry do |entry|
+      can [:manage, :archive], Entry do |entry|
         entry.new_record? || entry.owner_portal == current_portal
       end
     end
@@ -54,7 +54,7 @@ class Ability
 
     if user.global_admin?
       can :view_admin_menu, User
-      can :manage, [Portal, User, EntryType, Region, DataType]
+      can :manage, [Portal, User, EntryType, Region, DataType, IsoTopic]
     end
   end
 end

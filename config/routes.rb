@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'archive_items/create'
+
+  get 'archives/create'
+
   get '/logout', to: 'sessions#destroy'
   get '/login', to: 'sessions#new'
   get '/auth/:provider/disable', to: 'users#disable_provider'
@@ -22,6 +26,37 @@ Rails.application.routes.draw do
     resources :entry_types
     resources :regions
     resources :data_types
+    resources :iso_topics
+  end
+
+  namespace :catalog do
+    resources :collections
+
+    resources :contacts do
+      collection do
+        get :search
+      end
+    end
+
+    resources :entries do
+      member do
+        patch :archive
+        patch :unarchive
+      end
+      member do
+        patch :archive
+        patch :unarchive
+      end
+      resources :attachments
+    end
+
+    resources :organizations do
+      collection do
+        get :search, defaults: { format: :json }
+      end
+    end
+
+    resources :use_agreements
   end
 
   namespace :manager do
@@ -29,14 +64,6 @@ Rails.application.routes.draw do
 
     resources :users do
       get :autocomplete, on: :collection
-    end
-
-    resources :entries do
-      collection do
-        get :tags
-        get :collections
-      end
-      resources :attachments
     end
 
     resources :permissions
@@ -54,15 +81,11 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :use_agreements
-
     resources :organizations do
       collection do
         get :search, defaults: { format: :json }
       end
     end
-
-    resources :collections
   end
 
   resources :entries do
@@ -73,6 +96,7 @@ Rails.application.routes.draw do
     resources :organizations
     resources :contacts
     resources :regions
+    resources :iso_topics
   end
 
   # The priority is based upon order of creation: first created -> highest priority.
