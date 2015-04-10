@@ -118,9 +118,9 @@ ActiveRecord::Schema.define(version: 20150409172745) do
 
   create_table "downloads", force: :cascade do |t|
     t.date     "download_date"
-    t.integer  "user"
     t.text     "user_agent"
-    t.string   "type"
+    t.integer  "user_id"
+    t.integer  "attachment_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
   end
