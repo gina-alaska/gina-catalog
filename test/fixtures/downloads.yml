@@ -3,12 +3,12 @@
 
 one:
   download_date: 2015-04-09
-  user: 1
-  agent: MyString
-  type: 
+  user_id: one
+  user_agent: MyString
+  attachment_id: one
 
 two:
   download_date: 2015-04-09
-  user: 1
-  agent: MyString
-  type: 
+  user_id: one
+  user_agent: MyString
+  attachment: one
