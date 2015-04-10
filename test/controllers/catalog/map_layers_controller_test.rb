@@ -1,6 +1,6 @@
 require "test_helper"
 
-class Manager::MapLayersControllerTest < ActionController::TestCase
+class Catalog::MapLayersControllerTest < ActionController::TestCase
   setup do
     login_user(:portal_admin)
     @entry = entries(:one)
@@ -29,7 +29,7 @@ class Manager::MapLayersControllerTest < ActionController::TestCase
 
     assert assigns(:map_layer).errors.empty?, assigns(:map_layer).errors.full_messages
 
-    assert_redirected_to edit_manager_entry_path(@entry)
+    assert_redirected_to edit_catalog_entry_path(@entry)
   end
 
   def test_destroy
