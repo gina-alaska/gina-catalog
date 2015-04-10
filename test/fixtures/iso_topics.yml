@@ -1,0 +1,13 @@
+# Read about fixtures at
+# http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+#
+one:
+  name: One
+  long_name: MyStringOne
+  iso_theme_code: '123'
+  
+no_associated_entry:
+  name: IsoTopicDelete
+  long_name: MyString
+  iso_theme_code: '789'

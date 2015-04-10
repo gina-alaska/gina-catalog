@@ -40,6 +40,9 @@ class Entry < ActiveRecord::Base
   has_many :other_entry_contacts, -> { other }, class_name: 'EntryContact'
   has_many :other_contacts, through: :other_entry_contacts, source: :contact
 
+  has_many :entry_iso_topics
+  has_many :iso_topics, through: :entry_iso_topics
+
   has_many :entry_portals
   has_many :portals, -> { uniq }, through: :entry_portals
 
@@ -48,6 +51,8 @@ class Entry < ActiveRecord::Base
 
   has_one :owner_entry_portal, -> { where owner: true }, class_name: 'EntryPortal'
   has_one :owner_portal, through: :owner_entry_portal, source: :portal, class_name: 'Portal'
+
+  has_many :map_layers, :dependent => :destroy
 
   validates_associated :attachments
   validates :title, presence: true, length: { maximum: 255 }

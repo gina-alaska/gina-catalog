@@ -1,0 +1,10 @@
+%table#map_layer_list.table.table-stripped.tabled-condensed
+  %thead
+    %tr
+      %th.col-sm-2 Type
+      %th Name
+      %th Url
+      %th.col-sm-1.text-right Action
+  %tbody
+    - map_layers.each do |ml|
+      = render '/catalog/map_layers/map_layer', map_layer: ml

@@ -55,6 +55,7 @@ gem 'acts-as-taggable-on', '~> 3.4'
 gem 'uuidtools'
 gem 'searchkick'
 gem 'ransack'
+gem 'responders'
 # gem 'squeel'
 gem 'quiet_assets', group: [:development, :test]
 gem 'georuby'

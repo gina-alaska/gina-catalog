@@ -1,0 +1,25 @@
+%tr.fields
+  %td
+    = f.hidden_field :id
+    .fileinput.fileinput-new{data:{provides:'fileinput'}}
+      - if f.object.new_record?
+        %span.btn.btn-default.btn-file
+          %span.fileinput-new Select file
+          %span.fileinput-exists Change
+          = f.file_field_without_bootstrap :file, hide_label: true, label_col: 'col-sm-0'
+        %span.fileinput-filename
+        %a.close.fileinput-exists{href:'#',style:{float:'none'},data:{dismiss:'fileinput'}} &times;
+      - else
+        = "#{f.object.file.name} (#{number_to_human_size f.object.file.size})"
+  %td
+    = f.text_field :description, hide_label: true, label_col: 'col-sm-0'
+  %td
+    = f.select :category, Attachment::CATEGORIES, hide_label: true, label_col: 'col-sm-0'
+  %td.text-right
+    - unless f.object.new_record?
+      - if f.object.category == "Geojson"
+        = link_to catalog_entry_attachment_path(f.object.entry, f.object), remote: true, class: 'btn btn-primary', title: 'Show Map' do
+          %i.fa.fa-image
+      = link_to f.object.file.remote_url, class: 'btn btn-primary', title: 'Download File' do
+        %i.fa.fa-download
+    = f.link_to_remove('<i class="fa fa-times"></i>'.html_safe, class: 'btn btn-danger', title: 'Remove')
