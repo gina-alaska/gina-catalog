@@ -19,7 +19,7 @@ class Catalog::MapLayersController < ApplicationController
     respond_to do |format|
       if @map_layer.save
         flash[:notice] = 'Map layer was successfully created.'
-        format.html { edit_manager_entry_path(@entry) }
+        format.html { edit_catalog_entry_path(@entry) }
         format.js { render nothing: true }
       else
         format.html { render :action => "new" }
@@ -42,7 +42,7 @@ class Catalog::MapLayersController < ApplicationController
     respond_to do |format|
       if @map_layer.update_attributes(map_layer_params)
         flash[:notice] = 'Map layer was successfully updated.'
-        format.html { redirect_to edit_manager_entry_path(@entry) }
+        format.html { redirect_to edit_catalog_entry_path(@entry) }
         format.js { render nothing: true }
       else
         format.html { render :action => "edit" }
@@ -62,7 +62,7 @@ class Catalog::MapLayersController < ApplicationController
         format.js
       else
         flash[:error] = @map_layer.errors.full_messages.join('<br />').html_safe
-        format.html { redirect_back_or_default manager_entries_path }
+        format.html { redirect_back_or_default entries_path }
       end
     end
   end
