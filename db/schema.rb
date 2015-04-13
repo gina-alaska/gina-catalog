@@ -117,7 +117,6 @@ ActiveRecord::Schema.define(version: 20150409172745) do
   end
 
   create_table "downloads", force: :cascade do |t|
-    t.date     "download_date"
     t.text     "user_agent"
     t.integer  "user_id"
     t.integer  "attachment_id"
