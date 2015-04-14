@@ -120,12 +120,12 @@ ActiveRecord::Schema.define(version: 20150414000018) do
     t.string   "file_name"
     t.text     "user_agent"
     t.integer  "user_id"
-    t.integer  "attachment_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.integer  "entry_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  add_index "download_logs", ["attachment_id"], name: "index_download_logs_on_attachment_id", using: :btree
+  add_index "download_logs", ["entry_id"], name: "index_download_logs_on_entry_id", using: :btree
   add_index "download_logs", ["user_id"], name: "index_download_logs_on_user_id", using: :btree
 
   create_table "entries", force: :cascade do |t|
@@ -393,6 +393,6 @@ ActiveRecord::Schema.define(version: 20150414000018) do
     t.boolean  "global_admin", default: false
   end
 
-  add_foreign_key "download_logs", "attachments"
+  add_foreign_key "download_logs", "entries"
   add_foreign_key "download_logs", "users"
 end
