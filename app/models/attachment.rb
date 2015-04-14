@@ -10,7 +10,6 @@ class Attachment < ActiveRecord::Base
 
   belongs_to :entry, touch: true
   has_one :bbox, class_name: 'Bound', as: :boundable, dependent: :destroy
-  has_many :downloads, dependent: :destroy
 
   scope :thumbnail, -> { where(category: 'Thumbnail') }
   scope :geojson, -> { where(category: 'Geojson') }
