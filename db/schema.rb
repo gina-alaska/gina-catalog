@@ -117,6 +117,7 @@ ActiveRecord::Schema.define(version: 20150414000018) do
   end
 
   create_table "download_logs", force: :cascade do |t|
+    t.string   "file_name"
     t.text     "user_agent"
     t.integer  "user_id"
     t.integer  "attachment_id"
