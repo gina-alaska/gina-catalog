@@ -121,11 +121,13 @@ ActiveRecord::Schema.define(version: 20150414000018) do
     t.text     "user_agent"
     t.integer  "user_id"
     t.integer  "entry_id"
+    t.integer  "portal_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   add_index "download_logs", ["entry_id"], name: "index_download_logs_on_entry_id", using: :btree
+  add_index "download_logs", ["portal_id"], name: "index_download_logs_on_portal_id", using: :btree
   add_index "download_logs", ["user_id"], name: "index_download_logs_on_user_id", using: :btree
 
   create_table "entries", force: :cascade do |t|
@@ -394,5 +396,6 @@ ActiveRecord::Schema.define(version: 20150414000018) do
   end
 
   add_foreign_key "download_logs", "entries"
+  add_foreign_key "download_logs", "portals"
   add_foreign_key "download_logs", "users"
 end

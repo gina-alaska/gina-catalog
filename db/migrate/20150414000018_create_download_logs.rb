@@ -5,10 +5,12 @@ class CreateDownloadLogs < ActiveRecord::Migration
       t.text :user_agent
       t.references :user, index: true
       t.references :entry, index: true
+      t.references :portal, index: true
 
       t.timestamps null: false
     end
     add_foreign_key :download_logs, :users
     add_foreign_key :download_logs, :entries
+    add_foreign_key :download_logs, :portals
   end
 end
