@@ -1,0 +1,16 @@
+.row
+  .col-sm-10
+    = text_field_tag :organization_search, '', data: { name: 'organizations', target: '#add-selected-organization', behavior: 'typeahead', query: api_organizations_path + '?query=%QUERY'.html_safe }, placeholder: 'Search for organization to add', class: 'form-control pull-left'
+  .col-sm-2
+    = f.link_to_add :entry_organizations, :data => { :target => "#organization_fields" }, class: "btn btn-info btn-block disabled", id: 'add-selected-organization' do
+      Add selected
+      %i.fa.fa-arrow-right
+%table.table.table-striped
+  %thead
+    %tr
+      %th.col-sm-6 Organization
+      %th Primary
+      %th Funding
+      %th.actions Actions
+  %tbody#organization_fields.form-inline
+    = f.fields_for :entry_organizations, wrapper: false
