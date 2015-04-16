@@ -1,0 +1,13 @@
+.container
+  .panel.panel-default
+    .panel-heading{ style: 'position: relative' }
+      %ol.breadcrumb
+        %li
+          = link_to [:catalog, :map_layers] do
+            %i.fa.fa-globe
+            Map Layers
+        %li.active
+          New
+
+    .panel-body
+      = render 'form', map_layer: @map_layer 

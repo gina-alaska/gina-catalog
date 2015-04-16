@@ -4,6 +4,8 @@ class MapLayer < ActiveRecord::Base
     PROJECTED = GEO.projection_factory
   end
 
+  searchkick word_start: [:name, :url, :type]
+
   validates :name, length: { maximum: 255 }, presence: true
   validates :url, length: { maximum: 255 }, presence: true
   validates :type, length: { maximum: 255 }

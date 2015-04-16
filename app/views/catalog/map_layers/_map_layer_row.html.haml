@@ -1,0 +1,17 @@
+%tr
+  %td
+    = map_layer.name
+  %td
+    = map_layer.url
+  %td
+    = map_layer.type
+  %td
+    = map_layer.projections
+  %td.text-right.col-sm-2
+    .btn-group
+      = link_to edit_catalog_map_layer_path(map_layer), class: 'btn btn-sm btn-primary', title: 'Edit' do
+        %i.fa.fa-edit
+      = link_to catalog_map_layer_path(map_layer), data: { method: :delete, confirm: "Are you sure?" }, class: 'btn btn-sm btn-danger', title: 'Delete' do
+        %i.fa.fa-trash-o
+
+

@@ -4,7 +4,7 @@
     %ul
       - @map_layer.errors.full_messages.each do |msg|
         %li= msg
-= bootstrap_form_for [:catalog, @entry, @map_layer.becomes(MapLayer)], remote: true, layout: :horizontal, label_col: 'col-sm-2', control_col: 'col-sm-10', id: 'map-layer-form' do |f|
+= bootstrap_form_for [:catalog, @entry, @map_layer.becomes(MapLayer)], layout: :horizontal, label_col: 'col-sm-2', control_col: 'col-sm-10', id: 'map-layer-form' do |f|
   .form-group.form-group-sm
     = f.select :type, [['WMS', 'WmsLayer']], { include_blank: false }, class: 'form-control'
   .form-group.form-group-sm

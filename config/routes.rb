@@ -31,6 +31,7 @@ Rails.application.routes.draw do
 
   namespace :catalog do
     resources :collections
+    resources :map_layers
 
     resources :contacts do
       collection do
