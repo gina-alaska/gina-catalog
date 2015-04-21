@@ -1,12 +1,12 @@
 %h4 Data and Resources
-%ul.media-list.entry-resources
+%ul.media-list.entry-resources{ "data-no-turbolink" => "" }
   - entry.attachments.public_download.each do |download|
     %li.media
       .media-left
         .icon.download.pull-left
           %i.fa.fa-download
       .media-body
-        = link_to entry_attachment_path(entry, download), class: 'btn btn-default tag pull-right', rel: "nofollow", remote: true do
+        = link_to entry_attachment_path(entry, download), class: 'btn btn-default tag pull-right', rel: "nofollow" do
           %i.fa.fa-download.media-object
           Download
 
@@ -24,7 +24,7 @@
           .icon.download
             %i.fa.fa-user-secret
         .media-body
-          = link_to entry_attachment_path(entry, download), class: 'btn btn-default tag pull-right', rel: "nofollow", remote: true do
+          = link_to entry_attachment_path(entry, download), class: 'btn btn-default tag pull-right', rel: "nofollow" do
             %i.fa.fa-download.media-object
             Download
 
@@ -34,14 +34,14 @@
           %p.break-url
             = download.file.name
             = "(#{number_to_human_size download.file.size})"
-            
+
   - entry.links.where('category = ?', 'Download').each do |link|
     %li.media
       .media-left
         .icon.download
           %i.fa.fa-download
       .media-body
-        = link_to link.url, class: 'btn btn-default tag pull-right', rel: "nofollow", remote: true do
+        = link_to link.url, class: 'btn btn-default tag pull-right', rel: "nofollow" do
           %i.fa.fa-download.media-object
           Download
 
