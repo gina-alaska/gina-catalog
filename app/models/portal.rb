@@ -9,6 +9,7 @@ class Portal < ActiveRecord::Base
   has_many :use_agreements
   has_many :permissions
   has_many :invitations
+  has_many :download_logs
 
   has_many :users, through: :permissions
   has_many :activity_logs, as: :loggable
