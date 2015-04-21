@@ -18,7 +18,7 @@ $(document).on 'ready page:load', ->
     load: (query, callback) ->
       return callback() if query.length == 0
       $.ajax({
-        url: "/tags",
+        url: "/api/tags",
         dataType: 'json',
         data: { 
           q: encodeURIComponent(query)
@@ -45,7 +45,7 @@ $(document).on 'ready page:load', ->
     load: (query, callback) ->
       # return callback() if query.length == 0
       $.ajax({
-        url: '/collections',
+        url: '/api/collections',
         dataType: 'json',
         data: { 
           q: encodeURIComponent(query)
