@@ -1,4 +1,4 @@
-class CollectionsController < ApplicationController
+class Api::CollectionsController < ApplicationController
   def index
     @collections = current_portal.collections.order(:name)
 
