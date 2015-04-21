@@ -17,13 +17,11 @@ class MapLayer < ActiveRecord::Base
   scope :wms, -> { where(type: 'WmsLayer') }
 
   def supports?(projection)
-    self.projections.include?(projection)
+    projections.include?(projection)
   end
-  
+
   def as_json(opts)
-    opts.merge!({
-      :only => [:id, :type, :name, :url, :projections, :layers, :catalog_id, :bounds, :created_at, :updated_at]
-    })
+    opts.merge!(only: [:id, :type, :name, :url, :projections, :layers, :catalog_id, :bounds, :created_at, :updated_at])
     super(opts)
   end
 end

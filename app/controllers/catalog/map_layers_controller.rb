@@ -15,15 +15,15 @@ class Catalog::MapLayersController < ApplicationController
       @map_layer = WmsLayer.new(map_layer_params)
       @map_layer.entry = @entry
     end
-    
+
     respond_to do |format|
       if @map_layer.save
         flash[:notice] = 'Map layer was successfully created.'
         format.html { edit_manager_entry_path(@entry) }
         format.js { render nothing: true }
       else
-        format.html { render :action => "new" }
-        format.js { render :action => "new" }
+        format.html { render action: 'new' }
+        format.js { render action: 'new' }
       end
     end
   end
@@ -31,29 +31,29 @@ class Catalog::MapLayersController < ApplicationController
   def edit
     @entry = Entry.find(params[:entry_id])
     @map_layer = @entry.map_layers.find(params[:id])
-    
+
     respond_with(@map_layer)
   end
 
   def update
     @entry = Entry.find(params[:entry_id])
     @map_layer = @entry.map_layers.find(params[:id])
-            
+
     respond_to do |format|
       if @map_layer.update_attributes(map_layer_params)
         flash[:notice] = 'Map layer was successfully updated.'
         format.html { redirect_to edit_manager_entry_path(@entry) }
         format.js { render nothing: true }
       else
-        format.html { render :action => "edit" }
-        format.js { render :action => "edit" }
+        format.html { render action: 'edit' }
+        format.js { render action: 'edit' }
       end
     end
   end
 
   def destroy
     @entry = Entry.find(params[:entry_id])
-    @map_layers = @entry.map_layers 
+    @map_layers = @entry.map_layers
     @map_layer = @map_layers.find(params[:id])
 
     respond_to do |format|

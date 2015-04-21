@@ -1,4 +1,4 @@
-require "test_helper"
+require 'test_helper'
 
 class MapLayerTest < ActiveSupport::TestCase
   should belong_to(:entry)

@@ -1,4 +1,4 @@
-require "test_helper"
+require 'test_helper'
 
 class Manager::MapLayersControllerTest < ActionController::TestCase
   setup do
@@ -36,5 +36,4 @@ class Manager::MapLayersControllerTest < ActionController::TestCase
     xhr :get, :destroy, entry_id: @map_layer.entry_id, id: @map_layer.id
     assert_response :success
   end
-
 end
