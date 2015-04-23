@@ -1,6 +1,6 @@
 require "test_helper"
 
-class Manager::MapLayersControllerTest < ActionController::TestCase
+class Catalog::MapLayersControllerTest < ActionController::TestCase
   setup do
     login_user(:portal_admin)
     @entry = entries(:one)
