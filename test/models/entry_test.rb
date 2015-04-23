@@ -17,14 +17,16 @@ class EntryTest < ActiveSupport::TestCase
   should have_many(:activity_logs)
   should have_many(:entry_regions)
   should have_many(:regions).through(:entry_regions)
+  should have_many(:entry_map_layers)
+  should have_many(:map_layers).through(:entry_map_layers)
 
   should validate_presence_of(:title)
   should validate_presence_of(:status)
   should validate_presence_of(:entry_type_id)
 
-  should ensure_length_of(:slug).is_at_most(255)
-  should ensure_length_of(:title).is_at_most(255)
-  # should ensure_length_of(:portals).is_at_least(1)
+  should validate_length_of(:slug).is_at_most(255)
+  should validate_length_of(:title).is_at_most(255)
+  # should validate_length_of(:portals).is_at_least(1)
 
   should belong_to(:entry_type)
   should have_one(:owner_entry_portal)
