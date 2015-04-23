@@ -6,15 +6,15 @@ class Catalog::UseAgreementsController < ApplicationController
     @q.sorts = 'title asc' if @q.sorts.empty?
     @use_agreements = @q.result(distinct: true).page(params[:page])
     @use_agreements = @use_agreements.used_by_portal(current_portal) unless params[:all].present?
-
     respond_to do |format|
       format.html
       format.json { render json: @use_agreements }
     end
   end
 
-  #  def show
-  #  end
+  def show
+
+  end
 
   def new
   end
