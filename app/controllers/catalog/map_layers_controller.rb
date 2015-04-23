@@ -90,6 +90,6 @@ class Catalog::MapLayersController < ApplicationController
   protected
 
   def map_layer_params
-    params.require(:map_layer).permit(:id, :name, :type, :url, :entry_id, :layers, :projections)
+    params.require(:map_layer).permit(:id, :name, :type, :map_url, :layers, :projections)
   end
 end
