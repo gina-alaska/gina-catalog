@@ -29,7 +29,7 @@
       = render 'links_tab', f: f
 
     #map-layers.tab-pane
-      = render 'map_layers_tab', map_layers: @entry.map_layers
+      = render 'map_layers_tab', f: f
 
     #sds.tab-pane
       = render partial: "sds_fields", locals: { f: f, use_agreements: @use_agreements }
