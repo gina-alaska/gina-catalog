@@ -66,6 +66,26 @@ class Catalog::UseAgreementsController < ApplicationController
     end
   end
 
+  def archive
+    @use_agreement.archive!(params[:message], current_user)
+
+    respond_to do |format|
+      flash[:success] = "Use agreement #{@use_agreement.title} has been archived."
+      format.html { redirect_to catalog_use_agreements_path }
+      format.json { head :no_content }
+    end
+  end
+
+  def unarchive
+    @use_agreement.unarchive!
+
+    respond_to do |format|
+      flash[:success] = "Use agreement #{@use_agreement.title} has been restored."
+      format.html { redirect_to catalog_use_agreements_path }
+      format.json { head :no_content }
+    end
+  end
+  
   protected
 
   def use_agreement_params
