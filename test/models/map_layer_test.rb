@@ -1,4 +1,4 @@
-require "test_helper"
+require 'test_helper'
 
 class MapLayerTest < ActiveSupport::TestCase
   should have_many(:entry_map_layers)

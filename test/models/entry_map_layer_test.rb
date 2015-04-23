@@ -1,4 +1,4 @@
-require "test_helper"
+require 'test_helper'
 
 class EntryMapLayerTest < ActiveSupport::TestCase
   should belong_to :entry
@@ -11,5 +11,4 @@ class EntryMapLayerTest < ActiveSupport::TestCase
   def test_valid
     assert entry_map_layer.valid?
   end
-
 end

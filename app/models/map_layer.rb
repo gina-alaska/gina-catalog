@@ -12,8 +12,8 @@ class MapLayer < ActiveRecord::Base
 
   scope :wms, -> { where(type: 'WmsLayer') }
 
-  def supports?(projection)
+  def supports?(*)
     # !self.projections.match(projection).nil? # save for tiled map layers
-    raise "MapLayer error: The STI model should implement the supports? method!"
+    fail 'MapLayer error: The STI model should implement the supports? method!'
   end
 end
