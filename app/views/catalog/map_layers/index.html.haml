@@ -5,7 +5,7 @@
         = search_form_for [:catalog, @q] do |f|
           .form-group
             .input-group
-              = f.search_field :name_or_url_or_type_cont, class: 'form-control', placeholder: 'Search by name, url, or type'
+              = f.search_field :name_or_map_url_or_type_cont, class: 'form-control', placeholder: 'Search by name, url, or type'
             
               .input-group-btn
                 %button.btn.btn-default{ type: 'button', data: { behavior: 'clear-field', target: '#q_name_or_url_or_type_cont', autosubmit: 'true' } }
@@ -30,9 +30,9 @@
       %table.table.table-striped.table-condensed
         %thead
           %tr
+            %th Type
             %th Name
             %th URL
-            %th Type
             %th Projections
             %th.text-right Actions
         %tbody
