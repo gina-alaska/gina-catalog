@@ -49,7 +49,6 @@ Rails.application.routes.draw do
         patch :unarchive
       end
       resources :attachments
-      resources :map_layers
     end
 
     resources :organizations do
