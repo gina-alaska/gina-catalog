@@ -34,3 +34,9 @@ $(document).on 'nested:fieldAdded:entry_map_layers', (e) ->
   $('#map_layer_search').data('suggestion', null)
   $('#add-selected-map-layer').addClass('disabled')
   $('#add-selected-map-layer').addClass('btn-info')
+
+$(document).on 'map_layers:refresh', -> 
+  $.get( document.location ).done (data) ->
+    layers = $(data).find('#map-layer-table')
+    $('#map-layers-container').html(layers)
+    $('form[data-behavior="confirm-unsaved-changes"]').data("dirty", true)
