@@ -1,10 +1,11 @@
+- ajax ||= false
 - if @map_layer.errors.count > 0
   .alert.alert-error{ style: 'margin: 5px;' }
     %h4 Error while saving map layer
     %ul
       - @map_layer.errors.full_messages.each do |msg|
         %li= msg
-= bootstrap_form_for [:catalog, @map_layer.becomes(MapLayer)], layout: :horizontal, label_col: 'col-sm-2', control_col: 'col-sm-10', id: 'map-layer-form' do |f|
+= bootstrap_form_for [:catalog, @map_layer.becomes(MapLayer)], layout: :horizontal, label_col: 'col-sm-2', control_col: 'col-sm-10', id: 'map-layer-form', remote: ajax do |f|
   = f.select :type, [['WMS', 'WmsLayer']], { include_blank: false }, class: 'form-control'
   = f.text_field :name, class: 'form-control'
   = f.text_field :map_url, class: 'form-control'

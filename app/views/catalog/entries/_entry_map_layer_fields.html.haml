@@ -9,7 +9,8 @@
     %p.form-control-static.map_layer_map_url= f.object.map_layer.try(:map_url)
   %td.text-right
     .btn-group
-      //= link_to edit_catalog_entry_map_layer_path(map_layer.entry, map_layer), class: 'btn btn-default', remote: true, title: 'Edit' do
-      //  %i.fa.fa-edit
+      - unless f.object.map_layer.nil?
+        = link_to edit_catalog_map_layer_path(f.object.map_layer.id), class: 'btn btn-default', target: '_blank', title: 'Edit' do
+          %i.fa.fa-edit
       = f.link_to_remove('<i class="fa fa-times"></i>'.html_safe, class: 'btn btn-danger')
         
