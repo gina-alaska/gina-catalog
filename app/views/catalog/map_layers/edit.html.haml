@@ -10,4 +10,16 @@
           Edit #{@map_layer.name}
 
     .panel-body
-      = render 'form', map_layer: @map_layer 
+      %ul.nav.nav-tabs
+        - sections = %w{ map_layer attached_catalogs }
+        - sections.each do |section|
+          %li{class: (section == sections.first ? 'active' : '')}
+            = link_to section.humanize, "##{section}", data: { toggle: 'tab' }
+
+      .tab-content{ style: 'margin-top: 5px;' }
+
+        #map_layer.tab-pane.active
+          = render 'form', map_layer: @map_layer 
+
+        #attached_catalogs.tab-pane
+          = render 'entries', map_layer: @map_layer 
