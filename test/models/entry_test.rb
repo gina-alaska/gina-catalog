@@ -122,5 +122,6 @@ class EntryTest < ActiveSupport::TestCase
     assert_difference('ArchiveItem.count', -1) do
       entry.unarchive!
     end
+  end
 
 end
