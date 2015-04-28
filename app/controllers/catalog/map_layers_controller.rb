@@ -1,6 +1,5 @@
 class Catalog::MapLayersController < ApplicationController
   load_and_authorize_resource
-  respond_to :json, :js, :html
 
   def index
     @q = MapLayer.ransack(params[:q])
