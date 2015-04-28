@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150421204826) do
+ActiveRecord::Schema.define(version: 20150428213542) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -286,7 +286,10 @@ ActiveRecord::Schema.define(version: 20150421204826) do
     t.geometry "bounds",      limit: {:srid=>4326, :type=>"geometry"}
     t.datetime "created_at",                                           null: false
     t.datetime "updated_at",                                           null: false
+    t.integer  "portal_id"
   end
+
+  add_index "map_layers", ["portal_id"], name: "index_map_layers_on_portal_id", using: :btree
 
   create_table "memberships", force: :cascade do |t|
     t.integer  "user_id"
@@ -409,4 +412,5 @@ ActiveRecord::Schema.define(version: 20150421204826) do
   add_foreign_key "download_logs", "users"
   add_foreign_key "entry_map_layers", "entries"
   add_foreign_key "entry_map_layers", "map_layers"
+  add_foreign_key "map_layers", "portals"
 end
