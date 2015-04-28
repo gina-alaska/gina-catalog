@@ -2,7 +2,7 @@
   %td
     = f.hidden_field :id
     = f.hidden_field :map_layer_id, class: 'map_layer_id'
-    %p.form-control-static.map_layer_type= f.object.map_layer.try(:type)
+    %p.form-control-static.map_layer_type= f.object.map_layer.try(:layer_type)
   %td
     %p.form-control-static.map_layer_name= f.object.map_layer.try(:name)
   %td
