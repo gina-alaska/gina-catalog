@@ -3,7 +3,7 @@
     .panel-heading{ style: 'position: relative' }
       %ol.breadcrumb
         %li
-          = link_to [:catalog, :contacts] do
+          = link_to [:catalog, :map_layers] do
             %i.fa.fa-group
             Map Layers
         %li.active
@@ -11,15 +11,16 @@
 
     .panel-body
       %ul.nav.nav-tabs
-        - sections = %w{ map_layer attached_catalogs }
+        - sections = %w{ edit_layer record_list }
         - sections.each do |section|
           %li{class: (section == sections.first ? 'active' : '')}
             = link_to section.humanize, "##{section}", data: { toggle: 'tab' }
 
       .tab-content{ style: 'margin-top: 5px;' }
 
-        #map_layer.tab-pane.active
+        #edit_form.tab-pane.active
           = render 'form', map_layer: @map_layer 
 
-        #attached_catalogs.tab-pane
+        #record_list.tab-pane
+          %p List of catalog records that are linked with this map layer.
           = render 'entries', map_layer: @map_layer 
