@@ -8,9 +8,9 @@
     - map_layer.entries.each do |entry|
       %tr
         %td
-          = link_to entry.title, entry_path(entry), title: 'Full Record'
+          = link_to entry.title, entry_path(entry), title: 'Show Full Record'
         %td
           = entry.description
         %td
-          = link_to edit_catalog_entry_path(entry), class: 'btn btn-primary btn-sm' do 
-            Edit
+          = link_to edit_catalog_entry_path(entry), class: 'btn btn-default btn-sm', title: 'Edit Record' do 
+            %i.fa.fa-edit
