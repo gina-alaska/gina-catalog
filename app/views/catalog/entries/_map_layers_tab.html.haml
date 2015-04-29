@@ -1,0 +1,20 @@
+.row
+  .col-sm-8
+    = text_field_tag :map_layer_search, '', data: { name: 'map_layer', target: '#add-selected-map-layer', behavior: 'typeahead', query: api_map_layers_path + '?query=%QUERY'.html_safe }, placeholder: 'Search for map layer to add', class: 'form-control pull-left'
+  .col-sm-2
+    = f.link_to_add :entry_map_layers, :data => { :target => "#map_layer_fields" }, class: "btn btn-info btn-block disabled", id: 'add-selected-map-layer' do
+      Add selected
+  .col-sm-2
+    = link_to new_catalog_map_layer_path, remote: true, class: "btn btn-success" do
+      %i.fa.fa-plus
+      New map layer
+#map-layers-container
+  %table{ id: 'map-layer-table', class: 'table table-striped' }
+    %thead
+      %tr
+        %th.col-sm-2 Type
+        %th Name
+        %th URL
+        %th.text-right.actions Actions
+    %tbody#map_layer_fields.form-inline
+      = f.fields_for :entry_map_layers, wrapper: false

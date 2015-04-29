@@ -52,7 +52,9 @@ class Entry < ActiveRecord::Base
   has_one :owner_entry_portal, -> { where owner: true }, class_name: 'EntryPortal'
   has_one :owner_portal, through: :owner_entry_portal, source: :portal, class_name: 'Portal'
 
-  has_many :map_layers, dependent: :destroy
+  has_many :entry_map_layers
+  has_many :map_layers, through: :entry_map_layers
+
   has_many :download_logs, dependent: :destroy
 
   validates_associated :attachments
@@ -71,6 +73,7 @@ class Entry < ActiveRecord::Base
                                               reject_if: proc { |attachment| attachment['id'].blank? && attachment['file'].blank? }
   accepts_nested_attributes_for :links, allow_destroy: true,
                                         reject_if: proc { |link| link['url'].blank? }
+  accepts_nested_attributes_for :entry_map_layers, allow_destroy: true
 
   after_create :set_owner_portal
 

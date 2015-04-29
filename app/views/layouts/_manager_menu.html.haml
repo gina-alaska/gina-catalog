@@ -31,6 +31,11 @@
             = link_to catalog_organizations_path do
               %i.fa.fa-university.fa-fw
               Organizations
+        - if can? :manage, MapLayer
+          %li
+            = link_to catalog_map_layers_path do
+              %i.fa.fa-globe.fa-fw
+              Map Layers
         - if can? :manage, UseAgreement
           %li
             = link_to catalog_use_agreements_path do

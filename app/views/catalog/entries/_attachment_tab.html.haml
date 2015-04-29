@@ -1,0 +1,16 @@
+.row
+  .col-sm-10
+    %h4 Attachments
+  .col-sm-2
+    = f.link_to_add :attachments, :data => { :target => "#attachment_fields" }, class: "btn btn-info btn-block" do
+      %i.fa.fa-plus
+      Attach new file
+%table.table.table-striped
+  %thead
+    %tr
+      %th File
+      %th Description
+      %th Category
+      %th.actions.text-right Actions
+  %tbody#attachment_fields
+    = f.fields_for :attachments, wrapper: false
