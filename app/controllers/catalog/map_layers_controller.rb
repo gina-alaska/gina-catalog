@@ -2,7 +2,7 @@ class Catalog::MapLayersController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @q = MapLayer.ransack(params[:q])
+    @q = current_portal.map_layers.ransack(params[:q])
     @q.sorts = 'name asc' if @q.sorts.empty?
     @map_layers = @q.result(distinct: true).page(params[:page])
 
@@ -28,10 +28,7 @@ class Catalog::MapLayersController < ApplicationController
   end
 
   def create
-    case params[:map_layer][:type]
-    when 'WmsLayer'
-      @map_layer = WmsLayer.new(map_layer_params)
-    end
+    @map_layer = current_portal.map_layers.build(map_layer_params)
 
     respond_to do |format|
       if @map_layer.save

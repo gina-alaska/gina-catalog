@@ -7,6 +7,7 @@ class PortalTest < ActiveSupport::TestCase
   should have_many(:urls)
   should have_many(:activity_logs)
   should have_many(:social_networks)
+  should have_many(:map_layers)
 
   should accept_nested_attributes_for(:urls).allow_destroy(true)
   should accept_nested_attributes_for(:social_networks).allow_destroy(true)
