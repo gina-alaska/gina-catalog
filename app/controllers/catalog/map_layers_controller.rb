@@ -13,7 +13,7 @@ class Catalog::MapLayersController < ApplicationController
   end
 
   def search
-    @map_layers = MapLayer.search(params[:query])
+    @map_layers = current_portal.map_layers.search(params[:query])
 
     respond_to do |format|
       format.json
