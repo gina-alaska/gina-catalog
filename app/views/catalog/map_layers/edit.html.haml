@@ -11,14 +11,14 @@
 
     .panel-body
       %ul.nav.nav-tabs
-        - sections = %w{ edit_layer record_list }
+        - sections = %w{ layer_settings record_list }
         - sections.each do |section|
           %li{class: (section == sections.first ? 'active' : '')}
             = link_to section.humanize, "##{section}", data: { toggle: 'tab' }
 
       .tab-content{ style: 'margin-top: 5px;' }
 
-        #edit_form.tab-pane.active
+        #layer_settings.tab-pane.active
           = render 'form', map_layer: @map_layer 
 
         #record_list.tab-pane
