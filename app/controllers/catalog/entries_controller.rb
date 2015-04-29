@@ -46,12 +46,15 @@ class Catalog::EntriesController < ApplicationController
 
         flash[:success] = "Catalog record #{@entry.title} was successfully updated."
 
-        if params['commit'] == 'Save'
+        case params['commit']
+        when 'Save'
           format.html { redirect_to edit_catalog_entry_path(@entry) }
           format.js { redirect_via_turbolinks_to edit_catalog_entry_path(@entry) }
-        else
+        when 'Save & Close'
           format.html { redirect_to entries_path }
           format.js { redirect_via_turbolinks_to entries_path }
+        when 'remove map layer'
+          format.js
         end
         format.json { head :nocontent }
       else

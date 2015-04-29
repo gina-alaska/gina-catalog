@@ -1,16 +1,21 @@
-%table.table.table-striped.table-condensed
-  %thead
-    %tr
-      %th Record
-      %th Description
-      %th Action
-  %tbody
-    - map_layer.entries.each do |entry|
+#map-layers-container
+  %table{ id: 'map-layer-table', class: 'table table-striped table-condensed' }
+    %thead
       %tr
-        %td
-          = link_to entry.title, entry_path(entry), title: 'Show Full Record'
-        %td
-          = entry.description
-        %td
-          = link_to edit_catalog_entry_path(entry), class: 'btn btn-default btn-sm', title: 'Edit Record' do 
-            %i.fa.fa-edit
+        %th Record
+        %th Description
+        %th.text-right Action
+    %tbody
+      - map_layer.entry_map_layers.each do |eml|
+        - entry = eml.entry
+        %tr
+          %td
+            = link_to entry.title, entry_path(entry), title: 'Show Full Record'
+          %td
+            = entry.description
+          %td.text-right
+            .btn-group
+              = link_to edit_catalog_entry_path(entry), class: 'btn btn-default btn-sm', title: 'Edit Record' do 
+                %i.fa.fa-edit
+              = link_to catalog_entry_path(entry, entry: { entry_map_layers_attributes: { id: eml.id, _destroy: true } }, commit: 'remove map layer'), method: :patch, remote: true, class: 'btn btn-danger btn-sm', title: 'Unlink Record' do 
+                %i.fa.fa-times
