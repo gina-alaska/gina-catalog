@@ -35,6 +35,7 @@ $(document).on 'nested:fieldAdded:entry_map_layers', (e) ->
   $('#add-selected-map-layer').addClass('disabled')
   $('#add-selected-map-layer').addClass('btn-info')
 
+# This function is used in two places catalog/map_layer/_entries.html.haml and catalog/entries/_map_layers_tab.html.haml
 $(document).on 'map_layers:refresh', -> 
   $.get( document.location ).done (data) ->
     layers = $(data).find('#map-layer-table')
