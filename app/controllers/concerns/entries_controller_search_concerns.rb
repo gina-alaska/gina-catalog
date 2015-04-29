@@ -34,7 +34,6 @@ module EntriesControllerSearchConcerns
     facets = elastic_facets['terms'].each_with_object([]) do |f, memo|
       f['display_name'] = model.nil? ? f['term'] : model.where(term_field => f['term']).first.try(display_field)
       memo << f
-      logger.info "*********DISPLAY NAME #{memo}***********"
     end
 
     facets.sort { |a, b| a['count'] == b['count'] ? a['term'] <=> b['term'] : b['count'] <=> a['count'] }
