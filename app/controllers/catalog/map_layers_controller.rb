@@ -66,7 +66,7 @@ class Catalog::MapLayersController < ApplicationController
         format.js
       else
         flash[:error] = @map_layer.errors.full_messages.join('<br />').html_safe
-        format.html { redirect_back_or_default manager_entries_path }
+        format.html { redirect_back_or_default catalog_map_layers_path }
       end
     end
   end

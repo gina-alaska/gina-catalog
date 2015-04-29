@@ -1,4 +1,6 @@
 class MapLayer < ActiveRecord::Base
+  include EntryDependentConcerns
+  
   searchkick word_start: [:name, :url, :type]
 
   validates :name, length: { maximum: 255 }, presence: true
