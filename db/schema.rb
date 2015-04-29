@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150414000018) do
+ActiveRecord::Schema.define(version: 20150428213542) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -179,6 +179,16 @@ ActiveRecord::Schema.define(version: 20150414000018) do
     t.datetime "updated_at",   null: false
   end
 
+  create_table "entry_map_layers", force: :cascade do |t|
+    t.integer  "entry_id"
+    t.integer  "map_layer_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "entry_map_layers", ["entry_id"], name: "index_entry_map_layers_on_entry_id", using: :btree
+  add_index "entry_map_layers", ["map_layer_id"], name: "index_entry_map_layers_on_map_layer_id", using: :btree
+
   create_table "entry_organizations", force: :cascade do |t|
     t.integer  "entry_id"
     t.integer  "organization_id"
@@ -269,15 +279,17 @@ ActiveRecord::Schema.define(version: 20150414000018) do
 
   create_table "map_layers", force: :cascade do |t|
     t.string   "name"
-    t.string   "url"
+    t.string   "map_url"
     t.string   "type"
     t.string   "layers"
     t.string   "projections"
-    t.integer  "entry_id"
     t.geometry "bounds",      limit: {:srid=>4326, :type=>"geometry"}
     t.datetime "created_at",                                           null: false
     t.datetime "updated_at",                                           null: false
+    t.integer  "portal_id"
   end
+
+  add_index "map_layers", ["portal_id"], name: "index_map_layers_on_portal_id", using: :btree
 
   create_table "memberships", force: :cascade do |t|
     t.integer  "user_id"
@@ -398,4 +410,7 @@ ActiveRecord::Schema.define(version: 20150414000018) do
   add_foreign_key "download_logs", "entries"
   add_foreign_key "download_logs", "portals"
   add_foreign_key "download_logs", "users"
+  add_foreign_key "entry_map_layers", "entries"
+  add_foreign_key "entry_map_layers", "map_layers"
+  add_foreign_key "map_layers", "portals"
 end

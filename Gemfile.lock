@@ -279,8 +279,6 @@ GEM
     rdiscount (2.1.8)
     rdoc (4.2.0)
     ref (1.0.5)
-    responders (2.1.0)
-      railties (>= 4.2.0, < 5)
     retriable (1.4.1)
     rgeo (0.3.20)
     rgeo-activerecord (2.1.0)
@@ -408,7 +406,6 @@ DEPENDENCIES
   rails (= 4.2.0)
   ransack
   rdiscount
-  responders
   rgeo
   rgeo-activerecord
   rgeo-geojson

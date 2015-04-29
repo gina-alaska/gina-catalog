@@ -1,0 +1,42 @@
+.row
+  .col-sm-4
+    .panel.panel-default
+      .panel-body
+        = search_form_for [:catalog, @q] do |f|
+          .form-group
+            .input-group
+              = f.search_field :name_or_map_url_or_type_cont, class: 'form-control', placeholder: 'Search by name, url, or type'
+            
+              .input-group-btn
+                %button.btn.btn-default{ type: 'button', data: { behavior: 'clear-field', target: '#q_name_or_url_or_type_cont', autosubmit: 'true' } }
+                  %i.fa.fa-times
+                = button_tag type: 'submit', class: 'btn btn-primary' do
+                  %i.fa.fa-search
+          
+      .panel-footer
+        = link_to new_catalog_map_layer_path, class: 'btn btn-success btn-block' do
+          %i.fa.fa-plus
+          New Map Layer
+  .col-sm-8
+    .panel.panel-default
+      .panel-heading{ style: 'position: relative' }
+        .pull-right.muted{ style: 'font-size: 1em;' }
+          = page_entries_info @map_layers
+        %ol.breadcrumb
+          %li.active
+            %i.fa.fa-globe
+            Map Layers
+      
+      %table.table.table-striped.table-condensed
+        %thead
+          %tr
+            %th Type
+            %th Name
+            %th URL
+            %th Projections
+            %th.text-right Actions
+        %tbody
+          = render(partial: "map_layer_row", collection: @map_layers, as: :map_layer) || "<tr><td colspan=\"5\">There are no map layers found!</td></tr>".html_safe
+    .text-center
+      %div= paginate @map_layers
+      = page_entries_info @map_layers
