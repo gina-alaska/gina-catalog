@@ -1,6 +1,6 @@
 class Api::MapLayersController < ApplicationController
   def index
-    @map_layers = MapLayer.search(
+    @map_layers = current_portal.map_layers.search(
       search_params,
       fields: [
         { 'name^2' => :word_start },
