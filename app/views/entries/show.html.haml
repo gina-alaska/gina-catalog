@@ -20,6 +20,17 @@
             %div
               = org.acronym
               &nbsp;
+      .panel-heading
+        %h1.panel-title Record Previews
+      .panel-body
+        - if @entry.attachments.primary_thumbnail.any?
+          - @entry.attachments.primary_thumbnail.each do |thumbnail|
+            .text-center
+              = image_tag thumbnail.file.thumb('300x150').url    
+        - if @entry.attachments.thumbnail.any?
+          - @entry.attachments.thumbnail.each do |thumbnail|
+            .text-center
+              = image_tag thumbnail.file.thumb('300x150').url  
   .col-sm-8
     = render @entry
 

@@ -65,6 +65,7 @@ class Entry < ActiveRecord::Base
   validates :description, presence: true
   validates :status, presence: true
   validates :entry_type_id, presence: true
+  validate :single_primary_thumbnail
 
   accepts_nested_attributes_for :entry_collections, allow_destroy: true
   accepts_nested_attributes_for :entry_contacts, allow_destroy: true
@@ -76,6 +77,14 @@ class Entry < ActiveRecord::Base
   accepts_nested_attributes_for :entry_map_layers, allow_destroy: true
 
   after_create :set_owner_portal
+  
+  def primary_thumbnail_count
+    attachments.inject(0) { |c, v| v.category == 'Primary Thumbnail' ? c + 1 : c }
+  end
+  
+  def single_primary_thumbnail
+    errors.add(:attachments, 'has more than one Primary Thumbnail') if primary_thumbnail_count > 1
+  end
 
   def set_owner_portal
     entry_portals.first.update_attribute(:owner, true)
