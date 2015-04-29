@@ -3,7 +3,7 @@
   = f.alert_message "The catalog record could not be saved because of the following errors..."
 
   %ul.nav.nav-tabs
-    - sections = %w{ general contacts organizations tags attachments links map_layers sds }
+    - sections = %w{ general contacts organizations tags attachments links map_layers use_agreements }
     - sections.each do |section|
       %li{class: (section == sections.first ? 'active' : '')}
         = link_to section.humanize, "##{section}", data: { toggle: 'tab' }
