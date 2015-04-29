@@ -29,6 +29,7 @@ Rails.application.routes.draw do
 
   namespace :catalog do
     resources :collections
+    resources :map_layers
 
     resources :contacts do
       collection do
@@ -46,7 +47,6 @@ Rails.application.routes.draw do
         patch :unarchive
       end
       resources :attachments
-      resources :map_layers
     end
 
     resources :organizations do
@@ -96,8 +96,12 @@ Rails.application.routes.draw do
     resources :contacts
     resources :regions
     resources :iso_topics
+<<<<<<< HEAD
     resources :tags
     resources :collections
+=======
+    resources :map_layers
+>>>>>>> master
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

@@ -46,12 +46,15 @@ class Catalog::EntriesController < ApplicationController
 
         flash[:success] = "Catalog record #{@entry.title} was successfully updated."
 
-        if params['commit'] == 'Save'
+        case params['commit']
+        when 'Save'
           format.html { redirect_to edit_catalog_entry_path(@entry) }
           format.js { redirect_via_turbolinks_to edit_catalog_entry_path(@entry) }
-        else
+        when 'Save & Close'
           format.html { redirect_to entries_path }
           format.js { redirect_via_turbolinks_to entries_path }
+        when 'remove map layer'
+          format.js
         end
         format.json { head :nocontent }
       else
@@ -106,7 +109,8 @@ class Catalog::EntriesController < ApplicationController
       links_attributes: [:id, :link_id, :category, :display_text, :url, :_destroy],
       attachments_attributes: [:id, :file, :category, :description, :interaction, :_destroy],
       entry_contacts_attributes: [:id, :contact_id, :primary, :_destroy],
-      entry_organizations_attributes: [:id, :organization_id, :primary, :funding, :_destroy])
+      entry_organizations_attributes: [:id, :organization_id, :primary, :funding, :_destroy],
+      entry_map_layers_attributes: [:id, :map_layer_id, :_destroy])
 
     if values[:collection_ids].present?
       values[:collection_ids] = values.delete(:collection_ids).map(&:to_i).reject { |v| v == 0 }

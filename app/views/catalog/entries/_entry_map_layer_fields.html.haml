@@ -1,0 +1,16 @@
+%tr.fields
+  %td
+    = f.hidden_field :id
+    = f.hidden_field :map_layer_id, class: 'map_layer_id'
+    %p.form-control-static.map_layer_type= f.object.map_layer.try(:layer_type)
+  %td
+    %p.form-control-static.map_layer_name= f.object.map_layer.try(:name)
+  %td
+    %p.form-control-static.map_layer_map_url= f.object.map_layer.try(:map_url)
+  %td.text-right
+    .btn-group
+      - unless f.object.map_layer.nil?
+        = link_to edit_catalog_map_layer_path(f.object.map_layer.id), class: 'btn btn-default', target: '_blank', title: 'Edit' do
+          %i.fa.fa-edit
+      = f.link_to_remove('<i class="fa fa-times"></i>'.html_safe, class: 'btn btn-danger')
+        
