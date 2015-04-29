@@ -96,12 +96,9 @@ Rails.application.routes.draw do
     resources :contacts
     resources :regions
     resources :iso_topics
-<<<<<<< HEAD
     resources :tags
     resources :collections
-=======
     resources :map_layers
->>>>>>> master
   end
 
   # The priority is based upon order of creation: first created -> highest priority.
