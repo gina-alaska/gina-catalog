@@ -49,6 +49,15 @@ namespace :admin do
       end
       Import::Collection.fetch(ENV['catalog'])
     end
+
+    desc 'Import use agreements from api'
+    task use_agreements: :environment do
+      if ENV['catalog'].nil?
+        puts 'Please specify the catalog from which use agreements will be loaded (rake admin:load:use_agreements catalog=catalog.northslope.org)'
+        next
+      end
+      Import::UseAgreement.fetch(ENV['catalog'])
+    end
     
     desc 'Import entries from api'
     task entries: :environment do
