@@ -17,8 +17,6 @@ Rails.application.routes.draw do
   resources :sessions
   resources :memberships
   resources :users
-  resources :tags
-  resources :collections
 
   namespace :admin do
     resources :users
@@ -98,6 +96,8 @@ Rails.application.routes.draw do
     resources :contacts
     resources :regions
     resources :iso_topics
+    resources :tags
+    resources :collections
     resources :map_layers
   end
 
