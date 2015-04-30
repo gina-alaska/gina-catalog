@@ -21,6 +21,10 @@ module Import
       api_url '/contacts.json'
     end
 
+    def collections_url(portal)
+      api_url "/setups/#{portal}/collections.json"
+    end
+    
     def fetch(url)
       JSON.load(open(url))
     end
