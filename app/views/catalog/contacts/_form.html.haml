@@ -1,4 +1,4 @@
-= bootstrap_form_for [:manager, @contact], layout: :horizontal, label_col: 'col-lg-3 col-md-3', control_col: 'col-lg-9 col-md-9' do |f|
+= bootstrap_form_for [:catalog, @contact], layout: :horizontal, label_col: 'col-lg-3 col-md-3', control_col: 'col-lg-9 col-md-9' do |f|
   = f.alert_message "Please fix the errors below.", error_summary: false
   = f.text_field :name
   = f.email_field :email
