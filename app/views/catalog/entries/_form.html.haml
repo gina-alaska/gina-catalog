@@ -3,7 +3,7 @@
   = f.alert_message "The catalog record could not be saved because of the following errors..."
 
   %ul.nav.nav-tabs
-    - sections = %w{ general contacts organizations tags attachments links map_layers sds }
+    - sections = %w{ general contacts organizations tags attachments links map_layers use_agreements }
     - sections.each do |section|
       %li{class: (section == sections.first ? 'active' : '')}
         = link_to section.humanize, "##{section}", data: { toggle: 'tab' }
@@ -31,8 +31,8 @@
     #map_layers.tab-pane
       = render 'map_layers_tab', f: f
 
-    #sds.tab-pane
-      = render partial: "sds_fields", locals: { f: f, use_agreements: @use_agreements }
+    #use_agreements.tab-pane
+      = render partial: "use_agreement_fields", locals: { f: f, use_agreements: @use_agreements }
 
   .form-action
     = link_to :back, class: 'btn btn-default' do
