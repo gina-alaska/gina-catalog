@@ -13,7 +13,6 @@ class Catalog::UseAgreementsController < ApplicationController
   end
 
   def show
-
   end
 
   def new
@@ -85,7 +84,7 @@ class Catalog::UseAgreementsController < ApplicationController
       format.json { head :no_content }
     end
   end
-  
+
   protected
 
   def use_agreement_params

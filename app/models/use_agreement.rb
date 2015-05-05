@@ -1,7 +1,7 @@
 class UseAgreement < ActiveRecord::Base
   include EntryDependentConcerns
   include ArchiveConcerns
-  
+
   belongs_to :portal
   has_many :entries
 

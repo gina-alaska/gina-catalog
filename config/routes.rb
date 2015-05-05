@@ -57,7 +57,6 @@ Rails.application.routes.draw do
         patch :unarchive
       end
     end
-
   end
 
   namespace :manager do

@@ -32,7 +32,7 @@ module Import
       add_contacts(import.importable, json)
       add_collections(import.importable, json)
       add_links(import.importable, json)
-      
+
       import.importable.portals << @portal
 
       import.save
@@ -84,7 +84,7 @@ module Import
         model.collections << collection unless collection.nil? || model.collections.include?(collection)
       end if json['collections'].present?
     end
-    
+
     def add_locations(record, locations)
       return if !locations.present? || locations.to_json.blank?
       return if locations['features'].empty?

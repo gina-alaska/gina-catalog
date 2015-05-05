@@ -45,7 +45,7 @@ class Ability
         entry.new_record? || entry.owner_portal == current_portal
       end
       cannot :update, UseAgreement do |use_agreement|
-        use_agreement.archived? 
+        use_agreement.archived?
       end
     end
 
