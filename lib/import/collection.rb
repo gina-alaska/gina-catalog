@@ -5,7 +5,7 @@ module Import
     SIMPLE_FIELDS = %w(
       name description
     )
-     
+
     def self.fetch(catalog)
       import = ::Import::Collection.new(Portal.first)
       Client.paged_results 'Collections', Client.collections_url(catalog) do |record|

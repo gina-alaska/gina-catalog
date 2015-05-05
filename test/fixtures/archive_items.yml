@@ -7,3 +7,10 @@ one:
   archived_id: archived.id (Entry)
   archived_type: Entry
   archived: archived (Entry)
+  
+use_agreement:
+  message: MyText
+  user: admin
+  archived_id: archived.id (UseAgreement)
+  archived_type: UseAgreement
+  archived: archived (UseAgreement)

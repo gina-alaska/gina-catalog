@@ -6,15 +6,14 @@ class Catalog::UseAgreementsController < ApplicationController
     @q.sorts = 'title asc' if @q.sorts.empty?
     @use_agreements = @q.result(distinct: true).page(params[:page])
     @use_agreements = @use_agreements.used_by_portal(current_portal) unless params[:all].present?
-
     respond_to do |format|
       format.html
       format.json { render json: @use_agreements }
     end
   end
 
-  #  def show
-  #  end
+  def show
+  end
 
   def new
   end
@@ -63,6 +62,26 @@ class Catalog::UseAgreementsController < ApplicationController
         flash[:error] = @use_agreement.errors.full_messages.join('<br />').html_safe
         format.html { redirect_back_or_default catalog_use_agreements_path }
       end
+    end
+  end
+
+  def archive
+    @use_agreement.archive!(params[:message], current_user)
+
+    respond_to do |format|
+      flash[:success] = "Use agreement #{@use_agreement.title} has been archived."
+      format.html { redirect_to catalog_use_agreements_path }
+      format.json { head :no_content }
+    end
+  end
+
+  def unarchive
+    @use_agreement.unarchive!
+
+    respond_to do |format|
+      flash[:success] = "Use agreement #{@use_agreement.title} has been restored."
+      format.html { redirect_to catalog_use_agreements_path }
+      format.json { head :no_content }
     end
   end
 
