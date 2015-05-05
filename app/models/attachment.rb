@@ -1,5 +1,6 @@
 class Attachment < ActiveRecord::Base
   CATEGORIES = [
+    'Primary Thumbnail',
     'Thumbnail',
     'Geojson',
     'Public Download',
@@ -11,6 +12,7 @@ class Attachment < ActiveRecord::Base
   belongs_to :entry, touch: true
   has_one :bbox, class_name: 'Bound', as: :boundable, dependent: :destroy
 
+  scope :primary_thumbnail, -> { where(category: 'Primary Thumbnail') }
   scope :thumbnail, -> { where(category: 'Thumbnail') }
   scope :geojson, -> { where(category: 'Geojson') }
   scope :private_download, -> { where(category: 'Private Download') }
@@ -19,6 +21,7 @@ class Attachment < ActiveRecord::Base
   before_save :create_uuid
   after_save :create_bbox
 
+  validates :category, inclusion: { in: Attachment::CATEGORIES }
   validates :description, length: { maximum: 255 }
   # validates :file_uid, presence: true
   # validates :uuid, presence: true

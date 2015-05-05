@@ -6,5 +6,6 @@ class ImportItem < ActiveRecord::Base
   scope :by_type, ->(type) { where(importable_type: type) }
   scope :contacts, -> { by_type('Contact') }
   scope :entries, -> { by_type('Entry') }
+  scope :collections, -> { by_type('Collection') }
   scope :oid, ->(id) { where(import_id: id) }
 end

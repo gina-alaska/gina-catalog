@@ -3,7 +3,7 @@
   = f.alert_message "The catalog record could not be saved because of the following errors..."
 
   %ul.nav.nav-tabs
-    - sections = %w{ general contacts organizations tags attachments links map-layers sds }
+    - sections = %w{ general contacts organizations tags attachments links map_layers use_agreements }
     - sections.each do |section|
       %li{class: (section == sections.first ? 'active' : '')}
         = link_to section.humanize, "##{section}", data: { toggle: 'tab' }
@@ -14,93 +14,25 @@
       = render "general_fields", f: f
 
     #contacts.tab-pane
-      .row
-        .col-sm-10
-          = text_field_tag :contact_search, '', data: { name: 'contacts', target: '#add-selected-contact', behavior: 'typeahead', query: api_contacts_path + '?query=%QUERY'.html_safe }, placeholder: 'Search for contact to add', class: 'form-control pull-left'
-        .col-sm-2
-          = f.link_to_add :entry_contacts, :data => { :target => "#contact_fields" }, class: "btn btn-info btn-block disabled", id: 'add-selected-contact' do
-            Add selected
-            %i.fa.fa-arrow-right
-      %table.table.table-striped
-        %thead
-          %tr
-            %th Contact
-            %th Primary
-            %th.actions.text-right Actions
-        %tbody#contact_fields.form-inline
-          = f.fields_for :entry_contacts, wrapper: false
+      = render 'contacts_tab', f: f
 
     #organizations.tab-pane
-      .row
-        .col-sm-10
-          = text_field_tag :organization_search, '', data: { name: 'organizations', target: '#add-selected-organization', behavior: 'typeahead', query: api_organizations_path + '?query=%QUERY'.html_safe }, placeholder: 'Search for organization to add', class: 'form-control pull-left'
-        .col-sm-2
-          = f.link_to_add :entry_organizations, :data => { :target => "#organization_fields" }, class: "btn btn-info btn-block disabled", id: 'add-selected-organization' do
-            Add selected
-            %i.fa.fa-arrow-right
-      %table.table.table-striped
-        %thead
-          %tr
-            %th.col-sm-6 Organization
-            %th Primary
-            %th Funding
-            %th.actions Actions
-        %tbody#organization_fields.form-inline
-          = f.fields_for :entry_organizations, wrapper: false
+      = render 'organizations_tab', f: f
 
     #tags.tab-pane
       = render "tag_fields", f: f
 
     #attachments.tab-pane
-      .row
-        .col-sm-10
-          %h4 Attachments
-        .col-sm-2
-          = f.link_to_add :attachments, :data => { :target => "#attachment_fields" }, class: "btn btn-info btn-block" do
-            %i.fa.fa-plus
-            Attach new file
-      %table.table.table-striped
-        %thead
-          %tr
-            %th File
-            %th Description
-            %th Category
-            %th.actions.text-right Actions
-        %tbody#attachment_fields
-          = f.fields_for :attachments, wrapper: false
+      = render 'attachment_tab', f: f
 
     #links.tab-pane
-      .row
-        .col-sm-10
-          %h4 Links
-        .col-sm-2
-          = f.link_to_add :links, :data => { :target => "#link_fields" }, class: "btn btn-info btn-block" do
-            %i.fa.fa-plus
-            Add new link
-      %table.table.table-striped
-        %thead
-          %tr
-            %th Category
-            %th Display Text
-            %th URL
-            %th Valid
-            %th.actions.col-sm-1.text-right Actions
-        %tbody#link_fields
-          = f.fields_for :links, wrapper: false
+      = render 'links_tab', f: f
 
-    #map-layers.tab-pane
-      .row
-        .col-sm-10
-          %h4 Map Layers
-        .col-sm-2
-          = link_to new_catalog_entry_map_layer_path(@entry), class: 'btn btn-success pull-right', remote: true do
-            %i.fa.fa-plus
-            Add new Map Layer
-      .fields
-        = render '/catalog/map_layers/list', map_layers: @entry.map_layers
+    #map_layers.tab-pane
+      = render 'map_layers_tab', f: f
 
-    #sds.tab-pane
-      = render partial: "sds_fields", locals: { f: f, use_agreements: @use_agreements }
+    #use_agreements.tab-pane
+      = render partial: "use_agreement_fields", locals: { f: f, use_agreements: @use_agreements }
 
   .form-action
     = link_to :back, class: 'btn btn-default' do

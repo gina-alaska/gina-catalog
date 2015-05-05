@@ -17,14 +17,16 @@ class EntryTest < ActiveSupport::TestCase
   should have_many(:activity_logs)
   should have_many(:entry_regions)
   should have_many(:regions).through(:entry_regions)
+  should have_many(:entry_map_layers)
+  should have_many(:map_layers).through(:entry_map_layers)
 
   should validate_presence_of(:title)
   should validate_presence_of(:status)
   should validate_presence_of(:entry_type_id)
 
-  should ensure_length_of(:slug).is_at_most(255)
-  should ensure_length_of(:title).is_at_most(255)
-  # should ensure_length_of(:portals).is_at_least(1)
+  should validate_length_of(:slug).is_at_most(255)
+  should validate_length_of(:title).is_at_most(255)
+  # should validate_length_of(:portals).is_at_least(1)
 
   should belong_to(:entry_type)
   should have_one(:owner_entry_portal)
@@ -85,7 +87,15 @@ class EntryTest < ActiveSupport::TestCase
 
     assert !entry.published?, 'Entry is still published when it should not be.'
   end
-
+  
+  test 'should ensure that there is only one primary thumbnail' do
+    entry = entries(:one)
+    entry.attachments.build(category: 'Primary Thumbnail')
+    entry.attachments.build(category: 'Primary Thumbnail')
+    entry.save
+    assert entry.errors[:attachments].count > 0, 'Did not generate any errors about attachments'
+  end
+  
   test 'is the entry archived?' do
     archived = entries(:archived)
     entry = entries(:one)
@@ -115,4 +125,5 @@ class EntryTest < ActiveSupport::TestCase
       entry.unarchive!
     end
   end
+
 end

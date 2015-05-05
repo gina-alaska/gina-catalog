@@ -41,6 +41,15 @@ namespace :admin do
       Import::Contact.fetch
     end
 
+    desc 'Import collections from api'
+    task collections: :environment do
+      if ENV['catalog'].nil?
+        puts 'Please specify the catalog from which collections will be loaded (rake admin:load:collections catalog=catalog.northslope.org)'
+        next
+      end
+      Import::Collection.fetch(ENV['catalog'])
+    end
+    
     desc 'Import entries from api'
     task entries: :environment do
       if ENV['catalog'].nil?

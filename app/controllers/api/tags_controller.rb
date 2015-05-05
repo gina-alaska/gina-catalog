@@ -1,4 +1,4 @@
-class TagsController < ApplicationController
+class Api::TagsController < ApplicationController
   def index
     @tags = Entry.all_tags.order(:name)
     if params[:q].present?

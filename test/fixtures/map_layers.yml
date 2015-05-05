@@ -3,18 +3,16 @@
 
 one:
   name: MyString
-  url: MyString
+  map_url: MyString
   type: WmsLayer
   layers: MyString
-  projections: MyString
-  entry: one
+  projections: EPSG:3338
   bounds: 
 
 two:
   name: MyString
-  url: MyString
+  map_url: MyString
   type: WmsLayer
   layers: MyString
-  projections: MyString
-  entry: one
+  projections: EPSG:3338
   bounds: 
