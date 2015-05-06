@@ -42,10 +42,6 @@ Rails.application.routes.draw do
         patch :archive
         patch :unarchive
       end
-      member do
-        patch :archive
-        patch :unarchive
-      end
       resources :attachments
     end
 
@@ -55,7 +51,12 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :use_agreements
+    resources :use_agreements do
+      member do
+        patch :archive
+        patch :unarchive
+      end
+    end
   end
 
   namespace :manager do

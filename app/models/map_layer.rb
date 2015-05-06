@@ -1,6 +1,6 @@
 class MapLayer < ActiveRecord::Base
   include EntryDependentConcerns
-  
+
   searchkick word_start: [:name, :url, :type]
 
   validates :name, length: { maximum: 255 }, presence: true
@@ -22,5 +22,15 @@ class MapLayer < ActiveRecord::Base
 
   def layer_type
     fail 'MapLayer error: The layer type needs to be defined in the STI model'
+  end
+
+  def leaflet_options
+    {
+      type: layer_type,
+      name: name,
+      url: map_url,
+      layers: layers,
+      projections: projections
+    }
   end
 end

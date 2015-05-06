@@ -4,10 +4,20 @@
   %td
     = use_agreement.required.blank? ? "No" : "Yes"
   %td
-    = use_agreement.archived_at.blank? ? "No" : "Yes"
+    = use_agreement.archived? ? "Yes" : "No"
   %td.text-right.col-sm-2
     .btn-group
-      = link_to edit_catalog_use_agreement_path(use_agreement), class: 'btn btn-sm btn-primary', title: 'Edit' do
-        %i.fa.fa-edit
-      = link_to catalog_use_agreement_path(use_agreement), data: { method: :delete, confirm: "Are you sure?" }, class: 'btn btn-sm btn-danger', title: 'Archive' do
-        %i.fa.fa-trash-o
+      - if can? :update, use_agreement
+        = link_to edit_catalog_use_agreement_path(use_agreement), class: 'btn btn-sm btn-primary', title: 'Edit' do
+          %i.fa.fa-edit
+      - else
+        = link_to catalog_use_agreement_path(use_agreement), class: 'btn btn-sm btn-primary', title: 'Show' do
+          %i.fa.fa-file-text-o        
+      - if use_agreement.archived?
+        = link_to unarchive_catalog_use_agreement_path(use_agreement), method: :patch, class: 'btn btn-sm btn-default', data: { confirm: 'Are you sure you want to restore the Use Agreement?' }, title: 'Restore Use Agreement' do
+          %i.fa.fa-archive
+      - else
+        = link_to "#archive-modal-#{dom_id(use_agreement)}", class: 'btn btn-sm btn-danger', data: { toggle: 'modal' }, title: 'Archive Use Agreement' do
+          %i.fa.fa-archive 
+
+= render 'archive_modal', use_agreement: use_agreement

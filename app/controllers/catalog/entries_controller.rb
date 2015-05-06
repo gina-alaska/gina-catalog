@@ -128,6 +128,6 @@ class Catalog::EntriesController < ApplicationController
   end
 
   def gather_use_agreements
-    @use_agreements = UseAgreement.where(archived_at: nil) || []
+    @use_agreements = UseAgreement.active
   end
 end

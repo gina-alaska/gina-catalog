@@ -87,7 +87,7 @@ class EntryTest < ActiveSupport::TestCase
 
     assert !entry.published?, 'Entry is still published when it should not be.'
   end
-  
+
   test 'should ensure that there is only one primary thumbnail' do
     entry = entries(:one)
     entry.attachments.build(category: 'Primary Thumbnail')
@@ -95,7 +95,7 @@ class EntryTest < ActiveSupport::TestCase
     entry.save
     assert entry.errors[:attachments].count > 0, 'Did not generate any errors about attachments'
   end
-  
+
   test 'is the entry archived?' do
     archived = entries(:archived)
     entry = entries(:one)
@@ -125,5 +125,4 @@ class EntryTest < ActiveSupport::TestCase
       entry.unarchive!
     end
   end
-
 end
