@@ -3,18 +3,22 @@ class Layers
     @config = @mapel.data()
   setup: () ->
     layers = {}
+    layersForControl = {}
     #  = L.featureGroup()
 
     for el in @mapel.find('layer')
       klass = @determineLayerClass(el)
 
       layers[klass.zoomable] ||= L.featureGroup()
-      layer = new klass(el, layers[klass.zoomable]);
+      layer = new klass(el, layers[klass.zoomable])
       layer.zoom(@)
+      layersForControl[layer.config.name] = layer.layer
 
     layers[true].addTo(@map) if layers[true]?
     layers[false].addTo(@map) if layers[false]?
     @zoomTo(layers[true], @config.maxZoom) if @config.fitAll
+
+    L.control.layers(null, layersForControl).addTo(@map)
 
   zoomTo: (layer, maxZoom) ->
     @map.whenReady =>
