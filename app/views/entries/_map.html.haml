@@ -9,3 +9,5 @@
             %label File:
             = geojson.file.name
           {{popup}}
+    - entry.map_layers.each do |layer|
+      %layer{ data: layer.leaflet_options }

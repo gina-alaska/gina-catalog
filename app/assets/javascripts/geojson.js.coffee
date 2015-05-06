@@ -130,3 +130,5 @@ class @GeoJSONLayer
 
   zoom: (parent) ->
     parent.zoomTo(@layer, 10) if @config.fit
+
+  @zoomable: true

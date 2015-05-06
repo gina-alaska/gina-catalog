@@ -2,15 +2,19 @@ class Layers
   constructor: (@mapel, @map, @selector = 'layer') ->
     @config = @mapel.data()
   setup: () ->
-    layerGroup = L.featureGroup()
+    layers = {}
+    #  = L.featureGroup()
 
     for el in @mapel.find('layer')
       klass = @determineLayerClass(el)
-      layer = new klass(el, layerGroup);
+
+      layers[klass.zoomable] ||= L.featureGroup()
+      layer = new klass(el, layers[klass.zoomable]);
       layer.zoom(@)
 
-    layerGroup.addTo(@map);
-    @zoomTo(layerGroup, @config.maxZoom) if @config.fitAll
+    layers[true].addTo(@map) if layers[true]?
+    layers[false].addTo(@map) if layers[false]?
+    @zoomTo(layers[true], @config.maxZoom) if @config.fitAll
 
   zoomTo: (layer, maxZoom) ->
     @map.whenReady =>
