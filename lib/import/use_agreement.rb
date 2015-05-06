@@ -3,9 +3,9 @@ require 'import/base'
 module Import
   class UseAgreement < Base
     SIMPLE_FIELDS = %w(
-      title body required 
+      title body required
     )
-     
+
     def self.fetch(catalog)
       import = ::Import::UseAgreement.new(Portal.first)
       Client.paged_results 'UseAgreements', Client.use_agreements_url(catalog) do |record|

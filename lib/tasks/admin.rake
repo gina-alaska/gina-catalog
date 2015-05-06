@@ -58,7 +58,7 @@ namespace :admin do
       end
       Import::UseAgreement.fetch(ENV['catalog'])
     end
-    
+
     desc 'Import entries from api'
     task entries: :environment do
       if ENV['catalog'].nil?

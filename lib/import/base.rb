@@ -18,13 +18,13 @@ module Import
         record.organizations << org unless org.nil? || record.organizations.include?(org)
       end
     end
-    
+
     def find_org(json)
       return if json.nil?
-      
+
       ::Organization.where(name: json['name']).first
     end
-    
+
     def find_collection(json)
       return if json.nil?
       item = ImportItem.collections.oid(json['id']).first
@@ -36,10 +36,10 @@ module Import
       item = ImportItem.use_agreements.oid(json['id']).first
       item.try(:importable)
     end
-    
+
     def find_contact(contact)
       return if contact.nil?
-      
+
       ImportItem.contacts.oid(contact['id']).first.try(:importable)
     end
   end

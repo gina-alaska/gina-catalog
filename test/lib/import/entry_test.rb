@@ -48,7 +48,7 @@ class Import::EntryTest < ActiveSupport::TestCase
     assert_not_empty import.importable.contacts
     assert_not_empty import.importable.links
     assert_not_empty import.importable.collections
-    assert_not_nil import.importable.use_agreement    
+    assert_not_nil import.importable.use_agreement
   end
 
   test 'should add contacts to model' do

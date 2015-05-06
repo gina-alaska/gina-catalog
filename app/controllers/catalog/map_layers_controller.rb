@@ -60,7 +60,7 @@ class Catalog::MapLayersController < ApplicationController
 
   def destroy
     save_referrer_location
-    
+
     respond_to do |format|
       if @map_layer.destroy
         flash[:notice] = "#{@map_layer.name} has been deleted"

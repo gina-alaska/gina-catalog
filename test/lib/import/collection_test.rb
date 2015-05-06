@@ -7,7 +7,7 @@ class Import::CollectionTest < ActiveSupport::TestCase
     import = collection_import.create(
       'id' => 2,
       'name' => 'Collection',
-      'description' => 'Description test.',
+      'description' => 'Description test.'
     )
     assert import.importable.valid?, import.importable.errors.full_messages
   end

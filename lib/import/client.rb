@@ -24,11 +24,11 @@ module Import
     def collections_url(portal)
       api_url "/setups/#{portal}/collections.json"
     end
- 
+
     def use_agreements_url(portal)
       api_url "/setups/#{portal}/use_agreements.json"
     end
-       
+
     def fetch(url)
       JSON.load(open(url))
     end

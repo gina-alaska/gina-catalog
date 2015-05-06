@@ -1,6 +1,6 @@
 class Collection < ActiveRecord::Base
   include LegacyConcerns
-  
+
   validates :name, length: { maximum: 255 }
 
   belongs_to :portal
