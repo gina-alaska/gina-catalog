@@ -42,19 +42,24 @@ class CustomMarker extends CustomPopup
     opts
 
 class Layer
+  switch 
+    when "wms" then return Object.create(WmsLayer)
+    else return Object.create(GeojsonLayer)
+
+class GeojsonLayer
   @geojson_options: {
     'custom-marker': CustomMarker.build,
     'custom-popup': CustomPopup.build
   }
 
   @register_geojson_options_builder: (name, klass) ->
-    Layer.geojson_options[name] = klass
+    GeojsonLayer.geojson_options[name] = klass
 
   @fetch_geojson_options_builder: (name, options) ->
-    Layer.geojson_options[name](options)
+    GeojsonLayer.geojson_options[name](options)
 
   @valid_geojson_options_builder: (name) ->
-    Layer.geojson_options[name]?
+    GeojsonLayer.geojson_options[name]?
 
   @next_page: (uri) ->
     url = new URI(uri)
