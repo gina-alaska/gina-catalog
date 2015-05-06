@@ -27,14 +27,14 @@ module Import
     
     def find_collection(json)
       return if json.nil?
-      
-      ImportItem.collections.oid(json['id']).first.try(:importable)
+      item = ImportItem.collections.oid(json['id']).first
+      item.try(:importable)
     end
 
     def find_use_agreement(json)
       return if json.nil?
-      
-      ImportItem.use_agreements.oid(json['id']).first.try(:importable)
+      item = ImportItem.use_agreements.oid(json['id']).first
+      item.try(:importable)
     end
     
     def find_contact(contact)
