@@ -1,0 +1,15 @@
+%div{ id: "archive-modal-#{dom_id(use_agreement)}", class: "modal fade", role: 'dialog' }
+  .modal-dialog
+    .modal-content
+      = bootstrap_form_for [:archive, :catalog, use_agreement] do |f| 
+        .modal-header
+          %button.close{ data: { dismiss: 'modal' }}
+            %i.fa.fa-close
+          %h4{ class: "modal-title" } Archive Use Agreement: #{use_agreement.title}
+        .modal-body
+          %p
+            Add use agreement notes to the record, including reasons for archiving use agreements, etc.
+          .form-group
+            = text_area_tag :message, params[:message], rows: 10, class: 'form-control', placeholder: 'Please enter the reason for archiving the use agreement'
+        .modal-footer.text-right
+          = f.primary "Archive Use Agreement"

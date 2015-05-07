@@ -1,0 +1,23 @@
+.panel.panel-default
+  .panel-heading{ style: 'position: relative' }
+    %ol.breadcrumb
+      %li
+        = link_to catalog_use_agreements_path do
+          %i.fa.fa-university
+          Use Agreements
+        %li.active= @use_agreement.title
+        - if @use_agreement.archived?
+          %span{style: "color: red;"} (Archived)  
+  .panel-body
+    %dl.dl-horizontal
+      - if @use_agreement.archived?
+        %dt Archive Message
+        %dd= "#{@use_agreement.archive.message}"
+      %dt Title
+      %dd= @use_agreement.title
+      %dt Description
+      %dd= @use_agreement.body
+      %dt Required
+      %dd= @use_agreement.required
+
+  .panel-footer

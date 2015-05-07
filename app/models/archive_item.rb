@@ -4,4 +4,5 @@ class ArchiveItem < ActiveRecord::Base
 
   scope :by_type, ->(type) { where(archived_type: type) }
   scope :entries, -> { by_type('Entry') }
+  scope :use_agreements, -> { by_type('UseAgreement') }
 end

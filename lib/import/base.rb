@@ -27,6 +27,7 @@ module Import
 
     def find_collection(json)
       return if json.nil?
+      
       item = ImportItem.collections.oid(json['id']).first
       item.try(:importable)
     end
