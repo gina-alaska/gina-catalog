@@ -41,6 +41,11 @@ namespace :admin do
       Import::Contact.fetch
     end
 
+    desc 'Load regions (geokeywords) from api'
+    task regions: :environment do
+      Import::Region.fetch
+    end
+
     desc 'Load ISO topics from api'
     task iso_topics: :environment do
       Import::IsoTopic.fetch
