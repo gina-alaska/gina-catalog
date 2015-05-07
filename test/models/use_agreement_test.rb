@@ -21,15 +21,20 @@ class UseAgreementTest < ActiveSupport::TestCase
     assert !use_agreement.deletable?, 'Use agreement is marked as deletable when it should not be'
   end
 
-  test 'check for use_agreement archive' do
+  test 'should archive use agreement' do
     use_agreement = use_agreements(:one)
-    use_agreement.archive
-    assert use_agreement.archived, 'Use agreement has been archived but it did not take'
+    user = users(:one)
+
+    assert_difference('ArchiveItem.count') do
+      use_agreement.archive!('Testing archiving', user)
+    end
   end
 
-  test 'check for use_agreement unarchive' do
+  test 'should unarchive use agreement' do
     use_agreement = use_agreements(:archived)
-    use_agreement.unarchive
-    assert !use_agreement.archived, 'Use agreement has been unarchived but it did not take'
+
+    assert_difference('ArchiveItem.count', -1) do
+      use_agreement.unarchive!
+    end
   end
 end

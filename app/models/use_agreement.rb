@@ -1,6 +1,7 @@
 class UseAgreement < ActiveRecord::Base
   include EntryDependentConcerns
   include LegacyConcerns
+  include ArchiveConcerns
 
   belongs_to :portal
   has_many :entries
@@ -17,21 +18,5 @@ class UseAgreement < ActiveRecord::Base
 
   def deletable?
     entries.empty?
-  end
-
-  def archive
-    self.archived_at = Time.zone.now if archived_at.nil?
-  end
-
-  def unarchive
-    self.archived_at = nil
-  end
-
-  def archived
-    !archived_at.blank?
-  end
-
-  def archived=(value)
-    value.to_i == 1 ? archive : unarchive
   end
 end
