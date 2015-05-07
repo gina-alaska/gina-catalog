@@ -3,9 +3,14 @@
 
 #
 one:
-  name: One
-  long_name: MyStringOne
-  iso_theme_code: '123'
+  name: farming
+  long_name: "rearing of animals and/or cultivation of plants"
+  iso_theme_code: "001"
+
+two:
+  name: biota
+  long_name: "flora and/or fauna in natural environment"
+  iso_theme_code: "002"
   
 no_associated_entry:
   name: IsoTopicDelete
