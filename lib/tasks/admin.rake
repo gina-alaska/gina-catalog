@@ -40,7 +40,7 @@ namespace :admin do
     task contacts: :environment do
       Import::Contact.fetch
     end
-    
+
     desc 'Load ISO topics from api'
     task iso_topics: :environment do
       Import::IsoTopic.fetch

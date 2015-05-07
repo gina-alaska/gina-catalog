@@ -31,7 +31,7 @@ module Import
       add_locations(import.importable, json['locations'])
       add_contacts(import.importable, json)
       add_collections(import.importable, json)
-      add_iso_topics(import.importable, json)      
+      add_iso_topics(import.importable, json)
       add_use_agreement(import.importable, json)
       add_links(import.importable, json)
 
@@ -87,7 +87,7 @@ module Import
         model.iso_topics << item
       end if json['iso_topics'].present?
     end
-    
+
     def add_collections(model, json = {})
       json['collections'].each do |collection|
         collection = find_collection(collection)
