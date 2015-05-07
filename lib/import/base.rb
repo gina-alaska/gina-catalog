@@ -50,7 +50,7 @@ module Import
 
       ImportItem.contacts.oid(contact['id']).first.try(:importable)
     end
-    
+
     def find_region(region)
       return if region.nil?
 

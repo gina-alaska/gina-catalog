@@ -26,9 +26,9 @@ module Import
     end
 
     def regions_url
-      api_url "/geokeywords.json"
+      api_url '/geokeywords.json'
     end
-    
+
     def use_agreements_url(portal)
       api_url "/setups/#{portal}/use_agreements.json"
     end

@@ -7,7 +7,7 @@ class Import::RegionTest < ActiveSupport::TestCase
     import = region_import.create(
       'id' => 1,
       'name' => 'Alaska',
-      'geom' => "MULTIPOLYGON (((-168.24901 53.051919, -168.237302 52.950548)))"
+      'geom' => 'MULTIPOLYGON (((-168.24901 53.051919, -168.237302 52.950548)))'
     )
     assert import.importable.valid?, import.importable.errors.full_messages
   end

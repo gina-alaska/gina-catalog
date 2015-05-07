@@ -5,7 +5,7 @@ module Import
     SIMPLE_FIELDS = %w(
       name geom
     )
-    
+
     def self.fetch
       region = ::Import::Region.new
 
