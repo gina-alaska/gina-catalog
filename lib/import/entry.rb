@@ -31,6 +31,7 @@ module Import
       add_locations(import.importable, json['locations'])
       add_contacts(import.importable, json)
       add_collections(import.importable, json)
+      add_regions(import.importable, json)      
       add_iso_topics(import.importable, json)
       add_use_agreement(import.importable, json)
       add_links(import.importable, json)
@@ -80,6 +81,13 @@ module Import
       end if json['contacts'].present?
     end
 
+    def add_regions(model, json = {})
+      json['regions'].each do |region|
+        item = find_region(region)
+        model.regions << item unless item.nil? || model.regions.include?(item)
+      end if json['regions'].present?
+    end
+    
     def add_iso_topics(model, json)
       json['iso_topics'].each do |iso_topic|
         item =  find_iso_topic(iso_topic)

@@ -20,8 +20,8 @@ four:
   import_id: 4
   importable: one 
   importable_type: UseAgreement
-  
+
 five:
   import_id: 5
   importable: one 
-  importable_type: IsoTopic
+  importable_type: Region
