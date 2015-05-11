@@ -13,3 +13,6 @@ class @TMSLayer
     # do nothing
 
   @zoomable: false
+
+  getLayer: () ->
+    @layer
