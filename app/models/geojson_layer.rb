@@ -1,6 +1,5 @@
 class GeojsonLayer < MapLayer
-
-  def supports?(projection)
+  def supports?(*)
     false
   end
 
