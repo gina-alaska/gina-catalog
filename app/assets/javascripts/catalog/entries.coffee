@@ -43,7 +43,6 @@ $(document).on 'ready page:load', ->
         "<div>#{item.name}</div>"
     },
     load: (query, callback) ->
-      # return callback() if query.length == 0
       $.ajax({
         url: '/api/collections',
         dataType: 'json',
@@ -64,12 +63,12 @@ $(document).on 'ready page:load', ->
     valueField: 'id',
     labelField: 'name',
     searchField: 'name',
+    preload: true,
     render: {
       option: (item, escape) ->
         "<div>#{item.name}</div>"
     },
     load: (query, callback) ->
-      return callback() if query.length == 0
       $.ajax({
         url: '/api/regions',
         dataType: 'json',
@@ -90,12 +89,12 @@ $(document).on 'ready page:load', ->
     valueField: 'id',
     labelField: 'long_name_with_code',
     searchField: 'long_name_with_code',
+    preload: true,
     render: {
       option: (item, escape) ->
         "<div>#{item.long_name_with_code}</div>"
     },
     load: (query, callback) ->
-      return callback() if query.length == 0
       $.ajax({
         url: '/api/iso_topics',
         dataType: 'json',
