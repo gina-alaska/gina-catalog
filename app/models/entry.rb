@@ -9,7 +9,6 @@ class Entry < ActiveRecord::Base
 
   belongs_to :use_agreement
   belongs_to :entry_type
-  belongs_to :data_type
 
   has_many :attachments, dependent: :destroy
   has_many :bboxes, through: :attachments
@@ -42,6 +41,9 @@ class Entry < ActiveRecord::Base
 
   has_many :entry_iso_topics
   has_many :iso_topics, through: :entry_iso_topics
+  
+  has_many :entry_data_types
+  has_many :data_types, through: :entry_data_types
 
   has_many :entry_portals
   has_many :portals, -> { uniq }, through: :entry_portals
