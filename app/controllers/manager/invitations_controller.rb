@@ -1,6 +1,5 @@
 class Manager::InvitationsController < ManagerController
   load_and_authorize_resource find_by: :uuid
-  skip_authorize_resource only: [:accept]
 
   rescue_from ActiveRecord::RecordNotFound do |_exception|
     flash[:error] = "We're sorry but the requested invitation is no longer available"
