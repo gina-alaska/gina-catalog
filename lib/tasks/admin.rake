@@ -41,7 +41,12 @@ namespace :admin do
       Import::Contact.fetch
     end
 
-    desc 'Import collections from api'
+    desc 'Load ISO topics from api'
+    task iso_topics: :environment do
+      Import::IsoTopic.fetch
+    end
+
+    desc 'Import collections from api (catalog required)'
     task collections: :environment do
       if ENV['catalog'].nil?
         puts 'Please specify the catalog from which collections will be loaded (rake admin:load:collections catalog=catalog.northslope.org)'
@@ -50,7 +55,7 @@ namespace :admin do
       Import::Collection.fetch(ENV['catalog'])
     end
 
-    desc 'Import use agreements from api'
+    desc 'Import use agreements from api (catalog required)'
     task use_agreements: :environment do
       if ENV['catalog'].nil?
         puts 'Please specify the catalog from which use agreements will be loaded (rake admin:load:use_agreements catalog=catalog.northslope.org)'
@@ -59,7 +64,7 @@ namespace :admin do
       Import::UseAgreement.fetch(ENV['catalog'])
     end
 
-    desc 'Import entries from api'
+    desc 'Import entries from api (catalog required)'
     task entries: :environment do
       if ENV['catalog'].nil?
         puts 'Please specify the catalog to load (rake admin:load:entries catalog=catalog.northslope.org)'

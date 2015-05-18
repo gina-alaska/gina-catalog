@@ -25,15 +25,22 @@ module Import
       ::Organization.where(name: json['name']).first
     end
 
+    def find_iso_topic(json)
+      return if json.nil?
+
+      ::IsoTopic.where(iso_theme_code: json['iso_theme_code']).first
+    end
+
     def find_collection(json)
       return if json.nil?
-      
+
       item = ImportItem.collections.oid(json['id']).first
       item.try(:importable)
     end
 
     def find_use_agreement(json)
       return if json.nil?
+
       item = ImportItem.use_agreements.oid(json['id']).first
       item.try(:importable)
     end
