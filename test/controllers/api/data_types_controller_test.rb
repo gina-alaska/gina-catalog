@@ -1,4 +1,4 @@
-require "test_helper"
+require 'test_helper'
 
 class Api::DataTypesControllerTest < ActionController::TestCase
   test 'Should get index' do
