@@ -104,8 +104,8 @@ class Catalog::EntriesController < ApplicationController
     values = params.require(:entry).permit(
       :title, :description, :status, :entry_type_id, :start_date, :end_date,
       :use_agreement_id, :request_contact_info, :require_contact_info,
-      :data_type_id, :tag_list,
-      collection_ids: [], region_ids: [], iso_topic_ids: [],
+      :tag_list,
+      collection_ids: [], region_ids: [], iso_topic_ids: [], data_type_ids: [],
       links_attributes: [:id, :link_id, :category, :display_text, :url, :_destroy],
       attachments_attributes: [:id, :file, :category, :description, :interaction, :_destroy],
       entry_contacts_attributes: [:id, :contact_id, :primary, :_destroy],
@@ -124,6 +124,9 @@ class Catalog::EntriesController < ApplicationController
       values[:iso_topic_ids] = values.delete(:iso_topic_ids).map(&:to_i).reject { |v| v == 0 }
     end
 
+    if values[:data_type_ids].present?
+      values[:data_type_ids] = values.delete(:data_type_ids).map(&:to_i).reject { |v| v == 0 }
+    end
     values
   end
 

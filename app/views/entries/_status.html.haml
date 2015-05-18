@@ -15,8 +15,8 @@
       %div
         %strong End Date:
         = entry.end_date.strftime('%Y/%m/%d')  
-- unless entry.data_type.nil?
+- unless entry.data_types.nil?
   .row
     .col-sm-12
-      %strong Data Type:
-      = entry.data_type
+      %strong Data Types:
+      = list_data_types(entry)
