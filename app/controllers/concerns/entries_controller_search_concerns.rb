@@ -10,6 +10,7 @@ module EntriesControllerSearchConcerns
       iso_topics: organize_facets(@entries.facets['iso_topic_ids'], IsoTopic),
       entry_types: organize_facets(@entries.facets['entry_type_name']),
       data_types: organize_facets(@entries.facets['data_type_ids'], DataType),
+      regions: organize_facets(@entries.facets['region_ids'], Region),      
       status: organize_facets(@entries.facets['status']),
       primary_organizations: organize_facets(@entries.facets['primary_organization_ids'], Organization, :id, :acronym_with_name),
       funding_organizations: organize_facets(@entries.facets['funding_organization_ids'], Organization, :id, :acronym_with_name),
@@ -46,6 +47,7 @@ module EntriesControllerSearchConcerns
     iso_topics:               :iso_topic_ids,
     entry_type_name:          :entry_type_name,
     data_types:               :data_type_ids,
+    regions:                  :region_ids,    
     status:                   :status,
     primary_organizations:    :primary_organization_ids,
     funding_organizations:    :funding_organization_ids,
@@ -133,7 +135,7 @@ module EntriesControllerSearchConcerns
     end
 
     # items that can match any selected
-    [:entry_type_name, :data_types, :status, :primary_organizations, :funding_organizations,
+    [:entry_type_name, :data_types, :regions, :status, :primary_organizations, :funding_organizations,
      :primary_contacts, :other_contacts, :archived].each do |param|
       opts[:where][FACET_FIELDS[param]] = search_params[param] if search_params[param].present?
     end
