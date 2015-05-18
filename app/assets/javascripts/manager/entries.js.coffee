@@ -114,6 +114,34 @@ $(document).on 'ready page:load', ->
     create: false
   })
 
+  $('[data-behavior="selectize-data_types"]').selectize({
+    plugins: ['remove_button'],
+    valueField: 'id',
+    labelField: 'name',
+    searchField: 'name',
+    sortField: 'name',
+    preload: true,
+    render: {
+      option: (item, escape) ->
+        "<div>#{item.name}</div>"
+    },
+    load: (query, callback) ->
+      # return callback() if query.length == 0
+      $.ajax({
+        url: '/api/data_types',
+        dataType: 'json',
+        data: { 
+          q: encodeURIComponent(query)
+        },
+        type: 'GET',
+        error: -> 
+          callback()
+        success: (res) -> 
+          callback(res)
+      })
+    create: false
+  })
+
 $(document).on 'click', '[data-behavior="clear-field"]', (e) ->
   e.preventDefault();
   
