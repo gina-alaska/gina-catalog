@@ -50,7 +50,7 @@ class Link < ActiveRecord::Base
   end
 
   def pdf_to_text
-    return '' unless self.is_pdf?
+    return '' unless self.pdf?
 
     pdf_text = ''
     begin
