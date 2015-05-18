@@ -31,6 +31,7 @@ module Import
       add_locations(import.importable, json['locations'])
       add_contacts(import.importable, json)
       add_collections(import.importable, json)
+      add_use_agreement(import.importable, json)
       add_links(import.importable, json)
 
       import.importable.portals << @portal
@@ -83,6 +84,11 @@ module Import
         collection = find_collection(collection)
         model.collections << collection unless collection.nil? || model.collections.include?(collection)
       end if json['collections'].present?
+    end
+
+    def add_use_agreement(model, json = {})
+      item = find_use_agreement(json['use_agreement']) if json['use_agreement'].present?
+      model.use_agreement = item unless item.nil? || model.use_agreement.present?
     end
 
     def add_locations(record, locations)

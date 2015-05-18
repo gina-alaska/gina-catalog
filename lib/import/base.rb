@@ -10,6 +10,15 @@ module Import
       end
     end
 
+    def add_other_orgs(record, agencies)
+      return if agencies.blank?
+
+      agencies.each do |json|
+        org = ::Organization.where(name: json['name']).first
+        record.organizations << org unless org.nil? || record.organizations.include?(org)
+      end
+    end
+
     def find_org(json)
       return if json.nil?
 
@@ -18,17 +27,15 @@ module Import
 
     def find_collection(json)
       return if json.nil?
-
-      ImportItem.collections.oid(json['id']).first.try(:importable)
+      
+      item = ImportItem.collections.oid(json['id']).first
+      item.try(:importable)
     end
 
-    def add_other_orgs(record, agencies)
-      return if agencies.blank?
-
-      agencies.each do |json|
-        org = ::Organization.where(name: json['name']).first
-        record.organizations << org unless org.nil? || record.organizations.include?(org)
-      end
+    def find_use_agreement(json)
+      return if json.nil?
+      item = ImportItem.use_agreements.oid(json['id']).first
+      item.try(:importable)
     end
 
     def find_contact(contact)

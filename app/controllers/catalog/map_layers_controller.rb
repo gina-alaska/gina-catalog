@@ -59,7 +59,7 @@ class Catalog::MapLayersController < ApplicationController
   end
 
   def destroy
-    respond_to do |format|
+   respond_to do |format|
       if @map_layer.destroy
         flash[:notice] = "#{@map_layer.name} has been deleted"
         format.html { redirect_to catalog_map_layers_path }
