@@ -10,18 +10,6 @@ module Import
       end
     end
 
-    def find_org(json)
-      return if json.nil?
-
-      ::Organization.where(name: json['name']).first
-    end
-
-    def find_collection(json)
-      return if json.nil?
-
-      ImportItem.collections.oid(json['id']).first.try(:importable)
-    end
-
     def add_other_orgs(record, agencies)
       return if agencies.blank?
 
@@ -31,10 +19,42 @@ module Import
       end
     end
 
+    def find_org(json)
+      return if json.nil?
+
+      ::Organization.where(name: json['name']).first
+    end
+
+    def find_iso_topic(json)
+      return if json.nil?
+
+      ::IsoTopic.where(iso_theme_code: json['iso_theme_code']).first
+    end
+
+    def find_collection(json)
+      return if json.nil?
+
+      item = ImportItem.collections.oid(json['id']).first
+      item.try(:importable)
+    end
+
+    def find_use_agreement(json)
+      return if json.nil?
+
+      item = ImportItem.use_agreements.oid(json['id']).first
+      item.try(:importable)
+    end
+
     def find_contact(contact)
       return if contact.nil?
 
       ImportItem.contacts.oid(contact['id']).first.try(:importable)
+    end
+
+    def find_region(region)
+      return if region.nil?
+
+      ImportItem.regions.oid(region['id']).first.try(:importable)
     end
   end
 end

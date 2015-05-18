@@ -10,3 +10,18 @@ two:
   import_id: 2
   importable_id: one
   importable_type: Contact
+
+three:
+  import_id: 3
+  importable: one
+  importable_type: Collection
+  
+four:
+  import_id: 4
+  importable: one 
+  importable_type: UseAgreement
+
+five:
+  import_id: 5
+  importable: one 
+  importable_type: Region

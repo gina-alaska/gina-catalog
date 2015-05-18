@@ -24,11 +24,11 @@ module EntrySearchConcerns
   def data_type_names
     data_types.pluck(:name)
   end
-
+  
   def region_names
     regions.pluck(:name)
   end
-  
+
   def iso_topic_names
     iso_topics.pluck(:name)
   end

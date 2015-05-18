@@ -7,4 +7,3 @@ module EntriesHelper
     entry.data_types.pluck(:name).join(', ')
   end
 end
-

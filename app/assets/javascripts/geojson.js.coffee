@@ -51,9 +51,9 @@ class @GeoJSONLayer
     @config = @config_from_element(@el)
 
     if @config.cluster
-      cluster = @cluster_layer()
-      cluster.addTo(@parent)
-      @layer = @build_layer(cluster)
+      @cluster = @cluster_layer()
+      @cluster.addTo(@parent)
+      @layer = @build_layer(@cluster)
     else
       @layer = @build_layer(@parent)
 
@@ -80,7 +80,11 @@ class @GeoJSONLayer
     url.search(params)
     url.toString()
 
-
+  getLayer: () ->
+    if @cluster?
+      @cluster
+    else
+      @layer
 
   get_geojson_layer: (config = {}) ->
     featureLayer = L.mapbox.featureLayer(@url_defaults(config.url, { limit: 500 }))

@@ -1,8 +1,8 @@
-class @WMSLayer
+class @TMSLayer
   constructor: (@el, @parent) ->
     @config = $(@el).data();
 
-    @layer = L.tileLayer.wms(@config.url, {
+    @layer = L.tileLayer(@config.url, {
       layers: @config.layers,
       format: 'image/png',
       transparent: true
@@ -14,5 +14,5 @@ class @WMSLayer
 
   @zoomable: false
 
-  getLayer: () -> 
+  getLayer: () ->
     @layer

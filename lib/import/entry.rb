@@ -31,6 +31,9 @@ module Import
       add_locations(import.importable, json['locations'])
       add_contacts(import.importable, json)
       add_collections(import.importable, json)
+      add_regions(import.importable, json)
+      add_iso_topics(import.importable, json)
+      add_use_agreement(import.importable, json)
       add_links(import.importable, json)
 
       import.importable.portals << @portal
@@ -78,11 +81,31 @@ module Import
       end if json['contacts'].present?
     end
 
+    def add_regions(model, json = {})
+      json['regions'].each do |region|
+        item = find_region(region)
+        model.regions << item unless item.nil? || model.regions.include?(item)
+      end if json['regions'].present?
+    end
+
+    def add_iso_topics(model, json)
+      json['iso_topics'].each do |iso_topic|
+        item =  find_iso_topic(iso_topic)
+        next if model.iso_topics.include?(item)
+        model.iso_topics << item
+      end if json['iso_topics'].present?
+    end
+
     def add_collections(model, json = {})
       json['collections'].each do |collection|
         collection = find_collection(collection)
         model.collections << collection unless collection.nil? || model.collections.include?(collection)
       end if json['collections'].present?
+    end
+
+    def add_use_agreement(model, json = {})
+      item = find_use_agreement(json['use_agreement']) if json['use_agreement'].present?
+      model.use_agreement = item unless item.nil? || model.use_agreement.present?
     end
 
     def add_locations(record, locations)
