@@ -5,6 +5,7 @@ require 'import/contact'
 require 'import/organization'
 require 'import/collection'
 require 'import/use_agreement'
+require 'import/region'
 
 module Import
   API_URL = Rails.application.secrets.glynx2_api || 'http://glynx2-api.127.0.0.1.xip.io'
