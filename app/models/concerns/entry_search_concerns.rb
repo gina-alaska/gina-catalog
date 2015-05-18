@@ -24,6 +24,10 @@ module EntrySearchConcerns
   def data_type_names
     data_types.pluck(:name)
   end
+
+  def region_names
+    regions.pluck(:name)
+  end
   
   def iso_topic_names
     iso_topics.pluck(:name)
@@ -36,7 +40,7 @@ module EntrySearchConcerns
   def search_data_with_entries
     as_json(methods: [
       :portal_ids, :tag_list, :collection_ids, :collection_names, 
-      :data_type_ids, :data_type_names,
+      :data_type_ids, :data_type_names, :region_ids, :region_names,
       :entry_type_name, :primary_organization_ids, :funding_organization_ids,
       :organization_categories, :organization_name, :primary_contact_ids,
       :contact_ids, :iso_topic_ids, :iso_topic_names, :iso_topic_codes,
