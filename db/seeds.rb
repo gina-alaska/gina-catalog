@@ -26,7 +26,7 @@ end
 EntryType.where(name: 'Project', description: 'catalog record for projects with no associated data/observation files', color: '#c09853').first_or_create
 EntryType.where(name: 'Data', description: 'catalog record for projects with associated data/observation files', color: '#3a87ad').first_or_create
 
-data_types = ['Database', 'GIS', 'Image', 'Map', 'Other', 'Report', 'Web Service']
+data_types = ['Image','Database', 'GIS', 'Map', 'Web Service', 'Other', 'Report']
 data_types.each do |data_type|
   DataType.where(name: data_type).first_or_create
 end
