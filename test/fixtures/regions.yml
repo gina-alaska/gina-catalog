@@ -7,3 +7,7 @@ one:
 two:
   name: MyStringTwo
   geom: SRID=4326;POLYGON((5 5, 15 5, 15 15, 5 15, 5 5))
+
+no_associated_entry:
+  name: 'RegionTest'
+  geom: SRID=4326;POLYGON((5 5, 15 5, 15 15, 5 15, 5 5))
