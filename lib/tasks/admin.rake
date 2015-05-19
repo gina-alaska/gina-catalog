@@ -46,6 +46,11 @@ namespace :admin do
       Import::Region.fetch
     end
 
+    desc 'Load data types from api'
+    task data_types: :environment do
+      Import::DataType.fetch
+    end
+    
     desc 'Load ISO topics from api'
     task iso_topics: :environment do
       Import::IsoTopic.fetch
