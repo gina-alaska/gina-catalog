@@ -11,13 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150428213542) do
+ActiveRecord::Schema.define(version: 20150518025420) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "postgis"
   enable_extension "hstore"
   enable_extension "uuid-ossp"
-  enable_extension "postgis"
   enable_extension "postgis_topology"
 
   create_table "activity_logs", force: :cascade do |t|
@@ -147,7 +147,6 @@ ActiveRecord::Schema.define(version: 20150428213542) do
     t.boolean  "require_contact_info"
     t.integer  "entry_type_id"
     t.datetime "published_at"
-    t.integer  "data_type_id"
   end
 
   create_table "entry_aliases", force: :cascade do |t|
@@ -168,6 +167,13 @@ ActiveRecord::Schema.define(version: 20150428213542) do
     t.integer  "contact_id"
     t.integer  "entry_id"
     t.boolean  "primary",    default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "entry_data_types", force: :cascade do |t|
+    t.integer  "data_type_id"
+    t.integer  "entry_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

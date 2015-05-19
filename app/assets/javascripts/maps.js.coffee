@@ -12,7 +12,7 @@ class Layers
       layers[klass.zoomable] ||= L.featureGroup()
       layer = new klass(el, layers[klass.zoomable])
       layer.zoom(@)
-      layersForControl[layer.config.name] = layer.layer
+      layersForControl[layer.config.name] = layer.getLayer()
 
     layers[true].addTo(@map) if layers[true]?
     layers[false].addTo(@map) if layers[false]?

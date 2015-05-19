@@ -31,6 +31,10 @@ class Ability
 
     user ||= User.new
 
+    if !user.new_record?
+      can :accept, Invitation
+    end
+
     if user.role?(:cms_manager, current_portal)
       can :view_manager_menu, User
     end

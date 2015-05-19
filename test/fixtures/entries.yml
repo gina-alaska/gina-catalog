@@ -6,7 +6,6 @@ one:
   description: MyText
   status: MyString
   entry_type: one
-  data_type: one
   slug: MyString
   uuid: MyString
   licence_id: 1
@@ -20,7 +19,6 @@ two:
   description: MyText
   status: MyString
   entry_type: two
-  data_type: two
   slug: MyString
   uuid: MyString
   licence_id: 1
@@ -34,7 +32,6 @@ multi_owner:
   description: MyText
   status: MyString
   entry_type: two
-  data_type: two
   slug: MyString
   uuid: MyString
   licence_id: 1
@@ -48,7 +45,6 @@ published:
   description: MyText
   status: MyString
   entry_type: two
-  data_type: two
   slug: MyString
   uuid: MyString
   licence_id: 1
@@ -62,7 +58,6 @@ unpublished:
   description: MyText
   status: MyString
   entry_type: two
-  data_type: two
   slug: MyString
   uuid: MyString
   licence_id: 1
@@ -76,7 +71,6 @@ archived:
   description: MyText
   status: MyString
   entry_type: two
-  data_type: two
   slug: MyString
   uuid: MyString
   published_at: null
