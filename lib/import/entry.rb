@@ -35,6 +35,7 @@ module Import
       add_iso_topics(import.importable, json)
       add_use_agreement(import.importable, json)
       add_links(import.importable, json)
+      add_data_types(import.importable, json)
 
       import.importable.portals << @portal
 
@@ -96,6 +97,13 @@ module Import
       end if json['iso_topics'].present?
     end
 
+    def add_data_types(model, json = {})
+      json['data_types'].each do |data_type|
+        item = find_data_type(data_type)
+        model.data_types << item unless item.nil? || model.data_types.include?(item)
+      end if json['data_types'].present?
+    end
+    
     def add_collections(model, json = {})
       json['collections'].each do |collection|
         collection = find_collection(collection)
