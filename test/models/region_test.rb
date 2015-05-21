@@ -16,4 +16,17 @@ class RegionTest < ActiveSupport::TestCase
 
     assert_equal 0, regions.count
   end
+  
+  test 'check for deletable' do
+    region = regions(:no_associated_entry)
+    assert region.deletable?, 'Region is marked as undeletable when it should be deletable.'
+  end
+
+  test 'check for undeletable' do
+    region = regions(:one)
+    region.entries << entries(:one)
+
+    assert !region.deletable?, 'Region is marked as deletable but it should not be'
+  end
+  
 end
