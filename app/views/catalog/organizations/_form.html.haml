@@ -23,7 +23,7 @@
         .row
           .col-sm-10
             .fileinput-new.thumbnail
-              %img{ src: 'holder.js/200x200', style: 'width: 200px; height: 200px;' }
+              %img{ data: { src: 'holder.js/200x200' }, style: 'width: 200px; height: 200px;' }
             .fileinput-preview.thumbnail.fileinput-exists{ style: 'max-width:200px; max-height:200px;' }
               = image_tag @organization.logo.encode(:png).thumb('200x200').url if @organization.logo
           .col-sm-2.text-right
@@ -47,7 +47,7 @@
             %th.text-right Actions
         %tbody#aliases_add
           = f.fields_for :aliases, wrapper: false
-          
+
     #record_list.tab-pane
       %p List of catalog records that are linked with this map layer.
       = render 'organizations', organization: @organization 
