@@ -1,10 +1,10 @@
 #map-layers-container
-  %table{ id: 'organization-table', class: 'table table-striped table-condensed' }
+  %table{ id: 'map-layer-table', class: 'table table-striped table-condensed' }
     %thead
       %tr
         %th Record
         %th Description
-        %th.text-right.col-sm-2 Action
+        %th.text-right.col-sm-1 Action
     %tbody
       - organization.entry_organizations.each do |eml|
         - entry = eml.entry
