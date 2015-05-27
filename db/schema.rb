@@ -142,11 +142,11 @@ ActiveRecord::Schema.define(version: 20150518025420) do
     t.date     "end_date"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "use_agreement_id"
     t.boolean  "request_contact_info"
     t.boolean  "require_contact_info"
     t.integer  "entry_type_id"
     t.datetime "published_at"
+    t.integer  "use_agreement_id"
   end
 
   create_table "entry_aliases", force: :cascade do |t|

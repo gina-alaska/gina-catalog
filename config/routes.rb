@@ -101,6 +101,7 @@ Rails.application.routes.draw do
     resources :collections
     resources :map_layers
     resources :data_types
+    resources :use_agreements
   end
 
   # The priority is based upon order of creation: first created -> highest priority.
