@@ -27,7 +27,8 @@ namespace :admin do
       puts 'There was an error trying to set the user as a global admin'
     end
   end
-
+ 
+  desc 'Load items (organizations/contact/regions) that do not require a catalog'
   task load: ['load:organizations', 'load:contacts', 'load:regions']
 
   namespace :load do
