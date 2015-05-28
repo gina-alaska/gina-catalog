@@ -6,11 +6,11 @@ class Link < ActiveRecord::Base
 
   belongs_to :entry, touch: true
 
-  validates_length_of :display_text, maximum: 255
-  validates_length_of :url, in: 11..255, message: 'is not a valid url'
-  validates_inclusion_of :category, in: CATEGORIES, message: 'is not a valid category'
+  validates :display_text, length: { maximum: 255 }
+  validates :url, length: { within: 11..255, message: 'is not a valid url' }
+  validates :category, inclusion: { in: CATEGORIES, message: 'is not a valid category' }
 
-  def is_pdf?
+  def pdf?
     url.split('.').last.downcase == 'pdf'
   end
 
@@ -50,7 +50,7 @@ class Link < ActiveRecord::Base
   end
 
   def pdf_to_text
-    return '' unless self.is_pdf?
+    return '' unless self.pdf?
 
     pdf_text = ''
     begin

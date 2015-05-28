@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class RegionTest < ActiveSupport::TestCase
-  should ensure_length_of(:name).is_at_most(255)
+  should validate_length_of(:name).is_at_most(255)
 
   should validate_uniqueness_of(:name)
 

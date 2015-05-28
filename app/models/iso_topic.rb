@@ -7,15 +7,15 @@ class IsoTopic < ActiveRecord::Base
   has_many :entry_iso_topics
   has_many :entries, through: :entry_iso_topics
 
-  validates_presence_of :name
-  validates_length_of :name, maximum: 50
-  validates_uniqueness_of :name
+  validates :name, presence: true
+  validates :name, length: { maximum: 50 }
+  validates :name, uniqueness: true
 
-  validates_length_of :long_name, maximum: 200
+  validates :long_name, length: { maximum: 200 }
 
-  validates_presence_of :iso_theme_code
-  validates_length_of :iso_theme_code, maximum: 3
-  validates_uniqueness_of :iso_theme_code
+  validates :iso_theme_code, presence: true
+  validates :iso_theme_code, length: { maximum: 3 }
+  validates :iso_theme_code, uniqueness: true
 
   def long_name_with_code
     "#{iso_theme_code} :: #{name.humanize} - #{long_name}"
