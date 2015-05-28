@@ -14,6 +14,9 @@ Rails.application.routes.draw do
   get '/manager' => 'manager/dashboard#index', as: :manager
   get '/portal_not_found' => 'welcome#portal_not_found', as: :portal_not_found
 
+  get 'catalogs/:id' => 'import_items#entries'
+  get 'catalogs/:id/downloads/:uuid' => 'import_items#downloads'
+  
   resources :sessions
   resources :memberships
   resources :users
