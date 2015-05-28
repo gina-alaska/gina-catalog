@@ -6,8 +6,9 @@
           = link_to entries_path do
             %i.fa.fa-cubes
             Catalog Records
+        %li
+          = link_to truncate(@entry.title, length: 60), catalog_entry_path(@entry)
         %li.active
-          Edit #{@entry.title}
-
+          Edit
     .panel-body.entry-form-container
       = render 'form', collection: @entry 
