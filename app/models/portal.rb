@@ -19,6 +19,8 @@ class Portal < ActiveRecord::Base
   has_many :entry_portals
   has_many :entries, through: :entry_portals
 
+  has_many :themes, foreign_key: 'owner_portal_id'
+
   scope :active, -> {}
 
   validates :title, presence: true

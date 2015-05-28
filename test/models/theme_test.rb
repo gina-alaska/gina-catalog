@@ -1,0 +1,32 @@
+require 'test_helper'
+
+class ThemeTest < ActiveSupport::TestCase
+  should validate_presence_of(:name)
+  should validate_length_of(:name).is_at_most(255)
+  should validate_length_of(:page_bg).is_at_most(255)
+  should validate_length_of(:content_bg).is_at_most(255)
+  should validate_length_of(:header_bg).is_at_most(255)
+  should validate_length_of(:header_title_color).is_at_most(255)
+  should validate_length_of(:header_byline_color).is_at_most(255)
+  should validate_length_of(:header_bg_grad).is_at_most(255)
+  should validate_length_of(:menu_bg).is_at_most(255)
+  should validate_length_of(:menu_link_color).is_at_most(255)
+  should validate_length_of(:menu_active_bg).is_at_most(255)
+  should validate_length_of(:menu_active_link_color).is_at_most(255)
+  should validate_length_of(:menu_hover_bg).is_at_most(255)
+  should validate_length_of(:menu_hover_link_color).is_at_most(255)
+  should validate_length_of(:menu_bg_grad).is_at_most(255)
+  should validate_length_of(:home_btn_bg).is_at_most(255)
+  should validate_length_of(:home_btn_link_color).is_at_most(255)
+  should validate_length_of(:home_btn_hover_bg).is_at_most(255)
+  should validate_length_of(:home_btn_hover_border).is_at_most(255)
+  should validate_length_of(:home_btn_hover_link_color).is_at_most(255)
+  should validate_length_of(:social_icons_link_color).is_at_most(255)
+  should validate_length_of(:social_icons_hover_link_color).is_at_most(255)
+  should validate_length_of(:footer_bg).is_at_most(255)
+  should validate_length_of(:footer_text_color).is_at_most(255)
+  should validate_length_of(:footer_partners_bg).is_at_most(255)
+  should validate_length_of(:footer_bg_grad).is_at_most(255)
+
+  should belong_to(:owner_portal).class_name('Portal')
+end
