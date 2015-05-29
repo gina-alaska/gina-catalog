@@ -16,7 +16,7 @@ Rails.application.routes.draw do
 
   get 'catalogs/:id' => 'import_items#entries'
   get 'catalogs/:id/downloads/:uuid' => 'import_items#downloads'
-  
+
   resources :sessions
   resources :memberships
   resources :users
