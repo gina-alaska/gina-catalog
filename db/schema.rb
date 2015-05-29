@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150428213542) do
+ActiveRecord::Schema.define(version: 20150527185944) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -142,12 +142,11 @@ ActiveRecord::Schema.define(version: 20150428213542) do
     t.date     "end_date"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "use_agreement_id"
     t.boolean  "request_contact_info"
     t.boolean  "require_contact_info"
     t.integer  "entry_type_id"
     t.datetime "published_at"
-    t.integer  "data_type_id"
+    t.integer  "use_agreement_id"
   end
 
   create_table "entry_aliases", force: :cascade do |t|
@@ -168,6 +167,13 @@ ActiveRecord::Schema.define(version: 20150428213542) do
     t.integer  "contact_id"
     t.integer  "entry_id"
     t.boolean  "primary",    default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "entry_data_types", force: :cascade do |t|
+    t.integer  "data_type_id"
+    t.integer  "entry_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -387,6 +393,39 @@ ActiveRecord::Schema.define(version: 20150428213542) do
   end
 
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
+
+  create_table "themes", force: :cascade do |t|
+    t.string   "name"
+    t.string   "page_bg"
+    t.string   "content_bg"
+    t.string   "header_bg"
+    t.string   "header_title_color"
+    t.string   "header_byline_color"
+    t.string   "header_bg_grad"
+    t.string   "menu_bg"
+    t.string   "menu_link_color"
+    t.string   "menu_active_bg"
+    t.string   "menu_active_link_color"
+    t.string   "menu_hover_bg"
+    t.string   "menu_hover_link_color"
+    t.string   "menu_bg_grad"
+    t.string   "home_btn_bg"
+    t.string   "home_btn_link_color"
+    t.string   "home_btn_hover_bg"
+    t.string   "home_btn_hover_border"
+    t.string   "home_btn_hover_link_color"
+    t.string   "social_icons_link_color"
+    t.string   "social_icons_hover_link_color"
+    t.string   "footer_bg"
+    t.string   "footer_text_color"
+    t.string   "footer_partners_bg"
+    t.string   "footer_bg_grad"
+    t.integer  "owner_portal_id"
+    t.boolean  "locked"
+    t.text     "css"
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+  end
 
   create_table "use_agreements", force: :cascade do |t|
     t.string   "title"

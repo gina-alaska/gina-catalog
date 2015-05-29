@@ -13,3 +13,6 @@ class @WMSLayer
     # do nothing
 
   @zoomable: false
+
+  getLayer: () -> 
+    @layer

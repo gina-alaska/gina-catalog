@@ -29,6 +29,19 @@ class Import::EntryTest < ActiveSupport::TestCase
                                  'contacts' => [{
                                    'id' => 2
                                  }],
+                                 'collections' => [{
+                                   'id' => 3
+                                 }],
+                                 'use_agreement' => {
+                                   'id' => 4
+                                 },
+                                 'regions' => [{
+                                   'id' => 5
+                                 }],
+                                 'iso_topics' => [
+                                   { 'iso_theme_code' => '001' },
+                                   { 'iso_theme_code' => '002' }
+                                 ],
                                  'links' => [{
                                    'display_text' => 'website',
                                    'url' => 'http://test.com',
@@ -41,6 +54,10 @@ class Import::EntryTest < ActiveSupport::TestCase
     assert_not_empty import.importable.primary_contacts
     assert_not_empty import.importable.contacts
     assert_not_empty import.importable.links
+    assert_not_empty import.importable.collections
+    assert_not_empty import.importable.iso_topics
+    assert_not_empty import.importable.regions
+    assert_not_nil import.importable.use_agreement
   end
 
   test 'should add contacts to model' do

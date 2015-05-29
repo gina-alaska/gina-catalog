@@ -37,3 +37,28 @@ networks = [['Facebook', 'fa-facebook'], ['GitHub', 'fa-github'], ['Google+', 'f
 networks.each do |network|
   SocialNetworkConfig.where(name: network[0], icon: network[1]).first_or_create
 end
+
+iso_topics = [
+  [ "001", "farming", "rearing of animals and/or cultivation of plants"],
+  [ "002", "biota", "flora and/or fauna in natural environment"],
+  [ "003", "boundaries", "legal land descriptions"],
+  [ "004", "climatologyMeteorologyAtmosphere", "processes and phenomena of the atmosphere"],
+  [ "005", "economy", "economic activities, conditions and employment"],
+  [ "006", "elevation", "height above or below sea level"],
+  [ "007", "environment", "environmental resources, protection and conservation"],
+  [ "008", "geoscientificInformation", "information pertaining to earth sciences"],          
+  [ "009", "health", "health, health services, human ecology, and safety"],
+  [ "010", "imageryBaseMapsEarthCover", "base maps"],
+  [ "011", "intelligenceMilitary", "military bases, structures, activities"],
+  [ "012", "inlandWaters", "inland water features, drainage systems and their characteristics"],
+  [ "013", "location", "positional information and services"],
+  [ "014", "oceans", "features and characteristics of salt water bodies (excluding inland waters)"],
+  [ "015", "planningCadastre", "information used for appropriate actions for future use of the land"],
+  [ "016", "society", "characteristics of society and cultures"],                
+  [ "017", "structure", "man-made construction"],                
+  [ "018", "transportation", "means and aids for conveying persons and/or goods"],                
+  [ "019", "utilitiesCommunication", "energy, water and waste systems and communications infrastructure and services"]
+]
+iso_topics.each do |iso_topic|
+  IsoTopic.where( iso_theme_code: iso_topic[0], name: iso_topic[1], long_name: iso_topic[2] ).first_or_create
+end

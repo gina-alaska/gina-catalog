@@ -3,10 +3,24 @@
 
 one:
   import_id: 1
-  importable_id: one
-  importable_type: Entry
+  importable: one (Entry)
 
 two:
   import_id: 2
-  importable_id: one
-  importable_type: Contact
+  importable: one (Contact)
+
+three:
+  import_id: 3
+  importable: one (Collection)
+  
+four:
+  import_id: 4
+  importable: one (UseAgreement)
+
+five:
+  import_id: 5
+  importable: one (Region)
+
+six:
+  import_id: 6
+  importable: one (IsoTopic)

@@ -5,6 +5,8 @@
     %a{ href: '#logo', data: { toggle: 'tab' } } Logo
   %li
     %a{ href: '#aliases', data: { toggle: 'tab' } } Aliases
+  %li
+    %a{ href: '#record_list', data: { toggle: 'tab' } } Record List
 
 = bootstrap_nested_form_for [:catalog, @organization], layout: :horizontal do |f|
   .tab-content{ style: 'margin-top: 5px;' }
@@ -21,7 +23,7 @@
         .row
           .col-sm-10
             .fileinput-new.thumbnail
-              %img{ src: 'holder.js/200x200', style: 'width: 200px; height: 200px;' }
+              %img{ data: { src: 'holder.js/200x200' }, style: 'width: 200px; height: 200px;' }
             .fileinput-preview.thumbnail.fileinput-exists{ style: 'max-width:200px; max-height:200px;' }
               = image_tag @organization.logo.encode(:png).thumb('200x200').url if @organization.logo
           .col-sm-2.text-right
@@ -45,6 +47,10 @@
             %th.text-right Actions
         %tbody#aliases_add
           = f.fields_for :aliases, wrapper: false
+
+    #record_list.tab-pane
+      %p List of catalog records that are linked to this organization.
+      = render 'organizations', organization: @organization 
             
   .form-action
     = link_to :back, class: 'btn btn-default' do

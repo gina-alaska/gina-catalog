@@ -1,4 +1,6 @@
 class Region < ActiveRecord::Base
+  include EntryDependentConcerns
+
   module Factories
     GEO = RGeo::Geographic.simple_mercator_factory(srid: 4326)
     PROJECTED = GEO.projection_factory

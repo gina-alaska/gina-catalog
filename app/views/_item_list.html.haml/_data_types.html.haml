@@ -1,6 +1,7 @@
+%h3.panel-title Data Types
 - unless @facets.data_types.empty?
   .panel-body.panel-break
-    %h3.panel-title Data Type
+    %h3.panel-title Data Types
   #data-type-search.panel-body.expand{ style: 'padding-top: 5px; padding-bottom: 0px; '}
     - @facets.data_types.each do |facet|
       - data_type = facet[:record]
