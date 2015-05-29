@@ -6,6 +6,7 @@ development:
   schema_search_path: public,postgis
   host: 192.168.222.225
   client_encoding: UTF8
+  pool: 5
 test:
   adapter: postgis
   database: glynx_test
@@ -14,3 +15,12 @@ test:
   schema_search_path: public,postgis
   host: 192.168.222.225
   client_encoding: UTF8
+production:
+  adapter: postgis
+  database: glynx_production
+  username: <%= ENV['DB_USER'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
+  host: <%= ENV['DB_HOST'] %>
+  schema_search_path: public,postgis
+  client_encoding: UTF8
+  pool: 5
