@@ -31,7 +31,7 @@ class Ability
 
     user ||= User.new
 
-    if !user.new_record?
+    unless user.new_record?
       can :accept, Invitation
     end
 

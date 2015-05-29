@@ -1,4 +1,4 @@
-require "test_helper"
+require 'test_helper'
 
 class Api::UseAgreementsControllerTest < ActionController::TestCase
   def test_index
