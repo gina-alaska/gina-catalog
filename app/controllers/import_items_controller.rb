@@ -8,11 +8,8 @@ class ImportItemsController < ApplicationController
   end
 
   def downloads
-    entry = ImportItem.entries.oid(params['id']).first
-    attachment = entry.attachments.uuid(params['uuid']).first
-
     respond_to do |format|
-      format.html { redirect_to attachment.importable }
+      format.html { redirect_to "/sds/#{params['uuid']}" }
     end
   end
 end
