@@ -1,7 +1,7 @@
 var suggestion = <%= raw(render 'api/map_layers/map_layer.json', map_layer: @map_layer) %>;
 
-$('#map_layer_search').data('suggestion', suggestion)
-$('#map_layer_search').val('<%= @map_layer.name %>')
-$('#add-selected-map-layer').removeClass('disabled')
-$('#add-selected-map-layer').removeClass('btn-info')
-$('#add-selected-map-layer').addClass('btn-success')
+$('#map_layer_search').data('suggestion', suggestion);
+$('#map_layer_search').val('<%= @map_layer.name %>');
+$('#add-selected-map-layer').removeClass('disabled');
+$('#add-selected-map-layer').removeClass('btn-info');
+$('#add-selected-map-layer').addClass('btn-success');
