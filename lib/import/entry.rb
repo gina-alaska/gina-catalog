@@ -35,6 +35,7 @@ module Import
       add_iso_topics(import.importable, json)
       add_use_agreement(import.importable, json)
       add_links(import.importable, json)
+      add_archive_info(import.importable, json)
 
       import.importable.portals << @portal
 
@@ -137,6 +138,11 @@ module Import
         next if !record.new_record? && record.links.where(url: link['url']).count > 0
         record.links.build(link)
       end
+    end
+    
+    def add_archive_info(record, json)
+      return if json['archived_at'].blank?
+      record.archive!('No archive message available', nil)
     end
   end
 end
