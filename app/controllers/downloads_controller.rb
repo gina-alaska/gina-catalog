@@ -4,7 +4,7 @@ class DownloadsController < ApplicationController
   def show
     @download = GlobalID::Locator.locate_signed params[:id], for: 'download'
 
-    log_download if @download.class == Attachment && ATTACHMENTS_TO_LOG.include?(@download.category)
+    log_download
 
     respond_to do |format|
       format.any { send_file @download.file.path, filename: @download.file.name }
@@ -24,6 +24,7 @@ class DownloadsController < ApplicationController
   private
 
   def log_download
+    return if @download.class != Attachment && !ATTACHMENTS_TO_LOG.include?(@download.category)
     download_log = DownloadLog.new(user_agent: request.user_agent, user: current_user, entry: @download.entry, file_name: @download.file_name, portal: current_portal)
     download_log.save
   end
