@@ -7,6 +7,5 @@ modal.on('shown.bs.modal', function() {
   _modal = this
   $('#map-layer-modal form').on('ajax:success', function(evt, data, status, xhr) {
     $(_modal).modal('hide');
-    $(document).trigger('map_layers:refresh');
   });
 });
