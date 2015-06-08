@@ -107,6 +107,7 @@ class Catalog::EntriesController < ApplicationController
       :tag_list,
       collection_ids: [], region_ids: [], iso_topic_ids: [], data_type_ids: [],
       links_attributes: [:id, :link_id, :category, :display_text, :url, :_destroy],
+      entry_collections_attributes: [:id, :_destroy],
       attachments_attributes: [:id, :file, :category, :description, :interaction, :_destroy],
       entry_contacts_attributes: [:id, :contact_id, :primary, :_destroy],
       entry_organizations_attributes: [:id, :organization_id, :primary, :funding, :_destroy],
