@@ -1,0 +1,11 @@
+var modal = $('<%= escape_javascript(render('contact_modal', contact: @contact)) %>').modal();
+modal.on('hidden.bs.modal', function() {
+  $(this).remove();
+})
+modal.on('shown.bs.modal', function() {
+
+  _modal = this
+  $('#contact-modal form').on('ajax:success', function(evt, data, status, xhr) {
+    $(_modal).modal('hide');
+  });
+});

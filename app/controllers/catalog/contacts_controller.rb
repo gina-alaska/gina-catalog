@@ -29,6 +29,11 @@ class Catalog::ContactsController < ApplicationController
 
   def new
     @contact = Contact.new
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def edit
@@ -40,9 +45,11 @@ class Catalog::ContactsController < ApplicationController
       if @contact.save
         flash[:success] = "Contact #{@contact.name} was successfully created."
         format.html { redirect_back_or_default catalog_contacts_path }
+        format.js
       else
         format.html { render action: 'new' }
         format.json { render json: @contact.errors, status: :unprocessable_entity }
+        format.js
       end
     end
   end

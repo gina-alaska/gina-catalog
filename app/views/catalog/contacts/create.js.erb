@@ -1,0 +1,7 @@
+var suggestion = <%= raw(render 'api/contacts/contact.json', contact: @contact) %>;
+
+$('#contact_search').data('suggestion', suggestion);
+$('#contact_search').val('<%= @contact.name %>');
+$('#add-selected-contact').removeClass('disabled');
+$('#add-selected-contact').removeClass('btn-info');
+$('#add-selected-contact').addClass('btn-success');
