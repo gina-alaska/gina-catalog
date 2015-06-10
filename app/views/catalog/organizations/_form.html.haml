@@ -1,3 +1,4 @@
+- ajax ||= false
 %ul.nav.nav-tabs
   %li.active
     %a{ href: '#organization_form_fields', data: { toggle: 'tab' } } Organization Form
@@ -8,7 +9,7 @@
   %li
     %a{ href: '#record_list', data: { toggle: 'tab' } } Record List
 
-= bootstrap_nested_form_for [:catalog, @organization], layout: :horizontal do |f|
+= bootstrap_nested_form_for [:catalog, @organization], layout: :horizontal, remote: ajax do |f|
   .tab-content{ style: 'margin-top: 5px;' }
     #organization_form_fields.tab-pane.active
       = f.alert_message "Please fix the errors below."

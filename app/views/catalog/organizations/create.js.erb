@@ -1,0 +1,7 @@
+var suggestion = <%= raw(render 'api/organizations/organization.json', organization: @organization) %>;
+
+$('#organization_search').data('suggestion', suggestion);
+$('#organization_search').val('<%= @organization.name %>');
+$('#add-selected-organization').removeClass('disabled');
+$('#add-selected-organization').removeClass('btn-info');
+$('#add-selected-organization').addClass('btn-success');

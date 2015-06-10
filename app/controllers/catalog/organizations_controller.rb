@@ -31,6 +31,11 @@ class Catalog::OrganizationsController < ApplicationController
 
   def new
     @organization.aliases.build
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def edit
@@ -45,9 +50,11 @@ class Catalog::OrganizationsController < ApplicationController
       if @organization.save
         flash[:success] = "Organization #{@organization.name} was successfully created."
         format.html { redirect_back_or_default catalog_organizations_path }
+        format.js
       else
         format.html { render action: 'new' }
         format.json { render json: @organization.errors, status: :unprocessable_entity }
+        format.js
       end
     end
   end
