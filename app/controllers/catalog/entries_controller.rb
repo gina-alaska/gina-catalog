@@ -53,7 +53,7 @@ class Catalog::EntriesController < ApplicationController
         when 'Save & Close'
           format.html { redirect_to entries_path }
           format.js { redirect_via_turbolinks_to entries_path }
-        when 'remove map layer'
+        else
           format.js
         end
         format.json { head :nocontent }
