@@ -49,7 +49,7 @@ class Catalog::ContactsController < ApplicationController
       else
         format.html { render action: 'new' }
         format.json { render json: @contact.errors, status: :unprocessable_entity }
-        format.js
+        format.js { render 'create_error' }
       end
     end
   end

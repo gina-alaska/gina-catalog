@@ -54,7 +54,7 @@ class Catalog::OrganizationsController < ApplicationController
       else
         format.html { render action: 'new' }
         format.json { render json: @organization.errors, status: :unprocessable_entity }
-        format.js
+        format.js { render 'create_error' }
       end
     end
   end
