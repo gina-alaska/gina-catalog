@@ -147,3 +147,10 @@ $(document).on 'click', '[data-behavior="clear-field"]', (e) ->
     
     if $(this).data('autosubmit')
       $(el).parents('form').submit();
+
+$(document).on 'entry-refresh', ->
+  for item in $('[data-behavior="entry-refresh"]')
+    target = $(item).data('target')
+    $.get( document.location ).done (data) ->
+      layers = $(data).find(target)
+      $(target).replaceWith(layers)

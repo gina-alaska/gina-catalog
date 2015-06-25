@@ -10,4 +10,17 @@
           Edit #{@collection.name}
 
     .panel-body
-      = render 'form', collection: @collection 
+      %ul.nav.nav-tabs
+        - sections = %w{ collection_settings record_list }
+        - sections.each do |section|
+          %li{class: (section == sections.first ? 'active' : '')}
+            = link_to section.humanize, "##{section}", data: { toggle: 'tab' }
+
+      .tab-content{ style: 'margin-top: 5px;' }
+
+        #collection_settings.tab-pane.active
+          = render 'form', collection: @collection 
+
+        #record_list.tab-pane
+          %p List of catalog records that are linked with this map layer.
+          = render 'entries', collection: @collection 
