@@ -45,4 +45,8 @@ class Attachment < ActiveRecord::Base
   def name
     "Attachment-#{id}"
   end
+
+  def global_id
+    to_sgid(for: 'download')
+  end
 end

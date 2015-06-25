@@ -6,7 +6,7 @@
         .icon.download.pull-left
           %i.fa.fa-download
       .media-body
-        = link_to entry_attachment_path(entry, download), class: 'btn btn-default tag pull-right', rel: "nofollow" do
+        = link_to download_path(download.global_id), class: 'btn btn-default tag pull-right', rel: "nofollow" do
           %i.fa.fa-download.media-object
           Download
 
@@ -24,7 +24,7 @@
           .icon.download
             %i.fa.fa-user-secret
         .media-body
-          = link_to entry_attachment_path(entry, download), class: 'btn btn-default tag pull-right', rel: "nofollow" do
+          = link_to download_path(download.global_id), class: 'btn btn-default tag pull-right', rel: "nofollow" do
             %i.fa.fa-download.media-object
             Download
 
