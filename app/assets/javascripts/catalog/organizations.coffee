@@ -2,19 +2,26 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
+OrganizationSuggestion = {
+  add: (target, suggestion) ->
+    $(target).data('suggestion', suggestion)
+    $(target).val(OrganizationSuggestion.display_key(suggestion));
+    $('#add-selected-organization').removeClass('disabled')
+    $('#add-selected-organization').removeClass('btn-info')
+    $('#add-selected-organization').addClass('btn-success')
+
+  display_key: (d) ->
+    "#{d.name} (#{d.acronym})"
+  }
+
 $(document).on 'ready page:load',  ->
   organizationstypehead = new TypeAheadField('[data-behavior="typeahead"][data-name="organizations"]', {
-    display_key: (d) ->
-      console.log "#{d.name} (#{d.acronym})"
-      "#{d.name} (#{d.acronym})"
+    display_key: OrganizationSuggestion.display_key
   })
 
   organizationstypehead.on 'typeahead:selected', (e, suggestion, dataset) ->
     target = this
-    $(target).data('suggestion', suggestion)
-    $('#add-selected-organization').removeClass('disabled')
-    $('#add-selected-organization').removeClass('btn-info')
-    $('#add-selected-organization').addClass('btn-success')
+    $(document).trigger('organization:suggestion', [target, suggestion])
 
   organizationstypehead.on 'keyup', ->
     if $(this).val() == ""
@@ -23,6 +30,9 @@ $(document).on 'ready page:load',  ->
       $('#add-selected-organization').removeClass('btn-success')
       $('#add-selected-organization').addClass('disabled')
       $('#add-selected-organization').addClass('btn-info')
+
+$(document).on 'organization:suggestion', (e, target, suggestion) ->
+  OrganizationSuggestion.add(target, suggestion)
 
 $(document).on 'nested:fieldAdded:entry_organizations', (e) ->
   suggestion = $('#organization_search').data('suggestion')
