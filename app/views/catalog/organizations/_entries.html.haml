@@ -5,8 +5,8 @@
         %th Record
         %th Description
         %th.text-right.col-sm-1 Action
-    %tbody
-      - contact.entry_contacts.each do |eml|
+    %tbody#entry_list{ data: { behavior: 'entry-refresh', target: '#entry_list' } }
+      - organization.entry_organizations.each do |eml|
         - entry = eml.entry
         %tr
           %td
@@ -17,5 +17,5 @@
             .btn-group
               = link_to edit_catalog_entry_path(entry), class: 'btn btn-default btn-sm', title: 'Edit Record' do 
                 %i.fa.fa-edit
-              = link_to catalog_entry_path(entry, entry: { entry_contacts_attributes: { id: eml.id, _destroy: true } }, commit: 'remove map layer'), method: :patch, remote: true, class: 'btn btn-danger btn-sm', title: 'Unlink Record' do 
+              = link_to catalog_entry_path(entry, entry: { entry_organizations_attributes: { id: eml.id, _destroy: true } }, commit: 'remove map layer'), method: :patch, remote: true, class: 'btn btn-danger btn-sm', title: 'Unlink Record' do 
                 %i.fa.fa-times
