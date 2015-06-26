@@ -54,12 +54,12 @@
       - unless @organization.new_record?
         #record_list.tab-pane
           %p List of catalog records that are linked to this organization.
-          = render 'organizations', organization: @organization 
+          = render 'entries', organization: @organization 
               
-    .form-action
-      = link_to :back, class: 'btn btn-default' do
-        %i.fa.fa-arrow-left
-        Cancel
+    .form-action.text-right
+      = f.primary
 
-      .pull-right
-        = f.primary
+      - if !modal
+        = link_to :back, class: 'btn btn-default pull-left' do
+          %i.fa.fa-arrow-left
+          Cancel

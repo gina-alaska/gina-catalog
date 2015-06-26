@@ -4,6 +4,6 @@
       .modal-header
         %button.close{ type:"button", data: { dismiss: "modal" } }
           &times;
-        %h3 Organization
+        %h4.modal-title Organization
       .modal-body
-        = render 'form', ajax: true
+        = render 'form', ajax: true, modal: true
