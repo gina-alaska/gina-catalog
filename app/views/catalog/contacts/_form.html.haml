@@ -1,30 +1,19 @@
 #contact-form
   - ajax ||= false
-  %ul.nav.nav-tabs
-    %li.active
-      %a{ href: '#contact_form_fields', data: { toggle: 'tab' } } Contact Form
-    - unless @contact.new_record?
-      %li
-        %a{ href: '#record_list', data: { toggle: 'tab' } } Record List
-
+  - modal ||= false
   = bootstrap_form_for [:catalog, @contact], layout: :horizontal, label_col: 'col-lg-3 col-md-3', control_col: 'col-lg-9 col-md-9', remote: ajax do |f|
-    .tab-content{ style: 'margin-top: 5px;' }
-      #contact_form_fields.tab-pane.active
-        = f.alert_message "Please fix the errors below.", error_summary: false
-        = f.text_field :name
-        = f.email_field :email
-        = f.phone_field :phone_number, placeholder: "(999)999-9999", pattern: "[0-9()-]+", title: "Please use only numerals,(), and -."
-        = f.text_field :job_title
 
-      - unless @contact.new_record?
-        #record_list.tab-pane
-          %p List of catalog records that are linked to this contact.
-          = render 'contacts', contact: @contact
-        
-    .form-action
-      = link_to :back, class: 'btn btn-default' do
-        %i.fa.fa-arrow-left
-        Cancel
+    = f.alert_message "Please fix the errors below.", error_summary: false
+    = f.text_field :name
+    = f.email_field :email
+    = f.phone_field :phone_number, placeholder: "(999)999-9999", pattern: "[0-9()-]+", title: "Please use only numerals,(), and -."
+    = f.text_field :job_title
 
-      .pull-right
-        = f.primary
+    .form-action.text-right
+      = f.primary
+
+      - if !modal
+        = link_to :back, class: 'btn btn-default pull-left' do
+          %i.fa.fa-arrow-left
+          Cancel
+

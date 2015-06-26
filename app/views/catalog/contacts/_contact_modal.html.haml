@@ -1,9 +1,9 @@
 #contact-modal{ class: 'modal fade' }
   .modal-dialog
-    .modal-content{ style: 'padding: 0px 10px 30px 10px;' }
+    .modal-content
       .modal-header
         %button.close{ type:"button", data: { dismiss: "modal" } }
           &times;
-        %h3 Contact
+        %h4.modal-title Contact
       .modal-body
-        = render 'form', ajax: true
+        = render 'form', ajax: true, modal: true
