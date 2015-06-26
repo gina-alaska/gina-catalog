@@ -49,7 +49,7 @@ class Catalog::OrganizationsController < ApplicationController
     respond_to do |format|
       if @organization.save
         flash[:success] = "Organization #{@organization.name} was successfully created."
-        format.html { redirect_back_or_default catalog_organizations_path }
+        format.html { redirect_to catalog_organizations_path }
         format.js
       else
         format.html { render action: 'new' }
@@ -63,7 +63,7 @@ class Catalog::OrganizationsController < ApplicationController
     respond_to do |format|
       if @organization.update_attributes(organization_params)
         flash[:success] = "Organization #{@organization.name} was successfully updated."
-        format.html { redirect_back_or_default catalog_organizations_path }
+        format.html { redirect_to catalog_organizations_path }
         format.json { head :nocontent }
       else
         format.html { render action: 'edit' }
@@ -78,11 +78,11 @@ class Catalog::OrganizationsController < ApplicationController
     respond_to do |format|
       if @organization.destroy
         flash[:success] = "Organization #{@organization.name} was successfully deleted."
-        format.html { redirect_back_or_default catalog_organizations_path }
+        format.html { redirect_to catalog_organizations_path }
         format.json { head :no_content }
       else
         flash[:error] = @organization.errors.full_messages.join('<br />').html_safe
-        format.html { redirect_back_or_default catalog_organizations_path }
+        format.html { redirect_to catalog_organizations_path }
         #        format.json { head :no_content }
       end
     end

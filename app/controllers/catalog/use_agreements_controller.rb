@@ -29,7 +29,7 @@ class Catalog::UseAgreementsController < ApplicationController
     respond_to do |format|
       if @use_agreement.save
         flash[:success] = "Use agreement #{@use_agreement.title} was successfully created."
-        format.html { redirect_back_or_default catalog_use_agreements_path }
+        format.html { redirect_to catalog_use_agreements_path }
       else
         format.html { render action: 'new' }
         format.json { render json: @use_agreement.errors, status: :unprocessable_entity }
@@ -41,7 +41,7 @@ class Catalog::UseAgreementsController < ApplicationController
     respond_to do |format|
       if @use_agreement.update_attributes(use_agreement_params)
         flash[:success] = "Use agreement #{@use_agreement.title} was successfully updated."
-        format.html { redirect_back_or_default catalog_use_agreements_path }
+        format.html { redirect_to catalog_use_agreements_path }
         format.json { head :nocontent }
       else
         format.html { render action: 'edit' }
@@ -56,7 +56,7 @@ class Catalog::UseAgreementsController < ApplicationController
     respond_to do |format|
       if @use_agreement.destroy
         flash[:success] = "Use agreement #{@use_agreement.title} was successfully deleted."
-        format.html { redirect_back_or_default catalog_use_agreements_path }
+        format.html { redirect_to catalog_use_agreements_path }
         format.json { head :no_content }
       else
         flash[:error] = @use_agreement.errors.full_messages.join('<br />').html_safe
