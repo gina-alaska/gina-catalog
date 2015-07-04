@@ -31,6 +31,8 @@ class Ability
 
     user ||= User.new
 
+    can :read, Entry
+
     unless user.new_record?
       can :accept, Invitation
     end

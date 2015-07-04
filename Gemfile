@@ -92,7 +92,7 @@ end
 gem 'bundler', '>= 1.8.4'
 source 'https://rails-assets.org' do
   gem 'rails-assets-bootstrap'
-  gem 'rails-assets-fontawesome'
+  gem 'rails-assets-font-awesome'
   gem 'rails-assets-jasny-bootstrap'
   gem 'rails-assets-handlebars'
 end

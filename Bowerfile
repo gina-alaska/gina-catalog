@@ -1,11 +1,7 @@
 # A sample Bowerfile
 # Check out https://github.com/42dev/bower-rails#ruby-dsl-configuration for more options
 
-asset 'bootstrap', '~> 3.3.0'
-asset 'font-awesome', '~> 4.3.0'
 asset 'typeahead.js', '~> 0.10.5'
-asset 'handlebars', '~> 2.0.0'
-asset 'jasny-bootstrap', '~> 3.1.3'
 # asset 'eonasdan-bootstrap-datetimepicker', '~> 4.0.0'
 asset 'select2', '~> 3.5.0'
 asset 'selectize', '~> 0.11.2'
