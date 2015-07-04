@@ -12,12 +12,12 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require bootstrap/dist/js/bootstrap
-//= require handlebars/handlebars
+//= require bootstrap
+//= require jasny-bootstrap
+//= require handlebars
 //= require typeahead.js/dist/typeahead.bundle
 //= require jquery_nested_form
 //= require moment/moment
-//= require jasny-bootstrap/dist/js/jasny-bootstrap
 //= require select2/select2
 //= require selectize/dist/js/standalone/selectize
 //= require holderjs/holder
