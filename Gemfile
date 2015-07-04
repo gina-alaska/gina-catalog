@@ -95,4 +95,6 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-font-awesome'
   gem 'rails-assets-jasny-bootstrap'
   gem 'rails-assets-handlebars'
+  gem 'rails-assets-mapbox.js', '~> 2.1.5'
+  gem 'rails-assets-typeahead.js', '~> 0.10.5'
 end

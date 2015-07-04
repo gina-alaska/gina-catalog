@@ -15,13 +15,12 @@
 //= require bootstrap
 //= require jasny-bootstrap
 //= require handlebars
-//= require typeahead.js/dist/typeahead.bundle
+//= require typeahead.js
 //= require jquery_nested_form
 //= require moment/moment
-//= require select2/select2
 //= require selectize/dist/js/standalone/selectize
 //= require holderjs/holder
-//= require mapbox.js/mapbox
+//= require mapbox.js
 //= require leaflet.markercluster/dist/leaflet.markercluster
 //= require wicket/wicket
 //= require wicket/wicket-leaflet

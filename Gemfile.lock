@@ -265,6 +265,9 @@ GEM
       rails-assets-bootstrap (>= 3.1.0)
       rails-assets-jquery (>= 1.9.0)
     rails-assets-jquery (2.1.4)
+    rails-assets-mapbox.js (2.1.9)
+    rails-assets-typeahead.js (0.10.5)
+      rails-assets-jquery (>= 1.7)
     rails-deprecated_sanitizer (1.0.3)
       activesupport (>= 4.2.0.alpha)
     rails-dom-testing (1.0.6)
@@ -425,6 +428,8 @@ DEPENDENCIES
   rails-assets-font-awesome!
   rails-assets-handlebars!
   rails-assets-jasny-bootstrap!
+  rails-assets-mapbox.js (~> 2.1.5)!
+  rails-assets-typeahead.js (~> 0.10.5)!
   ransack
   rdiscount
   rgeo
