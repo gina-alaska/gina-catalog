@@ -9,7 +9,7 @@ class ImportItemsController < ApplicationController
 
   def downloads
     respond_to do |format|
-      format.html { redirect_to sds_path(params['uuid']} }
+      format.html { redirect_to sds_path(params['uuid']) }
     end
   end
 end
