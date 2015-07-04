@@ -14,11 +14,10 @@
  *= require font-awesome
  *= require jasny-bootstrap
  *= require rails_bootstrap_forms
- *= require selectize/dist/css/selectize
- *= require selectize/dist/css/selectize.bootstrap3
+ *= require selectize
+ *= require selectize/selectize.bootstrap3
  *= require mapbox.js/mapbox.css
- *= require leaflet.markercluster/dist/MarkerCluster
- *= require leaflet.markercluster/dist/MarkerCluster.Default
+ *= require leaflet.markercluster
  *= require_tree .
  *= require_self
  */
