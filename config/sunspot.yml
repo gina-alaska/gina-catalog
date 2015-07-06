@@ -1,7 +1,0 @@
-development:
-  solr:
-    solr_home: solr
-    hostname: 192.168.222.225
-    port: 8982
-    path: /solr/development
-    log_level: INFO
