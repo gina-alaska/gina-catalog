@@ -28,7 +28,7 @@ namespace :admin do
     end
   end
 
-  task load: ['load:regions', 'load:iso_topics', 'load:collections', 'load:use_agreements', 'load:organizations', 'load:contacts', 'load:entries']
+  task load: ['load:regions', 'load:collections', 'load:use_agreements', 'load:organizations', 'load:contacts', 'load:entries']
 
   namespace :load do
     desc 'Load agencies from api'
@@ -46,10 +46,10 @@ namespace :admin do
       Import::Region.fetch
     end
 
-    desc 'Load ISO topics from api'
-    task iso_topics: :environment do
-      Import::IsoTopic.fetch
-    end
+    # desc 'Load ISO topics from api'
+    # task iso_topics: :environment do
+    #   Import::IsoTopic.fetch
+    # end
 
     desc 'Import collections from api (catalog required)'
     task collections: :environment do
