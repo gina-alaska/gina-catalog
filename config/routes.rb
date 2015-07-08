@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   # Support legacy routes
   get 'catalogs/:id' => 'import_items#entries'
   get 'catalogs/:id/downloads/:uuid' => 'import_items#downloads'
-  get 'sds/:id' => 'downloads#sds' , constraints: { id: /[^\/]+/ }, as: :sds
+  get 'sds/:id' => 'downloads#sds', constraints: { id: /[^\/]+/ }, as: :sds
 
   resources :sessions
   resources :memberships
