@@ -447,6 +447,7 @@ DEPENDENCIES
   rgeo
   rgeo-activerecord
   rgeo-geojson
+  sass
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
   searchkick
