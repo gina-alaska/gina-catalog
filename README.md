@@ -6,6 +6,8 @@ This is currently only covering the data catalog.
 
 The cms portion will be added in 3.1
 
+# Setup
+
 ## Development Requirements
 
 * Ruby 2.1+
