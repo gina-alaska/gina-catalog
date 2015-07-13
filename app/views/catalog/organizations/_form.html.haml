@@ -54,7 +54,7 @@
       - unless @organization.new_record?
         #record_list.tab-pane
           %p List of catalog records that are linked to this organization.
-          = render 'organizations', organization: @organization
+          = render 'entries', organization: @organization
 
     .form-action
       - unless ajax
