@@ -53,3 +53,12 @@ private_download:
   category: "Private Download"
   uuid: MyString
   description: MyString
+
+archive:
+  entry: one
+  file_uid: MyString
+  file_size: 1
+  file_name: MyString
+  category: "Archive"
+  uuid: MyString
+  description: MyString
