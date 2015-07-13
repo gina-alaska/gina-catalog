@@ -34,7 +34,7 @@
                 %span.fileinput-new Add logo
                 %span.fileinput-exists Change logo
                 = f.file_field_without_bootstrap :logo
-                
+
       #aliases.tab-pane{ style: "min-height: 60px;" }
         .row
           .col-sm-10
@@ -54,12 +54,13 @@
       - unless @organization.new_record?
         #record_list.tab-pane
           %p List of catalog records that are linked to this organization.
-          = render 'organizations', organization: @organization 
-              
+          = render 'organizations', organization: @organization
+
     .form-action
-      = link_to :back, class: 'btn btn-default' do
-        %i.fa.fa-arrow-left
-        Cancel
+      - unless ajax
+        = link_to :back, class: 'btn btn-default' do
+          %i.fa.fa-arrow-left
+          Cancel
 
       .pull-right
         = f.primary

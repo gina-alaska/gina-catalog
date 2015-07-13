@@ -20,11 +20,12 @@
         #record_list.tab-pane
           %p List of catalog records that are linked to this contact.
           = render 'contacts', contact: @contact
-        
+
     .form-action
-      = link_to :back, class: 'btn btn-default' do
-        %i.fa.fa-arrow-left
-        Cancel
+      - unless ajax
+        = link_to :back, class: 'btn btn-default' do
+          %i.fa.fa-arrow-left
+          Cancel
 
       .pull-right
         = f.primary
