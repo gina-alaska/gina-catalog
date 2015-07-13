@@ -65,6 +65,8 @@ module EntriesControllerSearchConcerns
       @search_params = {}
       if params[:search].present?
         @search_params = params.require(:search).permit(:query, *fields)
+      else
+        @search_params[:order] = 'title'
       end
       @search_params[:archived?] ||= false
     end
