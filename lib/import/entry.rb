@@ -139,7 +139,7 @@ module Import
         record.links.build(link)
       end
     end
-    
+
     def add_archive_info(record, json)
       return if json['archived_at'].blank?
       record.archive!('No archive message available', nil)

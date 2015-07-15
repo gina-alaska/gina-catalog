@@ -17,4 +17,9 @@
     Valid projections are EPSG:3857, EPSG: 3338, EPSG: 3572
 
   .form-actions{ style: 'margin:0;' }
+    - unless ajax
+      = link_to :back, class: 'btn btn-default' do
+        %i.fa.fa-arrow-left
+        Cancel
+        
     = f.submit class: 'btn btn-primary pull-right'
