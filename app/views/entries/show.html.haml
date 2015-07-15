@@ -3,7 +3,7 @@
     = render 'manager_menu', entry: @entry
 
     .panel.panel-default
-      - if @entry.attachments.geojson.any?
+      - if @entry.attachments.geojson.any? or @entry.map_layers.any?
         = render 'map', entry: @entry
       .panel-heading
         %h1.panel-title Organizations
