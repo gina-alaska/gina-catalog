@@ -56,7 +56,7 @@ class Ability
     end
 
     if user.role?(:portal_manager, current_portal)
-      can :view_manager_menu, User
+      can :view_portal_menu, User
       can [:read, :update], Portal,  id: current_portal.id
       can :manage, [Permission, Invitation],  portal_id: current_portal.id
     end
