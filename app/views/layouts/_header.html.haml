@@ -1,16 +1,6 @@
-%nav.navbar.navbar-default.navbar-gina.navbar-static-top
-  .container-fluid
-    .navbar-header
-      %button.navbar-toggle{ type: 'button', data: { toggle: 'collapse', target: '#header-navbar' }}
-        %span.sr-only Toggle navigation
-        %span.icon-bar
-        %span.icon-bar
-        %span.icon-bar
-      = link_to root_url, class: 'navbar-brand' do
-        %span.gina gLynx
-    #header-navbar.collapse.navbar-collapse
-      %ul.nav.navbar-nav.navbar-right
-        = render 'layouts/manager_menu'
-        = render 'layouts/portal_menu'
-        = render 'layouts/admin_menu'
-        = render 'layouts/authorization_menu'
+#header-navbar.collapse.navbar-collapse
+  %ul.nav.navbar-nav.navbar-right
+    = render 'layouts/catalog_menu'
+    = render 'layouts/portal_menu'
+    = render 'layouts/admin_menu'
+    = render 'layouts/authorization_menu'

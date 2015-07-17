@@ -1,4 +1,4 @@
-class Admin::RegionsController < ApplicationController
+class Admin::RegionsController < AdminController
   load_and_authorize_resource
 
   def index

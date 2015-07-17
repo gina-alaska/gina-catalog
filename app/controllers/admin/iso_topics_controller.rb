@@ -1,4 +1,4 @@
-class Admin::IsoTopicsController < ApplicationController
+class Admin::IsoTopicsController < AdminController
   load_and_authorize_resource
 
   def index
