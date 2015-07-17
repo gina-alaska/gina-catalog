@@ -50,9 +50,6 @@ class Ability
       can [:manage, :archive], Entry do |entry|
         entry.new_record? || entry.owner_portal == current_portal
       end
-      cannot :update, UseAgreement do |use_agreement|
-        use_agreement.archived?
-      end
     end
 
     if user.role?(:portal_manager, current_portal)
@@ -64,6 +61,10 @@ class Ability
     if user.global_admin?
       can :view_admin_menu, User
       can :manage, [Portal, User, EntryType, Region, DataType, IsoTopic]
+    end
+
+    cannot :update, UseAgreement do |use_agreement|
+      use_agreement.archived?
     end
   end
 end
