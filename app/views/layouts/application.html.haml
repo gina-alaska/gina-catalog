@@ -20,7 +20,7 @@
             %span.icon-bar
             %span.icon-bar
           = link_to admin_url, class: 'navbar-brand' do
-            = current_portal.title
+            = current_portal.try(:title)
         = render 'layouts/header'
     .container-fluid
       = render 'layouts/flash_messages'
