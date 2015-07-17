@@ -7,9 +7,10 @@
         %span.icon-bar
         %span.icon-bar
       = link_to root_url, class: 'navbar-brand' do
-        %span.gina gLynx 
+        %span.gina gLynx
     #header-navbar.collapse.navbar-collapse
       %ul.nav.navbar-nav.navbar-right
         = render 'layouts/manager_menu'
+        = render 'layouts/portal_menu'
         = render 'layouts/admin_menu'
         = render 'layouts/authorization_menu'
