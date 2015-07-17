@@ -41,6 +41,17 @@ class Ability
       can :view_manager_menu, User
     end
 
+    if user.role?(:data_entry, current_portal)
+      can :view_manager_menu, User
+
+      can :manage, [Organization, Contact, MapLayer]
+      can :read, Attachment
+      can :manage, [UseAgreement, Collection],  portal_id: current_portal.id
+      can [:create, :update, :archive], Entry do |entry|
+        entry.new_record? || entry.owner_portal == current_portal
+      end
+    end
+
     if user.role?(:data_manager, current_portal)
       can :view_manager_menu, User
 
