@@ -1,4 +1,4 @@
-- if can? :view_manager_menu, current_user
+- if can? :view_catalog_menu, current_user
   - if can? :manage, Entry
     %li.dropdown
       = link_to '#', class: 'dropdown-toggle', data: { toggle: 'dropdown' } do
