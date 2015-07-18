@@ -42,7 +42,7 @@ class Ability
     end
 
     if user.role?(:data_entry, current_portal)
-      can :view_manager_menu, User
+      can :view_catalog_menu, User
 
       can :manage, [Organization, Contact, MapLayer]
       can :read, Attachment
