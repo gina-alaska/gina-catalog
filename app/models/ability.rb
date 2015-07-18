@@ -38,11 +38,11 @@ class Ability
     end
 
     if user.role?(:cms_manager, current_portal)
-      can :view_manager_menu, User
+      can :view_catalog_menu, User
     end
 
     if user.role?(:data_manager, current_portal)
-      can :view_manager_menu, User
+      can :view_catalog_menu, User
 
       can :manage, [Organization, Contact, MapLayer]
       can :read, Attachment
