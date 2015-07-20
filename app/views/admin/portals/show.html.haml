@@ -1,7 +1,37 @@
-%h2= @portal.title
+.panel.panel-default
+  .panel-heading{ style: 'position: relative' }
+    - if can?(:manage, Portal)
+      = link_to edit_admin_portal_path(@portal), class: 'btn btn-sm btn-primary panel-btn-right' do
+        Edit Portal
+    %ol.breadcrumb
+      %li
+        = link_to admin_portals_path do
+          %i.fa.fa-sitemap
+          Portals
+      %li.active
+        = @portal.title
 
-- if can?(:wahoo, Portal)
-  You have access to this portal!
+  .panel-body
+    .row
+      .col-sm-6
+        %dl.dl-horizontal
+          %dt parent
+          %dd=ddtext @portal.parent.title
 
-= link_to edit_admin_portal_path(@portal), class: 'btn btn-primary' do
-  Edit 
+      .col-sm-6
+        %dl.dl-horizontal
+          %dt acronym
+          %dd=ddtext @portal.acronym
+    .row
+      .col-sm-12
+        %fieldset.content
+          %legend Portal Urls
+
+          %table.table.table-striped
+            %thead
+              %th
+                URL
+              %th
+                Default
+            - @portal.urls.each do |url|
+              = render 'portal_url', url: url

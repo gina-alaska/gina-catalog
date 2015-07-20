@@ -1,32 +1,63 @@
-= bootstrap_nested_form_for [:admin, @portal] do |f|
-  = f.alert_message "Please fix the errors below."
-  
-  = f.text_field :title, wrapper_class: 'required'
-  
-  .row
-    .col-sm-6.col-md-6.col-lg-6
-      = f.text_field :acronym, wrapper_class: 'required'
-    .col-sm-6.col-md-6.col-lg-6
-      = f.collection_select :parent_id, (Portal.active - @portal.self_and_descendants), :id, :title, prompt: 'Select a parent portal'
-  
-  = f.link_to_add "New url", :urls, data: { target: '#url-form-body' }, class: 'pull-right btn btn-success'
-  %h3 Portal Urls
+%ul.nav.nav-tabs
+  %li.active
+    %a{ href: '#portal_form_fields', data: { toggle: 'tab' } } Portal Form
+  %li
+    %a{ href: '#users', data: { toggle: 'tab' } } Users
 
-  %table.table.table-bordered.table-striped.table-condensed.form-inline
-    %thead
-      %tr
-        %th URL
-        %th Default?
-    %tbody#url-form-body.nested-form-fields
-      = f.fields_for :urls, wrapper: false do |url_form|
-        %tr
-          %td= url_form.text_field :url, hide_label: true
-          %td
-            = url_form.check_box :default, hide_label: true
+= bootstrap_nested_form_for [:admin, @portal] do |f|
+  .tab-content{ style: 'margin-top: 5px;' }
+    #portal_form_fields.tab-pane.active
+      = f.alert_message "Please fix the errors below."
+      
+      = f.text_field :title, wrapper_class: 'required'
+      
+      .row
+        .col-sm-6
+          = f.text_field :acronym, wrapper_class: 'required'
+        .col-sm-6
+          = f.collection_select :parent_id, (Portal.active - @portal.self_and_descendants), :id, :title, prompt: 'Select a parent portal'
+      .row
+        %hr
   
-  .pull-right
+      .row
+        .col-sm-12
+          = f.link_to_add 'New url', :urls, data: { target: '#url-form-body' }, class: 'pull-right btn btn-success'
+          %h3 Portal Urls
+
+          %table.table.table-bordered.table-striped.table-condensed.form-inline
+            %thead
+              %tr
+                %th URL
+                %th.col-sm-1 Default?
+                %th.col-sm-1.text-right Actions
+            %tbody#url-form-body.nested-form-fields
+              = f.fields_for :urls, wrapper: false do |url_form|
+                %tr
+                  %td= url_form.text_field :url, hide_label: true
+                  %td= url_form.check_box :default, hide_label: true
+                  %td= url_form.link_to_remove('<i class="fa fa-times"></i>'.html_safe, class: 'btn btn-danger')
+
+    #users.tab-pane
+      .row
+        .col-sm-10
+          = text_field_tag :user_search, '', data: { name: 'users', target: '#add-selected-user', behavior: 'typeahead', query: api_users_path + '?query=%QUERY'.html_safe }, placeholder: 'Search for user to add', class: 'form-control pull-left'
+        .col-sm-2
+          = f.link_to_add :permissions, :data => { :target => "#users_add" }, class: 'btn btn-success btn-block disabled', prompt: 'Select a user', id: 'add-selected-user' do
+            %i.icon-plus.icon-white
+            Add user
+      %table.table.table-striped
+        %thead
+          %tr
+            %th User
+            %th Permissions
+            %th.text-right Actions
+        %tbody#users_add.nested-form-fields
+          = f.fields_for :permissions, wrapper: false
+      
+  .form-action
     = link_to :back, class: 'btn btn-default' do
       %i.fa.fa-arrow-left
       Cancel
       
-    = f.primary
+    .pull-right
+      = f.primary
