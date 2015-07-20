@@ -1,6 +1,8 @@
-class Catalog::EntriesController < ApplicationController
+class Catalog::EntriesController < ManagerController
   before_action :gather_use_agreements, only: [:new, :create, :edit, :update]
   load_and_authorize_resource
+
+  layout 'application', only: [:show, :index]
 
   def show
     redirect_to @entry
