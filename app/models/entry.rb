@@ -108,12 +108,16 @@ class Entry < ActiveRecord::Base
     save
   end
 
-  def unpublish
+  def unpublish(_current_user = nil)
     return true unless self.published?
 
     self.published_at = nil
     # self.published_by = nil
     save
+  end
+
+  def published?
+    !published_at.nil? && published_at <= Time.now.utc
   end
 
   def bbox
@@ -123,11 +127,7 @@ class Entry < ActiveRecord::Base
     bboxes.each do |box|
       bounds.add(box.geom)
     end
-
     bounds.to_geometry
   end
 
-  def published?
-    !published_at.nil? && published_at <= Time.now.utc
-  end
 end
