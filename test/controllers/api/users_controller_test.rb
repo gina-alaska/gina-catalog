@@ -1,6 +1,6 @@
 require "test_helper"
 
-class Api::UserControllerTest < ActionController::TestCase
+class Api::UsersControllerTest < ActionController::TestCase
   test 'should get index' do
     User.reindex
     get :index, format: :json
