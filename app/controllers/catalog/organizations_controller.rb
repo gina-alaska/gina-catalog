@@ -39,6 +39,7 @@ class Catalog::OrganizationsController < ManagerController
   end
 
   def edit
+    @entry_organizations = @organization.entry_organizations.owner_portal(current_portal)
     save_referrer_location
   end
 
