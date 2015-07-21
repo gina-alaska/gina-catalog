@@ -37,6 +37,7 @@ class Catalog::ContactsController < ManagerController
   end
 
   def edit
+    @entry_contacts = @contact.entry_contacts.owner_portal(current_portal)
     save_referrer_location
   end
 
