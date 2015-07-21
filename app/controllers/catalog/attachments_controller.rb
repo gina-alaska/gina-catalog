@@ -1,4 +1,4 @@
-class Catalog::AttachmentsController < ApplicationController
+class Catalog::AttachmentsController < ManagerController
   load_and_authorize_resource find_by: :uuid
 
   def show

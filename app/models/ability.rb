@@ -38,11 +38,22 @@ class Ability
     end
 
     if user.role?(:cms_manager, current_portal)
-      can :view_manager_menu, User
+      can :view_catalog_menu, User
+    end
+
+    if user.role?(:data_entry, current_portal)
+      can :view_catalog_menu, User
+
+      can :manage, [Organization, Contact, MapLayer]
+      can :read, Attachment
+      can :manage, [UseAgreement, Collection],  portal_id: current_portal.id
+      can [:create, :update, :archive], Entry do |entry|
+        entry.new_record? || entry.owner_portal == current_portal
+      end
     end
 
     if user.role?(:data_manager, current_portal)
-      can :view_manager_menu, User
+      can :view_catalog_menu, User
 
       can :manage, [Organization, Contact, MapLayer]
       can :read, Attachment
@@ -50,13 +61,10 @@ class Ability
       can [:manage, :archive], Entry do |entry|
         entry.new_record? || entry.owner_portal == current_portal
       end
-      cannot :update, UseAgreement do |use_agreement|
-        use_agreement.archived?
-      end
     end
 
     if user.role?(:portal_manager, current_portal)
-      can :view_manager_menu, User
+      can :view_portal_menu, User
       can [:read, :update], Portal,  id: current_portal.id
       can :manage, [Permission, Invitation],  portal_id: current_portal.id
     end
@@ -64,6 +72,10 @@ class Ability
     if user.global_admin?
       can :view_admin_menu, User
       can :manage, [Portal, User, EntryType, Region, DataType, IsoTopic]
+    end
+
+    cannot :update, UseAgreement do |use_agreement|
+      use_agreement.archived?
     end
   end
 end

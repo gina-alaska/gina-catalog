@@ -1,15 +1,26 @@
 !!!
 %html
   %head
-    %title 
+    %title
       gLynx admin
       = content_for :page_title
-      
+
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   %body
-    = render 'layouts/manager_header'
+    %nav.navbar.navbar-default.navbar-gina.navbar-static-top
+      .container-fluid
+        .navbar-header
+          %button.navbar-toggle{ type: 'button', data: { toggle: 'collapse', target: '#header-navbar' }}
+            %span.sr-only Toggle navigation
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          = link_to admin_url, class: 'navbar-brand' do
+            %span.gina gLynx
+            \:: Admin
+        = render 'layouts/header'
     .container-fluid
       = render 'layouts/flash_messages'
       = yield
