@@ -1,2 +1,13 @@
-%h2 New portal
-= render 'form'
+.container
+  .panel.panel-default
+    .panel-heading{ style: 'position: relative' }
+      %ol.breadcrumb
+        %li
+          = link_to admin_portals_path do
+            %i.fa.fa-sitemap
+            Portals
+        %li.active
+          New
+
+    .panel-body
+      = render 'form', portal: @portal 

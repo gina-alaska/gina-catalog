@@ -50,8 +50,10 @@ class Admin::PortalsController < AdminController
 
   def portal_params
     params.require(:portal).permit(
-      :title, :acronym, :parent_id, urls_attributes: [:id, :url, :default],
-                                    favicon: [:id, :image_name, :image_uid])
+      :title, :acronym, :parent_id,
+      permissions_attributes: [:id, :user_id, :_destroy, Permission::AVAILABLE_ROLES.keys],
+      urls_attributes: [:id, :url, :default, :_destroy],
+      favicon: [:id, :image_name, :image_uid])
   end
 
   def set_portal
