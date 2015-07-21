@@ -44,7 +44,7 @@ class Catalog::ContactsController < ManagerController
     respond_to do |format|
       if @contact.save
         flash[:success] = "Contact #{@contact.name} was successfully created."
-        format.html { redirect_back_or_default catalog_contacts_path }
+        format.html { redirect_to catalog_contacts_path }
         format.js
       else
         format.html { render action: 'new' }
@@ -58,7 +58,7 @@ class Catalog::ContactsController < ManagerController
     respond_to do |format|
       if @contact.update_attributes(contact_params)
         flash[:success] = "Contact #{@contact.name} was successfully updated."
-        format.html { redirect_back_or_default catalog_contacts_path }
+        format.html { redirect_to catalog_contacts_path }
         format.json { head :nocontent }
       else
         format.html { render action: 'edit' }
@@ -73,7 +73,7 @@ class Catalog::ContactsController < ManagerController
     respond_to do |format|
       if @contact.destroy
         flash[:success] = "Contact #{@contact.name} was successfully deleted."
-        format.html { redirect_back_or_default catalog_contacts_path }
+        format.html { redirect_to catalog_contacts_path }
         format.json { head :no_content }
       else
         flash[:error] = @contact.errors.full_messages.join('<br />').html_safe

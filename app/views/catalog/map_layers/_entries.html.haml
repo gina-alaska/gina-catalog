@@ -4,8 +4,8 @@
       %tr
         %th Record
         %th Description
-        %th.text-right Action
-    %tbody
+        %th.text-right.col-sm-1 Action
+    %tbody#entry_list{ data: { behavior: 'entry-refresh', target: '#entry_list' } }
       - map_layer.entry_map_layers.each do |eml|
         - entry = eml.entry
         %tr
