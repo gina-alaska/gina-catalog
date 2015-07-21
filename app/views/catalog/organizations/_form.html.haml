@@ -1,6 +1,5 @@
 #organization-form
   - ajax ||= false
-  - modal ||= false
   %ul.nav.nav-tabs
     %li.active
       %a{ href: '#organization_form_fields', data: { toggle: 'tab' } } Organization Form
@@ -58,12 +57,10 @@
           = render 'entries', organization: @organization
 
     .form-action
-      - unless ajax
+      - if !ajax
         = link_to :back, class: 'btn btn-default' do
           %i.fa.fa-arrow-left
           Cancel
 
-      - if !modal
-        = link_to :back, class: 'btn btn-default pull-left' do
-          %i.fa.fa-arrow-left
-          Cancel
+      .pull-right
+        = f.primary
