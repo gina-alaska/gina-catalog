@@ -17,7 +17,7 @@
         .row
           .col-sm-6
             .form-group
-              = f.select_without_bootstrap :order, [['Sort: Relevance', 'relevance'], ['Sort: Title', 'title'], ['Sort: Last Updated', 'updated_at']], { selected: @search_params[:order] }, { class: 'form-control' }
+              = f.select_without_bootstrap :order, [['Sort: Relevance', 'relevance'], ['Sort: Title', 'title'], ['Sort: Last Updated', 'updated_at']], { selected: params[:search].try(:[],:order) }, { class: 'form-control' }
 
           .col-sm-6
             .form-group

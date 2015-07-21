@@ -11,14 +11,16 @@
 
     .panel-body
       %ul.nav.nav-tabs
-        %li.active
-          %a{ href: '#contact_form_fields', data: { toggle: 'tab' } } Contact Form
-        %li
-          %a{ href: '#record_list', data: { toggle: 'tab' } } Record List
-  
+        - sections = %w{ contact_form record_list }
+        - sections.each do |section|
+          %li{class: (section == sections.first ? 'active' : '')}
+            = link_to section.humanize, "##{section}", data: { toggle: 'tab' }
+
       .tab-content{ style: 'margin-top: 5px;' }
-        #contact_form_fields.tab-pane.active
-          = render 'form', contact: @contact 
+
+        #layer_settings.tab-pane.active
+          = render 'form', contact: @contact
+
         #record_list.tab-pane
-          %p List of catalog records that are linked to this contact.
+          %p List of catalog records that are linked with this contact.
           = render 'entries', contact: @contact

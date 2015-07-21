@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   # Support legacy routes
   get 'catalogs/:id' => 'import_items#entries'
   get 'catalogs/:id/downloads/:uuid' => 'import_items#downloads'
-  get 'sds/:id' => 'downloads#sds' , constraints: { id: /[^\/]+/ }, as: :sds
+  get 'sds/:id' => 'downloads#sds', constraints: { id: /[^\/]+/ }, as: :sds
 
   resources :sessions
   resources :memberships
@@ -116,7 +116,7 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your portal routed with "root"
-  root 'welcome#index'
+  root 'entries#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

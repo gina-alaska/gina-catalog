@@ -4,7 +4,8 @@ class Attachment < ActiveRecord::Base
     'Thumbnail',
     'Geojson',
     'Public Download',
-    'Private Download'
+    'Private Download',
+    'Archive'
   ]
 
   dragonfly_accessor :file
@@ -17,6 +18,7 @@ class Attachment < ActiveRecord::Base
   scope :geojson, -> { where(category: 'Geojson') }
   scope :private_download, -> { where(category: 'Private Download') }
   scope :public_download, -> { where(category: 'Public Download') }
+  scope :archive, -> { where(category: 'Archive') }
 
   before_save :create_uuid
   after_save :create_bbox

@@ -1,4 +1,4 @@
-require "test_helper"
+require 'test_helper'
 
 class DownloadsControllerTest < ActionController::TestCase
   test 'should create new download log for public attachment download' do

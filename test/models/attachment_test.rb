@@ -29,6 +29,13 @@ class AttachmentTest < ActiveSupport::TestCase
     private_download.save
   end
 
+  test 'bbox should not be created if attachment is an archive file' do
+    archive = attachments(:archive)
+
+    archive.expects(:build_bbox).never
+    archive.save
+  end
+
   test 'bbox should be created if attachment is a Geojson file' do
     bounds = mock
     bounds.stubs(:from_geojson).returns(bounds)
