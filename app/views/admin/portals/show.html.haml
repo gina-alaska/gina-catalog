@@ -13,12 +13,10 @@
 
   .panel-body
     .row
-      .col-sm-6
+      .col-sm-12
         %dl.dl-horizontal
           %dt parent
           %dd=ddtext @portal.parent.try(:title)
-
-      .col-sm-6
         %dl.dl-horizontal
           %dt acronym
           %dd=ddtext @portal.acronym
