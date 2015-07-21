@@ -16,7 +16,7 @@
       .col-sm-6
         %dl.dl-horizontal
           %dt parent
-          %dd=ddtext @portal.parent.title
+          %dd=ddtext @portal.parent.try(:title)
 
       .col-sm-6
         %dl.dl-horizontal
