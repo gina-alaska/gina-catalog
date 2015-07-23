@@ -6,7 +6,7 @@
         %th Description
         %th.text-right.col-sm-1 Action
     %tbody#entry_list{ data: { behavior: 'entry-refresh', target: '#entry_list' } }
-      - organization.entry_organizations.each do |eml|
+      - @entry_organizations.each do |eml|
         - entry = eml.entry
         %tr
           %td
