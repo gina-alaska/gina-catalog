@@ -72,6 +72,7 @@ class Catalog::EntriesController < ManagerController
 
   def archive
     @entry.archive!(params[:message], current_user)
+    @entry.create_activity(:archive)
 
     respond_to do |format|
       flash[:success] = "Catalog record #{@entry.title} has been archived."
@@ -82,6 +83,7 @@ class Catalog::EntriesController < ManagerController
 
   def unarchive
     @entry.unarchive!
+    @entry.create_activity(:unarchive)
 
     respond_to do |format|
       flash[:success] = "Catalog record #{@entry.title} has been restored."

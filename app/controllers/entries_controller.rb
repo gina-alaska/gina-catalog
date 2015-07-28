@@ -13,6 +13,8 @@ class EntriesController < ApplicationController
 
   def show
     @archive_item = ArchiveItem.new
+    @activities = PublicActivity::Activity.where(entry_id: @entry.id)
+    
     respond_to do |format|
       format.html
       format.geojson

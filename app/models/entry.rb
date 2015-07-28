@@ -2,6 +2,10 @@ class Entry < ActiveRecord::Base
   include EntrySearchConcerns
   include LegacyConcerns
   include ArchiveConcerns
+  include PublicActivity::Model
+
+  tracked :owner => proc {|controller, model| controller.send(:current_user)},
+          :entry_id => :id 
 
   STATUSES = %w(Complete Ongoing Unknown Funded)
 
@@ -129,5 +133,9 @@ class Entry < ActiveRecord::Base
 
   def published?
     !published_at.nil? && published_at <= Time.now.utc
+  end
+
+  def to_s
+    title
   end
 end
