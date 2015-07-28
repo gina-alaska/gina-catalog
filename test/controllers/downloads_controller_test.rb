@@ -6,7 +6,7 @@ class DownloadsControllerTest < ActionController::TestCase
     @controller.stubs(:send_file).returns(true)
     @controller.stubs(:render).returns(true)
 
-   assert_difference('DownloadLog.count') do
+    assert_difference('DownloadLog.count') do
       get :show, id: attachments(:public_download).global_id
     end
   end

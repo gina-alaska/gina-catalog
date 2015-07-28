@@ -23,7 +23,7 @@ class EntriesController < ApplicationController
     @entry  = Entry.find(params['entry_id'])
 
     respond_to do |format|
-      format.html 
+      format.html
       format.geojson
     end
   end
