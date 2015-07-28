@@ -14,7 +14,3 @@
         = button_tag class: 'btn btn-default btn-block', data: { toggle: 'modal', target: '#archive-modal' } do
           %i.fa.fa-archive
           Archive          
-      = link_to catalog_entry_path(entry), method: :destroy, class: 'btn btn-danger btn-block', data: { confirm: 'Are you sure?' } do
-        %i.fa.fa-trash
-        Delete
-
