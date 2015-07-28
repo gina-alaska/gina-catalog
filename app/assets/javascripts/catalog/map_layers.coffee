@@ -13,7 +13,7 @@ $(document).on 'ready page:load',  ->
     $('#add-selected-map-layer').removeClass('btn-info')
     $('#add-selected-map-layer').addClass('btn-success')
 
-  maplayerstypehead.on 'keyup', -> 
+  maplayerstypehead.on 'keyup', ->
     if $(this).val() == ""
       target = this
       $(target).data('suggestion', "")
@@ -24,8 +24,8 @@ $(document).on 'ready page:load',  ->
 $(document).on 'nested:fieldAdded:entry_map_layers', (e) ->
   suggestion = $('#map_layer_search').data('suggestion')
   return unless suggestion?
-  
-  e.field.parents('form').data('dirty', true)  
+
+  e.field.parents('form').data('dirty', true)
   e.field.find('.map_layer_id').val(suggestion.id)
   e.field.find('.map_layer_name').html(suggestion.name)
   e.field.find('.map_layer_type').html(suggestion.type)
@@ -36,8 +36,23 @@ $(document).on 'nested:fieldAdded:entry_map_layers', (e) ->
   $('#add-selected-map-layer').addClass('btn-info')
 
 # This function is used in two places catalog/map_layer/_entries.html.haml and catalog/entries/_map_layers_tab.html.haml
-$(document).on 'map_layers:refresh', -> 
+$(document).on 'map_layers:refresh', ->
   $.get( document.location ).done (data) ->
     layers = $(data).find('#map-layer-table')
     $('#map-layers-container').html(layers)
     $('form[data-behavior="confirm-unsaved-changes"]').data("dirty", true)
+
+$(document).on 'change', '[data-toggle="hidden"]', ->
+  target = $(this).data('target')
+  match = $(this).data('match')
+  console.log("JSD")
+  console.log($(this).val())
+  console.log(match)
+  if $(this).val() == match
+    console.log("HERE:JSD")
+    console.log($(this).val())
+    $(target).removeClass('hidden')
+  else
+    console.log("ELSE:JSD")
+    console.log($(this).val())
+    $(target).addClass('hidden')
