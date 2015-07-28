@@ -1,0 +1,16 @@
+%li
+  .activity
+    .body
+      %strong
+        - if a.owner
+          #{a.owner}
+        - else
+          Someone
+
+      updated 
+      
+      %strong #{link_to a.trackable, a.trackable}
+
+      %span.text-muted
+        %abbr{ title: a.created_at }
+          #{time_ago_in_words a.created_at} ago

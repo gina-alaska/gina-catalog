@@ -34,6 +34,6 @@
             .text-center
               = image_tag thumbnail.file.thumb('300x150').url  
   .col-sm-8
-    = render @entry
+    = render @entry, activities: @activities
 
 = render 'archive_modal', entry: @entry
