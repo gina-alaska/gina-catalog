@@ -3,6 +3,9 @@ require 'test_helper'
 class PortalTest < ActiveSupport::TestCase
   should validate_presence_of(:title)
   should validate_presence_of(:acronym)
+  should validate_uniqueness_of(:title)
+  should validate_uniqueness_of(:acronym)
+  should validate_length_of(:acronym).is_at_most(15)
 
   should have_many(:urls)
   should have_many(:activity_logs)
