@@ -45,14 +45,8 @@ $(document).on 'map_layers:refresh', ->
 $(document).on 'change', '[data-toggle="hidden"]', ->
   target = $(this).data('target')
   match = $(this).data('match')
-  console.log("JSD")
-  console.log($(this).val())
-  console.log(match)
+
   if $(this).val() == match
-    console.log("HERE:JSD")
-    console.log($(this).val())
     $(target).removeClass('hidden')
   else
-    console.log("ELSE:JSD")
-    console.log($(this).val())
     $(target).addClass('hidden')
