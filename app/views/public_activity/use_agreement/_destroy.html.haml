@@ -1,0 +1,19 @@
+%ul
+  %li
+    .activity
+      .body
+        %strong
+          - if a.owner
+            #{a.owner}
+          - else
+            Someone
+
+        deleted use agreement from
+
+        %strong
+          - entry = Entry.find(a.entry_id)
+          #{link_to entry, entry}
+
+        %span.text-muted
+          %abbr{ title: a.created_at }
+            #{time_ago_in_words a.created_at} ago
