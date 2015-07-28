@@ -3,11 +3,11 @@
     .panel-heading{ style: 'position: relative' }
       %ol.breadcrumb
         %li
-          = link_to [:catalog, :entries] do
+          = link_to entries_path do
             %i.fa.fa-sitemap
             Catalog Records
         %li.active
           New
 
     .panel-body.entry-form-container
-      = render 'form', collection: @entry 
+      = render 'form', collection: @entry
