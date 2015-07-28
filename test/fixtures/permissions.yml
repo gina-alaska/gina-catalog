@@ -5,7 +5,7 @@ one:
   portal: one
   roles:
     cms_manager: true
-    data_entry: false
+    data_entry: true
     data_manager: true
     portal_manager: true
 
@@ -13,7 +13,7 @@ two:
   portal: one
   roles:
     cms_manager: false
-    data_entry: true
+    data_entry: false
     data_manager: false
     portal_manager: false
 
