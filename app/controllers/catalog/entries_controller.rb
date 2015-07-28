@@ -90,6 +90,46 @@ class Catalog::EntriesController < ManagerController
     end
   end
 
+  def publish
+    respond_to do |format|
+      if @entry.publish
+        #@entry.activity_logs.create(activity: 'Update', user: current_user, log: { message: "Published by #{current_user.first_name}" })
+
+        flash[:success] = "Catalog record #{@entry.title} has been published."
+        format.html { redirect_to @entry }
+        format.json { head :no_content }
+      else
+        flash[:error] = "Catalog record #{@entry.title} could not be published."
+        format.html { redirect_to @entry }
+        format.json { render json: @entry.errors, status: :unprocessable_entity }
+        format.js do
+          flash.now[:error] = @entry.errors.full_messages
+          render 'form_response'
+        end
+      end
+    end
+  end
+
+  def unpublish
+    respond_to do |format|
+      if @entry.unpublish
+        #@entry.activity_logs.create(activity: 'Update', user: current_user, log: { message: "Unpublished by #{current_user.first_name}" })
+
+        flash[:success] = "Catalog record #{@entry.title} has been unpublished."
+        format.html { redirect_to @entry }
+        format.json { head :no_content }
+      else
+        flash[:error] = "Catalog record #{@entry.title} could not be unpublished."
+        format.html { render action: '@entry' }
+        format.json { render json: @entry.errors, status: :unprocessable_entity }
+        format.js do
+          flash.now[:error] = @entry.errors.full_messages
+          render 'form_response'
+        end
+      end
+    end
+  end
+
   def destroy
     @entry.destroy
 
