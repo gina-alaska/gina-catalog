@@ -21,3 +21,17 @@
  *= require_tree .
  *= require_self
  */
+
+html,body {
+  height: 100%;
+  position: relative;
+}
+
+.page-container {
+  bottom: 0px;
+  position: absolute;
+  top: 60px;
+  width: 100%;
+  margin:0px;
+  padding:0px;
+}

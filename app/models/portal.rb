@@ -30,6 +30,7 @@ class Portal < ActiveRecord::Base
   accepts_nested_attributes_for :urls, allow_destroy: true, reject_if: :blank_url
   accepts_nested_attributes_for :social_networks, allow_destroy: true
   accepts_nested_attributes_for :favicon, allow_destroy: true
+  accepts_nested_attributes_for :permissions, allow_destroy: true
 
   # validate :single_default_url
 

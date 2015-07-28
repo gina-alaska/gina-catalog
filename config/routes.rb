@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  namespace :api do
+  get 'user/index'
+  end
+
   get 'archive_items/create'
 
   get 'archives/create'
@@ -100,6 +104,7 @@ Rails.application.routes.draw do
 
   resources :entries do
     resources :attachments
+    get :map
   end
 
   namespace :api, defaults: { format: :json }, only: [:index, :show] do
@@ -112,6 +117,7 @@ Rails.application.routes.draw do
     resources :map_layers
     resources :data_types
     resources :use_agreements
+    resources :users
   end
 
   # The priority is based upon order of creation: first created -> highest priority.
