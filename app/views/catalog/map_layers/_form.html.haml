@@ -6,6 +6,7 @@
       - @map_layer.errors.full_messages.each do |msg|
         %li= msg
 = bootstrap_form_for [:catalog, @map_layer.becomes(MapLayer)], layout: :horizontal, label_col: 'col-sm-2', control_col: 'col-sm-10', id: 'map-layer-form', remote: ajax do |f|
+  -# WMS must be the first element in the list so that the map-layer-layers-field toggle will work.
   = f.select :type, [['WMS', 'WmsLayer'], ['Tile', 'TmsLayer'],['GeoJSON', 'GeojsonLayer']], { include_blank: false }, class: 'form-control', data: { toggle: 'hidden', target: '#map-layer-layers-field', match: 'WmsLayer'}
   = f.text_field :name, class: 'form-control', wrapper_class: 'required'
   = f.text_field :map_url, class: 'form-control', wrapper_class: 'required'
