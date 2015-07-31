@@ -4,9 +4,6 @@ class Entry < ActiveRecord::Base
   include ArchiveConcerns
   include PublicActivity::Model
 
-  tracked :owner => proc {|controller, model| controller.send(:current_user)},
-          :entry_id => :id 
-
   STATUSES = %w(Complete Ongoing Unknown Funded)
 
   acts_as_taggable_on :tags
@@ -83,6 +80,44 @@ class Entry < ActiveRecord::Base
   accepts_nested_attributes_for :entry_map_layers, allow_destroy: true
 
   after_create :set_owner_portal
+
+  tracked :owner => proc {|controller, model| controller.send(:current_user)},
+          entry_id: :id,
+          parameters: :activity_params
+
+  def activity_params
+    params = {}
+
+    if use_agreement_id_changed?
+      params[:use_agreement] = { id: use_agreement_id, display: use_agreement.try(:title) }
+    end
+
+    if title_changed?
+      params[:title] = { display: self.title }
+    end
+
+    if description_changed?
+      params[:description] = { display: true }
+    end
+
+    if status_changed?
+      params[:status] = { display: self.status }
+    end
+
+    if entry_type_id_changed?
+      params[:type] = { display: entry_type.try(:name) }
+    end
+
+    if start_date_changed?
+      params[:start_date] = { display: self.start_date }
+    end
+
+    if end_date_changed?
+      params[:end_date] = { display: self.end_date }
+    end
+
+    params
+  end
 
   def primary_thumbnail_count
     attachments.inject(0) { |c, v| v.category == 'Primary Thumbnail' ? c + 1 : c }
