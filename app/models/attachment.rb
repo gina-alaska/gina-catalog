@@ -28,6 +28,16 @@ class Attachment < ActiveRecord::Base
   # validates :file_uid, presence: true
   # validates :uuid, presence: true
 
+  include PublicActivity::Model
+
+  tracked owner: proc {|controller, model| controller.send(:current_user)},
+          entry_id: :entry_id,
+          parameters: :activity_params
+
+  def activity_params
+    { attachment: :file_name  }
+  end
+
   def create_uuid
     return unless uuid.nil?
     return if file_uid.nil?
