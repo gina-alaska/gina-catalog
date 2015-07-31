@@ -3,7 +3,7 @@ class Admin::PortalsController < AdminController
   load_and_authorize_resource
 
   def index
-    @portals = Portal.active.roots
+    @portals = Portal.active.roots.reorder('title ASC')
   end
 
   def show
