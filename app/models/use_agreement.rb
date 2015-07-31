@@ -20,11 +20,6 @@ class UseAgreement < ActiveRecord::Base
     entries.empty?
   end
 
-  include PublicActivity::Model
-
-  tracked :owner => proc {|controller, model| controller.send(:current_user)},
-          :entry_id => :entry_id 
-
   def to_s
     use_agreement.title
   end
