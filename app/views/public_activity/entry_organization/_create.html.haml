@@ -2,20 +2,5 @@
   %li
     .activity
       .body
-        %strong
-          - if a.owner
-            #{a.owner}
-          - else
-            Someone
-
-        added organization 
-        %strong #{a.trackable}
-        to
-
-        %strong
-          - entry = Entry.find(a.entry_id)
-          #{link_to entry, entry}
-
-        %span.text-muted
-          %abbr{ title: a.created_at }
-            #{time_ago_in_words a.created_at} ago
+        Added organization 
+        %strong #{GlobalID::Locator.locate(a.parameters[:organization]).try(:name)}
