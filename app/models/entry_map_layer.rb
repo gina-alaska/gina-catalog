@@ -4,8 +4,8 @@ class EntryMapLayer < ActiveRecord::Base
 
   include PublicActivity::Model
 
-  tracked :owner => proc {|controller, model| controller.send(:current_user)},
-          :entry_id => :entry_id,
+  tracked owner: proc { |controller, _model| controller.send(:current_user) },
+          entry_id: :entry_id,
           parameters: :activity_params
 
   def to_s
