@@ -1,0 +1,9 @@
+%tr
+  %td
+    - portal.depth.times do |i|
+      %i.fa.fa-arrow-right
+
+    = link_to [:admin, portal] do
+      = portal.title
+  %td
+    = portal.default_url.try(:url)

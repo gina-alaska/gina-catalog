@@ -11,9 +11,9 @@ one:
   depth: 0
 
 two:
-  title: MyString
+  title: Portal Two
   by_line: MyString
-  acronym: MyString
+  acronym: PT
   description: MyText
   logo_uid: MyString
   contact_email: MyString
@@ -21,9 +21,9 @@ two:
   depth: 0
 
 bad_default_urls:
-  title: MyString
+  title: Portal Bad Default URLs
   by_line: MyString
-  acronym: MyString
+  acronym: PBDU
   description: MyText
   logo_uid: MyString
   contact_email: MyString

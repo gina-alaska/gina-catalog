@@ -2,19 +2,12 @@
   .panel-heading{ style: 'position: relative' }
     = link_to new_admin_portal_path, class: 'btn btn-sm btn-success panel-btn-right' do
       New Portal
-      
+
     .panel-title
       %i.fa.fa-sitemap
       All Portals
-  
+
   %table.table.table-bordered.table-stripped
     - @portals.each do |portal|
-      %tr
-        %td
-          - portal.depth.times do |i|
-            %i.fa.fa-arrow-right
-            
-          = link_to [:admin, portal] do
-            = portal.title
-        %td
-          = portal.default_url.try(:url)
+      - portal.self_and_descendants.each do |item|
+        = render 'portal_item', portal: item

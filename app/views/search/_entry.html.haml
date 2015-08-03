@@ -3,13 +3,15 @@
     = link_to entry.title, entry
     - if entry.archived?
       %span{style: "color: red;"} (Archived)
+    - if !entry.published?
+      %span{style: "color: red;"} (Unpublished)
   .entry-body
     %table.table-condensed.description
       %tbody
         %tr
           - if preview = entry.attachments.primary_thumbnail.first
             %td.preview{ style: 'width:150px; padding-right: 10px;' }
-              = image_tag preview.file.thumb('300x150').url 
+              = image_tag preview.file.thumb('300x150').url
           %td
             - if entry.primary_organizations.any?
               %em

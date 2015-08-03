@@ -1,0 +1,18 @@
+.panel.panel-default.map-info
+  .panel-body
+    %p= @entry.title
+    = link_to 'Goto Record', entry_path(@entry), class: 'btn btn-primary btn-block', target: '_blank' 
+
+.map-container.full-screen.top-bar-margin
+  #map.entry-map{ data: { behavior: 'map', target: 'map', 'mapbox-id' => 'gina-alaska.knb7oi02', 'max-zoom' => 15, 'fit-all' => 'true', cluster: 'true' } }
+    - @entry.attachments.geojson.each do |geojson|
+      %layer{ data: { name: geojson.name, url: entry_attachment_url(@entry, geojson, format: :geojson), 'geojson-options' => 'custom-marker', 'marker-label-field' => 'index' }}
+        %popup
+          %h1
+            = @entry.title
+          %p
+            %label File:
+            = geojson.file.name
+          {{popup}}
+    - @entry.map_layers.each do |layer|
+      %layer{ data: layer.leaflet_options }

@@ -119,11 +119,10 @@ class Entry < ActiveRecord::Base
     errors.add(:portals, 'cannot specify more than one owner') if owner_portal_count > 1
   end
 
-  def publish(_current_user = nil)
+  def publish
     return true if self.published?
 
     self.published_at = Time.zone.now
-    # self.published_by = current_user.id
     save
   end
 
@@ -131,8 +130,11 @@ class Entry < ActiveRecord::Base
     return true unless self.published?
 
     self.published_at = nil
-    # self.published_by = nil
     save
+  end
+
+  def published?
+    !published_at.nil? && published_at <= Time.now.utc
   end
 
   def bbox
@@ -142,12 +144,7 @@ class Entry < ActiveRecord::Base
     bboxes.each do |box|
       bounds.add(box.geom)
     end
-
     bounds.to_geometry
-  end
-
-  def published?
-    !published_at.nil? && published_at <= Time.now.utc
   end
 
   def to_s

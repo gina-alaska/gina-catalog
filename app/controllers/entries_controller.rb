@@ -20,4 +20,13 @@ class EntriesController < ApplicationController
       format.geojson
     end
   end
+
+  def map
+    @entry  = Entry.find(params['entry_id'])
+
+    respond_to do |format|
+      format.html
+      format.geojson
+    end
+  end
 end

@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   namespace :api do
-  get 'user/index'
+    get 'user/index'
   end
 
   get 'archive_items/create'
@@ -53,6 +53,8 @@ Rails.application.routes.draw do
       member do
         patch :archive
         patch :unarchive
+        patch :publish
+        patch :unpublish
       end
       resources :attachments
     end
@@ -102,6 +104,7 @@ Rails.application.routes.draw do
 
   resources :entries do
     resources :attachments
+    get :map
   end
 
   namespace :api, defaults: { format: :json }, only: [:index, :show] do
