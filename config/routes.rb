@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   namespace :api do
-  get 'user/index'
+    get 'user/index'
   end
 
   get 'archive_items/create'

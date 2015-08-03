@@ -37,7 +37,7 @@ class Admin::PortalsControllerTest < ActionController::TestCase
 
   test 'should create portal' do
     assert_difference('Portal.count') do
-      post :create, portal: @portal.attributes
+      post :create, portal: { title: 'Test Portal Create', acronym: 'TPC' }
       assert assigns(:portal).errors.empty?, assigns(:portal).errors.full_messages
     end
 
