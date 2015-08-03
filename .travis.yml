@@ -14,7 +14,7 @@ script:
   - bundle exec rake db:setup
   - bundle exec rake db:test:prepare
   - bundle exec rake searchkick:reindex:all
-  - bundle exec rake test:db
+  - bundle exec rake test
 sudo: false
 services:
   - elasticsearch
