@@ -15,4 +15,4 @@ sudo: false
 services:
   - elasticsearch
 env:
-  - elasticsearch_host=localhost
+  - ELASTICSEARCH_HOST=localhost
