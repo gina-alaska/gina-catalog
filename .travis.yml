@@ -10,4 +10,9 @@ before_script:
 - psql -c 'CREATE DATABASE travis_ci_test;' -U postgres
 - psql -c 'CREATE EXTENSION postgis;' -U postgres -d travis_ci_test
 - psql -c 'CREATE EXTENSION postgis_topology;' -U postgres -d travis_ci_test
+- rake searchkick:reindex:all
 sudo: false
+services:
+  - elasticsearch
+env:
+  - elasticsearch_host=localhost
