@@ -19,5 +19,4 @@ sudo: false
 services:
   - elasticsearch
 env:
-  - ELASTICSEARCH_HOST=localhost
-  - RAILS_ENV=test
+  - ELASTICSEARCH_HOST=localhost RAILS_ENV=test
