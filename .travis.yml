@@ -20,3 +20,4 @@ services:
   - elasticsearch
 env:
   - ELASTICSEARCH_HOST=localhost
+  - RAILS_ENV=test
