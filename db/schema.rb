@@ -16,9 +16,9 @@ ActiveRecord::Schema.define(version: 20150527185944) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
-  enable_extension "uuid-ossp"
   enable_extension "postgis"
   enable_extension "postgis_topology"
+  enable_extension "uuid-ossp"
 
   create_table "activity_logs", force: :cascade do |t|
     t.string   "activity"
@@ -142,11 +142,11 @@ ActiveRecord::Schema.define(version: 20150527185944) do
     t.date     "end_date"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "use_agreement_id"
     t.boolean  "request_contact_info"
     t.boolean  "require_contact_info"
     t.integer  "entry_type_id"
     t.datetime "published_at"
-    t.integer  "use_agreement_id"
   end
 
   create_table "entry_aliases", force: :cascade do |t|
@@ -353,9 +353,9 @@ ActiveRecord::Schema.define(version: 20150527185944) do
 
   create_table "regions", force: :cascade do |t|
     t.string   "name"
+    t.geometry "geom",       limit: {:srid=>4326, :type=>"geometry"}
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.geometry "geom",       limit: {:srid=>4326, :type=>"geometry"}
   end
 
   create_table "social_network_configs", force: :cascade do |t|

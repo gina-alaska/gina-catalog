@@ -17,9 +17,9 @@ directory '/etc/nginx/conf.d' do
 end
 
 proxies = if Chef::Config[:solo]
-            []
-          else
-            search(:node, 'role:haproxy').collect { |n| n['ipaddress'] }
+  []
+else
+  search(:node, 'role:haproxy').collect { |n| n['ipaddress'] }
 end
 
 template "/etc/nginx/sites-available/#{app_name}_site" do
@@ -30,7 +30,7 @@ template "/etc/nginx/sites-available/#{app_name}_site" do
     user: node[app_name]['account'],
     proxies: proxies,
     environment: node[app_name]['environment'],
-    socket: "#{node['unicorn']['listen']}/glynx.socket"
+    socket: ::File.join(node['unicorn']['listen'], 'glynx.socket')
   )
 end
 

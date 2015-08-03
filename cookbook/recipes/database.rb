@@ -1,6 +1,3 @@
-include_recipe 'glynx::_database_common'
-include_recipe 'yum-epel'
-
 node['glynx']['database']['environments'].each do |dbenv|
   dbinfo = node['glynx']['database'][dbenv]
 
@@ -19,9 +16,12 @@ node['glynx']['database']['environments'].each do |dbenv|
   }]
 end
 
+
+include_recipe 'postgresql::config_initdb'
+include_recipe 'postgresql::config_pgtune'
 include_recipe 'postgresql::server'
-include_recipe 'database::default'
-include_recipe 'postgresql::ruby'
+include_recipe 'postgresql::contrib'
+include_recipe 'database::postgresql'
 
 postgresql_connection_info = {
   host: '127.0.0.1',
@@ -33,11 +33,12 @@ postgresql_connection_info = {
 node['glynx']['database']['environments'].each do |dbenv|
   dbinfo = node['glynx']['database'][dbenv]
 
-  # Create a postgresql user but grant no privileges
   postgresql_database_user dbinfo['username'] do
     connection postgresql_connection_info
     password dbinfo['password']
-    action :create
+    superuser true
+    createdb true
+    action [:create]
   end
 
   # create a postgresql database
@@ -53,35 +54,5 @@ node['glynx']['database']['environments'].each do |dbenv|
     database_name dbinfo['database']
     privileges [:all]
     action :grant
-  end
-
-  # Ghetto way of doing it.
-  #  Lets work on a postgis cookbook at soem point
-  package 'postgis2_92'
-  package 'postgis2_92-devel'
-
-  #  Example what the dsl might look like
-  # postgis_database dbinfo do
-  #   action :create
-  # end
-
-  bash 'enable_postgis' do
-    user 'postgres'
-    code <<-EOS
-      psql -d #{dbinfo['database']} -c "ALTER ROLE #{dbinfo['username']} WITH CREATEDB"
-      psql -d #{dbinfo['database']} -c "ALTER ROLE #{dbinfo['username']} WITH SUPERUSER"
-      psql -d #{dbinfo['database']} -c "CREATE EXTENSION IF NOT EXISTS postgis;"
-      psql -d #{dbinfo['database']} -c "CREATE EXTENSION IF NOT EXISTS postgis_topology;"
-    EOS
-  end
-
-  package 'postgresql92-contrib'
-
-  bash 'install-hstore-extension' do
-    user 'postgres'
-    code <<-EOH
-      echo 'CREATE EXTENSION IF NOT EXISTS "hstore";' | psql -d #{dbinfo['database']}
-    EOH
-    action :run
   end
 end

@@ -91,12 +91,12 @@ GEM
       addressable (~> 2.3)
       multi_json (~> 1.0)
       rack
-    elasticsearch (1.0.6)
-      elasticsearch-api (= 1.0.6)
-      elasticsearch-transport (= 1.0.6)
-    elasticsearch-api (1.0.6)
+    elasticsearch (1.0.12)
+      elasticsearch-api (= 1.0.12)
+      elasticsearch-transport (= 1.0.12)
+    elasticsearch-api (1.0.12)
       multi_json
-    elasticsearch-transport (1.0.6)
+    elasticsearch-transport (1.0.12)
       faraday
       multi_json
     erubis (2.7.0)
@@ -139,7 +139,7 @@ GEM
       rubocop (~> 0.20)
     haml (4.0.6)
       tilt
-    hashie (3.4.0)
+    hashie (3.4.2)
     hike (1.2.3)
     hitimes (1.2.2)
     i18n (0.7.0)
@@ -189,7 +189,7 @@ GEM
       minitest-rails (~> 2.1)
     mocha (1.1.0)
       metaclass (~> 0.0.1)
-    multi_json (1.10.1)
+    multi_json (1.11.2)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
     nenv (0.2.0)
@@ -334,7 +334,7 @@ GEM
     sdoc (0.4.1)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
-    searchkick (0.8.5)
+    searchkick (0.9.0)
       activemodel
       elasticsearch (>= 1)
       hashie

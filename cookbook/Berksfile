@@ -5,18 +5,17 @@ end
 
 cookbook 'chruby'
 cookbook 'yum-gina', git: 'git@github.com:gina-alaska/yum-gina-cookbook'
-cookbook 'yum-epel'
 cookbook 'unicorn'
 cookbook 'nginx'
-cookbook 'postgresql'
-cookbook 'postgis', github: 'realityforge/chef-postgis'
-cookbook 'database'
+cookbook 'postgresql', '~> 3.4.20'
+cookbook 'database', '~> 4.0.6'
+cookbook 'yum-epel', '~> 0.6.0'
 cookbook 'redisio'
 cookbook 'runit'
 cookbook 'java'
 cookbook 'memcached'
 cookbook 'now'
 cookbook 'magic_shell'
-cookbook 'elasticsearch', '~> 0.3.10'
+cookbook 'elasticsearch', '~> 1.0.0'
 
 metadata
