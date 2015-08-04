@@ -1,14 +1,14 @@
 .activity
   .body
-    %strong
-      - if a.owner
-        #{a.owner}
-      - else
-        Someone
-
-    archived 
 
     %strong #{link_to a.trackable, a.trackable}
+
+    was archived 
+
+    - if a.owner && can?(:edit, Entry)
+      by 
+      %strong
+        #{a.owner},
 
     %span.text-muted
       %abbr{ title: a.created_at }
