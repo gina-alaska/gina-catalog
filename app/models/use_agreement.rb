@@ -19,4 +19,8 @@ class UseAgreement < ActiveRecord::Base
   def deletable?
     entries.empty?
   end
+
+  def to_s
+    use_agreement.title
+  end
 end

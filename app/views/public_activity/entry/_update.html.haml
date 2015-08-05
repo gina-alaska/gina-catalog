@@ -1,0 +1,75 @@
+%li
+  .activity
+    .body
+   
+      %strong #{link_to a.trackable, a.trackable}
+
+      was updated 
+ 
+      - if a.owner && can?(:edit, Entry)
+        by 
+        %strong
+          #{a.owner},
+  
+      %span.text-muted
+        %abbr{ title: a.created_at }
+          #{time_ago_in_words a.created_at} ago
+
+%ul
+  - if a.parameters[:use_agreement].present?
+    - ua = a.parameters[:use_agreement]
+    %li
+      .activity
+        .body
+          Use agreement 
+          - if ua[:id].nil?
+            was removed
+          - else
+            changed to 
+            %strong #{ua[:display]}
+
+  - if a.parameters[:title].present?
+    - title = a.parameters[:title]
+    %li
+      .activity
+        .body
+          Title was changed to
+          %strong #{title[:display]}
+
+  - if a.parameters[:description].present?
+    %li
+      .activity
+        .body
+          Description has been changed. 
+
+  - if a.parameters[:status].present?
+    - status = a.parameters[:status]
+    %li
+      .activity
+        .body
+          Status was changed to
+          %strong #{status[:display]}
+
+  - if a.parameters[:type].present?
+    - type = a.parameters[:type]
+    %li
+      .activity
+        .body
+          Entry type was changed to
+          %strong #{type[:display]}
+
+  - if a.parameters[:start_date].present?
+    - start_date = a.parameters[:start_date]
+    %li
+      .activity
+        .body
+          Start date was changed to
+          %strong #{start_date[:display]}
+
+  - if a.parameters[:end_date].present?
+    - end_date = a.parameters[:end_date]
+    %li
+      .activity
+        .body
+          End date type was changed to
+          %strong #{end_date[:display]}

@@ -2,6 +2,7 @@ class Entry < ActiveRecord::Base
   include EntrySearchConcerns
   include LegacyConcerns
   include ArchiveConcerns
+  include PublicActivity::Model
 
   STATUSES = %w(Complete Ongoing Unknown Funded)
 
@@ -80,6 +81,24 @@ class Entry < ActiveRecord::Base
 
   after_create :set_owner_portal
 
+  tracked :owner => proc { |controller, model| controller.send(:current_user) },
+          entry_id: :id,
+          parameters: :activity_params
+
+  def activity_params
+    params = {}
+
+    params[:use_agreement] = { id: use_agreement_id, display: use_agreement.try(:title) } if use_agreement_id_changed?
+    params[:title] = { display: title } if title_changed?
+    params[:description] = { display: true } if description_changed?
+    params[:status] = { display: status } if status_changed?
+    params[:type] = { display: entry_type.try(:name) } if entry_type_id_changed?
+    params[:start_date] = { display: start_date } if start_date_changed?
+    params[:end_date] = { display: end_date } if end_date_changed?
+
+    params
+  end
+
   def primary_thumbnail_count
     attachments.inject(0) { |c, v| v.category == 'Primary Thumbnail' ? c + 1 : c }
   end
@@ -128,4 +147,7 @@ class Entry < ActiveRecord::Base
     bounds.to_geometry
   end
 
+  def to_s
+    title
+  end
 end

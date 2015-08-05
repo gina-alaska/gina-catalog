@@ -29,9 +29,9 @@
     %li.active
       = link_to '#additional-information', data: { toggle: 'tab' } do
         %b Additional Information
-    /%li
-    /  = link_to '#activity-logs', data: { toggle: 'tab' } do
-    /    %b Activity Logs
+    %li
+      = link_to '#activity-logs', data: { toggle: 'tab' } do
+        %b Activity Logs
     - if can? :manage, entry
       %li
         = link_to '#download-logs', data: { toggle: 'tab' } do
@@ -41,8 +41,8 @@
     #additional-information.tab-pane.active.content
       = render 'status', entry: entry
       = render 'collapsed_content', entry: entry, collapse: false
-    /#activity-logs.tab-pane
-    /  = render 'activity_logs', entry: entry
+    #activity-logs.tab-pane
+      = render 'activity_logs', activities: activities
     - if can? :manage, @entry
       #download-logs.tab-pane
         = render 'download_logs', entry: entry
