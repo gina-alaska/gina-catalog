@@ -23,7 +23,8 @@
             .form-group
               = select_tag :limit, options_for_select([['Limit: 20', 20], ['Limit: 50', 50], ['Limit: 100', 100], ['Limit: 500', 500], ['Limit: 1000', 1000]], selected: params[:limit]), class: 'form-control'
         = render 'search/buttons', f: f
-
+      - if can? :edit, Entry
+        = render 'search/entry_actions', f: f
       = render 'search/facet_field', title: 'Collections', facets: @facets.collections, field: :collections
       = render 'search/facet_field', title: 'Tags', facets: @facets.tags, field: :tags
       = render 'search/facet_field', title: 'ISO Topics', facets: @facets.iso_topics, field: :iso_topics

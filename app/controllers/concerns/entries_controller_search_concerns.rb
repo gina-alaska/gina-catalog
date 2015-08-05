@@ -17,7 +17,7 @@ module EntriesControllerSearchConcerns
       organization_categories: organize_facets(@entries.facets['organization_categories']),
       primary_contacts: organize_facets(@entries.facets['primary_contact_ids'], Contact),
       other_contacts: organize_facets(@entries.facets['contact_ids'], Contact),
-      archived?: organize_facets(@entries.facets['archived?'])
+      archived: organize_facets(@entries.facets['archived?'])
     ) if facets?
 
     # logger.info "*****FACETS*******" + @entries.facets['archived?'].inspect
@@ -68,7 +68,7 @@ module EntriesControllerSearchConcerns
       else
         @search_params[:order] = 'title'
       end
-      @search_params[:archived?] ||= false
+      @search_params[:archived] ||= false
     end
 
     @search_params
