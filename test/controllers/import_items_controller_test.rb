@@ -6,9 +6,9 @@ class ImportItemsControllerTest < ActionController::TestCase
   end
 
   def test_entries
-    get :entries, id: @import_item.import_id
+    get 'entries', id: @import_item.import_id
 
-    assert_redirected_to entry_path(@import_item.importable)
+    assert_redirected_to catalog_entry_path(@import_item.importable)
   end
 
   def test_download
