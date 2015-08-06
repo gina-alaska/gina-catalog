@@ -29,8 +29,7 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
-# Use unicorn as the app server
-gem 'unicorn'
+# Use puma as the app server
 gem 'puma'
 
 # Use Capistrano for deployment
@@ -41,7 +40,6 @@ gem 'puma'
 
 gem 'rdiscount'
 gem 'haml'
-# gem 'bower-rails'
 gem 'omniauth'
 gem 'omniauth-github'
 gem 'omniauth-google-oauth2'
@@ -60,8 +58,6 @@ gem 'acts-as-taggable-on', '~> 3.4'
 gem 'uuidtools'
 gem 'searchkick'
 gem 'ransack'
-#gem 'responders'
-# gem 'squeel'
 gem 'quiet_assets', group: [:development, :test]
 gem 'georuby'
 gem 'kaminari'

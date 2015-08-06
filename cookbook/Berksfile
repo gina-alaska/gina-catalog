@@ -1,21 +1,26 @@
-source 'https://api.berkshelf.com'
-group :integration do
-  cookbook 'minitest-handler'
-end
-
-cookbook 'chruby'
-cookbook 'yum-gina', git: 'git@github.com:gina-alaska/yum-gina-cookbook'
-cookbook 'unicorn'
-cookbook 'nginx'
-cookbook 'postgresql', '~> 3.4.20'
-cookbook 'database', '~> 4.0.6'
-cookbook 'yum-epel', '~> 0.6.0'
-cookbook 'redisio'
-cookbook 'runit'
-cookbook 'java'
-cookbook 'memcached'
-cookbook 'now'
-cookbook 'magic_shell'
-cookbook 'elasticsearch', '~> 1.0.0'
+source 'https://supermarket.chef.io'
 
 metadata
+
+def gina_cookbook(name, version = '>= 0.0.0', options = {})
+  cookbook(name, version, {
+    git: "git@github.alaska.edu:gina-cookbooks/#{name}.git"
+   }.merge(options))
+end
+def rcs_cookbook(name, version = '>= 0.0.0', options = {})
+  cookbook(name, version, {
+    git: "git@github.alaska.edu:UAF-RCS-Cookbooks/#{name}.git"
+   }.merge(options))
+end
+
+gina_cookbook 'gina-glynx-roles'
+gina_cookbook 'gina-rails-application'
+gina_cookbook 'gina-role'
+
+#dependencies needed from the gina-role because they haven't been published
+cookbook 'rcs-base', git: 'git@github.alaska.edu:UAF-RCS-Cookbooks/rcs-base.git'
+cookbook 'yum-gina', git: 'git@github.com:gina-alaska/yum-gina-cookbook.git'
+cookbook 'gina-iptables', git: 'git@github.alaska.edu:gina-cookbooks/gina-iptables.git'
+cookbook 'update-ca-certs', git: 'git@github.alaska.edu:gina-cookbooks/update-ca-certificates.git'
+cookbook 'gina-users', git:'git@github.alaska.edu:gina-cookbooks/gina-users.git'
+cookbook 'yum'

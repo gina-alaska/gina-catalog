@@ -1,25 +1,33 @@
 ---
 driver:
   name: vagrant
-
+  synced_folders:
+    - ["../", '/www/glynx/current']
+  network:
+    - ["private_network", {ip: "192.168.222.225"}]
+  customize:
+    memory: 8192
+    cpus: 2
 provisioner:
-  name: chef_solo
+  name: chef_zero
+  require_chef_omnibus: 12.3.0
 
 platforms:
-  - name: centos-6.5
+  - name: chef/centos-6.6
 
 suites:
   - name: default
     run_list:
-      - recipe[glynx::default]
-      - recipe[glynx::redis]
-      - recipe[minitest-handler::default]
+      - recipe[glynx-development::default]
     attributes:
-      glynx:
-        account: "vagrant"
-        database:
-          password: nssi_dev_password
+      deploy:
+        environment: 'development'
+        action: 'nothing'
+        precompile_assets: false
+      app:
+        data_bag: 'glynx_development'
+        user: 'vagrant'
+        group: 'vagrant'
       postgresql:
         password:
-          postgres: "lskdjfalskjdhflaskjdhfls"
-          
+          postgres: "wombats"

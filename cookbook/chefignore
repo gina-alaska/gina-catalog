@@ -53,6 +53,8 @@ test/*
 features/*
 Guardfile
 Procfile
+.kitchen
+.kitchen.yml
 
 # SCM #
 #######
@@ -77,7 +79,6 @@ tmp
 # Cookbooks #
 #############
 CONTRIBUTING
-CHANGELOG*
 
 # Strainer #
 ############

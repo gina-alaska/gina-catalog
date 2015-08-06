@@ -1,13 +1,4 @@
-# glynx cookbook
+# cookbook
 
-# Requirements
+TODO: Enter the cookbook description here.
 
-# Usage
-
-# Attributes
-
-# Recipes
-
-# Author
-
-Author:: YOUR_NAME (<YOUR_EMAIL>)
