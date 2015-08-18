@@ -10,7 +10,7 @@
         - entry = eml.entry
         %tr
           %td
-            = link_to entry.title, entry_path(entry), title: 'Show Full Record'
+            = link_to entry.title, catalog_entry_path(entry), title: 'Show Full Record'
           %td
             = entry.description
           %td.text-right

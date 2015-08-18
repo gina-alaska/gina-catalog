@@ -4,8 +4,24 @@ class Catalog::EntriesController < ManagerController
 
   layout 'application', only: [:show, :index]
 
+  include EntriesControllerSearchConcerns
+
+  def index
+    respond_to do |format|
+      format.html { search(params[:page], params[:limit] || 20) }
+      format.geojson { search(params[:page], params[:limit] || 500) }
+      format.json
+    end
+  end
+
   def show
-    redirect_to @entry
+    @archive_item = ArchiveItem.new
+    @activities = PublicActivity::Activity.where(entry_id: @entry.id).order(created_at: :desc).limit(20)
+    
+    respond_to do |format|
+      format.html
+      format.geojson
+    end
   end
 
   def new
@@ -28,7 +44,7 @@ class Catalog::EntriesController < ManagerController
           format.html { redirect_to edit_catalog_entry_path(@entry) }
           format.js { redirect_via_turbolinks_to edit_catalog_entry_path(@entry) }
         else
-          format.html { redirect_to entries_path }
+          format.html { redirect_to catalog_entries_path }
           format.js { redirect_via_turbolinks_to catalog_entries_path }
         end
       else
@@ -53,8 +69,8 @@ class Catalog::EntriesController < ManagerController
           format.html { redirect_to edit_catalog_entry_path(@entry) }
           format.js { redirect_via_turbolinks_to edit_catalog_entry_path(@entry) }
         when 'Save & Close'
-          format.html { redirect_to entries_path }
-          format.js { redirect_via_turbolinks_to entries_path }
+          format.html { redirect_to catalog_entries_path }
+          format.js { redirect_via_turbolinks_to catalog_entries_path }
         else
           format.js
         end
@@ -76,7 +92,7 @@ class Catalog::EntriesController < ManagerController
 
     respond_to do |format|
       flash[:success] = "Catalog record #{@entry.title} has been archived."
-      format.html { redirect_to @entry }
+      format.html { redirect_to catalog_entry_path(@entry) }
       format.json { head :no_content }
     end
   end
@@ -87,7 +103,7 @@ class Catalog::EntriesController < ManagerController
 
     respond_to do |format|
       flash[:success] = "Catalog record #{@entry.title} has been restored."
-      format.html { redirect_to @entry }
+      format.html { redirect_to catalog_entry_path(@entry) }
       format.json { head :no_content }
     end
   end
@@ -98,11 +114,11 @@ class Catalog::EntriesController < ManagerController
         #@entry.activity_logs.create(activity: 'Update', user: current_user, log: { message: "Published by #{current_user.first_name}" })
 
         flash[:success] = "Catalog record #{@entry.title} has been published."
-        format.html { redirect_to @entry }
+        format.html { redirect_to catalog_entry_path(@entry) }
         format.json { head :no_content }
       else
         flash[:error] = "Catalog record #{@entry.title} could not be published."
-        format.html { redirect_to @entry }
+        format.html { redirect_to catalog_entry_path(@entry) }
         format.json { render json: @entry.errors, status: :unprocessable_entity }
         format.js do
           flash.now[:error] = @entry.errors.full_messages
@@ -118,7 +134,7 @@ class Catalog::EntriesController < ManagerController
         #@entry.activity_logs.create(activity: 'Update', user: current_user, log: { message: "Unpublished by #{current_user.first_name}" })
 
         flash[:success] = "Catalog record #{@entry.title} has been unpublished."
-        format.html { redirect_to @entry }
+        format.html { redirect_to catalog_entry_path(@entry) }
         format.json { head :no_content }
       else
         flash[:error] = "Catalog record #{@entry.title} could not be unpublished."
@@ -137,8 +153,17 @@ class Catalog::EntriesController < ManagerController
 
     respond_to do |format|
       flash[:success] = "Catalog record #{@entry.title} was successfully deleted."
-      format.html { redirect_to entries_path }
+      format.html { redirect_to catalog_entries_path }
       format.json { head :no_content }
+    end
+  end
+
+  def map
+    @entry  = Entry.find(params['entry_id'])
+
+    respond_to do |format|
+      format.html
+      format.geojson
     end
   end
 

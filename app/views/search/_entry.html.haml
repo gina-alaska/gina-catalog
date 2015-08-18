@@ -1,6 +1,6 @@
 - cache entry do
   %h4
-    = link_to entry.title, entry
+    = link_to entry.title, catalog_entry_path(entry)
     - if entry.archived?
       %span{style: "color: red;"} (Archived)
     - if !entry.published?
