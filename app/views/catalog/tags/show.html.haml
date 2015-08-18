@@ -1,0 +1,24 @@
+.panel.panel-default
+  .panel-heading{ style: 'position: relative' }
+    %h4
+      %i.fa.fa-tags
+      Entries associated with the tag 
+      %strong #{@tag.name}
+
+  .panel-body
+    %table.table.table-striped
+      %thead
+        %tr
+          %th Entries
+          %th Actions
+      - @entries.each do |entry|
+        %tr
+          %td
+            =link_to entry.title, catalog_entry_path(entry)
+          %td
+            =link_to remove_catalog_tag_path(@tag.name, entry_id: entry), method: :patch, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger', title: 'Remove Tag' do
+              %i.fa.fa-times
+  .panel-footer
+    = link_to catalog_tags_path, class: 'btn btn-default' do
+      %i.fa.fa-arrow-left
+      Back

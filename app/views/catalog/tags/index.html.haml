@@ -1,0 +1,29 @@
+.row
+  .col-sm-4
+    .panel.panel-default
+      .panel-body
+        = bootstrap_form_tag url: catalog_tags_path, method: 'get', layout: :inline, id: 'tag-search' do |f|
+          .form-group{ style: 'width: 100%;' }
+            .input-group{ style: 'width: 100%;' }
+              = text_field_tag 'q', params[:q], class: 'form-control', placeholder: 'Search by name', label: 'Tag Search'
+              .input-group-btn
+                %button.btn.btn-default{ type: 'button', data: { behavior: 'clear-field', target: '#q', autosubmit: 'true' } }
+                  %i.fa.fa-times
+                = button_tag type: 'submit', class: 'btn btn-primary' do
+                  %i.fa.fa-search
+          
+  .col-sm-8
+    .panel.panel-default
+      .panel-heading{ style: 'position: relative' }
+        %h4
+          %i.fa.fa-tags
+          Tag manager
+      
+      %table.table.table-striped.table-condensed
+        %thead
+          %tr
+            %th Name
+            %th Records
+            %th.text-right Actions
+        %tbody
+          = render(partial: "tag_row", collection: @tags, as: :tag) || "<tr class='danger'><td colspan=\"5\"><strong>No matches found!</strong></td></tr>".html_safe
