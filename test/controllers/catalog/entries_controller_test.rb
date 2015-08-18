@@ -6,11 +6,28 @@ class Catalog::EntriesControllerTest < ActionController::TestCase
     login_user(:portal_admin)
   end
 
-  #  test "should get show" do
-  #    get :show
-  #    assert_response :success
-  #  end
+  test 'should get index' do
+    get :index
+    assert_response :success
+    assert_not_nil assigns(:entries)
+    assert_not_nil assigns(:facets)
+    assert_not_nil assigns(:search_params)
+  end
 
+  test 'should only try to query non-archived records by default' do
+    get :index
+    assert_response :success
+    assert assigns(:search_params).keys.include?(:archived), 'Archived search param was not found'
+    assert_equal false, assigns(:search_params)[:archived]
+  end
+
+  test 'should get show' do
+    get :show, id: @entry
+
+    assert_response :success
+    assert_not_nil assigns(:entry)
+  end
+  
   test 'should get new' do
     get :new
     assert_nil flash[:error]
@@ -46,7 +63,7 @@ class Catalog::EntriesControllerTest < ActionController::TestCase
       assert assigns(:entry).errors.empty?, assigns(:entry).errors.full_messages
     end
 
-    assert_redirected_to entries_path
+    assert_redirected_to catalog_entries_path
   end
 
   test 'should get create with ajax save and close' do
@@ -76,7 +93,7 @@ class Catalog::EntriesControllerTest < ActionController::TestCase
     patch :update, id: @entry.id, entry: { name: 'Testing2' }, commit: 'Save & Close'
 
     assert assigns(:entry).errors.empty?, assigns(:entry).errors.full_messages
-    assert_redirected_to entries_path
+    assert_redirected_to catalog_entries_path
   end
 
   test 'should update entry record with ajax save and close' do
@@ -91,7 +108,7 @@ class Catalog::EntriesControllerTest < ActionController::TestCase
       delete :destroy, id: @entry.id
     end
 
-    assert_redirected_to entries_path
+    assert_redirected_to catalog_entries_path
   end
 
   test 'update should fail if updating editing from portal other than owner portal' do
@@ -105,7 +122,7 @@ class Catalog::EntriesControllerTest < ActionController::TestCase
       patch :archive, id: @entry.id, message: 'Testing'
     end
 
-    assert_redirected_to assigns(:entry)
+    assert_redirected_to catalog_entry_path(@entry)
   end
 
   test 'should unarchive entry' do
@@ -114,6 +131,6 @@ class Catalog::EntriesControllerTest < ActionController::TestCase
       patch :unarchive, id: @entry.id, archive: {}
     end
 
-    assert_redirected_to assigns(:entry)
+    assert_redirected_to catalog_entry_path(@entry)
   end
 end

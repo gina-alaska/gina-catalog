@@ -3,7 +3,7 @@ class ImportItemsController < ApplicationController
     entry = ImportItem.entries.oid(params['id']).first
 
     respond_to do |format|
-      format.html { redirect_to entry.importable }
+      format.html { redirect_to [:catalog, entry.importable] }
     end
   end
 

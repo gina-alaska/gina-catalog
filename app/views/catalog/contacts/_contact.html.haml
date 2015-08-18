@@ -1,0 +1,16 @@
+.entry-contact
+  - if contact.name.present?
+    %strong Name:
+    = contact.name
+    %br/
+  - if contact.job_title.present?
+    %strong Title:
+    = contact.job_title
+    %br/
+  - if contact.email.present?
+    %strong Email:
+    = contact.email
+    %br/
+  - if contact.phone_number.present?
+    %strong Phone:
+    %strong= contact.phone_number.humanize
