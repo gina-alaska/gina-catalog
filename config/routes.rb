@@ -1,8 +1,4 @@
 Rails.application.routes.draw do
-  namespace :api do
-    get 'user/index'
-  end
-
   get 'archive_items/create'
 
   get 'archives/create'
@@ -57,6 +53,12 @@ Rails.application.routes.draw do
         patch :unpublish
       end
       resources :attachments
+    end
+
+    resources :tags do
+      member do
+        patch :remove
+      end
     end
 
     resources :organizations do
