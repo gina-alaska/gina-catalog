@@ -27,3 +27,6 @@
             %th.text-right Actions
         %tbody
           = render(partial: "tag_row", collection: @tags, as: :tag) || "<tr class='danger'><td colspan=\"5\"><strong>No matches found!</strong></td></tr>".html_safe
+
+      .panel-footer.text-center
+        = paginate @tags

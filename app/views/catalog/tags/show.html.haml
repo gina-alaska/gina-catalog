@@ -18,6 +18,7 @@
           %td
             =link_to remove_catalog_tag_path(@tag.name, entry_id: entry), method: :patch, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger', title: 'Remove Tag' do
               %i.fa.fa-times
+    = paginate @entries
   .panel-footer
     = link_to catalog_tags_path, class: 'btn btn-default' do
       %i.fa.fa-arrow-left
