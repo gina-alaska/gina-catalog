@@ -56,7 +56,7 @@ Rails.application.routes.draw do
       get :map
     end
 
-    resources :tags do
+    resources :tags, constraints: { id: /[^\\]+/ } do
       member do
         patch :remove
       end
