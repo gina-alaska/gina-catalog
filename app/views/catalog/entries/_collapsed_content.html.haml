@@ -33,7 +33,8 @@
   %dd
     = link_to catalog_entry_url(entry) do
       = catalog_entry_url(entry)
-  %dt Direct Full Map Link
-  %dd
-    = link_to catalog_entry_map_path(entry) do
-      = catalog_entry_map_url(entry)
+  - if entry.attachments.geojson.any? or entry.map_layers.any?
+    %dt Direct Full Map Link
+    %dd
+      = link_to catalog_entry_map_path(entry) do
+        = catalog_entry_map_url(entry)
