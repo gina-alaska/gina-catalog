@@ -81,7 +81,7 @@ class Entry < ActiveRecord::Base
 
   after_create :set_owner_portal
 
-  tracked :owner => proc { |controller, model| controller.send(:current_user) },
+  tracked owner: proc { |controller, _model| controller.send(:current_user) },
           entry_id: :id,
           parameters: :activity_params
 
