@@ -22,7 +22,7 @@ class Catalog::TagsController < ApplicationController
   end
 
   def show
-    @entries = current_portal.entries.tagged_with(@tag.name) unless @tag.nil?
+    @entries = current_portal.entries.tagged_with(@tag.name).order(:title) unless @tag.nil?
 
     respond_to do |format|
       format.html
