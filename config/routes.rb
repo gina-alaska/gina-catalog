@@ -1,8 +1,4 @@
 Rails.application.routes.draw do
-  namespace :api do
-    get 'user/index'
-  end
-
   get 'archive_items/create'
 
   get 'archives/create'
@@ -58,6 +54,12 @@ Rails.application.routes.draw do
       end
       resources :attachments
       get :map
+    end
+
+    resources :tags, constraints: { id: /[^\\]+/ } do
+      member do
+        patch :remove
+      end
     end
 
     resources :organizations do

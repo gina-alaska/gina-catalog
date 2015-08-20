@@ -1,0 +1,2 @@
+module Catalog::TagsHelper
+end

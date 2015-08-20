@@ -17,7 +17,7 @@ class Link < ActiveRecord::Base
           parameters: :activity_params
 
   def activity_params
-    { link: self.display_text }
+    { link: display_text }
   end
 
   def pdf?

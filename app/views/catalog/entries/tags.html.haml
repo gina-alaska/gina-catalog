@@ -1,0 +1,11 @@
+.container
+  .panel.panel-default
+    .panel-heading{ style: 'position: relative' }
+      %h1.panel-title Manage Tags
+    .panel-body.entry-form-container
+      = bootstrap_form_tag url: remove_tags_catalog_entries_path, layout: :horizontal do |f|
+        .row
+          .col-sm-10
+            = f.text_field :tag, data: { behavior: 'selectize-tag-remove' }, multiple: false
+          .col-sm-2
+            = f.submit "Remove Tags", class: 'btn btn-primary'

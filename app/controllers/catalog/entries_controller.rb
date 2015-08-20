@@ -111,7 +111,7 @@ class Catalog::EntriesController < ManagerController
   def publish
     respond_to do |format|
       if @entry.publish
-        #@entry.activity_logs.create(activity: 'Update', user: current_user, log: { message: "Published by #{current_user.first_name}" })
+        # @entry.activity_logs.create(activity: 'Update', user: current_user, log: { message: "Published by #{current_user.first_name}" })
 
         flash[:success] = "Catalog record #{@entry.title} has been published."
         format.html { redirect_to catalog_entry_path(@entry) }
@@ -131,7 +131,7 @@ class Catalog::EntriesController < ManagerController
   def unpublish
     respond_to do |format|
       if @entry.unpublish
-        #@entry.activity_logs.create(activity: 'Update', user: current_user, log: { message: "Unpublished by #{current_user.first_name}" })
+        # @entry.activity_logs.create(activity: 'Update', user: current_user, log: { message: "Unpublished by #{current_user.first_name}" })
 
         flash[:success] = "Catalog record #{@entry.title} has been unpublished."
         format.html { redirect_to catalog_entry_path(@entry) }
