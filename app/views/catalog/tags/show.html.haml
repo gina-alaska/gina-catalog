@@ -1,5 +1,8 @@
 .panel.panel-default
   .panel-heading{ style: 'position: relative' }
+    .pull-right
+      - if @entries.total_count > 1
+        %small= page_entries_info @entries
     %h4
       %i.fa.fa-tags
       Entries associated with the tag 
@@ -10,15 +13,15 @@
       %thead
         %tr
           %th Entries
-          %th Actions
+          %th.text-right Actions
       - @entries.each do |entry|
         %tr
           %td
             =link_to entry.title, catalog_entry_path(entry)
-          %td
+          %td.text-right
             =link_to remove_catalog_tag_path(@tag.name, entry_id: entry), method: :patch, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger', title: 'Remove Tag' do
               %i.fa.fa-times
-    = paginate @entries
+    .text-center= paginate @entries
   .panel-footer
     = link_to catalog_tags_path, class: 'btn btn-default' do
       %i.fa.fa-arrow-left
