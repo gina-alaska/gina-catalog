@@ -14,7 +14,12 @@
           
   .col-sm-8
     .panel.panel-default
-      .panel-heading{ style: 'position: relative' }
+      .panel-heading{ style: 'position: relative; padding-bottom: 20px;' }
+        .pull-right
+          #{pluralize @tags.total_count, 'result'} found
+          %br/
+          - if @tags.total_count > 1
+            %small= page_entries_info @tags
         %h4
           %i.fa.fa-tags
           Tag manager
