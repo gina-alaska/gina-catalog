@@ -7,7 +7,7 @@
     %ul.dropdown-menu
       - if can? :create, Entry
         %li
-          = link_to new_catalog_entry_path do
+          = link_to new_catalog_entry_path, target: :_blank do
             %i.fa.fa-plus.fa-fw
             New Record
         %li
