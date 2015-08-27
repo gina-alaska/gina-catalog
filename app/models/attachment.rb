@@ -8,6 +8,7 @@ class Attachment < ActiveRecord::Base
     'Archive'
   ]
 
+  searchkick word_start: [:file_name, :description, :category]
   dragonfly_accessor :file
 
   belongs_to :entry, touch: true
