@@ -18,13 +18,14 @@ module EntrySearchConcerns
     text += iso_topics.pluck(:name, :iso_theme_code).flatten.uniq
     text += attachments.pluck(:file_name, :description, :category).flatten.uniq
     text += contacts.pluck(:name, :email, :phone_number).flatten.uniq
+    text += links.pluck(:display_text, :url, :category).flatten.uniq
   end
 
   def search_data_with_entries
     as_json(methods: [
       :portal_ids, :tag_list, :collection_ids, :text_search_fields,
       :data_type_ids, :region_ids, :entry_type_name, :primary_organization_ids,
-      :funding_organization_ids, :primary_contact_ids,
+      :funding_organization_ids, :primary_contact_ids, :links_ids,
       :contact_ids, :iso_topic_ids, :archived?, :attachment_ids
     ])
   end
