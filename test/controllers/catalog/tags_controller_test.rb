@@ -1,16 +1,11 @@
 require 'test_helper'
 
 class Catalog::TagsControllerTest < ActionController::TestCase
-  setup do
+  def setup
     login_user(:portal_admin)
-    Entry.public_activity_off
     @entry = entries(:one)
     @tag = @entry.tag_list.add('test')
     @entry.save
-  end
-
-  teardown do
-    Entry.public_activity_on
   end
 
   def test_index
