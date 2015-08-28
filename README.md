@@ -31,7 +31,7 @@ $ cd cookbook
 $ kitchen converge
 $ cd ..
 $ bundle
-$ bundle exec rake db:seed
+$ bundle exec rake db:seed searchkick:reindex:all
 $ bundle exec rake test # all test should pass!
 $ bundle exec rails server
 $ open http://catalog.127.0.0.1.xip.io:3000 # this only applies to OSX, otherwise open a browser and point it at that URL.
