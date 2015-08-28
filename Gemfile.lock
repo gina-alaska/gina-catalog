@@ -157,7 +157,6 @@ GEM
       activesupport (>= 3.0.0)
     launchy (2.4.3)
       addressable (~> 2.3)
-    libv8 (3.16.14.7)
     listen (2.8.5)
       celluloid (>= 0.15.2)
       rb-fsevent (>= 0.9.3)
@@ -189,7 +188,6 @@ GEM
     mocha (1.1.0)
       metaclass (~> 0.0.1)
     multi_json (1.11.2)
-    multi_xml (0.5.5)
     multipart-post (2.0.0)
     nenv (0.2.0)
     nested_form (0.3.2)
@@ -198,26 +196,9 @@ GEM
     notiffany (0.0.4)
       nenv (~> 0.1)
       shellany (~> 0.0)
-    oauth2 (1.0.0)
-      faraday (>= 0.8, < 0.10)
-      jwt (~> 1.0)
-      multi_json (~> 1.3)
-      multi_xml (~> 0.5)
-      rack (~> 1.2)
     omniauth (1.2.2)
       hashie (>= 1.2, < 4)
       rack (~> 1.0)
-    omniauth-github (1.1.2)
-      omniauth (~> 1.0)
-      omniauth-oauth2 (~> 1.1)
-    omniauth-google-oauth2 (0.2.6)
-      omniauth (> 1.0)
-      omniauth-oauth2 (~> 1.1)
-    omniauth-oauth2 (1.2.0)
-      faraday (>= 0.8, < 0.10)
-      multi_json (~> 1.3)
-      oauth2 (~> 1.0)
-      omniauth (~> 1.2)
     omniauth-openid (1.0.1)
       omniauth (~> 1.0)
       rack-openid (~> 1.3.1)
@@ -304,7 +285,6 @@ GEM
       ffi (>= 0.5.0)
     rdiscount (2.1.8)
     rdoc (4.2.0)
-    ref (1.0.5)
     retriable (1.4.1)
     rgeo (0.3.20)
     rgeo-activerecord (2.1.0)
@@ -365,9 +345,6 @@ GEM
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)
     stamp (0.6.0)
-    therubyracer (0.12.2)
-      libv8 (~> 3.16.14.0)
-      ref
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (1.4.1)
@@ -421,8 +398,6 @@ DEPENDENCIES
   mocha
   nested_form
   omniauth
-  omniauth-github
-  omniauth-google-oauth2
   omniauth-openid
   pg
   poltergeist
@@ -452,7 +427,6 @@ DEPENDENCIES
   shoulda-matchers
   spring
   stamp
-  therubyracer
   turbolinks
   uglifier (>= 1.3.0)
   uuidtools

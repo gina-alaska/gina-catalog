@@ -35,19 +35,32 @@ execute 'copy_environment' do
   not_if 'diff shared/.env.production current/.env'
 end
 
+
+ruby_block 'set_development_deployed' do
+  action :nothing
+  block do
+    node.default['app']['development_deployed'] = true
+  end
+end
+
+execute 'setup_test_env' do
+  action :nothing
+  cwd ::File.join(node['app']['install_path'], 'current')
+  user node['app']['user']
+  group node['app']['group']
+  command "bundle exec rake db:migrate db:seed RAILS_ENV=test"
+end
+
 execute 'setup_development_env' do
   cwd ::File.join(node['app']['install_path'], 'current')
   user node['app']['user']
   group node['app']['group']
-  command "bundle exec rake db:migrate db:seed searchkick:reindex:all"
+  command "bundle exec rake db:migrate db:seed"
+  not_if { node['app']['development_deployed'] }
+  notifies :run, "ruby_block[set_development_deployed]", :immediately
+  notifies :run, "execute[setup_test_env]", :immediately
 end
 
-execute 'setup_test_env' do
-  cwd ::File.join(node['app']['install_path'], 'current')
-  user node['app']['user']
-  group node['app']['group']
-  command "bundle exec rake db:migrate db:seed searchkick:reindex:all RAILS_ENV=test"
-end
 
 service 'chef-client' do
   action [:stop, :disable]

@@ -1,4 +1,4 @@
-workers Integer(ENV['WEB_CONCURRENCY'] || 2)
+workers Integer(ENV['WEB_CONCURRENCY'] || 1)
 threads_count = Integer(ENV['MAX_THREADS'] || 5)
 threads 1, threads_count
 
@@ -9,7 +9,7 @@ rackup      DefaultRackup
 port        ENV['PORT']     || 9292
 environment ENV['RAILS_ENV'] || 'development'
 pidfile     ENV['PUMA_PIDFILE'] || './tmp/pids/puma.pid'
-worker_timeout 120
+worker_timeout 240
 
 # not needed unless we are using preload_app!
 # if ENV['PUMA_PRELOAD_APP'] == 'preload_app!'

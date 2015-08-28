@@ -2,6 +2,7 @@ default['deploy']['environment'] = 'development'
 override['deploy']['action'] = 'nothing'
 override['deploy']['deploy_key'] = ''
 default['deploy']['precompile_assets'] = false
+default['deploy']['service_static_assets'] = false
 
 override['app']['user'] = 'vagrant'
 override['app']['group'] = 'vagrant'

@@ -1,16 +1,16 @@
 DEPENDENCIES
   gina-glynx-roles
     git: git@github.alaska.edu:gina-cookbooks/gina-glynx-roles.git
-    revision: e30ada9859cc240b8111c77b4ec1a73653bf345a
+    revision: 82dcd1f630ae348e9d2be66c487fb1512ff934d8
   gina-iptables
     git: git@github.alaska.edu:gina-cookbooks/gina-iptables.git
     revision: 96b5c83e2aee32da7ac6eae88cf715058258a029
   gina-rails-application
     git: git@github.alaska.edu:gina-cookbooks/gina-rails-application.git
-    revision: 3e077dcc420cf5361af2340e47e70e1c03e875fc
+    revision: f6085478b796ed32986dc97e7079d0d1a7f6246f
   gina-role
     git: git@github.alaska.edu:gina-cookbooks/gina-role.git
-    revision: 296de807c1456cb21c3d1aaf47aeca93cf473062
+    revision: 08350e1308a265678968591cb16004f1e2cf6885
   gina-users
     git: git@github.alaska.edu:gina-cookbooks/gina-users.git
     revision: 5da2d9c33e7c305ee451281321dfcf6e334c4773
@@ -63,17 +63,17 @@ GRAPH
     curl (~> 2.0.1)
     poise (~> 2.0.1)
     yum (~> 3.6.1)
-  gina-glynx-roles (0.4.0)
+  gina-glynx-roles (0.5.0)
     chef-vault (>= 0.0.0)
     gina-iptables (~> 1.0)
-    gina-rails-application (~> 0.3)
+    gina-rails-application (~> 1.0)
     gina-role (~> 2.1)
     packages (~> 0.4.0)
     yum-epel (~> 0.6.0)
   gina-iptables (1.1.3)
     chef-sugar (~> 3.1.0)
     iptables-ng (~> 2.2.6)
-  gina-rails-application (0.3.3)
+  gina-rails-application (1.0.3)
     apt (~> 2.7.0)
     certificate (~> 1.0.0)
     database (~> 4.0.6)
@@ -91,7 +91,7 @@ GRAPH
     ssh_known_hosts (~> 2.0.0)
     user (>= 0.0.0)
     yum-epel (~> 0.6.0)
-  gina-role (2.1.5)
+  gina-role (2.1.6)
     apt (~> 2.7.0)
     bash-CVE-2014-7169 (>= 0.0.0)
     chef-sugar (~> 3.1.0)
@@ -100,6 +100,7 @@ GRAPH
     omnibus_updater (~> 1.0.4)
     openssh (~> 1.4.0)
     packages (~> 0.4.0)
+    qgis (~> 0.1.1)
     rcs-base (>= 0.0.0)
     update-ca-certs (~> 0.1.0)
     yum-gina (>= 0.0.0)
@@ -114,7 +115,7 @@ GRAPH
     windows (>= 0.0.0)
     yum-epel (>= 0.0.0)
   glynx-development (0.1.0)
-    gina-glynx-roles (~> 0.4)
+    gina-glynx-roles (~> 0.5)
     yum (>= 0.0.0)
   homebrew (1.13.0)
     build-essential (>= 2.1.2)
@@ -150,6 +151,9 @@ GRAPH
     apt (>= 1.9.0)
     build-essential (>= 0.0.0)
     openssl (~> 4.0.0)
+  qgis (0.1.1)
+    apt (~> 2.7.0)
+    chef-sugar (~> 3.1.0)
   rcs-base (0.3.2)
     chef-client (>= 0.0.0)
     ntp (~> 1.8.2)
