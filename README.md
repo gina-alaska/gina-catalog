@@ -10,9 +10,32 @@ The cms portion will be added in 3.1
 
 * Ruby 2.1+
 * Bundler
+* ChefDK
 * PhantomJS (for running integration tests)
 * GVM (https://github.com/gina-alaska/gvm)
-* VirtualBox
+* NodeJS
+* VirtualBox (5.0.2+)
 * Vagrant
   * <code>vagrant plugins install vagrant-berkshelf</code>
   * <code>vagrant plugins install vagrant-omnibus</code>
+
+## Setting up development environment
+
+If you currently have been using GVM to run the development vm it is recommended that you shutdown and delete the currently running vm.  And then to make sure that you have the latest version of VirtualBox installed (5.0.2) as well as the ChefDK installed and configured to be in your path.
+
+After checkout out the code repository use the following steps to setup the development vm.
+
+```bash
+
+$ cd cookbook
+$ kitchen converge
+$ cd ..
+$ bundle
+$ bundle exec rake db:seed searchkick:reindex:all
+$ bundle exec rake test # all test should pass!
+$ bundle exec rails server
+$ open http://catalog.127.0.0.1.xip.io:3000 # this only applies to OSX, otherwise open a browser and point it at that URL.
+
+```
+
+It should be noted that while the vm is setup and configured to run nginx and puma internally it is currently not recommended that you use that for accessing the application.  It will perform very poorly due to the way vm uses shared folders to access the development code, accessing the database and all other services installed into the vm will behave fine though.

@@ -15,7 +15,7 @@ gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-gem 'therubyracer', platforms: :ruby
+#gem 'therubyracer', platforms: :ruby
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -29,8 +29,7 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
-# Use unicorn as the app server
-gem 'unicorn'
+# Use puma as the app server
 gem 'puma'
 
 # Use Capistrano for deployment
@@ -41,10 +40,9 @@ gem 'puma'
 
 gem 'rdiscount'
 gem 'haml'
-# gem 'bower-rails'
 gem 'omniauth'
-gem 'omniauth-github'
-gem 'omniauth-google-oauth2'
+#gem 'omniauth-github'
+#gem 'omniauth-google-oauth2'
 gem 'omniauth-openid'
 gem 'google-api-client'
 gem 'bootstrap_form', '~> 2.2.0' #git: 'https://github.com/bootstrap-ruby/rails-bootstrap-forms.git'
@@ -60,8 +58,6 @@ gem 'acts-as-taggable-on', '~> 3.4'
 gem 'uuidtools'
 gem 'searchkick'
 gem 'ransack'
-#gem 'responders'
-# gem 'squeel'
 gem 'quiet_assets', group: [:development, :test]
 gem 'georuby'
 gem 'kaminari'

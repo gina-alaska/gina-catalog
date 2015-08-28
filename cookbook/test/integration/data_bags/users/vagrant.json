@@ -1,0 +1,6 @@
+{
+  "id": "vagrant",
+  "groups": [ "gina", "webdev", "sysadmin" ],
+  "action": [ "manage" ],
+  "ssh_keygen": false
+}

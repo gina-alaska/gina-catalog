@@ -33,3 +33,6 @@ end
 
 # ActionController::Base.asset_host = 'http://catalog.192.168.222.225.xip.io'
 # Searchkick.disable_callbacks
+
+require 'public_activity/testing'
+PublicActivity.enabled = false

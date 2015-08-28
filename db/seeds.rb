@@ -46,7 +46,7 @@ iso_topics = [
   [ "005", "economy", "economic activities, conditions and employment"],
   [ "006", "elevation", "height above or below sea level"],
   [ "007", "environment", "environmental resources, protection and conservation"],
-  [ "008", "geoscientificInformation", "information pertaining to earth sciences"],          
+  [ "008", "geoscientificInformation", "information pertaining to earth sciences"],
   [ "009", "health", "health, health services, human ecology, and safety"],
   [ "010", "imageryBaseMapsEarthCover", "base maps"],
   [ "011", "intelligenceMilitary", "military bases, structures, activities"],
@@ -54,11 +54,15 @@ iso_topics = [
   [ "013", "location", "positional information and services"],
   [ "014", "oceans", "features and characteristics of salt water bodies (excluding inland waters)"],
   [ "015", "planningCadastre", "information used for appropriate actions for future use of the land"],
-  [ "016", "society", "characteristics of society and cultures"],                
-  [ "017", "structure", "man-made construction"],                
-  [ "018", "transportation", "means and aids for conveying persons and/or goods"],                
+  [ "016", "society", "characteristics of society and cultures"],
+  [ "017", "structure", "man-made construction"],
+  [ "018", "transportation", "means and aids for conveying persons and/or goods"],
   [ "019", "utilitiesCommunication", "energy, water and waste systems and communications infrastructure and services"]
 ]
 iso_topics.each do |iso_topic|
   IsoTopic.where( iso_theme_code: iso_topic[0], name: iso_topic[1], long_name: iso_topic[2] ).first_or_create
+end
+
+if Rails.env.development?
+  Entry.create(title: 'Example record for indexing purposes', description: 'This is an example record, needed for indexing purposes.', status: 'Complete', entry_type: EntryType.first, portals: [Portal.first] )
 end
