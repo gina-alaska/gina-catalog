@@ -55,6 +55,7 @@ class Ability
     if user.role?(:data_manager, current_portal)
       can :view_catalog_menu, User
 
+      can :manage, :tag
       can :manage, [Organization, Contact, MapLayer]
       can :read, Attachment
       can :manage, [UseAgreement, Collection],  portal_id: current_portal.id

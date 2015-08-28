@@ -8,7 +8,7 @@ json.cache! @entries do
         json.properties do
           json.index ''
           json.id dom_id(entry)
-          json.url entry_url(entry)
+          json.url catalog_entry_url(entry)
           json.title entry.title
           json.description entry.description.truncate(200)
           json.set! 'marker-color', entry.entry_type.color

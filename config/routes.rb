@@ -1,8 +1,4 @@
 Rails.application.routes.draw do
-  namespace :api do
-    get 'user/index'
-  end
-
   get 'archive_items/create'
 
   get 'archives/create'
@@ -57,6 +53,13 @@ Rails.application.routes.draw do
         patch :unpublish
       end
       resources :attachments
+      get :map
+    end
+
+    resources :tags, constraints: { id: /[^\\]+/ } do
+      member do
+        patch :remove
+      end
     end
 
     resources :organizations do
@@ -102,10 +105,10 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :entries do
-    resources :attachments
-    get :map
-  end
+  #resources :entries do
+  #  resources :attachments
+  #  get :map
+  #end
 
   namespace :api, defaults: { format: :json }, only: [:index, :show] do
     resources :organizations
@@ -124,7 +127,7 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your portal routed with "root"
-  root 'entries#index'
+  root 'catalog/entries#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

@@ -11,7 +11,7 @@
             %i.fa.fa-plus.fa-fw
             New Record
         %li
-          = link_to entries_path do
+          = link_to catalog_entries_path do
             %i.fa.fa-cubes.fa-fw
             Search Records
         %li.divider{ role: 'presentation' }
@@ -40,3 +40,8 @@
           = link_to catalog_use_agreements_path do
             %i.fa.fa-pencil.fa-fw
             Use Agreements
+      - if can? :edit, Entry
+        %li
+          = link_to catalog_tags_path do
+            %i.fa.fa-tags.fa-fw
+            Tag Manager

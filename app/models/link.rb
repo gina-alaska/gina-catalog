@@ -10,6 +10,16 @@ class Link < ActiveRecord::Base
   validates :url, length: { within: 11..255, message: 'is not a valid url' }
   validates :category, inclusion: { in: CATEGORIES, message: 'is not a valid category' }
 
+  include PublicActivity::Model
+
+  tracked owner: proc { |controller, _model| controller.send(:current_user) },
+          entry_id: :entry_id,
+          parameters: :activity_params
+
+  def activity_params
+    { link: display_text }
+  end
+
   def pdf?
     url.split('.').last.downcase == 'pdf'
   end
@@ -66,5 +76,9 @@ class Link < ActiveRecord::Base
     end
 
     pdf_text
+  end
+
+  def to_s
+    display_text
   end
 end

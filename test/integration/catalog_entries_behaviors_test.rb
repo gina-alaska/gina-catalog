@@ -17,7 +17,7 @@ class ManagerEntriesBehaviorsTest < ActionDispatch::IntegrationTest
     login(:admin)
 
     update_entry('Save & Close')
-    assert_equal entries_path, current_path
+    assert_equal catalog_entries_path, current_path
   end
 
   private

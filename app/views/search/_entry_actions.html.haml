@@ -1,0 +1,8 @@
+.panel-body.panel-break
+  %span.panel-title Record Actions
+.panel-body.panel-form{ style: 'padding-top: 5px; padding-bottom: 0px; padding-left: 0px; padding-right: 0px;' }
+  .row-fluid
+    .col-sm-12
+      %label
+        = check_box_tag "search[archived]", :archived, @search_params[:archived]
+        Only show archived
