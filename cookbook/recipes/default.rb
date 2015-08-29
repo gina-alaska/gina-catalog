@@ -21,9 +21,9 @@ execute 'bundle install' do
   cwd ::File.join(node['app']['install_path'], 'current')
   user node['app']['user']
   group node['app']['group']
-  command "bundle install --path=vendor/bundle"
+  command "bundle install"
   environment({"BUNDLE_BUILD__PG" => "--with-pg_config=/usr/pgsql-#{node['postgresql']['version']}/bin/pg_config"})
-  notifies :restart, 'service[puma]', :delayed
+  notifies :restart, 'runit_service[puma]', :delayed
 end
 
 execute 'copy_environment' do
@@ -31,7 +31,7 @@ execute 'copy_environment' do
   user node['app']['user']
   group node['app']['group']
   command "cp shared/.env.production current/.env"
-  notifies :restart, 'service[puma]', :delayed
+  notifies :restart, 'runit_service[puma]', :delayed
   not_if 'diff shared/.env.production current/.env'
 end
 
@@ -40,12 +40,9 @@ execute 'setup_development_env' do
   user node['app']['user']
   group node['app']['group']
   command "bundle exec rake db:migrate"
-  not_if { node['app']['development_deployed'] }
-  notifies :run, "execute[setup_test_env]", :immediately
 end
 
 execute 'setup_test_env' do
-  action :nothing
   cwd ::File.join(node['app']['install_path'], 'current')
   user node['app']['user']
   group node['app']['group']

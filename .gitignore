@@ -29,3 +29,5 @@ config/database.yml
 .rvmrc
 .powenv
 .env
+
+.kitchen/logs/kitchen.log
