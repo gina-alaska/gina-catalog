@@ -5,6 +5,8 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+PublicActivity.enabled = false
+
 if Rails.env.development?
   p = Portal.where(
     title: 'Catalog Development Portal',
