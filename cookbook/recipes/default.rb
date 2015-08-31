@@ -23,7 +23,7 @@ execute 'bundle install' do
   group node['app']['group']
   command "bundle install"
   environment({"BUNDLE_BUILD__PG" => "--with-pg_config=/usr/pgsql-#{node['postgresql']['version']}/bin/pg_config"})
-  notifies :restart, 'runit_service[puma]', :delayed
+  notifies :usr1, 'runit_service[puma]', :delayed
 end
 
 execute 'copy_environment' do
@@ -31,7 +31,7 @@ execute 'copy_environment' do
   user node['app']['user']
   group node['app']['group']
   command "cp shared/.env.production current/.env"
-  notifies :restart, 'runit_service[puma]', :delayed
+  notifies :usr1, 'runit_service[puma]', :delayed
   not_if 'diff shared/.env.production current/.env'
 end
 
