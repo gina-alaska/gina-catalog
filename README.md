@@ -27,14 +27,16 @@ After checkout out the code repository use the following steps to setup the deve
 
 ```bash
 
+# install latest version of vagrant, virtualbox and chefdk!
 $ cd cookbook
 $ kitchen converge
 $ cd ..
 $ bundle
 $ bundle exec rake db:seed searchkick:reindex:all
+$ bundle exec rake db:seed searchkick:reindex:all RAILS_ENV=test
 $ bundle exec rake test # all test should pass!
 $ bundle exec rails server
-$ open http://catalog.127.0.0.1.xip.io:3000 # this only applies to OSX, otherwise open a browser and point it at that URL.
+$ open http://catalog.192.168.222.225.xip.io
 
 ```
 
