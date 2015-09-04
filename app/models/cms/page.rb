@@ -24,9 +24,9 @@ class Cms::Page < ActiveRecord::Base
   end
 
   def render
-    layout_context = page_context
-    layout_context.content = page_pipeline(content, { mustache: page_context })
-    layout_pipeline(cms_layout.content, { mustache: layout_context })
+    layout_context = render_context
+    layout_context[:mustache].content = page_pipeline(content, render_context)
+    layout_pipeline(cms_layout.content, layout_context)
   end
 
   def layout_pipeline(content, context)
@@ -50,10 +50,11 @@ class Cms::Page < ActiveRecord::Base
     basic_pipeline(context).call(content)[:output].to_s
   end
 
-  def page_context
+  def render_context
     context = OpenStruct.new attributes
     context.portal = OpenStruct.new portal.attributes
+    context.snippet = ->(name) { portal.snippets.where(name: name).first.render }
     context.latest_entries = portal.entries.order(updated_at: :desc).limit(5).to_a
-    context
+    { mustache: context }
   end
 end

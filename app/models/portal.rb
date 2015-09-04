@@ -15,6 +15,7 @@ class Portal < ActiveRecord::Base
   # CMS related things
   has_many :layouts, class_name: 'Cms::Layout'
   has_many :pages, class_name: 'Cms::Page'
+  has_many :snippets, class_name: 'Cms::Snippet'
 
   has_many :users, through: :permissions
   has_many :activity_logs, as: :loggable

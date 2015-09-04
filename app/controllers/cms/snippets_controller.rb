@@ -4,7 +4,7 @@ class Cms::SnippetsController < CmsController
   # GET /cms/snippets
   # GET /cms/snippets.json
   def index
-    @cms_snippets = Cms::Snippet.all
+    @cms_snippets = current_portal.snippets
   end
 
   # GET /cms/snippets/1
@@ -14,7 +14,7 @@ class Cms::SnippetsController < CmsController
 
   # GET /cms/snippets/new
   def new
-    @cms_snippet = Cms::Snippet.new
+    @cms_snippet = current_portal.snippets.build
   end
 
   # GET /cms/snippets/1/edit
@@ -24,7 +24,7 @@ class Cms::SnippetsController < CmsController
   # POST /cms/snippets
   # POST /cms/snippets.json
   def create
-    @cms_snippet = Cms::Snippet.new(cms_snippet_params)
+    @cms_snippet = current_portal.snippets.build(cms_snippet_params)
 
     respond_to do |format|
       if @cms_snippet.save
@@ -64,7 +64,7 @@ class Cms::SnippetsController < CmsController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_cms_snippet
-      @cms_snippet = Cms::Snippet.find(params[:id])
+      @cms_snippet = current_portal.snippets.friendly.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

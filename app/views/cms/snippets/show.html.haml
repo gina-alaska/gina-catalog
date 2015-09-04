@@ -1,16 +1,13 @@
-%p#notice= notice
-%p
-  %strong Name:
-  = @cms_snippet.name
-%p
-  %strong Slug:
-  = @cms_snippet.slug
-%p
-  %strong Content:
-  = @cms_snippet.content
-%p
-  %strong Portal:
-  = @cms_snippet.portal
-= link_to 'Edit', edit_cms_snippet_path(@cms_snippet)
-|
-= link_to 'Back', cms_snippets_path
+.panel.panel-default
+  .panel-heading
+    %h1.panel-title #{@cms_snippet.name} preview
+  .panel-body
+    = @cms_snippet.render
+
+- content_for :sidebar_menu do
+  = link_to edit_cms_snippet_path(@cms_snippet), class: 'list-group-item' do
+    %i.fa.fa-edit.fa-fw
+    Edit snippet
+  = link_to cms_snippets_path, class: 'list-group-item' do
+    %i.fa.fa-arrow-left.fa-fw
+    Back to snippet list
