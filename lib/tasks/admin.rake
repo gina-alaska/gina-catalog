@@ -1,5 +1,6 @@
 require 'import'
 namespace :admin do
+  PublicActivity.enabled = false
   desc 'Set user to global admin'
   task :set, [:email] => :environment do |_t, args|
     email = args[:email]
