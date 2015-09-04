@@ -52,9 +52,7 @@ class Cms::Page < ActiveRecord::Base
 
   def render_context
     context = OpenStruct.new attributes
-    context.portal = OpenStruct.new portal.attributes
-    context.snippet = ->(name) { portal.snippets.where(name: name).first.render }
-    context.latest_entries = portal.entries.order(updated_at: :desc).limit(5).to_a
+    portal.merge_render_context!(context)
     { mustache: context }
   end
 end

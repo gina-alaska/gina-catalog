@@ -24,7 +24,7 @@ class Cms::Snippet < ActiveRecord::Base
 
   def render_context
     context = OpenStruct.new(attributes)
-    context.portal = portal
+    portal.merge_render_context!(context)
 
     { mustache: context }
   end

@@ -7,19 +7,20 @@
         %th Title
         %th Slug
         %th Layout
-        %th
+        %th.text-right Actions
     %tbody
       - @cms_pages.each do |cms_page|
         %tr
           %td= cms_page.title
           %td= cms_page.slug
           %td= cms_page.cms_layout
-          %td
-            = link_to 'Show', cms_page
-            = link_to 'Edit', edit_cms_page_path(cms_page)
-            = link_to 'Delete', cms_page, method: :delete, data: { confirm: 'Are you sure?' }
+          %td.text-right
+            .btn-group.btn-group-sm
+              = link_to 'Show', cms_page, class: 'btn btn-default'
+              = link_to 'Edit', edit_cms_page_path(cms_page), class: 'btn btn-primary'
+              = link_to 'Delete', cms_page, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'
 
 - content_for :sidebar_menu do
   = link_to new_cms_page_path, class: 'list-group-item list-group-item-success' do
-    %i.fa.fa-plus
-    New Page
+    %i.fa.fa-plus.fa-fw
+    New page
