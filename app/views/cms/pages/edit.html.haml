@@ -1,0 +1,14 @@
+%h1 Editing Cms Page
+.panel.panel-default
+  .panel-heading
+    %h1.panel-title Edit #{@page} page
+  .panel-body
+    = render 'form'
+
+- content_for :sidebar_menu do
+  = link_to @cms_page, class: 'list-group-item' do
+    %i.fa.fa-eye.fa-fw
+    Preview page
+  = link_to cms_pages_path, class: 'list-group-item' do
+    %i.fa.fa-arrow-left.fa-fw
+    Back to page list

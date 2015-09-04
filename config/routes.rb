@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+  namespace :cms do
+    resources :pages
+  end
+
+  namespace :cms do
+    resources :layouts
+  end
+
   get 'archive_items/create'
 
   get 'archives/create'
@@ -127,7 +135,7 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your portal routed with "root"
-  root 'catalog/entries#index'
+  root 'pages#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

@@ -18,6 +18,7 @@
  *= require selectize/selectize.bootstrap3
  *= require mapbox.js/mapbox.css
  *= require leaflet.markercluster
+ *= require woofmark
  *= require_tree .
  *= require_self
  */

@@ -12,6 +12,10 @@ class Portal < ActiveRecord::Base
   has_many :download_logs
   has_many :map_layers
 
+  # CMS related things
+  has_many :layouts, class_name: 'Cms::Layout'
+  has_many :pages, class_name: 'Cms::Page'
+
   has_many :users, through: :permissions
   has_many :activity_logs, as: :loggable
   has_many :social_networks, -> { joins(:social_network_config).order('social_network_configs.name ASC') }

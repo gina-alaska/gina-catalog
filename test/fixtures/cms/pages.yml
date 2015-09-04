@@ -1,0 +1,16 @@
+# Read about fixtures at
+# http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  title: MyString
+  slug: MyString
+  content: MyText
+  portal: 
+  layout: 
+
+two:
+  title: MyString
+  slug: MyString
+  content: MyText
+  portal: 
+  layout: 

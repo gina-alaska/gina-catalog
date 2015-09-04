@@ -1,0 +1,25 @@
+%p#notice= notice
+%p
+  %strong Title:
+  = @cms_page.title
+%p
+  %strong Slug:
+  = @cms_page.slug
+
+%p
+  %strong Layout:
+  = @cms_page.cms_layout
+
+%p
+  %strong Content:
+  %br/
+:markdown
+  #{@cms_page.render}
+
+- content_for :sidebar_menu do
+  = link_to edit_cms_page_path(@cms_page), class: 'list-group-item list-group-item-info' do
+    %i.fa.fa-edit
+    Edit page
+  = link_to cms_pages_path, class: 'list-group-item' do
+    %i.fa.fa-arrow-left
+    Back to page list
