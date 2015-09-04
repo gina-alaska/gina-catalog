@@ -1,0 +1,22 @@
+%p#notice= notice
+%h1 Listing Cms Snippets
+%table
+  %thead
+    %tr
+      %th Name
+      %th Slug
+      %th Content
+      %th Portal
+      %th{:colspan => "3"}
+  %tbody
+    - @cms_snippets.each do |cms_snippet|
+      %tr
+        %td= cms_snippet.name
+        %td= cms_snippet.slug
+        %td= cms_snippet.content
+        %td= cms_snippet.portal
+        %td= link_to 'Show', cms_snippet
+        %td= link_to 'Edit', edit_cms_snippet_path(cms_snippet)
+        %td= link_to 'Destroy', cms_snippet, method: :delete, data: { confirm: 'Are you sure?' }
+%br/
+= link_to 'New Snippet', new_cms_snippet_path

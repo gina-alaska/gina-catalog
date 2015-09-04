@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
   namespace :cms do
+    resources :snippets
+  end
+
+  namespace :cms do
     resources :pages
   end
 
@@ -137,6 +141,7 @@ Rails.application.routes.draw do
   # You can have the root of your portal routed with "root"
   root 'pages#index'
 
+  get ':slug' => 'pages#show', as: :page
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

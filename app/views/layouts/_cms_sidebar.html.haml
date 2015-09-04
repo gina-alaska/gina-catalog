@@ -10,6 +10,10 @@
       %h4.list-group-item-heading Layouts
       %p.list-group-item-text
         Manage layouts for CMS pages
+    = active_link_to cms_snippets_path, active: :inclusive, class: 'list-group-item' do
+      %h4.list-group-item-heading Snippets
+      %p.list-group-item-text
+        Manage page content snippets
   .list-group
     = content_for :sidebar_menu
 

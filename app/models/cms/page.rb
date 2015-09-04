@@ -30,19 +30,24 @@ class Cms::Page < ActiveRecord::Base
   end
 
   def layout_pipeline(content, context)
-    pipeline = HTML::Pipeline.new [
+    markdown_pipeline(context).call(content)[:output].to_s.html_safe
+  end
+
+  def basic_pipeline(context)
+    HTML::Pipeline.new [
       Glynx::MustacheFilter
     ], context
+  end
 
-    pipeline.call(content)[:output].to_s.html_safe
+  def markdown_pipeline(context)
+    HTML::Pipeline.new [
+      Glynx::MustacheFilter,
+      HTML::Pipeline::MarkdownFilter,
+    ], context
   end
 
   def page_pipeline(content, context)
-    pipeline = HTML::Pipeline.new [
-      Glynx::MustacheFilter
-    ], context
-
-    pipeline.call(content)[:output].to_s
+    basic_pipeline(context).call(content)[:output].to_s
   end
 
   def page_context

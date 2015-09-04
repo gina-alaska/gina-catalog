@@ -1,20 +1,21 @@
-%p#notice= notice
-%p
-  %strong Title:
-  = @cms_page.title
-%p
-  %strong Slug:
-  = @cms_page.slug
+.panel.panel-default
+  .panel-heading
+    %h1.panel-title= @cms_page.title
+  .panel-body
+    %p
+      %strong URL:
+      = link_to page_url(@cms_page.slug), page_url(@cms_page.slug)
 
-%p
-  %strong Layout:
-  = @cms_page.cms_layout
+    %p
+      %strong Layout:
+      = @cms_page.cms_layout
 
-%p
-  %strong Content:
-  %br/
-:markdown
-  #{@cms_page.render}
+.panel.panel-default
+  .panel-heading
+    %h1.panel-title Page preview
+  .panel-body
+    :markdown
+      #{@cms_page.render}
 
 - content_for :sidebar_menu do
   = link_to edit_cms_page_path(@cms_page), class: 'list-group-item list-group-item-info' do

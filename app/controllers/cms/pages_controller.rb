@@ -1,6 +1,7 @@
 class Cms::PagesController < CmsController
   before_action :set_cms_page, only: [:show, :edit, :update, :destroy]
-
+  authorize_resource
+  
   # GET /cms/pages
   # GET /cms/pages.json
   def index
