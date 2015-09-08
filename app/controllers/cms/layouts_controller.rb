@@ -52,7 +52,8 @@ class Cms::LayoutsController < CmsController
   def destroy
     respond_to do |format|
       if @cms_layout.pages.size > 0
-        format.html { redirect_to cms_layouts_url, notice: 'Cannot delete layout that is attached to a page' }
+        flash[:error] = 'Cannot delete a layout that is attached to a page'
+        format.html { redirect_to cms_layouts_url }
         format.json { head :no_content }
       else
         @cms_layout.destroy
