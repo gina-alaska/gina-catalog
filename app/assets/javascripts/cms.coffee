@@ -44,12 +44,14 @@ $(document).on 'ready page:load', ->
     el = $('[data-editor="ace"]')
     target = $(el.data('target'))
     editor = ace.edit(el.attr('id'))
+    mode = el.data('mode') || 'html_ruby'
+
     editor.setTheme('ace/theme/github')
-    editor.getSession().setMode('ace/mode/markdown')
+    editor.getSession().setMode("ace/mode/#{mode}")
     editor.getSession().setTabSize(2)
     editor.getSession().setUseSoftTabs(true)
     editor.getSession().setUseWrapMode(true)
-    
+
     el.addClass('loading')
     editor.setValue(target.val())
 
