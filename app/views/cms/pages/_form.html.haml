@@ -1,0 +1,15 @@
+= simple_form_for(@cms_page, input_html: { autocomplete: 'off' }) do |f|
+  = f.error_notification
+  .form-inputs
+    = f.input :title
+    = f.input :slug
+    = f.association :cms_layout
+    = f.input :content, label: false, input_html: { class: 'hidden' }
+    .panel.panel-default
+      %ul.nav
+        = render 'shared/ace/base_toolbar'
+        = render 'shared/ace/helper_toolbar'
+        = render 'shared/ace/attachment_toolbar'
+      #content-editor{ data: { editor: 'ace', target: '#cms_page_content', mode: 'html_ruby' } }
+  .form-actions.text-right
+    = f.button :submit, class: 'btn btn-primary'

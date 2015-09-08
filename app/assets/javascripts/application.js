@@ -28,4 +28,11 @@
 //= require turbolinks
 //= require wicket/wicket
 //= require wicket/wicket-leaflet
+//= require ace-builds/src-noconflict/ace
+//= require ace-builds/src-noconflict/worker-css
+//= require ace-builds/src-noconflict/worker-html
+//= require ace-builds/src-noconflict/mode-markdown
+//= require ace-builds/src-noconflict/mode-html
+//= require ace-builds/src-noconflict/mode-html_ruby
+//= require ace-builds/src-noconflict/theme-github
 //= require_tree .

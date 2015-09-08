@@ -63,6 +63,12 @@ gem 'georuby'
 gem 'kaminari'
 gem 'stamp'
 gem 'public_activity'
+gem 'active_link_to'
+gem 'simple_form'
+gem 'friendly_id'
+gem 'html-pipeline'
+gem 'mustache'
+gem 'github-markdown'
 
 group :development, :production do
   gem 'rails_12factor'
@@ -104,5 +110,6 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-leaflet.markercluster', '0.4.0.hotfix.1'
   # gem 'rails-assets-wicket'
   gem 'rails-assets-uri.js'
+  gem 'rails-assets-ace-builds'
 end
 gem "font-awesome-rails"

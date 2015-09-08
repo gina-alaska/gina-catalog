@@ -21,6 +21,8 @@ GEM
       erubis (~> 2.7.0)
       rails-dom-testing (~> 1.0, >= 1.0.5)
       rails-html-sanitizer (~> 1.0, >= 1.0.1)
+    active_link_to (1.0.3)
+      actionpack
     activejob (4.2.0)
       activesupport (= 4.2.0)
       globalid (>= 0.3.0)
@@ -108,7 +110,10 @@ GEM
     font-awesome-rails (4.3.0.0)
       railties (>= 3.2, < 5.0)
     formatador (0.2.5)
+    friendly_id (5.1.0)
+      activerecord (>= 4.0.0)
     georuby (2.5.2)
+    github-markdown (0.6.8)
     globalid (0.3.2)
       activesupport (>= 4.1.0)
     google-api-client (0.8.2)
@@ -142,6 +147,9 @@ GEM
     hashie (3.4.2)
     hike (1.2.3)
     hitimes (1.2.2)
+    html-pipeline (1.7.0)
+      activesupport (>= 2)
+      nokogiri (~> 1.4)
     i18n (0.7.0)
     jbuilder (2.2.6)
       activesupport (>= 3.0.0, < 5)
@@ -189,6 +197,7 @@ GEM
       metaclass (~> 0.0.1)
     multi_json (1.11.2)
     multipart-post (2.0.0)
+    mustache (1.0.2)
     nenv (0.2.0)
     nested_form (0.3.2)
     nokogiri (1.6.6.2)
@@ -242,7 +251,8 @@ GEM
       bundler (>= 1.3.0, < 2.0)
       railties (= 4.2.0)
       sprockets-rails
-    rails-assets-bootstrap (3.3.4)
+    rails-assets-ace-builds (1.2.0)
+    rails-assets-bootstrap (3.3.5)
       rails-assets-jquery (>= 1.9.1)
     rails-assets-handlebars (3.0.3)
     rails-assets-holderjs (2.4.1)
@@ -343,6 +353,9 @@ GEM
       faraday (~> 0.9)
       jwt (~> 1.0)
       multi_json (~> 1.10)
+    simple_form (3.1.0)
+      actionpack (~> 4.0)
+      activemodel (~> 4.0)
     slop (3.6.0)
     spring (1.3.0)
     sprockets (2.12.3)
@@ -384,6 +397,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active_link_to
   activerecord-postgis-adapter (= 3.0.0.beta1)
   acts-as-taggable-on (~> 3.4)
   awesome_nested_set
@@ -395,17 +409,21 @@ DEPENDENCIES
   dotenv-rails
   dragonfly (~> 1.0.1)
   font-awesome-rails
+  friendly_id
   georuby
+  github-markdown
   google-api-client
   guard
   guard-minitest
   guard-rubocop
   haml
+  html-pipeline
   jbuilder (~> 2.0)
   jquery-rails
   kaminari
   minitest-rails-capybara
   mocha
+  mustache
   nested_form
   omniauth
   omniauth-openid
@@ -415,6 +433,7 @@ DEPENDENCIES
   puma
   quiet_assets
   rails (= 4.2.0)
+  rails-assets-ace-builds!
   rails-assets-bootstrap!
   rails-assets-handlebars!
   rails-assets-holderjs (~> 2.4.0)!
@@ -437,6 +456,7 @@ DEPENDENCIES
   selenium-webdriver
   shoulda
   shoulda-matchers
+  simple_form
   spring
   stamp
   turbolinks

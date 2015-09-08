@@ -1,0 +1,29 @@
+.panel.panel-default
+  .panel-heading
+    %h1.panel-title= @cms_page.title
+  .panel-body
+    %p
+      %strong URL:
+      = link_to page_url(@cms_page.slug), page_url(@cms_page.slug)
+
+    %p
+      %strong Layout:
+      = @cms_page.cms_layout
+
+.panel.panel-default
+  .panel-heading
+    %h1.panel-title Page preview
+  .panel-body
+    :markdown
+      #{@cms_page.render}
+
+- content_for :sidebar_menu do
+  = link_to edit_cms_page_path(@cms_page), class: 'list-group-item list-group-item-info' do
+    %i.fa.fa-edit.fa-fw
+    Edit page
+  = link_to new_cms_page_path, class: 'list-group-item list-group-item-success' do
+    %i.fa.fa-plus.fa-fw
+    New page
+  = link_to cms_pages_path, class: 'list-group-item' do
+    %i.fa.fa-arrow-left.fa-fw
+    Back to page list

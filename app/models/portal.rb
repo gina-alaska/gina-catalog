@@ -12,6 +12,11 @@ class Portal < ActiveRecord::Base
   has_many :download_logs
   has_many :map_layers
 
+  # CMS related things
+  has_many :layouts, class_name: 'Cms::Layout'
+  has_many :pages, class_name: 'Cms::Page'
+  has_many :snippets, class_name: 'Cms::Snippet'
+
   has_many :users, through: :permissions
   has_many :activity_logs, as: :loggable
   has_many :social_networks, -> { joins(:social_network_config).order('social_network_configs.name ASC') }
@@ -54,5 +59,11 @@ class Portal < ActiveRecord::Base
     SocialNetworkConfig.order(name: :asc).each do |network|
       social_networks.find_or_initialize_by(social_network_config_id: network.id)
     end
+  end
+
+  def merge_render_context!(context)
+    context.portal = OpenStruct.new(attributes)
+    context.snippet = ->(name) { snippets.where(name: name).first.try(:render) }
+    context.latest_entries = entries.order(updated_at: :desc).limit(5).to_a
   end
 end

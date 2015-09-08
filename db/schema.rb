@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150724183731) do
+ActiveRecord::Schema.define(version: 20150904185105) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -107,6 +107,42 @@ ActiveRecord::Schema.define(version: 20150724183731) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "cms_layouts", force: :cascade do |t|
+    t.string   "name"
+    t.string   "slug"
+    t.integer  "portal_id"
+    t.text     "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "cms_layouts", ["portal_id"], name: "index_cms_layouts_on_portal_id", using: :btree
+
+  create_table "cms_pages", force: :cascade do |t|
+    t.string   "title"
+    t.string   "slug"
+    t.text     "content"
+    t.integer  "portal_id"
+    t.integer  "cms_layout_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "cms_pages", ["cms_layout_id"], name: "index_cms_pages_on_cms_layout_id", using: :btree
+  add_index "cms_pages", ["portal_id"], name: "index_cms_pages_on_portal_id", using: :btree
+  add_index "cms_pages", ["slug"], name: "index_cms_pages_on_slug", unique: true, using: :btree
+
+  create_table "cms_snippets", force: :cascade do |t|
+    t.string   "name"
+    t.string   "slug"
+    t.text     "content"
+    t.integer  "portal_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "cms_snippets", ["portal_id"], name: "index_cms_snippets_on_portal_id", using: :btree
 
   create_table "collections", force: :cascade do |t|
     t.string   "name"
@@ -262,6 +298,19 @@ ActiveRecord::Schema.define(version: 20150724183731) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "friendly_id_slugs", force: :cascade do |t|
+    t.string   "slug",           null: false
+    t.integer  "sluggable_id",   null: false
+    t.string   "sluggable_type"
+    t.string   "scope"
+    t.datetime "created_at"
+  end
+
+  add_index "friendly_id_slugs", ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true, using: :btree
+  add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
 
   create_table "import_items", force: :cascade do |t|
     t.integer  "import_id"
@@ -464,6 +513,10 @@ ActiveRecord::Schema.define(version: 20150724183731) do
     t.boolean  "global_admin", default: false
   end
 
+  add_foreign_key "cms_layouts", "portals"
+  add_foreign_key "cms_pages", "cms_layouts"
+  add_foreign_key "cms_pages", "portals"
+  add_foreign_key "cms_snippets", "portals"
   add_foreign_key "download_logs", "entries"
   add_foreign_key "download_logs", "portals"
   add_foreign_key "download_logs", "users"
