@@ -5,12 +5,12 @@ one:
   title: MyString
   slug: MyString
   content: MyText
-  portal: 
-  layout: 
+  portal: one
+  cms_layout: one
 
 two:
-  title: MyString
-  slug: MyString
+  title: MyString 2
+  slug: MyString 2
   content: MyText
-  portal: 
-  layout: 
+  portal: one
+  cms_layout: one
