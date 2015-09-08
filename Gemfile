@@ -110,9 +110,6 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-leaflet.markercluster', '0.4.0.hotfix.1'
   # gem 'rails-assets-wicket'
   gem 'rails-assets-uri.js'
-  gem 'rails-assets-bevacqua--woofmark'
-  gem 'rails-assets-bevacqua--megamark'
-  gem 'rails-assets-bevacqua--domador'
-  gem 'rails-assets-ace-builds'  
+  gem 'rails-assets-ace-builds'
 end
 gem "font-awesome-rails"

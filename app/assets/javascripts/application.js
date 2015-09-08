@@ -28,9 +28,6 @@
 //= require turbolinks
 //= require wicket/wicket
 //= require wicket/wicket-leaflet
-//= require woofmark
-//= require megamark
-//= require domador
 //= require ace-builds/src-noconflict/ace
 //= require ace-builds/src-noconflict/worker-css
 //= require ace-builds/src-noconflict/worker-html
