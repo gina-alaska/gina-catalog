@@ -1,6 +1,9 @@
 require "test_helper"
 
 class Cms::LayoutsControllerTest < ActionController::TestCase
+  setup do
+    login_user(:admin)
+  end
 
   def cms_layout
     @cms_layout ||= cms_layouts :one
@@ -22,7 +25,7 @@ class Cms::LayoutsControllerTest < ActionController::TestCase
       post :create, cms_layout: { content: cms_layout.content, name: cms_layout.name, portal_id: cms_layout.portal_id }
     end
 
-    assert_redirected_to cms_layout_path(assigns(:cms_layout))
+    assert_redirected_to cms_layouts_path
   end
 
   def test_edit
@@ -32,7 +35,7 @@ class Cms::LayoutsControllerTest < ActionController::TestCase
 
   def test_update
     put :update, id: cms_layout, cms_layout: { content: cms_layout.content, name: cms_layout.name, portal_id: cms_layout.portal_id }
-    assert_redirected_to cms_layout_path(assigns(:cms_layout))
+    assert_redirected_to cms_layouts_path
   end
 
   def test_destroy

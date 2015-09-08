@@ -50,10 +50,15 @@ class Cms::LayoutsController < CmsController
   # DELETE /cms/layouts/1
   # DELETE /cms/layouts/1.json
   def destroy
-    @cms_layout.destroy
     respond_to do |format|
-      format.html { redirect_to cms_layouts_url, notice: 'Layout was successfully destroyed.' }
-      format.json { head :no_content }
+      if @cms_layout.pages.size > 0
+        format.html { redirect_to cms_layouts_url, notice: 'Cannot delete layout that is attached to a page' }
+        format.json { head :no_content }
+      else
+        @cms_layout.destroy
+        format.html { redirect_to cms_layouts_url, notice: 'Layout was successfully deleted.' }
+        format.json { head :no_content }
+      end
     end
   end
 

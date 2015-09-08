@@ -3,10 +3,10 @@
 
 one:
   name: MyString
-  portal: 
+  portal: one
   content: MyText
 
 two:
   name: MyString
-  portal: 
+  portal: one
   content: MyText

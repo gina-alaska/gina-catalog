@@ -1,6 +1,9 @@
 require "test_helper"
 
 class Cms::PagesControllerTest < ActionController::TestCase
+  setup do
+    login_user(:admin)
+  end
 
   def cms_page
     @cms_page ||= cms_pages :one
@@ -36,7 +39,7 @@ class Cms::PagesControllerTest < ActionController::TestCase
   end
 
   def test_update
-    put :update, id: cms_page, cms_page: { content: cms_page.content, layout_id: cms_page.layout_id, portal_id: cms_page.portal_id, slug: cms_page.slug, title: cms_page.title }
+    put :update, id: cms_page, cms_page: { content: cms_page.content, cms_layout_id: cms_page.cms_layout_id, slug: cms_page.slug, title: cms_page.title }
     assert_redirected_to cms_page_path(assigns(:cms_page))
   end
 
