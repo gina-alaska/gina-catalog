@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Cms Themes</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Portal</th>
+      <th>Name</th>
+      <th>Css</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @cms_themes.each do |cms_theme| %>
+      <tr>
+        <td><%= cms_theme.portal %></td>
+        <td><%= cms_theme.name %></td>
+        <td><%= cms_theme.css %></td>
+        <td><%= link_to 'Show', cms_theme %></td>
+        <td><%= link_to 'Edit', edit_cms_theme_path(cms_theme) %></td>
+        <td><%= link_to 'Destroy', cms_theme, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Theme', new_cms_theme_path %>
