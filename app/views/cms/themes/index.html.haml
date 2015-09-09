@@ -1,0 +1,22 @@
+.panel.panel-default
+  .panel-heading
+    %h1.panel-title Themes
+  %table.table.table-striped
+    %thead
+      %tr
+        %th Name
+        %th Actions
+    %tbody
+      - @cms_themes.each do |cms_theme|
+        %tr
+          %td= cms_theme.name
+          %td.text-right
+            .btn-group.btn-group-sm
+              = link_to 'Show', cms_theme, class: 'btn btn-default'
+              = link_to 'Edit', edit_cms_theme_path(cms_theme), class: 'btn btn-primary'
+              = link_to 'Destroy', cms_theme, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'
+
+- content_for :sidebar_menu do
+  = link_to new_cms_theme_path, class: 'list-group-item list-group-item-success' do
+    %i.fa.fa-plus.fa-fw
+    New theme
