@@ -34,5 +34,6 @@
 //= require ace-builds/src-noconflict/mode-markdown
 //= require ace-builds/src-noconflict/mode-html
 //= require ace-builds/src-noconflict/mode-html_ruby
+//= require ace-builds/src-noconflict/mode-scss
 //= require ace-builds/src-noconflict/theme-github
 //= require_tree .
