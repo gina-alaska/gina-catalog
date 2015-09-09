@@ -12,7 +12,6 @@
           %td= cms_theme.name
           %td.text-right
             .btn-group.btn-group-sm
-              = link_to 'Show', cms_theme, class: 'btn btn-default'
               = link_to 'Edit', edit_cms_theme_path(cms_theme), class: 'btn btn-primary'
               = link_to 'Destroy', cms_theme, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'
 
