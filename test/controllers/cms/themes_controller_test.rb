@@ -1,6 +1,9 @@
 require "test_helper"
 
 class Cms::ThemesControllerTest < ActionController::TestCase
+  setup do
+    login_user(:admin)
+  end
 
   def cms_theme
     @cms_theme ||= cms_themes :one
@@ -19,15 +22,10 @@ class Cms::ThemesControllerTest < ActionController::TestCase
 
   def test_create
     assert_difference('Cms::Theme.count') do
-      post :create, cms_theme: { css: cms_theme.css, name: cms_theme.name, portal_id: cms_theme.portal_id }
+      post :create, cms_theme: { css: cms_theme.css, name: cms_theme.name, portal_id: cms_theme.portal_id, slug: cms_theme.slug }
     end
 
-    assert_redirected_to cms_theme_path(assigns(:cms_theme))
-  end
-
-  def test_show
-    get :show, id: cms_theme
-    assert_response :success
+    assert_redirected_to cms_themes_path
   end
 
   def test_edit
@@ -36,8 +34,8 @@ class Cms::ThemesControllerTest < ActionController::TestCase
   end
 
   def test_update
-    put :update, id: cms_theme, cms_theme: { css: cms_theme.css, name: cms_theme.name, portal_id: cms_theme.portal_id }
-    assert_redirected_to cms_theme_path(assigns(:cms_theme))
+    put :update, id: cms_theme, cms_theme: { css: cms_theme.css, name: cms_theme.name, portal_id: cms_theme.portal_id, slug: cms_theme.slug }
+    assert_redirected_to cms_themes_path
   end
 
   def test_destroy

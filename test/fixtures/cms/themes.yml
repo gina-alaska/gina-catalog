@@ -2,11 +2,13 @@
 # http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  portal: 
+  portal: one
   name: MyString
   css: MyText
+  slug: MyText
 
 two:
-  portal: 
+  portal: one
   name: MyString
   css: MyText
+  slug: MyText
