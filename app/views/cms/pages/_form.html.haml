@@ -7,9 +7,11 @@
     = f.input :content, label: false, input_html: { class: 'hidden' }
     .panel.panel-default
       %ul.nav
-        = render 'shared/ace/base_toolbar'
-        = render 'shared/ace/helper_toolbar'
-        = render 'shared/ace/attachment_toolbar'
+        .btn-toolbar.navbar-btn{ style: 'padding-left: 5px;'}
+          = render 'shared/ace/base_toolbar'
+          = render 'shared/ace/html_toolbar'
+          = render 'shared/ace/helper_toolbar'
+          = render 'shared/ace/attachment_toolbar'
       #content-editor{ data: { editor: 'ace', target: '#cms_page_content', mode: 'html_ruby' } }
   .form-actions.text-right
     = f.button :submit, class: 'btn btn-primary'
