@@ -1,16 +1,4 @@
 Rails.application.routes.draw do
-  namespace :cms do
-    resources :snippets
-  end
-
-  namespace :cms do
-    resources :pages
-  end
-
-  namespace :cms do
-    resources :layouts
-  end
-
   get 'archive_items/create'
 
   get 'archives/create'
@@ -45,6 +33,13 @@ Rails.application.routes.draw do
     resources :regions
     resources :data_types
     resources :iso_topics
+  end
+
+  namespace :cms do
+    resources :snippets
+    resources :pages
+    resources :layouts
+    resources :themes
   end
 
   namespace :catalog do
