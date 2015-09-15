@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
   before_filter :fetch_page
-  
+
   def index
   end
 

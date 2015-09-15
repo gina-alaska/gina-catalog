@@ -17,6 +17,7 @@ class Portal < ActiveRecord::Base
   has_many :pages, class_name: 'Cms::Page'
   has_many :snippets, class_name: 'Cms::Snippet'
   has_many :themes, class_name: 'Cms::Theme'
+  belongs_to :active_cms_theme, class_name: 'Cms::Theme'
 
   has_many :users, through: :permissions
   has_many :activity_logs, as: :loggable
@@ -63,6 +64,7 @@ class Portal < ActiveRecord::Base
   def merge_render_context!(context)
     context.portal = OpenStruct.new(attributes)
     context.snippet = ->(name) { snippets.where(name: name).first.try(:render) }
-    context.latest_entries = entries.order(updated_at: :desc).limit(5).to_a
+    context.pages = pages.map(&:attributes)
+    context.latest_entries = entries.order(updated_at: :desc).limit(5).map(&:attributes)
   end
 end

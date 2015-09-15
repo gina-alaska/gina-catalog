@@ -39,7 +39,9 @@ Rails.application.routes.draw do
     resources :snippets
     resources :pages
     resources :layouts
-    resources :themes
+    resources :themes do
+      patch :activate, on: :member
+    end
   end
 
   namespace :catalog do
