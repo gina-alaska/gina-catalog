@@ -5,6 +5,12 @@ class Cms::Page < ActiveRecord::Base
   belongs_to :portal
   belongs_to :cms_layout, class_name: 'Cms::Layout'
 
+  validates :slug, uniqueness: { scope: :portal_id }
+
+  def system_page?
+    !new_record? && %w{ home catalog }.include?(slug)
+  end
+
   def parent_path
     ''
   end
@@ -16,7 +22,7 @@ class Cms::Page < ActiveRecord::Base
   end
 
   def should_generate_new_friendly_id?
-    if !slug? || title_changed?
+    if !slug?
       true
     else
       false
