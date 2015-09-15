@@ -24,9 +24,13 @@ class Cms::Page < ActiveRecord::Base
   end
 
   def render
-    layout_context = render_context
-    layout_context[:mustache].content = page_pipeline(content, render_context)
-    layout_pipeline(cms_layout.content, layout_context)
+    if cms_layout
+      layout_context = render_context
+      layout_context[:mustache].content = page_pipeline(content, render_context)
+      layout_pipeline(cms_layout.content, layout_context)
+    else
+      layout_pipeline(content, render_context)
+    end
   end
 
   def layout_pipeline(content, context)
