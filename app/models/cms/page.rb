@@ -3,6 +3,8 @@ class Cms::Page < ActiveRecord::Base
   extend FriendlyId
   friendly_id :title, use: :slugged
 
+  has_closure_tree
+
   belongs_to :portal
   belongs_to :cms_layout, class_name: 'Cms::Layout'
 
