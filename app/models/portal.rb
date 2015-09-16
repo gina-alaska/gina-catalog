@@ -1,4 +1,6 @@
 class Portal < ActiveRecord::Base
+  include MustacheConcerns
+
   acts_as_nested_set
 
   has_many :urls, class_name: 'PortalUrl'
@@ -62,9 +64,9 @@ class Portal < ActiveRecord::Base
   end
 
   def merge_render_context!(context)
-    context.portal = OpenStruct.new(attributes)
+    context.portal = OpenStruct.new(mustache_context)
     context.snippet = ->(name) { snippets.where(name: name).first.try(:render) }
-    context.pages = pages.map(&:attributes)
-    context.latest_entries = entries.order(updated_at: :desc).limit(5).map(&:attributes)
+    context.pages = pages.map(&:mustache_context)
+    context.latest_entries = entries.order(updated_at: :desc).limit(5).map(&:mustache_context)
   end
 end

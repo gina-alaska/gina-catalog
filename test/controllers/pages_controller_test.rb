@@ -6,4 +6,10 @@ class PagesControllerTest < ActionController::TestCase
 
     assert_response :success
   end
+
+    test 'should render show' do
+      get :show, id: 'home'
+
+      assert_response :success
+    end
 end

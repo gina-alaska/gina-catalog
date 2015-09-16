@@ -1,3 +1,3 @@
 :scss
-  #{current_portal.active_cms_theme.css}
+  #{current_portal.active_cms_theme.try(:css)}
 = @page.render
