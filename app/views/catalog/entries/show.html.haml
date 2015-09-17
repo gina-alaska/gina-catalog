@@ -3,6 +3,7 @@
 .row
   .col-sm-4
     = render 'manager_menu', entry: @entry
+    = render 'share_portal', entry: @entry
 
     .panel.panel-default
       - if @entry.attachments.geojson.any? or @entry.map_layers.any?
