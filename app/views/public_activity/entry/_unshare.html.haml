@@ -1,0 +1,15 @@
+.activity
+  .body
+
+    %strong #{link_to a.trackable, [:catalog, a.trackable]}
+
+    was unshared 
+
+    - if a.owner && can?(:edit, Entry)
+      by 
+      %strong
+        #{a.owner},
+
+    %span.text-muted
+      %abbr{ title: a.created_at }
+        #{time_ago_in_words a.created_at} ago
