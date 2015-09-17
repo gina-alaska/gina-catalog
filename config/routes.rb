@@ -63,6 +63,7 @@ Rails.application.routes.draw do
         patch :unarchive
         patch :publish
         patch :unpublish
+        patch :toggle_share
       end
       resources :attachments
       get :map
