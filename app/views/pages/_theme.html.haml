@@ -1,0 +1,6 @@
+- extend_body ||= false
+:scss
+  .cms-page-content {
+    #{current_portal.active_cms_theme.try(:css)}
+  }
+  #{'body { @extend .cms-page-content.page; }' if extend_body}
