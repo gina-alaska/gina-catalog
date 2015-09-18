@@ -44,8 +44,8 @@ class Catalog::EntriesController < ManagerController
           format.html { redirect_to edit_catalog_entry_path(@entry) }
           format.js { redirect_via_turbolinks_to edit_catalog_entry_path(@entry) }
         else
-          format.html { redirect_to catalog_entries_path }
-          format.js { redirect_via_turbolinks_to catalog_entries_path }
+          format.html { redirect_to catalog_entry_path(@entry) }
+          format.js { redirect_via_turbolinks_to catalog_entry_path(@entry) }
         end
       else
         format.html { render action: 'new' }
@@ -69,8 +69,8 @@ class Catalog::EntriesController < ManagerController
           format.html { redirect_to edit_catalog_entry_path(@entry) }
           format.js { redirect_via_turbolinks_to edit_catalog_entry_path(@entry) }
         when 'Save & Close'
-          format.html { redirect_to catalog_entries_path }
-          format.js { redirect_via_turbolinks_to catalog_entries_path }
+          format.html { redirect_to catalog_entry_path(@entry) }
+          format.js { redirect_via_turbolinks_to catalog_entry_path(@entry) }
         else
           format.js
         end
