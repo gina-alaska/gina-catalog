@@ -8,4 +8,12 @@ module Cms::PagesHelper
     return true if page.ancestors.include?(tree_node) || page == tree_node
     false
   end
+
+  def disabled_up(page)
+    page.siblings_before.empty? ? 'disabled' : ''
+  end
+
+  def disabled_down(page)
+    page.siblings_after.empty? ? 'disabled' : ''
+  end
 end

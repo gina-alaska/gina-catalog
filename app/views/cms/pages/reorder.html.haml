@@ -1,0 +1,16 @@
+.panel.panel-default
+  .panel-heading
+    %h1.panel-title Order pages
+  %table.table.table-striped
+    %thead
+      %tr
+        %th Title
+        %th.text-right.col-sm-3 Actions
+    %tbody
+      - current_portal.pages.roots.each do |page|
+        = render 'reorder_page', page: page
+
+- content_for :sidebar_menu do
+  = link_to cms_pages_path, class: 'list-group-item' do
+    %i.fa.fa-arrow-left.fa-fw
+    Back to pages

@@ -38,7 +38,17 @@ Rails.application.routes.draw do
 
   namespace :cms do
     resources :snippets
-    resources :pages
+    resources :pages do
+      collection do
+        get :reorder
+      end
+      member do
+        patch :up
+        patch :down
+        patch :top
+        patch :bottom
+      end
+    end
     resources :layouts
     resources :themes do
       patch :activate, on: :member

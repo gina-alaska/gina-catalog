@@ -1,5 +1,5 @@
 class Cms::PagesController < CmsController
-  before_action :set_cms_page, only: [:show, :edit, :update, :destroy]
+  before_action :set_cms_page, only: [:show, :edit, :update, :destroy, :top, :bottom, :up, :down]
   authorize_resource
 
   # GET /cms/pages
@@ -20,6 +20,45 @@ class Cms::PagesController < CmsController
       @cms_page.parent = @parent_page = current_portal.pages.friendly.find(params[:parent])
     end
     @cms_page.cms_layout = @cms_page.parent.cms_layout || current_portal.layouts.first
+  end
+
+  def reorder
+  end
+
+  def up
+    @cms_page.siblings_before.last.try(:prepend_sibling, @cms_page)
+
+    respond_to do |format|
+      format.html { redirect_to reorder_cms_pages_path }
+      format.js { redirect_via_turbolinks_to reorder_cms_pages_path }
+    end
+  end
+
+  def down
+    @cms_page.siblings_after.first.try(:append_sibling, @cms_page)
+
+    respond_to do |format|
+      format.html { redirect_to reorder_cms_pages_path }
+      format.js { redirect_via_turbolinks_to reorder_cms_pages_path }
+    end
+  end
+
+  def top
+    @cms_page.siblings_before.first.try(:prepend_sibling, @cms_page)
+
+    respond_to do |format|
+      format.html { redirect_to reorder_cms_pages_path }
+      format.js { redirect_via_turbolinks_to reorder_cms_pages_path }
+    end
+  end
+
+  def bottom
+    @cms_page.siblings_after.last.try(:append_sibling, @cms_page)
+
+    respond_to do |format|
+      format.html { redirect_to reorder_cms_pages_path }
+      format.js { redirect_via_turbolinks_to reorder_cms_pages_path }
+    end
   end
 
   # GET /cms/pages/1/edit

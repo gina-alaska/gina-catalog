@@ -1,0 +1,15 @@
+%tr
+  %td{ style: "padding-left: #{page.depth * 20 + 10}px"}= page.title
+  %td.text-right
+    - unless page.siblings.empty?
+      .btn-group.order-buttons
+        = link_to top_cms_page_path(page), method: :patch, title: 'Move to top', class: 'btn btn-default ' + disabled_up(page) do
+          %i.fa.fa-angle-double-up
+        = link_to up_cms_page_path(page), method: :patch, title: 'Move up', class: 'btn btn-default ' + disabled_up(page) do
+          %i.fa.fa-angle-up
+        = link_to down_cms_page_path(page), method: :patch, title: 'Move down', class: 'btn btn-default ' + disabled_down(page) do
+          %i.fa.fa-angle-down
+        = link_to bottom_cms_page_path(page), method: :patch, title: 'Move to bottom', class: 'btn btn-default ' + disabled_down(page) do
+          %i.fa.fa-angle-double-down
+- page.children.each do |child|
+  = render 'reorder_page', page: child

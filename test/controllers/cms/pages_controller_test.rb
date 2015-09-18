@@ -9,6 +9,11 @@ class Cms::PagesControllerTest < ActionController::TestCase
     @cms_page ||= cms_pages :one
   end
 
+  test "get redorder pages" do
+    get :reorder
+    assert_response :success
+  end
+
   def test_index
     get :index
     assert_response :success
