@@ -1,8 +1,11 @@
-= render current_portal.pages.roots.first
-  
+= render current_portal.pages.roots.first, use_layout: true
+
 - content_for :sidebar_menu do
   = render 'page_list'
 
+  = link_to edit_cms_page_path(current_portal.pages.roots.first), class: 'list-group-item list-group-item-info' do
+    %i.fa.fa-edit.fa-fw
+    Edit page
   = link_to new_cms_page_path, class: 'list-group-item list-group-item-success' do
     %i.fa.fa-plus.fa-fw
     New page

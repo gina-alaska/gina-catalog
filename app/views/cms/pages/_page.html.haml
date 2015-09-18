@@ -18,6 +18,8 @@
 .panel.panel-default
   .panel-heading
     %h1.panel-title Page preview
-  .panel-body
+  .panel-body{ style: use_layout ? 'padding:0px;' : '' }
+    :scss
+      #{current_portal.active_cms_theme.css}
     :markdown
-      #{page.render(false)}
+      #{page.render(use_layout)}
