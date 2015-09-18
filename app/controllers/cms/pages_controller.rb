@@ -1,7 +1,7 @@
 class Cms::PagesController < CmsController
   before_action :set_cms_page, only: [:show, :edit, :update, :destroy]
   authorize_resource
-  
+
   # GET /cms/pages
   # GET /cms/pages.json
   def index
@@ -16,6 +16,10 @@ class Cms::PagesController < CmsController
   # GET /cms/pages/new
   def new
     @cms_page = current_portal.pages.build
+    if params[:parent]
+      @cms_page.parent = current_portal.pages.friendly.find(params[:parent])
+    end
+    @cms_page.cms_layout = current_portal.layouts.first
   end
 
   # GET /cms/pages/1/edit
@@ -70,6 +74,6 @@ class Cms::PagesController < CmsController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def cms_page_params
-      params.require(:cms_page).permit(:title, :slug, :content, :cms_layout_id)
+      params.require(:cms_page).permit(:title, :slug, :content, :cms_layout_id, :parent_id)
     end
 end

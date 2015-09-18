@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   get 'catalogs/:id/downloads/:uuid' => 'import_items#downloads'
   get 'sds/:id' => 'downloads#sds', constraints: { id: /[^\/]+/ }, as: :sds
 
-  resources :pages
+  resources :pages, as: :public_pages
   resources :sessions
   resources :memberships
   resources :users

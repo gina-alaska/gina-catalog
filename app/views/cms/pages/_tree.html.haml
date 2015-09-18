@@ -1,0 +1,10 @@
+- tree.each do |node|
+  %li
+    - if node.children.count > 0
+      %i.fa.fa-plus-square-o.fa-fw{ data: { toggle: 'collapse', target: '#' + dom_id(node, 'page-ol') } }
+    - else
+      %i.fa.fa-file-o.fa-fw
+    .page-item= link_to node.title, node
+  - unless node.children.empty?
+    %ol.collapse{ id: dom_id(node, 'page-ol') }
+      = render 'tree', tree: node.children, parent: node

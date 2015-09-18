@@ -3,12 +3,20 @@ class Cms::Page < ActiveRecord::Base
   extend FriendlyId
   friendly_id :title, use: :slugged
 
-  has_closure_tree
+  has_closure_tree order: 'sort_order'
 
   belongs_to :portal
   belongs_to :cms_layout, class_name: 'Cms::Layout'
 
   validates :slug, uniqueness: { scope: :portal_id }
+
+  def to_s
+    title
+  end
+
+  def depth_name
+    (('&nbsp;' * depth * 4) + title).html_safe
+  end
 
   def system_page?
     !new_record? && %w{ home catalog }.include?(slug)
@@ -26,8 +34,8 @@ class Cms::Page < ActiveRecord::Base
     end
   end
 
-  def render
-    if cms_layout
+  def render(use_layout = true)
+    if use_layout && cms_layout
       layout_context = render_context(portal)
       layout_context[:mustache].content = page_pipeline(content, render_context(portal))
       layout_pipeline(cms_layout.content, layout_context)

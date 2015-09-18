@@ -1,6 +1,10 @@
 .panel.panel-default
   .panel-heading
     %h1.panel-title Pages
+  .panel-body
+    %ol.cms-page-list.sortable
+      = render 'tree', tree: @cms_pages.roots, parent: nil
+
   %table.table.table-striped
     %thead
       %tr
