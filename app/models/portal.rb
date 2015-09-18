@@ -62,11 +62,4 @@ class Portal < ActiveRecord::Base
       social_networks.find_or_initialize_by(social_network_config_id: network.id)
     end
   end
-
-  def merge_render_context!(context)
-    context.portal = OpenStruct.new(mustache_context)
-    context.snippet = ->(name) { snippets.where(name: name).first.try(:render) }
-    context.pages = pages.map(&:mustache_context)
-    context.latest_entries = entries.order(updated_at: :desc).limit(5).map(&:mustache_context)
-  end
 end

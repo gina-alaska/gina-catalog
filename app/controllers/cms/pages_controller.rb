@@ -17,7 +17,7 @@ class Cms::PagesController < CmsController
   def new
     @cms_page = current_portal.pages.build
     if params[:parent]
-      @cms_page.parent = current_portal.pages.friendly.find(params[:parent])
+      @cms_page.parent = @parent_page = current_portal.pages.friendly.find(params[:parent])
     end
     @cms_page.cms_layout = current_portal.layouts.first
   end

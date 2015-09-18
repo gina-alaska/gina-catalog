@@ -1,30 +1,8 @@
-.panel.panel-default
-  .panel-heading
-    %h1.panel-title Pages
-  .panel-body
-    %ol.cms-page-list.sortable
-      = render 'tree', tree: @cms_pages.roots, parent: nil
-
-  %table.table.table-striped
-    %thead
-      %tr
-        %th Title
-        %th Slug
-        %th Layout
-        %th.text-right Actions
-    %tbody
-      - @cms_pages.each do |cms_page|
-        %tr
-          %td= cms_page.title
-          %td= cms_page.slug
-          %td= cms_page.cms_layout
-          %td.text-right
-            .btn-group.btn-group-sm
-              = link_to 'Show', cms_page, class: 'btn btn-default'
-              = link_to 'Edit', edit_cms_page_path(cms_page), class: 'btn btn-primary'
-              = link_to 'Delete', cms_page, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'
-
+= render current_portal.pages.roots.first
+  
 - content_for :sidebar_menu do
+  = render 'page_list'
+
   = link_to new_cms_page_path, class: 'list-group-item list-group-item-success' do
     %i.fa.fa-plus.fa-fw
     New page
