@@ -125,10 +125,10 @@ Rails.application.routes.draw do
     end
   end
 
-  #resources :entries do
-  #  resources :attachments
-  #  get :map
-  #end
+  # resources :entries do
+  #   resources :attachments
+  #   get :map
+  # end
 
   namespace :api, defaults: { format: :json }, only: [:index, :show] do
     resources :organizations

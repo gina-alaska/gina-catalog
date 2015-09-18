@@ -1,4 +1,4 @@
-require "test_helper"
+require 'test_helper'
 
 class PagesControllerTest < ActionController::TestCase
   test 'should render index' do
@@ -7,9 +7,9 @@ class PagesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-    test 'should render show' do
-      get :show, id: 'home'
+  test 'should render show' do
+    get :show, id: 'home'
 
-      assert_response :success
-    end
+    assert_response :success
+  end
 end
