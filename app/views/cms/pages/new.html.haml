@@ -5,6 +5,11 @@
     = render 'form'
 
 - content_for :sidebar_menu do
-  = link_to cms_page_path(@parent_page), class: 'list-group-item' do
-    %i.fa.fa-arrow-left.fa-fw
-    Back to pages
+  - if @parent_page.nil?
+    = link_to cms_pages_path, class: 'list-group-item' do
+      %i.fa.fa-arrow-left.fa-fw
+      Back to pages
+  - else
+    = link_to cms_page_path(@parent_page), class: 'list-group-item' do
+      %i.fa.fa-arrow-left.fa-fw
+      Back to pages
