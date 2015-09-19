@@ -19,7 +19,7 @@ class Cms::PagesController < CmsController
     if params[:parent]
       @cms_page.parent = @parent_page = current_portal.pages.friendly.find(params[:parent])
     end
-    @cms_page.cms_layout = @cms_page.parent.cms_layout || current_portal.layouts.first
+    @cms_page.cms_layout = @cms_page.parent.try(:cms_layout) || current_portal.layouts.first
   end
 
   def reorder
