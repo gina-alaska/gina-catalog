@@ -69,6 +69,7 @@ gem 'friendly_id'
 gem 'html-pipeline'
 gem 'mustache'
 gem 'github-markdown'
+gem 'closure_tree'
 
 group :development, :production do
   gem 'rails_12factor'

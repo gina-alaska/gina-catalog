@@ -5,10 +5,10 @@ one:
   portal: one
   name: MyString
   css: MyText
-  slug: MyText
+  slug: slug1
 
 two:
   portal: one
   name: MyString
   css: MyText
-  slug: MyText
+  slug: slug2

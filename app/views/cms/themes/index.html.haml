@@ -5,13 +5,18 @@
     %thead
       %tr
         %th Name
-        %th Actions
+        %th.text-right Actions
     %tbody
       - @cms_themes.each do |cms_theme|
         %tr
-          %td= cms_theme.name
+          %td
+            = cms_theme.name
+            - if current_portal.active_cms_theme == cms_theme
+              .badge Active theme
           %td.text-right
             .btn-group.btn-group-sm
+              - unless current_portal.active_cms_theme == cms_theme
+                = link_to 'Activate', activate_cms_theme_path(cms_theme), method: :patch, class: 'btn btn-default'
               = link_to 'Edit', edit_cms_theme_path(cms_theme), class: 'btn btn-primary'
               = link_to 'Destroy', cms_theme, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'
 

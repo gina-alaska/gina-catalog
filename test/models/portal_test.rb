@@ -28,7 +28,7 @@ class PortalTest < ActiveSupport::TestCase
   end
 
   test 'default_url should return the default url' do
-    assert_equal @portal.default_url.url, 'catalog.192.168.222.225.xip.io'
+    assert_equal @portal.default_url.url, 'test.host'
   end
 
   test 'build_social_networks should initialize available networks' do

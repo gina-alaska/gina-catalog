@@ -12,19 +12,9 @@
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   %body
-    %nav.navbar.navbar-default.navbar-gina.navbar-static-top
-      .container-fluid
-        .navbar-header
-          %button.navbar-toggle{ type: 'button', data: { toggle: 'collapse', target: '#header-navbar' }}
-            %span.sr-only Toggle navigation
-            %span.icon-bar
-            %span.icon-bar
-            %span.icon-bar
-          = link_to admin_url, class: 'navbar-brand' do
-            %span.gina gLynx
-            \:: CMS #{current_portal.acronym}
-        = render 'layouts/header'
+    = render 'layouts/navbar'
     .container-fluid
+      = render 'layouts/cms_main_menu'
       = render 'layouts/flash_messages'
       .row
         .col-sm-3

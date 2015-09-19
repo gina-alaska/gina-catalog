@@ -5,6 +5,11 @@ class Cms::ThemesControllerTest < ActionController::TestCase
     login_user(:admin)
   end
 
+  test "should set theme to be active" do
+    patch :activate, id: cms_theme.id
+    assert_redirected_to cms_themes_path
+  end
+
   def cms_theme
     @cms_theme ||= cms_themes :one
   end
@@ -34,7 +39,7 @@ class Cms::ThemesControllerTest < ActionController::TestCase
   end
 
   def test_update
-    put :update, id: cms_theme, cms_theme: { css: cms_theme.css, name: cms_theme.name, portal_id: cms_theme.portal_id, slug: cms_theme.slug }
+    put :update, id: cms_theme, cms_theme: { css: cms_theme.css, name: cms_theme.name, slug: 'foo' }
     assert_redirected_to cms_themes_path
   end
 

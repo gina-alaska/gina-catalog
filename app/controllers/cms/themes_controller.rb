@@ -1,5 +1,5 @@
 class Cms::ThemesController < CmsController
-  before_action :set_cms_theme, only: [:show, :edit, :update, :destroy]
+  before_action :set_cms_theme, only: [:show, :edit, :update, :destroy, :activate]
   authorize_resource
 
   # GET /cms/themes
@@ -15,6 +15,19 @@ class Cms::ThemesController < CmsController
 
   # GET /cms/themes/1/edit
   def edit
+  end
+
+  def activate
+    if current_portal.update_attributes(active_cms_theme: @cms_theme)
+      flash[:notice] = "#{@cms_theme} theme is now active"
+    else
+      flash[:error] = "Unable to activate #{@cms_theme}"
+    end
+
+    respond_to do |format|
+      format.html { redirect_to cms_themes_path }
+      format.js { redirect_via_turbolinks cms_themes_path }
+    end
   end
 
   # POST /cms/themes

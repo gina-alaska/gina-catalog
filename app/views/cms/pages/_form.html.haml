@@ -1,8 +1,9 @@
 = simple_form_for(@cms_page, input_html: { autocomplete: 'off' }) do |f|
   = f.error_notification
   .form-inputs
-    = f.input :title
-    = f.input :slug
+    = f.input :title, input_html: { data: { behavior: 'slugify', target: '#cms_page_slug' } }
+    = f.input :slug, disabled: f.object.system_page?, hint: f.object.system_page? ? 'The slug of a system page cannot be changed' : ''
+    = f.association :parent, collection: page_collection, label_method: :depth_name
     = f.association :cms_layout
     = f.input :content, label: false, input_html: { class: 'hidden' }
     .panel.panel-default

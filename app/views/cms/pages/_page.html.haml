@@ -1,0 +1,25 @@
+.panel.panel-default
+  .panel-heading
+    %h1.panel-title= page.title
+  .panel-body
+    %p
+      %strong URL:
+      = link_to page_url(page.slug), page_url(page.slug)
+
+    %p
+      %strong Layout:
+      = page.cms_layout
+
+    - if page.try(:redirect_url).try(:any?)
+      %p
+        %strong Redirect?
+        = page.redirect_url
+
+.panel.panel-default
+  .panel-heading
+    %h1.panel-title Page preview
+  .panel-body{ style: 'padding: 0px;' }
+    .cms-page-content.page{ style: 'padding:' + (use_layout ? '0px;' : '10px;') }
+      #{render '/pages/theme'}
+      :markdown
+        #{page.render(use_layout)}

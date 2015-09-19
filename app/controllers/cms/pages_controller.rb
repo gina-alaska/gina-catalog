@@ -1,7 +1,7 @@
 class Cms::PagesController < CmsController
-  before_action :set_cms_page, only: [:show, :edit, :update, :destroy]
+  before_action :set_cms_page, only: [:show, :edit, :update, :destroy, :top, :bottom, :up, :down]
   authorize_resource
-  
+
   # GET /cms/pages
   # GET /cms/pages.json
   def index
@@ -16,6 +16,49 @@ class Cms::PagesController < CmsController
   # GET /cms/pages/new
   def new
     @cms_page = current_portal.pages.build
+    if params[:parent]
+      @cms_page.parent = @parent_page = current_portal.pages.friendly.find(params[:parent])
+    end
+    @cms_page.cms_layout = @cms_page.parent.try(:cms_layout) || current_portal.layouts.first
+  end
+
+  def reorder
+  end
+
+  def up
+    @cms_page.siblings_before.last.try(:prepend_sibling, @cms_page)
+
+    respond_to do |format|
+      format.html { redirect_to reorder_cms_pages_path }
+      format.js { redirect_via_turbolinks_to reorder_cms_pages_path }
+    end
+  end
+
+  def down
+    @cms_page.siblings_after.first.try(:append_sibling, @cms_page)
+
+    respond_to do |format|
+      format.html { redirect_to reorder_cms_pages_path }
+      format.js { redirect_via_turbolinks_to reorder_cms_pages_path }
+    end
+  end
+
+  def top
+    @cms_page.siblings_before.first.try(:prepend_sibling, @cms_page)
+
+    respond_to do |format|
+      format.html { redirect_to reorder_cms_pages_path }
+      format.js { redirect_via_turbolinks_to reorder_cms_pages_path }
+    end
+  end
+
+  def bottom
+    @cms_page.siblings_after.last.try(:append_sibling, @cms_page)
+
+    respond_to do |format|
+      format.html { redirect_to reorder_cms_pages_path }
+      format.js { redirect_via_turbolinks_to reorder_cms_pages_path }
+    end
   end
 
   # GET /cms/pages/1/edit
@@ -70,6 +113,6 @@ class Cms::PagesController < CmsController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def cms_page_params
-      params.require(:cms_page).permit(:title, :slug, :content, :cms_layout_id)
+      params.require(:cms_page).permit(:title, :slug, :content, :cms_layout_id, :parent_id)
     end
 end
