@@ -27,7 +27,7 @@ class Catalog::EntriesControllerTest < ActionController::TestCase
     assert_response :success
     assert_not_nil assigns(:entry)
   end
-  
+
   test 'should get new' do
     get :new
     assert_nil flash[:error]
@@ -63,7 +63,7 @@ class Catalog::EntriesControllerTest < ActionController::TestCase
       assert assigns(:entry).errors.empty?, assigns(:entry).errors.full_messages
     end
 
-    assert_redirected_to catalog_entries_path
+    assert_redirected_to catalog_entry_path(assigns(:entry))
   end
 
   test 'should get create with ajax save and close' do
@@ -93,7 +93,7 @@ class Catalog::EntriesControllerTest < ActionController::TestCase
     patch :update, id: @entry.id, entry: { name: 'Testing2' }, commit: 'Save & Close'
 
     assert assigns(:entry).errors.empty?, assigns(:entry).errors.full_messages
-    assert_redirected_to catalog_entries_path
+    assert_redirected_to catalog_entry_path(assigns(:entry))
   end
 
   test 'should update entry record with ajax save and close' do
