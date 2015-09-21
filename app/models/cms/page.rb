@@ -19,7 +19,7 @@ class Cms::Page < ActiveRecord::Base
   end
 
   def system_page?
-    !new_record? && %w{ home catalog }.include?(slug)
+    !new_record? && %w(home catalog).include?(slug)
   end
 
   def parent_path

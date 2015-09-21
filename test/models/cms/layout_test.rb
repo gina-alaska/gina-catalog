@@ -1,7 +1,6 @@
-require "test_helper"
+require 'test_helper'
 
 class Cms::LayoutTest < ActiveSupport::TestCase
-
   def layout
     @layout ||= Cms::Layout.new
   end
@@ -9,5 +8,4 @@ class Cms::LayoutTest < ActiveSupport::TestCase
   def test_valid
     assert layout.valid?
   end
-
 end
