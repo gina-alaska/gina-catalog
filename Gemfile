@@ -70,6 +70,7 @@ gem 'html-pipeline'
 gem 'mustache'
 gem 'github-markdown'
 gem 'closure_tree'
+gem 'rack-cors', require: 'rack/cors'
 
 group :development, :production do
   gem 'rails_12factor'
