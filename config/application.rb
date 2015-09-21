@@ -32,8 +32,11 @@ module Glynx
 
     config.middleware.insert_before 0, "Rack::Cors", :debug => true, :logger => (-> { Rails.logger }) do
       allow do
-        origins 'geojson.io'
-        resource '*', :headers => :any, :methods => [:get, :options]
+        origins '*'
+        resource '/catalog/entries/*',
+          :headers => :any,
+          :methods => [:get, :options, :head],
+          :max_age => 3628800
       end
     end
   end
