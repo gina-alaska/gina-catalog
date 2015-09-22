@@ -1,0 +1,22 @@
+.panel.panel-default
+  .panel-heading
+    %h1.panel-title Snippets
+  %table.table.table-striped
+    %thead
+      %tr
+        %th Name
+        %th Actions
+    %tbody
+      - @cms_snippets.each do |cms_snippet|
+        %tr
+          %td= cms_snippet.name
+          %td.text-right
+            .btn-group.btn-group-sm
+              = link_to 'Show', cms_snippet, class: 'btn btn-default'
+              = link_to 'Edit', edit_cms_snippet_path(cms_snippet), class: 'btn btn-primary'
+              = link_to 'Delete', cms_snippet, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'
+
+- content_for :sidebar_menu do
+  = link_to new_cms_snippet_path, class: 'list-group-item list-group-item-success' do
+    %i.fa.fa-plus.fa-fw
+    New snippet

@@ -1,0 +1,6 @@
+{
+  "id": "webdev",
+  "groups": [ "gina", "webdev", "sysadmin" ],
+  "action": [ "create", "manage" ],
+  "ssh_keygen": false
+}

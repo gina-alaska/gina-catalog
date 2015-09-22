@@ -1,0 +1,12 @@
+- tree.each do |node|
+  %li
+    .page-item
+      - if node.children.count > 0
+        %i.fa.fa-fw{ class: skip_collapse(@cms_page, node) ? 'fa-folder-open-o' : 'fa-folder-o' }
+      - else
+        %i.fa.fa-file-o.fa-fw
+      = active_link_to node do
+        = truncate node.title
+  - unless node.children.empty?
+    %ol.collapse{ id: dom_id(node, 'page-ol'), class: skip_collapse(@cms_page, node) ? 'in' : '' }
+      = render 'tree', tree: node.children, parent: node

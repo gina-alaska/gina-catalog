@@ -1,0 +1,15 @@
+- use_layout ||= false
+= render @cms_page, use_layout: use_layout
+
+- content_for :sidebar_menu do
+  = render 'page_list'
+
+  = link_to edit_cms_page_path(@cms_page), class: 'list-group-item list-group-item-info' do
+    %i.fa.fa-edit.fa-fw
+    Edit page
+  = link_to new_cms_page_path(parent: @cms_page), class: 'list-group-item list-group-item-success' do
+    %i.fa.fa-plus.fa-fw
+    New page
+  = link_to reorder_cms_pages_path, class: 'list-group-item' do
+    %i.fa.fa-fw.fa-sort
+    Order pages

@@ -1,0 +1,22 @@
+- content_for :sidebar_menu do
+  = link_to new_cms_layout_path, class: 'list-group-item list-group-item-success' do
+    %i.fa.fa-plus.fa-fw
+    New layout
+
+.panel.panel-default
+  .panel-heading
+    %h1.panel-title Layouts
+
+  %table.table.table-striped
+    %thead
+      %tr
+        %th Name
+        %th.text-right Actions
+    %tbody
+      - @cms_layouts.each do |cms_layout|
+        %tr
+          %td= cms_layout.name
+          %td.text-right
+            .btn-group.btn-group-sm
+              = link_to 'Edit', edit_cms_layout_path(cms_layout), class: 'btn btn-default'
+              = link_to 'Delete', cms_layout, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'

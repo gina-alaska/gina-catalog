@@ -1,4 +1,6 @@
 class EntryOrganization < ActiveRecord::Base
+  include PublicActivity::Model
+
   belongs_to :entry, touch: true
   belongs_to :organization
 
@@ -8,8 +10,6 @@ class EntryOrganization < ActiveRecord::Base
   scope :funding, -> { where(funding: true) }
   scope :other, -> { where(funding: false, primary: false) }
   scope :owner_portal, ->(portal) { joins(entry: :owner_portal).references(:portals).where(portals: { id: portal.id }) }
-
-  include PublicActivity::Model
 
   tracked owner: proc { |controller, _model| controller.send(:current_user) },
           entry_id: :entry_id,

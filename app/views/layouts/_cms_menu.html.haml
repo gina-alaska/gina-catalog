@@ -1,0 +1,19 @@
+- if can? :view_cms_menu, current_user
+  %li.dropdown
+    = link_to '#', class: 'dropdown-toggle', data: { toggle: 'dropdown' } do
+      CMS
+      %span.caret
+    -# - if can? :manage, Cms::Layout
+    %ul.dropdown-menu
+      %li
+        = link_to cms_pages_path do
+          Pages
+      %li
+        = link_to cms_layouts_path do
+          Layouts
+      %li
+        = link_to cms_snippets_path do
+          Snippets
+      %li
+        = link_to cms_themes_path do
+          Themes

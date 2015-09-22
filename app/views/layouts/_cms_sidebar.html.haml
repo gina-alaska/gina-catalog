@@ -1,0 +1,13 @@
+.panel.panel-default
+  .list-group
+    = content_for :sidebar_menu
+
+- if content_for?(:sidebar_content)
+  = content_for :sidebar_content
+
+- if content_for?(:help)
+  .panel.panel-default
+    .panel-heading
+      %h1.panel-title Help
+    .panel-body
+      = content_for :help

@@ -3,11 +3,21 @@
     - entry.attachments.geojson.each do |geojson|
       %layer{ data: { name: geojson.file.name, url: catalog_entry_attachment_url(entry, geojson, format: :geojson), 'geojson-options' => 'custom-marker', 'marker-label-field' => 'index' }}
         %popup
-          %h1
-            = entry.title
-          %p
-            %label File:
-            = geojson.file.name
-          {{popup}}
+          .geojson-info 
+            .title 
+              {{title}}
+            .description
+              {{description}}
+            .popup
+              {{popup}}
+
+          .record-info
+            .catalog-record
+              %strong Catalog Record:
+              = geojson.entry.title
+            .file-name
+              %strong Filename:
+              = geojson.file.name
+
     - entry.map_layers.each do |layer|
       %layer{ data: layer.leaflet_options }

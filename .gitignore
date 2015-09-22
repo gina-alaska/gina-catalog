@@ -1,6 +1,7 @@
 *.rbc
 capybara-*.html
 .rspec
+.sass-cache/*
 /log
 /tmp
 /db/*.sqlite3
@@ -29,3 +30,5 @@ config/database.yml
 .rvmrc
 .powenv
 .env
+
+.kitchen/logs/kitchen.log

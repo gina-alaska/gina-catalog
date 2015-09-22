@@ -154,3 +154,4 @@ $(document).on 'entry-refresh', ->
     $.get( document.location ).done (data) ->
       layers = $(data).find(target)
       $(target).replaceWith(layers)
+      

@@ -92,3 +92,12 @@
 dl.download-logs {
   margin-bottom: 10px;
 }
+
+.geojson-info {
+  div { margin-bottom: 5px; }
+  .title { font-weight: bold; }
+}
+
+.geojson-info div:empty {
+  display:none;
+}

@@ -1,0 +1,23 @@
+// Place all the styles related to the cms/pages controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+ol.cms-page-list {
+  list-style: none;
+  padding-left: 25px;
+  font-size: 1.2em;
+
+  ol {
+    list-style: none;
+    padding-left: 25px;
+
+  }
+
+  .page-item {
+    display: inline-block;
+    border-radius: 5px;
+    margin-top: 5px;
+  }
+}
+ol.cms-page-list:first-child {
+  padding-left: 0px;
+}

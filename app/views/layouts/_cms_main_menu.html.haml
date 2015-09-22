@@ -1,0 +1,17 @@
+.list-group.horizontal.clearfix
+  = active_link_to cms_pages_path, active: :inclusive, class: 'list-group-item' do
+    %h4.list-group-item-heading Pages
+    %p.list-group-item-text
+      Manage content pages
+  = active_link_to cms_layouts_path, active: :inclusive, class: 'list-group-item' do
+    %h4.list-group-item-heading Layouts
+    %p.list-group-item-text
+      Manage layouts for pages
+  = active_link_to cms_snippets_path, active: :inclusive, class: 'list-group-item' do
+    %h4.list-group-item-heading Snippets
+    %p.list-group-item-text
+      Manage snippets for pages
+  = active_link_to cms_themes_path, active: :inclusive, class: 'list-group-item' do
+    %h4.list-group-item-heading Themes
+    %p.list-group-item-text
+      Setup portal themes

@@ -38,7 +38,9 @@ class Ability
     end
 
     if user.role?(:cms_manager, current_portal)
-      can :view_catalog_menu, User
+      can :view_cms_menu, User
+
+      can :manage, [Cms::Layout, Cms::Page, Cms::Snippet, Cms::Theme], portal_id: current_portal.id
     end
 
     if user.role?(:data_entry, current_portal)

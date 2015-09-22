@@ -1,0 +1,13 @@
+- content_for :sidebar_menu do
+  = link_to new_cms_layout_path, class: 'list-group-item list-group-item-success' do
+    %i.fa.fa-plus.fa-fw
+    New layout
+  = link_to cms_layouts_path, class: 'list-group-item' do
+    %i.fa.fa-arrow-left.fa-fw
+    Back to layout list
+
+.panel.panel-default
+  .panel-heading
+    %h1.panel-title Edit #{@cms_layout} layout
+  .panel-body
+    = render 'form'
