@@ -4,7 +4,7 @@ namespace :linkscan do
     require 'net/http'
 
     PublicActivity.enabled = false
-    Link.all.each do |link|
+    Link.find_each do |link|
       begin
         uri = URI(link.url)
         response = Net::HTTP.get_response(uri)
