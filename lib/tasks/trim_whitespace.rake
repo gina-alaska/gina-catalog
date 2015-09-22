@@ -4,7 +4,7 @@ namespace :trim do
 
     PublicActivity.enabled = false
     count = 0
-    Entry.all.each do |entry|
+    Entry.find_each do |entry|
       if !entry.title.strip!.nil?
         entry.save
         count += 1
