@@ -29,13 +29,12 @@
                 %img{ data: { src: 'holder.js/200x200' }, style: 'width: 200px; height: 200px;' }
               .fileinput-preview.thumbnail.fileinput-exists{ style: 'max-width:200px; max-height:200px;' }
                 = image_tag @organization.logo.encode(:png).thumb('200x200').url if @organization.logo
-            .col-sm-2.text-right
+            .col-sm-2
               %span.btn.btn-file.btn-success.btn-block
                 %span.fileinput-new Add logo
                 %span.fileinput-exists Change logo
                 = f.file_field_without_bootstrap :logo
-              .fileinput-exists
-                = f.check_box :remove_logo
+              = f.check_box :remove_logo, label_class: 'btn btn-default btn-block fileinput-exists', data: { toggle: 'buttons' }
 
       #aliases.tab-pane{ style: "min-height: 60px;" }
         .row
