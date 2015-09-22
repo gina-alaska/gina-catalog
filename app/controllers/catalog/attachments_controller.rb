@@ -11,6 +11,6 @@ class Catalog::AttachmentsController < ManagerController
   protected
 
   def set_attachment
-    @attachment = Attachment.where(uuid: params[:id]).first if params[:id].present?
+    @attachment = Attachment.geojson.where(uuid: params[:id]).first if params[:id].present?
   end
 end
