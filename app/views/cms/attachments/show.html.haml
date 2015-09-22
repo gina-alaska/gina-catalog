@@ -1,0 +1,22 @@
+%p
+  %strong Name:
+  = @cms_attachment.name
+%p
+  %strong Description:
+  = @cms_attachment.description
+%p
+  %strong File:
+  = @cms_attachment.file_id
+%p
+  %strong File filename:
+  = @cms_attachment.file_filename
+%p
+  %strong File size:
+  = @cms_attachment.file_size
+%p
+  %strong File content type:
+  = @cms_attachment.file_content_type
+
+- content_for :sidebar_menu
+  = link_to 'Edit', edit_cms_attachment_path(@cms_attachment), class: 'list-group-item list-group-item-info'
+  = link_to 'Back', cms_attachments_path, class: 'list-group-item'

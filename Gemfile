@@ -70,6 +70,8 @@ gem 'html-pipeline'
 gem 'mustache'
 gem 'github-markdown'
 gem 'closure_tree'
+gem "refile", '~> 0.6.1', require: ["refile/rails", "refile/simple_form"]
+gem "refile-mini_magick"
 
 group :development, :production do
   gem 'rails_12factor'

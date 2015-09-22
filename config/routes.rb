@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  namespace :cms do
+    resources :attachments
+  end
+
   get 'archive_items/create'
 
   get 'archives/create'

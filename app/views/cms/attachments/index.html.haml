@@ -1,0 +1,28 @@
+.panel.panel-default
+  .panel-heading
+    %h1.panel-title CMS Attachments
+
+  %table.table.table-striped
+    %thead
+      %tr
+        %th Name
+        %th File filename
+        %th File size
+        %th File content type
+        %th Portal
+        %th{:colspan => "3"}
+    %tbody
+      - @cms_attachments.each do |cms_attachment|
+        %tr
+          %td= cms_attachment.name
+          %td= cms_attachment.file_filename
+          %td= cms_attachment.file_size
+          %td= cms_attachment.file_content_type
+          %td= link_to 'Show', cms_attachment
+          %td= link_to 'Edit', edit_cms_attachment_path(cms_attachment)
+          %td= link_to 'Destroy', cms_attachment, method: :delete, data: { confirm: 'Are you sure?' }
+
+- content_for :sidebar_menu do
+  = link_to new_cms_attachment_path, class: 'list-group-item list-group-item-success' do
+    %i.fa.fa-plus.fa-fw
+    New attachment

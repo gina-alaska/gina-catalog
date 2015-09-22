@@ -1,0 +1,8 @@
+= simple_form_for(@cms_attachment) do |f|
+  = f.error_notification
+  .form-inputs
+    = f.input :name
+    = f.input :description
+    = f.input :file, as: :attachment
+  .form-actions
+    = f.button :submit
