@@ -1,0 +1,5 @@
+%tr
+  %td= f.text_field :url, hide_label: true
+  %td= f.check_box :default, hide_label: true
+  %td.text-right
+    = f.link_to_remove('<i class="fa fa-times"></i>'.html_safe, class: 'btn btn-danger')

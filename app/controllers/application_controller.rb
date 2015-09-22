@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   include GinaAuthentication::AppHelpers
   include GlynxPortals
-
+  
   before_action :check_current_portal
 
   # Prevent CSRF attacks by raising an exception.
