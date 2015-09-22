@@ -5,10 +5,8 @@ namespace :trim do
     PublicActivity.enabled = false
     count = 0
     Entry.find_each do |entry|
-      if !entry.title.strip!.nil?
-        entry.save
-        count += 1
-      end
+      entry.update_attribute(:title, entry.title.strip)
+      count += 1 if entry.previous_changes['title']
     end
     puts "Fixed #{count} entry titles."
     PublicActivity.enabled = true
