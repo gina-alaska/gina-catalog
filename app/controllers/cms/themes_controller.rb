@@ -72,13 +72,14 @@ class Cms::ThemesController < CmsController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_cms_theme
-      @cms_theme = current_portal.themes.friendly.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def cms_theme_params
-      params.require(:cms_theme).permit(:portal_id, :name, :css)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_cms_theme
+    @cms_theme = current_portal.themes.friendly.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def cms_theme_params
+    params.require(:cms_theme).permit(:portal_id, :name, :css)
+  end
 end

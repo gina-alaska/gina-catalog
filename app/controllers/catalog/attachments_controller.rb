@@ -1,6 +1,6 @@
 class Catalog::AttachmentsController < ManagerController
   ATTACHMENTS_TO_LOG = ['Public Download', 'Private Download']
-  
+
   load_and_authorize_resource find_by: :uuid
 
   def show

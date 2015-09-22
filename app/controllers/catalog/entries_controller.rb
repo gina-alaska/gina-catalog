@@ -17,7 +17,7 @@ class Catalog::EntriesController < ManagerController
   def show
     @archive_item = ArchiveItem.new
     @activities = PublicActivity::Activity.where(entry_id: @entry.id).order(created_at: :desc).limit(20)
-    
+
     respond_to do |format|
       format.html
       format.geojson

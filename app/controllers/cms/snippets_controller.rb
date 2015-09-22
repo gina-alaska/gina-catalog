@@ -62,13 +62,14 @@ class Cms::SnippetsController < CmsController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_cms_snippet
-      @cms_snippet = current_portal.snippets.friendly.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def cms_snippet_params
-      params.require(:cms_snippet).permit(:name, :slug, :content, :portal_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_cms_snippet
+    @cms_snippet = current_portal.snippets.friendly.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def cms_snippet_params
+    params.require(:cms_snippet).permit(:name, :slug, :content, :portal_id)
+  end
 end

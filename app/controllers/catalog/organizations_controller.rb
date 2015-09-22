@@ -93,7 +93,7 @@ class Catalog::OrganizationsController < ManagerController
 
   def organization_params
     params.require(:organization).permit(
-      :name, :acronym, :description, :category, :url, :active, :logo,
+      :name, :acronym, :description, :category, :url, :active, :logo, :remove_logo,
       aliases_attributes: [:id, :text, :_destroy])
   end
 end

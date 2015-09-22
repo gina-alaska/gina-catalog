@@ -106,13 +106,14 @@ class Cms::PagesController < CmsController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_cms_page
-      @cms_page = current_portal.pages.friendly.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def cms_page_params
-      params.require(:cms_page).permit(:title, :slug, :content, :cms_layout_id, :parent_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_cms_page
+    @cms_page = current_portal.pages.friendly.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def cms_page_params
+    params.require(:cms_page).permit(:title, :slug, :content, :cms_layout_id, :parent_id)
+  end
 end
