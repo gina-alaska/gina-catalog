@@ -40,3 +40,6 @@ Style/SingleLineBlockParams:
 
 StringLiterals:
   Enabled: false
+
+NumericLiterals:
+  Enabled: false
