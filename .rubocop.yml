@@ -36,3 +36,6 @@ Style/Lambda:
 # Configuration parameters: Methods.
 Style/SingleLineBlockParams:
   Enabled: false
+
+StringLiterals:
+  Enabled: false
