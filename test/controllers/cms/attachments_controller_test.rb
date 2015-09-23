@@ -19,7 +19,11 @@ class Cms::AttachmentsControllerTest < ActionController::TestCase
 
   def test_create
     assert_difference('Cms::Attachment.count') do
-      post :create, cms_attachment: { description: cms_attachment.description, file: 'test/fixtures/cms/attachments.yml', name: cms_attachment.name }
+      post :create, cms_attachment: {
+        description: cms_attachment.description,
+        file: 'test/fixtures/cms/attachments.yml',
+        name: cms_attachment.name
+      }
     end
 
     assert_redirected_to cms_attachment_path(assigns(:cms_attachment))
@@ -36,7 +40,12 @@ class Cms::AttachmentsControllerTest < ActionController::TestCase
   end
 
   def test_update
-    put :update, id: cms_attachment, cms_attachment: { description: cms_attachment.description, file_content_type: cms_attachment.file_content_type, file_filename: cms_attachment.file_filename, file_id: cms_attachment.file_id, file_size: cms_attachment.file_size, name: cms_attachment.name, portal_id: cms_attachment.portal_id }
+    put :update, id: cms_attachment, cms_attachment: {
+      description: cms_attachment.description,
+      file: 'test/fixtures/cms/attachments.yml',
+      name: cms_attachment.name
+    }
+
     assert_redirected_to cms_attachment_path(assigns(:cms_attachment))
   end
 
