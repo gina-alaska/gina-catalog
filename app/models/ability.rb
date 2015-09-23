@@ -48,7 +48,7 @@ class Ability
     if user.role?(:data_entry, current_portal)
       can :view_catalog_menu, User
 
-      can :read, Attachment do |attachment|
+      can [:read, :preview], Attachment do |attachment|
         attachment.entry.new_record? || attachment.entry.owner_portal = current_portal
       end
 
@@ -62,7 +62,7 @@ class Ability
     if user.role?(:data_manager, current_portal)
       can :view_catalog_menu, User
 
-      can :read, Attachment do |attachment|
+      can [:read, :preview], Attachment do |attachment|
         attachment.entry.new_record? || attachment.entry.owner_portal = current_portal
       end
 

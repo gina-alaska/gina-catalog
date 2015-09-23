@@ -73,7 +73,9 @@ Rails.application.routes.draw do
         patch :unpublish
         patch :toggle_share
       end
-      resources :attachments
+      resources :attachments do
+        get :preview, on: :member
+      end
       get :map
     end
 
