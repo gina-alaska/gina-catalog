@@ -4,7 +4,7 @@ class Cms::AttachmentsController < CmsController
   # GET /cms/attachments
   # GET /cms/attachments.json
   def index
-    @cms_attachments = Cms::Attachment.all
+    @cms_attachments = current_portal.cms_attachments
   end
 
   # GET /cms/attachments/1
@@ -14,7 +14,7 @@ class Cms::AttachmentsController < CmsController
 
   # GET /cms/attachments/new
   def new
-    @cms_attachment = Cms::Attachment.new
+    @cms_attachment = current_portal.cms_attachments.build
   end
 
   # GET /cms/attachments/1/edit
@@ -24,7 +24,7 @@ class Cms::AttachmentsController < CmsController
   # POST /cms/attachments
   # POST /cms/attachments.json
   def create
-    @cms_attachment = Cms::Attachment.new(cms_attachment_params)
+    @cms_attachment = current_portal.cms_attachments.build(cms_attachment_params)
 
     respond_to do |format|
       if @cms_attachment.save
@@ -64,7 +64,7 @@ class Cms::AttachmentsController < CmsController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_cms_attachment
-      @cms_attachment = Cms::Attachment.find(params[:id])
+      @cms_attachment = current_portal.cms_attachments.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

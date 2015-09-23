@@ -1,3 +1,8 @@
 %h1 New Cms Attachment
 = render 'form'
-= link_to 'Back', cms_attachments_path
+
+
+- content_for :sidebar_menu do
+  = link_to cms_attachments_path, class: 'list-group-item' do
+    %i.fa.fa-arrow-left.fa-fw
+    Back to attachment list
