@@ -173,11 +173,11 @@ class Catalog::EntriesController < ManagerController
     
     if portal.entries.include?(entry)
       portal.entry_portals.where(entry_id: entry).first.destroy
-      flash[:success] = "Catalog record #{entry.title} was successfully unshared with portal #{portal.title}."
+      flash[:success] = "Catalog record #{entry.title} was unshared with #{portal.title}."
       entry.create_activity(:unshare)
     else
       portal.entries << entry
-      flash[:success] = "Catalog record #{entry.title} was successfully shared with portal #{portal.title}."
+      flash[:success] = "Catalog record #{entry.title} was shared with #{portal.title}."
       entry.create_activity(:share)
     end
     

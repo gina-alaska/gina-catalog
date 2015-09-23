@@ -45,7 +45,6 @@ class Ability
 
     if user.role?(:data_entry, current_portal)
       can :view_catalog_menu, User
-      can :view_share_portal, User
       
       can :manage, [Organization, Contact, MapLayer]
       can :read, Attachment
@@ -57,7 +56,6 @@ class Ability
 
     if user.role?(:data_manager, current_portal)
       can :view_catalog_menu, User
-      can :view_share_portal, User
 
       can :manage, :tag
       can :manage, [Organization, Contact, MapLayer]
