@@ -1,0 +1,17 @@
+- if !shareable_portals.empty?
+  %nav.navbar.navbar-default
+    .container-fluid
+      .navbar-header
+        .navbar-brand.navbar-title Share Record With Portal
+      .navbar-form.navbar-right
+        .btn-group
+          .btn.btn-default.dropdown-toggle{ data: { toggle: 'dropdown' } }
+            Select Portals 
+            %span.caret
+          %ul.dropdown-menu{ data: { behavior: 'data-refresh' } }
+            - shareable_portals.each do |portal|
+              %li
+                =link_to toggle_share_catalog_entry_path(entry, portal: portal), remote: true, method: :patch do
+                  %i.fa.fa-fw{ class: portal.entries.include?(entry) ? 'fa-check-square-o' : 'fa-square-o' }
+                  =portal.title
+              
