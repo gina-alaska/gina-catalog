@@ -2,7 +2,7 @@ module Glynx
   module Refile
     # Generate a path for the file to save to
     class DateHasher
-      def hash(uploadable = nil)
+      def hash(_uploadable = nil)
         date = Time.zone.now
         encode(::File.join(date.strftime('%Y/%m/%d'), SecureRandom.hex(30)))
       end
