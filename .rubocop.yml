@@ -12,6 +12,7 @@ AllCops:
     - 'bin/*'
     - 'Guardfile'
     - 'config/puma.rb'
+    - 'lib/import/*'
 
 # Offense count: 58
 # Configuration parameters: EnforcedStyle, SupportedStyles.
