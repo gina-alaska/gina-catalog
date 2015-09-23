@@ -45,7 +45,7 @@ gem 'omniauth'
 #gem 'omniauth-google-oauth2'
 gem 'omniauth-openid'
 gem 'google-api-client'
-gem 'bootstrap_form', '~> 2.2.0' #git: 'https://github.com/bootstrap-ruby/rails-bootstrap-forms.git'
+gem 'bootstrap_form', '~> 2.3.0' #git: 'https://github.com/bootstrap-ruby/rails-bootstrap-forms.git'
 gem 'awesome_nested_set'
 gem 'rgeo'
 gem 'rgeo-activerecord'
@@ -72,6 +72,7 @@ gem 'github-markdown'
 gem 'closure_tree'
 gem "refile", '~> 0.6.1', require: ["refile/rails", "refile/simple_form"]
 gem "refile-mini_magick"
+gem 'rack-cors', require: 'rack/cors'
 
 group :development, :production do
   gem 'rails_12factor'

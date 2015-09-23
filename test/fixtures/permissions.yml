@@ -50,3 +50,12 @@ portal_permission:
     data_entry: true
     data_manager: true
     portal_manager: true
+
+data_manager:
+  user: data_manager       
+  portal: one
+  roles:
+    cms_manager: false
+    data_entry: false
+    data_manager: true
+    portal_manager: false

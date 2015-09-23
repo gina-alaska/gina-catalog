@@ -15,6 +15,11 @@ portal_admin:
   email: admin@test.com
   avatar: Nothing
 
+data_manager:
+  name: Data Manager
+  email: admin@test.com
+  avatar: Nothing
+
 admin:
   name: admin
   email: admin@testing.com

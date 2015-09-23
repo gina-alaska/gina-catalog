@@ -64,13 +64,14 @@ class Cms::LayoutsController < CmsController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_cms_layout
-      @cms_layout = current_portal.layouts.friendly.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def cms_layout_params
-      params.require(:cms_layout).permit(:name, :portal_id, :content)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_cms_layout
+    @cms_layout = current_portal.layouts.friendly.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def cms_layout_params
+    params.require(:cms_layout).permit(:name, :portal_id, :content)
+  end
 end

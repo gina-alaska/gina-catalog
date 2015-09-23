@@ -1,10 +1,10 @@
-require "test_helper"
+require 'test_helper'
 
 class Cms::SnippetsControllerTest < ActionController::TestCase
   setup do
     login_user(:admin)
   end
-  
+
   def cms_snippet
     @cms_snippet ||= cms_snippets :one
   end

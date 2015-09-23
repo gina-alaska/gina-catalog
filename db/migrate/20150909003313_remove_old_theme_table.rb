@@ -1,7 +1,7 @@
 class RemoveOldThemeTable < ActiveRecord::Migration
   def change
     reversible do |dir|
-      change_table :themes do |t|
+      change_table :themes do |_t|
         dir.up { drop_table :themes }
         dir.down do
           create_table :themes do |t|
