@@ -9,42 +9,24 @@ module EntrySearchConcerns
     alias_method_chain :search_data, :entries
   end
 
-  def collection_names
-    collections.pluck(:name)
-  end
-
-  def organization_categories
-    organizations.pluck(:category)
-  end
-
-  def organization_name
-    organizations.map { |org| "#{org.name} #{org.acronym}" }
-  end
-
-  def data_type_names
-    data_types.pluck(:name)
-  end
-
-  def region_names
-    regions.pluck(:name)
-  end
-
-  def iso_topic_names
-    iso_topics.pluck(:name)
-  end
-
-  def iso_topic_codes
-    iso_topics.pluck(:iso_theme_code)
+  def text_search_fields
+    text = []
+    text += collections.pluck(:name)
+    text += organizations.pluck(:name, :acronym, :category).flatten.uniq
+    text += data_types.pluck(:name)
+    text += regions.pluck(:name)
+    text += iso_topics.pluck(:name, :iso_theme_code).flatten.uniq
+    text += attachments.pluck(:file_name, :description, :category).flatten.uniq
+    text += contacts.pluck(:name, :email, :phone_number).flatten.uniq
+    text += links.pluck(:display_text, :url, :category).flatten.uniq
   end
 
   def search_data_with_entries
     as_json(methods: [
-      :portal_ids, :tag_list, :collection_ids, :collection_names,
-      :data_type_ids, :data_type_names, :region_ids, :region_names,
-      :entry_type_name, :primary_organization_ids, :funding_organization_ids,
-      :organization_categories, :organization_name, :primary_contact_ids,
-      :contact_ids, :iso_topic_ids, :iso_topic_names, :iso_topic_codes,
-      :archived?
+      :portal_ids, :tag_list, :collection_ids, :text_search_fields,
+      :data_type_ids, :region_ids, :entry_type_name, :primary_organization_ids,
+      :funding_organization_ids, :primary_contact_ids, :links_ids,
+      :contact_ids, :iso_topic_ids, :archived?, :attachment_ids
     ])
   end
 end

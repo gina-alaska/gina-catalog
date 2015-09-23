@@ -6,15 +6,15 @@ class EntrySearchConcernsTest < ActiveSupport::TestCase
   end
 
   test 'should get list of collection names' do
-    assert_equal ['Alaska'], @entry.collection_names
+    assert_includes @entry.text_search_fields, 'Alaska'
   end
 
   test 'get a list of organization categories' do
-    assert_equal ['Academic'], @entry.organization_categories
+    assert_includes @entry.text_search_fields, 'Academic'
   end
 
-  test 'should get list of organization names with acronyms' do
-    assert_equal ['Geographic Information Network of Alaska GINA'], @entry.organization_name
+  test 'should get list of organization names' do
+    assert_includes @entry.text_search_fields, 'Geographic Information Network of Alaska'
   end
 
   test 'should get entry type name' do
