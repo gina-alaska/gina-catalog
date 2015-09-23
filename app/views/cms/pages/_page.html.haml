@@ -4,7 +4,7 @@
   .panel-body
     %p
       %strong URL:
-      = link_to page_url(page.slug), page_url(page.slug)
+      = link_to page_url(page.ancestry_path), page_url(page.ancestry_path)
 
     %p
       %strong Layout:

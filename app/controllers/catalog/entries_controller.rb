@@ -1,8 +1,9 @@
 class Catalog::EntriesController < ManagerController
+  before_action :set_cms_page
   before_action :gather_use_agreements, only: [:new, :create, :edit, :update]
   load_and_authorize_resource
 
-  layout 'application', only: [:show, :index]
+  layout 'pages', only: [:show, :index]
 
   include EntriesControllerSearchConcerns
 
@@ -170,7 +171,7 @@ class Catalog::EntriesController < ManagerController
   def toggle_share
     portal = Portal.find(params['portal'])
     entry = Entry.find(params['id'])
-    
+
     if portal.entries.include?(entry)
       portal.entry_portals.where(entry_id: entry).first.destroy
       flash[:success] = "Catalog record #{entry.title} was unshared with #{portal.title}."
@@ -180,13 +181,13 @@ class Catalog::EntriesController < ManagerController
       flash[:success] = "Catalog record #{entry.title} was shared with #{portal.title}."
       entry.create_activity(:share)
     end
-    
+
     respond_to do |format|
       format.html { redirect_to catalog_entry_path(entry) }
       format.js { redirect_via_turbolinks_to catalog_entry_path(entry) }
     end
   end
-  
+
   protected
 
   def entry_params
@@ -222,5 +223,9 @@ class Catalog::EntriesController < ManagerController
 
   def gather_use_agreements
     @use_agreements = UseAgreement.active
+  end
+
+  def set_cms_page
+    @cms_page = current_portal.pages.find_by_path('catalog')
   end
 end

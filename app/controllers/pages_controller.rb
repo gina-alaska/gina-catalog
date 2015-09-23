@@ -17,7 +17,7 @@ class PagesController < ApplicationController
   end
 
   def fetch_page
-    slug = params[:slug] || 'home'
-    @page = current_portal.pages.friendly.find(slug)
+    slug = params[:slug].try(:split, '/') || 'home'
+    @page = current_portal.pages.find_by_path(slug)
   end
 end

@@ -10,6 +10,10 @@
   = link_to new_cms_page_path(parent: @cms_page), class: 'list-group-item list-group-item-success' do
     %i.fa.fa-plus.fa-fw
     New page
+  - unless @cms_page.system_page?
+    = link_to @cms_page, method: :delete, data: { confirm: 'Are you sure? All child pages will also be deleted.  This cannot be undone!' }, class: 'list-group-item list-group-item-danger' do
+      %i.fa.fa-trash.fa-fw
+      Delete page
   = link_to reorder_cms_pages_path, class: 'list-group-item' do
     %i.fa.fa-fw.fa-sort
-    Order pages
+    Reorder pages

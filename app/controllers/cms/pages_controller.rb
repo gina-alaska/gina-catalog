@@ -100,7 +100,7 @@ class Cms::PagesController < CmsController
   def destroy
     @cms_page.destroy
     respond_to do |format|
-      format.html { redirect_to cms_pages_url, notice: 'Page was successfully destroyed.' }
+      format.html { redirect_to cms_pages_url, notice: "#{@cms_page.title} has been deleted." }
       format.json { head :no_content }
     end
   end

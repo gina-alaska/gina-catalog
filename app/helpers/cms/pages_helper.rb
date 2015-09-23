@@ -16,4 +16,9 @@ module Cms::PagesHelper
   def disabled_down(page)
     page.siblings_after.empty? ? 'disabled' : ''
   end
+
+  def render_into_cms(page, &block)
+    page.content = capture(&block) if block_given?
+    page.render
+  end
 end

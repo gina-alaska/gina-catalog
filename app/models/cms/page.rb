@@ -1,14 +1,16 @@
 class Cms::Page < ActiveRecord::Base
+  SYSTEM_SLUGS = %w(home catalog)
+
   include MustacheConcerns
   extend FriendlyId
   friendly_id :title, use: :slugged
 
-  has_closure_tree order: 'sort_order'
+  has_closure_tree order: 'sort_order', name_column: :slug, dependent: :destroy
 
   belongs_to :portal
   belongs_to :cms_layout, class_name: 'Cms::Layout'
 
-  validates :slug, uniqueness: { scope: :portal_id }
+  validates :slug, uniqueness: { scope: [:parent_id, :portal_id] }
 
   def to_s
     title
@@ -19,7 +21,7 @@ class Cms::Page < ActiveRecord::Base
   end
 
   def system_page?
-    !new_record? && %w(home catalog).include?(slug)
+    !new_record? && SYSTEM_SLUGS.include?(slug)
   end
 
   def parent_path

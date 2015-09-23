@@ -12,4 +12,6 @@
     = csrf_meta_tags
   %body
     .public= render 'layouts/navbar'
-    = yield
+    .cms-page-content.page
+      = render 'pages/theme', extend_body: true
+      = yield
