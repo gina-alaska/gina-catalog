@@ -4,6 +4,7 @@ class Cms::Theme < ActiveRecord::Base
 
   belongs_to :portal
 
+  validates :name, presence: true
   validates :slug, uniqueness: { scope: :portal_id }
 
   def should_generate_new_friendly_id?

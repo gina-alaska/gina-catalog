@@ -1,13 +1,5 @@
 require "test_helper"
 
 class Cms::AttachmentTest < ActiveSupport::TestCase
-
-  def attachment
-    @attachment ||= Cms::Attachment.new
-  end
-
-  def test_valid
-    assert attachment.valid?
-  end
-
+  should validate_presence_of(:name)
 end
