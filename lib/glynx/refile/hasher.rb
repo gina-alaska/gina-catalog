@@ -9,7 +9,7 @@ module Glynx
 
       def encode(path)
         # strip out padding, decode will add it back in
-        Base64.urlsafe_encode64(path).gsub(/={0,2}$/,'')
+        Base64.urlsafe_encode64(path).gsub(/={0,2}$/, '')
       end
 
       def decode(hash)
