@@ -20,8 +20,9 @@
   .col-sm-8
     .panel.panel-default
       .panel-heading{ style: 'position: relative' }
-        .pull-right.muted{ style: 'font-size: 1em;' }
-          = page_entries_info @use_agreements
+        - if @use_agreements.total_count > 1
+          .pull-right.muted{ style: 'font-size: 1em;' }
+            = page_entries_info @use_agreements
         %ol.breadcrumb
           %li.active
             %i.fa.fa-pencil
@@ -34,8 +35,9 @@
             %th.col-sm-2 Archived
             %th.text-right Actions
         %tbody
-          = render(partial: "use_agreement_row", collection: @use_agreements, as: :use_agreement) || "<tr><td colspan=\"3\">There are no use agreements defined</td></tr>".html_safe
+          = render(partial: "use_agreement_row", collection: @use_agreements, as: :use_agreement) || "<tr><td colspan=\"3\">No use agreements found</td></tr>".html_safe
     .text-center
       %div= paginate @use_agreements
-      = page_entries_info @use_agreements
+      - if @use_agreements.total_count > 1
+        = page_entries_info @use_agreements
 

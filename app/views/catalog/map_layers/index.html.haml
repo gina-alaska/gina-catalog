@@ -20,8 +20,9 @@
   .col-sm-8
     .panel.panel-default
       .panel-heading{ style: 'position: relative' }
-        .pull-right.muted{ style: 'font-size: 1em;' }
-          = page_entries_info @map_layers
+        - if @map_layers.total_count > 1
+          .pull-right.muted{ style: 'font-size: 1em;' }
+            = page_entries_info @map_layers
         %ol.breadcrumb
           %li.active
             %i.fa.fa-globe
@@ -39,4 +40,5 @@
           = render(partial: "map_layer_row", collection: @map_layers, as: :map_layer) || "<tr><td colspan=\"5\">There are no map layers found!</td></tr>".html_safe
     .text-center
       %div= paginate @map_layers
-      = page_entries_info @map_layers
+      - if @map_layers.total_count > 1
+        = page_entries_info @map_layers
