@@ -1,4 +1,6 @@
 class Portal < ActiveRecord::Base
+  include MustacheConcerns
+
   acts_as_nested_set
 
   has_many :urls, class_name: 'PortalUrl'
@@ -16,6 +18,8 @@ class Portal < ActiveRecord::Base
   has_many :layouts, class_name: 'Cms::Layout'
   has_many :pages, class_name: 'Cms::Page'
   has_many :snippets, class_name: 'Cms::Snippet'
+  has_many :themes, class_name: 'Cms::Theme'
+  belongs_to :active_cms_theme, class_name: 'Cms::Theme'
 
   has_many :users, through: :permissions
   has_many :activity_logs, as: :loggable
@@ -23,8 +27,6 @@ class Portal < ActiveRecord::Base
 
   has_many :entry_portals
   has_many :entries, through: :entry_portals
-
-  has_many :themes, foreign_key: 'owner_portal_id'
 
   scope :active, -> {}
 
@@ -59,11 +61,5 @@ class Portal < ActiveRecord::Base
     SocialNetworkConfig.order(name: :asc).each do |network|
       social_networks.find_or_initialize_by(social_network_config_id: network.id)
     end
-  end
-
-  def merge_render_context!(context)
-    context.portal = OpenStruct.new(attributes)
-    context.snippet = ->(name) { snippets.where(name: name).first.try(:render) }
-    context.latest_entries = entries.order(updated_at: :desc).limit(5).to_a
   end
 end

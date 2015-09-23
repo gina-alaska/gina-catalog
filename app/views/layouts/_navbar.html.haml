@@ -1,0 +1,15 @@
+- if signed_in?
+  %nav.navbar.navbar-default.navbar-gina.navbar-static-top
+    .container-fluid
+      .navbar-header
+        %button.navbar-toggle{ type: 'button', data: { toggle: 'collapse', target: '#header-navbar' }}
+          %span.sr-only Toggle navigation
+          %span.icon-bar
+          %span.icon-bar
+          %span.icon-bar
+        = link_to root_url, class: 'navbar-brand' do
+          %span.gina Portal manager
+          %small
+            %i.fa.fa-chevron-right
+            #{current_portal.try(:title)}
+      = render 'layouts/header'

@@ -1,16 +1,4 @@
 Rails.application.routes.draw do
-  namespace :cms do
-    resources :snippets
-  end
-
-  namespace :cms do
-    resources :pages
-  end
-
-  namespace :cms do
-    resources :layouts
-  end
-
   get 'archive_items/create'
 
   get 'archives/create'
@@ -31,6 +19,7 @@ Rails.application.routes.draw do
   get 'catalogs/:id/downloads/:uuid' => 'import_items#downloads'
   get 'sds/:id' => 'downloads#sds', constraints: { id: /[^\/]+/ }, as: :sds
 
+  resources :pages, as: :public_pages
   resources :sessions
   resources :memberships
   resources :users
@@ -45,6 +34,25 @@ Rails.application.routes.draw do
     resources :regions
     resources :data_types
     resources :iso_topics
+  end
+
+  namespace :cms do
+    resources :snippets
+    resources :pages do
+      collection do
+        get :reorder
+      end
+      member do
+        patch :up
+        patch :down
+        patch :top
+        patch :bottom
+      end
+    end
+    resources :layouts
+    resources :themes do
+      patch :activate, on: :member
+    end
   end
 
   namespace :catalog do
@@ -118,10 +126,10 @@ Rails.application.routes.draw do
     end
   end
 
-  #resources :entries do
-  #  resources :attachments
-  #  get :map
-  #end
+  # resources :entries do
+  #   resources :attachments
+  #   get :map
+  # end
 
   namespace :api, defaults: { format: :json }, only: [:index, :show] do
     resources :organizations

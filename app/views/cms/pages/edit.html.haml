@@ -5,12 +5,9 @@
     = render 'form'
 
 - content_for :sidebar_menu do
-  = link_to @cms_page, class: 'list-group-item' do
-    %i.fa.fa-eye.fa-fw
-    Preview page
-  = link_to new_cms_page_path, class: 'list-group-item list-group-item-success' do
+  = link_to new_cms_page_path(parent: @cms_page), class: 'list-group-item list-group-item-success' do
     %i.fa.fa-plus.fa-fw
     New page
-  = link_to cms_pages_path, class: 'list-group-item' do
+  = link_to cms_page_path(@cms_page), class: 'list-group-item' do
     %i.fa.fa-arrow-left.fa-fw
-    Back to page list
+    Back to pages

@@ -1,4 +1,4 @@
-require "test_helper"
+require 'test_helper'
 
 class Cms::PagesControllerTest < ActionController::TestCase
   setup do
@@ -7,6 +7,11 @@ class Cms::PagesControllerTest < ActionController::TestCase
 
   def cms_page
     @cms_page ||= cms_pages :one
+  end
+
+  test 'get redorder pages' do
+    get :reorder
+    assert_response :success
   end
 
   def test_index
@@ -22,7 +27,7 @@ class Cms::PagesControllerTest < ActionController::TestCase
 
   def test_create
     assert_difference('Cms::Page.count') do
-      post :create, cms_page: { content: cms_page.content, cms_layout_id: cms_page.cms_layout_id, slug: cms_page.slug, title: cms_page.title }
+      post :create, cms_page: { content: cms_page.content, cms_layout_id: cms_page.cms_layout_id, slug: cms_page.slug + '-foo', title: cms_page.title }
     end
 
     assert_redirected_to cms_page_path(assigns(:cms_page))

@@ -6,7 +6,8 @@ DEPENDENCIES
     git: git@github.alaska.edu:gina-cookbooks/gina-iptables.git
     revision: 0a4b01ee169175df96aad77d16608b740500ab5a
   gina-rails-application
-    path: ../../../chef/tekno/cookbooks/rails_application
+    git: git@github.alaska.edu:gina-cookbooks/gina-rails-application.git
+    revision: 9b5e9301bc18987e880020ff451de2025fe78302
   gina-role
     git: git@github.alaska.edu:gina-cookbooks/gina-role.git
     revision: 08350e1308a265678968591cb16004f1e2cf6885
@@ -72,7 +73,7 @@ GRAPH
   gina-iptables (1.1.4)
     chef-sugar (~> 3.1.0)
     iptables-ng (~> 2.2.6)
-  gina-rails-application (1.0.4)
+  gina-rails-application (1.0.3)
     apt (~> 2.7.0)
     certificate (~> 1.0.0)
     database (~> 4.0.6)

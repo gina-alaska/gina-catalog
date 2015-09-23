@@ -3,7 +3,8 @@ class DownloadsController < ApplicationController
 
   def show
     @download = GlobalID::Locator.locate_signed params[:id], for: 'download'
-
+    authorize! :read, @download
+    
     log_download
 
     respond_to do |format|

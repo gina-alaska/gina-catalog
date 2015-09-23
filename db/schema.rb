@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150904185105) do
+ActiveRecord::Schema.define(version: 20150916191110) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -119,6 +119,15 @@ ActiveRecord::Schema.define(version: 20150904185105) do
 
   add_index "cms_layouts", ["portal_id"], name: "index_cms_layouts_on_portal_id", using: :btree
 
+  create_table "cms_page_hierarchies", id: false, force: :cascade do |t|
+    t.integer "ancestor_id",   null: false
+    t.integer "descendant_id", null: false
+    t.integer "generations",   null: false
+  end
+
+  add_index "cms_page_hierarchies", ["ancestor_id", "descendant_id", "generations"], name: "page_anc_desc_idx", unique: true, using: :btree
+  add_index "cms_page_hierarchies", ["descendant_id"], name: "page_desc_idx", using: :btree
+
   create_table "cms_pages", force: :cascade do |t|
     t.string   "title"
     t.string   "slug"
@@ -127,6 +136,8 @@ ActiveRecord::Schema.define(version: 20150904185105) do
     t.integer  "cms_layout_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.integer  "parent_id"
+    t.integer  "sort_order"
   end
 
   add_index "cms_pages", ["cms_layout_id"], name: "index_cms_pages_on_cms_layout_id", using: :btree
@@ -143,6 +154,18 @@ ActiveRecord::Schema.define(version: 20150904185105) do
   end
 
   add_index "cms_snippets", ["portal_id"], name: "index_cms_snippets_on_portal_id", using: :btree
+
+  create_table "cms_themes", force: :cascade do |t|
+    t.integer  "portal_id"
+    t.string   "name"
+    t.text     "css"
+    t.string   "slug"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "cms_themes", ["portal_id"], name: "index_cms_themes_on_portal_id", using: :btree
+  add_index "cms_themes", ["slug"], name: "index_cms_themes_on_slug", using: :btree
 
   create_table "collections", force: :cascade do |t|
     t.string   "name"
@@ -416,6 +439,7 @@ ActiveRecord::Schema.define(version: 20150904185105) do
     t.integer  "depth"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "active_cms_theme_id"
   end
 
   create_table "regions", force: :cascade do |t|
@@ -461,39 +485,6 @@ ActiveRecord::Schema.define(version: 20150904185105) do
 
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
-  create_table "themes", force: :cascade do |t|
-    t.string   "name"
-    t.string   "page_bg"
-    t.string   "content_bg"
-    t.string   "header_bg"
-    t.string   "header_title_color"
-    t.string   "header_byline_color"
-    t.string   "header_bg_grad"
-    t.string   "menu_bg"
-    t.string   "menu_link_color"
-    t.string   "menu_active_bg"
-    t.string   "menu_active_link_color"
-    t.string   "menu_hover_bg"
-    t.string   "menu_hover_link_color"
-    t.string   "menu_bg_grad"
-    t.string   "home_btn_bg"
-    t.string   "home_btn_link_color"
-    t.string   "home_btn_hover_bg"
-    t.string   "home_btn_hover_border"
-    t.string   "home_btn_hover_link_color"
-    t.string   "social_icons_link_color"
-    t.string   "social_icons_hover_link_color"
-    t.string   "footer_bg"
-    t.string   "footer_text_color"
-    t.string   "footer_partners_bg"
-    t.string   "footer_bg_grad"
-    t.integer  "owner_portal_id"
-    t.boolean  "locked"
-    t.text     "css"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
-  end
-
   create_table "use_agreements", force: :cascade do |t|
     t.string   "title"
     t.text     "body"
@@ -517,6 +508,7 @@ ActiveRecord::Schema.define(version: 20150904185105) do
   add_foreign_key "cms_pages", "cms_layouts"
   add_foreign_key "cms_pages", "portals"
   add_foreign_key "cms_snippets", "portals"
+  add_foreign_key "cms_themes", "portals"
   add_foreign_key "download_logs", "entries"
   add_foreign_key "download_logs", "portals"
   add_foreign_key "download_logs", "users"

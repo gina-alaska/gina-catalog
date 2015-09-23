@@ -2,6 +2,7 @@ class Entry < ActiveRecord::Base
   include EntrySearchConcerns
   include LegacyConcerns
   include ArchiveConcerns
+  include MustacheConcerns
   include PublicActivity::Model
 
   STATUSES = %w(Complete Ongoing Unknown Funded)

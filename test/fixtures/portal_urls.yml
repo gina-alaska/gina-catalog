@@ -2,12 +2,12 @@
 
 one:
   url: catalog.192.168.222.225.xip.io
-  default: true
+  default: false
   portal: one
 
 two:
   url: test.host
-  default: false
+  default: true
   portal: one
 
 three:

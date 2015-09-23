@@ -1,0 +1,31 @@
+= simple_form_for(@cms_theme) do |f|
+  = f.error_notification
+  .form-inputs
+    = f.input :name
+    = f.input :css, label: false, input_html: { class: 'hidden' }
+    = f.label :css
+    .panel.panel-default
+      %ul.nav
+        .btn-toolbar.navbar-btn{ style: 'padding-left: 5px;'}
+          = render 'shared/ace/base_toolbar'
+          = render 'shared/ace/css_toolbar'
+      #content-editor{ data: { editor: 'ace', target: '#cms_theme_css', mode: 'scss' } }
+
+  .form-actions.text-right
+    = f.button :submit
+
+- content_for :help do
+  %h4 Applying css to <code>&lt;body&gt;</code> tag
+  %p
+    To change the css for the <code>&lt;body&gt;</code> tag you will need to use the following css selector
+    %code &.page { }
+
+
+  %p
+    Example:
+    %pre.pre-scrollable
+      :preserve
+        // will be applied to the body html tag
+        &.page {
+          background-color: #dfdfdf;
+        }

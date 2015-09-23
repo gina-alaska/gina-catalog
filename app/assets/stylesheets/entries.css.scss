@@ -97,3 +97,12 @@ dl.download-logs {
   font-size: 16px;
   color: #000;
 }
+
+.geojson-info {
+  div { margin-bottom: 5px; }
+  .title { font-weight: bold; }
+}
+
+.geojson-info div:empty {
+  display:none;
+}

@@ -32,6 +32,8 @@ class Ability
     user ||= User.new
 
     can :read, Entry
+    can :read, Attachment
+    cannot :read, Attachment, category: 'Private Download'
 
     unless user.new_record?
       can :accept, Invitation
@@ -40,14 +42,17 @@ class Ability
     if user.role?(:cms_manager, current_portal)
       can :view_cms_menu, User
 
-      can :manage, [Cms::Layout, Cms::Page, Cms::Snippet], portal_id: current_portal.id
+      can :manage, [Cms::Layout, Cms::Page, Cms::Snippet, Cms::Theme], portal_id: current_portal.id
     end
 
     if user.role?(:data_entry, current_portal)
       can :view_catalog_menu, User
-      
+
+      can :read, Attachment do |attachment|
+        attachment.entry.new_record? || attachment.entry.owner_portal = current_portal
+      end
+
       can :manage, [Organization, Contact, MapLayer]
-      can :read, Attachment
       can :manage, [UseAgreement, Collection],  portal_id: current_portal.id
       can [:create, :update, :archive], Entry do |entry|
         entry.new_record? || entry.owner_portal == current_portal
@@ -57,9 +62,12 @@ class Ability
     if user.role?(:data_manager, current_portal)
       can :view_catalog_menu, User
 
+      can :read, Attachment do |attachment|
+        attachment.entry.new_record? || attachment.entry.owner_portal = current_portal
+      end
+
       can :manage, :tag
       can :manage, [Organization, Contact, MapLayer]
-      can :read, Attachment
       can :manage, [UseAgreement, Collection],  portal_id: current_portal.id
       can [:manage, :archive], Entry do |entry|
         entry.new_record? || entry.owner_portal == current_portal
