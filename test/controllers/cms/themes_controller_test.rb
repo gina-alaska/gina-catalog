@@ -1,11 +1,11 @@
-require "test_helper"
+require 'test_helper'
 
 class Cms::ThemesControllerTest < ActionController::TestCase
   setup do
     login_user(:admin)
   end
 
-  test "should set theme to be active" do
+  test 'should set theme to be active' do
     patch :activate, id: cms_theme.id
     assert_redirected_to cms_themes_path
   end

@@ -1,4 +1,4 @@
-require "test_helper"
+require 'test_helper'
 
 class Cms::PagesControllerTest < ActionController::TestCase
   setup do
@@ -9,7 +9,7 @@ class Cms::PagesControllerTest < ActionController::TestCase
     @cms_page ||= cms_pages :one
   end
 
-  test "get redorder pages" do
+  test 'get redorder pages' do
     get :reorder
     assert_response :success
   end

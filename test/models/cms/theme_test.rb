@@ -1,7 +1,6 @@
-require "test_helper"
+require 'test_helper'
 
 class Cms::ThemeTest < ActiveSupport::TestCase
-
   def theme
     @theme ||= Cms::Theme.new
   end
@@ -9,5 +8,4 @@ class Cms::ThemeTest < ActiveSupport::TestCase
   def test_valid
     assert theme.valid?
   end
-
 end

@@ -1,7 +1,6 @@
-require "test_helper"
+require 'test_helper'
 
 class Cms::PageTest < ActiveSupport::TestCase
-
   def page
     @page ||= Cms::Page.new
   end
@@ -9,5 +8,4 @@ class Cms::PageTest < ActiveSupport::TestCase
   def test_valid
     assert page.valid?
   end
-
 end

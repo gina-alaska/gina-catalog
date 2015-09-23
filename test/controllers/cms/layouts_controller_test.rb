@@ -1,4 +1,4 @@
-require "test_helper"
+require 'test_helper'
 
 class Cms::LayoutsControllerTest < ActionController::TestCase
   setup do
