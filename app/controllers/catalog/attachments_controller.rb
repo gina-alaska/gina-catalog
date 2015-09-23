@@ -8,6 +8,12 @@ class Catalog::AttachmentsController < ManagerController
     end
   end
 
+  def preview
+    respond_to do |format|
+      format.js
+    end
+  end
+
   protected
 
   def set_attachment

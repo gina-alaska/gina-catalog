@@ -18,7 +18,7 @@
   %td.text-right
     - unless f.object.new_record?
       - if f.object.category == "Geojson"
-        = link_to catalog_entry_attachment_path(f.object.entry, f.object), remote: true, class: 'btn btn-primary', title: 'Show Map' do
+        = link_to catalog_entry_attachment_preview_path(f.object.entry, f.object), remote: true, class: 'btn btn-primary', title: 'Show geojson preview map' do
           %i.fa.fa-image
         = link_to "http://geojson.io#data=data:text/x-url,#{catalog_entry_attachment_url(f.object.entry, f.object, :geojson)}", class: 'btn btn-primary', title: 'Send File to Geojson.io', target: :_blank do
           %i.fa.fa-send-o
