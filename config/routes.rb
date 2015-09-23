@@ -72,7 +72,9 @@ Rails.application.routes.draw do
         patch :publish
         patch :unpublish
       end
-      resources :attachments
+      resources :attachments do
+        get :preview, on: :member
+      end
       get :map
     end
 
