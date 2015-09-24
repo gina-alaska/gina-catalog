@@ -40,7 +40,12 @@
   .tab-content
     #additional-information.tab-pane.active.content
       = render 'status', entry: entry
-      = render 'entry_content', entry: entry
+      = render 'contacts', entry: entry
+      = render 'organizations', entry: entry
+      = render 'regions', entry: entry
+      = render 'collections', entry: entry
+      = render 'source_portal', entry: entry
+      = render 'entry_links', entry: entry
     #activity-logs.tab-pane
       = render 'activity_logs', activities: activities
     - if can? :manage, @entry
