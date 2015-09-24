@@ -26,6 +26,7 @@
 //= require leaflet.markercluster
 //= require uri.js
 //= require turbolinks
+//= require refile
 //= require wicket/wicket
 //= require wicket/wicket-leaflet
 //= require ace-builds/src-noconflict/ace

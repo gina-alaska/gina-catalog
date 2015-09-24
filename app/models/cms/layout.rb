@@ -5,6 +5,7 @@ class Cms::Layout < ActiveRecord::Base
   belongs_to :portal
   has_many :pages, foreign_key: 'cms_layout_id'
 
+  validates :name, presence: true
   validates :slug, uniqueness: { scope: :portal_id }
 
   def to_s
