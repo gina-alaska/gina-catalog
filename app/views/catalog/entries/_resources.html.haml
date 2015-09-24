@@ -1,103 +1,104 @@
-%h4 Data and Resources
-%ul.media-list.entry-resources{ "data-no-turbolink" => "" }
-  - entry.attachments.public_download.each do |download|
-    %li.media
-      .media-left
-        .icon.download.pull-left
-          %i.fa.fa-download
-      .media-body
-        = link_to download_path(download.global_id), class: 'btn btn-default tag pull-right', rel: "nofollow" do
-          %i.fa.fa-download.media-object
-          Download
-
-        %h4.media-heading
-          Download
-          = " :: #{download.description}" if download.description.present?
-        %p.break-url
-          = download.file.name
-          = "(#{number_to_human_size download.file.size})"
-
-  - if can?(:manage, entry)
-    - entry.attachments.private_download.each do |download|
+- if entry.attachments.any? || entry.links.any?
+  %h4 Data and Resources
+  %ul.media-list.entry-resources{ "data-no-turbolink" => "" }
+    - entry.attachments.public_download.each do |download|
       %li.media
         .media-left
-          .icon.download
-            %i.fa.fa-user-secret
+          .icon.download.pull-left
+            %i.fa.fa-download
         .media-body
           = link_to download_path(download.global_id), class: 'btn btn-default tag pull-right', rel: "nofollow" do
             %i.fa.fa-download.media-object
             Download
 
           %h4.media-heading
-            Private Download
+            Download
             = " :: #{download.description}" if download.description.present?
           %p.break-url
             = download.file.name
             = "(#{number_to_human_size download.file.size})"
 
-  - entry.links.where('category = ?', 'Download').each do |link|
-    %li.media
-      .media-left
-        .icon.download
-          %i.fa.fa-download
-      .media-body
-        = link_to link.url, class: 'btn btn-default tag pull-right', rel: "nofollow" do
-          %i.fa.fa-download.media-object
-          Download
+    - if can?(:manage, entry)
+      - entry.attachments.private_download.each do |download|
+        %li.media
+          .media-left
+            .icon.download
+              %i.fa.fa-user-secret
+          .media-body
+            = link_to download_path(download.global_id), class: 'btn btn-default tag pull-right', rel: "nofollow" do
+              %i.fa.fa-download.media-object
+              Download
 
-        %h4.media-heading
-          - download_text = "Download"
-          - download_text = download_text + " :: #{link.display_text}" unless link.display_text.empty?
-          = download_text
-        %p.break-url= link.url
+            %h4.media-heading
+              Private Download
+              = " :: #{download.description}" if download.description.present?
+            %p.break-url
+              = download.file.name
+              = "(#{number_to_human_size download.file.size})"
 
-  - entry.links.where('category in (?)', ['Report']).each do |link|
-    %li.media
-      .media-left
-        .icon.report
-          %i.fa.fa-code-o
-      .media-body
-        = link_to link.url, class: 'btn btn-default pull-right', :target => :_blank do
-          %i.fa.fa-external-link
-          View report
-
-        %h4.media-heading
-          = link.category
-          - unless link.display_text.empty? or link.display_text == link.url
-            = " :: #{link.display_text}"
-
-        %p.break-url= link.url
-  - entry.links.where('category not in (?)', ['Metadata', 'Download', 'Report']).order('category').each do |link|
-    %li.media
-      .media-left
-        .icon.website
-          %i.fa.fa-cloud
-      .media-body
-        = link_to link.url, class: 'btn btn-default pull-right', :target => :_blank do
-          %i.fa.fa-external-link
-          View
-          = link.category.downcase
-
-        %h4.media-heading
-          = link.category
-          - unless link.display_text.empty? or link.display_text == link.url
-            = " :: #{link.display_text}"
-        %p.break-url= link.url
-
-- if entry.links.where('category = ?', 'Metadata').count > 0
-  %ul.media-list.catalog-resources
-    - entry.links.where('category = ?', 'Metadata').each do |link|
+    - entry.links.where('category = ?', 'Download').each do |link|
       %li.media
         .media-left
-          .icon.metadata
-            %i.fa.fa-file
+          .icon.download
+            %i.fa.fa-download
+        .media-body
+          = link_to link.url, class: 'btn btn-default tag pull-right', rel: "nofollow" do
+            %i.fa.fa-download.media-object
+            Download
+
+          %h4.media-heading
+            - download_text = "Download"
+            - download_text = download_text + " :: #{link.display_text}" unless link.display_text.empty?
+            = download_text
+          %p.break-url= link.url
+
+    - entry.links.where('category in (?)', ['Report']).each do |link|
+      %li.media
+        .media-left
+          .icon.report
+            %i.fa.fa-code-o
         .media-body
           = link_to link.url, class: 'btn btn-default pull-right', :target => :_blank do
             %i.fa.fa-external-link
-            View metadata
+            View report
 
-          %h5.media-heading.break-url
+          %h4.media-heading
+            = link.category
+            - unless link.display_text.empty? or link.display_text == link.url
+              = " :: #{link.display_text}"
+
+          %p.break-url= link.url
+    - entry.links.where('category not in (?)', ['Metadata', 'Download', 'Report']).order('category').each do |link|
+      %li.media
+        .media-left
+          .icon.website
+            %i.fa.fa-cloud
+        .media-body
+          = link_to link.url, class: 'btn btn-default pull-right', :target => :_blank do
+            %i.fa.fa-external-link
+            View
+            = link.category.downcase
+
+          %h4.media-heading
             = link.category
             - unless link.display_text.empty? or link.display_text == link.url
               = " :: #{link.display_text}"
           %p.break-url= link.url
+
+  - if entry.links.where('category = ?', 'Metadata').count > 0
+    %ul.media-list.catalog-resources
+      - entry.links.where('category = ?', 'Metadata').each do |link|
+        %li.media
+          .media-left
+            .icon.metadata
+              %i.fa.fa-file
+          .media-body
+            = link_to link.url, class: 'btn btn-default pull-right', :target => :_blank do
+              %i.fa.fa-external-link
+              View metadata
+
+            %h5.media-heading.break-url
+              = link.category
+              - unless link.display_text.empty? or link.display_text == link.url
+                = " :: #{link.display_text}"
+            %p.break-url= link.url

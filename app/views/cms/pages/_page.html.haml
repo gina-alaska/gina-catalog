@@ -1,10 +1,11 @@
 .panel.panel-default
   .panel-heading
+    = render 'labels', cms_page: page
     %h1.panel-title= page.title
   .panel-body
     %p
       %strong URL:
-      = link_to page_url(page.slug), page_url(page.slug)
+      = link_to page_url(page.ancestry_path), page_url(page.ancestry_path)
 
     %p
       %strong Layout:

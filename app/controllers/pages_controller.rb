@@ -7,6 +7,7 @@ class PagesController < ApplicationController
 
   def show
     redirect_to root_url if params[:slug] == 'home'
+    redirect_to page_path('page-not-found') if @page.nil?
   end
 
   protected
@@ -17,7 +18,7 @@ class PagesController < ApplicationController
   end
 
   def fetch_page
-    slug = params[:slug] || 'home'
-    @page = current_portal.pages.friendly.find(slug)
+    slug = params[:slug].try(:split, '/') || 'home'
+    @page = current_portal.pages.find_by_path(slug)
   end
 end

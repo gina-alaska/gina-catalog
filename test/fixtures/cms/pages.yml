@@ -1,7 +1,7 @@
 # Read about fixtures at
 # http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-one:
+home:
   title: Home
   slug: home
   content: MyText
@@ -12,5 +12,12 @@ two:
   title: MyString 2
   slug: MyString 2
   content: MyText
+  portal: one
+  cms_layout: one
+
+catalog:
+  title: Catalog
+  slug: catalog
+  content: Test
   portal: one
   cms_layout: one

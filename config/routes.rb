@@ -152,7 +152,10 @@ Rails.application.routes.draw do
   # You can have the root of your portal routed with "root"
   root 'pages#index'
 
-  get ':slug' => 'pages#show', as: :page
+  get '/catalog' => 'catalog/entries#index'
+  get '/catalogs' => 'catalog/entries#index'
+  get '/page_not_found' => 'pages#not_found', as: :page_not_found
+  get '*slug' => 'pages#show', as: :page
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
