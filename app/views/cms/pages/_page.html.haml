@@ -11,10 +11,10 @@
       %strong Layout:
       = page.cms_layout
 
-    - if page.try(:redirect_url).try(:any?)
+    - if page.redirect_url?
       %p
-        %strong Redirect?
-        = page.redirect_url
+        %strong Redirects to:
+        = link_to page.redirect_url, page.redirect_url
 
 .panel.panel-default
   .panel-heading

@@ -7,3 +7,7 @@
     %span.label.label-warning
       %i.fa.fa-eye-slash
       Hidden
+  - if cms_page.redirect_url?
+    %span.label.label-info
+      %i.fa.fa-share
+      Redirect

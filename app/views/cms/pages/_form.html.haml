@@ -13,6 +13,7 @@
           = f.input :slug, disabled: f.object.system_page?, hint: f.object.system_page? ? 'Cannot changed the slug of a system page' : ''
         .col-sm-6
           = f.association :cms_layout, label: 'Layout'
+      = f.input :redirect_url, placeholder: 'http://example.com', hint: 'Redirect user to this url when this page is viewed'
       = f.input :hidden, label: 'Hide page'
 
     = f.association :parent, collection: page_collection, label: 'Parent page', label_method: :depth_name, prompt: 'Root page'
