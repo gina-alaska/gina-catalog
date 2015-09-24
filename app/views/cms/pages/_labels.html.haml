@@ -1,0 +1,9 @@
+%h4.labels{ style: 'top: 0; right:0; margin:0px; padding: 7px; position:absolute;'}
+  - if cms_page.system_page?
+    %span.label.label-danger
+      %i.fa.fa-gear
+      System page
+  - if cms_page.hidden?
+    %span.label.label-warning
+      %i.fa.fa-eye-slash
+      Hidden

@@ -7,6 +7,7 @@ class PagesController < ApplicationController
 
   def show
     redirect_to root_url if params[:slug] == 'home'
+    redirect_to page_path('page-not-found') if @page.nil?
   end
 
   protected

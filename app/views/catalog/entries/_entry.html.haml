@@ -1,4 +1,4 @@
-%h3
+%h3.title
   = link_to entry.title, edit_catalog_entry_path(entry)
   - if !entry.published?
     %span{style: "color: red;"} (Unpublished)
@@ -24,7 +24,7 @@
   = render 'resources', entry: entry
   = render 'tag_cloud', entry: entry
 
-.bordered{ style: 'margin-top: 10px;' }
+.tabbed{ style: 'margin-top: 10px;' }
   %ul.nav.nav-tabs{ style: 'padding-left: 5px; padding-top: 5px; margin-bottom: 0;' }
     %li.active
       = link_to '#additional-information', data: { toggle: 'tab' } do

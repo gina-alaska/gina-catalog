@@ -4,13 +4,15 @@
     .col-sm-4
       = render 'search/form'
     .col-sm-8.search-results
-      %h1{ style: 'margin-top: 0px;' }
-        #{pluralize @entries.total_count, 'result'} found
-        - if @entries.total_count > 1
-          %small.pull-right= page_entries_info @entries
-      .entry-results.clear-fix
+      .results-heading
+        %h1.title{ style: 'margin-top: 0px;' }
+          #{pluralize @entries.total_count, 'result'} found
+          - if @entries.total_count > 1
+            %small.pull-right= page_entries_info @entries
+      .results-body.clear-fix
         - @entries.each do |entry|
           .entry{ id: dom_id(entry) }
             = render 'search/entry', entry: entry
             = render 'actions', entry: entry
-      = render 'search/pagination', entries: @entries
+      .results-footer
+        = render 'search/pagination', entries: @entries

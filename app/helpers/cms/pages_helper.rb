@@ -21,4 +21,10 @@ module Cms::PagesHelper
     page.content = capture(&block) if block_given?
     page.render
   end
+
+  def page_type_css(page)
+    return 'muted' if page.hidden?
+    return 'danger' if page.system_page?
+    return ''
+  end
 end

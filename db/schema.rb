@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150916191110) do
+ActiveRecord::Schema.define(version: 20150924185147) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -108,6 +108,20 @@ ActiveRecord::Schema.define(version: 20150916191110) do
     t.datetime "updated_at"
   end
 
+  create_table "cms_attachments", force: :cascade do |t|
+    t.string   "name"
+    t.text     "description"
+    t.string   "file_id"
+    t.string   "file_filename"
+    t.integer  "file_size"
+    t.string   "file_content_type"
+    t.integer  "portal_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "cms_attachments", ["portal_id"], name: "index_cms_attachments_on_portal_id", using: :btree
+
   create_table "cms_layouts", force: :cascade do |t|
     t.string   "name"
     t.string   "slug"
@@ -134,10 +148,11 @@ ActiveRecord::Schema.define(version: 20150916191110) do
     t.text     "content"
     t.integer  "portal_id"
     t.integer  "cms_layout_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
     t.integer  "parent_id"
     t.integer  "sort_order"
+    t.boolean  "hidden",        default: false
   end
 
   add_index "cms_pages", ["cms_layout_id"], name: "index_cms_pages_on_cms_layout_id", using: :btree
@@ -504,6 +519,7 @@ ActiveRecord::Schema.define(version: 20150916191110) do
     t.boolean  "global_admin", default: false
   end
 
+  add_foreign_key "cms_attachments", "portals"
   add_foreign_key "cms_layouts", "portals"
   add_foreign_key "cms_pages", "cms_layouts"
   add_foreign_key "cms_pages", "portals"

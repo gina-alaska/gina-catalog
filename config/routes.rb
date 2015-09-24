@@ -154,6 +154,7 @@ Rails.application.routes.draw do
 
   get '/catalog' => 'catalog/entries#index'
   get '/catalogs' => 'catalog/entries#index'
+  get '/page_not_found' => 'pages#not_found', as: :page_not_found
   get '*slug' => 'pages#show', as: :page
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

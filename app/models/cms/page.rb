@@ -1,5 +1,5 @@
 class Cms::Page < ActiveRecord::Base
-  SYSTEM_SLUGS = %w(home catalog)
+  SYSTEM_SLUGS = %w(home catalog page-not-found)
 
   include MustacheConcerns
   extend FriendlyId
@@ -12,16 +12,18 @@ class Cms::Page < ActiveRecord::Base
 
   validates :slug, uniqueness: { scope: [:parent_id, :portal_id] }
 
+  scope :visible, -> { where(hidden: false) }
+
   def to_s
     title
   end
 
   def depth_name
-    (('&nbsp;' * depth * 4) + title).html_safe
+    (('&nbsp;' * (depth+1) * 4) + title).html_safe
   end
 
   def system_page?
-    !new_record? && SYSTEM_SLUGS.include?(slug)
+    !new_record? && SYSTEM_SLUGS.include?(ancestry_path.join('/'))
   end
 
   def parent_path
