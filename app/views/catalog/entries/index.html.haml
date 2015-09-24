@@ -5,8 +5,8 @@
   .col-sm-8.search-results
     %h1{ style: 'margin-top: 0px;' }
       #{pluralize @entries.total_count, 'result'} found
-      - if @entries.total_count > 1
-        %small.pull-right= page_entries_info @entries
+      %small.pull-right
+        =render 'shared/page_entry_info', collection: @entries
     .entry-results.clear-fix
       - @entries.each do |entry|
         .entry{ id: dom_id(entry) }

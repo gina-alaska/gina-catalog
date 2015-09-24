@@ -30,9 +30,8 @@
   .col-sm-8
     .panel.panel-default
       .panel-heading{ style: 'position: relative' }
-        - if @organizations.total_count > 1
-          .pull-right.muted{ style: 'font-size: 1em;' }
-            = page_entries_info @organizations
+        .pull-right.muted{ style: 'font-size: 1em;' }
+          =render 'shared/page_entry_info', collection: @organizations
         %ol.breadcrumb
           %li.active
             %i.fa.fa-university
@@ -50,5 +49,4 @@
           = render(partial: "organization_row", collection: @organizations, as: :organization) || "<tr><td colspan=\"4\">There are no organizations found!</td></tr>".html_safe
     .text-center
       %div= paginate @organizations
-      - if @organizations.total_count > 1
-        = page_entries_info @organizations
+      =render 'shared/page_entry_info', collection: @organizations
