@@ -10,9 +10,10 @@ class Cms::Page < ActiveRecord::Base
   belongs_to :portal
   belongs_to :cms_layout, class_name: 'Cms::Layout'
 
-  validates :slug, uniqueness: { scope: [:parent_id, :portal_id] }
-
   scope :visible, -> { where(hidden: false) }
+
+  validates :title, presence: true
+  validates :slug, uniqueness: { scope: [:parent_id, :portal_id] }
 
   def to_s
     title

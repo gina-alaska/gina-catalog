@@ -42,12 +42,4 @@ class Cms::LayoutsControllerTest < ActionController::TestCase
 
     assert_redirected_to cms_layouts_path
   end
-
-  def test_destroy
-    assert_difference('Cms::Layout.count', 0) do
-      delete :destroy, id: cms_layouts(:one)
-    end
-
-    assert_redirected_to cms_layouts_path
-  end
 end

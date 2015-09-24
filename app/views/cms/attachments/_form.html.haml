@@ -1,0 +1,13 @@
+= simple_form_for(@cms_attachment) do |f|
+  = f.error_notification
+  .form-inputs
+    = f.input :name
+    = f.input :description
+    = f.input :file, as: :attachment, direct: true, hint: @cms_attachment.file_attacher.filename.present? ? "Attached: #{@cms_attachment.file_attacher.filename}" : 'Max file size is 50 MB'
+    .progress.hidden
+      .progress-bar.progress-bar-success{ style: 'width: 0%' }
+        0% Uploading file
+  .form-actions.text-right
+    = f.button :submit, class: 'btn btn-primary'
+
+:javascript
