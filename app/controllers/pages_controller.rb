@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
-  before_filter :fetch_page
-  before_filter :redirect_to_default_url, only: [:index]
+  before_action :fetch_page
+  before_action :redirect_to_default_url, only: [:index]
 
   def index
   end

@@ -34,9 +34,9 @@ module Glynx
       allow do
         origins '*'
         resource '/catalog/entries/*',
-          :headers => :any,
-          :methods => [:get, :options, :head],
-          :max_age => 3628800
+          headers: :any,
+          methods: [:get, :options, :head],
+          max_age: 3628800
       end
     end
   end
