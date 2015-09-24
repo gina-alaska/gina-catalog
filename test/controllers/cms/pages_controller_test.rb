@@ -3,10 +3,11 @@ require 'test_helper'
 class Cms::PagesControllerTest < ActionController::TestCase
   setup do
     login_user(:admin)
+    Cms::Page.rebuild!
   end
 
   def cms_page
-    @cms_page ||= cms_pages :one
+    @cms_page ||= cms_pages :home
   end
 
   test 'get redorder pages' do
@@ -14,8 +15,9 @@ class Cms::PagesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  def test_index
+  test 'get index' do
     get :index
+
     assert_response :success
     assert_not_nil assigns(:cms_pages)
   end
