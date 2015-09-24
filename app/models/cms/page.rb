@@ -8,6 +8,7 @@ class Cms::Page < ActiveRecord::Base
   belongs_to :portal
   belongs_to :cms_layout, class_name: 'Cms::Layout'
 
+  validates :title, presence: true
   validates :slug, uniqueness: { scope: :portal_id }
 
   def to_s

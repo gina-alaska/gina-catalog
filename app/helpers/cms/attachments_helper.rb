@@ -1,0 +1,2 @@
+module Cms::AttachmentsHelper
+end
