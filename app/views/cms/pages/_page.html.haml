@@ -18,9 +18,9 @@
 
 .panel.panel-default
   .panel-heading
-    %h1.panel-title Page preview
+    %h1.panel-title Preview
   .panel-body{ style: 'padding: 0px;' }
-    .cms-page-content.page{ style: 'padding:' + (use_layout ? '0px;' : '10px;') }
+    .cms-page-content.page{ style: 'padding: 0px;' }
       #{render '/pages/theme'}
       :markdown
-        #{page.render(use_layout)}
+        #{page.render}
