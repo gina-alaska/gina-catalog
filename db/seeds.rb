@@ -66,7 +66,12 @@ iso_topics.each do |iso_topic|
 end
 
 if Rails.env.development?
-  Entry.create(title: 'Example record for indexing purposes', description: 'This is an example record, needed for indexing purposes.', status: 'Complete', entry_type: EntryType.first, portals: [Portal.first] )
+  Entry.where(title: 'Example record for indexing purposes').first_or_create do |entry|
+    entry.description = 'This is an example record, needed for indexing purposes.'
+    entry.status = 'Complete'
+    entry.entry_type = EntryType.first
+    entry.portals = [p]
+  end
 end
 
 if Rails.env.development?
