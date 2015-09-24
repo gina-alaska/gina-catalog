@@ -2,7 +2,7 @@
   %meta{name: 'keywords', content: @entry.tags.join(',').html_safe}
 .row
   .col-sm-4
-    = render 'manager_menu', entry: @entry
+    = render 'manager_menu', entry: @entry if @entry.owner_portal.id == current_portal.id
     = render 'share_portal', entry: @entry
 
     .panel.panel-default
