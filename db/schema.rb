@@ -152,6 +152,8 @@ ActiveRecord::Schema.define(version: 20150924201613) do
     t.datetime "updated_at",    null: false
     t.integer  "parent_id"
     t.integer  "sort_order"
+    t.boolean  "hidden",        default: false
+    t.string   "redirect_url"    
   end
 
   add_index "cms_pages", ["cms_layout_id"], name: "index_cms_pages_on_cms_layout_id", using: :btree
