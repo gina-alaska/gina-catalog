@@ -15,9 +15,13 @@
     = render 'layouts/navbar'
     .container-fluid
       = render 'layouts/cms_main_menu'
+      = render 'layouts/cms_sidebar'
       = render 'layouts/flash_messages'
-      .row
-        .col-sm-3
-          = render 'layouts/cms_sidebar'
-        .col-sm-9
-          = yield
+      - if content_for?(:sidebar)
+        .row
+          .col-sm-3
+            = content_for :sidebar
+          .col-sm-9
+            = yield
+      - else
+        = yield
