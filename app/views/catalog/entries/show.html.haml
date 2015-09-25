@@ -4,7 +4,7 @@
 = render_into_cms @cms_page do
   .row
     .col-sm-4
-      = render 'manager_menu', entry: @entry
+      = render 'manager_menu', entry: @entry if owned_by_current_portal(@entry)
       = render 'share_portal', entry: @entry
 
       .panel.panel-default
