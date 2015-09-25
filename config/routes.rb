@@ -1,8 +1,4 @@
 Rails.application.routes.draw do
-  namespace :cms do
-    resources :attachments
-  end
-
   get 'archive_items/create'
 
   get 'archives/create'
@@ -41,8 +37,17 @@ Rails.application.routes.draw do
   end
 
   namespace :cms do
+    resources :attachments
     resources :snippets
     resources :pages do
+      resources :attachments, only: [] do
+        member do
+          patch :add
+          patch :remove
+          patch :up
+          patch :down
+        end
+      end
       collection do
         get :reorder
       end
