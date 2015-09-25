@@ -1,0 +1,6 @@
+- unless entry.collections.blank?
+  %dt Collections
+  - entry.collections.each do |collection|
+    %dd
+      = link_to collection.name, catalog_entries_path(search: { collections: [collection.id] })
+  %br
