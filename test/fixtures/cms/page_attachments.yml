@@ -2,11 +2,11 @@
 # http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  page: 
-  attachment: 
-  priority: 1
+  page: one
+  attachment: one
+  position: 0
 
 two:
-  page: 
-  attachment: 
-  priority: 1
+  page: one
+  attachment: two
+  position: 1
