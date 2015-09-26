@@ -31,6 +31,7 @@ class ApplicationController < ActionController::Base
   helper_method :owned_by_current_portal
 
   def current_ability
-    @current_ability ||= Ability.new(current_user, current_portal)
+    controller_namespace = controller_path.split('/').first
+    @current_ability ||= Ability.new(current_user, current_portal, controller_namespace)
   end
 end
