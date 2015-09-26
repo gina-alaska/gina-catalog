@@ -3,31 +3,31 @@ class Portal < ActiveRecord::Base
 
   acts_as_nested_set
 
-  has_many :urls, class_name: 'PortalUrl'
+  has_many :urls, class_name: 'PortalUrl', dependent: :destroy
   has_one :default_url, -> { where default: true }, class_name: 'PortalUrl'
   has_one :favicon, dependent: :destroy
 
-  has_many :collections
+  has_many :collections, dependent: :destroy
   has_many :use_agreements
-  has_many :permissions
-  has_many :invitations
+  has_many :permissions, dependent: :destroy
+  has_many :invitations, dependent: :destroy
   has_many :download_logs
-  has_many :map_layers
+  has_many :map_layers, dependent: :destroy
 
   # CMS related things
-  has_many :cms_attachments, class_name: 'Cms::Attachment'
-  has_many :layouts, class_name: 'Cms::Layout'
-  has_many :pages, class_name: 'Cms::Page'
-  has_many :snippets, class_name: 'Cms::Snippet'
-  has_many :themes, class_name: 'Cms::Theme'
-  belongs_to :active_cms_theme, class_name: 'Cms::Theme'
+  has_many :cms_attachments, class_name: 'Cms::Attachment', dependent: :destroy
+  has_many :layouts, class_name: 'Cms::Layout', dependent: :destroy
+  has_many :pages, class_name: 'Cms::Page', dependent: :destroy
+  has_many :snippets, class_name: 'Cms::Snippet', dependent: :destroy
+  has_many :themes, class_name: 'Cms::Theme', dependent: :destroy
+  belongs_to :active_cms_theme, class_name: 'Cms::Theme', dependent: :destroy
 
 
   has_many :users, through: :permissions
   has_many :activity_logs, as: :loggable
   has_many :social_networks, -> { joins(:social_network_config).order('social_network_configs.name ASC') }
 
-  has_many :entry_portals
+  has_many :entry_portals, dependent: :destroy
   has_many :entries, through: :entry_portals
 
   scope :active, -> {}
