@@ -38,13 +38,15 @@ class Cms::AttachmentsController < CmsController
 
   def up
     @page = Cms::Page.friendly.find(params[:page_id])
-    @page.cms_page_attachments.where(attachment_id: params[:id]).first.move_higher
+    @page_attachment = @page.cms_page_attachments.where(attachment_id: params[:id]).first
+    @page_attachment.move_higher
     redirect_to :back
   end
 
   def down
     @page = Cms::Page.friendly.find(params[:page_id])
-    @page.cms_page_attachments.where(attachment_id: params[:id]).first.move_lower
+    @page_attachment = @page.cms_page_attachments.where(attachment_id: params[:id]).first
+    @page_attachment.move_lower
     redirect_to :back
   end
 
