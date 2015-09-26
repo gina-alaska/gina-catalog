@@ -1,7 +1,6 @@
 require "test_helper"
 
 class Cms::AttachmentsControllerTest < ActionController::TestCase
-
   def cms_attachment
     @cms_attachment ||= cms_attachments :one
   end

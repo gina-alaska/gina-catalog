@@ -50,7 +50,7 @@ class Ability
     if user.role?(:data_entry, current_portal) || user.role?(:data_manager, current_portal)
       can :view_catalog, :menu
     end
-   
+
     if user.role?(:portal_manager, current_portal)
       can :view_portal, :menu
     end
@@ -101,7 +101,7 @@ class Ability
       if user.role?(:portal_manager, current_portal)
         can [:read, :update], Portal,  id: current_portal.id
       end
-    end 
+    end
 
     cannot :update, UseAgreement do |use_agreement|
       use_agreement.archived?

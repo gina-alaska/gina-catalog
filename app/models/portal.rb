@@ -22,7 +22,6 @@ class Portal < ActiveRecord::Base
   has_many :themes, class_name: 'Cms::Theme', dependent: :destroy
   belongs_to :active_cms_theme, class_name: 'Cms::Theme', dependent: :destroy
 
-
   has_many :users, through: :permissions
   has_many :activity_logs, as: :loggable
   has_many :social_networks, -> { joins(:social_network_config).order('social_network_configs.name ASC') }
