@@ -1,6 +1,6 @@
 namespace :linkscan do
   desc 'run a scan for bad links and mark those that are bad as invalid.'
-  task :bad_links => :environment do
+  task bad_links: :environment do
     require 'net/http'
 
     PublicActivity.enabled = false
