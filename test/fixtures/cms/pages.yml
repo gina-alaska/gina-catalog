@@ -15,6 +15,14 @@ two:
   portal: one
   cms_layout: one
 
+redirect:
+  title: Redirect this Page
+  slug: redirect
+  content: Nope
+  portal: one
+  cms_layout: one
+  redirect_url: /test
+
 catalog:
   title: Catalog
   slug: catalog

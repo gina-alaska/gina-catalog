@@ -23,4 +23,9 @@ class PagesControllerTest < ActionController::TestCase
     get :show, slug: 'home'
     assert_redirected_to root_url
   end
+
+  test 'should redirect to test' do
+    get :show, slug: 'redirect'
+    assert_redirected_to '/test'
+  end
 end
