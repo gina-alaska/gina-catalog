@@ -56,4 +56,42 @@ class Cms::AttachmentsControllerTest < ActionController::TestCase
 
     assert_redirected_to cms_attachments_path
   end
+
+  test "shouldn't move top attachment up" do
+    @page = cms_pages(:home)
+    @request.env['HTTP_REFERER'] = cms_page_path(@page)
+
+    assert_difference("Cms::PageAttachment.where(attachment_id: #{@cms_attachment.id}).first.position", 0) do
+      patch :up, page_id: @page, id: @cms_attachment
+    end
+  end
+
+  test "should move attachment up" do
+    @page = cms_pages(:home)
+    @cms_attachment = cms_attachments(:two)
+    @request.env['HTTP_REFERER'] = cms_page_path(@page)
+
+    assert_difference("Cms::PageAttachment.where(attachment_id: #{@cms_attachment.id}).first.position", -1) do
+      patch :up, page_id: @page, id: @cms_attachment
+    end
+  end
+
+  test "shouldn't move bottom attachment down" do
+    @page = cms_pages(:home)
+    @cms_attachment = cms_attachments(:two)
+    @request.env['HTTP_REFERER'] = cms_page_path(@page)
+
+    assert_difference("Cms::PageAttachment.where(attachment_id: #{@cms_attachment.id}).first.position", 0) do
+      patch :down, page_id: @page, id: @cms_attachment
+    end
+  end
+
+  test "should move attachment down" do
+    @page = cms_pages(:home)
+    @request.env['HTTP_REFERER'] = cms_page_path(@page)
+
+    assert_difference("Cms::PageAttachment.where(attachment_id: #{@cms_attachment.id}).first.position", 1) do
+      patch :down, page_id: @page, id: @cms_attachment
+    end
+  end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150924201613) do
+ActiveRecord::Schema.define(version: 20150925202650) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -133,6 +133,17 @@ ActiveRecord::Schema.define(version: 20150924201613) do
 
   add_index "cms_layouts", ["portal_id"], name: "index_cms_layouts_on_portal_id", using: :btree
 
+  create_table "cms_page_attachments", force: :cascade do |t|
+    t.integer  "page_id"
+    t.integer  "attachment_id"
+    t.integer  "position"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "cms_page_attachments", ["attachment_id"], name: "index_cms_page_attachments_on_attachment_id", using: :btree
+  add_index "cms_page_attachments", ["page_id"], name: "index_cms_page_attachments_on_page_id", using: :btree
+
   create_table "cms_page_hierarchies", id: false, force: :cascade do |t|
     t.integer "ancestor_id",   null: false
     t.integer "descendant_id", null: false
@@ -148,12 +159,12 @@ ActiveRecord::Schema.define(version: 20150924201613) do
     t.text     "content"
     t.integer  "portal_id"
     t.integer  "cms_layout_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
     t.integer  "parent_id"
     t.integer  "sort_order"
     t.boolean  "hidden",        default: false
-    t.string   "redirect_url"    
+    t.string   "redirect_url"
   end
 
   add_index "cms_pages", ["cms_layout_id"], name: "index_cms_pages_on_cms_layout_id", using: :btree

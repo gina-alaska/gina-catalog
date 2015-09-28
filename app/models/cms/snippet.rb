@@ -15,8 +15,8 @@ class Cms::Snippet < ActiveRecord::Base
     end
   end
 
-  def render
-    context = render_context(portal)
+  def render(page = nil)
+    context = render_context(portal, page)
     basic_pipeline(context).call(content)[:output].to_s
   end
 end

@@ -1,7 +1,7 @@
 class Cms::AttachmentsController < CmsController
-  before_action :set_cms_attachment, only: [:show, :edit, :update, :destroy]
+  before_action :set_cms_attachment, only: [:show, :edit, :update, :destroy, :add, :remove]
   authorize_resource
-  
+
   # GET /cms/attachments
   # GET /cms/attachments.json
   def index
@@ -20,6 +20,34 @@ class Cms::AttachmentsController < CmsController
 
   # GET /cms/attachments/1/edit
   def edit
+  end
+
+  def remove
+    @page = Cms::Page.friendly.find(params[:page_id])
+    @page.attachments.destroy(@cms_attachment)
+
+    redirect_to :back
+  end
+
+  def add
+    @page = Cms::Page.friendly.find(params[:page_id])
+    @page.attachments << @cms_attachment
+
+    redirect_to :back
+  end
+
+  def up
+    @page = Cms::Page.friendly.find(params[:page_id])
+    @page_attachment = @page.cms_page_attachments.where(attachment_id: params[:id]).first
+    @page_attachment.move_higher
+    redirect_to :back
+  end
+
+  def down
+    @page = Cms::Page.friendly.find(params[:page_id])
+    @page_attachment = @page.cms_page_attachments.where(attachment_id: params[:id]).first
+    @page_attachment.move_lower
+    redirect_to :back
   end
 
   # POST /cms/attachments

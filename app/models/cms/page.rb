@@ -9,6 +9,8 @@ class Cms::Page < ActiveRecord::Base
 
   belongs_to :portal
   belongs_to :cms_layout, class_name: 'Cms::Layout'
+  has_many :cms_page_attachments, -> { order(position: :asc) }, class_name: 'Cms::PageAttachment'
+  has_many :attachments, through: :cms_page_attachments, class_name: 'Cms::Attachment', source: :attachment
 
   scope :visible, -> { where(hidden: false) }
 
@@ -41,7 +43,7 @@ class Cms::Page < ActiveRecord::Base
 
   def render(use_layout = true)
     if use_layout && cms_layout
-      layout_context = render_context(portal)
+      layout_context = render_context(portal, self)
       layout_context[:mustache].content = page_pipeline(content, render_context(portal))
       layout_pipeline(cms_layout.content, layout_context)
     else

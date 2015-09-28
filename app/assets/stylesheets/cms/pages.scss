@@ -21,3 +21,8 @@ ol.cms-page-list {
 ol.cms-page-list:first-child {
   padding-left: 0px;
 }
+
+.panel.tab-pane {
+  border-top: none;
+  border-radius: 0 0 5px 5px;
+}
