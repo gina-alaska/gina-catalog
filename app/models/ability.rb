@@ -1,7 +1,7 @@
 class Ability
   include CanCan::Ability
 
-  def initialize(user, current_portal)
+  def initialize(user, current_portal, controller_namespace)
     # Define abilities for the passed in user here. For example:
     #
     #   user ||= User.new # guest user (not logged in)
@@ -39,15 +39,31 @@ class Ability
       can :accept, Invitation
     end
 
-    if user.role?(:cms_manager, current_portal)
-      can :view_cms_menu, User
+    if user.global_admin?
+      can :view_admin, :menu
+    end
 
+    if user.role?(:cms_manager, current_portal)
+      can :view_cms, :menu
+    end
+
+    if user.role?(:data_entry, current_portal) || user.role?(:data_manager, current_portal)
+      can :view_catalog, :menu
+    end
+
+    if user.role?(:portal_manager, current_portal)
+      can :view_portal, :menu
+    end
+
+    if user.global_admin?
+      can :manage, [User, EntryType, Region, DataType, IsoTopic]
+    end
+
+    if user.role?(:cms_manager, current_portal)
       can :manage, [Cms::Layout, Cms::Page, Cms::Snippet, Cms::Theme, Cms::Attachment], portal_id: current_portal.id
     end
 
     if user.role?(:data_entry, current_portal)
-      can :view_catalog_menu, User
-
       can [:read, :preview], Attachment do |attachment|
         attachment.entry.new_record? || attachment.entry.owner_portal = current_portal
       end
@@ -60,8 +76,6 @@ class Ability
     end
 
     if user.role?(:data_manager, current_portal)
-      can :view_catalog_menu, User
-
       can [:read, :preview], Attachment do |attachment|
         attachment.entry.new_record? || attachment.entry.owner_portal = current_portal
       end
@@ -75,14 +89,18 @@ class Ability
     end
 
     if user.role?(:portal_manager, current_portal)
-      can :view_portal_menu, User
-      can [:read, :update], Portal,  id: current_portal.id
       can :manage, [Permission, Invitation],  portal_id: current_portal.id
     end
 
-    if user.global_admin?
-      can :view_admin_menu, User
-      can :manage, [Portal, User, EntryType, Region, DataType, IsoTopic]
+    case controller_namespace
+    when 'admin'
+      if user.global_admin?
+        can :manage, Portal
+      end
+    else
+      if user.role?(:portal_manager, current_portal)
+        can [:read, :update], Portal,  id: current_portal.id
+      end
     end
 
     cannot :update, UseAgreement do |use_agreement|
