@@ -1,17 +1,26 @@
 class PagesController < ApplicationController
   before_action :fetch_page
   before_action :redirect_to_default_url, only: [:index]
+  before_action :redirect_to_page_not_found, only: [:show]
+  before_action :redirect_to_root_if_home, only: [:show]
 
   def index
   end
 
   def show
-    redirect_to root_url if params[:slug] == 'home'
-    redirect_to page_path('page-not-found') if @page.nil?
     redirect_to @page.redirect_url if @page.redirect_url?
+    render status: :not_found if params[:slug] == 'page_not_found'
   end
 
   protected
+
+  def redirect_to_page_not_found
+    redirect_to page_not_found_path if @page.nil?
+  end
+
+  def redirect_to_root_if_home
+    redirect_to root_url if params[:slug] == 'home'
+  end
 
   def redirect_to_default_url
     return if Rails.env.development?

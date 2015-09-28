@@ -10,7 +10,7 @@ home:
 
 two:
   title: MyString 2
-  slug: MyString 2
+  slug: test
   content: MyText
   portal: one
   cms_layout: one
