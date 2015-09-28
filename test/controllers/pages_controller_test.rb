@@ -28,4 +28,13 @@ class PagesControllerTest < ActionController::TestCase
     get :show, slug: 'redirect'
     assert_redirected_to '/test'
   end
+
+  test 'should redirect home to test' do
+    @page = cms_pages(:home)
+    @page.redirect_url = '/test'
+    @page.save
+
+    get :show, slug: 'home'
+    assert_redirected_to '/test'
+  end
 end

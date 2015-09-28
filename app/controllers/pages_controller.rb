@@ -2,8 +2,8 @@ class PagesController < ApplicationController
   before_action :fetch_page
   before_action :redirect_to_default_url, only: [:index]
   before_action :redirect_to_page_not_found, only: [:show]
-  before_action :redirect_to_root_if_home, only: [:show]
   before_action :follow_redirect_url
+  before_action :redirect_to_root_if_home, only: [:show]
 
   def index
   end
