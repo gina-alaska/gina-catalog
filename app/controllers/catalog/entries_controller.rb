@@ -1,8 +1,9 @@
 class Catalog::EntriesController < ManagerController
+  before_action :set_cms_page
   before_action :gather_use_agreements, only: [:new, :create, :edit, :update]
   load_and_authorize_resource
 
-  layout 'application', only: [:show, :index]
+  layout 'pages', only: [:show, :index]
 
   include EntriesControllerSearchConcerns
 
@@ -222,5 +223,9 @@ class Catalog::EntriesController < ManagerController
 
   def gather_use_agreements
     @use_agreements = UseAgreement.active
+  end
+
+  def set_cms_page
+    @cms_page = current_portal.pages.find_by_path('catalog')
   end
 end

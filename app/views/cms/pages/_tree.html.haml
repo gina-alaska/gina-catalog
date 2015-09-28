@@ -1,12 +1,20 @@
 - tree.each do |node|
   %li
     .page-item
-      - if node.children.count > 0
-        %i.fa.fa-fw{ class: skip_collapse(@cms_page, node) ? 'fa-folder-open-o' : 'fa-folder-o' }
-      - else
-        %i.fa.fa-file-o.fa-fw
+      %span
+        - if node.children.count > 0
+          %i.fa.fa-fw{ class: skip_collapse(@cms_page, node) ? 'fa-minus-square-o' : 'fa-plus-square-o' }
+        - else
+          %i.fa.fa-file-o.fa-fw
       = active_link_to node do
         = truncate node.title
+      %span.type-icons{ style: 'display: inline-block; padding-left: 5px;' }
+        - if node.system_page?
+          %i.fa.fa-gear.text-info{ title: 'System page' }
+        - if node.hidden?
+          %i.fa.fa-eye-slash.text-warning{ title: 'Hidden' }
+        - if node.redirect_url?
+          %i.fa.fa-share.text-info{ title: 'Redirect' }
   - unless node.children.empty?
     %ol.collapse{ id: dom_id(node, 'page-ol'), class: skip_collapse(@cms_page, node) ? 'in' : '' }
       = render 'tree', tree: node.children, parent: node

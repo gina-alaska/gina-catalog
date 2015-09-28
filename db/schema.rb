@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150921204524) do
+ActiveRecord::Schema.define(version: 20150924201613) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -152,6 +152,8 @@ ActiveRecord::Schema.define(version: 20150921204524) do
     t.datetime "updated_at",    null: false
     t.integer  "parent_id"
     t.integer  "sort_order"
+    t.boolean  "hidden",        default: false
+    t.string   "redirect_url"    
   end
 
   add_index "cms_pages", ["cms_layout_id"], name: "index_cms_pages_on_cms_layout_id", using: :btree
@@ -518,7 +520,6 @@ ActiveRecord::Schema.define(version: 20150921204524) do
     t.boolean  "global_admin", default: false
   end
 
-  add_foreign_key "cms_attachments", "portals"
   add_foreign_key "cms_layouts", "portals"
   add_foreign_key "cms_pages", "cms_layouts"
   add_foreign_key "cms_pages", "portals"

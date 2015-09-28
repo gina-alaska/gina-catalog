@@ -1,25 +1,26 @@
 .panel.panel-default
   .panel-heading
+    = render 'labels', cms_page: page
     %h1.panel-title= page.title
   .panel-body
     %p
       %strong URL:
-      = link_to page_url(page.slug), page_url(page.slug)
+      = link_to page_url(page.ancestry_path), page_url(page.ancestry_path)
 
     %p
       %strong Layout:
       = page.cms_layout
 
-    - if page.try(:redirect_url).try(:any?)
+    - if page.redirect_url?
       %p
-        %strong Redirect?
-        = page.redirect_url
+        %strong Redirects to:
+        = link_to page.redirect_url, page.redirect_url
 
 .panel.panel-default
   .panel-heading
-    %h1.panel-title Page preview
+    %h1.panel-title Preview
   .panel-body{ style: 'padding: 0px;' }
-    .cms-page-content.page{ style: 'padding:' + (use_layout ? '0px;' : '10px;') }
+    .cms-page-content.page{ style: 'padding: 0px;' }
       #{render '/pages/theme'}
       :markdown
-        #{page.render(use_layout)}
+        #{page.render}

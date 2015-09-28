@@ -100,7 +100,7 @@ class Cms::PagesController < CmsController
   def destroy
     @cms_page.destroy
     respond_to do |format|
-      format.html { redirect_to cms_pages_url, notice: 'Page was successfully destroyed.' }
+      format.html { redirect_to cms_pages_url, notice: "#{@cms_page.title} has been deleted." }
       format.json { head :no_content }
     end
   end
@@ -114,6 +114,6 @@ class Cms::PagesController < CmsController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def cms_page_params
-    params.require(:cms_page).permit(:title, :slug, :content, :cms_layout_id, :parent_id)
+    params.require(:cms_page).permit(:title, :slug, :content, :cms_layout_id, :parent_id, :hidden, :redirect_url)
   end
 end

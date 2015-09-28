@@ -1,6 +1,7 @@
 class Cms::AttachmentsController < CmsController
   before_action :set_cms_attachment, only: [:show, :edit, :update, :destroy]
-
+  authorize_resource
+  
   # GET /cms/attachments
   # GET /cms/attachments.json
   def index
