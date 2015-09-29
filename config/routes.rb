@@ -58,7 +58,9 @@ Rails.application.routes.draw do
         patch :bottom
       end
     end
-    resources :layouts
+    resources :layouts do
+      patch :default, on: :member
+    end
     resources :themes do
       patch :activate, on: :member
     end
