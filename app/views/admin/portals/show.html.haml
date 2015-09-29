@@ -13,23 +13,47 @@
 
   .panel-body
     .row
-      .col-sm-12
+      .col-sm-6
         %dl.dl-horizontal
-          %dt parent
+          %dt Title
+          %dd=ddtext @portal.try(:title)
+        %dl.dl-horizontal
+          %dt Acronym
+          %dd=ddtext @portal.acronym
+      .col-sm-6
+        %dl.dl-horizontal
+          %dt Parent Portal
           %dd=ddtext @portal.parent.try(:title)
         %dl.dl-horizontal
-          %dt acronym
-          %dd=ddtext @portal.acronym
+          %dt Contact Email
+          %dd=ddtext @portal.contact_email
+      .col-sm-6
+        %dl.dl-horizontal
+          %dt By Line
+          %dd=ddtext @portal.by_line
+      .col-sm-6
+        %dl.dl-horizontal
+          %dt Google Analytics
+          %dd=ddtext @portal.analytics_account
+
     .row
       .col-sm-12
-        %fieldset.content
-          %legend Portal Urls
+        %table.table.table-striped
+          %thead
+            %th.col-sm-6
+              Portal URLs
+            %th
+              Default
+          - @portal.urls.each do |url|
+            = render 'portal_url', url: url
 
-          %table.table.table-striped
-            %thead
-              %th
-                URL
-              %th
-                Default
-            - @portal.urls.each do |url|
-              = render 'portal_url', url: url
+    .row
+      .col-sm-12
+        %table.table.table-striped
+          %thead
+            %th.col-sm-6
+              Portal Users
+            %th
+              Permissions
+          - @portal.users.each do |user|
+            = render 'user', user: user
