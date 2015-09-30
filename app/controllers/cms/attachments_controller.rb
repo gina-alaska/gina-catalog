@@ -6,6 +6,9 @@ class Cms::AttachmentsController < CmsController
   # GET /cms/attachments.json
   def index
     @cms_attachments = current_portal.cms_attachments
+    if params[:images]
+      @cms_attachments = @cms_attachments.images
+    end
   end
 
   # GET /cms/attachments/1
