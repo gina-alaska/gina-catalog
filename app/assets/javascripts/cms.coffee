@@ -20,6 +20,7 @@ class AceToolbar
   call: (action, btn) =>
     if @handlers[action]?
       @handlers[action](btn, this)
+      @focus()
 
   addHandler: (name, func) ->
     @handlers[name] = func
@@ -44,7 +45,11 @@ class AceToolbar
       session.insert(range.start, start_tag)
       @editor.selection.clearSelection()
 
+  focus: () =>
     @editor.focus()
+    setTimeout(=>
+      @editor.focus()
+    , 500)
 
 class AceHTMLToolbar
   handlers: {
@@ -60,6 +65,22 @@ class AceHTMLToolbar
         end_tag = btn.data('end') || ""
 
       scope.wrapSelectionWithTags(start_tag, end_tag)
+
+    image_chooser: (btn, scope) ->
+      target = $(btn).data('target')
+      $(target).find('.loading').hide();
+
+      images_url = $(btn).data('imagesUrl')
+      template = Handlebars.compile($(target).find('template').html())
+      $.getJSON(images_url).done (data) =>
+        $(target).find('.loading').hide();
+        $(target).find('.images').html('');
+        for image in data
+          $(target).find('.modal-body').append(template(image))
+
+    picture: (btn, scope) ->
+      $(btn).parents('.modal').modal('hide')
+      scope.wrapSelectionWithTags("<img src='#{$(btn).data('url')}' />\n", '')
 
     undo: (btn, scope) ->
       scope.undo()
@@ -77,7 +98,7 @@ $(document).on 'ready page:load', ->
     mode = el.data('mode') || 'html_ruby'
     toolbar = new AceToolbar(editor, mode)
 
-    $(el).find('[data-action]').on 'click', (evt) =>
+    $(document).on 'click', '[data-action]', (evt) =>
       evt.preventDefault()
       btn = $(evt.currentTarget)
       toolbar.call(btn.data('action'), btn)

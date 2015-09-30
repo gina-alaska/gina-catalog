@@ -1,0 +1,23 @@
+.btn-group.btn-group-sm
+  %button.btn.btn-default{ type: 'button', title: 'Insert picture', data: { action: 'image_chooser', toggle: 'modal', target: '#image-chooser-modal', images_url: cms_attachments_path(:json) } }
+    %i.fa.fa-picture-o
+
+
+#image-chooser-modal.modal.fade{ data: { behavior: 'load', url: cms_attachments_path(:json) } }
+  .modal-dialog.modal-lg
+    .modal-content
+      .modal-header
+        %h4.modal-title Image chooser
+      .modal-body
+        .loading
+          %i.fa.fa-spin.fa-refresh
+          Loading images....
+        .images
+          %template
+            %a.thumbnail{ id: "image-{{id}}", href: "#add-image", data: { action: 'picture', url: '{{image_url}}' }, style: 'display: inline-block;' }
+              .text-center {{name}}
+              %img{ src: "{{thumbnail_url}}" }
+      .modal-footer
+        %button.btn.btn-primary{ type: 'button', data: { dismiss: 'modal' } }
+          %i.fa.fa-close
+          Close
