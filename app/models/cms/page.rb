@@ -52,7 +52,7 @@ class Cms::Page < ActiveRecord::Base
   end
 
   def layout_pipeline(content, context)
-    markdown_pipeline(context).call(content)[:output].to_s.html_safe
+    basic_pipeline(context).call(content)[:output].to_s.html_safe
   end
 
   def page_pipeline(content, context)
