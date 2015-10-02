@@ -1,0 +1,10 @@
+.panel-heading{ style: 'position: relative' }
+  %h3 Portal Summary
+.panel-body
+  %dl.dl-horizontal
+    %dt Users
+    %dd=ddtext @user_count
+    %dt Catalog Records
+    %dd=ddtext @entry_count
+    %dt Downloads
+    %dd=ddtext @download_count
