@@ -42,4 +42,11 @@ class Cms::LayoutsControllerTest < ActionController::TestCase
 
     assert_redirected_to cms_layouts_path
   end
+
+  test "set default layout" do
+    get :default, id: @cms_layout
+
+    assert_equal @cms_layout, @cms_layout.portal.default_cms_layout
+    assert_redirected_to cms_layouts_path
+  end
 end

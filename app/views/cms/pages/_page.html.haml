@@ -4,10 +4,14 @@
   = link_to edit_cms_page_path(page), class: 'list-group-item list-group-item-info' do
     %i.fa.fa-edit.fa-fw
     Edit page
-  = link_to new_cms_page_path(parent: page), class: 'list-group-item list-group-item-success' do
-    %i.fa.fa-plus.fa-fw
-    New page
-  - unless page.system_page?
+  - if page.system_page?
+    = link_to new_cms_page_path, class: 'list-group-item list-group-item-success' do
+      %i.fa.fa-plus.fa-fw
+      New page
+  - else
+    = link_to new_cms_page_path(parent: page), class: 'list-group-item list-group-item-success' do
+      %i.fa.fa-plus.fa-fw
+      New page
     = link_to page, method: :delete, data: { confirm: 'Are you sure? All child pages will also be deleted.  This cannot be undone!' }, class: 'list-group-item list-group-item-danger' do
       %i.fa.fa-trash.fa-fw
       Delete page

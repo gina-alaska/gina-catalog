@@ -1,11 +1,24 @@
 class Cms::LayoutsController < CmsController
-  before_action :set_cms_layout, only: [:show, :edit, :update, :destroy]
+  before_action :set_cms_layout, only: [:show, :edit, :update, :destroy, :default]
   authorize_resource
 
   # GET /cms/layouts
   # GET /cms/layouts.json
   def index
     @cms_layouts = current_portal.layouts
+  end
+
+  def default
+    if current_portal.update_attributes(default_cms_layout: @cms_layout)
+      flash[:notice] = "Set #{@cms_layout} as default layout"
+    else
+      flash[:error] = "Unable to set #{@cms_layout} as default layout"
+    end
+
+    respond_to do |format|
+      format.html { redirect_to cms_layouts_path }
+      format.js { redirect_via_turbolinks cms_layouts_path }
+    end
   end
 
   # GET /cms/layouts/new
