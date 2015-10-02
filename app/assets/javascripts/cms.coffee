@@ -68,15 +68,18 @@ class AceHTMLToolbar
 
     image_chooser: (btn, scope) ->
       target = $(btn).data('target')
-      $(target).find('.loading').hide();
+      $(target).find('.loading').show();
+      $(target).find('.images').hide();
 
       images_url = $(btn).data('imagesUrl')
       template = Handlebars.compile($(target).find('template').html())
       $.getJSON(images_url).done (data) =>
+        console.log 'foo'
         $(target).find('.loading').hide();
-        $(target).find('.images').html('');
+        $(target).find('.images').html(' ');
         for image in data
-          $(target).find('.modal-body').append(template(image))
+          $(target).find('.modal-body .images').append(template(image))
+        $(target).find('.images').show();
 
     picture: (btn, scope) ->
       $(btn).parents('.modal').modal('hide')
