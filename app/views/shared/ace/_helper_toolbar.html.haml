@@ -1,22 +1,38 @@
 .btn-group.btn-group-sm
-  %button.btn.btn-default{ type: 'button', title: 'Insert picture', data: { action: 'image_chooser', toggle: 'modal', target: '#image-chooser-modal', images_url: cms_attachments_path(images: true, format: :json) } }
+  %button.btn.btn-default{ type: 'button', title: 'Insert picture', data: { action: 'chooser', toggle: 'modal', target: '#image-chooser-modal', url: cms_attachments_path(sort: 'name', images: true, format: :json) } }
     %i.fa.fa-picture-o
+  %button.btn.btn-default{ type: 'button', title: 'Link', data: { action: 'chooser', toggle: 'modal', target: '#link-chooser-modal', url: cms_attachments_path(sort: 'name', format: :json) } }
+    %i.fa.fa-link
 
-
-#image-chooser-modal.modal.fade{ data: { behavior: 'load', url: cms_attachments_path(:json) } }
+#link-chooser-modal.modal.fade
   .modal-dialog.modal-lg
     .modal-content
       .modal-header
-        %h4.modal-title Image chooser
+        %h4.modal-title Select an attachment to link
       .modal-body
+        = render '/shared/ace/chooser_sortby', target: '#link-chooser-modal', images: false
+        .loading
+          %i.fa.fa-spin.fa-refresh
+          Loading documents....
+        .content
+        = render '/shared/ace/chooser_template', action: 'link'
+      .modal-footer
+        %button.btn.btn-primary{ type: 'button', data: { dismiss: 'modal' } }
+          %i.fa.fa-close
+          Close
+
+#image-chooser-modal.modal.fade
+  .modal-dialog.modal-lg
+    .modal-content
+      .modal-header
+        %h4.modal-title Select an image to add
+      .modal-body
+        = render '/shared/ace/chooser_sortby', target: '#image-chooser-modal', images: true
         .loading
           %i.fa.fa-spin.fa-refresh
           Loading images....
-        .images
-        %template
-          %a.thumbnail{ id: "image-{{id}}", href: "#add-image", data: { action: 'picture', url: '{{image_url}}' }, style: 'display: inline-block;' }
-            .text-center {{name}}
-            %img{ src: "{{thumbnail_url}}" }
+        .content
+        = render '/shared/ace/chooser_template', action: 'image'
       .modal-footer
         %button.btn.btn-primary{ type: 'button', data: { dismiss: 'modal' } }
           %i.fa.fa-close

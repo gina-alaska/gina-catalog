@@ -6,6 +6,11 @@ class Cms::AttachmentsController < CmsController
   # GET /cms/attachments.json
   def index
     @cms_attachments = current_portal.cms_attachments
+
+    if params[:sort]
+      @cms_attachments = sort_by(@cms_attachments, params[:sort])
+    end
+
     if params[:images]
       @cms_attachments = @cms_attachments.images
     end
@@ -103,5 +108,16 @@ class Cms::AttachmentsController < CmsController
   # Never trust parameters from the scary internet, only allow the white list through.
   def cms_attachment_params
     params.require(:cms_attachment).permit(:name, :description, :file)
+  end
+
+  def sort_by(collection, field = '')
+    fields = {
+      'name' => 'name',
+      'filename' => 'file_filename',
+      'age' => 'created_at',
+      'size' => 'file_size',
+      '' => 'name'
+    }
+    collection.order(fields[field] => :asc)
   end
 end

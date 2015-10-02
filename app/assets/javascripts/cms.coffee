@@ -66,22 +66,31 @@ class AceHTMLToolbar
 
       scope.wrapSelectionWithTags(start_tag, end_tag)
 
-    image_chooser: (btn, scope) ->
+    chooser: (btn, scope) ->
       target = $(btn).data('target')
       $(target).find('.loading').show();
-      $(target).find('.images').hide();
+      $(target).find('.content').hide();
 
-      images_url = $(btn).data('imagesUrl')
+      if $(btn).parent().find('.active').removeClass('active').length > 0
+        $(btn).addClass('active')
+
+      images_url = $(btn).attr('href') || $(btn).data('url')
       template = Handlebars.compile($(target).find('template').html())
       $.getJSON(images_url).done (data) =>
-        console.log 'foo'
         $(target).find('.loading').hide();
-        $(target).find('.images').html(' ');
+        $(target).find('.content').html(' ');
         for image in data
-          $(target).find('.modal-body .images').append(template(image))
-        $(target).find('.images').show();
+          $(target).find('.modal-body .content').append(template(image))
+        $(target).find('.content').show();
 
-    picture: (btn, scope) ->
+    link: (btn, scope) ->
+      $(btn).parents('.modal').modal('hide')
+      url = $(btn).data('url')
+      title = $(btn).data('title')
+      scope.wrapSelectionWithTags("<a title='#{title}' href='#{url}' />", '</a>')
+
+
+    image: (btn, scope) ->
       $(btn).parents('.modal').modal('hide')
       scope.wrapSelectionWithTags("<img src='#{$(btn).data('url')}' />\n", '')
 

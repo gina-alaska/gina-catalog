@@ -1,0 +1,5 @@
+.toolbar.clearfix{ style: 'margin-bottom: 5px;' }
+  .btn-group.pull-right
+    .btn.btn-default.disabled Sort by:
+    - %w( name filename age size ).each_with_index do |sortby,index|
+      = active_link_to sortby.humanize, cms_attachments_path(images: images, sort: sortby, format: :json), class: "btn btn-default #{'active' if index == 0}", data: { action: 'chooser', target: target }
