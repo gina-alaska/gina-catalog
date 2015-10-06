@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   get '/auth/failure', to: 'sessions#failure'
 
   get '/admin' => 'admin/dashboard#index', as: :admin
-  get '/manager' => 'manager/dashboard#index', as: :manager
+  get '/manager' => 'manager/dashboards#index', as: :manager
   get '/portal_not_found' => 'welcome#portal_not_found', as: :portal_not_found
 
   # Support legacy routes
@@ -136,7 +136,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :dashboard do
+    resources :dashboards do
       collection do
         get :downloads, as: 'downloads'
       end
