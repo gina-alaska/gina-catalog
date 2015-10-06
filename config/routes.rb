@@ -135,6 +135,12 @@ Rails.application.routes.draw do
         get :search, defaults: { format: :json }
       end
     end
+
+    resources :dashboard do
+      collection do
+        get :downloads, as: 'downloads'
+      end
+    end
   end
 
   # resources :entries do
