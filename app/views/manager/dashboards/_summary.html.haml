@@ -8,3 +8,8 @@
     %dd=ddtext @entry_count
     %dt Downloads
     %dd=ddtext @download_count
+
+  %h3 Top Record Downloads
+  - @top_downloads.each do |entry_id, count|
+    = link_entry(entry_id)
+    = count
