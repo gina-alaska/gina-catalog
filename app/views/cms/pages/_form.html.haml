@@ -14,7 +14,7 @@
         .col-sm-6
           = f.association :cms_layout, label: 'Layout'
       = f.input :redirect_url, placeholder: 'http://example.com', hint: 'Redirect user to this url when this page is viewed'
-      = f.input :hidden, label: 'Hide page'
+      = f.input :hidden, label: 'Hidden from page list'
 
     = f.association :parent, collection: page_collection, label: 'Parent page', label_method: :depth_name, include_blank: 'Root page'
     = f.input :content, label: false, input_html: { class: 'hidden' }
@@ -26,7 +26,11 @@
           = render 'shared/ace/helper_toolbar'
           = render 'shared/ace/attachment_toolbar'
       #content-editor.editor
-  .form-actions.text-right
-    = f.button :submit, class: 'btn btn-primary'
+  .form-actions
+    .row
+      .col-sm-9.text-right
+        = f.input :draft
+      .col-sm-3
+        = f.button :submit, class: 'btn btn-primary btn-block'
 
 = render 'help'
