@@ -1,4 +1,4 @@
-class Catalog::UseAgreementsController < ManagerController
+class Catalog::UseAgreementsController < CatalogController
   load_and_authorize_resource
 
   def index

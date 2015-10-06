@@ -1,4 +1,4 @@
-class Catalog::MapLayersController < ManagerController
+class Catalog::MapLayersController < CatalogController
   load_and_authorize_resource
 
   def index
