@@ -74,6 +74,7 @@ gem 'acts_as_list'
 gem "refile", '~> 0.6.1', require: ["refile/rails", "refile/simple_form"]
 gem "refile-mini_magick"
 gem 'rack-cors', require: 'rack/cors'
+gem 'hightop'
 
 group :development, :production do
   gem 'rails_12factor'
