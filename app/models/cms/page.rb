@@ -41,14 +41,10 @@ class Cms::Page < ActiveRecord::Base
     end
   end
 
-  def render(use_layout = true)
-    if use_layout && cms_layout
-      layout_context = render_context(portal, self)
-      layout_context[:mustache].content = page_pipeline(content, render_context(portal))
-      layout_pipeline(cms_layout.content, layout_context)
-    else
-      layout_pipeline(content, render_context(portal))
-    end
+  def render
+    layout_context = render_context(portal, self)
+    layout_context[:mustache].content = page_pipeline(content, layout_context)
+    layout_pipeline(cms_layout.content, layout_context)
   end
 
   def layout_pipeline(content, context)

@@ -116,5 +116,6 @@ source 'https://rails-assets.org' do
   # gem 'rails-assets-wicket'
   gem 'rails-assets-uri.js'
   gem 'rails-assets-ace-builds'
+  gem 'rails-assets-bootstrap-submenu'
 end
 gem "font-awesome-rails"

@@ -103,6 +103,8 @@ class AceHTMLToolbar
 
 $(document).on 'ready page:load', ->
   if $('[data-editor="ace"]').size() > 0
+    $('[data-submenu]').submenupicker();
+    
     el = $('[data-editor="ace"]')
     textarea = $(el).find('.editor')
     target = $(el.data('target'))

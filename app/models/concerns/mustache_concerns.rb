@@ -23,10 +23,19 @@ module MustacheConcerns
   end
 
   def render_context(portal, page = nil)
-    context = OpenStruct.new(mustache_context)
+    context = OpenStruct.new(page.try(:mustache_context) || mustache_context)
+    context.public = !page.try(:draft)
+
+    if page.nil?
+      # context.children = map_mustache_safe(children, self) 
+    else
+      context.children = map_mustache_safe(page.children, page)
+    end
+
     context.portal = portal.mustache_context(page)
     context.snippet = ->(name) { portal.snippets.where(name: name).first.try(:render, page) }
     context.pages = map_mustache_safe(portal.pages.roots.visible, page)
+
     unless page.nil?
       context.image_attachments = map_mustache_safe(page.cms_page_attachments.map(&:attachment), page)
     end
