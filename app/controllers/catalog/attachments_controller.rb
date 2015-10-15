@@ -1,4 +1,4 @@
-class Catalog::AttachmentsController < ManagerController
+class Catalog::AttachmentsController < CatalogController
   before_action :set_attachment
   authorize_resource
 
