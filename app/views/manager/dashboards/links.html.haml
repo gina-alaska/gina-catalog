@@ -1,0 +1,32 @@
+.panel-heading{ style: 'position: relative' }
+  %h3 Manage Links
+.panel-body
+  - if @links.count == 0
+    %h4 No links to manage.
+  - else
+    %table.table.table-bordered.table-striped.table-condensed.table-hover
+      %thead
+        %tr
+          %th Valid?
+          %th.col-sm-4 URL
+          %th Last Checked
+          %th Category
+          %th.col-sm-4 Catalog Record
+          %th.text-right Actions
+      %tbody
+        - @links.each do |link|
+          %tr{class: (link.valid_link == true ? '' : 'danger')}
+            %td
+              - if link.valid_link
+                Yes
+              - else
+                No
+            %td
+              = link_to link.url, link.url
+            %td= link.last_checked_at
+            %td= link.category
+            %td
+              = link_to link.entry.title, catalog_entry_path(link.entry)
+            %td.text-right
+              = link_to edit_catalog_entry_path(link.entry), class: 'btn btn-primary', title: 'Edit catalog record' do
+                %i.fa.fa-edit
