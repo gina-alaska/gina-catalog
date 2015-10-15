@@ -2,14 +2,37 @@
   %h3 Portal Summary
 .panel-body
   %dl.dl-horizontal
-    %dt Users
-    %dd=ddtext @user_count
-    %dt Catalog Records
-    %dd=ddtext @entry_count
-    %dt Downloads
-    %dd=ddtext @download_count
+    .row
+      .col-sm-6
+        %dt Users
+        %dd=ddtext @user_count
+        %dt Catalog Records
+        %dd=ddtext @entry_count
+        %dt Total Downloads
+        %dd=ddtext @download_count
+        %dt Unique Downloads
+        %dd=ddtext @download_unique_count
+      .col-sm-6
+        %dt Portal URL
+        %dd=ddtext current_portal.urls.default_url.first.url
+        %dt CMS Pages
+        %dd=ddtext @cms_page_count
+        %dt CMS Attachments
+        %dd=ddtext @cms_attachment_count
 
-  %h3 Top Record Downloads
-  - @top_downloads.each do |entry_id, count|
-    = link_entry(entry_id)
-    = count
+  %h3 Catalog Records With Top Downloads
+  %table.table.table-bordered.table-striped.table-condensed.table-hover
+    %thead
+      %tr
+        %th Record
+        %th.col-sm-2 Download Count
+        %th.col-sm-1.text-right Actions
+    %tbody
+      - @top_downloads.each do |entry_id, count|
+        %tr
+          %td= link_entry(entry_id)
+          %td= count
+          %td.text-right
+            = link_to manager_dashboard_path(entry_id), class: 'btn btn-primary', title: 'Show Downloads' do
+              %i.fa.fa-list
+            
