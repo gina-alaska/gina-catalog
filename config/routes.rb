@@ -138,7 +138,8 @@ Rails.application.routes.draw do
 
     resources :dashboards do
       collection do
-        get :downloads, as: 'downloads'
+        get :downloads, as: :download_logs
+        get :links
       end
     end
   end
