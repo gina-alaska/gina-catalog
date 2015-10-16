@@ -3,7 +3,7 @@
     .panel-heading
       %h1.panel-title Manager Menu
     .panel-body
-      = link_to edit_catalog_entry_path(entry), class: 'btn btn-default btn-block' do
+      = link_to edit_catalog_entry_path(entry), target: "_blank", class: 'btn btn-default btn-block' do
         %i.fa.fa-edit
         Edit
       - if can? :publish, @entry

@@ -20,7 +20,8 @@ class Portal < ActiveRecord::Base
   has_many :pages, class_name: 'Cms::Page', dependent: :destroy
   has_many :snippets, class_name: 'Cms::Snippet', dependent: :destroy
   has_many :themes, class_name: 'Cms::Theme', dependent: :destroy
-  belongs_to :active_cms_theme, class_name: 'Cms::Theme', dependent: :destroy
+  belongs_to :active_cms_theme, class_name: 'Cms::Theme'
+  belongs_to :default_cms_layout, class_name: 'Cms::Layout'
 
   has_many :users, through: :permissions
   has_many :activity_logs, as: :loggable
