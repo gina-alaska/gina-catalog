@@ -16,10 +16,8 @@ class Manager::DashboardsController < ManagerController
   end
 
   def downloads
-    # @downloads = DownloadLog.where(entry_id: current_portal.entry_ids)
-
     @q = DownloadLog.ransack(params[:q])
-    @q.sorts = 'name asc' if @q.sorts.empty?
+    @q.sorts = 'file_name asc' if @q.sorts.empty?
     @downloads = @q.result(distinct: true).page(params[:page])
 
     respond_to do |format|
@@ -29,6 +27,13 @@ class Manager::DashboardsController < ManagerController
   end
 
   def links
-    @links = Link.where(entry_id: current_portal.entries.pluck(:id))
+    @q = Link.where(valid_link: false).ransack(params[:q])
+    @q.sorts = 'primary_organization.name asc' if @q.sorts.empty?
+    @links = @q.result(distinct: true).page(params[:page])
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @downloads }
+    end
   end
 end

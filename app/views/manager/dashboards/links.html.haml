@@ -1,32 +1,51 @@
+- content_for :sidebar do
+  .panel.panel-default
+    .panel-heading
+      .panel-title Search Links
+    .panel-body
+      = search_form_for @q, url: links_manager_dashboards_path, html: { method: :get } do |f|
+        .form-group
+          .input-group
+            = f.search_field :primary_organizations_name_or_url_or_category_cont, class: 'form-control', placeholder: 'Search Organization, URL, Category'
+          
+            .input-group-btn
+              %button.btn.btn-default{ type: 'button', data: { behavior: 'clear-field', target: '#q_primary_organizations_name_or_url_or_category_cont', autosubmit: 'true' } }
+                %i.fa.fa-times
+              = button_tag type: 'submit', class: 'btn btn-primary' do
+                %i.fa.fa-search
+      
 .panel-heading{ style: 'position: relative' }
-  %h3 Manage Links
+  %h3 Manage Bad Links
 .panel-body
   - if @links.count == 0
-    %h4 No links to manage.
+    %h4 No links found
   - else
     %table.table.table-bordered.table-striped.table-condensed.table-hover
       %thead
         %tr
-          %th Valid?
+          %th.col-sm-1 Organization
           %th.col-sm-4 URL
-          %th Last Checked
+          %th.col-sm-2 Last Checked
           %th Category
-          %th.col-sm-4 Catalog Record
+          %th.col-sm-3 Catalog Record
+          %th.col-sm-1 Valid?
           %th.text-right Actions
       %tbody
         - @links.each do |link|
-          %tr{class: (link.valid_link == true ? '' : 'danger')}
+          %tr
             %td
-              - if link.valid_link
-                Yes
-              - else
-                No
+              = link.primary_organizations.first.acronym
             %td
               = link_to link.url, link.url
             %td= link.last_checked_at
             %td= link.category
             %td
               = link_to link.entry.title, catalog_entry_path(link.entry)
+            %td
+              - if link.valid_link
+                Yes
+              - else
+                No
             %td.text-right
-              = link_to edit_catalog_entry_path(link.entry), class: 'btn btn-primary', title: 'Edit catalog record' do
+              = link_to edit_catalog_entry_path(link.entry), class: 'btn btn-primary', title: 'Edit catalog record', target: '_blank' do
                 %i.fa.fa-edit
