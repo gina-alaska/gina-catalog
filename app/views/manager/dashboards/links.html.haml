@@ -27,8 +27,7 @@
           %th.col-sm-4 URL
           %th.col-sm-2 Last Checked
           %th Category
-          %th.col-sm-3 Catalog Record
-          %th.col-sm-1 Valid?
+          %th.col-sm-4 Catalog Record
           %th.text-right Actions
       %tbody
         - @links.each do |link|
@@ -41,11 +40,6 @@
             %td= link.category
             %td
               = link_to link.entry.title, catalog_entry_path(link.entry)
-            %td
-              - if link.valid_link
-                Yes
-              - else
-                No
             %td.text-right
               = link_to edit_catalog_entry_path(link.entry), class: 'btn btn-primary', title: 'Edit catalog record', target: '_blank' do
                 %i.fa.fa-edit
