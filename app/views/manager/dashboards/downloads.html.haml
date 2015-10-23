@@ -32,7 +32,7 @@
         - @downloads.each do |download|
           %tr
             %td= download.created_at
-            %td= download.user.name
+            %td= download.user.try(:name)
             %td= download.file_name
             %td= download.portal.try(:acronym)
             %td

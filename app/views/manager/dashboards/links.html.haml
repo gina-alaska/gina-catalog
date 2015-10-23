@@ -33,7 +33,7 @@
         - @links.each do |link|
           %tr
             %td
-              = link.primary_organizations.first.acronym
+              = link.primary_organizations.first.try(:acronym)
             %td
               = link_to link.url, link.url
             %td= link.last_checked_at
