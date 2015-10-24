@@ -8,6 +8,7 @@ class EntryOrganization < ActiveRecord::Base
 
   scope :primary, -> { where(primary: true) }
   scope :funding, -> { where(funding: true) }
+  scope :only_funding, -> { where(primary: false, funding: true) }
   scope :other, -> { where(funding: false, primary: false) }
   scope :owner_portal, ->(portal) { joins(entry: :owner_portal).references(:portals).where(portals: { id: portal.id }) }
 
