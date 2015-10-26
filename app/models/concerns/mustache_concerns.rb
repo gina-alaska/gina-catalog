@@ -26,7 +26,7 @@ module MustacheConcerns
     context = OpenStruct.new(mustache_context)
     context.portal = portal.mustache_context(page)
     context.snippet = ->(name) { portal.snippets.where(name: name).first.try(:render, page) }
-    context.pages = map_mustache_safe(portal.pages.roots.visible, page)
+    context.pages = map_mustache_safe(portal.pages.roots.visible.active, page)
     unless page.nil?
       context.image_attachments = map_mustache_safe(page.cms_page_attachments.map(&:attachment), page)
     end
