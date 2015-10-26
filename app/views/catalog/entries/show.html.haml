@@ -10,21 +10,13 @@
       .panel.panel-default
         - if @entry.attachments.geojson.any? or @entry.map_layers.any?
           = render 'map', entry: @entry
-        .panel-heading
-          %h1.panel-title Organizations
-        .panel-body
-          - @entry.primary_organizations.each do |org|
-            .text-center
-              = image_tag org.logo.thumb('300x150').url unless org.logo.nil?
-              %h4= org.name
-        .panel-body
-          %h5 Other Organizations
-          - @entry.other_organizations.each do |org|
-            .pull-left.text-center
-              = image_tag org.logo.thumb('80x80').url unless org.logo.nil?
-              %div
-                = org.acronym
-                &nbsp;
+        - if @entry.entry_organizations.any?
+          .panel-heading
+            %h1.panel-title Organizations
+          .panel-body
+            = render 'record_organizations', entry_orgs: @entry.entry_organizations.primary
+            = render 'record_organizations', entry_orgs: @entry.entry_organizations.only_funding
+            = render 'record_organizations', entry_orgs: @entry.entry_organizations.other
         .panel-heading
           %h1.panel-title Record Previews
         .panel-body
