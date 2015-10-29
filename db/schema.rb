@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150928232233) do
+ActiveRecord::Schema.define(version: 20151029215043) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -165,6 +165,7 @@ ActiveRecord::Schema.define(version: 20150928232233) do
     t.integer  "sort_order"
     t.boolean  "hidden",        default: false
     t.string   "redirect_url"
+    t.text     "description"
   end
 
   add_index "cms_pages", ["cms_layout_id"], name: "index_cms_pages_on_cms_layout_id", using: :btree
