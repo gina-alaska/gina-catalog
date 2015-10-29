@@ -2,18 +2,18 @@
   = f.error_notification
   .form-inputs
     .row
-      .col-sm-9
+      .col-sm-6
         = f.input :title, input_html: { data: { behavior: 'slugify', target: '#cms_page_slug' } }
+      .col-sm-3
+        = f.association :cms_layout, label: 'Layout'
       .col-sm-3
         = f.label 'Advanced'
         %button.btn.btn-info.btn-block{ type: 'button', data: { toggle: 'collapse', target: '#advanced-options' } } Toggle advanced options
     #advanced-options.collapse
       .row
-        .col-sm-4
+        .col-sm-6
           = f.input :slug, disabled: f.object.system_page?, hint: f.object.system_page? ? 'Cannot changed the slug of a system page' : ''
-        .col-sm-4
-          = f.association :cms_layout, label: 'Layout'
-        .col-sm-4
+        .col-sm-6
           = f.association :parent, collection: page_collection, label: 'Parent page', label_method: :depth_name, include_blank: 'Root page'
 
       = f.input :redirect_url, placeholder: 'http://example.com', hint: 'Redirect user to this url when this page is viewed'
