@@ -26,11 +26,9 @@ module MustacheConcerns
     context = OpenStruct.new(page.try(:mustache_context) || mustache_context)
     context.public = !page.try(:draft)
 
-    if page.nil?
-      # context.children = map_mustache_safe(children, self) 
-    else
-      context.children = map_mustache_safe(page.children, page)
-    end
+    context.page = page
+
+    context.parent_page = page.try(:parent).try(:mustache_context)
 
     context.portal = portal.mustache_context(page)
     context.snippet = ->(name) { portal.snippets.where(name: name).first.try(:render, page) }
