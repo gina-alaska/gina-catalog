@@ -3,11 +3,11 @@
     View Helpers
     %b.caret
   %ul.dropdown-menu
+    %li
+      %a{ href: "#", type: 'button', data: { action: 'insert', start: '{{#pages}}', end: '{{/pages}}' } } Page List
     %li.dropdown-submenu
       %a{ href: "#" } Page:
       %ul.dropdown-menu
-        %li
-          %a{ href: "#", type: 'button', data: { action: 'insert', start: '{{#pages}}', end: '{{/pages}}' } } Page List
         %li
           %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ title }}' } } Title
         %li
@@ -18,10 +18,8 @@
           %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ created_at }}' } } Created At
         %li
           %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ updated_at }}' } } Updated At
-        %li
-          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ updated_at }}' } } Updated At
     %li.dropdown-submenu
-      %a{ href: "#" } Page parent:
+      %a{ href: "#" } Parent page:
       %ul.dropdown-menu
         %li
           %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ parent_page.title }}' } } Title
@@ -29,9 +27,12 @@
           %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ parent_page.slug }}' } } Slug
         %li
           %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ parent_page.description }}' } } Description
+    %li.dropdown-submenu
+      %a{ href: "#" } Root page:
+      %ul.dropdown-menu
         %li
-          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ parent_page.created_at }}' } } Created At
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ root_page.title }}' } } Title
         %li
-          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ parent_page.updated_at }}' } } Updated At
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ root_page.slug }}' } } Slug
         %li
-          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ parent_page.updated_at }}' } } Updated At
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ root_page.description }}' } } Description

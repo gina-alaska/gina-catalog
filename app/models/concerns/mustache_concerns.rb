@@ -28,6 +28,7 @@ module MustacheConcerns
 
     context.page = page
 
+    context.child_pages = map_mustache_safe(page.children, page) unless page.nil?
     context.parent_page = page.try(:parent).try(:mustache_context)
 
     context.portal = portal.mustache_context(page)
