@@ -30,7 +30,8 @@ module MustacheConcerns
 
     context.child_pages = map_mustache_safe(page.children, page) unless page.nil?
     context.parent_page = page.try(:parent).try(:mustache_context)
-
+    context.root_page = page.try(:root).try(:mustache_context)
+    
     context.portal = portal.mustache_context(page)
     context.snippet = ->(name) { portal.snippets.where(name: name).first.try(:render, page) }
     context.pages = map_mustache_safe(portal.pages.roots.visible, page)

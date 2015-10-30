@@ -36,3 +36,21 @@
           %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ root_page.slug }}' } } Slug
         %li
           %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ root_page.description }}' } } Description
+    %li.dropdown-submenu
+      %a{ href: "#" } Portal:
+      %ul.dropdown-menu
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ portal.title }}' } } Title
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ portal.acronym }}' } } Acronym
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ portal.by_line }}' } } By Line
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ portal.description }}' } } Description
+
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ portal.contact_email }}' } } Contact Email
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ portal.description }}' } } Description
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ portal.description }}' } } Description
