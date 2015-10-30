@@ -34,11 +34,11 @@ class Cms::Page < ActiveRecord::Base
   end
 
   def should_generate_new_friendly_id?
-    if !slug?
-      true
-    else
-      false
-    end
+    !slug?
+  end
+
+  def url_path
+    ancestry_path.join('/')
   end
 
   def render
@@ -53,5 +53,14 @@ class Cms::Page < ActiveRecord::Base
 
   def page_pipeline(content, context)
     basic_pipeline(context).call(content)[:output].to_s
+  end
+
+  def mustache_context(page = nil)
+    attrs = attributes.dup
+
+    attrs['url_path'] = url_path
+    attrs['slug'] = url_path
+
+    attrs
   end
 end
