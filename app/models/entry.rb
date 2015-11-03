@@ -82,6 +82,9 @@ class Entry < ActiveRecord::Base
 
   after_create :set_owner_portal
 
+  scope :newest, -> { order(created_at: :desc).limit(10) }
+  scope :recently_updated, -> { order(updated_at: :desc).limit(10) }
+
   tracked owner: proc { |controller, _model| controller.send(:current_user) },
           entry_id: :id,
           parameters: :activity_params

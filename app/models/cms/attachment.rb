@@ -15,11 +15,12 @@ class Cms::Attachment < ActiveRecord::Base
 
   def mustache_context(page)
     context = OpenStruct.new(attributes)
+    context.image = self
     context.active = (page.attachments.images.first == self ? 'active' : '')
-    context.thumbnail = -> (size) { ::ActionView::Base.new.attachment_url(self, :file, :limit, *size.split('x')) }
-    context.fill = -> (size) { ::ActionView::Base.new.attachment_url(self, :file, :fill, *size.split('x'), 'Center') }
-    context.fit = -> (size) { ::ActionView::Base.new.attachment_url(self, :file, :fit, *size.split('x')) }
-    context.url = -> { ::ActionView::Base.new.attachment_url(self, :file) }
+    # context.thumbnail = -> (size) { ::ActionView::Base.new.attachment_url(self, :file, :limit, *size.split('x')) }
+    # context.fill = -> (size) { ::ActionView::Base.new.attachment_url(self, :file, :fill, *size.split('x'), 'Center') }
+    # context.fit = -> (size) { ::ActionView::Base.new.attachment_url(self, :file, :fit, *size.split('x')) }
+    # context.url = -> { ::ActionView::Base.new.attachment_url(self, :file) }
     context
   end
 end

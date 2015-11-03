@@ -149,6 +149,10 @@ GEM
       rubocop (~> 0.20)
     haml (4.0.6)
       tilt
+    handlebars (0.7.0)
+      handlebars-source (~> 3.0.0)
+      therubyracer (~> 0.12.1)
+    handlebars-source (3.0.3)
     hashie (3.4.2)
     hike (1.2.3)
     html-pipeline (1.7.0)
@@ -171,6 +175,7 @@ GEM
       activesupport (>= 3.0.0)
     launchy (2.4.3)
       addressable (~> 2.3)
+    libv8 (3.16.14.13)
     listen (3.0.3)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
@@ -203,7 +208,6 @@ GEM
       metaclass (~> 0.0.1)
     multi_json (1.11.2)
     multipart-post (2.0.0)
-    mustache (1.0.2)
     nenv (0.2.0)
     nested_form (0.3.2)
     netrc (0.10.3)
@@ -317,6 +321,7 @@ GEM
       ffi (>= 0.5.0)
     rdiscount (2.1.8)
     rdoc (4.2.0)
+    ref (2.0.0)
     refile (0.6.1)
       mime-types
       rest-client (~> 1.8)
@@ -395,6 +400,9 @@ GEM
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)
     stamp (0.6.0)
+    therubyracer (0.12.2)
+      libv8 (~> 3.16.14.0)
+      ref
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (1.4.1)
@@ -451,13 +459,13 @@ DEPENDENCIES
   guard-minitest
   guard-rubocop
   haml
+  handlebars
   html-pipeline
   jbuilder (~> 2.0)
   jquery-rails
   kaminari
   minitest-rails-capybara
   mocha
-  mustache
   nested_form
   omniauth
   omniauth-openid

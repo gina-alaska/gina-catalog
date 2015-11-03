@@ -38,13 +38,14 @@ class Cms::Page < ActiveRecord::Base
   end
 
   def url_path
-    ancestry_path.join('/')
+    '/' + ancestry_path.join('/')
   end
 
   def render
-    layout_context = render_context(portal, self)
-    layout_context[:mustache].content = page_pipeline(content, layout_context)
-    layout_pipeline(cms_layout.content, layout_context)
+    context = render_context(portal, self)
+    context[:data].content = basic_pipeline(context).call(content)[:output].to_s
+
+    basic_pipeline(context).call(cms_layout.content)[:output].to_s.html_safe
   end
 
   def layout_pipeline(content, context)

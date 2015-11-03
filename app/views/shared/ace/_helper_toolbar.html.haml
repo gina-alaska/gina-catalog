@@ -49,3 +49,13 @@
           %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ portal.description }}' } } Description
         %li
           %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ portal.contact_email }}' } } Contact Email
+
+    %li.dropdown-submenu
+      %a{ href: "#" } Catalog:
+      %ul.dropdown-menu
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', start: '{{#newest_entries}}', end: '{{/newest_entries}}' } } Newest entries
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ title }}' } } Title
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ description }}' } } Description

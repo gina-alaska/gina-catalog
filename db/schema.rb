@@ -165,6 +165,7 @@ ActiveRecord::Schema.define(version: 20151029215043) do
     t.integer  "sort_order"
     t.boolean  "hidden",        default: false
     t.string   "redirect_url"
+    t.boolean  "draft",         default: false
     t.text     "description"
   end
 
