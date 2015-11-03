@@ -1,7 +1,7 @@
 class Catalog::EntriesController < ManagerController
   before_action :set_cms_page
   before_action :gather_use_agreements, only: [:new, :create, :edit, :update]
-  load_and_authorize_resource
+  load_and_authorize_resource except: :map
 
   layout 'pages', only: [:show, :index]
 
