@@ -1,4 +1,4 @@
-class Catalog::ContactsController < ManagerController
+class Catalog::ContactsController < CatalogController
   load_and_authorize_resource
 
   def index

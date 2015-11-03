@@ -1,4 +1,4 @@
-class Catalog::EntriesController < ManagerController
+class Catalog::EntriesController < CatalogController
   before_action :set_cms_page
   before_action :gather_use_agreements, only: [:new, :create, :edit, :update]
   load_and_authorize_resource except: :map

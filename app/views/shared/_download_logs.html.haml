@@ -1,7 +1,4 @@
-%table.table.table-striped.table-condensed
-  %thead
-    %tr
-      %th &nbsp;
+%table.table.table-bordered.table-striped.table-condensed
   %tbody
     - entry.download_logs.order('created_at DESC').limit(50).each do |download|
       /- contact = download.contact_info

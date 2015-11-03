@@ -150,6 +150,8 @@ GEM
     haml (4.0.6)
       tilt
     hashie (3.4.2)
+    hightop (0.1.3)
+      activerecord
     hike (1.2.3)
     html-pipeline (1.7.0)
       activesupport (>= 2)
@@ -449,6 +451,7 @@ DEPENDENCIES
   guard-minitest
   guard-rubocop
   haml
+  hightop
   html-pipeline
   jbuilder (~> 2.0)
   jquery-rails
