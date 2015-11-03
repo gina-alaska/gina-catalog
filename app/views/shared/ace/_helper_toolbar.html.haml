@@ -51,10 +51,12 @@
           %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ portal.contact_email }}' } } Contact Email
 
     %li.dropdown-submenu
-      %a{ href: "#" } Catalog:
+      %a{ href: "#" } Catalog Entries:
       %ul.dropdown-menu
         %li
-          %a{ href: "#", type: 'button', data: { action: 'insert', start: '{{#newest_entries}}', end: '{{/newest_entries}}' } } Newest entries
+          %a{ href: "#", type: 'button', data: { action: 'insert', start: '{{#updated_entries}}', end: '{{/updated_entries}}' } } Recently updated
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', start: '{{#newest_entries}}', end: '{{/newest_entries}}' } } Newest
         %li
           %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ title }}' } } Title
         %li

@@ -2,35 +2,31 @@ module Glynx
   class MustacheFilter < HTML::Pipeline::Filter
     def initialize(*args)
       super(*args)
-      
+
       @handlebars = Handlebars::Context.new
       @page = data.page
       register_helpers()
     end
 
+    def entries(entries, scope, limit, block)
+      if block.nil?
+        block = limit
+        limit = 10
+      end
+      limit ||= 10
+
+      entries.limit(limit).map do |entry|
+        block.fn(entry.mustache_context(@page))
+      end.join
+    end
+
     def register_helpers
       @handlebars.register_helper(:newest_entries) do |this,limit,block|
-        if block.nil?
-          block = limit
-          limit = 10
-        end
-        limit ||= 10
-
-        current_portal.entries.active.newest.limit(limit).map do |entry|
-          block.fn(entry.mustache_context(@page))
-        end.join
+        entries(current_portal.entries.active.newest, this, limit, block)
       end
 
-      @handlebars.register_helper(:latest_entries) do |this,limit,block|
-        if block.nil?
-          block = limit
-          limit = 10
-        end
-        limit ||= 10
-
-        current_portal.entries.active.recently_updated.limit(limit).map do |entry|
-          block.fn(entry.mustache_context(@page))
-        end.join
+      @handlebars.register_helper(:updated_entries) do |this,limit,block|
+        entries(current_portal.entries.active.recently_updated, this, limit, block)
       end
 
       @handlebars.register_helper(:pages) do |this,block|
