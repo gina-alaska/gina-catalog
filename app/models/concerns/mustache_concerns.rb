@@ -25,7 +25,7 @@ module MustacheConcerns
     attrs['item'] = self.to_global_id
     attrs['url'] = h.send :"#{self.mustache_route}_path", id if h.respond_to?(:"#{self.mustache_route}_path")
 
-    attrs
+    attrs.each_with_object({}) { |item,hash| hash[item.first] = item.last.to_s }
   end
 
   def mustache_route

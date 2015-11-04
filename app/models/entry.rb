@@ -158,4 +158,12 @@ class Entry < ActiveRecord::Base
   def mustache_route
     "catalog_#{super}"
   end
+
+  def mustache_context(*args)
+    attrs = super(*args)
+
+    attrs['type'] = entry_type.name
+
+    attrs
+  end
 end

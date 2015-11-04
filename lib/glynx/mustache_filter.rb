@@ -115,10 +115,13 @@ module Glynx
       end
 
       @handlebars.register_helper(:collections) do |this,block|
-        collections = current_portal.collections.visible
+        collections = current_portal.collections.visible.order(name: :asc)
 
         if block[:hash][:name]
           collections = collections.where(name: block[:hash][:name])
+        end
+        if block[:hash][:limit]
+          collections = collections.limit(block[:hash][:limit].to_i)
         end
 
         collections.map do |collection|

@@ -57,7 +57,9 @@
       %a{ href: "#" } Collections:
       %ul.dropdown-menu
         %li
-          %a{ href: "#", type: 'button', data: { action: 'insert', start: '{{#collections}}', end: '{{/collections}}' } } List
+          %a{ href: "#", type: 'button', data: { action: 'insert', start: '{{#collections limit="10"}}', end: '{{/collections}}' } } List
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', start: '{{#collections name="10"}}', end: '{{/collections}}' } } By name
         %li
           %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ name }}' } } Name
         %li
@@ -90,3 +92,9 @@
           %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ description }}' } } Description
         %li
           %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ url }}' } } URL
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ type }}' } } Type
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ start_date }}' } } Start date
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ end_date }}' } } End date

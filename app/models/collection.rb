@@ -14,14 +14,6 @@ class Collection < ActiveRecord::Base
   }
 
   scope :visible, -> {
-    where(hidden: false).pluck(:name)
+    where(hidden: false)
   }
-
-  def mustache_context(*args)
-    context = super(*args)
-
-    context['collection'] = to_global_id.to_s
-
-    context
-  end
 end
