@@ -154,4 +154,8 @@ class Entry < ActiveRecord::Base
   def to_s
     title
   end
+
+  def mustache_route
+    "catalog_#{super}"
+  end
 end

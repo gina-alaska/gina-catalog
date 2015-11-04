@@ -28,12 +28,46 @@ module Glynx
     end
 
     def register_helpers
-      @handlebars.register_helper(:newest_entries) do |this,limit,block|
-        entries(current_portal.entries.active.newest, this, limit, block)
+      @handlebars.register_helper(:entries) do |this, context, block|
+        limit = block[:hash][:limit]
+        model = GlobalID::Locator.locate(context)
+        if model.nil?
+          ''
+        else
+          entries(model.entries, this, limit, block)
+        end
       end
 
-      @handlebars.register_helper(:updated_entries) do |this,limit,block|
-        entries(current_portal.entries.active.recently_updated, this, limit, block)
+      @handlebars.register_helper(:newest_entries) do |this,context,block|
+        if block.nil?
+          block = context
+          model = current_portal
+        else
+          model = GlobalID::Locator.locate(context)
+        end
+
+        limit = block[:hash][:limit]
+        if model.nil?
+          ''
+        else
+          entries(model.entries.active.newest, this, limit, block)
+        end
+      end
+
+      @handlebars.register_helper(:updated_entries) do |this,context,block|
+        if block.nil?
+          block = context
+          model = current_portal
+        else
+          model = GlobalID::Locator.locate(context)
+        end
+
+        limit = block[:hash][:limit]
+        if model.nil?
+          ''
+        else
+          entries(model.entries.active.recently_updated, this, limit, block)
+        end
       end
 
       @handlebars.register_helper(:pages) do |this,block|
@@ -78,6 +112,18 @@ module Glynx
         current_page.cms_page_attachments.map(&:attachment).map do |image|
           block.fn(image.mustache_context(data.page))
         end.join if current_page
+      end
+
+      @handlebars.register_helper(:collections) do |this,block|
+        collections = current_portal.collections
+
+        if block[:hash][:name]
+          collections = collections.where(name: block[:hash][:name])
+        end
+
+        collections.map do |collection|
+          block.fn(collection.mustache_context(data.page))
+        end.join
       end
 
       @handlebars.partial_missing do |name|

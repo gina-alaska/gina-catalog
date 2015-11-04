@@ -54,6 +54,13 @@
           %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ fill image size="100x100" }}' } } Thumbnail (fill)
 
     %li.dropdown-submenu
+      %a{ href: "#" } Collections:
+      %ul.dropdown-menu
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', start: '{{#collections}}', end: '{{/collections}}' } } List
+
+
+    %li.dropdown-submenu
       %a{ href: "#" } Portal:
       %ul.dropdown-menu
         %li
