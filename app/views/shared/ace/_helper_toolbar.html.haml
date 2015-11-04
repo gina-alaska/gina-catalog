@@ -36,6 +36,23 @@
           %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ root_page.slug }}' } } Slug
         %li
           %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ root_page.description }}' } } Description
+
+    %li.dropdown-submenu
+      %a{ href: "#" } Image attachments:
+      %ul.dropdown-menu
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', start: '{{#image_attachments}}', end: '{{/image_attachments}}' } } List
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ title }}' } } Title
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ description }}' } } Description
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ thumbnail image size="100x100" }}' } } Thumbnail (limit)
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ fit image size="100x100" }}' } } Thumbnail (fit)
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ fill image size="100x100" }}' } } Thumbnail (fill)
+
     %li.dropdown-submenu
       %a{ href: "#" } Portal:
       %ul.dropdown-menu

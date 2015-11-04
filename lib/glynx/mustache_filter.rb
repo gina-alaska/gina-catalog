@@ -20,6 +20,13 @@ module Glynx
       end.join
     end
 
+    def image_thumbnail_tag(image, type, options)
+      size = options[:hash][:size] || '100x100'
+      Handlebars::SafeString.new(
+        ::ActionView::Base.new.attachment_image_tag(image, :file, type, *size.split('x'))
+      )
+    end
+
     def register_helpers
       @handlebars.register_helper(:newest_entries) do |this,limit,block|
         entries(current_portal.entries.active.newest, this, limit, block)
@@ -50,24 +57,21 @@ module Glynx
       end
 
       @handlebars.register_helper(:thumbnail) do |this,image,options|
-        size = options[:hash][:size]
-        Handlebars::SafeString.new(
-          ::ActionView::Base.new.attachment_image_tag(image, :file, :limit, *size.split('x'))
-        )
+        image_thumbnail_tag(image, :limit, options)
+      end
+
+      # TODO: remove after this fixing all portals
+      # adding in for compatibility with glynx 2.0
+      @handlebars.register_helper(:thumb) do |this,image,options|
+        image_thumbnail_tag(image, :limit, options)
       end
 
       @handlebars.register_helper(:fit) do |this,image,options|
-        size = options[:hash][:size]
-        Handlebars::SafeString.new(
-          ::ActionView::Base.new.attachment_image_tag(image, :file, :fit, *size.split('x'))
-        )
+        image_thumbnail_tag(image, :fit, options)
       end
 
       @handlebars.register_helper(:fill) do |this,image,options|
-        size = options[:hash][:size]
-        Handlebars::SafeString.new(
-          ::ActionView::Base.new.attachment_image_tag(image, :file, :fill, *size.split('x'))
-        )
+        image_thumbnail_tag(image, :fill, options)
       end
 
       @handlebars.register_helper(:image_attachments) do |this,block|
