@@ -58,7 +58,10 @@
       %ul.dropdown-menu
         %li
           %a{ href: "#", type: 'button', data: { action: 'insert', start: '{{#collections}}', end: '{{/collections}}' } } List
-
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ name }}' } } Name
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ description }}' } } Description
 
     %li.dropdown-submenu
       %a{ href: "#" } Portal:
@@ -78,10 +81,12 @@
       %a{ href: "#" } Catalog Entries:
       %ul.dropdown-menu
         %li
-          %a{ href: "#", type: 'button', data: { action: 'insert', start: '{{#updated_entries}}', end: '{{/updated_entries}}' } } Recently updated
+          %a{ href: "#", type: 'button', data: { action: 'insert', start: '{{#updated_entries limit="5"}}', end: '{{/updated_entries}}' } } Recently updated
         %li
-          %a{ href: "#", type: 'button', data: { action: 'insert', start: '{{#newest_entries}}', end: '{{/newest_entries}}' } } Newest
+          %a{ href: "#", type: 'button', data: { action: 'insert', start: '{{#newest_entries limit="5"}}', end: '{{/newest_entries}}' } } Newest
         %li
           %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ title }}' } } Title
         %li
           %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ description }}' } } Description
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ url }}' } } URL
