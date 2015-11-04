@@ -188,6 +188,16 @@ class Catalog::EntriesController < ManagerController
     end
   end
 
+  def exports
+    @search_params = JSON.parse(params["serialized_search"]).symbolize_keys
+
+    respond_to do |format|
+      format.html { search(params[:page], params[:limit] || 20) }
+      format.geojson { search(params[:page], params[:limit] || 500) }
+      format.json
+    end
+  end
+
   protected
 
   def entry_params
