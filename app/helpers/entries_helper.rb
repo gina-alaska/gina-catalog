@@ -8,7 +8,7 @@ module EntriesHelper
   end
 
   def check_export_visible_params(name)
-    !params['visible'].present? or params['visible'][name] == '1'
+    !params['visible'].present? || params['visible'][name] == '1'
   end
 
   def limit_select
