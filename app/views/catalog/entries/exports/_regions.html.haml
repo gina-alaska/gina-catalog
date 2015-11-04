@@ -1,0 +1,5 @@
+%b Region(s):
+- if !item.regions.empty?
+  = item.regions.collect{|loc| loc.name}.join(", ") + "; "
+- else
+  ="none"

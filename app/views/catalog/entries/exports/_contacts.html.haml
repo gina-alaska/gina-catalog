@@ -1,0 +1,10 @@
+%b Primary Contact:
+- if item.primary_contacts.blank?
+  ="none; "
+- else
+  = item.primary_contacts.collect{|contact| "#{contact.name}"}.join(", ")
+%b Other contact(s):
+- if !item.other_contacts.blank?
+  = item.other_contacts.collect{|contact| "#{contact.name}"}.join(", ")
+- else
+  ="none"

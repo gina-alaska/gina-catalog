@@ -1,0 +1,6 @@
+%b Links(s):
+- if !item.links.empty?
+  - item.links.each do |link|
+    = "#{link.display_text}; #{link.url}"
+- else
+  ="none"

@@ -1,0 +1,5 @@
+%b Data Type(s):
+- if !item.data_types.empty?
+  = item.data_types.collect{|data| data.name}.join(", ")
+- else
+  ="none"
