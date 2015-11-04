@@ -115,7 +115,7 @@ module Glynx
       end
 
       @handlebars.register_helper(:collections) do |this,block|
-        collections = current_portal.collections
+        collections = current_portal.collections.visible
 
         if block[:hash][:name]
           collections = collections.where(name: block[:hash][:name])
