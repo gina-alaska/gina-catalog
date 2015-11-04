@@ -10,11 +10,23 @@
   }
 }
 
-.alert-floating {
-    position:fixed; 
+.floating-flashes {
+    position:absolute; 
     bottom: 0px; 
-    left: 0px; 
-    width: 50%;
-    z-index:9999; 
-    border-radius:0px
+    right: 8px; 
+    text-align: right;
+    max-width: 50%;
+
+    .alert {
+      text-align: left;
+      width: auto !important;
+      padding-right: 40px;
+      margin-bottom: 10px;
+    }
+
+    .close {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+    }
 }
