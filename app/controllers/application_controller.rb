@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from CanCan::AccessDenied do |_exception|
     if signed_in?
-      redirect_to '/permission_denied'
+      redirect_to permission_denied_path
     else
       session[:redirect_back_to] = request.original_url
       redirect_to login_path
