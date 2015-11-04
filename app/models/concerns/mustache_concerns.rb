@@ -20,12 +20,19 @@ module MustacheConcerns
   end
 
   def mustache_context(page = nil)
-    attrs = attributes.dup
+    attrs = mustache_sanitize(attributes)
 
     attrs['item'] = self.to_global_id
+    attrs[self.class.name.parameterize] = mustache_sanitize(attributes)
     attrs['url'] = h.send :"#{self.mustache_route}_path", id if h.respond_to?(:"#{self.mustache_route}_path")
 
-    attrs.each_with_object({}) { |item,hash| hash[item.first] = item.last.to_s }
+    attrs
+  end
+
+  def mustache_sanitize(items)
+    items.each_with_object({}) do |item,hash|
+      hash[item.first] = item.last.to_s
+    end
   end
 
   def mustache_route
