@@ -4,7 +4,6 @@ module Glynx
       super(*args)
 
       @handlebars = Handlebars::Context.new
-      @page = data.page
       register_helpers()
     end
 
@@ -15,8 +14,8 @@ module Glynx
       end
       limit ||= 10
 
-      entries.limit(limit).map do |entry|
-        block.fn(entry.mustache_context(@page))
+      entries.published.limit(limit).map do |entry|
+        block.fn(entry.mustache_context(current_page))
       end.join
     end
 
@@ -28,6 +27,10 @@ module Glynx
     end
 
     def register_helpers
+      @handlebars.register_helper(:parent_portal) do |this,block|
+        block.fn(current_portal.parent.mustache_context) unless current_portal.parent.nil?
+      end
+
       @handlebars.register_helper(:entries) do |this, context, block|
         limit = block[:hash][:limit]
         model = GlobalID::Locator.locate(context)
@@ -141,11 +144,11 @@ module Glynx
     end
 
     def current_portal
-      context[:data].portal
+      data.portal
     end
 
     def current_page
-      context[:data].page
+      data.page
     end
 
     def clean_context

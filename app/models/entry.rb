@@ -84,6 +84,7 @@ class Entry < ActiveRecord::Base
 
   scope :newest, -> { order(created_at: :desc).limit(10) }
   scope :recently_updated, -> { order(updated_at: :desc).limit(10) }
+  scope :published, -> { where('published_at <= ?', Time.zone.now) }
 
   tracked owner: proc { |controller, _model| controller.send(:current_user) },
           entry_id: :id,
