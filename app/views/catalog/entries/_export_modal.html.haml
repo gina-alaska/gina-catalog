@@ -8,7 +8,7 @@
       .modal-body
         .panel
           %p Select report elements to include:
-          = bootstrap_form_for export_catalog_entries_path do |f| 
+          = bootstrap_form_tag url: exports_catalog_entries_path, method: :get do |f| 
             = f.hidden_field 'serialized_search', value: @search_params.to_json
             .row
               .col-sm-3
@@ -41,7 +41,7 @@
               .col-sm-4
                 = f.select :limit, options_for_select(limit_select, @limit), hide_label: true
               .col-sm-8
-                = f.text_field :description_chars, value: params["description_chars"], placeholder: "500", label: 'Characters in Description', layout: :horizontal, label_col: 'col-sm-7', control_col: 'col-sm-5'
+                = f.text_field :description_chars, value: 500, label: 'Characters in Description', layout: :horizontal, label_col: 'col-sm-7', control_col: 'col-sm-5'
             .row
             .modal-footer.text-right
               = f.primary "Export"
