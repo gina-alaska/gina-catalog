@@ -11,6 +11,8 @@
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   %body
+    .floating-flashes
+      = render 'layouts/flash_messages'
     .public= render 'layouts/navbar'
     .cms-page-content.page
       = render 'pages/theme', extend_body: true
