@@ -88,7 +88,7 @@ Rails.application.routes.draw do
         get :preview, on: :member
       end
       get :map
-      get :export, on: :collection
+      get :exports, on: :collection
     end
 
     resources :tags, constraints: { id: /[^\\]+/ } do
