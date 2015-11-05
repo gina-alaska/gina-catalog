@@ -1,0 +1,8 @@
+%template
+  %a.thumbnail{ id: "document-{{id}}", href: "#add-link", title: "{{name}} - {{description}}", data: { action: action, url: '{{link_url}}' }, style: 'display: inline-block;' }
+    .text-center
+      {{name}}
+      %br/
+      %abbr{ title: "{{file_filename}}" }
+        {{filename}}
+    %img{ src: "{{preview_url}}" }

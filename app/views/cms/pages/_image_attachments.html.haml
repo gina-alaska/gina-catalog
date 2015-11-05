@@ -1,0 +1,50 @@
+.panel.panel-default
+  .panel-heading
+    %h1.panel-title Image Attachments
+  %table.table.table-striped
+    %thead
+      %tr
+        %th Preview
+        %th Info
+        %th.text-right Actions
+    %tbody
+      - page.cms_page_attachments.each do |pa|
+        %tr
+          %td= attachment_image_tag pa.attachment, :file, :limit, 100, 100
+          %td
+            %p
+              %strong Name:
+              = pa.attachment.name
+
+              - if pa.attachment.description.present?
+                %br/
+                %strong Description:
+                = pa.attachment.description
+
+              %br/
+              %strong Filename:
+              = pa.attachment.file_filename
+          %td.text-right
+            .btn-group
+              = link_to up_cms_page_attachment_path(page, pa.attachment), method: :patch, class: "btn btn-default #{pa.first? ? 'disabled' : ''}" do
+                %i.fa.fa-angle-up
+              = link_to down_cms_page_attachment_path(page, pa.attachment), method: :patch, class: "btn btn-default #{pa.last? ? 'disabled' : ''}" do
+                %i.fa.fa-angle-down
+            .btn-group
+              = link_to remove_cms_page_attachment_path(page, pa.attachment), method: :patch, class: 'btn btn-danger' do
+                Remove
+
+
+#image-attachment-modal.modal.fade
+  .modal-dialog.modal-lg
+    .modal-content
+      .modal-header
+        %button.close{ data: { dismiss: 'modal' } }
+          %span &times;
+        %h4 Image attachments
+      .modal-body
+        - current_portal.cms_attachments.images.where.not(id: page.attachment_ids).find_each do |i|
+          = link_to add_cms_page_attachment_path(page, i), method: :patch, class: 'thumbnail', style: 'display: inline-block;' do
+            = attachment_image_tag(i, :file, :fill, 100, 100, fallback: "default.png")
+      .modal-footer
+        %button.btn.btn-primary{ data: { dismiss: 'modal' } } Close

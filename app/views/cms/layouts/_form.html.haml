@@ -1,0 +1,22 @@
+= simple_form_for(@cms_layout) do |f|
+  .form-inputs
+    = f.input :name
+    = f.input :content, label: false, input_html: { class: 'hidden' }
+
+
+    .panel.panel-default{ data: { editor: 'ace', target: '#cms_layout_content', mode: 'html_ruby' } }
+      %ul.nav
+        .btn-toolbar.navbar-btn{ style: 'padding-left: 5px;'}
+          = render 'shared/ace/base_toolbar'
+          = render 'shared/ace/html_toolbar'
+          = render 'shared/ace/helper_toolbar'
+          = render 'shared/ace/attachment_toolbar'
+      #content-editor.editor
+
+  .form-actions.text-right
+    = f.button :submit, class: 'btn btn-default'
+
+- content_for :help do
+  %code {{{content}}}
+  \-
+  controls where content from the page will be shown

@@ -12,7 +12,16 @@
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   %body
-    = render 'layouts/manager_header'
+    = render 'layouts/navbar'
     .container-fluid
+      = render 'layouts/manager/mainmenu'
+      / = render 'layouts/manager/sidebar'
       = render 'layouts/flash_messages'
-      = yield
+      - if content_for?(:sidebar)
+        .row
+          .col-sm-3
+            = content_for :sidebar
+          .col-sm-9
+            = yield
+      - else
+        = yield

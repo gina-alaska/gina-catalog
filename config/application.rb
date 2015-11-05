@@ -6,10 +6,13 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+Dotenv::Railtie.load
+
 module Glynx
   class Application < Rails::Application
+    require 'glynx/mustache_filter'
     # Use the responders controller from the responders gem
-    config.app_generators.scaffold_controller :responders_controller
+    # config.app_generators.scaffold_controller :responders_controller
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
@@ -18,6 +21,7 @@ module Glynx
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
     # config.time_zone = 'Central Time (US & Canada)'
+    config.time_zone = 'Alaska'
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
@@ -25,5 +29,15 @@ module Glynx
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
+
+    config.middleware.insert_before 0, "Rack::Cors", debug: true, logger: (-> { Rails.logger }) do
+      allow do
+        origins '*'
+        resource '/catalog/entries/*',
+                 headers: :any,
+                 methods: [:get, :options, :head],
+                 max_age: 3628800
+      end
+    end
   end
 end

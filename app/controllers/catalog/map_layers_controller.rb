@@ -1,4 +1,4 @@
-class Catalog::MapLayersController < ApplicationController
+class Catalog::MapLayersController < CatalogController
   load_and_authorize_resource
 
   def index
@@ -34,7 +34,7 @@ class Catalog::MapLayersController < ApplicationController
       if @map_layer.save
         flash[:notice] = 'Map layer was successfully created.'
         format.html { redirect_to catalog_map_layers_path }
-        format.js { render nothing: true }
+        format.js
       else
         format.html { render action: 'new' }
         format.js { render action: 'new' }

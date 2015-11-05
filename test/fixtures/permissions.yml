@@ -5,13 +5,15 @@ one:
   portal: one
   roles:
     cms_manager: true
+    data_entry: true
     data_manager: true
     portal_manager: true
 
 two:
   portal: one
   roles:
-    cms_manager: true
+    cms_manager: false
+    data_entry: false
     data_manager: false
     portal_manager: false
 
@@ -19,6 +21,7 @@ three:
   portal: one
   roles:
     cms_manager: false
+    data_entry: false
     data_manager: true
     portal_manager: false
 
@@ -26,6 +29,7 @@ four:
   portal: one
   roles:
     cms_manager: false
+    data_entry: false
     data_manager: false
     portal_manager: true
 
@@ -34,6 +38,7 @@ admin:
   portal: one
   roles:
     cms_manager: true
+    data_entry: true
     data_manager: true
     portal_manager: true
 
@@ -42,5 +47,15 @@ portal_permission:
   portal: one
   roles:
     cms_manager: true
+    data_entry: true
     data_manager: true
     portal_manager: true
+
+data_manager:
+  user: data_manager       
+  portal: one
+  roles:
+    cms_manager: false
+    data_entry: false
+    data_manager: true
+    portal_manager: false

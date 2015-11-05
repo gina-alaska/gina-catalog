@@ -4,7 +4,7 @@ one:
   category: MyString
   display_text: MyString
   url: MyString
-  entry_id: 1
+  entry: one
   valid_link: false
   last_checked_at: 2014-12-04
 
@@ -12,7 +12,7 @@ two:
   category: MyString
   display_text: MyString
   url: MyString
-  entry_id: 1
+  entry: one
   valid_link: false
   last_checked_at: 2014-12-04
 
@@ -20,7 +20,7 @@ good_pdf:
   category: "PDF"
   display_text: MyString
   url: "http://mytest.com/test.pdf"
-  entry_id: 1
+  entry: one
   valid_link: true
   last_checked_at: 2014-12-04
 
@@ -28,6 +28,14 @@ bad_pdf:
   category: "PDF"
   display_text: MyString
   url: "http://mytest.com/test.doc"
-  entry_id: 1
+  entry: one
+  valid_link: true
+  last_checked_at: 2014-12-04
+
+bad_primary_org:
+  category: "PDF"
+  display_text: MyString
+  url: "http://mytest.com/test.doc"
+  entry: no_primary_org
   valid_link: true
   last_checked_at: 2014-12-04

@@ -1,0 +1,11 @@
+- confirm = "Are you sure? This will remove #{tag.taggings_count.to_s} tags from system!"
+%tr
+  %td
+    =tag.name
+  %td
+    = tag.taggings_count
+  %td.text-right
+    =link_to catalog_tag_path(tag.name), class: 'btn btn-primary', title: 'Show Entries' do
+      %i.fa.fa-file-text-o        
+    = link_to remove_catalog_tag_path(tag.name), method: :patch, data: { confirm: confirm }, class: 'btn btn-danger', title: 'Delete Tag' do
+      %i.fa.fa-trash-o

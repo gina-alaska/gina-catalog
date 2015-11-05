@@ -1,0 +1,40 @@
+.panel.panel-default
+  .panel-heading
+    %h1.panel-title CMS Attachments
+
+  %table.table.table-striped
+    %thead
+      %tr
+        %th Preview
+        %th Name
+        %th File filename
+        %th File size
+        %th File type
+        %th.col-sm-2
+    %tbody
+      - @cms_attachments.each do |cms_attachment|
+        %tr
+          %td
+            - if cms_attachment.image?
+              = attachment_image_tag(cms_attachment, :file, :limit, 200, 50)
+            - else
+              = image_tag('document.png', height: 50)
+          %td= cms_attachment.name
+          %td= cms_attachment.file_filename
+          %td= number_to_human_size cms_attachment.file_size
+          %td
+            %abbr{ title: cms_attachment.file_content_type }
+              = MIME::Types[cms_attachment.file_content_type].first.try(:friendly) || 'Unknown'
+          %td.text-right
+            .btn-group.btn-group-sm
+              = link_to attachment_url(cms_attachment, :file), class: 'btn btn-default', title: 'Permalink' do
+                %i.fa.fa-fw.fa-link{ }
+              = link_to [:edit, cms_attachment], class: 'btn btn-primary', title: 'Edit' do
+                %i.fa.fa-fw.fa-edit{  }
+              = link_to cms_attachment, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger', title: 'delete' do
+                %i.fa.fa-fw.fa-trash{  }
+
+- content_for :sidebar_menu do
+  = link_to new_cms_attachment_path, class: 'list-group-item list-group-item-success' do
+    %i.fa.fa-plus.fa-fw
+    New attachment

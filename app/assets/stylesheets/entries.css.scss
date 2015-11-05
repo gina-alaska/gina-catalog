@@ -2,12 +2,47 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 .search-results {
-  padding-left: 0px;
+  padding-left: 0;
+
+  .results-heading {
+    padding: 8px;
+    background-color: #fff;
+    margin-bottom: 0px;
+    border-radius: 5px 5px 0 0;
+
+  }
+
+  .results-body {
+    clear: both;
+    background-color: #fff;
+  }
+
+  .results-footer {
+    padding: 10px;
+    border-top: 1px solid #dfdfdf;
+    background-color: #fff;
+    border-radius: 0 0 5px 5px;
+  }
 }
 
-.entry-results {
-  clear: both;
+.full-record {
+  border-radius: 5px;
+  padding: 8px 15px;
+  background-color: #fff;
 
+  .title {
+    margin-top: 0px;
+  }
+  .tabbed {
+    margin: 0 -15px;
+
+    .tab-pane {
+      padding: 5px 15px;
+    }
+  }
+}
+
+.results-body {
   h4 {
     margin-right: 30px;
   }
@@ -83,12 +118,26 @@
     vertical-align: top;
   }
 }
-  
+
 .result .tag {
-  margin-bottom: 5px; 
+  margin-bottom: 5px;
   font-size: 15px;
   }
 
 dl.download-logs {
   margin-bottom: 10px;
+}
+
+.navbar-header .navbar-title {
+  font-size: 16px;
+  color: #000;
+}
+
+.geojson-info {
+  div { margin-bottom: 5px; }
+  .title { font-weight: bold; }
+}
+
+.geojson-info div:empty {
+  display:none;
 }

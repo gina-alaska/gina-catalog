@@ -1,0 +1,12 @@
+# Read about fixtures at
+# http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  portal: one
+  content: MyText
+
+two:
+  name: MyString
+  portal: one
+  content: MyText

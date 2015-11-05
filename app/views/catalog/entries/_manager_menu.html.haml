@@ -1,0 +1,26 @@
+- if can? :view_manager_menu, current_user
+  .panel.panel-default
+    .panel-heading
+      %h1.panel-title Manager Menu
+    .panel-body
+      = link_to edit_catalog_entry_path(entry), target: "_blank", class: 'btn btn-default btn-block' do
+        %i.fa.fa-edit
+        Edit
+      - if can? :publish, @entry
+        - if !entry.published?
+          = link_to publish_catalog_entry_path(entry), method: :patch, class: 'btn btn-default btn-block', data: { confirm: 'Are you sure?' } do
+            %i.fa.fa-thumbs-up
+            Publish
+        - else
+          = link_to unpublish_catalog_entry_path(entry), method: :patch, class: 'btn btn-default btn-block', data: { confirm: 'Are you sure?' } do
+            %i.fa.fa-thumbs-down
+            Unpublish
+      - if can? :archive, @entry
+        - if entry.archived?
+          = link_to unarchive_catalog_entry_path(entry), method: :patch, class: 'btn btn-default btn-block', data: { confirm: 'Are you sure?' } do
+            %i.fa.fa-archive
+            Restore Record
+        - else
+          = button_tag class: 'btn btn-danger btn-block', data: { toggle: 'modal', target: '#archive-modal' } do
+            %i.fa.fa-archive
+            Archive

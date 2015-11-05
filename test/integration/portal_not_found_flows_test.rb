@@ -18,7 +18,7 @@ class PortalNotFoundFlowsTest < ActionDispatch::IntegrationTest
   end
 
   test 'valid portal request to portal_not_found should redirect to root' do
-    host! 'catalog.192.168.222.225.xip.io'
+    host! 'test.host'
     get_via_redirect '/portal_not_found'
     assert_equal '/', path
   end

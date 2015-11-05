@@ -10,14 +10,14 @@ module EntriesControllerSearchConcerns
       iso_topics: organize_facets(@entries.facets['iso_topic_ids'], IsoTopic),
       entry_types: organize_facets(@entries.facets['entry_type_name']),
       data_types: organize_facets(@entries.facets['data_type_ids'], DataType),
-      regions: organize_facets(@entries.facets['region_ids'], Region),      
+      regions: organize_facets(@entries.facets['region_ids'], Region),
       status: organize_facets(@entries.facets['status']),
       primary_organizations: organize_facets(@entries.facets['primary_organization_ids'], Organization, :id, :acronym_with_name),
       funding_organizations: organize_facets(@entries.facets['funding_organization_ids'], Organization, :id, :acronym_with_name),
       organization_categories: organize_facets(@entries.facets['organization_categories']),
       primary_contacts: organize_facets(@entries.facets['primary_contact_ids'], Contact),
       other_contacts: organize_facets(@entries.facets['contact_ids'], Contact),
-      archived?: organize_facets(@entries.facets['archived?'])
+      archived: organize_facets(@entries.facets['archived?'])
     ) if facets?
 
     # logger.info "*****FACETS*******" + @entries.facets['archived?'].inspect
@@ -47,7 +47,7 @@ module EntriesControllerSearchConcerns
     iso_topics:               :iso_topic_ids,
     entry_type_name:          :entry_type_name,
     data_types:               :data_type_ids,
-    regions:                  :region_ids,    
+    regions:                  :region_ids,
     status:                   :status,
     primary_organizations:    :primary_organization_ids,
     funding_organizations:    :funding_organization_ids,
@@ -65,8 +65,10 @@ module EntriesControllerSearchConcerns
       @search_params = {}
       if params[:search].present?
         @search_params = params.require(:search).permit(:query, *fields)
+      else
+        @search_params[:order] = 'title'
       end
-      @search_params[:archived?] ||= false
+      @search_params[:archived] ||= false
     end
 
     @search_params

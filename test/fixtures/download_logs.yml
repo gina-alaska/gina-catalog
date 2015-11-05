@@ -4,13 +4,19 @@
 one:
   file_name: MyName
   user_agent: MyText
-  user: 
-  entry: 
-  portal:
+  user: one 
+  entry: one
+  portal: one
 
 two:
   file_name: MyName
   user_agent: MyText
-  user: 
-  entry: 
-  portal:
+  user: one
+  entry: one 
+  portal: one
+
+no_user:
+  file_name: MyName
+  user_agent: MyText
+  entry: one
+  portal: one

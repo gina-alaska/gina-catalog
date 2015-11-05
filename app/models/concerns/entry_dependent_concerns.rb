@@ -14,6 +14,10 @@ module EntryDependentConcerns
     deletable_without_entries? && entries.empty?
   end
 
+  def published?
+    !published_at.nil? && published_at <= Time.now.utc
+  end
+
   def check_for_entries
     return if entries.empty?
 

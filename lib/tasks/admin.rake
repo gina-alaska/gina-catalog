@@ -1,5 +1,6 @@
 require 'import'
 namespace :admin do
+  PublicActivity.enabled = false
   desc 'Set user to global admin'
   task :set, [:email] => :environment do |_t, args|
     email = args[:email]
@@ -27,9 +28,9 @@ namespace :admin do
       puts 'There was an error trying to set the user as a global admin'
     end
   end
- 
-  desc 'Load items (organizations/contact/regions) that do not require a catalog'
-  task load: ['load:organizations', 'load:contacts', 'load:regions']
+
+  desc 'Load all items'
+  task load: ['load:regions', 'load:collections', 'load:use_agreements', 'load:organizations', 'load:contacts', 'load:entries']
 
   namespace :load do
     desc 'Load agencies from api'
@@ -46,17 +47,6 @@ namespace :admin do
     task regions: :environment do
       Import::Region.fetch
     end
-
-    # Loaded from seeds file
-#    desc 'Load data types from api'
-#    task data_types: :environment do
-#      Import::DataType.fetch
-#    end
-    
-#    desc 'Load ISO topics from api'
-#    task iso_topics: :environment do
-#      Import::IsoTopic.fetch
-#    end
 
     desc 'Import collections from api (catalog required)'
     task collections: :environment do

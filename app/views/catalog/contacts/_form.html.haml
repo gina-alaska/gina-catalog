@@ -1,14 +1,18 @@
-= bootstrap_form_for [:catalog, @contact], layout: :horizontal, label_col: 'col-lg-3 col-md-3', control_col: 'col-lg-9 col-md-9' do |f|
-  = f.alert_message "Please fix the errors below.", error_summary: false
-  = f.text_field :name
-  = f.email_field :email
-  = f.phone_field :phone_number, placeholder: "(999)999-9999", pattern: "[0-9()-]+", title: "Please use only numerals,(), and -."
-  = f.text_field :job_title
+#contact-form
+  - ajax ||= false
+  - modal ||= false
+  = bootstrap_form_for [:catalog, @contact], layout: :horizontal, label_col: 'col-lg-3 col-md-3', control_col: 'col-lg-9 col-md-9', remote: ajax do |f|
 
-  .form-action
-    = link_to :back, class: 'btn btn-default' do
-      %i.fa.fa-arrow-left
-      Cancel
+    = f.alert_message "Please fix the errors below.", error_summary: false
+    = f.text_field :name
+    = f.email_field :email
+    = f.phone_field :phone_number, placeholder: "(999)999-9999", pattern: "[0-9()-]+", title: "Please use only numerals,(), and -."
+    = f.text_field :job_title
 
-    .pull-right
+    .form-action.text-right
       = f.primary
+
+      - if !modal
+        = link_to :back, class: 'btn btn-default pull-left' do
+          %i.fa.fa-arrow-left
+          Cancel

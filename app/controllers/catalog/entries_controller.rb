@@ -1,9 +1,28 @@
-class Catalog::EntriesController < ApplicationController
+class Catalog::EntriesController < CatalogController
+  before_action :set_cms_page
   before_action :gather_use_agreements, only: [:new, :create, :edit, :update]
-  load_and_authorize_resource
+  load_and_authorize_resource except: :map
+
+  layout 'pages', only: [:show, :index]
+
+  include EntriesControllerSearchConcerns
+
+  def index
+    respond_to do |format|
+      format.html { search(params[:page], params[:limit] || 20) }
+      format.geojson { search(params[:page], params[:limit] || 500) }
+      format.json
+    end
+  end
 
   def show
-    redirect_to @entry
+    @archive_item = ArchiveItem.new
+    @activities = PublicActivity::Activity.where(entry_id: @entry.id).order(created_at: :desc).limit(20)
+
+    respond_to do |format|
+      format.html
+      format.geojson
+    end
   end
 
   def new
@@ -26,8 +45,8 @@ class Catalog::EntriesController < ApplicationController
           format.html { redirect_to edit_catalog_entry_path(@entry) }
           format.js { redirect_via_turbolinks_to edit_catalog_entry_path(@entry) }
         else
-          format.html { redirect_to entries_path }
-          format.js { redirect_via_turbolinks_to catalog_entries_path }
+          format.html { redirect_to catalog_entry_path(@entry) }
+          format.js { redirect_via_turbolinks_to catalog_entry_path(@entry) }
         end
       else
         format.html { render action: 'new' }
@@ -51,9 +70,9 @@ class Catalog::EntriesController < ApplicationController
           format.html { redirect_to edit_catalog_entry_path(@entry) }
           format.js { redirect_via_turbolinks_to edit_catalog_entry_path(@entry) }
         when 'Save & Close'
-          format.html { redirect_to entries_path }
-          format.js { redirect_via_turbolinks_to entries_path }
-        when 'remove map layer'
+          format.html { redirect_to catalog_entry_path(@entry) }
+          format.js { redirect_via_turbolinks_to catalog_entry_path(@entry) }
+        else
           format.js
         end
         format.json { head :nocontent }
@@ -70,21 +89,63 @@ class Catalog::EntriesController < ApplicationController
 
   def archive
     @entry.archive!(params[:message], current_user)
+    @entry.create_activity(:archive)
 
     respond_to do |format|
       flash[:success] = "Catalog record #{@entry.title} has been archived."
-      format.html { redirect_to @entry }
+      format.html { redirect_to catalog_entry_path(@entry) }
       format.json { head :no_content }
     end
   end
 
   def unarchive
     @entry.unarchive!
+    @entry.create_activity(:unarchive)
 
     respond_to do |format|
       flash[:success] = "Catalog record #{@entry.title} has been restored."
-      format.html { redirect_to @entry }
+      format.html { redirect_to catalog_entry_path(@entry) }
       format.json { head :no_content }
+    end
+  end
+
+  def publish
+    respond_to do |format|
+      if @entry.publish
+        # @entry.activity_logs.create(activity: 'Update', user: current_user, log: { message: "Published by #{current_user.first_name}" })
+
+        flash[:success] = "Catalog record #{@entry.title} has been published."
+        format.html { redirect_to catalog_entry_path(@entry) }
+        format.json { head :no_content }
+      else
+        flash[:error] = "Catalog record #{@entry.title} could not be published."
+        format.html { redirect_to catalog_entry_path(@entry) }
+        format.json { render json: @entry.errors, status: :unprocessable_entity }
+        format.js do
+          flash.now[:error] = @entry.errors.full_messages
+          render 'form_response'
+        end
+      end
+    end
+  end
+
+  def unpublish
+    respond_to do |format|
+      if @entry.unpublish
+        # @entry.activity_logs.create(activity: 'Update', user: current_user, log: { message: "Unpublished by #{current_user.first_name}" })
+
+        flash[:success] = "Catalog record #{@entry.title} has been unpublished."
+        format.html { redirect_to catalog_entry_path(@entry) }
+        format.json { head :no_content }
+      else
+        flash[:error] = "Catalog record #{@entry.title} could not be unpublished."
+        format.html { render action: '@entry' }
+        format.json { render json: @entry.errors, status: :unprocessable_entity }
+        format.js do
+          flash.now[:error] = @entry.errors.full_messages
+          render 'form_response'
+        end
+      end
     end
   end
 
@@ -93,8 +154,37 @@ class Catalog::EntriesController < ApplicationController
 
     respond_to do |format|
       flash[:success] = "Catalog record #{@entry.title} was successfully deleted."
-      format.html { redirect_to entries_path }
+      format.html { redirect_to catalog_entries_path }
       format.json { head :no_content }
+    end
+  end
+
+  def map
+    @entry  = Entry.find(params['entry_id'])
+
+    respond_to do |format|
+      format.html
+      format.geojson
+    end
+  end
+
+  def toggle_share
+    portal = Portal.find(params['portal'])
+    entry = Entry.find(params['id'])
+
+    if portal.entries.include?(entry)
+      portal.entry_portals.where(entry_id: entry).first.destroy
+      flash[:success] = "Catalog record #{entry.title} was unshared with #{portal.title}."
+      entry.create_activity(:unshare)
+    else
+      portal.entries << entry
+      flash[:success] = "Catalog record #{entry.title} was shared with #{portal.title}."
+      entry.create_activity(:share)
+    end
+
+    respond_to do |format|
+      format.html { redirect_to catalog_entry_path(entry) }
+      format.js { redirect_via_turbolinks_to catalog_entry_path(entry) }
     end
   end
 
@@ -107,6 +197,7 @@ class Catalog::EntriesController < ApplicationController
       :tag_list,
       collection_ids: [], region_ids: [], iso_topic_ids: [], data_type_ids: [],
       links_attributes: [:id, :link_id, :category, :display_text, :url, :_destroy],
+      entry_collections_attributes: [:id, :_destroy],
       attachments_attributes: [:id, :file, :category, :description, :interaction, :_destroy],
       entry_contacts_attributes: [:id, :contact_id, :primary, :_destroy],
       entry_organizations_attributes: [:id, :organization_id, :primary, :funding, :_destroy],
@@ -132,5 +223,9 @@ class Catalog::EntriesController < ApplicationController
 
   def gather_use_agreements
     @use_agreements = UseAgreement.active
+  end
+
+  def set_cms_page
+    @cms_page = current_portal.pages.find_by_path('catalog')
   end
 end

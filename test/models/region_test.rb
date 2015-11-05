@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class RegionTest < ActiveSupport::TestCase
-  should ensure_length_of(:name).is_at_most(255)
+  should validate_length_of(:name).is_at_most(255)
 
   should validate_uniqueness_of(:name)
 
@@ -15,5 +15,17 @@ class RegionTest < ActiveSupport::TestCase
     regions = Region.intersects('POINT(20 20)')
 
     assert_equal 0, regions.count
+  end
+
+  test 'check for deletable' do
+    region = regions(:no_associated_entry)
+    assert region.deletable?, 'Region is marked as undeletable when it should be deletable.'
+  end
+
+  test 'check for undeletable' do
+    region = regions(:one)
+    region.entries << entries(:one)
+
+    assert !region.deletable?, 'Region is marked as deletable but it should not be'
   end
 end

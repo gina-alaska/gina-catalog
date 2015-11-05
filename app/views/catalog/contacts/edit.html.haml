@@ -10,4 +10,17 @@
           Edit #{@contact.name}
 
     .panel-body
-      = render 'form', contact: @contact 
+      %ul.nav.nav-tabs
+        - sections = %w{ contact_form record_list }
+        - sections.each do |section|
+          %li{class: (section == sections.first ? 'active' : '')}
+            = link_to section.humanize, "##{section}", data: { toggle: 'tab' }
+
+      .tab-content{ style: 'margin-top: 5px;' }
+
+        #contact_form.tab-pane.active
+          = render 'form', contact: @contact
+
+        #record_list.tab-pane
+          %p List of catalog records that are linked with this contact.
+          = render 'entries', contact: @contact

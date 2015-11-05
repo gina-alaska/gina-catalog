@@ -4,9 +4,11 @@ class Attachment < ActiveRecord::Base
     'Thumbnail',
     'Geojson',
     'Public Download',
-    'Private Download'
+    'Private Download',
+    'Archive'
   ]
 
+  searchkick word_start: [:file_name, :description, :category]
   dragonfly_accessor :file
 
   belongs_to :entry, touch: true
@@ -17,6 +19,7 @@ class Attachment < ActiveRecord::Base
   scope :geojson, -> { where(category: 'Geojson') }
   scope :private_download, -> { where(category: 'Private Download') }
   scope :public_download, -> { where(category: 'Public Download') }
+  scope :archive, -> { where(category: 'Archive') }
 
   before_save :create_uuid
   after_save :create_bbox
@@ -25,6 +28,16 @@ class Attachment < ActiveRecord::Base
   validates :description, length: { maximum: 255 }
   # validates :file_uid, presence: true
   # validates :uuid, presence: true
+
+  include PublicActivity::Model
+
+  tracked owner: proc { |controller, _model| controller.send(:current_user) },
+          entry_id: :entry_id,
+          parameters: :activity_params
+
+  def activity_params
+    { attachment: :file_name  }
+  end
 
   def create_uuid
     return unless uuid.nil?
@@ -44,5 +57,9 @@ class Attachment < ActiveRecord::Base
 
   def name
     "Attachment-#{id}"
+  end
+
+  def global_id
+    to_sgid(for: 'download')
   end
 end

@@ -36,6 +36,7 @@ module Import
       add_use_agreement(import.importable, json)
       add_links(import.importable, json)
       add_data_types(import.importable, json)
+      add_archive_info(import.importable, json)
 
       import.importable.portals << @portal
 
@@ -103,7 +104,7 @@ module Import
         model.data_types << item unless item.nil? || model.data_types.include?(item)
       end if json['data_types'].present?
     end
-    
+
     def add_collections(model, json = {})
       json['collections'].each do |collection|
         collection = find_collection(collection)
@@ -145,6 +146,11 @@ module Import
         next if !record.new_record? && record.links.where(url: link['url']).count > 0
         record.links.build(link)
       end
+    end
+
+    def add_archive_info(record, json)
+      return if json['archived_at'].blank?
+      record.archive!('No archive message available', nil)
     end
   end
 end

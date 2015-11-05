@@ -1,4 +1,4 @@
-class Manager::PortalsController < ApplicationController
+class Manager::PortalsController < ManagerController
   load_and_authorize_resource
 
   def show

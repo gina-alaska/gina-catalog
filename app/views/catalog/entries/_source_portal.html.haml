@@ -1,0 +1,6 @@
+- unless owned_by_current_portal(entry)
+  %dt Source Portal
+  %dd
+    = link_to "//#{entry.owner_portal.default_url.url}" do
+      = entry.owner_portal.title
+  %br

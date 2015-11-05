@@ -1,4 +1,4 @@
-class Catalog::CollectionsController < ApplicationController
+class Catalog::CollectionsController < CatalogController
   load_and_authorize_resource
 
   def index
@@ -31,7 +31,7 @@ class Catalog::CollectionsController < ApplicationController
     respond_to do |format|
       if @collection.save
         flash[:success] = "Collection #{@collection.name} was successfully created."
-        format.html { redirect_back_or_default catalog_collections_path }
+        format.html { redirect_to catalog_collections_path }
       else
         format.html { render action: 'new' }
         format.json { render json: @collection.errors, status: :unprocessable_entity }
@@ -43,7 +43,7 @@ class Catalog::CollectionsController < ApplicationController
     respond_to do |format|
       if @collection.update_attributes(collection_params)
         flash[:success] = "Collection #{@collection.name} was successfully updated."
-        format.html { redirect_back_or_default catalog_collections_path }
+        format.html { redirect_to catalog_collections_path }
         format.json { head :nocontent }
       else
         format.html { render action: 'edit' }
@@ -58,7 +58,7 @@ class Catalog::CollectionsController < ApplicationController
 
     respond_to do |format|
       flash[:success] = "Collection #{@collection.name} was successfully deleted."
-      format.html { redirect_back_or_default catalog_collections_path }
+      format.html { redirect_to catalog_collections_path }
       format.json { head :no_content }
     end
   end

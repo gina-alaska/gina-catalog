@@ -5,12 +5,23 @@ class Link < ActiveRecord::Base
   ]
 
   belongs_to :entry, touch: true
+  has_many :primary_organizations, through: :entry
 
-  validates_length_of :display_text, maximum: 255
-  validates_length_of :url, in: 11..255, message: 'is not a valid url'
-  validates_inclusion_of :category, in: CATEGORIES, message: 'is not a valid category'
+  validates :display_text, length: { maximum: 255 }
+  validates :url, length: { within: 11..255, message: 'is not a valid url' }
+  validates :category, inclusion: { in: CATEGORIES, message: 'is not a valid category' }
 
-  def is_pdf?
+  include PublicActivity::Model
+
+  tracked owner: proc { |controller, _model| controller.send(:current_user) },
+          entry_id: :entry_id,
+          parameters: :activity_params
+
+  def activity_params
+    { link: display_text }
+  end
+
+  def pdf?
     url.split('.').last.downcase == 'pdf'
   end
 
@@ -50,7 +61,7 @@ class Link < ActiveRecord::Base
   end
 
   def pdf_to_text
-    return '' unless self.is_pdf?
+    return '' unless self.pdf?
 
     pdf_text = ''
     begin
@@ -66,5 +77,9 @@ class Link < ActiveRecord::Base
     end
 
     pdf_text
+  end
+
+  def to_s
+    display_text
   end
 end

@@ -1,0 +1,32 @@
+// Place all the styles related to the pages controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.public > .navbar-static-top {
+  margin-bottom: 0px;
+  z-index: 1001;
+  .dropdown-menu {
+    z-index: 1001;
+  }
+}
+
+.floating-flashes {
+    position:absolute; 
+    bottom: 0px; 
+    right: 8px; 
+    text-align: right;
+    max-width: 50%;
+
+    .alert {
+      text-align: left;
+      width: auto !important;
+      padding-right: 40px;
+      margin-bottom: 10px;
+    }
+
+    .close {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+    }
+}

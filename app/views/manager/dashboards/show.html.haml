@@ -1,0 +1,7 @@
+.panel.panel-default
+  .panel-heading
+    %h3
+      Download Logs for record
+      %strong #{@entry.title}
+  .panel-body
+    = render 'shared/download_logs', entry: @entry

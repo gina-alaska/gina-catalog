@@ -1,0 +1,39 @@
+# Read about fixtures at
+# http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+home:
+  title: Home
+  slug: home
+  content: MyText
+  portal: one
+  cms_layout: one
+
+two:
+  title: MyString 2
+  slug: test
+  content: MyText
+  portal: one
+  cms_layout: one
+
+redirect:
+  title: Redirect this Page
+  slug: redirect
+  content: Nope
+  portal: one
+  cms_layout: one
+  redirect_url: /test
+
+catalog:
+  title: Catalog
+  slug: catalog
+  content: Test
+  portal: one
+  cms_layout: one
+
+draft:
+  title: Draft page
+  slug: draft
+  content: Draft content
+  portal: one
+  cms_layout: one
+  draft: true

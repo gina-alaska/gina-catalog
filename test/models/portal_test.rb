@@ -3,6 +3,9 @@ require 'test_helper'
 class PortalTest < ActiveSupport::TestCase
   should validate_presence_of(:title)
   should validate_presence_of(:acronym)
+  should validate_uniqueness_of(:title)
+  should validate_uniqueness_of(:acronym)
+  should validate_length_of(:acronym).is_at_most(15)
 
   should have_many(:urls)
   should have_many(:activity_logs)
@@ -25,7 +28,7 @@ class PortalTest < ActiveSupport::TestCase
   end
 
   test 'default_url should return the default url' do
-    assert_equal @portal.default_url.url, 'catalog.192.168.222.225.xip.io'
+    assert_equal @portal.default_url.url, 'test.host'
   end
 
   test 'build_social_networks should initialize available networks' do

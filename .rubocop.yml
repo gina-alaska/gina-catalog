@@ -3,6 +3,7 @@ inherit_from: .rubocop_todo.yml
 AllCops:
   Exclude:
     - 'vendor/**/*'
+    - 'tmp/**/*'
     - 'test/fixtures/**/*'
     - 'db/schema.rb'
     - 'db/seeds.rb'
@@ -10,6 +11,8 @@ AllCops:
     - 'Gemfile'
     - 'bin/*'
     - 'Guardfile'
+    - 'config/puma.rb'
+    - 'lib/import/*'
 
 # Offense count: 58
 # Configuration parameters: EnforcedStyle, SupportedStyles.
@@ -33,4 +36,10 @@ Style/Lambda:
 # Offense count: 2
 # Configuration parameters: Methods.
 Style/SingleLineBlockParams:
+  Enabled: false
+
+StringLiterals:
+  Enabled: false
+
+NumericLiterals:
   Enabled: false

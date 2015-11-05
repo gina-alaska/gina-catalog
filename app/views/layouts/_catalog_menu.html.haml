@@ -1,0 +1,47 @@
+- if can? :view_catalog, :menu
+  %li.dropdown
+    = link_to '#', class: 'dropdown-toggle', data: { toggle: 'dropdown' } do
+      Catalog
+      %span.caret
+
+    %ul.dropdown-menu
+      - if can? :create, Entry
+        %li
+          = link_to new_catalog_entry_path, target: :_blank do
+            %i.fa.fa-plus.fa-fw
+            New Record
+        %li
+          = link_to catalog_entries_path do
+            %i.fa.fa-cubes.fa-fw
+            Search Records
+        %li.divider{ role: 'presentation' }
+      - if can? :manage, Collection
+        %li
+          = link_to catalog_collections_path do
+            %i.fa.fa-sitemap.fa-fw
+            Collections
+      - if can? :manage, Contact
+        %li
+          = link_to catalog_contacts_path do
+            %i.fa.fa-phone.fa-fw
+            Contacts
+      - if can? :manage, Organization
+        %li
+          = link_to catalog_organizations_path do
+            %i.fa.fa-university.fa-fw
+            Organizations
+      - if can? :manage, MapLayer
+        %li
+          = link_to catalog_map_layers_path do
+            %i.fa.fa-globe.fa-fw
+            Map Layers
+      - if can? :manage, UseAgreement
+        %li
+          = link_to catalog_use_agreements_path do
+            %i.fa.fa-pencil.fa-fw
+            Use Agreements
+      - if can? :edit, Entry
+        %li
+          = link_to catalog_tags_path do
+            %i.fa.fa-tags.fa-fw
+            Tag Manager

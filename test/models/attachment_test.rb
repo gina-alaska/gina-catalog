@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class AttachmentTest < ActiveSupport::TestCase
-  should ensure_length_of(:description).is_at_most(255)
+  should validate_length_of(:description).is_at_most(255)
 
   should belong_to(:entry)
 
@@ -27,6 +27,13 @@ class AttachmentTest < ActiveSupport::TestCase
 
     private_download.expects(:build_bbox).never
     private_download.save
+  end
+
+  test 'bbox should not be created if attachment is an archive file' do
+    archive = attachments(:archive)
+
+    archive.expects(:build_bbox).never
+    archive.save
   end
 
   test 'bbox should be created if attachment is a Geojson file' do

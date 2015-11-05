@@ -11,12 +11,21 @@ Rails.application.routes.draw do
   get '/auth/failure', to: 'sessions#failure'
 
   get '/admin' => 'admin/dashboard#index', as: :admin
-  get '/manager' => 'manager/dashboard#index', as: :manager
+  get '/manager' => 'manager/dashboards#index', as: :manager
   get '/portal_not_found' => 'welcome#portal_not_found', as: :portal_not_found
 
+  # Support legacy routes
+  get 'catalogs/:id' => 'import_items#entries'
+  get 'catalogs/:id/downloads/:uuid' => 'import_items#downloads'
+  get 'sds/:id' => 'downloads#sds', constraints: { id: /[^\/]+/ }, as: :sds
+
+  resources :pages, as: :public_pages
   resources :sessions
   resources :memberships
   resources :users
+  resources :downloads, constraints: { id: /[^\/]+/ } do
+    get :sds, on: :member
+  end
 
   namespace :admin do
     resources :users
@@ -25,6 +34,36 @@ Rails.application.routes.draw do
     resources :regions
     resources :data_types
     resources :iso_topics
+  end
+
+  namespace :cms do
+    resources :attachments
+    resources :snippets
+    resources :pages do
+      resources :attachments, only: [] do
+        member do
+          patch :add
+          patch :remove
+          patch :up
+          patch :down
+        end
+      end
+      collection do
+        get :reorder
+      end
+      member do
+        patch :up
+        patch :down
+        patch :top
+        patch :bottom
+      end
+    end
+    resources :layouts do
+      patch :default, on: :member
+    end
+    resources :themes do
+      patch :activate, on: :member
+    end
   end
 
   namespace :catalog do
@@ -41,8 +80,20 @@ Rails.application.routes.draw do
       member do
         patch :archive
         patch :unarchive
+        patch :publish
+        patch :unpublish
+        patch :toggle_share
       end
-      resources :attachments
+      resources :attachments do
+        get :preview, on: :member
+      end
+      get :map
+    end
+
+    resources :tags, constraints: { id: /[^\\]+/ } do
+      member do
+        patch :remove
+      end
     end
 
     resources :organizations do
@@ -86,11 +137,19 @@ Rails.application.routes.draw do
         get :search, defaults: { format: :json }
       end
     end
+
+    resources :dashboards do
+      collection do
+        get :downloads
+        get :links
+      end
+    end
   end
 
-  resources :entries do
-    resources :attachments
-  end
+  # resources :entries do
+  #   resources :attachments
+  #   get :map
+  # end
 
   namespace :api, defaults: { format: :json }, only: [:index, :show] do
     resources :organizations
@@ -101,14 +160,21 @@ Rails.application.routes.draw do
     resources :collections
     resources :map_layers
     resources :data_types
+    resources :use_agreements
+    resources :users
   end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your portal routed with "root"
-  root 'welcome#index'
+  root 'pages#index'
 
+  get '/catalog' => 'catalog/entries#index'
+  get '/catalogs' => 'catalog/entries#index'
+  get '/page-not-found' => 'pages#show', slug: 'page-not-found', as: :page_not_found
+  mount Refile.app, at: Refile.mount_point, as: :refile_app
+  get '*slug' => 'pages#show', as: :page
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
