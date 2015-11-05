@@ -22,7 +22,7 @@ module MustacheConcerns
   def mustache_context(page = nil)
     attrs = mustache_sanitize(attributes)
 
-    attrs['item'] = self.to_global_id
+    attrs['gid'] = self.to_global_id
     attrs[self.class.name.parameterize] = mustache_sanitize(attributes)
     attrs['url'] = h.send :"#{self.mustache_route}_path", id if h.respond_to?(:"#{self.mustache_route}_path")
 

@@ -7,7 +7,7 @@ module Glynx
       register_helpers()
     end
 
-    def entries(entries, scope, limit, block)
+    def entries(entries, limit, block)
       if block.nil?
         block = limit
         limit = 10
@@ -19,6 +19,23 @@ module Glynx
       end.join
     end
 
+    def portals(portals, block)
+      portals.map do |portal|
+        block.fn(portal.mustache_context(current_page))
+      end.join
+    end
+
+    def from_context(scope, context, block, default = nil)
+      if block.nil?
+        block = context
+        context = scope
+      end
+
+      model = GlobalID::Locator.locate(context.gid) if context.respond_to? :gid
+
+      [model || default, block]
+    end
+
     def image_thumbnail_tag(image, type, options)
       size = options[:hash][:size] || '100x100'
       Handlebars::SafeString.new(
@@ -27,50 +44,34 @@ module Glynx
     end
 
     def register_helpers
-      @handlebars.register_helper(:parent_portal) do |this,block|
-        block.fn(current_portal.parent.mustache_context) unless current_portal.parent.nil?
+      @handlebars.register_helper(:parent_portal) do |this,context,block|
+        model, block = from_context(this, context, block, current_portal)
+        portals([model.parent], block) unless model.parent.nil?
+      end
+
+      @handlebars.register_helper(:child_portals) do |this,context,block|
+        model, block = from_context(this, context, block, current_portal)
+        portals(model.children, block)
+      end
+
+      @handlebars.register_helper(:sibling_portals) do |this,context,block|
+        model, block = from_context(this, context, block, current_portal)
+        portals(model.siblings, block)
       end
 
       @handlebars.register_helper(:entries) do |this, context, block|
-        limit = block[:hash][:limit]
-        model = GlobalID::Locator.locate(context)
-        if model.nil?
-          ''
-        else
-          entries(model.entries, this, limit, block)
-        end
+        model,block = from_context(this, context, block, current_portal)
+        entries(model.entries.active, block[:hash][:limit], block)
       end
 
       @handlebars.register_helper(:newest_entries) do |this,context,block|
-        if block.nil?
-          block = context
-          model = current_portal
-        else
-          model = GlobalID::Locator.locate(context)
-        end
-
-        limit = block[:hash][:limit]
-        if model.nil?
-          ''
-        else
-          entries(model.entries.active.newest, this, limit, block)
-        end
+        model,block = from_context(this, context, block, current_portal)
+        entries(model.entries.active.newest, block[:hash][:limit], block)
       end
 
       @handlebars.register_helper(:updated_entries) do |this,context,block|
-        if block.nil?
-          block = context
-          model = current_portal
-        else
-          model = GlobalID::Locator.locate(context)
-        end
-
-        limit = block[:hash][:limit]
-        if model.nil?
-          ''
-        else
-          entries(model.entries.active.recently_updated, this, limit, block)
-        end
+        model,block = from_context(this, context, block, current_portal)
+        entries(model.entries.active.recently_updated, block[:hash][:limit], block)
       end
 
       @handlebars.register_helper(:pages) do |this,block|
@@ -94,25 +95,34 @@ module Glynx
       end
 
       @handlebars.register_helper(:thumbnail) do |this,image,options|
-        image_thumbnail_tag(image, :limit, options)
+        model, options = from_context(this, image, options)
+        Rails.logger.info model.inspect
+        Rails.logger.info this.gid
+        image_thumbnail_tag(model, :limit, options)
       end
 
       # TODO: remove after this fixing all portals
       # adding in for compatibility with glynx 2.0
       @handlebars.register_helper(:thumb) do |this,image,options|
-        image_thumbnail_tag(image, :limit, options)
+        model, options = from_context(this, image, options)
+
+        image_thumbnail_tag(model, :limit, options)
       end
 
       @handlebars.register_helper(:fit) do |this,image,options|
-        image_thumbnail_tag(image, :fit, options)
+        model, options = from_context(this, image, options)
+
+        image_thumbnail_tag(model, :fit, options)
       end
 
       @handlebars.register_helper(:fill) do |this,image,options|
-        image_thumbnail_tag(image, :fill, options)
+        model, options = from_context(this, image, options)
+
+        image_thumbnail_tag(model, :fill, options)
       end
 
       @handlebars.register_helper(:image_attachments) do |this,block|
-        current_page.cms_page_attachments.map(&:attachment).map do |image|
+        current_page.attachments.images.map do |image|
           block.fn(image.mustache_context(data.page))
         end.join if current_page
       end

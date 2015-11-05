@@ -47,11 +47,11 @@
         %li
           %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ description }}' } } Description
         %li
-          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ thumbnail image size="100x100" }}' } } Thumbnail (limit)
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ thumbnail size="100x100" }}' } } Thumbnail (limit)
         %li
-          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ fit image size="100x100" }}' } } Thumbnail (fit)
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ fit size="100x100" }}' } } Thumbnail (fit)
         %li
-          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ fill image size="100x100" }}' } } Thumbnail (fill)
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ fill size="100x100" }}' } } Thumbnail (fill)
 
     %li.dropdown-submenu
       %a{ href: "#" } Collections:
@@ -68,6 +68,12 @@
     %li.dropdown-submenu
       %a{ href: "#" } Portal:
       %ul.dropdown-menu
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{#parent_portal}}' } } Parent portal
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', start: '{{#child_portals}}', end: '{{/child_portals}}' } } Child portals
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', start: '{{#sibling_portals}}', end: '{{/sibling_portals}}' } } Sibling portals
         %li
           %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ portal.title }}' } } Title
         %li
