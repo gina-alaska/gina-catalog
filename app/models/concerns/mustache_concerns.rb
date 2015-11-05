@@ -24,7 +24,7 @@ module MustacheConcerns
 
     attrs['gid'] = self.to_global_id
     attrs[self.class.name.parameterize] = mustache_sanitize(attributes)
-    attrs['url'] = h.send :"#{self.mustache_route}_path", id if h.respond_to?(:"#{self.mustache_route}_path")
+    attrs['url'] = mustache_url
 
     attrs
   end
@@ -37,6 +37,10 @@ module MustacheConcerns
 
   def mustache_route
     self.class.name.parameterize
+  end
+
+  def mustache_url
+    h.send(:"#{mustache_route}_path", self) if h.respond_to?(:"#{self.mustache_route}_path")
   end
 
   def map_mustache_safe(collection, page)

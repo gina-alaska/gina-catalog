@@ -21,4 +21,8 @@ class Cms::Attachment < ActiveRecord::Base
     context['active'] = (page.attachments.images.first == self ? 'active' : '')
     context
   end
+
+  def mustache_url
+    Refile.attachment_url(self, :file)
+  end
 end
