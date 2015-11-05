@@ -114,6 +114,6 @@ class Cms::PagesController < CmsController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def cms_page_params
-    params.require(:cms_page).permit(:title, :slug, :content, :cms_layout_id, :parent_id, :description, :hidden, :redirect_url)
+    params.require(:cms_page).permit(:title, :slug, :content, :cms_layout_id, :parent_id, :description, :hidden, :redirect_url, :draft)
   end
 end

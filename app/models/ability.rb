@@ -73,6 +73,7 @@ class Ability
       can [:create, :update, :archive], Entry do |entry|
         entry.new_record? || entry.owner_portal == current_portal
       end
+      can [:read, :downloads, :links], :dashboard
     end
 
     if user.role?(:data_manager, current_portal)
@@ -86,6 +87,7 @@ class Ability
       can [:manage, :archive], Entry do |entry|
         entry.new_record? || entry.owner_portal == current_portal
       end
+      can [:read, :downloads, :links], :dashboard
     end
 
     if user.role?(:portal_manager, current_portal)

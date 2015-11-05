@@ -11,3 +11,7 @@
     %span.label.label-info
       %i.fa.fa-share
       Redirect
+  - if cms_page.draft?
+    %span.label.label-info
+      %i.fa.fa-pencil{ title: 'Draft' }
+      Draft

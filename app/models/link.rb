@@ -5,6 +5,7 @@ class Link < ActiveRecord::Base
   ]
 
   belongs_to :entry, touch: true
+  has_many :primary_organizations, through: :entry
 
   validates :display_text, length: { maximum: 255 }
   validates :url, length: { within: 11..255, message: 'is not a valid url' }

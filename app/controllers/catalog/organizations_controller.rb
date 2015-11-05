@@ -1,4 +1,4 @@
-class Catalog::OrganizationsController < ManagerController
+class Catalog::OrganizationsController < CatalogController
   load_and_authorize_resource
 
   def index

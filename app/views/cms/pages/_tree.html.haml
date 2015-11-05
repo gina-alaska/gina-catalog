@@ -15,6 +15,8 @@
           %i.fa.fa-eye-slash.text-warning{ title: 'Hidden' }
         - if node.redirect_url?
           %i.fa.fa-share.text-info{ title: 'Redirect' }
+        - if node.draft?
+          %i.fa.fa-pencil.text-muted{ title: 'Draft' }
   - unless node.children.empty?
     %ol.collapse{ id: dom_id(node, 'page-ol'), class: skip_collapse(@cms_page, node) ? 'in' : '' }
       = render 'tree', tree: node.children, parent: node

@@ -33,6 +33,8 @@ class PagesController < ApplicationController
 
   def fetch_page
     slug = params[:slug].try(:split, '/') || 'home'
-    @page = current_portal.pages.find_by_path(slug)
+    pages = current_portal.pages
+    pages = pages.active if cannot? :manage, Cms::Page
+    @page = pages.find_by_path(slug)
   end
 end

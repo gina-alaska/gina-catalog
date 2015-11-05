@@ -13,6 +13,7 @@ class Cms::Page < ActiveRecord::Base
   has_many :attachments, through: :cms_page_attachments, class_name: 'Cms::Attachment', source: :attachment
 
   scope :visible, -> { where(hidden: false) }
+  scope :active, -> { where(draft: false) }
 
   validates :title, presence: true
   validates :slug, uniqueness: { scope: [:parent_id, :portal_id] }
@@ -22,7 +23,7 @@ class Cms::Page < ActiveRecord::Base
   end
 
   def depth_name
-    (('&nbsp;' * (depth+1) * 4) + title).html_safe
+    (('&nbsp;' * (depth + 1) * 4) + title).html_safe
   end
 
   def system_page?

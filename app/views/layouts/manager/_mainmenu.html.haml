@@ -1,0 +1,21 @@
+.list-group.horizontal.clearfix
+  = active_link_to manager_path, active: :exact, class: 'list-group-item' do
+    %h4.list-group-item-heading Dashboard Summary
+    %p.list-group-item-text
+      Portal overview
+  = active_link_to manager_portal_path(current_portal), class: 'list-group-item' do
+    %h4.list-group-item-heading Portal Settings
+    %p.list-group-item-text
+      Manage portal settings
+  = active_link_to manager_permissions_path, class: 'list-group-item' do
+    %h4.list-group-item-heading User Permissions
+    %p.list-group-item-text
+      Invite users and manage permissions
+  = active_link_to downloads_manager_dashboards_path, class: 'list-group-item' do
+    %h4.list-group-item-heading Download Log
+    %p.list-group-item-text
+      Manage and view downloads
+  = active_link_to links_manager_dashboards_path, class: 'list-group-item' do
+    %h4.list-group-item-heading Links Manger
+    %p.list-group-item-text
+      Manage and view bad record links

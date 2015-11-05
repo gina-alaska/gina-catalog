@@ -29,3 +29,11 @@ catalog:
   content: Test
   portal: one
   cms_layout: one
+
+draft:
+  title: Draft page
+  slug: draft
+  content: Draft content
+  portal: one
+  cms_layout: one
+  draft: true
