@@ -145,6 +145,17 @@ Welcome to the home page
     EOHTML
   end
 
+  p.pages.where(title: 'Sitemap', slug: 'sitemap').first_or_create do |page|
+    page.try(:hidden=, true)
+    page.cms_layout = default_layout
+    page.content = <<-EOHTML
+<div class="jumbotron">
+  <h1>You have found the sitemap</h1>
+  <p>We're sorry but this page doesn't do anything yet.</p>
+</div>
+    EOHTML
+  end
+
   p.active_cms_theme = p.themes.where(name: 'default').first_or_create do |theme|
     theme.css = <<-EOCSS
 //will be applied to the body html tag
