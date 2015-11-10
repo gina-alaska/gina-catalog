@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151005233056) do
+ActiveRecord::Schema.define(version: 20151106184258) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -166,6 +166,7 @@ ActiveRecord::Schema.define(version: 20151005233056) do
     t.boolean  "hidden",        default: false
     t.string   "redirect_url"
     t.boolean  "draft",         default: false
+    t.text     "description"
   end
 
   add_index "cms_pages", ["cms_layout_id"], name: "index_cms_pages_on_cms_layout_id", using: :btree
@@ -199,10 +200,11 @@ ActiveRecord::Schema.define(version: 20151005233056) do
     t.string   "name"
     t.string   "description"
     t.integer  "portal_id"
-    t.boolean  "hidden"
+    t.boolean  "hidden",                  default: false, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "entry_collections_count", default: 0
+    t.integer  "position"
   end
 
   create_table "contacts", force: :cascade do |t|
