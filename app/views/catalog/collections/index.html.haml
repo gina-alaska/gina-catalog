@@ -14,7 +14,7 @@
                   %i.fa.fa-search
 
       .panel-footer
-        = link_to new_catalog_collection_path, class: 'btn btn-success btn-block' do
+        = link_to new_catalog_collection_path, class: 'list-group-item list-group-item-success' do
           %i.fa.fa-sitemap
           New Collection
   .col-sm-8
@@ -29,10 +29,11 @@
       %table.table.table-striped.table-condensed
         %thead
           %tr
-            %th.col-sm-8 Name
-            %th Hidden
-            %th Count
-            %th.text-right Actions 
+            %th.col-sm-7 Name
+            %th.col-sm-1 Hidden
+            %th.col-sm-1 Counts
+            %th.text-right.col-sm-1 Actions 
+            %th.text-right.col-sm-2 Reorder 
         %tbody
           = render(partial: "collection_row", collection: @collections, as: :collection) || "<tr><td colspan=\"4\">There are no collections found!</td></tr>".html_safe 
     .text-center
