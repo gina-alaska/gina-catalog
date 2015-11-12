@@ -103,6 +103,7 @@ group :development, :test do
   gem 'selenium-webdriver'
   gem 'minitest-rails-capybara'
   gem 'guard-rubocop'
+  gem 'pry-rails'
 end
 
 gem 'bundler', '>= 1.8.4'

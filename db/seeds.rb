@@ -137,78 +137,83 @@ Welcome to the home page
   p.pages.where(title: 'All helpers examples', slug: 'all-helpers-examples').first_or_create do |page|
     page.cms_layout = default_layout
     page.content = <<-EOHTML
-    <div class="row">
-      <div class="col-sm-9">
-        <p>{{ portal.title }}</p>
-        <p>Wahooo</p>
-        <p>{{ title }}</p>
+<div class="row">
+  <div class="col-sm-9">
+    <p>{{ portal.title }}</p>
+    <p>Wahooo</p>
+    <p>{{ page.title }}</p>
 
-        <p>{{ slug }}</p>
+    <p>{{ page.url }}</p>
 
-        <p>{{ description }}</p>
+    <p>{{ page.description }}</p>
+    <p>{{ page.updated_at }}</p>
 
-        <p>Title: {{ root_page.title }}</p>
-        <p>Slug: {{ root_page.slug }}</p>
-        <p>Desc: {{ root_page.description }}</p>
+    {{# root_page }}
+    <p>Title: {{ page.title }}</p>
+    <p>Slug: {{ page.slug }}</p>
+    <p>Desc: {{ page.description }}</p>
+    {{/ root_page }}
+    {{#image_attachments}}
+      {{ thumbnail size="200x100" }}
+      {{ fill size="200x100" }}
+      {{ fit size="200x100" }}
+      {{ title }}
+    {{/image_attachments}}
 
-        {{#image_attachments}}
-          {{ thumbnail size="200x100" }}
-          {{ fill size="200x100" }}
-          {{ fit size="200x100" }}
-          {{ title }}
-        {{/image_attachments}}
+    <h4>Collections</h4>
+    {{#collections limit="5" }}
+      <p><b>Collection:</b> {{ collection.name }}</p>
+      {{#entries limit="1"}}
+        <a href="{{ catalog_entry.url }}">{{ catalog_entry.title }}</a>
+        <p>Desc: {{ catalog_entry.description }}</p>
+        <p>Type: {{ catalog_entry.type }}</p>
+        <p>Start: {{ catalog_entry.start_date }}</p>
+        <p>End: {{ catalog_entry.end_date }}</p>
+      {{/entries}}
 
-        <h4>Collections</h4>
-        {{#collections limit="5" }}
-          <p><b>Collection:</b> {{ name }}</p>
-          {{#entries limit="1"}}
-            <a href="{{url}}">{{ entry.title }}</a>
-            <p>Desc: {{ description }}</p>
-            <p>Type: {{ type }}</p>
-            <p>Start: {{ start_date }}</p>
-            <p>End: {{ end_date }}</p>
-          {{/entries}}
+    {{/collections}}
 
-        {{/collections}}
+    <h4>Newest</h4>
+    {{#newest_entries limit="5"}}
+      <ul>
+        <ol><a href="{{catalog_entry.url}}">{{ catalog_entry.title }}</a></ol>
+      </ul>
+    {{/newest_entries}}
 
-        <h4>Newest</h4>
-        {{#newest_entries limit="5"}}
-          <ul>
-            <ol><a href="{{url}}">{{ title }}</a></ol>
-          </ul>
-        {{/newest_entries}}
+    <h4>Latest</h4>
+    {{#updated_entries limit="5"}}
+      <ul>
+        <ol><a href="{{catalog_entry.url}}">{{ catalog_entry.title }}</a></ol>
+      </ul>
+    {{/updated_entries}}
 
-        <h4>Latest</h4>
-        {{#updated_entries limit="5"}}
-          <ul>
-            <ol><a href="{{url}}">{{ title }}</a></ol>
-          </ul>
-        {{/updated_entries}}
-
-        <h4>Parent portal</h4>
-        {{#parent_portal}}
-          {{ portal.title }}
-          {{ portal.acronym }}
-          {{ portal.description }}
-          <ol>
-            <h5>childs</h5>
-            {{#child_portals}}
-              <li>{{ portal.title }}</li>
-            {{/child_portals}}
-          </ol>
-        {{/parent_portal}}
-
-        <h5>sibs</h5>
-        <ol>
-        {{#sibling_portals}}
+    <h4>Parent portal</h4>
+    {{#parent_portal}}
+      {{ portal.title }}
+      {{ portal.acronym }}
+      {{ portal.description }}
+      <ol>
+        <h5>childs</h5>
+        {{#child_portals}}
           <li>{{ portal.title }}</li>
-        {{/sibling_portals}}
-        </ol>
-      </div>
-      <div class="col-sm-3">
+        {{/child_portals}}
+      </ol>
+    {{/parent_portal}}
 
-      </div>
-    </div>
+    <h5>sibs</h5>
+    <ol>
+    {{#sibling_portals}}
+      <li>{{ portal.title }}</li>
+    {{/sibling_portals}}
+    </ol>
+  </div>
+  <div class="col-sm-3">
+    {{ title }}
+    <ul>{{#pages}}
+      <li>{{ page.title }}</li>
+    {{/pages}}</ul>
+  </div>
+</div>
     EOHTML
   end
 

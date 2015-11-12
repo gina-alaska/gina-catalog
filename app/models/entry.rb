@@ -160,11 +160,10 @@ class Entry < ActiveRecord::Base
     "catalog_#{super}"
   end
 
-  def mustache_context(*args)
-    attrs = super(*args)
+  def as_context
+    context = super
+    context['type'] = entry_type.name
 
-    attrs['type'] = entry_type.name
-
-    attrs
+    context
   end
 end

@@ -20,10 +20,15 @@ module MustacheConcerns
   end
 
   def mustache_context(page = nil)
-    attrs = mustache_sanitize(attributes)
+    context = as_context
+    context[mustache_route] = context.dup
 
+    context
+  end
+
+  def as_context
+    attrs = mustache_sanitize(attributes)
     attrs['gid'] = self.to_global_id
-    attrs[mustache_route] = mustache_sanitize(attributes)
     attrs['url'] = mustache_url
 
     attrs

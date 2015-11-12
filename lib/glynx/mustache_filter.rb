@@ -87,7 +87,7 @@ module Glynx
       end
 
       @handlebars.register_helper(:root_page) do |this,block|
-        block.fn(current_page.root.mustache_context(data.page)) if !current_page.nil? && !current_page.root?
+        block.fn(current_page.root.mustache_context(data.page)) if !current_page.nil? && !current_page.root.nil?
       end
 
       @handlebars.register_helper(:parent_page) do |this,block|
