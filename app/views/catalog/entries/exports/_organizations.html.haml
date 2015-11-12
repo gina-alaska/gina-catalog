@@ -1,16 +1,7 @@
 %b Primary Organization: 
--if item.primary_organizations.blank?
-  ="none"
--else
-  = item.primary_organizations.collect{|org| "#{org.name} (#{org.acronym})"}.join(', ')
+= export_value item.primary_organizations.collect(&:name_with_acronym).join(', ')
 %br/
 %b Funding Organization: 
--if item.funding_organizations.blank?
-  ="none; "
--else
-  = item.funding_organizations.collect{|org| "#{org.name} (#{org.acronym})"}.join(', ')
+= export_value item.funding_organizations.collect(&:name_with_acronym).join(', ')
 %b Other Organization(s):
--if !item.other_organizations.blank?
-  = item.other_organizations.collect{|org| "#{org.name} (#{org.acronym})"}.join(', ')
--else
-  ="none"
+= export_value item.other_organizations.collect(&:name_with_acronym).join(', ')
