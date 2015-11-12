@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   get '/admin' => 'admin/dashboard#index', as: :admin
   get '/manager' => 'manager/dashboards#index', as: :manager
   get '/portal_not_found' => 'welcome#portal_not_found', as: :portal_not_found
+  get '/sitemap' => 'sitemaps#index'
 
   # Support legacy routes
   get 'catalogs/:id' => 'import_items#entries'
@@ -23,6 +24,7 @@ Rails.application.routes.draw do
   resources :sessions
   resources :memberships
   resources :users
+  resources :sitemaps
   resources :downloads, constraints: { id: /[^\/]+/ } do
     get :sds, on: :member
   end
