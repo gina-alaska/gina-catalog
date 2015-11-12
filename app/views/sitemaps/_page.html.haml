@@ -1,0 +1,6 @@
+%li
+  = link_to page.title, "/#{page.slug}", title: page.description
+  - if !page.children.nil?
+    - page.children.each do |child| 
+      %ul
+        = render 'page', page: child

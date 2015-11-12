@@ -1,0 +1,7 @@
+.panel.panel-default
+  .panel-heading
+    %h3 Sitemap
+  .panel-body
+    - @pages.each do |page|
+      %ul
+        = render 'page', page: page
