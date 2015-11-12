@@ -149,10 +149,7 @@ Welcome to the home page
     page.try(:hidden=, true)
     page.cms_layout = default_layout
     page.content = <<-EOHTML
-<div class="jumbotron">
-  <h1>You have found the sitemap</h1>
-  <p>We're sorry but this page doesn't do anything yet.</p>
-</div>
+This page is automatically generated, editing it will not change the content.
     EOHTML
   end
 
