@@ -27,16 +27,9 @@ module Import
       json['entry_type'] = entry_type(json['type'])
 
       add_simple_fields(SIMPLE_FIELDS, import.importable, json)
-      add_orgs(import.importable, json)
-      add_locations(import.importable, json['locations'])
-      add_contacts(import.importable, json)
-      add_collections(import.importable, json)
-      add_regions(import.importable, json)
-      add_iso_topics(import.importable, json)
-      add_use_agreement(import.importable, json)
-      add_links(import.importable, json)
-      add_data_types(import.importable, json)
-      add_archive_info(import.importable, json)
+      %w( orgs logations contacts collections regions iso_topics use_agreements links data_types archive_info).each do |topic|
+        send(:"add_#{topic}", import.importable, json)
+      end
 
       import.importable.portals << @portal
 
@@ -117,7 +110,8 @@ module Import
       model.use_agreement = item unless item.nil? || model.use_agreement.present?
     end
 
-    def add_locations(record, locations)
+    def add_locations(record, json = {})
+      locations = json['locations']
       return if !locations.present? || locations.to_json.blank?
       return if locations['features'].empty?
 
