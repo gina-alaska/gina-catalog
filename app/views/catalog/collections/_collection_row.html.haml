@@ -12,3 +12,13 @@
         %i.fa.fa-edit
       = link_to catalog_collection_path(collection), data: { method: :delete, confirm: "Are you sure you want to delete this collection?  It will be removed from all catalog records." }, class: 'btn btn-sm btn-danger', title: 'Delete' do
         %i.fa.fa-trash-o
+  %td.text-right
+    .btn-group.order-buttons
+      = link_to top_catalog_collection_path(collection), method: :patch, title: 'Move to top', class: 'btn btn-default ' do
+        %i.fa.fa-angle-double-up
+      = link_to up_catalog_collection_path(collection), method: :patch, title: 'Move up', class: 'btn btn-default ' do
+        %i.fa.fa-angle-up
+      = link_to down_catalog_collection_path(collection), method: :patch, title: 'Move down', class: 'btn btn-default ' do
+        %i.fa.fa-angle-down
+      = link_to bottom_catalog_collection_path(collection), method: :patch, title: 'Move to bottom', class: 'btn btn-default 'do
+        %i.fa.fa-angle-double-down

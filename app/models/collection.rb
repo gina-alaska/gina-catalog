@@ -8,6 +8,7 @@ class Collection < ActiveRecord::Base
 
   has_many :entry_collections, dependent: :delete_all
   has_many :entries, through: :entry_collections
+  acts_as_list scope: :portal
 
   scope :used_by_portal, ->(portal) {
     where(portal: portal)
