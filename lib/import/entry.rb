@@ -5,7 +5,7 @@ module Import
     SIMPLE_FIELDS = %w(
       title description start_date end_date status
       tag_list entry_type primary_organization_ids funding_organization_ids
-      primary_contact_ids
+      primary_contact_ids published_at
     )
 
     def self.fetch(catalog)
@@ -27,7 +27,7 @@ module Import
       json['entry_type'] = entry_type(json['type'])
 
       add_simple_fields(SIMPLE_FIELDS, import.importable, json)
-      %w( orgs logations contacts collections regions iso_topics use_agreements links data_types archive_info).each do |topic|
+      %w( orgs locations contacts collections regions iso_topics use_agreement links data_types archive_info).each do |topic|
         send(:"add_#{topic}", import.importable, json)
       end
 
