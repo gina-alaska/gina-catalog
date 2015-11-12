@@ -96,8 +96,6 @@ module Glynx
 
       @handlebars.register_helper(:thumbnail) do |this,image,options|
         model, options = from_context(this, image, options)
-        Rails.logger.info model.inspect
-        Rails.logger.info this.gid
         image_thumbnail_tag(model, :limit, options)
       end
 
