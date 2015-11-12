@@ -1,5 +1,5 @@
 %li
-  = link_to page.title, "/#{page.slug}", title: page.description
+  = link_to page.title, "/#{page.slug}"
   - if !page.children.nil?
     - page.children.each do |child| 
       %ul
