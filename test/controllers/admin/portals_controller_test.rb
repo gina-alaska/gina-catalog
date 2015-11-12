@@ -79,6 +79,6 @@ class Admin::PortalsControllerTest < ActionController::TestCase
 
     get :new
 
-    assert_redirected_to '/permission_denied'
+    assert_response(403)
   end
 end
