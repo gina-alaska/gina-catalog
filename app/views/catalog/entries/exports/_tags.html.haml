@@ -1,5 +1,2 @@
 %b Tags:
-- if !item.tags.empty?
-  = item.tags.collect{|tag| tag.text}.join(", ")
-- else
-  ="none "
+#{export_value(item.tags.collect(&:text).join(", "))}

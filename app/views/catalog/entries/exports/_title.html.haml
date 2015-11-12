@@ -1,4 +1,2 @@
--if item.title
-  %b= "Title: #{item.title}"
--else
-  %b= "Title: none"
+%b Title:
+#{export_value(item.title)}

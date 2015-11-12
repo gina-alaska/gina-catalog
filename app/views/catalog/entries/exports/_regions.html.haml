@@ -1,5 +1,2 @@
 %b Region(s):
-- if !item.regions.empty?
-  = item.regions.collect{|loc| loc.name}.join(", ") + "; "
-- else
-  ="none"
+#{export_value(item.regions.collect(&:name).join(", ") + '; ')}
