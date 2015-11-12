@@ -15,7 +15,7 @@ class Cms::Attachment < ActiveRecord::Base
     Refile.types[:image].content_type.include? file_content_type
   end
 
-  def mustache_context(page)
+  def as_context
     context = super(page)
     context['title'] = name
     context['active'] = (page.attachments.images.first == self ? 'active' : '')
