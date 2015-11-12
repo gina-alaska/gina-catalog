@@ -39,7 +39,7 @@ class Cms::Page < ActiveRecord::Base
   end
 
   def url_path
-    '/' + ancestry_path.join('/')
+    ancestry_path.join('/')
   end
 
   def render
@@ -58,11 +58,19 @@ class Cms::Page < ActiveRecord::Base
   end
 
   def mustache_context(page = nil)
-    attrs = attributes.dup
+    attrs = super(page)
 
-    attrs['url_path'] = url_path
+    # attrs['url'] = url_path
     attrs['slug'] = url_path
 
     attrs
+  end
+
+  def mustache_route
+    "page"
+  end
+
+  def mustache_url_params
+    url_path
   end
 end
