@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap
+//= require bootstrap-submenu
 //= require jasny-bootstrap
 //= require handlebars
 //= require typeahead.js

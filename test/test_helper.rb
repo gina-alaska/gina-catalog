@@ -36,3 +36,4 @@ end
 
 require 'public_activity/testing'
 PublicActivity.enabled = false
+Cms::Page.rebuild!

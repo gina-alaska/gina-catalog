@@ -10,7 +10,7 @@
     %tbody
       - page.cms_page_attachments.each do |pa|
         %tr
-          %td= attachment_image_tag pa.attachment, :file, :limit, 100, 100
+          %td= attachment_image_tag pa.attachment, :file, :limit, 50, 50
           %td
             %p
               %strong Name:
@@ -25,14 +25,13 @@
               %strong Filename:
               = pa.attachment.file_filename
           %td.text-right
-            .btn-group
+            .btn-group.btn-group-sm
               = link_to up_cms_page_attachment_path(page, pa.attachment), method: :patch, class: "btn btn-default #{pa.first? ? 'disabled' : ''}" do
                 %i.fa.fa-angle-up
               = link_to down_cms_page_attachment_path(page, pa.attachment), method: :patch, class: "btn btn-default #{pa.last? ? 'disabled' : ''}" do
                 %i.fa.fa-angle-down
-            .btn-group
               = link_to remove_cms_page_attachment_path(page, pa.attachment), method: :patch, class: 'btn btn-danger' do
-                Remove
+                %i.fa.fa-times
 
 
 #image-attachment-modal.modal.fade
