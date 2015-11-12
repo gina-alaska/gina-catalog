@@ -57,13 +57,10 @@ class Cms::Page < ActiveRecord::Base
     basic_pipeline(context).call(content)[:output].to_s
   end
 
-  def mustache_context(page = nil)
-    attrs = super(page)
-
-    # attrs['url'] = url_path
-    attrs['slug'] = url_path
-
-    attrs
+  def as_context
+    context = super
+    context['slug'] = url_path
+    context
   end
 
   def mustache_route
