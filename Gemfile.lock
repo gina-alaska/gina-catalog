@@ -149,6 +149,10 @@ GEM
       rubocop (~> 0.20)
     haml (4.0.6)
       tilt
+    handlebars (0.7.0)
+      handlebars-source (~> 3.0.0)
+      therubyracer (~> 0.12.1)
+    handlebars-source (3.0.3)
     hashie (3.4.2)
     hightop (0.1.3)
       activerecord
@@ -173,6 +177,7 @@ GEM
       activesupport (>= 3.0.0)
     launchy (2.4.3)
       addressable (~> 2.3)
+    libv8 (3.16.14.13)
     listen (3.0.3)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
@@ -205,7 +210,6 @@ GEM
       metaclass (~> 0.0.1)
     multi_json (1.11.2)
     multipart-post (2.0.0)
-    mustache (1.0.2)
     nenv (0.2.0)
     nested_form (0.3.2)
     netrc (0.10.3)
@@ -235,6 +239,8 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    pry-rails (0.3.4)
+      pry (>= 0.9.10)
     public_activity (1.4.2)
       actionpack (>= 3.0.0)
       activerecord (>= 3.0)
@@ -265,6 +271,8 @@ GEM
       sprockets-rails
     rails-assets-ace-builds (1.2.0)
     rails-assets-bootstrap (3.3.5)
+      rails-assets-jquery (>= 1.9.1)
+    rails-assets-bootstrap-submenu (2.0.1)
       rails-assets-jquery (>= 1.9.1)
     rails-assets-handlebars (3.0.3)
     rails-assets-holderjs (2.4.1)
@@ -317,6 +325,7 @@ GEM
       ffi (>= 0.5.0)
     rdiscount (2.1.8)
     rdoc (4.2.0)
+    ref (2.0.0)
     refile (0.6.1)
       mime-types
       rest-client (~> 1.8)
@@ -395,6 +404,9 @@ GEM
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)
     stamp (0.6.0)
+    therubyracer (0.12.2)
+      libv8 (~> 3.16.14.0)
+      ref
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (1.4.1)
@@ -451,6 +463,7 @@ DEPENDENCIES
   guard-minitest
   guard-rubocop
   haml
+  handlebars
   hightop
   html-pipeline
   jbuilder (~> 2.0)
@@ -458,12 +471,12 @@ DEPENDENCIES
   kaminari
   minitest-rails-capybara
   mocha
-  mustache
   nested_form
   omniauth
   omniauth-openid
   pg
   poltergeist
+  pry-rails
   public_activity
   puma
   quiet_assets
@@ -471,6 +484,7 @@ DEPENDENCIES
   rails (= 4.2.0)
   rails-assets-ace-builds!
   rails-assets-bootstrap!
+  rails-assets-bootstrap-submenu!
   rails-assets-handlebars!
   rails-assets-holderjs (~> 2.4.0)!
   rails-assets-jasny-bootstrap!

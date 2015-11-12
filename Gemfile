@@ -67,7 +67,9 @@ gem 'active_link_to'
 gem 'simple_form'
 gem 'friendly_id'
 gem 'html-pipeline'
-gem 'mustache'
+# gem 'mustache'
+# gem 'flavour_saver'
+gem 'handlebars'
 gem 'github-markdown'
 gem 'closure_tree'
 gem 'acts_as_list'
@@ -101,6 +103,7 @@ group :development, :test do
   gem 'selenium-webdriver'
   gem 'minitest-rails-capybara'
   gem 'guard-rubocop'
+  gem 'pry-rails'
 end
 
 gem 'bundler', '>= 1.8.4'
@@ -118,5 +121,6 @@ source 'https://rails-assets.org' do
   # gem 'rails-assets-wicket'
   gem 'rails-assets-uri.js'
   gem 'rails-assets-ace-builds'
+  gem 'rails-assets-bootstrap-submenu'
 end
 gem "font-awesome-rails"

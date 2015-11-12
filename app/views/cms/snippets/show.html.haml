@@ -2,8 +2,7 @@
   .panel-heading
     %h1.panel-title #{@cms_snippet.name} preview
   .panel-body
-    :markdown
-      #{@cms_snippet.render}
+    #{@cms_snippet.render.html_safe}
 
 - content_for :sidebar_menu do
   = link_to edit_cms_snippet_path(@cms_snippet), class: 'list-group-item' do

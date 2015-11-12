@@ -4,9 +4,9 @@
 one:
   name: MyString
   portal: one
-  content: MyText
+  content: {{{content}}}
 
 two:
   name: MyString
   portal: one
-  content: MyText
+  content: {{{content}}}
