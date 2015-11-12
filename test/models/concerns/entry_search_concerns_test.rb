@@ -14,7 +14,7 @@ class EntrySearchConcernsTest < ActiveSupport::TestCase
   end
 
   test 'should get list of organization names' do
-    assert_includes @entry.text_search_fields, 'Geographic Information Network of Alaska'
+    assert_includes @entry.text_search_fields, 'Geographic Information Network Alaska'
   end
 
   test 'should get entry type name' do
