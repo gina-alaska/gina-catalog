@@ -1,5 +1,6 @@
 class Collection < ActiveRecord::Base
   include LegacyConcerns
+  include MustacheConcerns
 
   validates :name, length: { maximum: 255 }
 
@@ -14,6 +15,6 @@ class Collection < ActiveRecord::Base
   }
 
   scope :visible, -> {
-    where(hidden: false).pluck(:name)
+    where(hidden: false)
   }
 end

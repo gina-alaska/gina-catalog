@@ -1,6 +1,11 @@
 module MustacheConcerns
   extend ActiveSupport::Concern
 
+  included do
+    delegate :url_helpers, to: "Rails.application.routes"
+    alias :h :url_helpers
+  end
+
   def basic_pipeline(context)
     HTML::Pipeline.new [
       Glynx::MustacheFilter
@@ -15,7 +20,36 @@ module MustacheConcerns
   end
 
   def mustache_context(page = nil)
-    attributes
+    context = as_context
+    context[mustache_route] = context.dup
+
+    context
+  end
+
+  def as_context
+    attrs = mustache_sanitize(attributes)
+    attrs['gid'] = self.to_global_id
+    attrs['url'] = mustache_url
+
+    attrs
+  end
+
+  def mustache_sanitize(items)
+    items.each_with_object({}) do |item,hash|
+      hash[item.first] = item.last.to_s
+    end
+  end
+
+  def mustache_route
+    self.class.name.parameterize
+  end
+
+  def mustache_url
+    h.send(:"#{mustache_route}_path", mustache_url_params) if h.respond_to?(:"#{self.mustache_route}_path")
+  end
+
+  def mustache_url_params
+    to_param
   end
 
   def map_mustache_safe(collection, page)
@@ -23,15 +57,14 @@ module MustacheConcerns
   end
 
   def render_context(portal, page = nil)
-    context = OpenStruct.new(mustache_context)
-    context.portal = portal.mustache_context(page)
-    context.snippet = ->(name) { portal.snippets.where(name: name).first.try(:render, page) }
-    context.pages = map_mustache_safe(portal.pages.roots.visible.active, page)
-    unless page.nil?
-      context.image_attachments = map_mustache_safe(page.cms_page_attachments.map(&:attachment), page)
-    end
-    context.latest_entries = map_mustache_safe(portal.entries.order(updated_at: :desc).limit(5), page)
+    portal.readonly!
+    data = OpenStruct.new({ portal: portal })
 
-    { mustache: context }
+    unless page.nil?
+      page.readonly!
+      data.page = page
+    end
+
+    { data: data }
   end
 end
