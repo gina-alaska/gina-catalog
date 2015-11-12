@@ -24,7 +24,6 @@ Rails.application.routes.draw do
   resources :sessions
   resources :memberships
   resources :users
-  resources :sitemaps
   resources :downloads, constraints: { id: /[^\/]+/ } do
     get :sds, on: :member
   end
