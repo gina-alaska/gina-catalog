@@ -16,9 +16,16 @@ class Cms::Attachment < ActiveRecord::Base
   end
 
   def as_context
-    context = super(page)
+    context = super
     context['title'] = name
+    context
+  end
+
+  def mustache_context(page)
+    context = super(page)
+
     context['active'] = (page.attachments.images.first == self ? 'active' : '')
+
     context
   end
 
