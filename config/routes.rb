@@ -67,7 +67,14 @@ Rails.application.routes.draw do
   end
 
   namespace :catalog do
-    resources :collections
+    resources :collections do
+      member do
+        patch :up
+        patch :down
+        patch :top
+        patch :bottom
+      end
+    end
     resources :map_layers
 
     resources :contacts do

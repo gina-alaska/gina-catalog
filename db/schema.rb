@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151104213340) do
+ActiveRecord::Schema.define(version: 20151106184258) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -204,6 +204,7 @@ ActiveRecord::Schema.define(version: 20151104213340) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "entry_collections_count", default: 0
+    t.integer  "position"
   end
 
   create_table "contacts", force: :cascade do |t|
@@ -534,6 +535,7 @@ ActiveRecord::Schema.define(version: 20151104213340) do
     t.boolean  "global_admin", default: false
   end
 
+  add_foreign_key "cms_attachments", "portals"
   add_foreign_key "cms_layouts", "portals"
   add_foreign_key "cms_pages", "cms_layouts"
   add_foreign_key "cms_pages", "portals"
