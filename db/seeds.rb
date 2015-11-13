@@ -78,8 +78,8 @@ if Rails.env.development?
   default_layout = p.layouts.where(name: 'default').first_or_create do |l|
     l.content = <<-EOHTML
 <div class="header">
-  {{#snippet}}header{{/snippet}}
-  {{#snippet}}navbar{{/snippet}}
+  {{>header}}
+  {{>navbar}}
 </div>
 <div class="container-fluid">
   <div class="content">
@@ -87,7 +87,7 @@ if Rails.env.development?
   </div>
 </div>
 <div class="footer">
-  {{#snippet}}footer{{/snippet}}
+  {{>footer}}
 </div>
     EOHTML
   end
