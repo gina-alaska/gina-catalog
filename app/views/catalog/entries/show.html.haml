@@ -10,7 +10,7 @@
       .panel.panel-default
         - if @entry.attachments.geojson.any? or @entry.map_layers.any?
           = render 'map', entry: @entry
-          .div{ style: 'margin-top: 2px; margin-bottom: 2px;' }
+          .full-page-map-btn
             = link_to catalog_entry_map_path(@entry), class: 'btn btn-primary btn-block' do
               Full Page Map
         - if @entry.entry_organizations.any?
