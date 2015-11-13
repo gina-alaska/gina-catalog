@@ -5,10 +5,12 @@ class Organization < ActiveRecord::Base
   CATEGORIES = [
     'Academic',
     'Industry/Consultants',
+    'International',
     'State',
     'Federal',
     'Local',
     'Foundation',
+    'Intergovernmental',
     'Non-Governmental',
     'Unknown'
   ]

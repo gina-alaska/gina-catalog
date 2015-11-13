@@ -82,6 +82,10 @@ class Entry < ActiveRecord::Base
 
   after_create :set_owner_portal
 
+  scope :newest, -> { order(created_at: :desc).limit(10) }
+  scope :recently_updated, -> { order(updated_at: :desc).limit(10) }
+  scope :published, -> { where('published_at <= ?', Time.zone.now) }
+
   tracked owner: proc { |controller, _model| controller.send(:current_user) },
           entry_id: :id,
           parameters: :activity_params
@@ -150,5 +154,16 @@ class Entry < ActiveRecord::Base
 
   def to_s
     title
+  end
+
+  def mustache_route
+    "catalog_#{super}"
+  end
+
+  def as_context
+    context = super
+    context['type'] = entry_type.name
+
+    context
   end
 end

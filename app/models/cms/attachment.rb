@@ -1,4 +1,6 @@
 class Cms::Attachment < ActiveRecord::Base
+  include MustacheConcerns
+
   belongs_to :portal
 
   has_many :cms_page_attachments, class_name: 'Cms::PageAttachment'
@@ -13,13 +15,21 @@ class Cms::Attachment < ActiveRecord::Base
     Refile.types[:image].content_type.include? file_content_type
   end
 
-  def mustache_context(page)
-    context = OpenStruct.new(attributes)
-    context.active = (page.attachments.images.first == self ? 'active' : '')
-    context.thumbnail = -> (size) { ::ActionView::Base.new.attachment_url(self, :file, :limit, *size.split('x')) }
-    context.fill = -> (size) { ::ActionView::Base.new.attachment_url(self, :file, :fill, *size.split('x'), 'Center') }
-    context.fit = -> (size) { ::ActionView::Base.new.attachment_url(self, :file, :fit, *size.split('x')) }
-    context.url = -> { ::ActionView::Base.new.attachment_url(self, :file) }
+  def as_context
+    context = super
+    context['title'] = name
     context
+  end
+
+  def mustache_context(page)
+    context = super(page)
+
+    context['active'] = (page.attachments.images.first == self ? 'active' : '')
+
+    context
+  end
+
+  def mustache_url
+    Refile.attachment_url(self, :file)
   end
 end

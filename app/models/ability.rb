@@ -33,6 +33,7 @@ class Ability
 
     can :read, Entry
     can :read, Attachment
+    can :read, :dashboard
     cannot :read, Attachment, category: 'Private Download'
 
     unless user.new_record?
@@ -49,10 +50,6 @@ class Ability
 
     if user.role?(:data_entry, current_portal) || user.role?(:data_manager, current_portal)
       can :view_catalog, :menu
-    end
-
-    if user.role?(:portal_manager, current_portal)
-      can :view_portal, :menu
     end
 
     if user.global_admin?
@@ -73,7 +70,7 @@ class Ability
       can [:create, :update, :archive], Entry do |entry|
         entry.new_record? || entry.owner_portal == current_portal
       end
-      can [:read, :downloads, :links], :dashboard
+      can [:downloads, :links], :dashboard
     end
 
     if user.role?(:data_manager, current_portal)
@@ -87,7 +84,7 @@ class Ability
       can [:manage, :archive], Entry do |entry|
         entry.new_record? || entry.owner_portal == current_portal
       end
-      can [:read, :downloads, :links], :dashboard
+      can [:downloads, :links], :dashboard
     end
 
     if user.role?(:portal_manager, current_portal)

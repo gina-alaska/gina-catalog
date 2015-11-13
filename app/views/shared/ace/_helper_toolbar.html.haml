@@ -1,39 +1,97 @@
-.btn-group.btn-group-sm
-  %button.btn.btn-default{ type: 'button', title: 'Insert picture', data: { action: 'chooser', toggle: 'modal', target: '#image-chooser-modal', url: cms_attachments_path(sort: 'name', images: true, format: :json) } }
-    %i.fa.fa-picture-o
-  %button.btn.btn-default{ type: 'button', title: 'Link', data: { action: 'chooser', toggle: 'modal', target: '#link-chooser-modal', url: cms_attachments_path(sort: 'name', format: :json) } }
-    %i.fa.fa-link
+.btn-group.btn-group-sm.dropdown
+  = link_to '#', class: "btn btn-default dropdown-toggle", data: { submenu: true, toggle: "dropdown" } do
+    View Helpers
+    %b.caret
+  %ul.dropdown-menu
+    %li.dropdown-submenu
+      %a{ href: "#" } Page:
+      %ul.dropdown-menu
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', start: '{{#pages}}', end: '{{/pages}}' } } List
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', start: '{{#root_page}}', end: '{{/root_page}}' } } Root page
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', start: '{{#parent_page}}', end: '{{/parent_page}}' } } Parent page
+        %li.divider
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ page.title }}' } } Title
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ page.url }}' } } Url
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ page.description }}' } } Description
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ page.created_at }}' } } Created At
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ page.updated_at }}' } } Updated At
 
-#link-chooser-modal.modal.fade
-  .modal-dialog.modal-lg
-    .modal-content
-      .modal-header
-        %h4.modal-title Select an attachment to link
-      .modal-body
-        = render '/shared/ace/chooser_sortby', target: '#link-chooser-modal', images: false
-        .loading
-          %i.fa.fa-spin.fa-refresh
-          Loading documents....
-        .content
-        = render '/shared/ace/chooser_template', action: 'link'
-      .modal-footer
-        %button.btn.btn-primary{ type: 'button', data: { dismiss: 'modal' } }
-          %i.fa.fa-close
-          Close
+    %li.dropdown-submenu
+      %a{ href: "#" } Image attachments:
+      %ul.dropdown-menu
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', start: '{{#image_attachments}}', end: '{{/image_attachments}}' } } List
+        %li.divider
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ attachment.title }}' } } Title
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ attachment.description }}' } } Description
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ thumbnail size="100x100" }}' } } Thumbnail (limit)
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ fit size="100x100" }}' } } Thumbnail (fit)
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ fill size="100x100" }}' } } Thumbnail (fill)
 
-#image-chooser-modal.modal.fade
-  .modal-dialog.modal-lg
-    .modal-content
-      .modal-header
-        %h4.modal-title Select an image to add
-      .modal-body
-        = render '/shared/ace/chooser_sortby', target: '#image-chooser-modal', images: true
-        .loading
-          %i.fa.fa-spin.fa-refresh
-          Loading images....
-        .content
-        = render '/shared/ace/chooser_template', action: 'image'
-      .modal-footer
-        %button.btn.btn-primary{ type: 'button', data: { dismiss: 'modal' } }
-          %i.fa.fa-close
-          Close
+    %li.dropdown-submenu
+      %a{ href: "#" } Collections:
+      %ul.dropdown-menu
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', start: '{{#collections limit="10"}}', end: '{{/collections}}' } } List
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', start: '{{#collections name="10"}}', end: '{{/collections}}' } } By name
+        %li.divider
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ collection.name }}' } } Name
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ collection.description }}' } } Description
+
+    %li.dropdown-submenu
+      %a{ href: "#" } Portal:
+      %ul.dropdown-menu
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{#parent_portal}}' } } Parent portal
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', start: '{{#child_portals}}', end: '{{/child_portals}}' } } Child portals
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', start: '{{#sibling_portals}}', end: '{{/sibling_portals}}' } } Sibling portals
+        %li.divider
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ portal.title }}' } } Title
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ portal.acronym }}' } } Acronym
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ portal.by_line }}' } } By Line
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ portal.description }}' } } Description
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ portal.contact_email }}' } } Contact Email
+
+    %li.dropdown-submenu
+      %a{ href: "#" } Catalog Entries:
+      %ul.dropdown-menu
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', start: '{{#updated_entries limit="5"}}', end: '{{/updated_entries}}' } } Recently updated
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', start: '{{#newest_entries limit="5"}}', end: '{{/newest_entries}}' } } Newest
+        %li.divider  
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ catalog_entry.title }}' } } Title
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ catalog_entry.description }}' } } Description
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ catalog_entry.url }}' } } URL
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ catalog_entry.type }}' } } Type
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ catalog_entry.start_date }}' } } Start date
+        %li
+          %a{ href: "#", type: 'button', data: { action: 'insert', html: '{{ catalog_entry.end_date }}' } } End date

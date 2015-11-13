@@ -3,7 +3,7 @@ class Catalog::CollectionsController < CatalogController
 
   def index
     @q = Collection.ransack(params[:q])
-    @q.sorts = 'name asc' if @q.sorts.empty?
+    @q.sorts = 'position asc' if @q.sorts.empty?
     @collections = @q.result(distinct: true).page(params[:page])
     @collections = @collections.used_by_portal(current_portal) unless params[:all].present?
 
@@ -60,6 +60,42 @@ class Catalog::CollectionsController < CatalogController
       flash[:success] = "Collection #{@collection.name} was successfully deleted."
       format.html { redirect_to catalog_collections_path }
       format.json { head :no_content }
+    end
+  end
+
+  def up
+    @collection.move_higher
+
+    respond_to do |format|
+      format.html { redirect_to catalog_collections_path }
+      format.js { redirect_via_turbolinks_to catalog_collections_path }
+    end
+  end
+
+  def down
+    @collection.move_lower
+
+    respond_to do |format|
+      format.html { redirect_to catalog_collections_path }
+      format.js { redirect_via_turbolinks_to catalog_collections_path }
+    end
+  end
+
+  def top
+    @collection.move_to_top
+
+    respond_to do |format|
+      format.html { redirect_to catalog_collections_path }
+      format.js { redirect_via_turbolinks_to catalog_collections_path }
+    end
+  end
+
+  def bottom
+    @collection.move_to_bottom
+
+    respond_to do |format|
+      format.html { redirect_to catalog_collections_path }
+      format.js { redirect_via_turbolinks_to catalog_collections_path }
     end
   end
 
