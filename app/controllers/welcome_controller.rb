@@ -7,4 +7,7 @@ class WelcomeController < ApplicationController
   def portal_not_found
     redirect_to root_url unless current_portal.nil?
   end
+
+  def permission_denied
+  end
 end

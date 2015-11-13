@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   get '/admin' => 'admin/dashboard#index', as: :admin
   get '/manager' => 'manager/dashboards#index', as: :manager
   get '/portal_not_found' => 'welcome#portal_not_found', as: :portal_not_found
+  get '/permission_denied' => 'welcome#permission_denied', as: :permission_denied
 
   # Support legacy routes
   get 'catalogs/:id' => 'import_items#entries'
@@ -67,7 +68,14 @@ Rails.application.routes.draw do
   end
 
   namespace :catalog do
-    resources :collections
+    resources :collections do
+      member do
+        patch :up
+        patch :down
+        patch :top
+        patch :bottom
+      end
+    end
     resources :map_layers
 
     resources :contacts do

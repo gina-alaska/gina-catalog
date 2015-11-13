@@ -35,21 +35,18 @@ class Cms::Page < ActiveRecord::Base
   end
 
   def should_generate_new_friendly_id?
-    if !slug?
-      true
-    else
-      false
-    end
+    !slug?
   end
 
-  def render(use_layout = true)
-    if use_layout && cms_layout
-      layout_context = render_context(portal, self)
-      layout_context[:mustache].content = page_pipeline(content, render_context(portal))
-      layout_pipeline(cms_layout.content, layout_context)
-    else
-      layout_pipeline(content, render_context(portal))
-    end
+  def url_path
+    ancestry_path.join('/')
+  end
+
+  def render
+    context = render_context(portal, self)
+    context[:data].content = basic_pipeline(context).call(content)[:output].to_s
+
+    basic_pipeline(context).call(cms_layout.content)[:output].to_s.html_safe
   end
 
   def layout_pipeline(content, context)
@@ -58,5 +55,19 @@ class Cms::Page < ActiveRecord::Base
 
   def page_pipeline(content, context)
     basic_pipeline(context).call(content)[:output].to_s
+  end
+
+  def as_context
+    context = super
+    context['slug'] = url_path
+    context
+  end
+
+  def mustache_route
+    "page"
+  end
+
+  def mustache_url_params
+    url_path
   end
 end

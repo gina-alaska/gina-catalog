@@ -15,8 +15,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from CanCan::AccessDenied do |_exception|
     if signed_in?
-      # flash.now[:error] = 'You do not have permission to view this page'
-      render template: 'welcome/permission_denied', status: :forbidden
+      redirect_to permission_denied_path, status: :forbidden
     else
       session[:redirect_back_to] = request.original_url
       redirect_to login_path
