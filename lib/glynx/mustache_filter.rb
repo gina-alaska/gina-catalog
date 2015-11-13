@@ -125,6 +125,16 @@ module Glynx
         end.join if current_page
       end
 
+      @handlebars.register_helper(:content_for) do |this,context,block|
+        set_content this.page, context, block.fn(current_page.mustache_context(data.page))
+
+        ''
+      end
+
+      @handlebars.register_helper(:show_content_for) do |this,context|
+        get_content(this.page, context)
+      end
+
       @handlebars.register_helper(:collections) do |this,block|
         collections = current_portal.collections.visible.order(name: :asc)
 
@@ -157,6 +167,14 @@ module Glynx
 
     def current_page
       data.page
+    end
+
+    def set_content(page, name, value)
+      RequestStore.store[:"content_for_#{page.slug.parameterize}_#{name.parameterize}"] = value
+    end
+
+    def get_content(page, name)
+      RequestStore.store[:"content_for_#{page.slug.parameterize}_#{name.parameterize}"]
     end
 
     def clean_context
