@@ -26,3 +26,13 @@
                 = link_to 'Set as default', default_cms_layout_path(cms_layout), method: :patch, class: 'btn btn-default'
               = link_to 'Edit', edit_cms_layout_path(cms_layout), class: 'btn btn-default'
               = link_to 'Delete', cms_layout, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'
+
+- content_for :help do
+  .panel-body
+    %span.help-block
+      %p
+        <b>Layouts</b> are what determines how the web site will be layed out, how it navigates, etc.  Here is how the basic look and feel for the web site is created using HTML.
+      %p
+        Select the "<b>New layout</b>" button above to create a new layout.  Each layout must have a unique name.
+      %p
+        Use the "<b>Set as default</b>" button to make a layout the default, any pages that do not specify a layout will use this one.  Only one layout at a time can be made the default.
