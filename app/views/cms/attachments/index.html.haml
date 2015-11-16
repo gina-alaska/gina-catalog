@@ -38,3 +38,13 @@
   = link_to new_cms_attachment_path, class: 'list-group-item list-group-item-success' do
     %i.fa.fa-plus.fa-fw
     New attachment
+
+- content_for :help do
+  .panel-body
+    %span.help-block
+      %p
+        <b>Attachments</b> are various images or documents that are to be placed or linked to on the web site.  Once uploaded they can be shown or linked to in pages on the site.  The
+        %i.fa.fa-link
+        "<b>Permalink</b>" button displays the file with it's full URL.  Copy the URL to link to the attachment.
+      %p
+        Select the "<b>New attachment</b>" button above to create a new attachment.  Each attachment must have a unique name.
