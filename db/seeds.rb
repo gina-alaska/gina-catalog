@@ -228,6 +228,14 @@ Welcome to the home page
     EOHTML
   end
 
+  p.pages.where(title: 'Sitemap', slug: 'sitemap').first_or_create do |page|
+    page.try(:hidden=, true)
+    page.cms_layout = default_layout
+    page.content = <<-EOHTML
+This page is automatically generated, editing it will not change the content.
+    EOHTML
+  end
+
   p.active_cms_theme = p.themes.where(name: 'default').first_or_create do |theme|
     theme.css = <<-EOCSS
 //will be applied to the body html tag
