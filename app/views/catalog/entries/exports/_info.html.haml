@@ -1,17 +1,8 @@
 %b Start Date:
-- if item.start_date
-  = item.start_date.strftime("%D") + "; "
-- else
-  ="none; "
+#{export_value(item.start_date.try(:strftime, '%D'))};
 
 %b End Date:
-- if item.end_date
-  = item.end_date.strftime("%D") + "; "
-- else
-  ="none; "
+#{export_value(item.end_date.try(:strftime, '%D'))};
 
 %b Status:
-- if item.status
-  = item.status
-- else
-  ="none; "
+#{export_value(item.status)};
