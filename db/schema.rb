@@ -535,6 +535,7 @@ ActiveRecord::Schema.define(version: 20151106184258) do
     t.boolean  "global_admin", default: false
   end
 
+  add_foreign_key "cms_attachments", "portals"
   add_foreign_key "cms_layouts", "portals"
   add_foreign_key "cms_pages", "cms_layouts"
   add_foreign_key "cms_pages", "portals"
