@@ -47,34 +47,33 @@ iso_topics.each do |iso_topic|
   IsoTopic.where( iso_theme_code: iso_topic[0], name: iso_topic[1], long_name: iso_topic[2] ).first_or_create
 end
 
-default_portal = Portal.where(
-  title: 'gLynx Portal',
-  acronym: 'gLynx',
-  contact_email: 'support@gina.alaska.edu'
-).first_or_create
+default_portal = Portal.where(title: 'gLynx Portal', acronym: 'gLynx').first_or_create do |portal|
+  portal.contact_email = 'support@gina.alaska.edu'
+)
 
 if default_portal.new_record?
+  Entry.reindex
+  Organization.reindex
+
   # Only do this if the portal doesn't exist.
   # If we move the default url to another portal don't want to put
   # it back here at some later point.
   default_portal.urls.where(url: 'catalog.192.168.222.225.xip.io', default: false).first_or_create
   default_portal.urls.where(url: 'catalog.127.0.0.1.xip.io', default: false).first_or_create
   default_portal.urls.where(url: 'portal.gina.alaska.edu', default: true).first_or_create
+
+  Entry.where(title: 'Example record').first_or_create do |entry|
+    entry.description = 'This is an example record'
+    entry.status = 'Complete'
+    entry.entry_type = EntryType.first
+    entry.published_at = Time.zone.now
+    entry.portals = [default_portal]
+  end
 end
 
-Contact.where(name: 'Will Fisher', email: 'will@alaska.edu').first_or_create
-
-Organization.where(name: 'Geographic Information Network of Alaska', acronym: 'GINA').first_or_create
-
-Entry.reindex
-Organization.reindex
-
-Entry.where(title: 'Example record').first_or_create do |entry|
-  entry.description = 'This is an example record'
-  entry.status = 'Complete'
-  entry.entry_type = EntryType.first
-  entry.published_at = Time.zone.now
-  entry.portals = [default_portal]
+if Rails.env.development?
+  Contact.where(name: 'Will Fisher', email: 'will@alaska.edu').first_or_create
+  Organization.where(name: 'Geographic Information Network of Alaska', acronym: 'GINA').first_or_create
 end
 
 default_layout = default_portal.layouts.where(name: 'default').first_or_create do |l|
