@@ -49,7 +49,7 @@ end
 
 default_portal = Portal.where(title: 'gLynx Portal', acronym: 'gLynx').first_or_create do |portal|
   portal.contact_email = 'support@gina.alaska.edu'
-)
+end
 
 if default_portal.new_record?
   Entry.reindex
