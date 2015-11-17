@@ -7,24 +7,6 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 PublicActivity.enabled = false
 
-if Rails.env.development?
-  p = Portal.where(
-    title: 'Catalog Development Portal',
-    acronym: 'gLynx Portal',
-    contact_email: 'support@gina.alaska.edu'
-  ).first_or_initialize
-  p.urls.build(url: 'catalog.192.168.222.225.xip.io', default: true) if p.new_record?
-  p.urls.build(url: 'catalog.127.0.0.1.xip.io', default: false) if p.new_record?
-  p.save
-
-  Contact.where(name: 'Will Fisher', email: 'will@alaska.edu').first_or_create
-
-  Organization.where(name: 'Geographic Information Network of Alaska', acronym: 'GINA').first_or_create
-
-  Entry.reindex
-  Organization.reindex
-end
-
 EntryType.where(name: 'Project', description: 'catalog record for projects with no associated data/observation files', color: '#c09853').first_or_create
 EntryType.where(name: 'Data', description: 'catalog record for projects with associated data/observation files', color: '#3a87ad').first_or_create
 
@@ -65,18 +47,33 @@ iso_topics.each do |iso_topic|
   IsoTopic.where( iso_theme_code: iso_topic[0], name: iso_topic[1], long_name: iso_topic[2] ).first_or_create
 end
 
-if Rails.env.development?
-  Entry.where(title: 'Example record for indexing purposes').first_or_create do |entry|
-    entry.description = 'This is an example record, needed for indexing purposes.'
-    entry.status = 'Complete'
-    entry.entry_type = EntryType.first
-    entry.portals = [p]
-  end
+demo_portal = Portal.where(
+  title: 'gLynx Portal',
+  acronym: 'gLynx',
+  contact_email: 'support@gina.alaska.edu'
+).first_or_create
+
+demo_portal.urls.where(url: 'catalog.192.168.222.225.xip.io', default: false).first_or_create
+demo_portal.urls.where(url: 'catalog.127.0.0.1.xip.io', default: false).first_or_create
+demo_portal.urls.where(url: 'portal.gina.alaska.edu', default: true).first_or_create
+
+Contact.where(name: 'Will Fisher', email: 'will@alaska.edu').first_or_create
+
+Organization.where(name: 'Geographic Information Network of Alaska', acronym: 'GINA').first_or_create
+
+Entry.reindex
+Organization.reindex
+
+Entry.where(title: 'Example record').first_or_create do |entry|
+  entry.description = 'This is an example record'
+  entry.status = 'Complete'
+  entry.entry_type = EntryType.first
+  entry.published_at = Time.zone.now
+  entry.portals = [demo_portal]
 end
 
-if Rails.env.development?
-  default_layout = p.layouts.where(name: 'default').first_or_create do |l|
-    l.content = <<-EOHTML
+default_layout = demo_portal.layouts.where(name: 'default').first_or_create do |l|
+  l.content = <<-EOHTML
 <div class="header">
   {{>header}}
   {{>navbar}}
@@ -89,12 +86,12 @@ if Rails.env.development?
 <div class="footer">
   {{>footer}}
 </div>
-    EOHTML
-  end
-  p.default_cms_layout = default_layout
+  EOHTML
+end
+demo_portal.default_cms_layout = default_layout
 
-  twocol_layout = p.layouts.where(name: 'twocolumns').first_or_create do |layout|
-    layout.content = <<-EOHTML
+twocol_layout = demo_portal.layouts.where(name: 'twocolumns').first_or_create do |layout|
+  layout.content = <<-EOHTML
 <div class="header">
   {{>header}}
   {{>navbar}}
@@ -114,25 +111,25 @@ if Rails.env.development?
 <div class="footer">
   {{>footer}}
 </div>
-    EOHTML
-  end
+  EOHTML
+end
 
-  p.snippets.where(name: 'header').first_or_create do |s|
-    s.content = <<-EOHTML
+demo_portal.snippets.where(name: 'header').first_or_create do |s|
+  s.content = <<-EOHTML
 <h1 class="page-title">{{portal.title}}</h1>
-    EOHTML
-  end
+  EOHTML
+end
 
-  p.snippets.where(name: 'footer').first_or_create do |s|
-    s.content = <<-EOHTML
+demo_portal.snippets.where(name: 'footer').first_or_create do |s|
+  s.content = <<-EOHTML
 <small>Powered by <a href="http://www.gina.alaska.edu">GINA</a></small>
 |
 <small><a href="/login">Manager Login</a></small>
-    EOHTML
-  end
+  EOHTML
+end
 
-  p.snippets.where(name: 'navbar').first_or_create do |s|
-    s.content = <<-EOHTML
+demo_portal.snippets.where(name: 'navbar').first_or_create do |s|
+  s.content = <<-EOHTML
 <nav class="navbar navbar-default navbar-static-top">
   <ul class="nav navbar-nav">
     {{#pages}}
@@ -140,28 +137,29 @@ if Rails.env.development?
     {{/pages}}
   </ul>
 </nav>
-    EOHTML
-  end
+  EOHTML
+end
 
-  p.pages.where(title: 'Home', slug: 'home').first_or_create do |page|
-    page.cms_layout = default_layout
-    page.content = <<-EOHTML
-Welcome to the home page
-    EOHTML
-  end
+demo_portal.pages.where(title: 'Home', slug: 'home').first_or_create do |page|
+  page.cms_layout = default_layout
+  page.content = <<-EOHTML
+<h1>Welcome to gLynx</h1>
+<p>This is a new instance of gLynx please take a moment to login and update the site with your content</p>
+  EOHTML
+end
 
-  p.pages.where(title: 'Catalog', slug: 'catalog').first_or_create do |page|
-    page.cms_layout = default_layout
-    page.content = <<-EOHTML
+demo_portal.pages.where(title: 'Catalog', slug: 'catalog').first_or_create do |page|
+  page.cms_layout = default_layout
+  page.content = <<-EOHTML
 <h1>
   Place holder for the data catalog page, this will show the search interface and full record views for catalog entries.
 </h1>
-    EOHTML
-  end
+  EOHTML
+end
 
-  p.pages.where(title: 'All helpers examples', slug: 'all-helpers-examples').first_or_create do |page|
-    page.cms_layout = twocol_layout
-    page.content = <<-EOHTML
+demo_portal.pages.where(title: 'All helpers examples', slug: 'all-helpers-examples').first_or_create do |page|
+  page.cms_layout = twocol_layout
+  page.content = <<-EOHTML
 <p>{{ portal.title }}</p>
 <p>Wahooo</p>
 <p>{{ page.title }}</p>
@@ -172,9 +170,9 @@ Welcome to the home page
 <p>{{ page.updated_at }}</p>
 
 {{# root_page }}
-<p>Title: {{ page.title }}</p>
-<p>Slug: {{ page.slug }}</p>
-<p>Desc: {{ page.description }}</p>
+  <p>Title: {{ page.title }}</p>
+  <p>Slug: {{ page.slug }}</p>
+  <p>Desc: {{ page.description }}</p>
 {{/ root_page }}
 {{#image_attachments}}
   {{ thumbnail size="200x100" }}
@@ -225,9 +223,9 @@ Welcome to the home page
 
 <h5>sibs</h5>
 <ol>
-{{#sibling_portals}}
-  <li>{{ portal.title }}</li>
-{{/sibling_portals}}
+  {{#sibling_portals}}
+    <li>{{ portal.title }}</li>
+  {{/sibling_portals}}
 </ol>
 
 {{#content_for "sidebar"}}
@@ -236,30 +234,30 @@ Welcome to the home page
     <li>{{ page.title }}</li>
   {{/pages}}</ul>
 {{/content_for}}
-    EOHTML
-  end
+  EOHTML
+end
 
-  p.pages.where(title: 'Page not found', slug: 'page-not-found').first_or_create do |page|
-    page.try(:hidden=, true)
-    page.cms_layout = default_layout
-    page.content = <<-EOHTML
+demo_portal.pages.where(title: 'Page not found', slug: 'page-not-found').first_or_create do |page|
+  page.try(:hidden=, true)
+  page.cms_layout = default_layout
+  page.content = <<-EOHTML
 <div class="jumbotron">
   <h1>404 - Page not found</h1>
   <p>We're sorry but the page you requested could not be found</p>
 </div>
-    EOHTML
-  end
+  EOHTML
+end
 
-  p.pages.where(title: 'Sitemap', slug: 'sitemap').first_or_create do |page|
-    page.try(:hidden=, true)
-    page.cms_layout = default_layout
-    page.content = <<-EOHTML
+demo_portal.pages.where(title: 'Sitemap', slug: 'sitemap').first_or_create do |page|
+  page.try(:hidden=, true)
+  page.cms_layout = default_layout
+  page.content = <<-EOHTML
 This page is automatically generated, editing it will not change the content.
-    EOHTML
-  end
+  EOHTML
+end
 
-  p.active_cms_theme = p.themes.where(name: 'default').first_or_create do |theme|
-    theme.css = <<-EOCSS
+demo_portal.active_cms_theme = demo_portal.themes.where(name: 'default').first_or_create do |theme|
+  theme.css = <<-EOCSS
 //will be applied to the body html tag
 &.page {
   background-color: #fff;
@@ -312,7 +310,6 @@ This page is automatically generated, editing it will not change the content.
     border-radius: 0 0 5px 5px;
   }
 }
-    EOCSS
-  end
-  p.save
+  EOCSS
 end
+demo_portal.save
