@@ -47,15 +47,15 @@ iso_topics.each do |iso_topic|
   IsoTopic.where( iso_theme_code: iso_topic[0], name: iso_topic[1], long_name: iso_topic[2] ).first_or_create
 end
 
-demo_portal = Portal.where(
+default_portal = Portal.where(
   title: 'gLynx Portal',
   acronym: 'gLynx',
   contact_email: 'support@gina.alaska.edu'
 ).first_or_create
 
-demo_portal.urls.where(url: 'catalog.192.168.222.225.xip.io', default: false).first_or_create
-demo_portal.urls.where(url: 'catalog.127.0.0.1.xip.io', default: false).first_or_create
-demo_portal.urls.where(url: 'portal.gina.alaska.edu', default: true).first_or_create
+default_portal.urls.where(url: 'catalog.192.168.222.225.xip.io', default: false).first_or_create
+default_portal.urls.where(url: 'catalog.127.0.0.1.xip.io', default: false).first_or_create
+default_portal.urls.where(url: 'portal.gina.alaska.edu', default: true).first_or_create
 
 Contact.where(name: 'Will Fisher', email: 'will@alaska.edu').first_or_create
 
@@ -69,10 +69,10 @@ Entry.where(title: 'Example record').first_or_create do |entry|
   entry.status = 'Complete'
   entry.entry_type = EntryType.first
   entry.published_at = Time.zone.now
-  entry.portals = [demo_portal]
+  entry.portals = [default_portal]
 end
 
-default_layout = demo_portal.layouts.where(name: 'default').first_or_create do |l|
+default_layout = default_portal.layouts.where(name: 'default').first_or_create do |l|
   l.content = <<-EOHTML
 <div class="header">
   {{>header}}
@@ -88,9 +88,9 @@ default_layout = demo_portal.layouts.where(name: 'default').first_or_create do |
 </div>
   EOHTML
 end
-demo_portal.default_cms_layout = default_layout
+default_portal.default_cms_layout = default_layout
 
-twocol_layout = demo_portal.layouts.where(name: 'twocolumns').first_or_create do |layout|
+twocol_layout = default_portal.layouts.where(name: 'twocolumns').first_or_create do |layout|
   layout.content = <<-EOHTML
 <div class="header">
   {{>header}}
@@ -114,13 +114,13 @@ twocol_layout = demo_portal.layouts.where(name: 'twocolumns').first_or_create do
   EOHTML
 end
 
-demo_portal.snippets.where(name: 'header').first_or_create do |s|
+default_portal.snippets.where(name: 'header').first_or_create do |s|
   s.content = <<-EOHTML
 <h1 class="page-title">{{portal.title}}</h1>
   EOHTML
 end
 
-demo_portal.snippets.where(name: 'footer').first_or_create do |s|
+default_portal.snippets.where(name: 'footer').first_or_create do |s|
   s.content = <<-EOHTML
 <small>Powered by <a href="http://www.gina.alaska.edu">GINA</a></small>
 |
@@ -128,7 +128,7 @@ demo_portal.snippets.where(name: 'footer').first_or_create do |s|
   EOHTML
 end
 
-demo_portal.snippets.where(name: 'navbar').first_or_create do |s|
+default_portal.snippets.where(name: 'navbar').first_or_create do |s|
   s.content = <<-EOHTML
 <nav class="navbar navbar-default navbar-static-top">
   <ul class="nav navbar-nav">
@@ -140,7 +140,7 @@ demo_portal.snippets.where(name: 'navbar').first_or_create do |s|
   EOHTML
 end
 
-demo_portal.pages.where(title: 'Home', slug: 'home').first_or_create do |page|
+default_portal.pages.where(title: 'Home', slug: 'home').first_or_create do |page|
   page.cms_layout = default_layout
   page.content = <<-EOHTML
 <h1>Welcome to gLynx</h1>
@@ -148,7 +148,7 @@ demo_portal.pages.where(title: 'Home', slug: 'home').first_or_create do |page|
   EOHTML
 end
 
-demo_portal.pages.where(title: 'Catalog', slug: 'catalog').first_or_create do |page|
+default_portal.pages.where(title: 'Catalog', slug: 'catalog').first_or_create do |page|
   page.cms_layout = default_layout
   page.content = <<-EOHTML
 <h1>
@@ -157,7 +157,7 @@ demo_portal.pages.where(title: 'Catalog', slug: 'catalog').first_or_create do |p
   EOHTML
 end
 
-demo_portal.pages.where(title: 'All helpers examples', slug: 'all-helpers-examples').first_or_create do |page|
+default_portal.pages.where(title: 'All helpers examples', slug: 'all-helpers-examples').first_or_create do |page|
   page.cms_layout = twocol_layout
   page.content = <<-EOHTML
 <p>{{ portal.title }}</p>
@@ -237,7 +237,7 @@ demo_portal.pages.where(title: 'All helpers examples', slug: 'all-helpers-exampl
   EOHTML
 end
 
-demo_portal.pages.where(title: 'Page not found', slug: 'page-not-found').first_or_create do |page|
+default_portal.pages.where(title: 'Page not found', slug: 'page-not-found').first_or_create do |page|
   page.try(:hidden=, true)
   page.cms_layout = default_layout
   page.content = <<-EOHTML
@@ -248,7 +248,7 @@ demo_portal.pages.where(title: 'Page not found', slug: 'page-not-found').first_o
   EOHTML
 end
 
-demo_portal.pages.where(title: 'Sitemap', slug: 'sitemap').first_or_create do |page|
+default_portal.pages.where(title: 'Sitemap', slug: 'sitemap').first_or_create do |page|
   page.try(:hidden=, true)
   page.cms_layout = default_layout
   page.content = <<-EOHTML
@@ -256,7 +256,7 @@ This page is automatically generated, editing it will not change the content.
   EOHTML
 end
 
-demo_portal.active_cms_theme = demo_portal.themes.where(name: 'default').first_or_create do |theme|
+default_portal.active_cms_theme = default_portal.themes.where(name: 'default').first_or_create do |theme|
   theme.css = <<-EOCSS
 //will be applied to the body html tag
 &.page {
@@ -312,4 +312,4 @@ demo_portal.active_cms_theme = demo_portal.themes.where(name: 'default').first_o
 }
   EOCSS
 end
-demo_portal.save
+default_portal.save
