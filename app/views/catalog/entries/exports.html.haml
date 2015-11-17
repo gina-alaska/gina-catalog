@@ -1,0 +1,7 @@
+- parts = ["title", "organizations", "contacts", "info", "tags", "iso", "data", "regions", "description", "links", "url", "collections"]
+- @entries.each do |item|
+  %p
+    - parts.each do |part|
+      - if check_export_visible_params(part)
+        = render partial: "catalog/entries/exports/#{part}", locals: {item: item}
+        %br/

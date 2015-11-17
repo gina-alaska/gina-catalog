@@ -4,4 +4,8 @@ module Catalog::EntriesHelper
       portals << portal if current_user.role?(:data_entry, portal) || current_user.role?(:data_manager, portal)
     end
   end
+
+  def export_value(item)
+    item.blank? ? 'none' : item
+  end
 end
