@@ -49,26 +49,13 @@ end
 
 default_portal = Portal.where(title: 'gLynx Portal', acronym: 'gLynx').first_or_create do |portal|
   portal.contact_email = 'support@gina.alaska.edu'
-end
 
-if default_portal.new_record?
+  portal.urls.build(url: 'catalog.192.168.222.225.xip.io', default: false)
+  portal.urls.build(url: 'catalog.127.0.0.1.xip.io', default: false)
+  portal.urls.build(url: 'portal.gina.alaska.edu', default: true)
+
   Entry.reindex
   Organization.reindex
-
-  # Only do this if the portal doesn't exist.
-  # If we move the default url to another portal don't want to put
-  # it back here at some later point.
-  default_portal.urls.where(url: 'catalog.192.168.222.225.xip.io', default: false).first_or_create
-  default_portal.urls.where(url: 'catalog.127.0.0.1.xip.io', default: false).first_or_create
-  default_portal.urls.where(url: 'portal.gina.alaska.edu', default: true).first_or_create
-
-  Entry.where(title: 'Example record').first_or_create do |entry|
-    entry.description = 'This is an example record'
-    entry.status = 'Complete'
-    entry.entry_type = EntryType.first
-    entry.published_at = Time.zone.now
-    entry.portals = [default_portal]
-  end
 end
 
 if Rails.env.development?
