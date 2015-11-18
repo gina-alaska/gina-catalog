@@ -1,5 +1,5 @@
 class Cms::Page < ActiveRecord::Base
-  SYSTEM_SLUGS = %w(home catalog page-not-found)
+  SYSTEM_SLUGS = %w(home catalog page-not-found sitemap)
 
   include MustacheConcerns
   extend FriendlyId

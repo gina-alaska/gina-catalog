@@ -1,0 +1,8 @@
+%b Start Date:
+#{export_value(item.start_date.try(:strftime, '%D'))};
+
+%b End Date:
+#{export_value(item.end_date.try(:strftime, '%D'))};
+
+%b Status:
+#{export_value(item.status)};

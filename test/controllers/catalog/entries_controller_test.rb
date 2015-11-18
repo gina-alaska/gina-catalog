@@ -14,6 +14,14 @@ class Catalog::EntriesControllerTest < ActionController::TestCase
     assert_not_nil assigns(:search_params)
   end
 
+  test 'should get exports' do
+    get :exports, serialized_search: '{"order":"title","archived":false}'
+    assert_response :success
+    assert_not_nil assigns(:entries)
+    assert_not_nil assigns(:facets)
+    assert_not_nil assigns(:search_params)
+  end
+
   test 'should only try to query non-archived records by default' do
     get :index
     assert_response :success
