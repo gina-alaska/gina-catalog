@@ -1,6 +1,6 @@
 = f.text_field :title, wrapper_class: 'required'
 = f.text_area :description, cols: 40, rows: 10, wrapper_class: 'required'
-= f.select :status, @entry.class::STATUSES, { selected: @entry.status, prompt: 'Please select a status', wrapper_class: 'required' }
-= f.collection_select :entry_type_id, EntryType.all, :id, :name, { prompt: 'Please select a catalog type', wrapper_class: 'required' }
+= f.select :status, @entry.class::STATUSES, { selected: @entry.status, prompt: 'Please select a status' }, wrapper_class: 'required'
+= f.collection_select :entry_type_id, EntryType.all, :id, :name, { prompt: 'Please select a catalog type' }, wrapper_class: 'required' 
 = f.date_field :start_date #, placeholder: 'YYYY-MM-DD', class: "datetimepicker", value: @entry.start_date.try(:to_date), data: {date_format: "YYYY-MM-DD"}
 = f.date_field :end_date #, placeholder: 'YYYY-MM-DD', class: "datetimepicker", value: @entry.end_date.try(:to_date), data: {date_format: "YYYY-MM-DD"}
