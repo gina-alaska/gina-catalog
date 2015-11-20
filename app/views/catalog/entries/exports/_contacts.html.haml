@@ -1,4 +1,4 @@
 %b Primary Contact:
-#{export_value(item.primary_contacts.collect(&:name).join(", "))}
+#{export_value(item.primary_contacts.pluck('DISTINCT name').join(", "))}
 %b Other contact(s):
-#{export_value(item.other_contacts.collect(&:name).join(", "))}
+#{export_value(item.other_contacts.pluck('DISTINCT name').join(", "))}
