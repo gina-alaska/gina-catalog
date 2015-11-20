@@ -2,7 +2,7 @@ module PermissionConcerns
   extend ActiveSupport::Concern
 
   included do
-    has_many :permissions do
+    has_many :permissions, dependent: :destroy do
       def for(portal)
         where(portal_id: portal).first
       end
