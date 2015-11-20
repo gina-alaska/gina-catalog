@@ -87,6 +87,7 @@ GEM
       execjs
     coffee-script-source (1.9.1.1)
     columnize (0.9.0)
+    dalli (2.7.4)
     debug_inspector (0.0.2)
     debugger-linecache (1.2.0)
     domain_name (0.5.24)
@@ -453,6 +454,7 @@ DEPENDENCIES
   cancancan (~> 1.9)
   closure_tree
   coffee-rails (~> 4.1.0)
+  dalli
   dotenv-rails
   dragonfly (~> 1.0.1)
   font-awesome-rails
