@@ -5,6 +5,8 @@ class Entry < ActiveRecord::Base
   include MustacheConcerns
   include PublicActivity::Model
 
+  after_commit :check_for_multi_organizations
+
   STATUSES = %w(Complete Ongoing Unknown Funded)
 
   acts_as_taggable_on :tags
@@ -165,5 +167,21 @@ class Entry < ActiveRecord::Base
     context['type'] = entry_type.name
 
     context
+  end
+
+  def check_for_multi_organizations
+    Entry.transaction do
+      all_orgs = self.entry_organizations.group(:organization_id).count
+      all_orgs.each do |organization_id, count|
+        next unless count > 1
+        new_assoc = self.entry_organizations.build(organization_id: organization_id)
+        entry_organizations.where(organization_id: organization_id).each do |org| 
+          new_assoc.primary ||= org.primary
+          new_assoc.funding ||= org.funding
+        end
+        entry_organizations.where(organization_id: organization_id).destroy_all
+        new_assoc.save!
+      end
+    end
   end
 end
