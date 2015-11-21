@@ -4,7 +4,3 @@
 one:
   entry: one
   map_layer: one 
-
-two:
-  entry:
-  map_layer:
