@@ -33,6 +33,15 @@ class Catalog::MapLayersControllerTest < ActionController::TestCase
     assert_redirected_to catalog_map_layers_path
   end
 
+  def test_destroy_associated
+    # should fail
+    assert_difference('MapLayer.count', 0) do
+      delete :destroy, id: @map_layer.id
+    end
+
+    assert_redirected_to catalog_map_layers_path
+  end
+
   def test_destroy
     assert_difference('MapLayer.count', -1) do
       delete :destroy, id: @no_association.id
