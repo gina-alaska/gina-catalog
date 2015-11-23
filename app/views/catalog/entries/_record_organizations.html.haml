@@ -9,6 +9,10 @@
     %h5.title
       = org.acronym
       - if entry_org.primary?
-        .label.label-primary Primary
+        %br/
+        .span
+          .label.label-primary Primary
       - if entry_org.funding?
-        .label.label-info Funding
+        %br/
+        .span
+          .label.label-info Funding
