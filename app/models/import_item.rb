@@ -8,6 +8,7 @@ class ImportItem < ActiveRecord::Base
   scope :entries, -> { by_type('Entry') }
   scope :collections, -> { by_type('Collection') }
   scope :regions, -> { by_type('Region') }
+  scope :data_types, -> { by_type('DataType') }  
   scope :use_agreements, -> { by_type('UseAgreement') }
   scope :iso_topics, -> { by_type('IsoTopic') }
   scope :oid, ->(id) { where(import_id: id) }

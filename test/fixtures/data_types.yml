@@ -2,11 +2,11 @@
 # http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  name: Database
+  name: Map
   description: MyString
 
 two:
-  name: Map
+  name: GIS
   description: MyString
 
 no_associated_entry:

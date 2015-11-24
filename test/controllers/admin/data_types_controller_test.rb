@@ -27,7 +27,7 @@ class Admin::DataTypesControllerTest < ActionController::TestCase
 
   test 'should create data_type' do
     assert_difference('DataType.count') do
-      post :create, data_type: @data_type.attributes
+      post :create, data_type: { name: 'Test', description: 'test description' }
       assert assigns(:data_type).errors.empty?, assigns(:data_type).errors.full_messages
     end
 

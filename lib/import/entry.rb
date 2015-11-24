@@ -5,7 +5,7 @@ module Import
     SIMPLE_FIELDS = %w(
       title description start_date end_date status
       tag_list entry_type primary_organization_ids funding_organization_ids
-      primary_contact_ids
+      primary_contact_ids published_at
     )
 
     def self.fetch(catalog)
@@ -27,15 +27,9 @@ module Import
       json['entry_type'] = entry_type(json['type'])
 
       add_simple_fields(SIMPLE_FIELDS, import.importable, json)
-      add_orgs(import.importable, json)
-      add_locations(import.importable, json['locations'])
-      add_contacts(import.importable, json)
-      add_collections(import.importable, json)
-      add_regions(import.importable, json)
-      add_iso_topics(import.importable, json)
-      add_use_agreement(import.importable, json)
-      add_links(import.importable, json)
-      add_archive_info(import.importable, json)
+      %w( orgs locations contacts collections regions iso_topics use_agreement links data_types archive_info).each do |topic|
+        send(:"add_#{topic}", import.importable, json)
+      end
 
       import.importable.portals << @portal
 
@@ -97,6 +91,13 @@ module Import
       end if json['iso_topics'].present?
     end
 
+    def add_data_types(model, json = {})
+      json['data_types'].each do |data_type|
+        item = find_data_type(data_type)
+        model.data_types << item unless item.nil? || model.data_types.include?(item)
+      end if json['data_types'].present?
+    end
+
     def add_collections(model, json = {})
       json['collections'].each do |collection|
         collection = find_collection(collection)
@@ -109,7 +110,8 @@ module Import
       model.use_agreement = item unless item.nil? || model.use_agreement.present?
     end
 
-    def add_locations(record, locations)
+    def add_locations(record, json = {})
+      locations = json['locations']
       return if !locations.present? || locations.to_json.blank?
       return if locations['features'].empty?
 
