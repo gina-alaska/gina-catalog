@@ -125,7 +125,7 @@ $(document).on 'ready page:load', ->
     editor.$blockScrolling = Infinity
 
     el.addClass('loading')
-    editor.setValue(target.val())
+    editor.setValue(target.val(), -1)
 
     editor.getSession().on 'change', (e) ->
       target.val(editor.getValue())
