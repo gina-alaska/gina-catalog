@@ -56,8 +56,8 @@ class Entry < ActiveRecord::Base
   has_one :owner_entry_portal, -> { where owner: true }, class_name: 'EntryPortal'
   has_one :owner_portal, through: :owner_entry_portal, source: :portal, class_name: 'Portal'
 
-  has_many :entry_map_layers
-  has_many :map_layers, through: :entry_map_layers, dependent: :destroy
+  has_many :entry_map_layers, dependent: :destroy
+  has_many :map_layers, through: :entry_map_layers
 
   has_many :download_logs, dependent: :destroy
 
