@@ -4,6 +4,7 @@ class Catalog::MapLayersControllerTest < ActionController::TestCase
   setup do
     login_user(:portal_admin)
     @map_layer = map_layers(:one)
+    @no_association = map_layers(:two)
   end
 
   def test_new
@@ -32,9 +33,18 @@ class Catalog::MapLayersControllerTest < ActionController::TestCase
     assert_redirected_to catalog_map_layers_path
   end
 
+  def test_destroy_associated
+    # should fail
+    assert_difference('MapLayer.count', 0) do
+      delete :destroy, id: @map_layer.id
+    end
+
+    assert_redirected_to catalog_map_layers_path
+  end
+
   def test_destroy
     assert_difference('MapLayer.count', -1) do
-      delete :destroy, id: @map_layer.id
+      delete :destroy, id: @no_association.id
     end
 
     assert_redirected_to catalog_map_layers_path
