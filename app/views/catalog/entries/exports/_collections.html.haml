@@ -1,2 +1,2 @@
 %b Collection(s):
-#{export_value(item.collections.collect(&:name).join(", "))}
+#{export_value(item.collections.pluck('DISTINCT name').join(", "))}
