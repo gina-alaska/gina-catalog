@@ -1,0 +1,7 @@
+%b Primary Organization: 
+= export_value item.primary_organizations.collect(&:name_with_acronym).join(', ')
+%br/
+%b Funding Organization: 
+= export_value item.funding_organizations.collect(&:name_with_acronym).join(', ')
+%b Other Organization(s):
+= export_value item.other_organizations.collect(&:name_with_acronym).join(', ')

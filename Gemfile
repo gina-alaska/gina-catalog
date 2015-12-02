@@ -49,7 +49,7 @@ gem 'bootstrap_form', '~> 2.3.0' #git: 'https://github.com/bootstrap-ruby/rails-
 gem 'awesome_nested_set'
 gem 'rgeo'
 gem 'rgeo-activerecord'
-gem 'activerecord-postgis-adapter', '3.0.0.beta1'
+gem 'activerecord-postgis-adapter', '3.0.0'
 gem 'rgeo-geojson'
 gem 'cancancan', '~> 1.9'
 gem 'nested_form'
@@ -78,6 +78,8 @@ gem "refile-mini_magick"
 gem 'rack-cors', require: 'rack/cors'
 gem 'hightop'
 gem 'version'
+gem 'request_store'
+gem 'dalli'
 
 group :development, :production do
   gem 'rails_12factor'

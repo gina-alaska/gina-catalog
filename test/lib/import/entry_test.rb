@@ -38,6 +38,9 @@ class Import::EntryTest < ActiveSupport::TestCase
                                  'regions' => [{
                                    'id' => 5
                                  }],
+                                 'data_types' => [
+                                   { 'name' => 'GIS' },
+                                 ],
                                  'iso_topics' => [
                                    { 'iso_theme_code' => '001' },
                                    { 'iso_theme_code' => '002' }
@@ -57,6 +60,7 @@ class Import::EntryTest < ActiveSupport::TestCase
     assert_not_empty import.importable.collections
     assert_not_empty import.importable.iso_topics
     assert_not_empty import.importable.regions
+    assert_not_empty import.importable.data_types
     assert_not_nil import.importable.use_agreement
   end
 

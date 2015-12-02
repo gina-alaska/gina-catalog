@@ -1,10 +1,10 @@
 class Bound < ActiveRecord::Base
-  module Factories
-    GEO = RGeo::Geographic.simple_mercator_factory
-    PROJECTED = GEO.projection_factory
-  end
+  # module Factories
+  #   GEO = RGeo::Geographic.simple_mercator_factory
+  #   PROJECTED = GEO.projection_factory
+  # end
 
-  set_rgeo_factory_for_column(:geom, Factories::PROJECTED)
+  # set_rgeo_factory_for_column(:geom, Factories::PROJECTED)
 
   belongs_to :boundable, polymorphic: true
 

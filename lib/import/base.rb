@@ -31,6 +31,12 @@ module Import
       ::IsoTopic.where(iso_theme_code: json['iso_theme_code']).first
     end
 
+    def find_data_type(json)
+      return if json.nil?
+
+      ::DataType.where(name: json['name']).first
+    end
+    
     def find_collection(json)
       return if json.nil?
 

@@ -2,9 +2,5 @@
 # http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  entry: 
-  map_layer: 
-
-two:
-  entry: 
-  map_layer: 
+  entry: one
+  map_layer: one 

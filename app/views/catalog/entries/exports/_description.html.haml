@@ -1,0 +1,3 @@
+%b Description:
+- num_chars = params["description_chars"].nil?  ? 500 : params["description_chars"].to_i
+#{truncate(export_value(item.description), length: num_chars)}

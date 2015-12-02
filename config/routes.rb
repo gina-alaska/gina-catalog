@@ -10,9 +10,9 @@ Rails.application.routes.draw do
   get '/auth/:provider/callback', to: 'sessions#create'
   get '/auth/failure', to: 'sessions#failure'
 
-  get '/admin' => 'admin/dashboard#index', as: :admin
   get '/manager' => 'manager/dashboards#index', as: :manager
   get '/portal_not_found' => 'welcome#portal_not_found', as: :portal_not_found
+  get '/sitemap' => 'sitemaps#index'
   get '/permission_denied' => 'welcome#permission_denied', as: :permission_denied
 
   # Support legacy routes
@@ -96,6 +96,7 @@ Rails.application.routes.draw do
         get :preview, on: :member
       end
       get :map
+      get :exports, on: :collection
     end
 
     resources :tags, constraints: { id: /[^\\]+/ } do
