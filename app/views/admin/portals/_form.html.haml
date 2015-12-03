@@ -8,17 +8,17 @@
       = f.text_field :acronym, wrapper_class: 'required'
     .col-sm-6
       = f.collection_select :parent_id, (Portal.active - @portal.self_and_descendants), :id, :title, prompt: 'Select a parent portal'
-    
+
   .row
     .col-sm-12
       = f.link_to_add 'New url', :urls, data: { target: '#url-form-body' }, class: 'pull-right btn btn-success'
       %h3 Portal Urls
-    
+
       %table.table.table-bordered.table-striped.table-condensed.form-inline
         %thead
           %tr
             %th.col-sm-3 URL
-            %th.col-sm-2 Default?
+            %th.col-sm-2 Active?
             %th.col-sm-1.text-right Actions
         %tbody#url-form-body.nested-form-fields
           = f.fields_for :urls, wrapper: false
@@ -41,11 +41,11 @@
             %th.col-sm-1.text-right Actions
         %tbody#users_add.nested-form-fields
           = f.fields_for :permissions, wrapper: false
-      
+
   .form-action
     = link_to :back, class: 'btn btn-default' do
       %i.fa.fa-arrow-left
       Cancel
-      
+
     .pull-right
       = f.primary

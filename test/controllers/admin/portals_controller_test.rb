@@ -3,7 +3,6 @@ require 'test_helper'
 class Admin::PortalsControllerTest < ActionController::TestCase
   setup do
     @portal = portals(:one)
-    # @portal_no_urls = portals(:two)
     login_user(:admin)
   end
 
@@ -20,13 +19,6 @@ class Admin::PortalsControllerTest < ActionController::TestCase
     assert_response :success
     assert_not_nil assigns(:portal)
   end
-
-  # test "should show portal with no urls" do
-  #  get :show, id: @portal_no_urls.id
-  #
-  #  assert_response :success
-  #  assert_not_nil assigns(:portal)
-  # end
 
   test 'should show new portal form' do
     get :new
@@ -79,6 +71,6 @@ class Admin::PortalsControllerTest < ActionController::TestCase
 
     get :new
 
-    assert_response(403)
+    assert_response :redirect
   end
 end

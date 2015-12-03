@@ -2,35 +2,35 @@
 
 one:
   url: catalog.192.168.222.225.xip.io
-  default: false
+  active: false
   portal: one
 
 two:
   url: test.host
-  default: true
+  active: true
   portal: one
 
 three:
   url: foo.com
-  default: true
+  active: true
   portal: two
 
 four:
   url: www.example.com
-  default: false
+  active: false
   portal: one
 
 five:
   url: 127.0.0.1
-  default: false
+  active: false
   portal: one
 
 six:
   url: bar.com
-  default: true
+  active: true
   portal: bad_default_urls
 
 seven:
   url: bag.com
-  default: true
+  active: true
   portal: bad_default_urls

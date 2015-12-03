@@ -22,15 +22,6 @@ class PortalTest < ActiveSupport::TestCase
     @portal = portals(:one)
   end
 
-  test 'default_url_count should return number of default urls' do
-    assert_equal 1, portals(:one).default_url_count
-    assert_equal 2, portals(:bad_default_urls).default_url_count
-  end
-
-  test 'default_url should return the default url' do
-    assert_equal @portal.default_url.url, 'test.host'
-  end
-
   test 'build_social_networks should initialize available networks' do
     @portal.social_networks.destroy_all
     assert_difference('@portal.social_networks.size', SocialNetworkConfig.count) do
@@ -42,5 +33,9 @@ class PortalTest < ActiveSupport::TestCase
     assert_difference('@portal.social_networks.size', SocialNetworkConfig.count - @portal.social_networks.size) do
       @portal.build_social_networks
     end
+  end
+
+  test 'should return the first active_url' do
+    assert_equal 'test.host', @portal.default_url.url
   end
 end

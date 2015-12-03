@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151106184258) do
+ActiveRecord::Schema.define(version: 20151203231050) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -353,9 +353,9 @@ ActiveRecord::Schema.define(version: 20151106184258) do
   end
 
   create_table "friendly_id_slugs", force: :cascade do |t|
-    t.string   "slug",           null: false
-    t.integer  "sluggable_id",   null: false
-    t.string   "sluggable_type"
+    t.string   "slug",                      null: false
+    t.integer  "sluggable_id",              null: false
+    t.string   "sluggable_type", limit: 50
     t.string   "scope"
     t.datetime "created_at"
   end
@@ -380,14 +380,14 @@ ActiveRecord::Schema.define(version: 20151106184258) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
-    t.uuid     "uuid"
+    t.uuid     "uuid",          default: "uuid_generate_v4()"
     t.integer  "portal_id"
   end
 
   create_table "iso_topic_categories", force: :cascade do |t|
-    t.string   "name"
-    t.string   "long_name"
-    t.string   "iso_theme_code"
+    t.string   "name",           limit: 50
+    t.string   "long_name",      limit: 200
+    t.string   "iso_theme_code", limit: 3
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -428,7 +428,7 @@ ActiveRecord::Schema.define(version: 20151106184258) do
     t.string   "name"
     t.string   "category"
     t.string   "description"
-    t.string   "acronym"
+    t.string   "acronym",     limit: 15
     t.string   "adiwg_code"
     t.string   "adiwg_path"
     t.string   "logo_uid"
@@ -450,7 +450,7 @@ ActiveRecord::Schema.define(version: 20151106184258) do
   create_table "portal_urls", force: :cascade do |t|
     t.integer  "portal_id"
     t.string   "url"
-    t.boolean  "default",    default: false
+    t.boolean  "active",     default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -502,7 +502,7 @@ ActiveRecord::Schema.define(version: 20151106184258) do
     t.string   "taggable_type"
     t.integer  "tagger_id"
     t.string   "tagger_type"
-    t.string   "context"
+    t.string   "context",       limit: 128
     t.datetime "created_at"
   end
 

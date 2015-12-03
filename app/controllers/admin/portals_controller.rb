@@ -52,7 +52,7 @@ class Admin::PortalsController < AdminController
     params.require(:portal).permit(
       :title, :acronym, :parent_id,
       permissions_attributes: [:id, :user_id, :_destroy, Permission::AVAILABLE_ROLES.keys],
-      urls_attributes: [:id, :url, :default, :_destroy],
+      urls_attributes: [:id, :url, :active, :_destroy],
       favicon: [:id, :image_name, :image_uid])
   end
 

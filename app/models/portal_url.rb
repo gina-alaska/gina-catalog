@@ -3,5 +3,9 @@ class PortalUrl < ActiveRecord::Base
 
   validates :url, presence: true
 
-  scope :default_url, -> { where(default: true) }
+  scope :active_url, -> { where(active: true) }
+
+  def self.find_active_url(url)
+    active_url.where(url: url).first
+  end
 end

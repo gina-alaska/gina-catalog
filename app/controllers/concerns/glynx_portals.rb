@@ -3,6 +3,7 @@ module GlynxPortals
 
   included do
     helper_method :current_portal
+    before_action :check_current_portal
   end
 
   def current_portal

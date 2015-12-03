@@ -1,7 +1,9 @@
 require 'test_helper'
 
 class PortalUrlTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  should belong_to('portal')
+
+  test 'should return the active url' do
+    assert_not PortalUrl.find_active_url('test.host').nil?, 'Could not find the specified active url'
+  end
 end
