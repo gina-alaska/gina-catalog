@@ -34,7 +34,7 @@ class Portal < ActiveRecord::Base
 
   validates :title, presence: true, uniqueness: true
   validates :acronym, presence: true, length: { maximum: 15 }, uniqueness: true
-  validate :single_default_url
+  # validate :single_default_url
 
   accepts_nested_attributes_for :urls, allow_destroy: true, reject_if: :blank_url
   accepts_nested_attributes_for :social_networks, allow_destroy: true
