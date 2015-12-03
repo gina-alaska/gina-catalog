@@ -16,16 +16,10 @@
               = link_to 'Edit', edit_cms_snippet_path(cms_snippet), class: 'btn btn-primary'
               = link_to 'Delete', cms_snippet, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'
 
-- content_for :help do
-  .panel-body
-    %span.help-block
-      %p
-        <b>Snippets</b> are small blocks of content that can be used in pages or layouts.  it is convenent to use snippets for content that is repeated on more than one page.
-      %p
-        Select the "<b>new snippet</b>" button above to create a new snippet.  each snippet must have a unique name.
-        
 - content_for :sidebar_menu do
-  .panel-footer
-    = link_to new_cms_snippet_path, class: 'btn btn-success btn-block' do
-      %i.fa.fa-plus.fa-fw
-      New snippet
+  = link_to new_cms_snippet_path, class: 'list-group-item list-group-item-success' do
+    %i.fa.fa-plus.fa-fw
+    New snippet
+  = help_link(['cms', 'snippets'], class: 'list-group-item') do
+    %i.fa.fa-fw.fa-question-circle
+    Help
