@@ -9,5 +9,6 @@ class WelcomeController < ApplicationController
   end
 
   def permission_denied
+    render status: :forbidden
   end
 end
