@@ -30,23 +30,6 @@
     = link_to reorder_cms_pages_path, class: 'list-group-item' do
       %i.fa.fa-fw.fa-sort
       Reorder pages
-
-- content_for :help do
-  .panel-body
-    %span.help-block
-      %p
-        <b>Pages</b> define each page of the web site and their relationships to each other.  The pages under the "All pages" header are considered "root" pages.  Any pages that are created under them are their children pages.  Pages with the
-        %i.fa.fa-gear
-        icon are system pages and can not be deleted.  Pages with the
-        %i.fa.fa-eye-slash
-        icon are hidden and can not be seen on the public side of the web site. 
-      %p
-        Select the "<b>New page</b>" button above to create a new page.
-        %br/
-        Select the "<b>Edit page</b>" button above to edit a page.
-        %br/
-        Select the "<b>Delete page</b>" button above to remove a page (non system pages only).
-        %br/
-        Select the "<b>Attach image</b>" button above to attach an image to a page.
-        %br/
-        Select the "<b>Reorder pages</b>" button above to change the order of the pages.
+    = help_link(['cms', 'pages'], class: 'list-group-item') do
+      %i.fa.fa-fw.fa-question-circle
+      Help
