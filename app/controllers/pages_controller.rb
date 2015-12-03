@@ -27,7 +27,7 @@ class PagesController < ApplicationController
   end
 
   def redirect_to_default_url
-    redirect_to "//#{current_portal.default_url.url}" if current_portal.urls.default_url.where(url: request.host).empty?
+    redirect_to "//#{current_portal.default_url.url}" if current_portal.urls.find_active_url(request.host).nil?
   end
 
   def fetch_page

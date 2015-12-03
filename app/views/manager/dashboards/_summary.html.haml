@@ -14,7 +14,7 @@
         %dd=ddtext @download_unique_count
       .col-sm-6
         %dt Portal URL
-        %dd=ddtext current_portal.urls.default_url.first.url
+        %dd=ddtext current_portal.default_url.url
         %dt CMS Pages
         %dd=ddtext @cms_page_count
         %dt CMS Attachments
@@ -35,4 +35,3 @@
           %td.text-right
             = link_to manager_dashboard_path(entry_id), class: 'btn btn-primary', title: 'Show Downloads' do
               %i.fa.fa-list
-            

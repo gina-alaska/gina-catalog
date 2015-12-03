@@ -2,7 +2,7 @@
 # More info at https://github.com/guard/guard#readme
 
 group :red_green_refactor, halt_on_fail: true do
-  guard :minitest, all_on_start: false, failed_mode: :keep, all_after_pass: false do
+  guard :minitest, all_on_start: false, failed_mode: :keep, all_after_pass: true do
     # with Minitest::Unit
     watch(%r{^test/(.*)\/?test_(.*)\.rb$})
     watch(%r{^lib/(.*/)?([^/]+)\.rb$})     { |m| "test/#{m[1]}test_#{m[2]}.rb" }

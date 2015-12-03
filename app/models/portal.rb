@@ -4,7 +4,7 @@ class Portal < ActiveRecord::Base
   acts_as_nested_set
 
   has_many :urls, class_name: 'PortalUrl', dependent: :destroy
-  has_one :default_url, -> { where default: true }, class_name: 'PortalUrl'
+
   has_one :favicon, dependent: :destroy
 
   has_many :collections, dependent: :destroy
@@ -63,5 +63,9 @@ class Portal < ActiveRecord::Base
     SocialNetworkConfig.order(name: :asc).each do |network|
       social_networks.find_or_initialize_by(social_network_config_id: network.id)
     end
+  end
+
+  def default_url
+    self.urls.active_url.first
   end
 end
