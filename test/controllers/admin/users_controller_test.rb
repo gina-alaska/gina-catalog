@@ -30,7 +30,7 @@ class Admin::UsersControllerTest < ActionController::TestCase
     login_user(:one)
     get :edit, id: @userone.id
 
-    assert_response(403)
+    assert_response :redirect
   end
 
   test 'should only allow global_admin field to be edited' do

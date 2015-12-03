@@ -79,6 +79,6 @@ class Admin::PortalsControllerTest < ActionController::TestCase
 
     get :new
 
-    assert_response(403)
+    assert_response :redirect
   end
 end
