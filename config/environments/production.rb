@@ -60,7 +60,7 @@ Rails.application.configure do
     servers = ENV['MEMCACHE_SERVERS'].split(",")
     namespace = ENV['MEMCACHE_NAMESPACE'] || 'glynx'
 
-    config.cache_store = :dalli, servers, { namespace: namespace }
+    config.cache_store = :dalli_store, servers, { namespace: namespace }
   end
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
