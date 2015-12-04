@@ -5,8 +5,10 @@ class HelpControllerTest < ActionController::TestCase
   #  flunk "Need real tests"
   #end
 
-  test 'should get index' do
-    get :index
+  test 'should get cms' do
+    xhr :get, :cms, format: :js, id: 'pages'
+
+    assert_equal "text/javascript", @response.content_type
     assert_response :success
   end
 end
