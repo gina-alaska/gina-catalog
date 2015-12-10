@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151203231050) do
+ActiveRecord::Schema.define(version: 20151208222758) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -171,7 +171,7 @@ ActiveRecord::Schema.define(version: 20151203231050) do
 
   add_index "cms_pages", ["cms_layout_id"], name: "index_cms_pages_on_cms_layout_id", using: :btree
   add_index "cms_pages", ["portal_id"], name: "index_cms_pages_on_portal_id", using: :btree
-  add_index "cms_pages", ["slug"], name: "index_cms_pages_on_slug", unique: true, using: :btree
+  add_index "cms_pages", ["slug"], name: "index_cms_pages_on_slug", using: :btree
 
   create_table "cms_snippets", force: :cascade do |t|
     t.string   "name"
@@ -353,9 +353,9 @@ ActiveRecord::Schema.define(version: 20151203231050) do
   end
 
   create_table "friendly_id_slugs", force: :cascade do |t|
-    t.string   "slug",                      null: false
-    t.integer  "sluggable_id",              null: false
-    t.string   "sluggable_type", limit: 50
+    t.string   "slug",           null: false
+    t.integer  "sluggable_id",   null: false
+    t.string   "sluggable_type"
     t.string   "scope"
     t.datetime "created_at"
   end
@@ -380,14 +380,14 @@ ActiveRecord::Schema.define(version: 20151203231050) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
-    t.uuid     "uuid",          default: "uuid_generate_v4()"
+    t.uuid     "uuid"
     t.integer  "portal_id"
   end
 
   create_table "iso_topic_categories", force: :cascade do |t|
-    t.string   "name",           limit: 50
-    t.string   "long_name",      limit: 200
-    t.string   "iso_theme_code", limit: 3
+    t.string   "name"
+    t.string   "long_name"
+    t.string   "iso_theme_code"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -428,7 +428,7 @@ ActiveRecord::Schema.define(version: 20151203231050) do
     t.string   "name"
     t.string   "category"
     t.string   "description"
-    t.string   "acronym",     limit: 15
+    t.string   "acronym"
     t.string   "adiwg_code"
     t.string   "adiwg_path"
     t.string   "logo_uid"
@@ -502,7 +502,7 @@ ActiveRecord::Schema.define(version: 20151203231050) do
     t.string   "taggable_type"
     t.integer  "tagger_id"
     t.string   "tagger_type"
-    t.string   "context",       limit: 128
+    t.string   "context"
     t.datetime "created_at"
   end
 
@@ -535,7 +535,6 @@ ActiveRecord::Schema.define(version: 20151203231050) do
     t.boolean  "global_admin", default: false
   end
 
-  add_foreign_key "cms_attachments", "portals"
   add_foreign_key "cms_layouts", "portals"
   add_foreign_key "cms_pages", "cms_layouts"
   add_foreign_key "cms_pages", "portals"
