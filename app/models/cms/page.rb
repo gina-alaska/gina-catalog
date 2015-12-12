@@ -17,6 +17,7 @@ class Cms::Page < ActiveRecord::Base
 
   validates :title, presence: true
   validates :slug, uniqueness: { scope: [:parent_id, :portal_id] }
+  validate :check_handlebarjs_syntax
 
   def to_s
     title
@@ -46,7 +47,7 @@ class Cms::Page < ActiveRecord::Base
     context = render_context(portal, self)
     context[:data].content = basic_pipeline(context).call(content)[:output].to_s
 
-    basic_pipeline(context).call(cms_layout.content)[:output].to_s.html_safe
+    basic_pipeline(context).call(cms_layout.render(context))[:output].to_s.html_safe
   end
 
   def layout_pipeline(content, context)
