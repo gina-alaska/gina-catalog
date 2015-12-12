@@ -57,14 +57,22 @@ module MustacheConcerns
   end
 
   def render_context(portal, page = nil)
-    portal.readonly!
-    data = OpenStruct.new({ portal: portal })
+    ro_portal = portal.dup
+    data = OpenStruct.new({ portal: ro_portal.readonly! })
 
     unless page.nil?
-      page.readonly!
-      data.page = page
+      ro_page = page.dup
+      data.page = ro_page.readonly!
     end
 
     { data: data }
+  end
+
+  def check_handlebarjs_syntax
+    begin
+      render  
+    rescue => e
+      errors.add(:content, "Invalid View Helper syntax { #{e.message.split(':').first} }!")
+    end
   end
 end
