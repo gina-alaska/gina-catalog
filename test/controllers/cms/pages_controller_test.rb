@@ -29,7 +29,7 @@ class Cms::PagesControllerTest < ActionController::TestCase
 
   def test_create
     assert_difference('Cms::Page.count') do
-      post :create, cms_page: { content: cms_page.content, cms_layout_id: cms_page.cms_layout_id, slug: cms_page.slug + '-foo', title: cms_page.title }
+      post :create, cms_page: { content: cms_page.content, cms_layout_id: cms_page.cms_layout_id, title: cms_page.title + ' foo' }
     end
 
     assert_redirected_to cms_page_path(assigns(:cms_page))

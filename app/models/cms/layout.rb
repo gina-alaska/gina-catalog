@@ -15,7 +15,7 @@ class Cms::Layout < ActiveRecord::Base
   end
   
   def render(context = nil)
-    context ||= render_context(portal)
+    return content if context.nil?
     basic_pipeline(context).call(content)[:output].to_s
   end
 end

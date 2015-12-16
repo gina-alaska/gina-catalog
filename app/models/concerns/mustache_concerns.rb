@@ -57,20 +57,21 @@ module MustacheConcerns
   end
 
   def render_context(portal, page = nil)
-    ro_portal = Portal.find(portal.id)
-    ro_portal.readonly!
-    data = OpenStruct.new({ portal: ro_portal })
+    data = OpenStruct.new()
+    unless portal.nil?
+      data.portal = portal
+    end
 
-    unless page.nil?
-      ro_page = Cms::Page.find(page.id)
-      ro_page.readonly!
-      data.page = ro_page
+    if !page.nil?
+      data.page = page
     end
 
     { data: data }
   end
 
   def check_handlebarjs_syntax
+    return if content.blank?
+    
     begin
       render  
     rescue V8::Error => e
