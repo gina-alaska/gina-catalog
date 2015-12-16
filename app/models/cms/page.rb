@@ -47,7 +47,7 @@ class Cms::Page < ActiveRecord::Base
     context = render_context(portal, self)
     context[:data].content = basic_pipeline(context).call(content)[:output].to_s
 
-    basic_pipeline(context).call(cms_layout.render(context))[:output].to_s.html_safe
+    cms_layout.render(context).html_safe
   end
 
   def layout_pipeline(content, context)
