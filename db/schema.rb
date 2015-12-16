@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151203231050) do
+ActiveRecord::Schema.define(version: 20151208222758) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -171,7 +171,7 @@ ActiveRecord::Schema.define(version: 20151203231050) do
 
   add_index "cms_pages", ["cms_layout_id"], name: "index_cms_pages_on_cms_layout_id", using: :btree
   add_index "cms_pages", ["portal_id"], name: "index_cms_pages_on_portal_id", using: :btree
-  add_index "cms_pages", ["slug"], name: "index_cms_pages_on_slug", unique: true, using: :btree
+  add_index "cms_pages", ["slug"], name: "index_cms_pages_on_slug", using: :btree
 
   create_table "cms_snippets", force: :cascade do |t|
     t.string   "name"
