@@ -28,7 +28,7 @@ module MustacheConcerns
 
   def as_context
     attrs = mustache_sanitize(attributes)
-    attrs['gid'] = self.to_global_id
+    attrs['gid'] = self.to_global_id unless self.new_record?
     attrs['url'] = mustache_url
 
     attrs
@@ -57,12 +57,14 @@ module MustacheConcerns
   end
 
   def render_context(portal, page = nil)
-    ro_portal = portal.dup
-    data = OpenStruct.new({ portal: ro_portal.readonly! })
+    ro_portal = Portal.find(portal.id)
+    ro_portal.readonly!
+    data = OpenStruct.new({ portal: ro_portal })
 
     unless page.nil?
-      ro_page = page.dup
-      data.page = ro_page.readonly!
+      ro_page = Cms::Page.find(page.id)
+      ro_page.readonly!
+      data.page = ro_page
     end
 
     { data: data }
@@ -71,7 +73,8 @@ module MustacheConcerns
   def check_handlebarjs_syntax
     begin
       render  
-    rescue => e
+    rescue V8::Error => e
+      Rails.logger.info(e)
       errors.add(:content, "Invalid View Helper syntax { #{e.message.split(':').first} }!")
     end
   end
