@@ -29,7 +29,7 @@ module MustacheConcerns
   def as_context
     attrs = mustache_sanitize(attributes)
     attrs['gid'] = self.to_global_id unless self.new_record?
-    attrs['url'] = mustache_url
+    attrs['url'] = mustache_url unless self.new_record?
 
     attrs
   end
@@ -75,7 +75,6 @@ module MustacheConcerns
     begin
       render  
     rescue V8::Error => e
-      Rails.logger.info(e)
       errors.add(:content, "Invalid View Helper syntax { #{e.message.split(':').first} }!")
     end
   end
