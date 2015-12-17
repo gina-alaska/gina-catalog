@@ -3,7 +3,6 @@ class Cms::Page < ActiveRecord::Base
 
   include MustacheConcerns
   extend FriendlyId
-  friendly_id :title, use: :slugged
 
   has_closure_tree order: 'sort_order', name_column: :slug, dependent: :destroy
 
@@ -19,6 +18,8 @@ class Cms::Page < ActiveRecord::Base
   validates :slug, uniqueness: { scope: [:parent_id, :portal_id] }
   validate :check_handlebarjs_syntax
 
+  friendly_id :title, use: :scoped, scope: :portal
+  
   def to_s
     title
   end
