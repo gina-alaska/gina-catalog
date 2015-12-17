@@ -1,0 +1,50 @@
+{
+  "layouts": [
+    {
+      "name": "default",
+      "content": "<div class=\"header\">\n  {{#snippet}}header{{/snippet}}\n  {{#snippet}}navbar{{/snippet}}\n</div>\n<div class=\"container-fluid\">\n  <div class=\"content\">\n    {{{content}}}\n  </div>\n</div>\n<div class=\"footer\">\n  {{#snippet}}footer{{/snippet}}\n</div>\n"
+    }
+  ],
+  "snippets": [
+    {
+      "name": "header",
+      "content": "<h1 class=\"page-title\">{{portal.title}}</h1>\n"
+    },
+    {
+      "name": "footer",
+      "content": "<small>Powered by <a href=\"http://www.gina.alaska.edu\">GINA</a></small>\n|\n<small><a href=\"/login\">Manager Login</a></small>\n"
+    },
+    {
+      "name": "navbar",
+      "content": "<nav class=\"navbar navbar-default navbar-static-top\">\n  <ul class=\"nav navbar-nav\">\n    {{#pages}}\n      <li><a href=\"/{{slug}}\">{{title}}</a></li>\n    {{/pages}}\n  </ul>\n</nav>\n"
+    }
+  ],
+  "themes": [
+    {
+      "name": "default",
+      "css": "//will be applied to the body html tag\n&.page {\n  background-color: #fff;\n}\n\n.header {\n  padding:0px;\n  background: #4d91ae; /* Old browsers */\n  background: -moz-linear-gradient(top, #4d91ae 0%, #00628b 85%); /* FF3.6+ */\n  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#4d91ae), color-stop(85%,#00628b)); /* Chrome    ,Safari4+\n  background: -webkit-linear-gradient(top, #4d91ae 0%,#00628b 85%); /* Chrome10+,Safari5.1+ */\n  background: -o-linear-gradient(top, #4d91ae 0%,#00628b 85%); /* Opera 11.10+ */\n  background: -ms-linear-gradient(top, #4d91ae 0%,#00628b 85%); /* IE10+ */\n  background: linear-gradient(to bottom, #4d91ae 0%,#00628b 85%); /* W3C */\n  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4d91ae', endColorstr='#00628b',GradientType=0 ); /*   IE6-9 */\n\n  h1 {\n    margin:0px;\n    padding: 10px;\n    color: #fff;\n  }\n}\n\n.footer {\n  margin-top: 20px;\n  padding: 10px;\n}\n\n// Catalog Search Results\n.search-results {\n  padding-left: 0;\n\n  .results-heading {\n    padding: 8px;\n    background-color: #fff;\n    margin-bottom: 0px;\n    border-radius: 5px 5px 0 0;\n\n  }\n\n  .results-body {\n    clear: both;\n    background-color: #fff;\n  }\n\n  .results-footer {\n    padding: 10px;\n    border-top: 1px solid #dfdfdf;\n    background-color: #fff;\n    border-radius: 0 0 5px 5px;\n  }\n}\n"
+    }
+  ],
+  "pages": [
+    {
+      "title": "Home",
+      "slug": "home",
+      "content": "Welcome to the home page\n"
+    },
+    {
+      "title": "Catalog",
+      "slug": "catalog",
+      "content": "<h1>\n  Place holder for the data catalog page, this will show the search interface and full record views for catalog entries.\n</h1>\n"
+    },
+    {
+      "title": "All helpers examples",
+      "slug": "all-helpers-examples",
+      "content": "<div class=\"row\">\n  <div class=\"col-sm-9\">\n    <p>{{ portal.title }}</p>\n    <p>Wahooo</p>\n    <p>{{ page.title }}</p>\n\n    <p>{{ page.url }}</p>\n\n    <p>{{ page.description }}</p>\n    <p>{{ page.updated_at }}</p>\n\n    {{# root_page }}\n    <p>Title: {{ page.title }}</p>\n    <p>Slug: {{ page.slug }}</p>\n    <p>Desc: {{ page.description }}</p>\n    {{/ root_page }}\n    {{#image_attachments}}\n      {{ thumbnail size=\"200x100\" }}\n      {{ fill size=\"200x100\" }}\n      {{ fit size=\"200x100\" }}\n      {{ title }}\n    {{/image_attachments}}\n\n    <h4>Collections</h4>\n    {{#collections limit=\"5\" }}\n      <p><b>Collection:</b> {{ collection.name }}</p>\n      {{#entries limit=\"1\"}}\n        <a href=\"{{ catalog_entry.url }}\">{{ catalog_entry.title }}</a>\n        <p>Desc: {{ catalog_entry.description }}</p>\n        <p>Type: {{ catalog_entry.type }}</p>\n        <p>Start: {{ catalog_entry.start_date }}</p>\n        <p>End: {{ catalog_entry.end_date }}</p>\n      {{/entries}}\n\n    {{/collections}}\n\n    <h4>Newest</h4>\n    {{#newest_entries limit=\"5\"}}\n      <ul>\n        <ol><a href=\"{{catalog_entry.url}}\">{{ catalog_entry.title }}</a></ol>\n      </ul>\n    {{/newest_entries}}\n\n    <h4>Latest</h4>\n    {{#updated_entries limit=\"5\"}}\n      <ul>\n        <ol><a href=\"{{catalog_entry.url}}\">{{ catalog_entry.title }}</a></ol>\n      </ul>\n    {{/updated_entries}}\n\n    <h4>Parent portal</h4>\n    {{#parent_portal}}\n      {{ portal.title }}\n      {{ portal.acronym }}\n      {{ portal.description }}\n      <ol>\n        <h5>childs</h5>\n        {{#child_portals}}\n          <li>{{ portal.title }}</li>\n        {{/child_portals}}\n      </ol>\n    {{/parent_portal}}\n\n    <h5>sibs</h5>\n    <ol>\n    {{#sibling_portals}}\n      <li>{{ portal.title }}</li>\n    {{/sibling_portals}}\n    </ol>\n  </div>\n  <div class=\"col-sm-3\">\n    {{ title }}\n    <ul>{{#pages}}\n      <li>{{ page.title }}</li>\n    {{/pages}}</ul>\n  </div>\n</div>\n"
+    },
+    {
+      "title": "Page not found",
+      "slug": "page-not-found",
+      "content": "<div class=\"jumbotron\">\n  <h1>404 - Page not found</h1>\n  <p>We're sorry but the page you requested could not be found</p>\n</div>\n"
+    }
+  ]
+}
