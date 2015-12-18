@@ -6,6 +6,7 @@ class Cms::Snippet < ActiveRecord::Base
   belongs_to :portal
 
   validates :name, presence: true
+  validate :check_handlebarjs_syntax
 
   def should_generate_new_friendly_id?
     if !slug? || name_changed?
