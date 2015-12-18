@@ -5,5 +5,5 @@
 - if entry.attachments.geojson.any? or entry.map_layers.any?
   %dt Direct Full Map Link
   %dd
-    = link_to catalog_entry_map_path(entry) do
-      = catalog_entry_map_url(entry)
+    = link_to map_catalog_entry_path(entry) do
+      = map_catalog_entry_url(entry)
