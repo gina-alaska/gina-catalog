@@ -28,8 +28,8 @@ module MustacheConcerns
 
   def as_context
     attrs = mustache_sanitize(attributes)
-    attrs['gid'] = self.to_global_id
-    attrs['url'] = mustache_url
+    attrs['gid'] = self.to_global_id unless self.new_record?
+    attrs['url'] = mustache_url unless self.new_record?
 
     attrs
   end
@@ -57,14 +57,25 @@ module MustacheConcerns
   end
 
   def render_context(portal, page = nil)
-    portal.readonly!
-    data = OpenStruct.new({ portal: portal })
+    data = OpenStruct.new()
+    unless portal.nil?
+      data.portal = portal
+    end
 
-    unless page.nil?
-      page.readonly!
+    if !page.nil?
       data.page = page
     end
 
     { data: data }
+  end
+
+  def check_handlebarjs_syntax
+    return if content.blank?
+    
+    begin
+      render  
+    rescue V8::Error => e
+      errors.add(:content, "Invalid View Helper syntax { #{e.message.split(':').first} }!")
+    end
   end
 end

@@ -3,7 +3,6 @@ class Cms::Page < ActiveRecord::Base
 
   include MustacheConcerns
   extend FriendlyId
-  friendly_id :title, use: :slugged
 
   has_closure_tree order: 'sort_order', name_column: :slug, dependent: :destroy
 
@@ -17,7 +16,10 @@ class Cms::Page < ActiveRecord::Base
 
   validates :title, presence: true
   validates :slug, uniqueness: { scope: [:parent_id, :portal_id] }
+  validate :check_handlebarjs_syntax
 
+  friendly_id :title, use: :scoped, scope: :portal
+  
   def to_s
     title
   end
@@ -46,7 +48,7 @@ class Cms::Page < ActiveRecord::Base
     context = render_context(portal, self)
     context[:data].content = basic_pipeline(context).call(content)[:output].to_s
 
-    basic_pipeline(context).call(cms_layout.content)[:output].to_s.html_safe
+    cms_layout.render(context).html_safe
   end
 
   def layout_pipeline(content, context)

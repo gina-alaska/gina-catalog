@@ -1,5 +1,6 @@
 class Portal < ActiveRecord::Base
   include MustacheConcerns
+  include PortalConcerns
 
   acts_as_nested_set
 
