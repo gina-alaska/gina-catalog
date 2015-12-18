@@ -27,6 +27,8 @@ class Catalog::EntriesController < CatalogController
   end
 
   def new
+    @entry = current_portal.entries.build
+
     @entry.attachments.build
     @entry.links.build
   end
@@ -37,6 +39,8 @@ class Catalog::EntriesController < CatalogController
   end
 
   def create
+    @entry = current_portal.entries.build(entry_params)
+
     @entry.portals << current_portal
     respond_to do |format|
       if @entry.save
