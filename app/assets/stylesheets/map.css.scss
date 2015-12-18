@@ -66,21 +66,8 @@
 
 .map-container {
   width: 100%;
-  height: 300px;
-
-  &.full-screen {
-    position:absolute;
-    display: inline-block; 
-    top:0;
-    bottom:0;
-    left: 0;
-    right: 0;
-    height: auto;
-    z-index: 1000000;
-  }
 
   &.top-bar-margin {
-    top: 51px;
   }
 
   &.small {
@@ -106,4 +93,27 @@
   @include map;
   width: 100%;
   height: 100%;
+}
+
+.map {
+  @include map;
+}
+
+.map-container.full-screen {
+  display: table;
+  height: 100%;
+
+  .map-header {
+    display: table-row;
+    height: 1%;
+    .navbar {
+      margin-bottom:0;
+    } 
+  }
+  .map-body {
+    display: table-row;
+  }
+  .map {
+    display: table-cell;
+  }
 }
