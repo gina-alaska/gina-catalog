@@ -3,15 +3,18 @@
   %head
     %title
       gLynx
-      = content_for :page_title
-
+      = yield :page_title
+    = yield :head
     -# = stylesheet_link_tag 'https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.css'
     -# = javascript_include_tag 'https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.js'
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   %body
-    = render 'layouts/header'
-    .page-container
-      = render 'layouts/flash_messages'
-      = yield
+    = render 'layouts/flash_messages'
+    .map-container.full-screen
+      .map-header
+        = render 'layouts/navbar'
+        = content_for :mapheader
+      .map-body
+        = yield
