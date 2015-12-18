@@ -4,8 +4,5 @@
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  #{ unless current_portal.analytics_account.blank? or current_portal.analytics_account == 'UA-6824535-21'
-    "ga('create', '" + "#{current_portal.analytics_account}" + "', 'auto');" + "\nga('send', 'pageview');"
-    end }
-  ga('create', 'UA-6824535-21', 'auto', 'gina');
-  ga('gina.send', 'pageview');
+  #{ portal_analytics(current_portal.analytics_account) }
+  #{ portal_analytics(Rails.application.secrets.gina_analytics, 'gina') }
