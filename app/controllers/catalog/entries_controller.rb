@@ -1,7 +1,8 @@
 class Catalog::EntriesController < CatalogController
+  before_action :set_entry
   before_action :set_cms_page
   before_action :gather_use_agreements, only: [:new, :create, :edit, :update]
-  load_and_authorize_resource except: :map
+  authorize_resource 
 
   layout 'pages', only: [:show, :index]
 
@@ -160,10 +161,12 @@ class Catalog::EntriesController < CatalogController
   end
 
   def map
-    @entry  = Entry.find(params['entry_id'])
+    @activities = PublicActivity::Activity.where(entry_id: @entry.id).order(created_at: :desc).limit(20)
 
     respond_to do |format|
-      format.html
+      format.html {
+        render layout: 'map'
+      }
       format.geojson
     end
   end
@@ -237,5 +240,9 @@ class Catalog::EntriesController < CatalogController
 
   def set_cms_page
     @cms_page = current_portal.pages.find_by_path('catalog')
+  end
+
+  def set_entry
+    @entry = current_portal.entries.find(params[:id]) if params[:id].present?
   end
 end
