@@ -10,7 +10,7 @@
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
-    = render "layouts/analytics" unless Rails.env == 'development'
+    = render "layouts/analytics"
   %body
     .floating-flashes
       = render 'layouts/flash_messages'
