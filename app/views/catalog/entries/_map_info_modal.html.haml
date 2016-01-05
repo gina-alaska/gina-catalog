@@ -1,0 +1,9 @@
+#map-info-modal.modal.fade
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{ data: { dismiss: 'modal' }}
+          %i.fa.fa-close
+        %h4{ class: "modal-title" } Catalog Record Information
+      .modal-body
+        = render 'entry', entry: @entry, activities: @activities

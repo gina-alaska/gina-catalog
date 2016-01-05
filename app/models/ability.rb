@@ -31,7 +31,11 @@ class Ability
 
     user ||= User.new
 
-    can :read, Entry
+    can [:read, :map], Entry do |entry|
+      entry.published?
+    end
+    cannot [:read, :map], Entry, published_at: nil
+
     can :read, Attachment
     can :read, :dashboard
     cannot :read, Attachment, category: 'Private Download'
@@ -67,7 +71,7 @@ class Ability
 
       can :manage, [Organization, Contact, MapLayer]
       can :manage, [UseAgreement, Collection],  portal_id: current_portal.id
-      can [:create, :update, :archive], Entry do |entry|
+      can [:read, :create, :update, :archive, :map], Entry do |entry|
         entry.new_record? || entry.owner_portal == current_portal
       end
       can [:downloads, :links], :dashboard

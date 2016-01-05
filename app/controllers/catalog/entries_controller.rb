@@ -1,7 +1,9 @@
 class Catalog::EntriesController < CatalogController
+  before_action :set_entry
   before_action :set_cms_page
   before_action :gather_use_agreements, only: [:new, :create, :edit, :update]
-  load_and_authorize_resource except: :map
+  before_action :set_activities, only: [:show, :map]
+  authorize_resource 
 
   layout 'pages', only: [:show, :index]
 
@@ -17,7 +19,6 @@ class Catalog::EntriesController < CatalogController
 
   def show
     @archive_item = ArchiveItem.new
-    @activities = PublicActivity::Activity.where(entry_id: @entry.id).order(created_at: :desc).limit(20)
 
     respond_to do |format|
       format.html
@@ -26,6 +27,8 @@ class Catalog::EntriesController < CatalogController
   end
 
   def new
+    @entry = current_portal.entries.build
+
     @entry.attachments.build
     @entry.links.build
   end
@@ -36,6 +39,8 @@ class Catalog::EntriesController < CatalogController
   end
 
   def create
+    @entry = current_portal.entries.build(entry_params)
+
     @entry.portals << current_portal
     respond_to do |format|
       if @entry.save
@@ -160,11 +165,10 @@ class Catalog::EntriesController < CatalogController
   end
 
   def map
-    @entry  = Entry.find(params['entry_id'])
-
     respond_to do |format|
-      format.html
-      format.geojson
+      format.html {
+        render layout: 'map'
+      }
     end
   end
 
@@ -237,5 +241,13 @@ class Catalog::EntriesController < CatalogController
 
   def set_cms_page
     @cms_page = current_portal.pages.find_by_path('catalog')
+  end
+
+  def set_entry
+    @entry = current_portal.entries.find(params[:id]) if params[:id].present?
+  end
+
+  def set_activities
+    @activities = PublicActivity::Activity.where(entry_id: @entry.id).order(created_at: :desc).limit(20)
   end
 end
