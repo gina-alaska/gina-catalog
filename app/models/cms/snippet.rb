@@ -1,7 +1,7 @@
 class Cms::Snippet < ActiveRecord::Base
   include MustacheConcerns
   extend FriendlyId
-  friendly_id :name, use: :slugged
+  friendly_id :name, use: :scoped, scope: :portal
 
   belongs_to :portal
 

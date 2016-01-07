@@ -3,6 +3,8 @@ class Cms::Page < ActiveRecord::Base
 
   include MustacheConcerns
   extend FriendlyId
+  delegate :ancestry_path, to: :parent, prefix: :parent, allow_nil: true
+  delegate :name, to: :cms_layout, prefix: :cms_layout, allow_nil: true
 
   has_closure_tree order: 'sort_order', name_column: :slug, dependent: :destroy
 

@@ -20,6 +20,7 @@ class Admin::PortalsController < AdminController
 
     respond_to do |format|
       if @portal.save
+        @portal.create_cms('portal_templates/default_cms.json')
         format.html do
           flash[:notice] = "Created portal: #{@portal.title}"
           redirect_to [:admin, @portal]

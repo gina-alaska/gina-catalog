@@ -2,7 +2,11 @@
   "layouts": [
     {
       "name": "default",
-      "content": "<div class=\"header\">\n  {{#snippet}}header{{/snippet}}\n  {{#snippet}}navbar{{/snippet}}\n</div>\n<div class=\"container-fluid\">\n  <div class=\"content\">\n    {{{content}}}\n  </div>\n</div>\n<div class=\"footer\">\n  {{#snippet}}footer{{/snippet}}\n</div>\n"
+      "content": "<div class=\"header\">\n  {{>header}}\n  {{>navbar}}\n</div>\n<div class=\"container-fluid\">\n  <div class=\"content\">\n    {{{content}}}\n  </div>\n</div>\n<div class=\"footer\">\n  {{>footer}}\n</div>\n"
+    },
+    {
+      "name": "twocolumns",
+      "content": "<div class=\"header\">\n  {{>header}}\n  {{>navbar}}\n</div>\n<div class=\"container-fluid\">\n  <div class=\"content\">\n    <div class=\"row-fluid\">\n      <div class=\"col-sm-9\">\n        {{{content}}}\n      </div>\n      <div class=\"col-sm-3\">\n        {{{ show_content_for \"sidebar\" }}}\n      </div>\n    </div>\n  </div>\n</div>\n<div class=\"footer\">\n  {{>footer}}\n</div>\n"
     }
   ],
   "snippets": [
@@ -29,22 +33,47 @@
     {
       "title": "Home",
       "slug": "home",
-      "content": "Welcome to the home page\n"
+      "content": "<h1>Welcome to gLynx</h1>\n<p>This is a new instance of gLynx please take a moment to login and update the site with your content</p>\n",
+      "hidden": false,
+      "redirect_url": null,
+      "parent_ancestry_path": null,
+      "cms_layout_name": "default"
     },
     {
       "title": "Catalog",
       "slug": "catalog",
-      "content": "<h1>\n  Place holder for the data catalog page, this will show the search interface and full record views for catalog entries.\n</h1>\n"
+      "content": "<h1>\n  Place holder for the data catalog page, this will show the search interface and full record views for catalog entries.\n</h1>\n",
+      "hidden": false,
+      "redirect_url": null,
+      "parent_ancestry_path": null,
+      "cms_layout_name": "default"
     },
     {
       "title": "All helpers examples",
       "slug": "all-helpers-examples",
-      "content": "<div class=\"row\">\n  <div class=\"col-sm-9\">\n    <p>{{ portal.title }}</p>\n    <p>Wahooo</p>\n    <p>{{ page.title }}</p>\n\n    <p>{{ page.url }}</p>\n\n    <p>{{ page.description }}</p>\n    <p>{{ page.updated_at }}</p>\n\n    {{# root_page }}\n    <p>Title: {{ page.title }}</p>\n    <p>Slug: {{ page.slug }}</p>\n    <p>Desc: {{ page.description }}</p>\n    {{/ root_page }}\n    {{#image_attachments}}\n      {{ thumbnail size=\"200x100\" }}\n      {{ fill size=\"200x100\" }}\n      {{ fit size=\"200x100\" }}\n      {{ title }}\n    {{/image_attachments}}\n\n    <h4>Collections</h4>\n    {{#collections limit=\"5\" }}\n      <p><b>Collection:</b> {{ collection.name }}</p>\n      {{#entries limit=\"1\"}}\n        <a href=\"{{ catalog_entry.url }}\">{{ catalog_entry.title }}</a>\n        <p>Desc: {{ catalog_entry.description }}</p>\n        <p>Type: {{ catalog_entry.type }}</p>\n        <p>Start: {{ catalog_entry.start_date }}</p>\n        <p>End: {{ catalog_entry.end_date }}</p>\n      {{/entries}}\n\n    {{/collections}}\n\n    <h4>Newest</h4>\n    {{#newest_entries limit=\"5\"}}\n      <ul>\n        <ol><a href=\"{{catalog_entry.url}}\">{{ catalog_entry.title }}</a></ol>\n      </ul>\n    {{/newest_entries}}\n\n    <h4>Latest</h4>\n    {{#updated_entries limit=\"5\"}}\n      <ul>\n        <ol><a href=\"{{catalog_entry.url}}\">{{ catalog_entry.title }}</a></ol>\n      </ul>\n    {{/updated_entries}}\n\n    <h4>Parent portal</h4>\n    {{#parent_portal}}\n      {{ portal.title }}\n      {{ portal.acronym }}\n      {{ portal.description }}\n      <ol>\n        <h5>childs</h5>\n        {{#child_portals}}\n          <li>{{ portal.title }}</li>\n        {{/child_portals}}\n      </ol>\n    {{/parent_portal}}\n\n    <h5>sibs</h5>\n    <ol>\n    {{#sibling_portals}}\n      <li>{{ portal.title }}</li>\n    {{/sibling_portals}}\n    </ol>\n  </div>\n  <div class=\"col-sm-3\">\n    {{ title }}\n    <ul>{{#pages}}\n      <li>{{ page.title }}</li>\n    {{/pages}}</ul>\n  </div>\n</div>\n"
+      "content": "<p>{{ portal.title }}</p>\n<p>Wahooo</p>\n<p>{{ page.title }}</p>\n\n<p>{{ page.url }}</p>\n\n<p>{{ page.description }}</p>\n<p>{{ page.updated_at }}</p>\n\n{{# root_page }}\n  <p>Title: {{ page.title }}</p>\n  <p>Slug: {{ page.slug }}</p>\n  <p>Desc: {{ page.description }}</p>\n{{/ root_page }}\n{{#image_attachments}}\n  {{ thumbnail size=\"200x100\" }}\n  {{ fill size=\"200x100\" }}\n  {{ fit size=\"200x100\" }}\n  {{ title }}\n{{/image_attachments}}\n\n<h4>Collections</h4>\n{{#collections limit=\"5\" }}\n  <p><b>Collection:</b> {{ collection.name }}</p>\n  {{#entries limit=\"1\"}}\n    <a href=\"{{ catalog_entry.url }}\">{{ catalog_entry.title }}</a>\n    <p>Desc: {{ catalog_entry.description }}</p>\n    <p>Type: {{ catalog_entry.type }}</p>\n    <p>Start: {{ catalog_entry.start_date }}</p>\n    <p>End: {{ catalog_entry.end_date }}</p>\n  {{/entries}}\n\n{{/collections}}\n\n<h4>Newest</h4>\n{{#newest_entries limit=\"5\"}}\n  <ul>\n    <ol><a href=\"{{catalog_entry.url}}\">{{ catalog_entry.title }}</a></ol>\n  </ul>\n{{/newest_entries}}\n\n<h4>Latest</h4>\n{{#updated_entries limit=\"5\"}}\n  <ul>\n    <ol><a href=\"{{catalog_entry.url}}\">{{ catalog_entry.title }}</a></ol>\n  </ul>\n{{/updated_entries}}\n\n<h4>Parent portal</h4>\n{{#parent_portal}}\n  {{ portal.title }}\n  {{ portal.acronym }}\n  {{ portal.description }}\n  <ol>\n    <h5>childs</h5>\n    {{#child_portals}}\n      <li>{{ portal.title }}</li>\n    {{/child_portals}}\n  </ol>\n{{/parent_portal}}\n\n<h5>sibs</h5>\n<ol>\n  {{#sibling_portals}}\n    <li>{{ portal.title }}</li>\n  {{/sibling_portals}}\n</ol>\n\n{{#content_for \"sidebar\"}}\n  {{ title }}\n  <ul>{{#pages}}\n    <li>{{ page.title }}</li>\n  {{/pages}}</ul>\n{{/content_for}}\n",
+      "hidden": false,
+      "redirect_url": null,
+      "parent_ancestry_path": null,
+      "cms_layout_name": "twocolumns"
     },
     {
       "title": "Page not found",
       "slug": "page-not-found",
-      "content": "<div class=\"jumbotron\">\n  <h1>404 - Page not found</h1>\n  <p>We're sorry but the page you requested could not be found</p>\n</div>\n"
+      "content": "<div class=\"jumbotron\">\n  <h1>404 - Page not found</h1>\n  <p>We're sorry but the page you requested could not be found</p>\n</div>\n",
+      "hidden": true,
+      "redirect_url": null,
+      "parent_ancestry_path": null,
+      "cms_layout_name": "default"
+    },
+    {
+      "title": "Sitemap",
+      "slug": "sitemap",
+      "content": "This page is automatically generated, editing it will not change the content.\n",
+      "hidden": true,
+      "redirect_url": null,
+      "parent_ancestry_path": null,
+      "cms_layout_name": "default"
     }
   ]
 }
