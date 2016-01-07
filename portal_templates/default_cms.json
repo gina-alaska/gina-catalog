@@ -40,17 +40,6 @@
       "cms_layout_name": "default"
     },
     {
-      "title": "test",
-      "slug": "test",
-      "content": "test",
-      "hidden": false,
-      "redirect_url": "",
-      "parent_ancestry_path": [
-        "home"
-      ],
-      "cms_layout_name": "default"
-    },
-    {
       "title": "Catalog",
       "slug": "catalog",
       "content": "<h1>\n  Place holder for the data catalog page, this will show the search interface and full record views for catalog entries.\n</h1>\n",
