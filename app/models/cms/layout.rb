@@ -1,7 +1,7 @@
 class Cms::Layout < ActiveRecord::Base
   include MustacheConcerns
   extend FriendlyId
-  friendly_id :name, use: :slugged
+  friendly_id :name, use: :scoped, scope: :portal
 
   belongs_to :portal
   has_many :pages, foreign_key: 'cms_layout_id', dependent: :nullify
