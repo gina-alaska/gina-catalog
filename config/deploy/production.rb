@@ -7,7 +7,7 @@
 # server 'example.com', user: 'deploy', roles: %w{app web}, other_property: :other_value
 # server 'db.example.com', user: 'deploy', roles: %w{db}
 
-
+server 'glynx-web-f105.x.gina.alaska.edu', user: 'webdev', roles: %w{app web migrator}, primary: true
 
 # role-based syntax
 # ==================
@@ -47,6 +47,9 @@
 #    auth_methods: %w(password)
 #  }
 #
+set :ssh_options, {
+  forward_agent: true
+}
 # The server-based syntax can be used to override options:
 # ------------------------------------
 # server 'example.com',

@@ -9,7 +9,7 @@ set :user, 'vagrant'
 # server 'example.com', user: 'deploy', roles: %w{app db web}, my_property: :my_value
 # server 'example.com', user: 'deploy', roles: %w{app web}, other_property: :other_value
 # server 'db.example.com', user: 'deploy', roles: %w{db}
-server 'glynx-vagrant', roles: %w{app db web}
+server 'glynx-vagrant', roles: %w{app db web}, primary: true
 
 
 # role-based syntax

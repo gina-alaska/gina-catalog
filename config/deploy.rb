@@ -10,6 +10,8 @@ ask :branch, `cat VERSION`.chomp
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, '/www/glynx'
 
+set :migration_role, 'migrator'
+
 # Default value for :scm is :git
 # set :scm, :git
 
@@ -42,6 +44,18 @@ namespace :deploy do
       # within release_path do
       #   execute :rake, 'cache:clear'
       # end
+    end
+  end
+
+  desc "First time setup"
+  task :first_time do
+    on roles(:app, primary: true), limit: 1 do
+      within release_path do
+        with rails_env: fetch(:rails_env) do
+          execute :rake, 'db:seed'
+          execute :rake, 'searchkick:reindex:all'
+        end
+      end
     end
   end
 
