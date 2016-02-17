@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'dotenv-rails'
+gem 'dotenv-rails', require: 'dotenv/rails-now'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0'
@@ -126,3 +126,8 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-bootstrap-submenu'
 end
 gem "font-awesome-rails"
+
+group :development do
+  gem "capistrano", "~> 3.4"
+  gem 'capistrano-rails', '~> 1.1'
+end
