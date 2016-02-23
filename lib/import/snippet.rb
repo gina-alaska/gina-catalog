@@ -1,15 +1,15 @@
 require 'import/base'
 
 module Import
-  class Collection < Base
+  class Snippet < Base
     SIMPLE_FIELDS = %w(
-      name description
+      name content
     )
 
     def self.fetch(catalog, portal_id)
-      import = ::Import::Entry.new(Portal.find(portal_id))
-      
-      Client.paged_results 'Collections', Client.collections_url(catalog) do |record|
+      import = new(Portal.find(portal_id))
+
+      Client.results 'Layout', Client.snippets_url(catalog) do |record|
         import.create(record)
       end
     end
@@ -19,16 +19,16 @@ module Import
     end
 
     def create(json = {})
-      import = ImportItem.collections.oid(json['id']).first_or_initialize
-      import.importable ||= ::Collection.new
+      import = ImportItem.snippets.oid(json['id']).first_or_initialize
+      import.importable ||= ::Cms::Snippet.new
 
       add_simple_fields(SIMPLE_FIELDS, import.importable, json)
 
       import.importable.portal = @portal
 
       import.save
-      unless import.importable.save
-        puts "Error saving collection #{import.import_id}"
+      unless import.importable.save(validate: false)
+        puts "Error saving snippet #{import.import_id}"
         puts import.importable.errors.full_messages
       end
       import

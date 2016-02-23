@@ -9,6 +9,30 @@ module Import
       File.join(::Import::API_URL, path)
     end
 
+    def portal_api_url(portal, path)
+      File.join(::Import::API_URL, 'setups', portal, path)
+    end
+
+    def pages_url(portal)
+      portal_api_url portal, 'pages.json'
+    end
+
+    def attachments_url(portal)
+      portal_api_url portal, 'attachments.json'
+    end
+
+    def layouts_url(portal)
+      portal_api_url portal, 'layouts.json'
+    end
+
+    def snippets_url(portal)
+      portal_api_url portal, 'snippets.json'
+    end
+
+    def themes_url(portal)
+      portal_api_url portal, 'themes.json'
+    end
+
     def agencies_url
       api_url '/agencies.json'
     end
@@ -32,7 +56,7 @@ module Import
     def data_types_url
       api_url '/data_types.json'
     end
-    
+
     def use_agreements_url(portal)
       api_url "/setups/#{portal}/use_agreements.json"
     end

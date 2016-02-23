@@ -21,7 +21,7 @@ class Cms::Page < ActiveRecord::Base
   validate :check_handlebarjs_syntax
 
   friendly_id :title, use: :scoped, scope: :portal
-  
+
   def to_s
     title
   end
@@ -50,7 +50,26 @@ class Cms::Page < ActiveRecord::Base
     context = render_context(portal, self)
     context[:data].content = basic_pipeline(context).call(content)[:output].to_s
 
-    cms_layout.render(context).html_safe
+    if cms_layout
+      cms_layout.render(context).html_safe
+    else
+      context[:data].content.html_safe
+    end
+  rescue HTML::Pipeline::Filter::InvalidDocumentException => e
+    @render_errors ||= []
+    @render_errors << [:content, "contains invalid content { #{e.message.split(':').first} }!"]
+  rescue V8::Error => e
+    @render_errors ||= []
+    @render_errors << [:content, "contains invalid content { #{e.message.split(':').first} }!"]
+  end
+
+  def check_handlebarjs_syntax
+    return if content.blank?
+    unless @render_errors.nil?
+      @render_errors.each do |render_error|
+        error.add(*render_error)
+      end
+    end
   end
 
   def layout_pipeline(content, context)

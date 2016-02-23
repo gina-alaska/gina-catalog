@@ -54,7 +54,11 @@ namespace :admin do
         puts 'Please specify the catalog from which collections will be loaded (rake admin:load:collections catalog=catalog.northslope.org)'
         next
       end
-      Import::Collection.fetch(ENV['catalog'])
+      if ENV['portal'].nil?
+        puts 'Please specify the portal to load (rake admin:load:collections catalog=catalog.northslope.org portal=1234)'
+        next
+      end
+      Import::Collection.fetch(ENV['catalog'], ENV['portal'])
     end
 
     desc 'Import use agreements from api (catalog required)'
@@ -63,7 +67,11 @@ namespace :admin do
         puts 'Please specify the catalog from which use agreements will be loaded (rake admin:load:use_agreements catalog=catalog.northslope.org)'
         next
       end
-      Import::UseAgreement.fetch(ENV['catalog'])
+      if ENV['portal'].nil?
+        puts 'Please specify the portal to load (rake admin:load:use_agreements catalog=catalog.northslope.org portal=1234)'
+        next
+      end
+      Import::UseAgreement.fetch(ENV['catalog'], ENV['portal'])
     end
 
     desc 'Import entries from api (catalog required)'
@@ -72,7 +80,41 @@ namespace :admin do
         puts 'Please specify the catalog to load (rake admin:load:entries catalog=catalog.northslope.org)'
         next
       end
-      Import::Entry.fetch(ENV['catalog'])
+      if ENV['portal'].nil?
+        puts 'Please specify the portal to load (rake admin:load:entries catalog=catalog.northslope.org portal=1234)'
+        next
+      end
+      Import::Entry.fetch(ENV['catalog'], ENV['portal'])
+    end
+
+    desc 'Import cms from api (catalog required)'
+    task cms: :environment do
+      if ENV['catalog'].nil?
+        puts 'Please specify the catalog to load (rake admin:load:cms catalog=catalog.northslope.org)'
+        next
+      end
+      if ENV['portal'].nil?
+        puts 'Please specify the portal to load (rake admin:load:cms catalog=catalog.northslope.org portal=1234)'
+        next
+      end
+
+      Import::Layout.fetch(ENV['catalog'], ENV['portal'])
+      Import::Snippet.fetch(ENV['catalog'], ENV['portal'])
+      Import::Theme.fetch(ENV['catalog'], ENV['portal'])
+      Import::Page.fetch(ENV['catalog'], ENV['portal'])
+    end
+
+    task attachments: :environment do
+      if ENV['catalog'].nil?
+        puts 'Please specify the catalog to load (rake admin:load:cms catalog=catalog.northslope.org)'
+        next
+      end
+      if ENV['portal'].nil?
+        puts 'Please specify the portal to load (rake admin:load:cms catalog=catalog.northslope.org portal=1234)'
+        next
+      end
+
+      Import::Attachment.fetch(ENV['catalog'], ENV['portal'])
     end
   end
 end

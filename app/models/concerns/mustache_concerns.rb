@@ -71,11 +71,13 @@ module MustacheConcerns
 
   def check_handlebarjs_syntax
     return if content.blank?
-    
+
     begin
-      render  
+      render
+    rescue HTML::Pipeline::Filter::InvalidDocumentException => e
+      errors.add(:content, "contains invalid content { #{e.message.split(':').first} }!")
     rescue V8::Error => e
-      errors.add(:content, "Invalid View Helper syntax { #{e.message.split(':').first} }!")
+      errors.add(:content, "contains invalid content { #{e.message.split(':').first} }!")
     end
   end
 end

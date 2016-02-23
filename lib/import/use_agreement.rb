@@ -6,8 +6,9 @@ module Import
       title body required
     )
 
-    def self.fetch(catalog)
-      import = ::Import::UseAgreement.new(Portal.first)
+    def self.fetch(catalog, portal_id)
+      import = ::Import::Entry.new(Portal.find(portal_id))
+      
       Client.paged_results 'UseAgreements', Client.use_agreements_url(catalog) do |record|
         import.create(record)
       end

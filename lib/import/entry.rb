@@ -8,8 +8,8 @@ module Import
       primary_contact_ids published_at
     )
 
-    def self.fetch(catalog)
-      import = ::Import::Entry.new(Portal.first)
+    def self.fetch(catalog, portal_id)
+      import = ::Import::Entry.new(Portal.find(portal_id))
 
       Client.paged_results 'Entries', Client.catalog_records_url(catalog) do |record|
         import.create(record)
