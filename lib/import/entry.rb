@@ -38,7 +38,7 @@ module Import
         send(:"add_#{topic}", import.importable, json)
       end
 
-      import.importable.portals << @portal
+      import.importable.portals << @portal unless import.importable.portals.include?(@portal)
       import.importable.status ||= 'Unknown'
       import.importable.description ||= 'Empty'
 
