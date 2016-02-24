@@ -2,6 +2,8 @@ require 'import/base'
 
 module Import
   class Entry < Base
+    attr_accessor :errors
+
     SIMPLE_FIELDS = %w(
       title description start_date end_date status
       tag_list entry_type primary_organization_ids funding_organization_ids
@@ -13,6 +15,11 @@ module Import
 
       Client.paged_results 'Entries', Client.catalog_records_url(catalog) do |record|
         import.create(record)
+      end
+
+      unless import.errors.nil? || import.errors.empty?
+        puts import.errors.inspect
+        puts "Error importing #{import.errors.count} records"
       end
     end
 
@@ -32,9 +39,13 @@ module Import
       end
 
       import.importable.portals << @portal
+      import.importable.status ||= 'Unknown'
+      import.importable.description ||= 'Empty'
 
       import.save
       unless import.importable.save
+        @errors ||=[]
+        @errors << [import.import_id, import.importable.errors]
         puts "Error saving entry #{import.import_id}"
         puts import.importable.errors.full_messages
       end
