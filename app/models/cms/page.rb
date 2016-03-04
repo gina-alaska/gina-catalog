@@ -56,11 +56,13 @@ class Cms::Page < ActiveRecord::Base
       context[:data].content.html_safe
     end
   rescue HTML::Pipeline::Filter::InvalidDocumentException => e
+    Rails.logger.error e.backtrace.join("\n")
     @render_errors ||= []
-    @render_errors << [:content, "contains invalid content { #{e.message.split(':').first} }!"]
+    @render_errors << [:content, "contains invalid content - #{e.message}"]
   rescue V8::Error => e
+    Rails.logger.error e.backtrace.join("\n")
     @render_errors ||= []
-    @render_errors << [:content, "contains invalid content { #{e.message.split(':').first} }!"]
+    @render_errors << [:content, "contains invalid content - #{e.message}"]
   end
 
   def check_handlebarjs_syntax

@@ -80,18 +80,33 @@ module Glynx
         end.join
       end
 
-      @handlebars.register_helper(:child_pages) do |this,block|
-        current_page.children.visible.map do |page|
-          block.fn(page.mustache_context(data.page))
+      @handlebars.register_helper(:find_page) do |this,block|
+        pages = current_portal.pages
+
+        return unless block[:hash][:slug]
+
+        page = pages.friendly.find(block[:hash][:slug])
+        block.fn(page.mustache_context(data.page)) if !page.nil?
+      end
+
+      @handlebars.register_helper(:child_pages) do |this,context,block|
+        page,block = from_context(this, context, block, current_page)
+
+        page.children.visible.map do |page|
+          block.fn(page.mustache_context(page))
         end.join unless current_page.nil?
       end
 
-      @handlebars.register_helper(:root_page) do |this,block|
-        block.fn(current_page.root.mustache_context(data.page)) if !current_page.nil? && !current_page.root.nil?
+      @handlebars.register_helper(:root_page) do |this,context,block|
+        page,block = from_context(this, context, block, current_page)
+
+        block.fn(page.root.mustache_context(page)) if !page.nil? && !page.root.nil?
       end
 
-      @handlebars.register_helper(:parent_page) do |this,block|
-        block.fn(current_page.parent.mustache_context(data.page)) if !current_page.nil? && !current_page.parent.nil?
+      @handlebars.register_helper(:parent_page) do |this,context, block|
+        page,block = from_context(this, context, block, current_page)
+
+        block.fn(page.parent.mustache_context(page)) if !page.nil? && !page.parent.nil?
       end
 
       @handlebars.register_helper(:thumbnail) do |this,image,options|
@@ -119,10 +134,12 @@ module Glynx
         image_thumbnail_tag(model, :fill, options)
       end
 
-      @handlebars.register_helper(:image_attachments) do |this,block|
-        current_page.attachments.images.map do |image|
-          block.fn(image.mustache_context(data.page))
-        end.join if current_page
+      @handlebars.register_helper(:image_attachments) do |this,context,block|
+        page,block = from_context(this, context, block, current_page)
+
+        page.attachments.images.map do |image|
+          block.fn(image.mustache_context(page))
+        end.join if page
       end
 
       @handlebars.register_helper(:content_for) do |this,context,block|

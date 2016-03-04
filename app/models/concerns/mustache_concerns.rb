@@ -75,8 +75,10 @@ module MustacheConcerns
     begin
       render
     rescue HTML::Pipeline::Filter::InvalidDocumentException => e
+      Rails.logger.error e.backtrace
       errors.add(:content, "contains invalid content { #{e.message.split(':').first} }!")
     rescue V8::Error => e
+      Rails.logger.error e.backtrace
       errors.add(:content, "contains invalid content { #{e.message.split(':').first} }!")
     end
   end
