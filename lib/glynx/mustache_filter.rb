@@ -168,8 +168,12 @@ module Glynx
       end
 
       @handlebars.partial_missing do |name|
-        lambda do |this,context,options|
-          current_portal.snippets.friendly.find(name).render({ data: data })
+        lambda do |this,context,block|
+          page,block = from_context(this, context, block, current_page)
+          snippet = current_portal.snippets.friendly.find(name)
+          ctx = page.render_context(current_portal, page)
+
+          snippet.render(ctx)
         end
       end
     end
