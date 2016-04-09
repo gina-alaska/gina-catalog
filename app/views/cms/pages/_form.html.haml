@@ -5,7 +5,7 @@
       .col-sm-6
         = f.input :title, input_html: { data: { behavior: 'slugify', target: '#cms_page_slug' } }
       .col-sm-3
-        = f.association :cms_layout, label: 'Layout'
+        = f.association :cms_layout, collection: @cms_layouts, label: 'Layout'
       .col-sm-3
         = f.label 'Advanced'
         %button.btn.btn-info.btn-block{ type: 'button', data: { toggle: 'collapse', target: '#advanced-options' } } Toggle advanced options

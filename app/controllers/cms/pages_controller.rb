@@ -16,6 +16,7 @@ class Cms::PagesController < CmsController
   # GET /cms/pages/new
   def new
     @cms_page = current_portal.pages.build
+    @cms_layouts = current_portal.layouts
     if params[:parent]
       @cms_page.parent = @parent_page = current_portal.pages.friendly.find(params[:parent])
     end
@@ -63,6 +64,7 @@ class Cms::PagesController < CmsController
 
   # GET /cms/pages/1/edit
   def edit
+    @cms_layouts = current_portal.layouts
   end
 
   # POST /cms/pages
