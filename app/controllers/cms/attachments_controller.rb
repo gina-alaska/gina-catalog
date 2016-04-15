@@ -38,7 +38,7 @@ class Cms::AttachmentsController < CmsController
   end
 
   def add
-    @page = Cms::Page.friendly.find(params[:page_id])
+    @page = current_portal.pages.friendly.find(params[:page_id])
     @page.attachments << @cms_attachment
 
     redirect_to :back
