@@ -138,7 +138,12 @@ module Glynx
         page,block = from_context(this, context, block, current_page)
 
         page.attachments.images.map do |image|
-          block.fn(image.mustache_context(page))
+          if block.keys.include? 'data'
+            data = @handlebars.create_frame(block.data)
+            data.first =  (page.attachments.images.first == image)
+          end
+
+          block.fn(image.mustache_context(page), data: data)
         end.join if page
       end
 
