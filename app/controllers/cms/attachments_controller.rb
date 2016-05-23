@@ -31,7 +31,7 @@ class Cms::AttachmentsController < CmsController
   end
 
   def remove
-    @page = Cms::Page.friendly.find(params[:page_id])
+    @page = current_portal.pages.friendly.find(params[:page_id])
     @page.attachments.destroy(@cms_attachment)
 
     redirect_to :back
@@ -45,14 +45,14 @@ class Cms::AttachmentsController < CmsController
   end
 
   def up
-    @page = Cms::Page.friendly.find(params[:page_id])
+    @page = current_portal.pages.friendly.find(params[:page_id])
     @page_attachment = @page.cms_page_attachments.where(attachment_id: params[:id]).first
     @page_attachment.move_higher
     redirect_to :back
   end
 
   def down
-    @page = Cms::Page.friendly.find(params[:page_id])
+    @page = current_portal.pages.friendly.find(params[:page_id])
     @page_attachment = @page.cms_page_attachments.where(attachment_id: params[:id]).first
     @page_attachment.move_lower
     redirect_to :back

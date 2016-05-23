@@ -3,7 +3,7 @@ class Cms::Attachment < ActiveRecord::Base
 
   belongs_to :portal
 
-  has_many :cms_page_attachments, class_name: 'Cms::PageAttachment'
+  has_many :cms_page_attachments, class_name: 'Cms::PageAttachment', dependent: :destroy
 
   attachment :file
 
