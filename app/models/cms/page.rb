@@ -85,6 +85,8 @@ class Cms::Page < ActiveRecord::Base
   def as_context
     context = super
     context['slug'] = url_path
+    context['dom_id'] = url_path.parameterize
+
     context
   end
 
