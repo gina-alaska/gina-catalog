@@ -23,8 +23,8 @@ Rails.application.configure do
     value_max_bytes: 10485760
   )
   config.action_dispatch.rack_cache = {
-    :metastore    => client,
-    :entitystore  => client
+    :metastore    => memcache_client,
+    :entitystore  => memcache_client
   }
 
   # Disable serving static files from the `/public` folder by default since
