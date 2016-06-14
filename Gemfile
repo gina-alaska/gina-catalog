@@ -83,6 +83,8 @@ gem 'dalli'
 
 group :development, :production do
   gem 'rails_12factor'
+  gem 'rack-cache'
+  gem 'dalli'
 end
 
 group :development, :test do
