@@ -58,12 +58,18 @@ Rails.application.configure do
   # config.cache_store = :mem_cache_store
   if ENV['MEMCACHE_SERVERS']
     servers = ENV['MEMCACHE_SERVERS'].split(",")
-   else
+  else
     servers = 'flash.x.gina.alaska.edu'
   end
-
   namespace = ENV['MEMCACHE_NAMESPACE'] || 'glynx'
-  config.cache_store = :dalli_store, servers, { namespace: namespace, value_max_bytes: 10485760 }
+
+  memcache_client = Dalli::Client.new(servers, value_max_bytes: 10485760)
+  config.cache_store = :dalli_store
+  config.action_dispatch.rack_cache = {
+    :metastore    => memcache_client,
+    :entitystore  => memcache_client
+  }
+  config.static_cache_control = "public, max-age=2592000"
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.action_controller.asset_host = 'http://assets.example.com'
