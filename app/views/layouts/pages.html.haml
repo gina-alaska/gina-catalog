@@ -4,9 +4,7 @@
     %title
       gLynx
       = yield :page_title
-    = yield :head
-    -# = stylesheet_link_tag 'https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.css'
-    -# = javascript_include_tag 'https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.js'
+    = render 'layouts/head'
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
