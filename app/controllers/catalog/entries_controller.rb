@@ -4,6 +4,7 @@ class Catalog::EntriesController < CatalogController
   before_action :gather_use_agreements, only: [:new, :create, :edit, :update]
   before_action :set_activities, only: [:show, :map]
   authorize_resource 
+  skip_authorize_resource :only => :exports
 
   layout 'pages', only: [:show, :index]
 
