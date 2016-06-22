@@ -3,14 +3,13 @@
     - entry.attachments.geojson.each do |geojson|
       %layer{ data: { name: geojson.file.name, url: catalog_entry_attachment_url(entry, geojson, format: :geojson), 'geojson-options' => 'custom-marker', 'marker-label-field' => 'index' }}
         %popup
-          .geojson-info 
-            .title 
-              {{title}}
+          .geojson-info
+            .title
+              \\{{title}}
             .description
-              {{description}}
+              \\{{description}}
             .popup
-              {{popup}}
-
+              \\{{popup}}
           .record-info
             .catalog-record
               %strong Catalog Record:
