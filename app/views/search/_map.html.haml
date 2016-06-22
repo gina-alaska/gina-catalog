@@ -6,6 +6,6 @@
   #search-map.search-map{ data: { behavior: 'map', target: 'search-map', 'mapbox-id' => 'gina-alaska.knb7oi02', 'max-zoom' => 15 } }
     %layer{ data: { paged: 'true', url: url_for(params.merge(page: 1, format: :geojson)), fit: 'true', 'geojson-options' => 'custom-marker', 'marker-label-field' => 'index', cluster: 'true' }}
       %popup
-        %h1 {{title}}
-        %p {{description}}
-        <a href="{{url}}" class="btn btn-primary btn-block btn-sm">View Record</a>
+        %h1 \{{title}}
+        %p \{{description}}
+        <a href="\{{url}}" class="btn btn-primary btn-block btn-sm">View Record</a>
