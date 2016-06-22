@@ -1,5 +1,4 @@
-- if !current_portal.nil?
-  - if current_portal.favicon.try(:image).nil?
-    = favicon_link_tag 'favicon.png', type: 'image/png'
-  - else
-    = favicon_link_tag current_portal.favicon.image.encode(:png).thumb('32x32').url, type: 'image/png'
+- if current_portal.nil? || current_portal.favicon.try(:image).nil?
+  = favicon_link_tag 'favicon.png', type: 'image/png'
+- else
+  = favicon_link_tag current_portal.favicon.image.encode(:png).thumb('32x32').url, type: 'image/png'
