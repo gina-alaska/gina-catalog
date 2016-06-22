@@ -39,6 +39,7 @@ class Ability
     can :read, Attachment
     can :read, :dashboard
     cannot :read, Attachment, category: 'Private Download'
+    can :exports, Entry
 
     unless user.new_record?
       can :accept, Invitation
