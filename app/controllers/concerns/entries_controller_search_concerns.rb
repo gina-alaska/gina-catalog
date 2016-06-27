@@ -124,7 +124,7 @@ module EntriesControllerSearchConcerns
       order: order_params,
       include: [:bboxes],
       where: {
-        portal_ids: [current_portal.id] + current_portal.children.collect{|p| p.id},
+        portal_ids: current_portal.self_and_descendants.pluck(:id),
         start_date: date_search_params(:starts_after, :starts_before),
         end_date: date_search_params(:ends_after, :ends_before)
       }
