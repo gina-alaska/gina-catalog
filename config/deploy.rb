@@ -59,6 +59,17 @@ namespace :deploy do
     end
   end
 
+  desc "Reindex elastic search"
+  task :reindex do
+    on roles(:app, primary: true), limit: 1 do
+      within release_path do
+        with rails_env: fetch(:rails_env) do
+          execute :rake, 'searchkick:reindex:all'
+        end
+      end
+    end
+  end
+
   task :fix_entry_owners do
     on roles(:app, primary: true), limit: 1 do
       within release_path do
