@@ -244,7 +244,7 @@ class Catalog::EntriesController < CatalogController
   end
 
   def set_entry
-    @entry = current_portal.entries.find(params[:id]) if params[:id].present?
+    @entry = Entry.find(params[:id]) if params[:id].present?
   end
 
   def set_activities
