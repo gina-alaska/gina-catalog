@@ -14,6 +14,11 @@ class Catalog::EntriesControllerTest < ActionController::TestCase
     assert_not_nil assigns(:search_params)
   end
 
+  test 'should render entry without owner portal' do
+    get :show, id: entries(:no_owner)
+    assert_response :success
+  end
+
   test 'should get exports' do
     get :exports, serialized_search: '{"order":"title","archived":false, "visible":{"organizations":"1", "collections":"1", "contacts":"1", "data":"1", "description":"1", "info":"1", "iso":"1", "links":"1", "location":"1", "tags":"1", "title":"1", "url":"1"}}'
     assert_response :success

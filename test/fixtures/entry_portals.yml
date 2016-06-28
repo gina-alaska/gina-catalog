@@ -9,7 +9,7 @@ two:
   entry: one
   portal: two
   owner: false
-  
+
 three:
   entry: multi_owner
   portal: one
@@ -20,3 +20,7 @@ four:
   portal: two
   owner: true
 
+five:
+  entry: no_owner
+  portal: one
+  owner: false

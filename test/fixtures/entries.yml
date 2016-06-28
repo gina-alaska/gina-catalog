@@ -65,7 +65,7 @@ unpublished:
   published_at: null
   start_date: 2014-09-05
   end_date: 2014-09-05
-  
+
 archived:
   title: MyString
   description: MyText
@@ -78,6 +78,19 @@ archived:
   end_date: 2014-09-05
 
 no_primary_org:
+  title: MyString
+  description: MyText
+  status: MyString
+  entry_type: one
+  slug: MyString
+  uuid: MyString
+  licence_id: 1
+  archived_at: 2014-09-05 16:00:04
+  published_at: 2014-09-05 16:00:04
+  start_date: 2014-09-05
+  end_date: 2014-09-05
+
+no_owner:
   title: MyString
   description: MyText
   status: MyString
