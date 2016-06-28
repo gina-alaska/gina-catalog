@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def owned_by_current_portal(entry)
-    entry.owner_portal.id == current_portal.id
+    entry.owner_portal.try(:id) == current_portal.id
   end
   helper_method :owned_by_current_portal
 
