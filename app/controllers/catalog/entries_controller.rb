@@ -3,7 +3,7 @@ class Catalog::EntriesController < CatalogController
   before_action :set_cms_page
   before_action :gather_use_agreements, only: [:new, :create, :edit, :update]
   before_action :set_activities, only: [:show, :map]
-  authorize_resource 
+  authorize_resource
 
   layout 'pages', only: [:show, :index]
 
@@ -13,7 +13,7 @@ class Catalog::EntriesController < CatalogController
     respond_to do |format|
       format.html { search(params[:page], params[:limit] || 20) }
       format.geojson { search(params[:page], params[:limit] || 500) }
-      format.json
+      # format.json 
     end
   end
 

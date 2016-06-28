@@ -141,7 +141,7 @@ class Entry < ActiveRecord::Base
   end
 
   def published?
-    !published_at.nil? && published_at <= Time.now.utc
+    !published_at.nil?
   end
 
   def bbox

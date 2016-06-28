@@ -59,4 +59,13 @@ namespace :deploy do
     end
   end
 
+  task :fix_entry_owners do
+    on roles(:app, primary: true), limit: 1 do
+      within release_path do
+        with rails_env: fetch(:rails_env) do
+          execute :rake, 'admin:fix_entry_owners'
+        end
+      end
+    end
+  end
 end

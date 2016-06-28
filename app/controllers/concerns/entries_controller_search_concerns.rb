@@ -19,8 +19,6 @@ module EntriesControllerSearchConcerns
       other_contacts: organize_facets(@entries.facets['contact_ids'], Contact),
       archived: organize_facets(@entries.facets['archived?'])
     ) if facets?
-
-    # logger.info "*****FACETS*******" + @entries.facets['archived?'].inspect
   end
 
   protected
@@ -142,6 +140,10 @@ module EntriesControllerSearchConcerns
       opts[:where][FACET_FIELDS[param]] = search_params[param] if search_params[param].present?
     end
     opts[:where][:archived?] ||= false
+
+    if cannot? :manage, Entry
+      opts[:where][:published?] = true
+    end
 
     opts[:query] = query_params if search_params[:query].present?
 
