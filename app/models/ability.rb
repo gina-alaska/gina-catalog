@@ -72,7 +72,10 @@ class Ability
 
       can :manage, [Organization, Contact, MapLayer]
       can :manage, [UseAgreement, Collection],  portal_id: current_portal.id
-      can [:read, :create, :update, :archive, :map], Entry do |entry|
+      can [:read,:map], Entry do |entry|
+        entry.new_record? || current_portal.self_and_ancestors.include?(entry.owner_portal)
+      end
+      can [:create, :update, :archive], Entry do |entry|
         entry.new_record? || entry.owner_portal == current_portal
       end
       can [:downloads, :links], :dashboard
@@ -86,7 +89,11 @@ class Ability
       can :manage, :tag
       can :manage, [Organization, Contact, MapLayer]
       can :manage, [UseAgreement, Collection],  portal_id: current_portal.id
-      can [:manage, :archive], Entry do |entry|
+
+      can [:read,:map], Entry do |entry|
+        entry.new_record? || current_portal.self_and_ancestors.include?(entry.owner_portal)
+      end
+      can [:create, :update, :destroy, :archive, :unarchive], Entry do |entry|
         entry.new_record? || entry.owner_portal == current_portal
       end
       can [:downloads, :links], :dashboard
