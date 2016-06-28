@@ -92,10 +92,6 @@ class Entry < ActiveRecord::Base
           entry_id: :id,
           parameters: :activity_params
 
-  def owner_portal
-    super() || portals.first
-  end
-
   def activity_params
     params = {}
 
@@ -119,7 +115,7 @@ class Entry < ActiveRecord::Base
   end
 
   def set_owner_portal
-    entry_portals.first.update_attribute(:owner, true) if owner_portal.nil?
+    entry_portals.first.update_attribute(:owner, true) if owner_portal_count == 0
   end
 
   def owner_portal_count

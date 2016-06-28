@@ -29,6 +29,12 @@ namespace :admin do
     end
   end
 
+  task fix_entry_owners: :environment do
+    Entry.find_each do |entry|
+      entry.set_owner_portal
+    end
+  end
+
   desc 'Load all items'
   task load: ['load:regions', 'load:collections', 'load:use_agreements', 'load:organizations', 'load:contacts', 'load:entries']
 
