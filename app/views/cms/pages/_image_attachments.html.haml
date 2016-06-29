@@ -44,9 +44,6 @@
       .modal-body
         - current_portal.cms_attachments.images.where.not(id: page.attachment_ids).find_each do |i|
           = link_to add_cms_page_attachment_path(page, i), method: :patch, class: 'thumbnail', style: 'display: inline-block;' do
-            - if i.image?
-              = attachment_image_tag(i, :file, :fill, 100, 100, fallback: "default.png")
-            - else
-              = image_tag('default.png')
+            = attachment_image_tag(i, :file, :fill, 100, 100, fallback: "default.png")
       .modal-footer
         %button.btn.btn-primary{ data: { dismiss: 'modal' } } Close
