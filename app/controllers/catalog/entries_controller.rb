@@ -13,7 +13,7 @@ class Catalog::EntriesController < CatalogController
     respond_to do |format|
       format.html { search(params[:page], params[:limit] || 20) }
       format.geojson { search(params[:page], params[:limit] || 500) }
-      # format.json 
+      # format.json
     end
   end
 
@@ -116,7 +116,7 @@ class Catalog::EntriesController < CatalogController
 
   def publish
     respond_to do |format|
-      if @entry.publish
+      if @entry.publish!
         # @entry.activity_logs.create(activity: 'Update', user: current_user, log: { message: "Published by #{current_user.first_name}" })
 
         flash[:success] = "Catalog record #{@entry.title} has been published."
@@ -136,7 +136,7 @@ class Catalog::EntriesController < CatalogController
 
   def unpublish
     respond_to do |format|
-      if @entry.unpublish
+      if @entry.unpublish!
         # @entry.activity_logs.create(activity: 'Update', user: current_user, log: { message: "Unpublished by #{current_user.first_name}" })
 
         flash[:success] = "Catalog record #{@entry.title} has been unpublished."

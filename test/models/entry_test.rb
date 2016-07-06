@@ -76,14 +76,14 @@ class EntryTest < ActiveSupport::TestCase
 
   test 'publish an entry' do
     entry = entries(:unpublished)
-    entry.publish
+    entry.publish!
 
     assert entry.published?, 'Entry has not been published when it should be.'
   end
 
   test 'unpublish an entry' do
     entry = entries(:published)
-    entry.unpublish
+    entry.unpublish!
 
     assert !entry.published?, 'Entry is still published when it should not be.'
   end

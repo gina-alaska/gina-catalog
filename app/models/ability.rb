@@ -93,7 +93,7 @@ class Ability
       can [:read,:map], Entry do |entry|
         entry.new_record? || current_portal.self_and_ancestors.include?(entry.owner_portal)
       end
-      can [:create, :update, :destroy, :archive, :unarchive], Entry do |entry|
+      can [:create, :update, :destroy, :publish, :unpublish, :archive, :unarchive], Entry do |entry|
         entry.new_record? || entry.owner_portal == current_portal
       end
       can [:downloads, :links], :dashboard
