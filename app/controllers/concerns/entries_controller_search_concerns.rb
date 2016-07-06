@@ -141,7 +141,7 @@ module EntriesControllerSearchConcerns
     end
     opts[:where][:archived?] ||= false
 
-    if cannot? :manage, Entry
+    if cannot?(:read_unpublished, Entry)
       opts[:where][:published?] = true
     end
 

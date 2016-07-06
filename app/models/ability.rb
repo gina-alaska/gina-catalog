@@ -72,7 +72,7 @@ class Ability
 
       can :manage, [Organization, Contact, MapLayer]
       can :manage, [UseAgreement, Collection],  portal_id: current_portal.id
-      can [:read,:map], Entry do |entry|
+      can [:read,:map,:read_unpublished], Entry do |entry|
         entry.new_record? || current_portal.self_and_ancestors.include?(entry.owner_portal)
       end
       can [:create, :update, :archive], Entry do |entry|
@@ -90,7 +90,7 @@ class Ability
       can :manage, [Organization, Contact, MapLayer]
       can :manage, [UseAgreement, Collection],  portal_id: current_portal.id
 
-      can [:read,:map], Entry do |entry|
+      can [:read,:map,:read_unpublished], Entry do |entry|
         entry.new_record? || current_portal.self_and_ancestors.include?(entry.owner_portal)
       end
       can [:create, :update, :destroy, :publish, :unpublish, :archive, :unarchive], Entry do |entry|
