@@ -146,4 +146,44 @@ class Catalog::EntriesControllerTest < ActionController::TestCase
 
     assert_redirected_to catalog_entry_path(@entry)
   end
+
+  test 'should publish entry' do
+    login_user(:data_manager)
+    @entry = entries(:unpublished)
+    assert_difference('Entry.published.count') do
+      patch :publish, id: @entry.id
+    end
+
+    assert_redirected_to catalog_entry_path(@entry)
+  end
+
+  test 'should fail to publish entry' do
+    login_user(:two)
+    @entry = entries(:unpublished)
+    assert_difference('Entry.published.count', 0) do
+      patch :publish, id: @entry.id
+    end
+
+    assert_redirected_to permission_denied_path
+  end
+
+  test 'should unpublish entry' do
+    login_user(:data_manager)
+    @entry = entries(:published)
+    assert_difference('Entry.published.count', -1) do
+      patch :unpublish, id: @entry.id
+    end
+
+    assert_redirected_to catalog_entry_path(@entry)
+  end
+
+  test 'should fail to unpublish entry' do
+    login_user(:two)
+    @entry = entries(:published)
+    assert_difference('Entry.published.count', 0) do
+      patch :unpublish, id: @entry.id
+    end
+
+    assert_redirected_to permission_denied_path
+  end
 end

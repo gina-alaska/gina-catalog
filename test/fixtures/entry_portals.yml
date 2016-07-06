@@ -24,3 +24,13 @@ five:
   entry: no_owner
   portal: one
   owner: false
+
+six:
+  entry: published
+  portal: one
+  owner: true
+
+seven:
+  entry: unpublished
+  portal: one
+  owner: true
