@@ -16,7 +16,7 @@
     - if page.system_page?
       = link_to new_cms_page_path, class: 'list-group-item list-group-item-success' do
         %i.fa.fa-plus.fa-fw
-        New page`
+        New page
     - else
       = link_to new_cms_page_path(parent: page), class: 'list-group-item list-group-item-success' do
         %i.fa.fa-plus.fa-fw
