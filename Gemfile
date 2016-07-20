@@ -121,6 +121,8 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-holderjs', '~> 2.4.0'
   gem 'rails-assets-moment'
   gem 'rails-assets-leaflet.markercluster', '0.4.0.hotfix.1'
+  gem 'rails-assets-leaflet-dist'
+  gem 'rails-assets-Leaflet.Coordinates'
   # gem 'rails-assets-wicket'
   gem 'rails-assets-uri.js'
   gem 'rails-assets-ace-builds'
