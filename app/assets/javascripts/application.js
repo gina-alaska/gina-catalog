@@ -25,8 +25,8 @@
 //= require holderjs
 //= require mapbox.js
 //= require leaflet.markercluster
-//= require leaflet-dist
-//= require Leaflet.Coordinates
+//= require Control.Coordinates.js
+//= require NumberFormatter.js
 //= require uri.js
 //= require turbolinks
 //= require refile
