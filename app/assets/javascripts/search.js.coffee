@@ -17,16 +17,30 @@ $(document).on 'click', '[data-behavior="highlight"]', (e) ->
 
   $(target).toggleClass('active')
 
+sortBtnSwap = (el) ->
+  sort = $(el).data('sort')
+  dir = $(el).data('direction')
+  newdir = if dir == 'asc' then 'desc' else 'asc'
+  icon = $(el).find('i.fa')
+
+  $(el).data('direction', newdir)
+  $(icon).removeClass("fa-sort-#{sort}-#{dir}").addClass("fa-sort-#{sort}-#{newdir}")
+
 $(document).on 'ready page:load', ->
   for item in $('[data-behavior="float-checked"] input:checked')
     $(item).parents('.facet-item').prependTo($(item).parents('.facet-list'))
 
   $('.sort-by').click (event) ->
     target = $($(this).data('target'))
+    if $(this).hasClass('active')
+      sortBtnSwap(this)
+
+    $(this).parents('.sort-btns').find('.sort-by').removeClass('active')
+    $(this).addClass('active')
+
     type = $(this).data('sort')
     direction = $(this).data('direction')
-    $(this).data('direction', if direction == 'asc' then 'desc' else 'asc')
-    facets = target.children().toArray()
+    facets = target.children()
 
     facets.sort (a, b) ->
       an = $(a).data(type)
@@ -37,30 +51,4 @@ $(document).on 'ready page:load', ->
         return if direction == 'asc' then -1 else 1
       0
     $(facets).detach().appendTo target
-    iconSwap($(this), direction)
     event.preventDefault()
-    return
-
-  iconSwap = (target, direction) ->
-    sort = $(target).data('sort')
-    icon = $(target).find('i')
-
-    if sort == 'name'
-      if direction == 'asc'
-        $(icon).removeClass('fa-sort-alpha-desc').addClass('fa-sort-alpha-asc')
-      else
-        $(icon).removeClass('fa-sort-alpha-asc').addClass('fa-sort-alpha-desc')
-    else
-      if direction == 'asc'
-        $(icon).removeClass('fa-sort-numeric-desc').addClass('fa-sort-numeric-asc')
-      else
-        $(icon).removeClass('fa-sort-numeric-asc').addClass('fa-sort-numeric-desc')
-    return
-
-  $('.sort-by').click (event) ->
-    current = $(this)
-    targets = $(this).parent().children().each (button, current) ->
-      if button == current
-        $(button).addClass('active')
-      else
-        $(button).removeClass('active')
