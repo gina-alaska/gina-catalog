@@ -1,5 +1,5 @@
 %h3.title
-  = link_to entry.title, edit_catalog_entry_path(entry)
+  = entry.title
   - if !entry.published?
     %span{style: "color: red;"} (Unpublished)
   - if entry.archived?
