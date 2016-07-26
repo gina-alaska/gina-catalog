@@ -19,6 +19,18 @@ class Layers
     @zoomTo(layers[true], @config.maxZoom) if @config.fitAll
 
     L.control.layers(null, layersForControl).addTo(@map)
+    L.control.coordinates(
+      position: 'topright'
+      decimals: 3
+      decimalSeperator: '.'
+      labelTemplateLat: 'Latitude: {y}'
+      labelTemplateLng: 'Longitude: {x}'
+      enableUserInput: false
+      useDMS: false
+      useLatLngOrder: true
+      markerType: L.marker
+      markerProps: {}
+    ).addTo @map
 
   zoomTo: (layer, maxZoom) ->
     @map.whenReady =>
@@ -50,7 +62,6 @@ $(document).on 'ready page:load init_map', ->
 
     layers = new Layers(mapel, @map)
     layers.setup();
-
 
 $(document).on 'click', '[data-behavior="highlight-markers"]', (e) =>
   e.preventDefault()
