@@ -157,6 +157,10 @@ class Entry < ActiveRecord::Base
   def to_s
     title
   end
+  
+  def to_param
+    "#{self.id}-#{self.title.try(:truncate, 50).try(:parameterize)}"
+  end
 
   def mustache_route
     "catalog_#{super}"
