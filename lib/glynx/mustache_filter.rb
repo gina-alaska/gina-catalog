@@ -91,8 +91,13 @@ module Glynx
 
       @handlebars.register_helper(:child_pages) do |this,context,block|
         page,block = from_context(this, context, block, current_page)
+        children = page.children.visible
 
-        page.children.visible.map do |page|
+        if block[:hash][:limit]
+          children = children.limit(block[:hash][:limit].to_i)
+        end
+
+        children.map do |page|
           block.fn(page.mustache_context(page))
         end.join unless current_page.nil?
       end
