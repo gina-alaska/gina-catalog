@@ -1,10 +1,10 @@
 #entry_search{ data: { behavior: 'float-checked' } }
   = bootstrap_form_for :search, url: catalog_entries_path, method: :get do |f|
     .panel.panel-default
-      .panel-heading
-        %h1.panel-title Search
       .map-left
         = render 'search/map'
+      .panel-heading
+        %h1.panel-title Search
       .panel-body
         .form-group.form-inline
           .input-group
