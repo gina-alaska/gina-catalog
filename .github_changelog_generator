@@ -1,3 +1,4 @@
 unreleased=false
-since-tag=3.3.6
+since-tag=3.6.0
+future-release=3.7.0
 max-issues=500
