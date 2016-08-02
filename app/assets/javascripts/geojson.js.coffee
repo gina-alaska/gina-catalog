@@ -18,7 +18,7 @@ class CustomMarker extends CustomPopup
     opts = super(params, opts)
 
     params.markerLabelField ||= 'title'
-    params.iconSize ||= [30,30]
+    params.iconSize ||= [12,12]
     params.iconClass ||= 'circle-marker'
 
     opts.pointToLayer = (feature, ll) ->
@@ -127,10 +127,14 @@ class @GeoJSONLayer
 
     config
 
+  clusterConfig: () =>
+    if GLYNX? and GLYNX.IE
+      { disableClusteringAtZoom: 8 }
+    else
+      { maxClusterRadius: 25, disableClusteringAtZoom: 5 }
+
   cluster_layer: (layer = null) ->
-    new L.MarkerClusterGroup({
-      maxClusterRadius: 25
-    })
+    new L.MarkerClusterGroup(@clusterConfig())
 
   zoom: (parent) ->
     parent.zoomTo(@layer, 10) if @config.fit
