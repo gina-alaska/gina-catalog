@@ -10,4 +10,5 @@ Rails.application.config.assets.version = '2.0'
 Rails.application.config.assets.precompile += %w(
   mapbox.js/images/icons-000000@2x.png
   mapbox.js/images/icons-ffffff@2x.png
+  ie.js
 )
