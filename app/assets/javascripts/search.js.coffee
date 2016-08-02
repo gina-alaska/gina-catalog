@@ -1,11 +1,17 @@
 $(document).on 'click', '[data-toggle="expand"]', (e) ->
   e.preventDefault()
-  target = $(e.target).attr('href')
+  target = $(this).attr('href')
   $(target).toggleClass('in') if $(target).length > 0
 
-  text = $(e.target).text()
-  $(e.target).text $(e.target).data('toggletext')
-  $(e.target).data('toggletext', text)
+  if $(this).data('toggletext')
+    text = $(this).text()
+    $(this).text $(this).data('toggletext')
+    $(this).data('toggletext', text)
+  else if $(this).data('toggleicon')
+    icon = $(this).find('i')
+    iconclass = icon.attr('class')
+    icon.removeClass(iconclass).addClass($(this).data('toggleicon'))
+    $(this).data('toggleicon', iconclass)
 
 $(document).on 'click', '[data-behavior="highlight"]', (e) ->
   e.preventDefault()
