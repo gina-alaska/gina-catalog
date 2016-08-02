@@ -2,13 +2,15 @@
   .panel-body.panel-break
     %span.panel-title= title
 
-    .pull-right.sort-btns.btn-group
-      = link_to '#', class: 'btn btn-default btn-sm sort-by', title: 'Sort Alphabetically', data: { target: "##{field}-search".dasherize, sort: 'alpha', direction: 'asc' } do
-        %i.fa.fa-sort-alpha-asc
-      = link_to '#', class: 'btn btn-default btn-sm sort-by active', title: 'Sort by Counts', data: { target: "##{field}-search".dasherize, sort: 'numeric', direction: 'desc' } do
-        %i.fa.fa-sort-numeric-desc
+    .pull-right
+      .sort-btns.btn-group
+        = link_to '#', class: 'btn btn-default btn-sm sort-by', title: 'Sort Alphabetically', data: { target: "##{field}-search".dasherize, sort: 'alpha', direction: 'asc' } do
+          %i.fa.fa-sort-alpha-asc
+        = link_to '#', class: 'btn btn-default btn-sm sort-by active', title: 'Sort by Counts', data: { target: "##{field}-search".dasherize, sort: 'numeric', direction: 'desc' } do
+          %i.fa.fa-sort-numeric-desc
       - if facets.count > 3
-        = link_to 'more...', "##{field.to_s.dasherize}-search", data: { toggle: 'expand', 'toggletext' => 'less...' }
+        = link_to "##{field.to_s.dasherize}-search", class: 'btn btn-default btn-sm', title: 'Toggle show more', data: { toggle: 'expand', 'toggleicon' => 'fa fa-chevron-circle-up' } do
+          %i.fa.fa-chevron-circle-down
 
   - selected = Array.wrap(@search_params[field])
   .facet-list.panel-body.expand{ id: "#{field}-search".dasherize, style: 'padding-top: 5px; padding-bottom: 0px; '}
