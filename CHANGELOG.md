@@ -1,5 +1,38 @@
 # Change Log
 
+## [3.7.0](https://github.com/gina-alaska/gina-catalog/tree/3.7.0) (2016-08-03)
+[Full Changelog](https://github.com/gina-alaska/gina-catalog/compare/3.6.2...3.7.0)
+
+**Implemented enhancements:**
+
+- \[CMS\] add limit functionality to \#child\_pages handlebar command. [\#927](https://github.com/gina-alaska/gina-catalog/issues/927)
+
+**Closed issues:**
+
+- \[Map\] move mouse coordinates to bottom left [\#938](https://github.com/gina-alaska/gina-catalog/issues/938)
+- \[Search\] Rename "Reset All" to "Clear Filters" or "Clear" [\#933](https://github.com/gina-alaska/gina-catalog/issues/933)
+- \[Search\] move search title down below map [\#929](https://github.com/gina-alaska/gina-catalog/issues/929)
+
+**Merged pull requests:**
+
+- Move mouse coordinates to the bottom left. [\#939](https://github.com/gina-alaska/gina-catalog/pull/939) ([grimm](https://github.com/grimm))
+- Move search title below map [\#934](https://github.com/gina-alaska/gina-catalog/pull/934) ([grimm](https://github.com/grimm))
+- Added a limit attribute to the child\_pages handlebar command. [\#928](https://github.com/gina-alaska/gina-catalog/pull/928) ([grimm](https://github.com/grimm))
+
+## [3.6.2](https://github.com/gina-alaska/gina-catalog/tree/3.6.2) (2016-08-02)
+[Full Changelog](https://github.com/gina-alaska/gina-catalog/compare/3.6.1...3.6.2)
+
+**Merged pull requests:**
+
+- This turns the more... link into an icon button [\#935](https://github.com/gina-alaska/gina-catalog/pull/935) ([teknofire](https://github.com/teknofire))
+
+## [3.6.1](https://github.com/gina-alaska/gina-catalog/tree/3.6.1) (2016-08-01)
+[Full Changelog](https://github.com/gina-alaska/gina-catalog/compare/3.6.0...3.6.1)
+
+**Fixed bugs:**
+
+- \[CMS\] Favicon is not being used. [\#894](https://github.com/gina-alaska/gina-catalog/issues/894)
+
 ## [3.6.0](https://github.com/gina-alaska/gina-catalog/tree/3.6.0) (2016-07-27)
 [Full Changelog](https://github.com/gina-alaska/gina-catalog/compare/3.5.8...3.6.0)
 
@@ -129,7 +162,37 @@
 - Fixed attachments controller so the attach image is scoped correctly … [\#886](https://github.com/gina-alaska/gina-catalog/pull/886) ([grimm](https://github.com/grimm))
 
 ## [3.3.7](https://github.com/gina-alaska/gina-catalog/tree/3.3.7) (2016-04-11)
-[Full Changelog](https://github.com/gina-alaska/gina-catalog/compare/v2.0...3.3.7)
+[Full Changelog](https://github.com/gina-alaska/gina-catalog/compare/3.3.6...3.3.7)
+
+**Fixed bugs:**
+
+- \[CMS\] Layout list is not limited to current portal [\#877](https://github.com/gina-alaska/gina-catalog/issues/877)
+
+**Merged pull requests:**
+
+- Fixed layout select in page edit form so that it only shows layouts f… [\#881](https://github.com/gina-alaska/gina-catalog/pull/881) ([grimm](https://github.com/grimm))
+
+## [3.3.6](https://github.com/gina-alaska/gina-catalog/tree/3.3.6) (2016-03-10)
+[Full Changelog](https://github.com/gina-alaska/gina-catalog/compare/3.3.5...3.3.6)
+
+**Fixed bugs:**
+
+- \[CMS\] You can only create one sub page at a time [\#878](https://github.com/gina-alaska/gina-catalog/issues/878)
+
+## [3.3.5](https://github.com/gina-alaska/gina-catalog/tree/3.3.5) (2016-03-04)
+[Full Changelog](https://github.com/gina-alaska/gina-catalog/compare/3.3.4...3.3.5)
+
+## [3.3.4](https://github.com/gina-alaska/gina-catalog/tree/3.3.4) (2016-03-04)
+[Full Changelog](https://github.com/gina-alaska/gina-catalog/compare/3.3.3...3.3.4)
+
+## [3.3.3](https://github.com/gina-alaska/gina-catalog/tree/3.3.3) (2016-02-24)
+[Full Changelog](https://github.com/gina-alaska/gina-catalog/compare/3.3.2...3.3.3)
+
+## [3.3.2](https://github.com/gina-alaska/gina-catalog/tree/3.3.2) (2016-02-23)
+[Full Changelog](https://github.com/gina-alaska/gina-catalog/compare/3.3.1...3.3.2)
+
+## [3.3.1](https://github.com/gina-alaska/gina-catalog/tree/3.3.1) (2016-02-17)
+[Full Changelog](https://github.com/gina-alaska/gina-catalog/compare/3.3.0...3.3.1)
 
 **Implemented enhancements:**
 
@@ -168,8 +231,6 @@
 
 **Fixed bugs:**
 
-- \[CMS\] You can only create one sub page at a time [\#878](https://github.com/gina-alaska/gina-catalog/issues/878)
-- \[CMS\] Layout list is not limited to current portal [\#877](https://github.com/gina-alaska/gina-catalog/issues/877)
 - Clean up full map for records [\#859](https://github.com/gina-alaska/gina-catalog/issues/859)
 - Organizations show up multiple times when looking at some imported nssi records [\#845](https://github.com/gina-alaska/gina-catalog/issues/845)
 - Editing a map layer in production gives  500 Error [\#844](https://github.com/gina-alaska/gina-catalog/issues/844)
@@ -231,11 +292,13 @@
 - \[Admin/Catalog Types\] Don't allow deletion of catalog types. [\#418](https://github.com/gina-alaska/gina-catalog/issues/418)
 - \[Manager/Collections\] Add dependent: :delete\_all to collections [\#417](https://github.com/gina-alaska/gina-catalog/issues/417)
 - \[Manager/Use Agreements\] Create archive for Use Agreements. [\#415](https://github.com/gina-alaska/gina-catalog/issues/415)
+- Fix link display text error [\#401](https://github.com/gina-alaska/gina-catalog/issues/401)
 - Manager menu items display for users who do not have permission to view them. [\#400](https://github.com/gina-alaska/gina-catalog/issues/400)
 - Invites give incorrect message if the new user is not logged in. [\#399](https://github.com/gina-alaska/gina-catalog/issues/399)
 - \[Manager/Contacts\] Don't allow deletion of contacts [\#397](https://github.com/gina-alaska/gina-catalog/issues/397)
 - \[Manager/Agency\] Don't allow deletion of agencies [\#396](https://github.com/gina-alaska/gina-catalog/issues/396)
 - \[Permissions\] Pending invite list does not work well on small screens [\#386](https://github.com/gina-alaska/gina-catalog/issues/386)
+- \[Use Agreement\] column header "action" is not capitalized [\#385](https://github.com/gina-alaska/gina-catalog/issues/385)
 - When editing a catalog record clearing the name from a contact search leaves the add selected button enabled. [\#371](https://github.com/gina-alaska/gina-catalog/issues/371)
 
 **Closed issues:**
@@ -364,20 +427,30 @@
 - Confirm deletes everywhere? [\#412](https://github.com/gina-alaska/gina-catalog/issues/412)
 - \[Manager\] Consistent presentation of "delete/remove" actions [\#405](https://github.com/gina-alaska/gina-catalog/issues/405)
 - Closing.... [\#404](https://github.com/gina-alaska/gina-catalog/issues/404)
+- \[Manager/Agency\] Get rid of show action [\#395](https://github.com/gina-alaska/gina-catalog/issues/395)
 - \[Manager/Catalog Record/Agencies Tab\] Change "Delete" to "X" under Actions [\#391](https://github.com/gina-alaska/gina-catalog/issues/391)
+- Add a dropdown for agency to the bad link list to filter result to only show from selected agency. [\#389](https://github.com/gina-alaska/gina-catalog/issues/389)
+- \[Agencies\] Add basic search capability to the index page [\#387](https://github.com/gina-alaska/gina-catalog/issues/387)
 - \[Portal Settings\] Favicon support [\#384](https://github.com/gina-alaska/gina-catalog/issues/384)
 - \[Portal Settings\] Show list of supported social networks with a field for user to add urls [\#383](https://github.com/gina-alaska/gina-catalog/issues/383)
 - \[Portal Settings\] Create social networks lookup table [\#382](https://github.com/gina-alaska/gina-catalog/issues/382)
 - Add a counter cache to collections for the collection entry relation [\#381](https://github.com/gina-alaska/gina-catalog/issues/381)
 - \[Manager/Collections\] Don't need show action for collections [\#380](https://github.com/gina-alaska/gina-catalog/issues/380)
+- \[Manager/Agency\] In the agency form, update the logo tab look and feel updates [\#379](https://github.com/gina-alaska/gina-catalog/issues/379)
 - \[Manager/Agency\] Alias tab look and feel should be consistent with catalog record attachments [\#378](https://github.com/gina-alaska/gina-catalog/issues/378)
+- Add category column to the Agency index list [\#377](https://github.com/gina-alaska/gina-catalog/issues/377)
+- Agency logo should show up in the agency index list [\#376](https://github.com/gina-alaska/gina-catalog/issues/376)
+- Move the checkbox for primary contact in the catalog record form to the far left [\#375](https://github.com/gina-alaska/gina-catalog/issues/375)
+- Remove labels from the checkboxes in catalog record form -\> contacts tab [\#374](https://github.com/gina-alaska/gina-catalog/issues/374)
+- Remove secondary selection from contacts for catalog record form [\#373](https://github.com/gina-alaska/gina-catalog/issues/373)
 - The look of the "Add Selected" button in the catalog record contacts tab should have a more noticeable visual change [\#372](https://github.com/gina-alaska/gina-catalog/issues/372)
 - A data manager should be able to save a catalog record without closing the record. [\#370](https://github.com/gina-alaska/gina-catalog/issues/370)
 - Add ability for managers to publish and unpublish catalog records [\#369](https://github.com/gina-alaska/gina-catalog/issues/369)
+- Show the primary agency for a catalog record [\#368](https://github.com/gina-alaska/gina-catalog/issues/368)
+- In catalog record list source agency column should be primary agency [\#367](https://github.com/gina-alaska/gina-catalog/issues/367)
 
 **Merged pull requests:**
 
-- Fixed layout select in page edit form so that it only shows layouts f… [\#881](https://github.com/gina-alaska/gina-catalog/pull/881) ([grimm](https://github.com/grimm))
 - Capistrano deployment scripts [\#865](https://github.com/gina-alaska/gina-catalog/pull/865) ([teknofire](https://github.com/teknofire))
 - Updated cms template to use newer content. [\#862](https://github.com/gina-alaska/gina-catalog/pull/862) ([grimm](https://github.com/grimm))
 - Fix full record map view \#859 [\#860](https://github.com/gina-alaska/gina-catalog/pull/860) ([grimm](https://github.com/grimm))
@@ -578,47 +651,15 @@
 - Update manager agency alias tab \#378 [\#410](https://github.com/gina-alaska/gina-catalog/pull/410) ([jdelamere](https://github.com/jdelamere))
 - Pending invite list not work on small screens \#386 [\#409](https://github.com/gina-alaska/gina-catalog/pull/409) ([grimm](https://github.com/grimm))
 - Remove secondary contacts again [\#408](https://github.com/gina-alaska/gina-catalog/pull/408) ([jdelamere](https://github.com/jdelamere))
-- Added new permission denied page and have cancancan errors display it. [\#403](https://github.com/gina-alaska/gina-catalog/pull/403) ([grimm](https://github.com/grimm))
-- Create activity log to track activities [\#363](https://github.com/gina-alaska/gina-catalog/pull/363) ([grimm](https://github.com/grimm))
-
-## [v2.0](https://github.com/gina-alaska/gina-catalog/tree/v2.0) (2014-12-16)
-[Full Changelog](https://github.com/gina-alaska/gina-catalog/compare/3.3.6...v2.0)
-
-**Fixed bugs:**
-
-- Fix link display text error [\#401](https://github.com/gina-alaska/gina-catalog/issues/401)
-- \[Use Agreement\] column header "action" is not capitalized [\#385](https://github.com/gina-alaska/gina-catalog/issues/385)
-
-**Closed issues:**
-
-- \[Manager/Agency\] Get rid of show action [\#395](https://github.com/gina-alaska/gina-catalog/issues/395)
-- Add a dropdown for agency to the bad link list to filter result to only show from selected agency. [\#389](https://github.com/gina-alaska/gina-catalog/issues/389)
-- \[Agencies\] Add basic search capability to the index page [\#387](https://github.com/gina-alaska/gina-catalog/issues/387)
-- \[Manager/Agency\] In the agency form, update the logo tab look and feel updates [\#379](https://github.com/gina-alaska/gina-catalog/issues/379)
-- Add category column to the Agency index list [\#377](https://github.com/gina-alaska/gina-catalog/issues/377)
-- Agency logo should show up in the agency index list [\#376](https://github.com/gina-alaska/gina-catalog/issues/376)
-- Move the checkbox for primary contact in the catalog record form to the far left [\#375](https://github.com/gina-alaska/gina-catalog/issues/375)
-- Remove labels from the checkboxes in catalog record form -\> contacts tab [\#374](https://github.com/gina-alaska/gina-catalog/issues/374)
-- Remove secondary selection from contacts for catalog record form [\#373](https://github.com/gina-alaska/gina-catalog/issues/373)
-- Show the primary agency for a catalog record [\#368](https://github.com/gina-alaska/gina-catalog/issues/368)
-- In catalog record list source agency column should be primary agency [\#367](https://github.com/gina-alaska/gina-catalog/issues/367)
-
-**Merged pull requests:**
-
 - Update manager agency \#379 \#395 [\#407](https://github.com/gina-alaska/gina-catalog/pull/407) ([jdelamere](https://github.com/jdelamere))
 - Revert "Remove secondary contacts " [\#406](https://github.com/gina-alaska/gina-catalog/pull/406) ([grimm](https://github.com/grimm))
+- Added new permission denied page and have cancancan errors display it. [\#403](https://github.com/gina-alaska/gina-catalog/pull/403) ([grimm](https://github.com/grimm))
 - Fix \#401 there is no description in links. [\#402](https://github.com/gina-alaska/gina-catalog/pull/402) ([grimm](https://github.com/grimm))
 - Add agency to bad link dashboard page [\#398](https://github.com/gina-alaska/gina-catalog/pull/398) ([grimm](https://github.com/grimm))
 - adding in agency logo to the index [\#394](https://github.com/gina-alaska/gina-catalog/pull/394) ([teknofire](https://github.com/teknofire))
 - Add source agency to entry list [\#393](https://github.com/gina-alaska/gina-catalog/pull/393) ([jdelamere](https://github.com/jdelamere))
 - adding ability to search for agencies [\#392](https://github.com/gina-alaska/gina-catalog/pull/392) ([teknofire](https://github.com/teknofire))
 - Remove secondary contacts  [\#390](https://github.com/gina-alaska/gina-catalog/pull/390) ([jdelamere](https://github.com/jdelamere))
-- Attachment interaction namechanges [\#366](https://github.com/gina-alaska/gina-catalog/pull/366) ([jdelamere](https://github.com/jdelamere))
-- Add entry to collections [\#365](https://github.com/gina-alaska/gina-catalog/pull/365) ([jdelamere](https://github.com/jdelamere))
-- Manager should be able to add links to entry [\#364](https://github.com/gina-alaska/gina-catalog/pull/364) ([grimm](https://github.com/grimm))
-- Fix agency contact form field widths [\#361](https://github.com/gina-alaska/gina-catalog/pull/361) ([jdelamere](https://github.com/jdelamere))
-- Portal settings for glynx30 [\#360](https://github.com/gina-alaska/gina-catalog/pull/360) ([grimm](https://github.com/grimm))
-- Add attachments [\#359](https://github.com/gina-alaska/gina-catalog/pull/359) ([grimm](https://github.com/grimm))
 
 
 
