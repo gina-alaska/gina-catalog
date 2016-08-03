@@ -1,11 +1,12 @@
-- if can? :view_manager_menu, current_user
+- if can? :view_catalog, :menu
   .panel.panel-default
     .panel-heading
       %h1.panel-title Manager Menu
     .panel-body
-      = link_to edit_catalog_entry_path(entry), target: "_blank", class: 'btn btn-default btn-block' do
-        %i.fa.fa-edit
-        Edit
+      - if can? :edit, @entry
+        = link_to edit_catalog_entry_path(entry), target: "_blank", class: 'btn btn-default btn-block' do
+          %i.fa.fa-edit
+          Edit
       - if can? :publish, @entry
         - if !entry.published?
           = link_to publish_catalog_entry_path(entry), method: :patch, class: 'btn btn-default btn-block', data: { confirm: 'Are you sure?' } do
