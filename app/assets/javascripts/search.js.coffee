@@ -51,6 +51,9 @@ $(document).on 'ready page:load', ->
     facets.sort (a, b) ->
       an = $(a).data(type)
       bn = $(b).data(type)
+      if type == "alpha" 
+        an = an.toUpperCase()
+        bn = bn.toUpperCase()
       if an > bn
         return if direction == 'asc' then 1 else -1
       if an < bn
