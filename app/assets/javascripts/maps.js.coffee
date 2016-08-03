@@ -20,7 +20,7 @@ class Layers
 
     L.control.layers(null, layersForControl).addTo(@map)
     L.control.coordinates(
-      position: 'topright'
+      position: 'bottomleft'
       decimals: 3
       decimalSeperator: '.'
       labelTemplateLat: 'Latitude: {y}'
