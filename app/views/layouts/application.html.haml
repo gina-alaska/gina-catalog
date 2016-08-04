@@ -10,9 +10,6 @@
     -# = javascript_include_tag 'https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.js'
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
-    /[if lte IE 9]
-      = javascript_include_tag "ie", "data-turblinks-track" => true
-    /[endif]
     = csrf_meta_tags
   %body
     = render 'layouts/navbar'
