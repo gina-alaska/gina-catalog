@@ -40,4 +40,5 @@
 //= require ace-builds/src-noconflict/mode-html_ruby
 //= require ace-builds/src-noconflict/mode-scss
 //= require ace-builds/src-noconflict/theme-github
+//= stub ie
 //= require_tree .
