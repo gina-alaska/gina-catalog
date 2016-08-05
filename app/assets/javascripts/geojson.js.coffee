@@ -131,7 +131,7 @@ class @GeoJSONLayer
     if GLYNX? and GLYNX.IE
       { disableClusteringAtZoom: 8 }
     else
-      { maxClusterRadius: 25, disableClusteringAtZoom: 3 }
+      { maxClusterRadius: 25, disableClusteringAtZoom: 4 }
 
   cluster_layer: (layer = null) ->
     new L.MarkerClusterGroup(@clusterConfig())
