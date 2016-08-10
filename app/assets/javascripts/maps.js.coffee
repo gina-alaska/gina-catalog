@@ -23,8 +23,8 @@ class Layers
       position: 'bottomleft'
       decimals: 3
       decimalSeperator: '.'
-      labelTemplateLat: 'Latitude: {y}'
-      labelTemplateLng: 'Longitude: {x}'
+      labelTemplateLat: 'Lat: {y}'
+      labelTemplateLng: 'Lon: {x}'
       enableUserInput: false
       useDMS: false
       useLatLngOrder: true
