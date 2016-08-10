@@ -7,7 +7,7 @@
 # server 'example.com', user: 'deploy', roles: %w{app web}, other_property: :other_value
 # server 'db.example.com', user: 'deploy', roles: %w{db}
 
-
+server 'glynx-web-127b.x.gina.alaska.edu', user: 'webdev', roles: %w{app web}, primary: true
 
 # role-based syntax
 # ==================
@@ -30,7 +30,7 @@
 # For available Capistrano configuration variables see the documentation page.
 # http://capistranorb.com/documentation/getting-started/configuration/
 # Feel free to add new variables to customise your setup.
-
+set :rails_env, 'production'
 
 
 # Custom SSH Options
@@ -47,6 +47,9 @@
 #    auth_methods: %w(password)
 #  }
 #
+set :ssh_options, {
+  forward_agent: true
+}
 # The server-based syntax can be used to override options:
 # ------------------------------------
 # server 'example.com',
