@@ -145,10 +145,18 @@ class Entry < ActiveRecord::Base
   end
 
   def bbox
+    if bboxes.count > 1
+      generate_bbox(bboxes)
+    else
+      bboxes.first
+    end
+  end
+
+  def generate_bbox(features)
     srs_database = RGeo::CoordSys::SRSDatabase::ActiveRecordTable.new
     factory = RGeo::Geos.factory(srs_database: srs_database, srid: 4326)
     bounds = RGeo::Cartesian::BoundingBox.new(factory)
-    bboxes.each do |box|
+    features.each do |box|
       bounds.add(box.geom)
     end
     bounds.to_geometry
@@ -157,7 +165,7 @@ class Entry < ActiveRecord::Base
   def to_s
     title
   end
-  
+
   def to_param
     "#{self.id}-#{self.title.try(:truncate, 50).try(:parameterize)}"
   end
