@@ -3,6 +3,6 @@
     = user.name
   %td
     - Permission::AVAILABLE_ROLES.each do |role, description|
-      %i{ class: "#{user.role?(role, current_portal) ? 'fa fa-check-square-o' : 'fa fa-square-o'}" }
+      %i{ class: "#{user.role?(role, portal) ? 'fa fa-check-square-o' : 'fa fa-square-o'}" }
       = "#{description}"
       %br/
