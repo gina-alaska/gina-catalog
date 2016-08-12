@@ -12,11 +12,11 @@
   .detail-block
     %label Status:
     = entry.status
-  - if entry.start_date
+  - unless entry.start_date.blank?
     .detail-block
       %label Starts:
       = entry.start_date
-  - if entry.end_date
+  - unless entry.end_date.blank?
     .detail-block
       %label Ends:
       = entry.end_date
