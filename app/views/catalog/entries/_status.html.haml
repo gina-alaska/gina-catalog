@@ -15,7 +15,7 @@
       %div
         %strong End Date:
         = entry.end_date.strftime('%Y/%m/%d')  
-- unless entry.data_types.nil?
+- unless entry.data_types.blank?
   .row
     .col-sm-12
       %strong Data Types:
