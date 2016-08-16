@@ -7,8 +7,8 @@ module Import
     )
 
     def self.fetch(catalog, portal_id)
-      import = ::Import::Entry.new(Portal.find(portal_id))
-      
+      import = ::Import::Collection.new(Portal.find(portal_id))
+
       Client.paged_results 'Collections', Client.collections_url(catalog) do |record|
         import.create(record)
       end

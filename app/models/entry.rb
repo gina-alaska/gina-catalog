@@ -145,21 +145,29 @@ class Entry < ActiveRecord::Base
   end
 
   def bbox
-    if bboxes.count > 1
-      generate_bbox(bboxes)
-    else
-      bboxes.first
-    end
-  end
-
-  def generate_bbox(features)
     srs_database = RGeo::CoordSys::SRSDatabase::ActiveRecordTable.new
     factory = RGeo::Geos.factory(srs_database: srs_database, srid: 4326)
     bounds = RGeo::Cartesian::BoundingBox.new(factory)
-    features.each do |box|
-      bounds.add(box.geom)
+    centroids.each do |centroid|
+      bounds.add(centroid)
     end
     bounds.to_geometry
+  end
+
+  def bbox_centroid
+    case bbox.geometry_type
+    when RGeo::Feature::Point
+      bbox
+    when RGeo::Feature::Polygon
+      bbox.point_on_surface
+    else
+      logger.info bbox.geometry_type
+      nil
+    end
+  end
+
+  def centroids
+    attachments.geojson.map(&:centroid)
   end
 
   def to_s
