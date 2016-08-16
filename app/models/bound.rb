@@ -10,14 +10,9 @@ class Bound < ActiveRecord::Base
 
   def from_geojson(data)
     geojson = RGeo::GeoJSON.decode(data, json_parser: :json)
-
-    if geojson.count > 1
-      bbox = bbox_for_multiple_features(geojson)
-    else
-      bbox = bbox_for_single_feature(geojson.first)
-    end
-
-    self.geom = bbox
+    bbox = RGeo::Cartesian::BoundingBox.new(factory)
+    geojson.each { |feature| bbox.add(feature.geometry) }
+    self.geom = bbox.to_geometry
     self
   end
 
@@ -33,21 +28,9 @@ class Bound < ActiveRecord::Base
   #   @bbox ||= RGeo::Cartesian::BoundingBox.new(factory)
   # end
 
-  def bbox_for_single_feature(feature)
-    # bbox = RGeo::Cartesian::BoundingBox.new(factory)
-    # bbox.add(feature.geometry)
-    # bbox
-    RGeo::Feature.cast(feature.geometry, factory: factory, :project => true)
-  end
-
-  def bbox_for_multiple_features(features)
-    bbox = RGeo::Cartesian::BoundingBox.new(factory)
-    features.each { |feature| bbox.add(feature.geometry) }
-
-    bbox.to_geometry
-  end
-
   def centroid
+    return if geom.nil?
+
     case geom.geometry_type
     when RGeo::Feature::Point
       geom

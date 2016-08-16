@@ -63,19 +63,20 @@ $(document).on 'ready page:load init_map', ->
     layers = new Layers(mapel, @map)
     layers.setup();
 
-$(document).on 'click', '[data-behavior="highlight-markers"]', (e) =>
+$(document).on 'click', '[data-behavior="highlight-markers"]', (e) ->
   e.preventDefault()
   map = $('[data-behavior="map"]').data('map')
-  el = $(e.target).data('target')
-
-  map.once 'zoomend', =>
-    # add delay because of marker cluster adding and removing dom elements
-    setTimeout =>
-      $(el).addClass('active')
-    , 150
+  el = $(this).data('target')
 
   $(el).parents('.leaflet-marker-pane').find('.active').removeClass('active')
   $(el).addClass('active')
 
-  wkt = new Wkt.Wkt($(e.target).data('zoomto'))
-  map.fitBounds(wkt.toObject().getBounds(), { padding: [10,10] })
+  wkt = new Wkt.Wkt($(this).data('zoomto'))
+  geom = wkt.toObject()
+
+  if wkt.type == 'point'
+    map.setView(geom.getLatLng(), 10)
+  else
+    map.fitBounds(geom.getBounds(), padding: [10, 10])
+
+  $(el).addClass('active')

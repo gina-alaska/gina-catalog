@@ -45,6 +45,11 @@ class Import::EntryTest < ActiveSupport::TestCase
                                    { 'iso_theme_code' => '001' },
                                    { 'iso_theme_code' => '002' }
                                  ],
+                                 'uploads' => [
+                                   { 'name' => 'test.com', 'url' => 'http://test.com', 'downloadable' => true },
+                                   { 'name' => 'foo.com', 'url' => 'http://foo.com', 'preview' => true },
+
+                                 ],
                                  'links' => [{
                                    'display_text' => 'website',
                                    'url' => 'http://test.com',
@@ -61,6 +66,7 @@ class Import::EntryTest < ActiveSupport::TestCase
     assert_not_empty import.importable.iso_topics
     assert_not_empty import.importable.regions
     assert_not_empty import.importable.data_types
+    assert_not_empty import.importable.attachments
     assert_not_nil import.importable.use_agreement
   end
 

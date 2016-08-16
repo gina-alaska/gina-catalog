@@ -77,8 +77,7 @@ module Import
       items
     end
 
-    def paged_results(name, url, &block)
-      page = 1
+    def paged_results(name, url, page = 1, &block)
       puts "[#{name}] Fetching page #{page}"
       while (items = results(name, "#{url}?page=#{page}", &block))
         break if items.count == 0

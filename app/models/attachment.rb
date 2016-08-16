@@ -62,4 +62,34 @@ class Attachment < ActiveRecord::Base
   def global_id
     to_sgid(for: 'download')
   end
+
+  def srs_database
+    @srs_database ||= RGeo::CoordSys::SRSDatabase::ActiveRecordTable.new
+  end
+
+  def factory
+    @factory ||= RGeo::Geos.factory(srs_database: srs_database, srid: 4326)
+  end
+
+  def centroid
+    geojson = RGeo::GeoJSON.decode(file.data, json_parser: :json)
+
+    if geojson.count == 1
+      geom = geojson.first.geometry
+    else
+      bbox = RGeo::Cartesian::BoundingBox.new(factory)
+      geojson.each { |feature| bbox.add(feature.geometry) }
+      geom = bbox.to_geometry
+    end
+
+    case geom.geometry_type
+    when RGeo::Feature::Point
+      geom
+    when RGeo::Feature::Polygon
+      geom.point_on_surface
+    else
+      logger.info geom.geometry_type
+      nil
+    end
+  end
 end
