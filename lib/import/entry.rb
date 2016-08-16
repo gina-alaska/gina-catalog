@@ -13,7 +13,7 @@ module Import
     def self.fetch(catalog, portal_id)
       import = ::Import::Entry.new(Portal.find(portal_id))
 
-      Client.paged_results 'Entries', Client.catalog_records_url(catalog) do |record|
+      Client.paged_results('Entries', Client.catalog_records_url(catalog), ENV['page'].to_i) do |record|
         import.create(record)
       end
 
@@ -34,7 +34,7 @@ module Import
       json['entry_type'] = entry_type(json['type'])
 
       add_simple_fields(SIMPLE_FIELDS, import.importable, json)
-      %w( orgs locations contacts collections regions iso_topics use_agreement links data_types archive_info).each do |topic|
+      %w( orgs locations contacts collections regions iso_topics use_agreement links data_types archive_info attachments).each do |topic|
         send(:"add_#{topic}", import.importable, json)
       end
 
@@ -54,6 +54,30 @@ module Import
 
     def entry_type(name)
       EntryType.where('name ilike :name', name: name).first
+    end
+
+    def add_attachments(model, json = {})
+      json['uploads'].each do |upload|
+        attachment = model.attachments.where(file_name: upload['name']).first_or_initialize do |a|
+          if upload['preview']
+            if model.attachments.primary_thumbnail.count == 0
+              a.category = 'Primary Thumbnail'
+            else
+              a.category = 'Thumbnail'
+            end
+          elsif upload['downloadable']
+            a.category = 'Public Download'
+          else
+            a.category = 'Private Download'
+          end
+
+          a.file_url = upload['url']
+          a.file_name = upload['name']
+          a.description = upload['description']
+        end
+        model.attachments << attachment if attachment.new_record?
+        attachment.save
+      end if json['uploads'].present?
     end
 
     def add_primary_org(model, org)
@@ -148,7 +172,7 @@ module Import
       return unless json['links'].present?
       json['links'].each do |link|
         link.delete('id')
-        next if !record.new_record? && record.links.where(url: link['url']).count > 0
+        next if record.links.where(url: link['url']).count > 0
         record.links.build(link)
       end
     end
