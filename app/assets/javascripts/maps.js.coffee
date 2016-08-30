@@ -6,8 +6,6 @@ class Layers
     layersForControl = {
       "GINA BDL": L.tileLayer('http://tiles.gina.alaska.edu/tilesrv/bdl/tile/{x}/{y}/{z}.png')
     }
-    baseLayers = {
-    }
     #  = L.featureGroup()
 
     for el in @mapel.find('layer')
@@ -22,7 +20,8 @@ class Layers
     layers[false].addTo(@map) if layers[false]?
     @zoomTo(layers[true], @config.maxZoom) if @config.fitAll
 
-    L.control.layers(baseLayers, layersForControl).addTo(@map)
+    L.control.layers(null, layersForControl, { position: 'topleft' }).addTo(@map)
+    
     L.control.coordinates(
       position: 'bottomleft'
       decimals: 3
