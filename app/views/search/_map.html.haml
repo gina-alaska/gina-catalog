@@ -1,10 +1,10 @@
 .map-container{ style: 'position: relative' }
-  .btn.btn-default.btn-sm{ data: { behavior: 'move-left' }, style: 'top: 110px; left: 10px; display: none; position: absolute; z-index: 1001; border-color: #999; padding: 4px 8px;'}
+  .btn.btn-default.btn-sm{ data: { behavior: 'move-left' }, style: 'top: 110px; left: 10px; display: none; position: absolute; z-index: 1; border-color: #999; padding: 4px 8px;'}
     %i.fa.fa-compress
-  .btn.btn-default.btn-sm{ data: { behavior: 'move-top' }, style: 'top: 110px; left: 10px; position: absolute; z-index: 1001; border-color: #999; padding: 4px 8px;'}
+  .btn.btn-default.btn-sm{ data: { behavior: 'move-top' }, style: 'top: 110px; left: 10px; position: absolute; z-index: 1; border-color: #999; padding: 4px 8px;'}
     %i.fa.fa-expand
   #search-map.search-map{ data: { behavior: 'map', target: 'search-map', 'mapbox-id' => 'gina-alaska.knb7oi02', 'max-zoom' => 15 } }
-    %layer{ data: { paged: 'true', url: url_for(params.merge(page: 1, format: :geojson)), 'geojson-options' => 'custom-marker', 'marker-label-field' => 'index', cluster: 'true' }}
+    %layer{ data: { name: 'Search results', paged: 'true', url: url_for(params.merge(page: 1, format: :geojson)), 'geojson-options' => 'custom-marker', 'marker-label-field' => 'index', cluster: 'true' }}
       %popup
         %h1 \{{title}}
         %p \{{description}}

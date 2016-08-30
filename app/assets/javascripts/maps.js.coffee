@@ -4,7 +4,6 @@ class Layers
   setup: () ->
     layers = {}
     layersForControl = {
-      "GINA BDL": L.tileLayer('http://tiles.gina.alaska.edu/tilesrv/bdl/tile/{x}/{y}/{z}.png')
     }
     #  = L.featureGroup()
 
@@ -20,8 +19,10 @@ class Layers
     layers[false].addTo(@map) if layers[false]?
     @zoomTo(layers[true], @config.maxZoom) if @config.fitAll
 
+    layersForControl['GINA BDL'] = L.tileLayer('http://tiles.gina.alaska.edu/tilesrv/bdl/tile/{x}/{y}/{z}.png')
+
     L.control.layers(null, layersForControl, { position: 'topleft' }).addTo(@map)
-    
+
     L.control.coordinates(
       position: 'bottomleft'
       decimals: 3
