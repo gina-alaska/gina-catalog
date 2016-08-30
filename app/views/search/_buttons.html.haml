@@ -1,10 +1,9 @@
 .row
   .col-sm-4
-    = link_to catalog_entries_path, class: 'btn btn-default btn-block' do
+    = link_to catalog_entries_path, class: 'btn btn-primary btn-block' do
       Clear
   .col-sm-4
     = button_tag class: 'btn btn-primary btn-block', data: { toggle: 'modal', target: '#export-modal' }, type: :button do
-      %i.fa.fa-download
       Export
   .col-sm-4
     = f.submit 'Search', class: 'btn btn-primary btn-block'
