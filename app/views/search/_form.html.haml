@@ -3,8 +3,13 @@
     .panel.panel-default
       .map-left
         = render 'search/map'
-      .panel-heading
-        %h1.panel-title Search
+      .panel-body.panel-break
+        %span.panel-title Search
+        - if current_portal.pages.find_by_path('search-help')
+          .pull-right
+            .sort-btns.btn-group
+              = link_to page_path('search-help'), class: 'btn btn-default btn-sm' do
+                %i.fa.fa-question
       .panel-body
         .form-group.form-inline
           .input-group

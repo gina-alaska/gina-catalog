@@ -3,7 +3,9 @@ class Layers
     @config = @mapel.data()
   setup: () ->
     layers = {}
-    layersForControl = {}
+    layersForControl = {
+      "GINA BDL": L.tileLayer('http://tiles.gina.alaska.edu/tilesrv/bdl/tile/{x}/{y}/{z}.png')
+    }
     #  = L.featureGroup()
 
     for el in @mapel.find('layer')
@@ -19,6 +21,7 @@ class Layers
     @zoomTo(layers[true], @config.maxZoom) if @config.fitAll
 
     L.control.layers(null, layersForControl, { position: 'topleft' }).addTo(@map)
+    
     L.control.coordinates(
       position: 'bottomleft'
       decimals: 3
@@ -58,6 +61,7 @@ $(document).on 'ready page:load init_map', ->
     config = mapel.data()
     L.mapbox.accessToken = config.accessToken || 'pk.eyJ1IjoiZ2luYS1hbGFza2EiLCJhIjoiN0lJVnk5QSJ9.CsQYpUUXtdCpnUdwurAYcQ';
     @map = L.mapbox.map(mapel.data('target'), config.mapboxId, config);
+    @map.setView([64.245, -152.051], 3);
     mapel.data('map', @map)
 
     layers = new Layers(mapel, @map)
