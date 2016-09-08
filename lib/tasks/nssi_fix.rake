@@ -19,11 +19,7 @@ namespace :fixnssi do
       exit 1
     end
 
-    portal.entries.find_each do |entry|
-      if entry.data_types.pluck(:name).include?('Report')
-        entry.entry_type = entry_type
-        entry.save
-      end
-    end
+    entries = portal.entries.joins(:data_types).where(data_types: { name: 'Report' })
+    entries.find_each { |e| e.update_attributes( entry_type_id: entry_type.id ) }
   end
 end
