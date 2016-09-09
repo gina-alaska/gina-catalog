@@ -21,13 +21,13 @@ $(document).on 'ready page:load', ->
       $.ajax({
         url: "/tags",
         dataType: 'json',
-        data: { 
+        data: {
           q: encodeURIComponent(query)
         },
         type: 'GET',
-        error: -> 
+        error: ->
           callback()
-        success: (res) -> 
+        success: (res) ->
           callback(res)
       })
   })
@@ -48,46 +48,18 @@ $(document).on 'ready page:load', ->
       $.ajax({
         url: '/collections',
         dataType: 'json',
-        data: { 
+        data: {
           q: encodeURIComponent(query)
         },
         type: 'GET',
-        error: -> 
+        error: ->
           callback()
-        success: (res) -> 
+        success: (res) ->
           callback(res)
       })
     create: false
   })
 
-  $('[data-behavior="selectize-iso_topics"]').selectize({
-    plugins: ['remove_button'],
-    valueField: 'id',
-    labelField: 'name',
-    searchField: 'name',
-    sortField: 'name',
-    preload: true,
-    render: {
-      option: (item, escape) ->
-        "<div>#{item.name}</div>"
-    },
-    load: (query, callback) ->
-      # return callback() if query.length == 0
-      $.ajax({
-        url: '/api/iso_topics',
-        dataType: 'json',
-        data: { 
-          q: encodeURIComponent(query)
-        },
-        type: 'GET',
-        error: -> 
-          callback()
-        success: (res) -> 
-          callback(res)
-      })
-    create: false
-  })
-  
   $('[data-behavior="selectize-regions"]').selectize({
     plugins: ['remove_button'],
     valueField: 'id',
@@ -130,13 +102,13 @@ $(document).on 'ready page:load', ->
       $.ajax({
         url: '/api/data_types',
         dataType: 'json',
-        data: { 
+        data: {
           q: encodeURIComponent(query)
         },
         type: 'GET',
-        error: -> 
+        error: ->
           callback()
-        success: (res) -> 
+        success: (res) ->
           callback(res)
       })
     create: false
@@ -144,11 +116,11 @@ $(document).on 'ready page:load', ->
 
 $(document).on 'click', '[data-behavior="clear-field"]', (e) ->
   e.preventDefault();
-  
+
   el = $(this).data('target')
 
   if $(el).val() != ''
     $(el).val('');
-    
+
     if $(this).data('autosubmit')
       $(el).parents('form').submit();
