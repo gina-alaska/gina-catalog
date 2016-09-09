@@ -1,5 +1,5 @@
 = f.text_field :tag_list, value: f.object.tag_list.to_s, label: 'Tags', data: { behavior: 'selectize-tags' }
-= f.collection_select :iso_topic_ids, @entry.iso_topics, :id, :long_name_with_code, { label: 'ISO Topics', include_blank: 'Search for ISO topic names and codes' }, { data: { behavior: 'selectize', label: 'long_name_with_code', url: '/api/iso_topics' }, multiple: true }
+= f.collection_select :iso_topic_ids, IsoTopic.order(iso_theme_code: :asc), :id, :long_name_with_code, { label: 'ISO Topics', include_blank: 'Search for ISO topic names and codes' }, { data: { behavior: 'selectize', label: 'long_name_with_code', url: '/api/iso_topics' }, multiple: true }
 = f.collection_select :collection_ids, @entry.collections, :id, :name, { label: 'Collections', include_blank: 'Search for collections' }, { data: { behavior: 'selectize-collections' }, multiple: true }
 = f.collection_select :region_ids, @entry.regions, :id, :name, { label: 'Regions', include_blank: 'Search for regions' }, { data: { behavior: 'selectize-regions' }, multiple: true }
 = f.collection_select :data_type_ids, @entry.data_types, :id, :name, { label: 'Data Types', include_blank: 'Search for data types' }, { data: { behavior: 'selectize-data_types' }, multiple: true }
