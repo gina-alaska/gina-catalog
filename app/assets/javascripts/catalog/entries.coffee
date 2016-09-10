@@ -20,13 +20,13 @@ $(document).on 'ready page:load', ->
       $.ajax({
         url: "/api/tags",
         dataType: 'json',
-        data: { 
+        data: {
           q: encodeURIComponent(query)
         },
         type: 'GET',
-        error: -> 
+        error: ->
           callback()
-        success: (res) -> 
+        success: (res) ->
           callback(res)
       })
   })
@@ -46,13 +46,13 @@ $(document).on 'ready page:load', ->
       $.ajax({
         url: '/api/collections',
         dataType: 'json',
-        data: { 
+        data: {
           q: encodeURIComponent(query)
         },
         type: 'GET',
-        error: -> 
+        error: ->
           callback()
-        success: (res) -> 
+        success: (res) ->
           callback(res)
       })
     create: false
@@ -89,6 +89,15 @@ $(document).on 'ready page:load', ->
     valueField: 'id',
     labelField: 'long_name_with_code',
     searchField: 'long_name_with_code',
+    sortField: [
+      {
+        field: 'long_name_with_code',
+        direction: 'asc'
+      },
+      {
+        field: '$score'
+      }
+    ],
     preload: true,
     render: {
       option: (item, escape) ->
@@ -125,26 +134,26 @@ $(document).on 'ready page:load', ->
       $.ajax({
         url: '/api/use_agreements',
         dataType: 'json',
-        data: { 
+        data: {
           q: encodeURIComponent(query)
         },
         type: 'GET',
-        error: -> 
+        error: ->
           callback()
-        success: (res) -> 
+        success: (res) ->
           callback(res)
       })
     create: false
   })
-    
+
 $(document).on 'click', '[data-behavior="clear-field"]', (e) ->
   e.preventDefault();
-  
+
   el = $(this).data('target')
 
   if $(el).val() != ''
     $(el).val('');
-    
+
     if $(this).data('autosubmit')
       $(el).parents('form').submit();
 
@@ -154,4 +163,3 @@ $(document).on 'entry-refresh', ->
     $.get( document.location ).done (data) ->
       layers = $(data).find(target)
       $(target).replaceWith(layers)
-      
