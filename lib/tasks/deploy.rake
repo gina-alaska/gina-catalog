@@ -2,7 +2,7 @@ require 'version'
 
 namespace :deploy do
   desc "Deploy current version with capistrano"
-  task :staging => [:not_dirty] do
+  task :staging => :not_dirty do
     sh "cap staging deploy"
   end
 
