@@ -15,13 +15,7 @@ end
 
 gina_cookbook 'gina-glynx-roles'
 gina_cookbook 'gina-rails-application'
-# cookbook 'gina-rails-application', path: '/Users/wfisher/chef/tekno/cookbooks/rails_application'
-gina_cookbook 'gina-role'
-
+# cookbook 'gina-rails-application', path: '/Users/wfisher/chef/gina12-chef/cookbooks/gina-rails-application'
 #dependencies needed from the gina-role because they haven't been published
-cookbook 'rcs-base', git: 'git@github.alaska.edu:UAF-RCS-Cookbooks/rcs-base.git'
-cookbook 'yum-gina', git: 'git@github.com:gina-alaska/yum-gina-cookbook.git'
-cookbook 'gina-iptables', git: 'git@github.alaska.edu:gina-cookbooks/gina-iptables.git'
-cookbook 'update-ca-certs', git: 'git@github.alaska.edu:gina-cookbooks/update-ca-certificates.git'
-cookbook 'gina-users', git:'git@github.alaska.edu:gina-cookbooks/gina-users.git'
-cookbook 'yum'
+cookbook 'gina-gluster', git: 'git@github.com:gina-alaska/gina-gluster-cookbook.git'
+cookbook 'postgresql', git: 'git@github.com:teknofire/postgresql', branch: 'fix_chef_sugar_compat'

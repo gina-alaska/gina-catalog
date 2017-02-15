@@ -18,32 +18,32 @@ node.override['resolver']['nameservers'] = '8.8.8.8'
 include_recipe 'gina-glynx-roles::web_server'
 
 execute 'bundle install' do
-  cwd ::File.join(node['app']['install_path'], 'current')
+  cwd gra_release_path
   user node['app']['user']
   group node['app']['group']
   command "bundle install"
   environment({"BUNDLE_BUILD__PG" => "--with-pg_config=/usr/pgsql-#{node['postgresql']['version']}/bin/pg_config"})
   notifies :usr1, 'runit_service[puma]', :delayed
 end
-
+env_file = gra_env_file(node['deploy']['environment'])
 execute 'copy_environment' do
-  cwd node['app']['install_path']
+  cwd gra_release_path
   user node['app']['user']
   group node['app']['group']
-  command "cp shared/.env.production current/.env"
+  command "cp #{env_file} .env"
   notifies :usr1, 'runit_service[puma]', :delayed
-  not_if 'diff shared/.env.production current/.env'
+  not_if "diff #{env_file} .env"
 end
 
 execute 'setup_development_env' do
-  cwd ::File.join(node['app']['install_path'], 'current')
+  cwd gra_release_path
   user node['app']['user']
   group node['app']['group']
   command "bundle exec rake db:migrate"
 end
 
 execute 'setup_test_env' do
-  cwd ::File.join(node['app']['install_path'], 'current')
+  cwd gra_release_path
   user node['app']['user']
   group node['app']['group']
   command "bundle exec rake db:migrate RAILS_ENV=test"

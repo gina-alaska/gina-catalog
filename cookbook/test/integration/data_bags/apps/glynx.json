@@ -13,22 +13,12 @@
     "ELASTICSEARCH_HOST": "192.168.222.225"
   },
   "database": {
-    "development": {
-      "username": "glynx",
-      "password": "wombats",
-      "name": "glynx_development",
-      "host": "192.168.222.225",
-      "port": 5432,
-      "pool": 5
-    },
-    "test": {
-      "username": "glynx",
-      "password": "wombats",
-      "name": "glynx_test",
-      "host": "192.168.222.225",
-      "port": 5432,
-      "pool": 5
-    }
+    "username": "glynx",
+    "password": "wombats",
+    "name": "glynx_development",
+    "host": "192.168.222.225",
+    "port": 5432,
+    "pool": 5
   },
   "deploy_key": ""
 }

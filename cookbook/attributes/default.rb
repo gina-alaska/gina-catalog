@@ -7,7 +7,8 @@ default['deploy']['service_static_assets'] = false
 override['app']['user'] = 'vagrant'
 override['app']['group'] = 'vagrant'
 
-default['app']['data_bag'] = 'glynx_development'
+default['glynx']['environment_aware'] = false
+
 default['postgresql']['password']['postgres'] = "wombats"
 
 default['postgresql']['pg_hba'] << {
