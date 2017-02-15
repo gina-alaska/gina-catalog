@@ -1,4 +1,4 @@
-= f.collection_select :use_agreement_id, use_agreements, :id, :title, { label: 'Use Agreement', include_blank: '----'}, { data: { behavior: 'selectize-use_agreements' }, multiple: false }
+= f.collection_select :use_agreement_id, use_agreements, :id, :title, { label: 'Use Agreement', include_blank: '----'}, { data: { behavior: 'selectize', label: 'title', url: '/api/use_agreements' }, multiple: false }
 = f.form_group do
   = f.check_box :request_contact_info
 = f.form_group do
