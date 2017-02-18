@@ -33,3 +33,5 @@ config/database.yml
 .env
 
 .kitchen/logs/kitchen.log
+
+\.DS_Store
