@@ -19,6 +19,7 @@ class Manager::DashboardsController < ManagerController
   def downloads
     @q = DownloadLog.ransack(params[:q])
     @q.sorts = 'created_at DESC' if @q.sorts.empty?
+
     @downloads = @q.result(distinct: true).page(params[:page]).per(100)
 
     respond_to do |format|
