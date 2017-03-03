@@ -1,9 +1,4 @@
-.row
-  .col-lg-7
-    = render page
-  .col-lg-5
-    = render 'image_attachments', page: page
-
+= render page
 = render 'preview', page: page
 
 - content_for :sidebar do
