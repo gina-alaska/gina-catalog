@@ -15,6 +15,7 @@
   - selected = Array.wrap(@search_params[field])
   .facet-list.panel-body.expand{ id: "#{field}-search".dasherize, style: 'padding-top: 5px; padding-bottom: 0px; '}
     - facets.each do |facet|
+      - next if facet['hidden']
       %span.facet-item{ data: { alpha: facet['display_name'], numeric: facet['count'] } }
         %span.pull-right.badge.badge-default
           = facet['count']

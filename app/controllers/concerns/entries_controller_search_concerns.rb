@@ -31,7 +31,15 @@ module EntriesControllerSearchConcerns
     return [] if elastic_facets.nil?
 
     facets = elastic_facets['terms'].each_with_object([]) do |f, memo|
-      f['display_name'] = model.nil? ? f['term'] : model.where(term_field => f['term']).first.try(display_field)
+      if !model.nil?
+        facet_record = model.where(term_field => f['term']).first
+        f['display_name'] = facet_record.try(display_field)
+        f['hidden'] = facet_record.try(:hidden?) if facet_record.respond_to?(:hidden)
+      else
+        f['display_name'] = f['term']
+        f['hidden'] = false
+      end
+
       memo << f
     end
 
