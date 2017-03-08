@@ -10,3 +10,7 @@ describe service('elasticsearch') do
   it { should be_running }
   it { should be_enabled }
 end
+
+# describe port(9200) do
+#   it { should be_listening }
+# end

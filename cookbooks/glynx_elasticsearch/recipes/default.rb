@@ -31,8 +31,23 @@ node.default['java']['jdk_version'] = '8'
 node.default['elasticsearch']['cluster']['name'] = "elasticsearch_glynx_#{node.chef_environment}"
 
 include_recipe 'java'
-include_recipe 'elasticsearch::default'
 
-service 'elasticsearch' do
-  action :start
+elasticsearch_user 'elasticsearch'
+
+elasticsearch_install 'elasticsearch' do
+  version '5.2.2'
+end
+
+elasticsearch_configure 'elasticsearch' do
+  allocated_memory '512m'
+  configuration ({
+    'cluster.name' => 'glynx_cluster',
+    'network.host' => '_site_',
+    'node.name' => '${HOSTNAME}',
+
+  })
+end
+
+elasticsearch_service 'elasticsearch' do
+  action [:enable, :start]
 end
