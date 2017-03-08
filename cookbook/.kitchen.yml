@@ -2,11 +2,11 @@
 driver:
   name: vagrant
   synced_folders:
-    - ["../", '/www/glynx/current']
+    - ["../", '/var/www/glynx/current']
   network:
     - ["private_network", {ip: "192.168.222.225"}]
   customize:
-    memory: 8192
+    memory: 2048
     cpus: 2
     natdnsproxy1: "off"
     natdnshostresolver1: "off"
@@ -14,17 +14,18 @@ provisioner:
   name: chef_zero
 
 platforms:
-  - name: centos-6.8
+  - name: centos-7.2
 
 suites:
   - name: default
     run_list:
       - recipe[glynx-development::default]
     attributes:
-      deploy:
-        action: nothing
-        precompile_assets: false
-      app:
+      glynx:
+        database_host: 192.168.222.225
+        env:
+          ELASTICSEARCH_HOST: 192.168.222.225
+          SECRET_KEY_BASE: 8c203c6952f79adab4e25e3e59558f0f9914f0aae13a605c3f4c522e2f78ab31ccf601449eb367bca098383320618b9f77abc46fcf9d80c0603a2a98127ef878
         user: vagrant
         group: vagrant
       postgresql:
