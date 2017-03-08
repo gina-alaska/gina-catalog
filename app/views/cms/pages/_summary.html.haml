@@ -2,8 +2,6 @@
 = render 'preview', page: page
 
 - content_for :sidebar do
-  = render 'page_list'
-
   .list-group
     = link_to edit_cms_page_path(page), class: 'list-group-item list-group-item-info' do
       %i.fa.fa-edit.fa-fw
@@ -25,3 +23,5 @@
     = link_to reorder_cms_pages_path, class: 'list-group-item' do
       %i.fa.fa-fw.fa-sort
       Reorder pages
+
+  = render 'page_list'
