@@ -10,6 +10,9 @@
   = link_to new_cms_page_path(parent: @cms_page), class: 'list-group-item list-group-item-success' do
     %i.fa.fa-plus.fa-fw
     New page
+  = help_link(['cms', 'page_edit'], class: 'list-group-item') do
+    %i.fa.fa-fw.fa-question-circle
+    Help
   = link_to cms_page_path(@cms_page), class: 'list-group-item' do
     %i.fa.fa-arrow-left.fa-fw
     Back to pages

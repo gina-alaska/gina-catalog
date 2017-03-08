@@ -1,0 +1,9 @@
+#help-modal.modal.fade
+  .modal-dialog.modal-lg
+    .modal-content
+      .modal-header
+        %button.close{ type: "button", data: { dismiss: "modal" } }
+          &times;
+        %h4.modal-title Glynx Help
+      .modal-body{ style: 'padding: 8px 0px;' }
+        = render(section, section: section, subsection: subsection)

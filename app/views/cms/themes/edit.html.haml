@@ -7,6 +7,9 @@
   = link_to new_cms_theme_path, class: 'list-group-item list-group-item-success' do
     %i.fa.fa-plus.fa-fw
     New theme
+  = help_link(['cms', 'css'], class: 'list-group-item') do
+    %i.fa.fa-fw.fa-question-circle
+    Help
   = link_to cms_themes_path, class: 'list-group-item' do
     %i.fa.fa-arrow-left.fa-fw
     Back to themes list

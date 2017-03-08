@@ -1,0 +1,25 @@
+%h4 Applying css to <code>&lt;body&gt;</code> tag
+%p
+  To change the css for the <code>&lt;body&gt;</code> tag you will need to use the following css selector
+  %code &.page { }
+
+%p
+  Example:
+  %pre.pre-scrollable
+    :preserve
+      // will be applied to the body html tag
+      &.page {
+        background-color: #dfdfdf;
+      }
+      
+%p
+  Editor Menu:
+  %br/
+
+  .row
+    .col-sm-4
+      .btn-group.btn-group-xs
+        %i.fa.fa-undo.btn.btn-default.btn-small{ title: 'Undo' }
+        %i.fa.fa-repeat.btn.btn-default.btn-small{ title: 'Redo' }
+    .col-sm-8
+      Undo the last change and Redo the last undo.

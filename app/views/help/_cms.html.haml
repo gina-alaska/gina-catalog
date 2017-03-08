@@ -1,0 +1,40 @@
+%ul#help-tabs.nav.nav-tabs
+  - sections = %w{ pages page_edit layouts layout_edit snippets snippet_edit themes attachments ace css }
+  - sections.each do |item|
+    %li{class: check_active(item, sections.first)}
+      = link_to item.humanize, "##{item}_help", data: { toggle: 'tab' }
+
+.tab-content{ style: 'padding: 8px;' }
+  #pages_help.tab-pane.active
+    = render('help/cms/cms_pages')
+
+  #page_edit_help.tab-pane
+    = render('help/cms/cms_page_edit')
+
+  #layouts_help.tab-pane
+    = render('help/cms/cms_layouts')
+    
+  #layout_edit_help.tab-pane
+    = render('help/cms/cms_layout_edit')
+
+  #snippets_help.tab-pane
+    = render('help/cms/cms_snippets')
+    
+  #snippet_edit_help.tab-pane
+    = render('help/cms/cms_snippet_edit')
+
+  #themes_help.tab-pane
+    = render('help/cms/cms_themes')
+    
+  #attachments_help.tab-pane
+    = render('help/cms/cms_attachments')
+
+  #ace_help.tab-pane
+    = render('help/cms/cms_ace')
+
+  #css_help.tab-pane
+    = render('help/cms/cms_ace_css')
+
+- if subsection
+  :javascript
+    $('#help-tabs a[href="##{subsection}_help"]').tab('show')

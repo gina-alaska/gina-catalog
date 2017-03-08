@@ -5,7 +5,7 @@
     %thead
       %tr
         %th Name
-        %th Actions
+        %th.text-right Actions
     %tbody
       - @cms_snippets.each do |cms_snippet|
         %tr
@@ -20,3 +20,6 @@
   = link_to new_cms_snippet_path, class: 'list-group-item list-group-item-success' do
     %i.fa.fa-plus.fa-fw
     New snippet
+  = help_link(['cms', 'snippets'], class: 'list-group-item') do
+    %i.fa.fa-fw.fa-question-circle
+    Help

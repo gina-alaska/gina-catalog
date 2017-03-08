@@ -3,6 +3,8 @@
     %i.fa.fa-picture-o
   %button.btn.btn-default{ type: 'button', title: 'Link', data: { action: 'chooser', toggle: 'modal', target: '#link-chooser-modal', url: cms_attachments_path(sort: 'name', format: :json) } }
     %i.fa.fa-link
+  = help_link(['cms', 'ace'], class: 'btn btn-default') do
+    %i.fa.fa-fw.fa-question-circle
 
 .btn-group
 

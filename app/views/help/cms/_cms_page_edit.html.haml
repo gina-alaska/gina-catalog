@@ -1,0 +1,25 @@
+%h4 Page slug
+%p
+  The page slugs from the parent pages are combined with the current page slug
+  to create a unique url for viewing a page.
+
+%p
+  The following slugs are reserved for system pages and cannot be modified
+  %strong #{::Cms::Page::SYSTEM_SLUGS.join(', ')}
+%p
+  %strong Example:
+  A page w/ the slug <code>test-project</code>
+  can be viewed by navigating to
+  %code #{page_url('test-project')}
+
+%h4 Layouts
+
+%p
+  Controls the content that gets wrapped around the current page.
+%p
+  By default a page will inherit either the layout of its parent page or the default layout
+  if there is no parent page.
+
+%h4 Draft
+
+%p Pages that are marked as drafts will only be visible to cms managers.
