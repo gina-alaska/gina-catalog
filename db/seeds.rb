@@ -51,6 +51,7 @@ default_portal = Portal.where(title: 'gLynx Portal', acronym: 'gLynx').first_or_
   portal.contact_email = 'support@gina.alaska.edu'
 
   portal.urls.build(url: 'catalog.192.168.222.225.xip.io', active: true)
+  portal.urls.build(url: 'localhost', active: true)
   portal.urls.build(url: 'catalog.127.0.0.1.xip.io', active: true)
   portal.urls.build(url: 'portal.gina.alaska.edu', active: true)
 end
