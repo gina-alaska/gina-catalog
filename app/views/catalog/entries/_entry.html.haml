@@ -31,7 +31,7 @@
     %li
       = link_to '#activity-logs', data: { toggle: 'tab' } do
         %b Activity Logs
-    - if can? :manage, entry
+    - if can? :update, entry
       %li
         = link_to '#download-logs', data: { toggle: 'tab' } do
           %b Download Logs
@@ -47,6 +47,6 @@
       = render 'entry_links', entry: entry
     #activity-logs.tab-pane
       = render 'activity_logs', activities: activities
-    - if can? :manage, @entry
+    - if can? :update, entry
       #download-logs.tab-pane
-        = render 'shared/download_logs', entry: entry
+        = render 'shared/download_logs', entry: entry, downloads: @downloads
