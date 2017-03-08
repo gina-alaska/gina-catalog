@@ -1,0 +1,9 @@
+{
+  "_default": {
+    "database": {
+      "name": "glynx_development",
+      "username": "glynx",
+      "password": "changeme"
+    }
+  }
+}

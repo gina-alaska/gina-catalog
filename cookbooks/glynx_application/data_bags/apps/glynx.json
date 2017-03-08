@@ -1,0 +1,10 @@
+{
+  "_default": {
+    "database": {
+      "adapter": "postgis",
+      "name": "glynx_development",
+      "username": "glynx",
+      "password": "changeme"
+    }
+  }
+}
