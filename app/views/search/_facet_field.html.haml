@@ -15,10 +15,11 @@
   - selected = Array.wrap(@search_params[field])
   .facet-list.panel-body.expand{ id: "#{field}-search".dasherize, style: 'padding-top: 5px; padding-bottom: 0px; '}
     - facets.each do |facet|
-      %span.facet-item{ data: { alpha: facet['display_name'], numeric: facet['count'] } }
+      - next if facet['hidden']
+      %span.facet-item{ data: { alpha: facet['display_name'], numeric: facet['doc_count'] } }
         %span.pull-right.badge.badge-default
-          = facet['count']
+          = facet['doc_count']
         %div{ style: 'margin-right: 30px; white-space: nowrap; overflow:hidden; text-overflow: ellipsis;' }
           %label
-            = check_box_tag "search[#{field}][]", facet['term'], selected.try(:include?, facet['term'].to_s)
+            = check_box_tag "search[#{field}][]", facet['key'], selected.try(:include?, facet['key'].to_s)
             = facet['display_name']

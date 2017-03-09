@@ -1,47 +1,33 @@
-%table.table.table-bordered.table-striped.table-condensed
+%table.table.table-bordered.table-striped.table-condensed{ id: 'download-table' }
   %tbody
-    - downloads.each do |download|
-      /- contact = download.contact_info
+    - if downloads.blank?
       %tr
         %td
-          %dl.dl-horizontal.download-logs
-            .row
-              .col-sm-6
-                .item
-                  %dt Date: 
-                  %dd= download.try(:created_at).try(:strftime, "%F %T") 
-                .item
-                  %dt User: 
-                  %dd= download.user.nil? ? 'Guest' : download.user.name
-              .col-sm-6
-                .item
-                  %dt File:
-                  %dd= download.file_name
-                - if download.portal.present?
+          No downloads for this record.
+    - else
+      %tr
+        %td
+          = paginate downloads, remote: true
+      - downloads.each do |download|
+        %tr
+          %td
+            %dl.dl-horizontal.download-logs
+              .row
+                .col-sm-6
                   .item
-                    %dt Portal: 
-                    %dd= download.portal.acronym
-            /- unless contact.nil?
-            /  .row-fluid
-            /    .span6
-            /      - unless contact.name.nil?
-            /        %dt Name:
-            /        %dd
-            /          = contact.name
-            /          &nbsp;
-            /      %dt IP:
-            /      %dd
-            /        = contact.user_ip
-            /        &nbsp;
-            /    .span6
-            /      - unless contact.email.nil?
-            /        %dt Email:
-            /        %dd
-            /          = contact.email
-            /          &nbsp;
-            /  - unless contact.usage_description.nil?
-            /    .item
-            /      %dt Description: 
-            /      %dd
-            /        = contact.usage_description
-            /        &nbsp;
+                    %dt Date: 
+                    %dd= download.try(:created_at).try(:strftime, "%F %T") 
+                  .item
+                    %dt User: 
+                    %dd= download.user.nil? ? 'Guest' : download.user.name
+                .col-sm-6
+                  .item
+                    %dt File:
+                    %dd= download.file_name
+                  - if download.portal.present?
+                    .item
+                      %dt Portal: 
+                      %dd= download.portal.acronym
+      %tr
+        %td
+          = paginate downloads, remote: true

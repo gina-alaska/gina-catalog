@@ -1,24 +1,20 @@
 {
   "id": "glynx",
-  "repository": "git@github.com:gina-alaska/gina-catalog.git",
-  "revision": "master",
-  "environment": "development",
-  "env": {
-    "SECRET_KEY_BASE": "4935ca9ce3cce8c93ce383a7d1ed2638072c8c3569884a15762d840500d38ed393fe0049168458267de1d70baa5933a5d0f51b319c7e4264a828b6df83845120",
-    "GOOGLE_CLIENT_ID": "",
-    "GOOGLE_CLIENT_SECRET": "",
-    "RANSACK_FORM_BUILDER": "::SimpleForm::FormBuilder",
-    "AWS_CLIENT_ID": "",
-    "AWS_CLIENT_SECRET": "",
-    "ELASTICSEARCH_HOST": "192.168.222.225"
-  },
-  "database": {
-    "username": "glynx",
-    "password": "wombats",
-    "name": "glynx_development",
-    "host": "192.168.222.225",
-    "port": 5432,
-    "pool": 5
-  },
-  "deploy_key": ""
+  "_default": {
+    "env": {
+      "SECRET_KEY_BASE": "4935ca9ce3cce8c93ce383a7d1ed2638072c8c3569884a15762d840500d38ed393fe0049168458267de1d70baa5933a5d0f51b319c7e4264a828b6df83845120",
+      "GOOGLE_CLIENT_ID": "",
+      "GOOGLE_CLIENT_SECRET": "",
+      "RANSACK_FORM_BUILDER": "::SimpleForm::FormBuilder",
+      "AWS_CLIENT_ID": "",
+      "AWS_CLIENT_SECRET": "",
+      "ELASTICSEARCH_HOST": "192.168.222.225"
+    },
+    "database": {
+      "adapter": "postgis",
+      "username": "glynx",
+      "password": "wombats",
+      "name": "glynx_development"
+    }
+  }
 }
