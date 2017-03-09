@@ -12,12 +12,13 @@
       .modal-header
         %h4.modal-title Select an attachment to link
       .modal-body
-        = render '/shared/ace/chooser_sortby', target: '#link-chooser-modal', images: false
-        .loading
-          %i.fa.fa-spin.fa-refresh
-          Loading documents....
-        .content
-        = render '/shared/ace/chooser_template', action: 'link'
+        .row
+          = render '/shared/ace/chooser_sortby', target: '#link-chooser-modal', images: false
+          .loading
+            %i.fa.fa-spin.fa-refresh
+            Loading documents....
+          .content
+          = render '/shared/ace/chooser_template', action: 'link'
       .modal-footer
         %button.btn.btn-primary{ type: 'button', data: { dismiss: 'modal' } }
           %i.fa.fa-close
@@ -29,12 +30,13 @@
       .modal-header
         %h4.modal-title Select an image to add
       .modal-body
-        = render '/shared/ace/chooser_sortby', target: '#image-chooser-modal', images: true
-        .loading
-          %i.fa.fa-spin.fa-refresh
-          Loading images....
-        .content
-        = render '/shared/ace/chooser_template', action: 'image'
+        .row
+          = render '/shared/ace/chooser_sortby', target: '#image-chooser-modal', images: true
+          .loading
+            %i.fa.fa-spin.fa-refresh
+            Loading images....
+          .content
+          = render '/shared/ace/chooser_template', action: 'image'
       .modal-footer
         %button.btn.btn-primary{ type: 'button', data: { dismiss: 'modal' } }
           %i.fa.fa-close
