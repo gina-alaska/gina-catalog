@@ -2,20 +2,7 @@ source 'https://supermarket.chef.io'
 
 metadata
 
-def gina_cookbook(name, version = '>= 0.0.0', options = {})
-  cookbook(name, version, {
-    git: "git@github.alaska.edu:gina-cookbooks/#{name}.git"
-   }.merge(options))
-end
-def rcs_cookbook(name, version = '>= 0.0.0', options = {})
-  cookbook(name, version, {
-    git: "git@github.alaska.edu:UAF-RCS-Cookbooks/#{name}.git"
-   }.merge(options))
-end
-
-gina_cookbook 'gina-glynx-roles'
-gina_cookbook 'gina-rails-application'
-# cookbook 'gina-rails-application', path: '/Users/wfisher/chef/gina12-chef/cookbooks/gina-rails-application'
-#dependencies needed from the gina-role because they haven't been published
+cookbook 'glynx_database', git: 'git@github.alaska.edu:gina-cookbooks/gina-glynx-env.git', rel: 'cookbooks/glynx_database'
+cookbook 'glynx_application', git: 'git@github.alaska.edu:gina-cookbooks/gina-glynx-env.git', rel: 'cookbooks/glynx_application'
+cookbook 'glynx_elasticsearch', git: 'git@github.alaska.edu:gina-cookbooks/gina-glynx-env.git', rel: 'cookbooks/glynx_elasticsearch'
 cookbook 'gina-gluster', git: 'git@github.com:gina-alaska/gina-gluster-cookbook.git'
-cookbook 'postgresql', git: 'git@github.com:teknofire/postgresql', branch: 'fix_chef_sugar_compat'

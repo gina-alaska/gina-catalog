@@ -13,7 +13,7 @@ class Manager::DashboardsController < ManagerController
 
   def show
     @entry = Entry.find(params[:id])
-    @downloads = @entry.download_logs.order('created_at DESC').limit(50)
+    @downloads = @entry.download_logs.order('created_at DESC').limit(50).page(params[:page]).per(100)
   end
 
   def downloads

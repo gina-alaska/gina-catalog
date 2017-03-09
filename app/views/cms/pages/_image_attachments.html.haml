@@ -1,11 +1,15 @@
 .panel.panel-default
   .panel-heading
-    %h1.panel-title Image Attachments
+    %h1.panel-title
+      Image Attachments
+      = link_to '#image-attachment-modal', class: 'btn btn-default btn-info', data: { toggle: 'modal' }, style: 'color: white; margin-left: 12px;' do
+        %i.fa.fa-fw.fa-image
+        Attach image
   %table.table.table-striped
     %thead
       %tr
         %th Preview
-        %th Info
+        %th{ width: 150 } Info
         %th.text-right Actions
     %tbody
       - page.cms_page_attachments.each do |pa|
@@ -25,12 +29,12 @@
               %strong Filename:
               = pa.attachment.file_filename
           %td.text-right
-            .btn-group.btn-group-sm
-              = link_to up_cms_page_attachment_path(page, pa.attachment), method: :patch, class: "btn btn-default #{pa.first? ? 'disabled' : ''}" do
+            .btn-group.btn-group-xs
+              = link_to up_cms_page_attachment_path(page, pa.attachment), method: :patch, class: "btn btn-default btn-xs #{pa.first? ? 'disabled' : ''}" do
                 %i.fa.fa-angle-up
-              = link_to down_cms_page_attachment_path(page, pa.attachment), method: :patch, class: "btn btn-default #{pa.last? ? 'disabled' : ''}" do
+              = link_to down_cms_page_attachment_path(page, pa.attachment), method: :patch, class: "btn btn-default btn-xs #{pa.last? ? 'disabled' : ''}" do
                 %i.fa.fa-angle-down
-              = link_to remove_cms_page_attachment_path(page, pa.attachment), method: :patch, class: 'btn btn-danger' do
+              = link_to remove_cms_page_attachment_path(page, pa.attachment), method: :patch, class: 'btn btn-danger btn-xs' do
                 %i.fa.fa-times
 
 
