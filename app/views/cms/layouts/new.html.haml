@@ -1,7 +1,9 @@
 - content_for :sidebar_menu do
-  = link_to cms_layouts_path, class: 'list-group-item' do
-    %i.fa.fa-arrow-left
-    Back to layout list
+  .panel.panel-default
+    .list-group
+      = link_to cms_layouts_path, class: 'list-group-item' do
+        %i.fa.fa-arrow-left
+        Back to layout list
 
 .panel.panel-default
   .panel-heading

@@ -11,6 +11,8 @@
         = render 'reorder_page', page: page
 
 - content_for :sidebar_menu do
-  = link_to cms_pages_path, class: 'list-group-item' do
-    %i.fa.fa-arrow-left.fa-fw
-    Back to pages
+  .panel.panel-default
+    .list-group
+      = link_to cms_pages_path, class: 'list-group-item' do
+        %i.fa.fa-arrow-left.fa-fw
+        Back to pages

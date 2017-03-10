@@ -28,18 +28,20 @@
       = attachment_image_tag(@cms_attachment, :file, :limit, 400, 400)
 
 - content_for :sidebar_menu do
-  = link_to attachment_url(@cms_attachment, :file), class: 'list-group-item' do
-    %i.fa.fa-fw.fa-link
-    Permalink
-  = link_to [:edit, @cms_attachment], class: 'list-group-item list-group-item-info' do
-    %i.fa.fa-fw.fa-edit
-    Edit attachment
-  = link_to new_cms_attachment_path, class: 'list-group-item list-group-item-success' do
-    %i.fa.fa-plus.fa-fw
-    New attachment
-  = link_to @cms_attachment, method: :delete, data: { confirm: 'Are you sure?' }, class: 'list-group-item list-group-item-danger' do
-    %i.fa.fa-fw.fa-trash
-    Delete attachment
-  = link_to cms_attachments_path, class: 'list-group-item' do
-    %i.fa.fa-fw.fa-arrow-left
-    Back to attachment list
+  .panel.panel-default
+    .list-group
+      = link_to attachment_url(@cms_attachment, :file), class: 'list-group-item' do
+        %i.fa.fa-fw.fa-link
+        Permalink
+      = link_to [:edit, @cms_attachment], class: 'list-group-item list-group-item-info' do
+        %i.fa.fa-fw.fa-edit
+        Edit attachment
+      = link_to new_cms_attachment_path, class: 'list-group-item list-group-item-success' do
+        %i.fa.fa-plus.fa-fw
+        New attachment
+      = link_to @cms_attachment, method: :delete, data: { confirm: 'Are you sure?' }, class: 'list-group-item list-group-item-danger' do
+        %i.fa.fa-fw.fa-trash
+        Delete attachment
+      = link_to cms_attachments_path, class: 'list-group-item' do
+        %i.fa.fa-fw.fa-arrow-left
+        Back to attachment list

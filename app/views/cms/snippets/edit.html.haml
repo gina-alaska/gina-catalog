@@ -4,12 +4,14 @@
   .panel-body
     = render 'form'
 - content_for :sidebar_menu do
-  = link_to @cms_snippet, class: 'list-group-item' do
-    %i.fa.fa-eye.fa-fw
-    Preview snippet
-  = link_to new_cms_snippet_path, class: 'list-group-item list-group-item-success' do
-    %i.fa.fa-plus.fa-fw
-    New snippet
-  = link_to cms_snippets_path, class: 'list-group-item' do
-    %i.fa.fa-arrow-left.fa-fw
-    Back to snippet list
+  .panel.panel-default
+    .list-group
+      = link_to @cms_snippet, class: 'list-group-item' do
+        %i.fa.fa-eye.fa-fw
+        Preview snippet
+      = link_to new_cms_snippet_path, class: 'list-group-item list-group-item-success' do
+        %i.fa.fa-plus.fa-fw
+        New snippet
+      = link_to cms_snippets_path, class: 'list-group-item' do
+        %i.fa.fa-arrow-left.fa-fw
+        Back to snippet list
