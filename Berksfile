@@ -9,7 +9,3 @@ cookbook 'gina-server'
 local_cookbook 'glynx_database'
 local_cookbook 'glynx_application'
 local_cookbook 'glynx_elasticsearch'
-
-# TODO: migrate other ogc cookbooks
-# local_cookbook 'gina_ws_wms'
-# local_cookbook 'gina_ws_tiles'
