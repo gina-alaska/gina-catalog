@@ -31,7 +31,8 @@ config/database.yml
 .rvmrc
 .powenv
 .env
-
+.env.development
+.ruby-version
 .kitchen/logs/kitchen.log
 
 \.DS_Store
