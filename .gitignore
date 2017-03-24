@@ -34,5 +34,5 @@ config/database.yml
 .env.development
 .ruby-version
 .kitchen/logs/kitchen.log
-
+/results
 \.DS_Store
