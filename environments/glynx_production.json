@@ -1,5 +1,5 @@
 {
-  "name": "glynx_test",
+  "name": "glynx_production",
   "description": "",
   "cookbook_versions": {
     "apt": "= 6.0.1",
@@ -45,6 +45,7 @@
   "json_class": "Chef::Environment",
   "chef_type": "environment",
   "default_attributes": {
+    "glynx": { "database_host": "10.19.16.66" }
   },
   "override_attributes": {
   }

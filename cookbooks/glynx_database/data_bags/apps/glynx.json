@@ -1,7 +1,7 @@
 {
   "_default": {
     "database": {
-      "name": "glynx_development",
+      "name": "glynx_production",
       "username": "glynx",
       "password": "changeme"
     }

@@ -1,6 +1,6 @@
 #
 # Cookbook:: glynx_application
-# Recipe:: datamounts
+# Spec:: default
 #
 # The MIT License (MIT)
 #
@@ -24,20 +24,18 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-include_recipe 'glynx_application::_user'
 
-package %w(glusterfs-fuse)
+require 'spec_helper'
 
-directory '/mnt/glynx_storage' do
-  recursive true
-  user node['glynx']['user']
-  group node['glynx']['group']
-end
+describe 'glynx_application::habitat' do
+  context 'When all attributes are default, on an unspecified platform' do
+    let(:chef_run) do
+      runner = ChefSpec::ServerRunner.new
+      runner.converge(described_recipe)
+    end
 
-mount '/mnt/glynx_storage' do
-  device node['glynx']['datamount']['device']
-  fstype node['glynx']['datamount']['fstype']
-  options node['glynx']['datamount']['options']
-  action [:mount, :enable]
-  only_if { node['glynx']['datamount']['device'] }
+    it 'converges successfully' do
+      expect { chef_run }.to_not raise_error
+    end
+  end
 end

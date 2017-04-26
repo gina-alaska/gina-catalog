@@ -8,12 +8,12 @@ provisioner:
   # For example:
   #   always_update_cookbooks: <%= !ENV['CI'] %>
   always_update_cookbooks: true
-
+  require_chef_omnibus: 12.19.36
 verifier:
   name: inspec
 
 platforms:
-  - name: centos-7.2
+  - name: centos-7.3
 
 suites:
   - name: default
@@ -31,6 +31,19 @@ suites:
         - test/smoke/datamount
     attributes:
       glynx:
+        datamount:
+          device: 'pod3.gina.alaska.edu:/gvolnssi_silo'
+          fstype: 'glusterfs'
+  - name: habitat
+    run_list:
+      - recipe[glynx_application::datamount]
+      - recipe[glynx_application::default]
+    verifier:
+      inspec_tests:
+        - test/smoke/default
+    attributes:
+      glynx:
+        deploy_method: habitat
         datamount:
           device: 'pod3.gina.alaska.edu:/gvolnssi_silo'
           fstype: 'glusterfs'

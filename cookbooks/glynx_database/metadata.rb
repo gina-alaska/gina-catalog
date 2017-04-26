@@ -22,3 +22,5 @@ depends 'postgresql', '>= 6.1.1'
 depends 'database'
 depends 'chef-vault'
 depends 'yum-epel'
+
+gem 'toml-rb'

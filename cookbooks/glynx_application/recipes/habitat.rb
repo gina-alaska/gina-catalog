@@ -1,6 +1,6 @@
 #
 # Cookbook:: glynx_application
-# Recipe:: datamounts
+# Recipe:: habitat
 #
 # The MIT License (MIT)
 #
@@ -24,20 +24,22 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-include_recipe 'glynx_application::_user'
+node.default['glynx']['package'] = 'uafgina-glynx-3.9.10-20170325011722-x86_64-linux.hart'
+node.default['glynx']['package_checksum'] = '6073908c35c292d388614397b147ef41f88cb6381fdb507d619a348eea4b2f79'
 
-package %w(glusterfs-fuse)
+config = chef_vault_item_for_environment('apps', 'glynx')
+dbconfig = config['database']
 
-directory '/mnt/glynx_storage' do
-  recursive true
-  user node['glynx']['user']
-  group node['glynx']['group']
-end
+user_toml = {
+  'database_adapter' => dbconfig['adapter'],
+  'database_host' => node['glynx']['database_host'],
+  'database_username' => dbconfig['username'],
+  'database_password' => dbconfig['password'],
+  'secret_key_base' => config['secret_key_base']
+}
 
-mount '/mnt/glynx_storage' do
-  device node['glynx']['datamount']['device']
-  fstype node['glynx']['datamount']['fstype']
-  options node['glynx']['datamount']['options']
-  action [:mount, :enable]
-  only_if { node['glynx']['datamount']['device'] }
+glynx_package 'uafgina/glynx' do
+  source_url "https://s3-us-west-2.amazonaws.com/gina-packages/#{node['glynx']['package']}"
+  source_checksum node['glynx']['package_checksum']
+  config user_toml
 end

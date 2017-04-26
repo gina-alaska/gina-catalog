@@ -31,13 +31,6 @@ include_recipe 'glynx_application::_user'
 
 package %w(git nfs-utils bind-utils ImageMagick geos patch libicu-devel curl-devel libxml2-devel libxslt-devel geos-devel proj-devel ImageMagick-devel)
 
-directory node['glynx']['install_path'] do
-  owner node['glynx']['user']
-  group node['glynx']['group']
-  recursive true
-end
-
-
 unless node['glynx']['env']['ELASTICSEARCH_HOST']
   es_results = search(:node, "chef_environment:#{node.chef_environment} AND tags:glynx-elasticsearch", filter_result: {'ip' => ['ipaddress']}).first
   node.default['glynx']['env']['ELASTICSEARCH_HOST'] = es_results.nil? ? 'localhost' : es_results['ip']
@@ -48,14 +41,25 @@ unless node['glynx']['database_host']
   node.default['glynx']['database_host'] = db_results.nil? ? 'localhost' : db_results['ip']
 end
 
-dbconfig = chef_vault_item_for_environment('apps', 'glynx')['database']
-database_url = "#{dbconfig['adapter']}://#{dbconfig['username']}:#{dbconfig['password']}@#{node['glynx']['database_host']}"
+case node['glynx']['deploy_method'].to_sym
+when :local
+  directory node['glynx']['install_path'] do
+    owner node['glynx']['user']
+    group node['glynx']['group']
+    recursive true
+  end
 
-glynx_config node['glynx']['dot_env_path'] do
-  owner node['glynx']['user']
-  group node['glynx']['group']
+  glynx_config node['glynx']['dot_env_path'] do
+    owner node['glynx']['user']
+    group node['glynx']['group']
 
-  variables lazy { node['glynx']['env'].to_hash.merge({ DATABASE_URL: database_url }) }
+    dbconfig = chef_vault_item_for_environment('apps', 'glynx')['database']
+    database_url = "#{dbconfig['adapter']}://#{dbconfig['username']}:#{dbconfig['password']}@#{node['glynx']['database_host']}"
+
+    # don't add database_url to the node attributes as it will save the password in plain text
+    variables lazy { node['glynx']['env'].to_hash.merge({ DATABASE_URL: database_url }) }
+  end
+  include_recipe 'glynx_application::puma'
+when :habitat
+  include_recipe 'glynx_application::habitat'
 end
-
-include_recipe 'glynx_application::puma'
