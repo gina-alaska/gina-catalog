@@ -4,9 +4,12 @@
 #
 # Copyright (c) 2015 The Authors, All Rights Reserved.
 
+# ruby_runtime '2.3'
+# ruby_gem 'bundler'
+
 include_recipe 'glynx_database::server'
 include_recipe 'glynx_elasticsearch::default'
-include_recipe 'glynx_application::default'
+# include_recipe 'glynx_application::default'
 
 # include_recipe 'chef-solo-search::default'
 # include_recipe 'glynx-development::fix_yum_mirrors'
@@ -28,25 +31,39 @@ execute 'copy_environment' do
   user node['app']['user']
   group node['app']['group']
   command lazy { "cp #{node['glynx']['dot_env_path']} .env" }
-  notifies :restart, 'service[puma]', :delayed
+  # notifies :restart, 'service[puma]', :delayed
   not_if "diff #{env_file} .env"
 end
 
-execute 'bundle install' do
-  cwd node['glynx']['release_path']
-  user node['app']['user']
-  group node['app']['group']
-  command "bundle install"
-  environment({"BUNDLE_BUILD__PG" => "--with-pg_config=/usr/pgsql-#{node['postgresql']['version']}/bin/pg_config"})
-  notifies :restart, 'service[puma]', :delayed
-end
+# ENV['BUNDLE_BUILD__PG'] = "--with-pg_config=/usr/pgsql-#{node['postgresql']['version']}/bin/pg_config"
+# parent_bundle_resource = bundle_install "#{node['glynx']['release_path']}" do
+#   user node['app']['user']
+#   deployment false
+#   binstubs false
+# end
+#
+# ruby_execute 'setup_development_env' do
+#   cwd node['glynx']['release_path']
+#   user node['app']['user']
+#   command "rake db:migrate"
+#   parent_bundle parent_bundle_resource
+# end
 
-execute 'setup_development_env' do
-  cwd node['glynx']['release_path']
-  user node['app']['user']
-  group node['app']['group']
-  command "bundle exec rake db:migrate"
-end
+# execute 'bundle install' do
+#   cwd node['glynx']['release_path']
+#   user node['app']['user']
+#   group node['app']['group']
+#   command "bundle install"
+#   environment({"BUNDLE_BUILD__PG" => "--with-pg_config=/usr/pgsql-#{node['postgresql']['version']}/bin/pg_config"})
+#   notifies :restart, 'service[puma]', :delayed
+# end
+
+# execute 'setup_development_env' do
+#   cwd node['glynx']['release_path']
+#   user node['app']['user']
+#   group node['app']['group']
+#   command "bundle exec rake db:migrate"
+# end
 
 postgresql_connection_info = {
   host: '127.0.0.1',
@@ -61,13 +78,13 @@ postgresql_database "glynx_test" do
   connection postgresql_connection_info
   action :create
 end
-
-execute 'setup_test_env' do
-  cwd node['glynx']['release_path']
-  user node['app']['user']
-  group node['app']['group']
-  command "bundle exec rake db:migrate RAILS_ENV=test"
-end
+#
+# execute 'setup_test_env' do
+#   cwd node['glynx']['release_path']
+#   user node['app']['user']
+#   group node['app']['group']
+#   command "bundle exec rake db:migrate RAILS_ENV=test"
+# end
 
 service 'chef-client' do
   action [:stop, :disable]
