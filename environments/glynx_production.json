@@ -15,9 +15,10 @@
     "firewall": "= 2.5.4",
     "gina-server": "= 1.5.4",
     "gina-users": "= 1.0.2",
-    "glynx_application": "= 0.1.0",
+    "glynx_application": "= 0.1.1",
     "glynx_database": "= 0.1.2",
     "glynx_elasticsearch": "= 0.2.0",
+    "habitat": "= 0.4.0",
     "homebrew": "= 3.0.0",
     "hostsfile": "= 2.4.5",
     "iptables": "= 4.0.0",
@@ -45,7 +46,9 @@
   "json_class": "Chef::Environment",
   "chef_type": "environment",
   "default_attributes": {
-    "glynx": { "database_host": "10.19.16.66" }
+    "glynx": {
+      "database_host": "10.19.16.66"
+    }
   },
   "override_attributes": {
   }
