@@ -23,6 +23,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
+require 'toml'
 
 resource_name 'glynx_package'
 
@@ -58,7 +59,6 @@ action :install do
     hab_package new_resource.name
   end
 
-  require 'toml'
   directory new_resource.service_path do
     owner 'hab'
     group 'hab'
