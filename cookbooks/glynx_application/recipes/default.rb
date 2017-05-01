@@ -31,18 +31,18 @@ include_recipe 'glynx_application::_user'
 
 package %w(git nfs-utils bind-utils ImageMagick geos patch libicu-devel curl-devel libxml2-devel libxslt-devel geos-devel proj-devel ImageMagick-devel)
 
-unless node['glynx']['env']['ELASTICSEARCH_HOST']
-  es_results = search(:node, "chef_environment:#{node.chef_environment} AND tags:glynx-elasticsearch", filter_result: {'ip' => ['ipaddress']}).first
-  node.default['glynx']['env']['ELASTICSEARCH_HOST'] = es_results.nil? ? 'localhost' : es_results['ip']
-end
-
-unless node['glynx']['database_host']
-  db_results = search(:node, "chef_environment:#{node.chef_environment} AND tags:glynx-database", filter_result: {'ip' => ['ipaddress']}).first
-  node.default['glynx']['database_host'] = db_results.nil? ? 'localhost' : db_results['ip']
-end
-
 case node['glynx']['deploy_method'].to_sym
 when :local
+  unless node['glynx']['env']['ELASTICSEARCH_HOST']
+    es_results = search(:node, "chef_environment:#{node.chef_environment} AND tags:glynx-elasticsearch", filter_result: {'ip' => ['ipaddress']}).first
+    node.default['glynx']['env']['ELASTICSEARCH_HOST'] = es_results.nil? ? 'localhost' : es_results['ip']
+  end
+
+  unless node['glynx']['database_host']
+    db_results = search(:node, "chef_environment:#{node.chef_environment} AND tags:glynx-database", filter_result: {'ip' => ['ipaddress']}).first
+    node.default['glynx']['database_host'] = db_results.nil? ? 'localhost' : db_results['ip']
+  end
+
   directory node['glynx']['install_path'] do
     owner node['glynx']['user']
     group node['glynx']['group']
@@ -59,7 +59,13 @@ when :local
     # don't add database_url to the node attributes as it will save the password in plain text
     variables lazy { node['glynx']['env'].to_hash.merge({ DATABASE_URL: database_url }) }
   end
-  include_recipe 'glynx_application::puma'
+  include_recipe 'glynx_application::_puma'
 when :habitat
-  include_recipe 'glynx_application::habitat'
+  include_recipe 'glynx_application::_habitat'
+end
+
+include_recipe 'gina_firewall::default'
+firewall_rule 'puma port' do
+  port 9292
+  command :allow
 end
