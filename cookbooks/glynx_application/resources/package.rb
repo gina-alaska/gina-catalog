@@ -74,7 +74,9 @@ action :install do
     notifies :restart, "hab_service[#{new_resource.name}]"
   end
 
+  hab_sup 'default'
+
   hab_service new_resource.name do
-    action [:enable, :start]
+    action [:load]
   end
 end

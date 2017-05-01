@@ -24,8 +24,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-node.default['glynx']['package'] = 'uafgina-glynx-3.9.10-20170325011722-x86_64-linux.hart'
-node.default['glynx']['package_checksum'] = '6073908c35c292d388614397b147ef41f88cb6381fdb507d619a348eea4b2f79'
+node.default['glynx']['package'] = 'uafgina-glynx-3.9.11-20170501213349-x86_64-linux.hart'
+node.default['glynx']['package_checksum'] = '4c23d9063f73c87e9d702db5b5e24b5e19e65aae365101c6ef9b4f9091be577b'
 
 config = chef_vault_item_for_environment('apps', 'glynx')
 dbconfig = config['database']
@@ -35,7 +35,8 @@ user_toml = {
   'database_host' => node['glynx']['database_host'],
   'database_username' => dbconfig['username'],
   'database_password' => dbconfig['password'],
-  'secret_key_base' => config['secret_key_base']
+  'secret_key_base' => config['secret_key_base'],
+  'glynx_storage_path' => node['glynx']['storage_path']
 }
 
 glynx_package 'uafgina/glynx' do

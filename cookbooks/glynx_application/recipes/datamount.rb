@@ -28,13 +28,13 @@ include_recipe 'glynx_application::_user'
 
 package %w(glusterfs-fuse)
 
-directory '/mnt/glynx_storage' do
+directory node['glynx']['storage_path'] do
   recursive true
   user node['glynx']['user']
   group node['glynx']['group']
 end
 
-mount '/mnt/glynx_storage' do
+mount node['glynx']['storage_path'] do
   device node['glynx']['datamount']['device']
   fstype node['glynx']['datamount']['fstype']
   options node['glynx']['datamount']['options']
