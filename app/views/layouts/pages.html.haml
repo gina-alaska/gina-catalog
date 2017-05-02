@@ -2,7 +2,7 @@
 %html
   %head
     %title
-      = current_portal.acronym
+      = current_portal.acronym unless current_portal.nil?
     = yield :head
     = render 'layouts/favicon'
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
