@@ -4,7 +4,7 @@ maintainer_email 'support+chef@gina.alaska.edu'
 license 'mit'
 description 'Installs/Configures glynx_elasticsearch'
 long_description 'Installs/Configures glynx_elasticsearch'
-version '0.2.0'
+version '0.2.1'
 
 # The `issues_url` points to the location where issues for this cookbook are
 # tracked.  A `View Issues` link will be displayed on this cookbook's page when
@@ -20,3 +20,4 @@ version '0.2.0'
 
 depends 'java'
 depends 'elasticsearch'
+depends 'gina_firewall'

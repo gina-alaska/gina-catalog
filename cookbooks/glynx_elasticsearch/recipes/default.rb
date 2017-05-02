@@ -51,3 +51,10 @@ end
 elasticsearch_service 'elasticsearch' do
   action [:enable, :start]
 end
+
+include_recipe 'gina_firewall::default'
+
+firewall_rule 'elasticsearch' do
+  port 9200
+  command :allow
+end
