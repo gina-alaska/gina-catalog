@@ -46,7 +46,7 @@ user_toml = {
   'database_username' => dbconfig['username'],
   'database_password' => dbconfig['password'],
   'secret_key_base' => config['secret_key_base'],
-  'glynx_storage_path' => ::File.join(node['glynx']['storage_mount'], 'glynx_uploads')
+  'glynx_storage_path' => ::File.join(node['glynx']['storage_mount'], 'glynx_uploads'),
   'gina_analytics' => 'UA-6824535-22',
   'elasticsearch_host' =>  node['glynx']['elasticsearch_host']
 }
