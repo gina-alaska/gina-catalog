@@ -36,7 +36,7 @@ user_toml = {
   'database_username' => dbconfig['username'],
   'database_password' => dbconfig['password'],
   'secret_key_base' => config['secret_key_base'],
-  'glynx_storage_path' => node['glynx']['storage_path']
+  'glynx_storage_path' => ::File.join(node['glynx']['storage_mount'], 'glynx_uploads')
 }
 
 glynx_package 'uafgina/glynx' do

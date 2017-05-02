@@ -13,7 +13,7 @@ default['glynx']['install_path'] = '/var/www/glynx'
 default['glynx']['release_path'] = '/var/www/glynx/current'
 default['glynx']['dot_env_path'] = '/var/www/glynx/shared/.env'
 default['glynx']['ruby_version'] = '2.3.1'
-default['glynx']['storage_path'] = '/mnt/glynx_storage'
+default['glynx']['storage_mount'] = '/mnt/glynx_storage'
 # Habitat install related configs
 
 #default['glynx']['package'] = 'HAB PACKAGE NAME'
