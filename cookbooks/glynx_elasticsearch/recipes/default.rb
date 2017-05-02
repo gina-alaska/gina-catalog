@@ -26,6 +26,12 @@
 
 tag('glynx-elasticsearch')
 
+set_limit '*' do
+  type 'hard'
+  item 'nproc'
+  value 2048
+end
+
 node.default['java']['install_flavor'] = 'openjdk'
 node.default['java']['jdk_version'] = '8'
 node.default['elasticsearch']['cluster']['name'] = "elasticsearch_glynx_#{node.chef_environment}"
@@ -38,13 +44,15 @@ elasticsearch_install 'elasticsearch' do
   version '5.2.2'
 end
 
+
+
 elasticsearch_configure 'elasticsearch' do
   allocated_memory '512m'
   configuration ({
     'cluster.name' => 'glynx_cluster',
     'network.host' => '_site_',
     'node.name' => '${HOSTNAME}',
-
+    'bootstrap.system_call_filter' => 'false'
   })
 end
 
