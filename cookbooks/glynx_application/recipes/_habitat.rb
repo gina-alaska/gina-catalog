@@ -27,6 +27,16 @@
 node.default['glynx']['package'] = 'uafgina-glynx-3.9.11-20170501213349-x86_64-linux.hart'
 node.default['glynx']['package_checksum'] = '4c23d9063f73c87e9d702db5b5e24b5e19e65aae365101c6ef9b4f9091be577b'
 
+unless node['glynx']['elasticsearch_host']
+  es_results = search(:node, "chef_environment:#{node.chef_environment} AND tags:glynx-elasticsearch", filter_result: {'ip' => ['ipaddress']}).first
+   node.default['glynx']['elasticsearch_host'] = es_results.nil? ? 'localhost' : es_results['ip']
+end
+
+unless node['glynx']['database_host']
+  db_results = search(:node, "chef_environment:#{node.chef_environment} AND tags:glynx-database", filter_result: {'ip' => ['ipaddress']}).first
+  node.default['glynx']['database_host'] = db_results.nil? ? 'localhost' : db_results['ip']
+end
+
 config = chef_vault_item_for_environment('apps', 'glynx')
 dbconfig = config['database']
 
@@ -37,6 +47,8 @@ user_toml = {
   'database_password' => dbconfig['password'],
   'secret_key_base' => config['secret_key_base'],
   'glynx_storage_path' => ::File.join(node['glynx']['storage_mount'], 'glynx_uploads')
+  'gina_analytics' => 'UA-6824535-22',
+  'elasticsearch_host' =>  node['glynx']['elasticsearch_host']
 }
 
 glynx_package 'uafgina/glynx' do
