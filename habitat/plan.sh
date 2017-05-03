@@ -66,7 +66,8 @@ pkg_build_deps=(
 )
 
 pkg_deps=(
-  core/bundler
+  core/bundler/1.13.7
+  core/ruby/2.3.1/20161214031900
   core/cacerts
   core/glibc
   core/libffi
@@ -77,8 +78,7 @@ pkg_deps=(
   core/node
   core/openssl
   core/zlib
-  core/ruby
-  core/imagemagick
+  uafgina/imagemagick
 )
 
 pkg_expose=(9292)

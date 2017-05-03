@@ -1,9 +1,9 @@
 ##!/bin/sh
 export GEM_HOME="{{pkg.svc_static_path}}/vendor/bundle/ruby/2.3.0"
 export GEM_PATH="$(hab pkg path core/ruby)/lib/ruby/gems/2.3.0:$(hab pkg path core/bundler):$GEM_HOME"
-export LD_LIBRARY_PATH="$(hab pkg path core/gcc-libs)/lib"
+export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:$(hab pkg path core/gcc-libs)/lib"
 export RAILS_ENV="production"
-export PATH="${PATH}:$(hab pkg path core/bundler)/bin:{{pkg.svc_static_path}}/bin"
+export PATH="${PATH}:$(hab pkg path uafgina/imagemagick)/bin:$(hab pkg path core/bundler)/bin:{{pkg.svc_static_path}}/bin"
 
 cd {{pkg.svc_static_path}}
 
