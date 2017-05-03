@@ -24,8 +24,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-node.default['glynx']['package'] = 'uafgina-glynx-3.9.12-20170502212029-x86_64-linux.hart'
-node.default['glynx']['package_checksum'] = 'edc632d78b0c6f400af08638751b2b05f0b54fa8eec94a418765cba9f6db6691'
+node.default['glynx']['package'] = 'uafgina-glynx-3.9.12-20170502235516-x86_64-linux.hart'
+node.default['glynx']['package_checksum'] = '55e2bf8ac065857ecd52fdd1e837e2defcca202ce4cc5107c9e08171ca030a22'
 
 unless node['glynx']['elasticsearch_host']
   es_results = search(:node, "chef_environment:#{node.chef_environment} AND tags:glynx-elasticsearch", filter_result: {'ip' => ['ipaddress']}).first
