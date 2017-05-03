@@ -43,7 +43,6 @@ action :install do
 
   if new_resource.source_url
     local_package = "#{Chef::Config[:file_cache_path]}/#{::File.basename(new_resource.source_url)}"
-
     remote_file local_package do
       source new_resource.source_url
       checksum new_resource.source_checksum
@@ -77,6 +76,6 @@ action :install do
   hab_sup 'default'
 
   hab_service new_resource.name do
-    action [:load]
+    action [:load, :start]
   end
 end
