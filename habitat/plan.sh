@@ -79,6 +79,8 @@ pkg_deps=(
   core/openssl
   core/zlib
   uafgina/imagemagick
+  uafgina/geos
+  uafgina/proj
 )
 
 pkg_expose=(9292)
@@ -155,6 +157,9 @@ do_build() {
   bundle config build.nokogiri '${NOKOGIRI_CONFIG}'
   build_line "Setting pg_config=${_pg_config}"
   bundle config build.pg --with-pg-config=$_pg_config
+
+  build_line "Setting rgeo bundle config"
+  bundle config build.rgeo "--with-geos-dir=$(pkg_path_for geos) --with-proj-dir=$(pkg_path_for geos)"
 
   # Remove the specific ruby version, because our ruby is 2.3
   sed -e 's/^ruby.*//' -i Gemfile
