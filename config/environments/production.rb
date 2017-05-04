@@ -64,7 +64,7 @@ Rails.application.configure do
   namespace = ENV['MEMCACHE_NAMESPACE'] || 'glynx'
 
   memcache_client = Dalli::Client.new(servers, value_max_bytes: 10485760)
-  config.cache_store = :dalli_store
+  config.cache_store = :dalli_store, *servers, { namespace:namespace, value_max_bytes: 10485760, compress:true }
   config.action_dispatch.rack_cache = {
     :metastore    => memcache_client,
     :entitystore  => memcache_client
