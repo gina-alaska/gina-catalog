@@ -82,8 +82,7 @@ module EntriesControllerSearchConcerns
 
   def query_params(force_all = false)
     query_string = search_params[:query]
-    query_string = '' if query_string.nil?
-    query_string = '*' if force_all || query_string.blank?
+    query_string = '*' if query_string.blank?
 
     {
       query_string: {
