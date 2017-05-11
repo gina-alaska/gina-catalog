@@ -9,7 +9,7 @@ Dragonfly.app.configure do
   url_format '/media/:job/:name'
 
   datastore :file,
-            root_path: Rails.root.join('uploads/dragonfly'),
+            root_path: ::File.join(Rails.application.secrets.glynx_storage_path, 'dragonfly'),
             server_root: Rails.root.join('public')
 end
 

@@ -80,20 +80,79 @@ module EntriesControllerSearchConcerns
     @search_params
   end
 
-  def date_search_params(after, before)
-    date_search = {}
-    if search_params[after].present?
-      date_search[:gte] = Date.parse(search_params[after])
-    end
-    if search_params[before].present?
-      date_search[:lte] = Date.parse(search_params[before])
+  def query_params(force_all = false)
+    query_string = search_params[:query]
+    query_string = '*' if query_string.blank?
+
+    {
+      query_string: {
+        query: query_string,
+        # analyzer: 'snowball',
+        default_field: '_all',
+        # default_operator: "AND",
+        # flags: 'OR|AND|PREFIX|NOT'
+      }
+    }
+  end
+
+  def search_facets
+    FACET_FIELDS.values.each_with_object({}) { |f, c| c[f.to_s] = { limit: 50 } }
+  end
+
+  def elasticsearch_params(page, per_page = 20)
+    facet_field_search = []
+    [:tags, :collections, :iso_topics, :organization_categories, :entry_type_name, :data_types, :regions, :status, :primary_organizations, :funding_organizations,
+      :primary_contacts, :other_contacts, :archived].each do |param|
+      next unless search_params[param].present?
+      facet_field_search <<  term_query_filter(FACET_FIELDS[param], search_params[param])
     end
 
-    date_search
+    custom_query = {
+      bool: { must: [ query_params(facet_field_search.empty?) ] }
+    }
+
+    unless facet_field_search.empty?
+      custom_query[:bool][:must] += facet_field_search
+    end
+
+    if start_date_filter = range_query_filter(:start_date, :starts_after, :starts_before)
+      custom_query[:bool][:must] << start_date_filter
+    end
+
+    if end_date_filter = range_query_filter(:end_date, :ends_after, :ends_before)
+      custom_query[:bool][:must] << end_date_filter
+    end
+
+    # user filter here to keep it from affecting the result score
+    custom_query[:bool][:filter] ||= []
+    if cannot?(:read_unpublished, Entry)
+      custom_query[:bool][:filter] << term_query_filter(:published?, true)
+    end
+
+    custom_query[:bool][:filter] << term_query_filter(:archived?, !!search_params[:archived])
+
+    {
+      body: {
+        sort: order_params,
+        query: custom_query,
+        aggs: aggregates,
+        post_filter: {
+          bool: {
+            filter: [{
+              in: {
+                portal_ids: current_portal.self_and_descendants.pluck(:id)
+              }
+            }]
+          }
+        }
+      },
+      page: page,
+      per_page: per_page,
+    }
   end
 
   def order_params
-    case search_params[:order]
+    order_by = case search_params[:order]
     when 'start_date'
       { start_date: :asc }
     when 'end_date'
@@ -103,58 +162,55 @@ module EntriesControllerSearchConcerns
     when 'updated_at'
       { updated_at: :desc }
     end
+
+    [order_by, '_score'].compact
   end
 
-  def query_params
+  def date_search_params(after, before)
+    date_search = nil
+
+    if search_params[after].present?
+      date_search ||= {}
+      date_search[:gte] = Date.parse(search_params[after])
+    end
+    if search_params[before].present?
+      date_search ||= {}
+      date_search[:lte] = Date.parse(search_params[before])
+    end
+
+    date_search
+  end
+
+  def range_query_filter(field, after, before)
+    filter = date_search_params(after, before)
+    return false if filter.nil?
+
     {
-      query_string: {
-        query: search_params[:query],
-        analyzer: 'snowball',
-        # default_operator: "AND",
-        # flags: 'OR|AND|PREFIX|NOT'
+      range: {
+        field => date_search_params(after, before)
       }
     }
   end
 
-  def search_facets
-    a = FACET_FIELDS.values.each_with_object({}) { |f, c| c[f.to_s] = { limit: 50 } }
-    logger.info a.inspect
-    a
+  def term_query_filter(name, value)
+    if value.is_a? Array
+      { terms: { name => value } }
+    else
+      { term: { name => value } }
+    end
   end
 
-  def elasticsearch_params(page, per_page = 20)
-    opts = {
-      # smart_facets: true,
-      page: page,
-      per_page: per_page,
-      order: order_params,
-      includes: [:bboxes],
-      where: {
-        portal_ids: current_portal.self_and_descendants.pluck(:id),
-        start_date: date_search_params(:starts_after, :starts_before),
-        end_date: date_search_params(:ends_after, :ends_before)
+  def aggregates
+    FACET_FIELDS.each_with_object({}) do |f, c|
+      name = f[0]
+      field = f[1]
+
+      c[field] = {
+        terms: {
+          field: field,
+          size: 50
+        }
       }
-    }
-    opts[:aggs] = search_facets if facets?
-
-    # items that must match all selected
-    [:tags, :collections, :iso_topics, :organization_categories].each do |param|
-      opts[:where][FACET_FIELDS[param]] = { all: search_params[param] } if search_params[param].present?
     end
-
-    # items that can match any selected
-    [:entry_type_name, :data_types, :regions, :status, :primary_organizations, :funding_organizations,
-     :primary_contacts, :other_contacts, :archived].each do |param|
-      opts[:where][FACET_FIELDS[param]] = search_params[param] if search_params[param].present?
-    end
-    opts[:where][:archived?] ||= false
-
-    if cannot?(:read_unpublished, Entry)
-      opts[:where][:published?] = true
-    end
-
-    opts[:query] = query_params if search_params[:query].present?
-
-    opts
   end
 end

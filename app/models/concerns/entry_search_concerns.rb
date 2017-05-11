@@ -22,7 +22,7 @@ module EntrySearchConcerns
     text += contacts.pluck(:name, :email, :phone_number).flatten.uniq
     text += links.pluck(:display_text, :url, :category).flatten.uniq
 
-    elasticsearch_word_strip text.join(' ')
+    elasticsearch_word_strip text.join(' ').downcase
   end
 
   def search_data_with_entries
@@ -33,12 +33,13 @@ module EntrySearchConcerns
       :contact_ids, :iso_topic_ids, :archived?, :published?, :attachment_ids
     ])
 
+    data['title'] = elasticsearch_word_strip data['title']
     data['description'] = elasticsearch_word_strip data['description']
 
     data
   end
 
   def elasticsearch_word_strip(data)
-    data.gsub(/[\,\.:]/, '').gsub(STOPWORDS, '').gsub(SPACEWORDS, ' ')
+    data.gsub(/[\,\.:]/, '').gsub(STOPWORDS, '').gsub(SPACEWORDS, ' ').downcase
   end
 end
