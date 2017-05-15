@@ -19,8 +19,8 @@ class Layers
     layers[false].addTo(@map) if layers[false]?
     @zoomTo(layers[true], @config.maxZoom) if @config.fitAll
 
-    layersForControl['GINA BDL'] = L.tileLayer('http://tiles.gina.alaska.edu/tilesrv/bdl/tile/{x}/{y}/{z}.png')
-    layersForControl['GINA Topos'] = L.tileLayer('http://tiles.gina.alaska.edu/tilesrv/drg/tile/{x}/{y}/{z}.png')
+    layersForControl['GINA BDL'] = L.tileLayer('http://tiles.gina.alaska.edu/tilesrv/bdl/tile/{x}/{y}/{z}.png?GOGC=220EAC1F05E4')
+    layersForControl['GINA Topos'] = L.tileLayer('http://tiles.gina.alaska.edu/tilesrv/drg/tile/{x}/{y}/{z}.png?GOGC=220EAC1F05E4')
 
     L.control.layers(null, layersForControl, { position: 'topleft' }).addTo(@map)
 
