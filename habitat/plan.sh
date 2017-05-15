@@ -127,7 +127,6 @@ do_build() {
   cp -a $PLAN_CONTEXT/../lib .
   cp -a $PLAN_CONTEXT/../portal_templates .
   cp -a $PLAN_CONTEXT/../public .
-  cp -a $PLAN_CONTEXT/../system .
   cp -a $PLAN_CONTEXT/../vendor .
 
   mkdir log
