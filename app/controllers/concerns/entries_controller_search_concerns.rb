@@ -131,6 +131,9 @@ module EntriesControllerSearchConcerns
 
     custom_query[:bool][:filter] << term_query_filter(:archived?, !!search_params[:archived])
 
+    page ||= 1
+    offset = (page.to_i - 1) * per_page.to_i
+
     {
       body: {
         sort: order_params,
@@ -144,7 +147,9 @@ module EntriesControllerSearchConcerns
               }
             }]
           }
-        }
+        },
+        size: per_page,
+        from: offset
       },
       page: page,
       per_page: per_page,
