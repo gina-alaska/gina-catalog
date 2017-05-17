@@ -1,5 +1,21 @@
 # Change Log
 
+## [3.9.15](https://github.com/gina-alaska/gina-catalog/tree/3.9.15) (2017-05-17)
+[Full Changelog](https://github.com/gina-alaska/gina-catalog/compare/3.7.0...3.9.15)
+
+- Revamped deployment to use habitat
+- Fixed page titles in the layouts so they use the portal.title [\#982](https://github.com/gina-alaska/gina-catalog/issues/982)
+- Fixed hidden collections so they no longer show in search panel.
+- Fixed download logs to only show currrent portal items and added pagination.
+- Moved page list underneath cms page menu
+- Moved image attachments to the page edit view, cleaned up main cms page view
+- Fixed ISO Topic sorting
+- Disable autozoom on the search map
+- Fixed issue with shown users permissions updating incorrect portal
+- Switched to a slightly better method for finding centroids of geojson features
+- Creating CMS page with slug of search-help will cause a button to show in the catalog search 
+- Search handling completely rewritten.  Now fully supports ElasticSearch [query string syntax](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html#query-string-syntax)
+
 ## [3.7.0](https://github.com/gina-alaska/gina-catalog/tree/3.7.0) (2016-08-03)
 [Full Changelog](https://github.com/gina-alaska/gina-catalog/compare/3.6.2...3.7.0)
 
