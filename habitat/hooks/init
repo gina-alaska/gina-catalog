@@ -14,6 +14,9 @@ cp {{pkg.svc_config_path}}/database.yml {{pkg.svc_static_path}}/config/database.
 echo "Copying secrets.yml"
 cp {{pkg.svc_config_path}}/secrets.yml {{pkg.svc_static_path}}/config/secrets.yml
 
+echo "Copying puma.rb"
+cp {{pkg.svc_config_path}}/puma.rb {{pkg.svc_static_path}}/config/puma.rb
+
 
 export GEM_HOME="{{pkg.svc_static_path}}/vendor/bundle/ruby/2.3.0"
 export GEM_PATH="$(hab pkg path core/ruby)/lib/ruby/gems/2.3.0:$(hab pkg path core/bundler):$GEM_HOME"
