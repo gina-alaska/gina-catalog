@@ -3,6 +3,8 @@
 # You can safely delete this file if you don't need it.
 rails_binding_ip = "0.0.0.0"
 rails_port = 9292
+rails_env = "production"
+rails_pidfile = "./tmp/pids/puma.pid"
 database_adapter = "postgis"
 database_name = "glynx_production"
 database_username = "glynx"
@@ -14,3 +16,5 @@ elasticsearch_host = ""
 glynx2_api = ""
 gina_analytics = ""
 glynx_stroage_path = ""
+web_concurrency = 1
+max_threads = 5
