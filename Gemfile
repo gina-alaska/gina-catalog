@@ -137,3 +137,5 @@ end
 group :production do
   gem 'tzinfo-data'
 end
+
+ruby '2.3.1'
