@@ -1,0 +1,14 @@
+version: '2'
+services:
+  glynx:
+    image: uafgina/glynx
+    volumes:
+      - ./uploads:/mnt/glynx_storage
+    ports:
+      - "9292"
+    environment:
+      HAB_GLYNX: |
+        glynx_storage_path='/mnt/glynx_storage/glynx_uploads'
+        secret_key_base='asdf'
+        db={user='hab',password='hab',port='5432',host='10.19.16.189'}
+    command: start uafgina/glynx
