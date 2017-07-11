@@ -21,8 +21,7 @@
               = link_to 'Destroy', cms_theme, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'
 
 - content_for :sidebar_menu do
-  .panel.panel-default
-    .list-group
-      = link_to new_cms_theme_path, class: 'list-group-item list-group-item-success' do
-        %i.fa.fa-plus.fa-fw
-        New theme
+  .list-group
+    = link_to new_cms_theme_path, class: 'list-group-item list-group-item-success' do
+      %i.fa.fa-plus.fa-fw
+      New theme
