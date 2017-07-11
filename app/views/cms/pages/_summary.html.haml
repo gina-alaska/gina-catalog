@@ -17,9 +17,6 @@
       = link_to page, method: :delete, data: { confirm: 'Are you sure? All child pages will also be deleted.  This cannot be undone!' }, class: 'list-group-item list-group-item-danger' do
         %i.fa.fa-trash.fa-fw
         Delete page
-    = link_to '#image-attachment-modal', class: 'list-group-item', data: { toggle: 'modal' } do
-      %i.fa.fa-fw.fa-image
-      Attach image
     = link_to reorder_cms_pages_path, class: 'list-group-item' do
       %i.fa.fa-fw.fa-sort
       Reorder pages
