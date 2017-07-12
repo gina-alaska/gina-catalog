@@ -39,9 +39,14 @@ class Cms::AttachmentsController < CmsController
 
   def add
     @page = current_portal.pages.friendly.find(params[:page_id])
-    @page.attachments << @cms_attachment
+    @page.attachments << @cms_attachment unless @page.attachments.include?(@cms_attachment)
 
-    redirect_to :back
+    # redirect_to :back
+    respond_to do |format|
+      format.json {
+        render json: { location: edit_cms_page_path(@page) }
+      }
+    end
   end
 
   def up

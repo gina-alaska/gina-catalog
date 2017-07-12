@@ -1,0 +1,15 @@
+%template
+  .col-sm-3.text-center
+    .thumbnail
+      %a{ id: "document-{{id}}", href: "#add-link", title: "{{name}} - {{description}}", data: { action: action, id: '{{id}}', url: '{{link_url}}' }, style: 'display: inline-block;' }
+        %img{ src: "{{preview_url}}" }
+        .text-left{ style: 'color:black' }
+          %div Name: {{name}}
+          %div
+            Filename:
+            %abbr{ title: "{{file_filename}}" }
+              {{filename}}
+          %div
+            Age: {{age}}
+          %div
+            Filesize: {{human_filesize}}
