@@ -17,6 +17,7 @@
               = link_to 'Delete', cms_snippet, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'
 
 - content_for :sidebar_menu do
-  = link_to new_cms_snippet_path, class: 'list-group-item list-group-item-success' do
-    %i.fa.fa-plus.fa-fw
-    New snippet
+  .list-group
+    = link_to new_cms_snippet_path, class: 'list-group-item list-group-item-success' do
+      %i.fa.fa-plus.fa-fw
+      New snippet

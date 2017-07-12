@@ -1,7 +1,8 @@
 - content_for :sidebar_menu do
-  = link_to new_cms_layout_path, class: 'list-group-item list-group-item-success' do
-    %i.fa.fa-plus.fa-fw
-    New layout
+  .list-group
+    = link_to new_cms_layout_path, class: 'list-group-item list-group-item-success' do
+      %i.fa.fa-plus.fa-fw
+      New layout
 
 .panel.panel-default
   .panel-heading

@@ -1,10 +1,11 @@
 .panel.panel-default
   .panel-heading
-    %h1.panel-title
-      Image Attachments
-      = link_to '#image-attachment-modal', class: 'btn btn-default btn-info', data: { toggle: 'modal' }, style: 'color: white; margin-left: 12px;' do
+    .pull-right
+      = link_to '#image-attachment-modal', class: 'btn btn-default btn-info btn-xs', data: { toggle: 'modal' }, style: 'color: white; margin-top: -13px;' do
         %i.fa.fa-fw.fa-image
         Attach image
+    %h1.panel-title
+      Image Attachments
   %table.table.table-striped
     %thead
       %tr
