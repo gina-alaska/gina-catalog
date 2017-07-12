@@ -39,5 +39,7 @@ module Glynx
                  max_age: 3628800
       end
     end
+
+    config.action_dispatch.rack_cache = true
   end
 end
