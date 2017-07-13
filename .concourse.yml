@@ -2,7 +2,9 @@ resources:
 - name: glynx-pull-request
   type: pull-request
   source:
+    uri: git@github.com:gina-alaska/gina-catalog
     repo: gina-alaska/gina-catalog
+    private_key: {{github-privatekey}}
     access_token: {{github-accesstoken}}
 - name: rails
   type: git
