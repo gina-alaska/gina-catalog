@@ -13,7 +13,7 @@ class Organization < ActiveRecord::Base
     'Intergovernmental',
     'Non-Governmental',
     'Unknown'
-  ]
+  ].freeze
 
   dragonfly_accessor :logo
 

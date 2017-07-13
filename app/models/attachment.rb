@@ -6,7 +6,7 @@ class Attachment < ActiveRecord::Base
     'Public Download',
     'Private Download',
     'Archive'
-  ]
+  ].freeze
 
   searchkick word_start: [:file_name, :description, :category]
   dragonfly_accessor :file
@@ -36,7 +36,7 @@ class Attachment < ActiveRecord::Base
           parameters: :activity_params
 
   def activity_params
-    { attachment: :file_name  }
+    { attachment: :file_name }
   end
 
   def create_uuid

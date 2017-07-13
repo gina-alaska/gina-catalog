@@ -2,15 +2,15 @@ require 'version'
 
 namespace :deploy do
   desc "Deploy current version with capistrano"
-  task :staging => :not_dirty do
+  task staging: :not_dirty do
     sh "cap staging deploy"
   end
 
-  task :production => [:not_dirty] do
+  task production: [:not_dirty] do
     sh "cap production deploy"
   end
 
-  task :push_and_deploy => [:not_dirty] do
+  task push_and_deploy: [:not_dirty] do
     puts "Pushing new version tag to git"
     sh "git push && git push --tags"
 
@@ -20,7 +20,7 @@ namespace :deploy do
   end
 
   desc "Bump version to #{Version.current.bump!} and deploy"
-  task :patch => [:not_dirty] do
+  task patch: [:not_dirty] do
     Rake::Task["version:bump"].invoke
     Rake::Task["deploy:push_and_deploy"].invoke
   end

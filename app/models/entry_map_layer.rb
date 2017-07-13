@@ -13,6 +13,6 @@ class EntryMapLayer < ActiveRecord::Base
   end
 
   def activity_params
-    { map_layer: map_layer.to_global_id.to_s  }
+    { map_layer: map_layer.to_global_id.to_s }
   end
 end

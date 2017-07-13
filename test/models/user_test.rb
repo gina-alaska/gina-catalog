@@ -10,7 +10,7 @@ class UserTest < ActiveSupport::TestCase
   should have_many(:portals).through(:permissions)
   should have_many(:activity_logs)
 
-  test 'user should have all privs for portal one'  do
+  test 'user should have all privs for portal one' do
     @user = users(:one)
     @portal = portals(:one)
 
@@ -20,7 +20,7 @@ class UserTest < ActiveSupport::TestCase
     end
   end
 
-  test 'user should have no privs for portal two'  do
+  test 'user should have no privs for portal two' do
     @user = users(:one)
     @portal = portals(:two)
 
@@ -36,6 +36,6 @@ class UserTest < ActiveSupport::TestCase
     @user = User.new(name: user.name, email: user.email)
     @portal = portals(:one)
 
-    @user.set_roles(@portal,  cms_manager: false)
+    @user.set_roles(@portal, cms_manager: false)
   end
 end

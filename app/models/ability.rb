@@ -31,9 +31,7 @@ class Ability
 
     user ||= User.new
 
-    can [:read, :map], Entry do |entry|
-      entry.published?
-    end
+    can [:read, :map], Entry, &:published?
     cannot [:read, :map], Entry, published_at: nil
 
     can :read, Attachment
@@ -41,17 +39,11 @@ class Ability
     cannot :read, Attachment, category: 'Private Download'
     can :exports, Entry
 
-    unless user.new_record?
-      can :accept, Invitation
-    end
+    can :accept, Invitation unless user.new_record?
 
-    if user.global_admin?
-      can :view_admin, :menu
-    end
+    can :view_admin, :menu if user.global_admin?
 
-    if user.role?(:cms_manager, current_portal)
-      can :view_cms, :menu
-    end
+    can :view_cms, :menu if user.role?(:cms_manager, current_portal)
 
     if user.role?(:data_entry, current_portal) || user.role?(:data_manager, current_portal)
       can :view_catalog, :menu
@@ -71,8 +63,8 @@ class Ability
       end
 
       can :manage, [Organization, Contact, MapLayer]
-      can :manage, [UseAgreement, Collection],  portal_id: current_portal.id
-      can [:read,:map,:read_unpublished], Entry do |entry|
+      can :manage, [UseAgreement, Collection], portal_id: current_portal.id
+      can [:read, :map, :read_unpublished], Entry do |entry|
         entry.new_record? || current_portal.self_and_ancestors.include?(entry.owner_portal)
       end
       can [:create, :update, :archive], Entry do |entry|
@@ -88,9 +80,9 @@ class Ability
 
       can :manage, :tag
       can :manage, [Organization, Contact, MapLayer]
-      can :manage, [UseAgreement, Collection],  portal_id: current_portal.id
+      can :manage, [UseAgreement, Collection], portal_id: current_portal.id
 
-      can [:read,:map,:read_unpublished], Entry do |entry|
+      can [:read, :map, :read_unpublished], Entry do |entry|
         entry.new_record? || current_portal.self_and_ancestors.include?(entry.owner_portal)
       end
       can [:create, :update, :destroy, :publish, :unpublish, :archive, :unarchive], Entry do |entry|
@@ -100,22 +92,18 @@ class Ability
     end
 
     if user.role?(:portal_manager, current_portal)
-      can :manage, [Permission, Invitation],  portal_id: current_portal.id
+      can :manage, [Permission, Invitation], portal_id: current_portal.id
     end
 
     case controller_namespace
     when 'admin'
-      if user.global_admin?
-        can :manage, Portal
-      end
+      can :manage, Portal if user.global_admin?
     else
       if user.role?(:portal_manager, current_portal)
-        can [:read, :update], Portal,  id: current_portal.id
+        can [:read, :update], Portal, id: current_portal.id
       end
     end
 
-    cannot :update, UseAgreement do |use_agreement|
-      use_agreement.archived?
-    end
+    cannot :update, UseAgreement, &:archived?
   end
 end

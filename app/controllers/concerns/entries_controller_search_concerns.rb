@@ -61,7 +61,7 @@ module EntriesControllerSearchConcerns
     primary_contacts:         :primary_contact_ids,
     other_contacts:           :contact_ids,
     archived:                 :archived?
-  }
+  }.freeze
 
   def search_params
     if @search_params.nil?
@@ -80,7 +80,7 @@ module EntriesControllerSearchConcerns
     @search_params
   end
 
-  def query_params(force_all = false)
+  def query_params(_force_all = false)
     query_string = search_params[:query]
     query_string = '*' if query_string.blank?
 
@@ -102,13 +102,13 @@ module EntriesControllerSearchConcerns
   def elasticsearch_params(page, per_page = 20)
     facet_field_search = []
     [:tags, :collections, :iso_topics, :organization_categories, :entry_type_name, :data_types, :regions, :status, :primary_organizations, :funding_organizations,
-      :primary_contacts, :other_contacts, :archived].each do |param|
+     :primary_contacts, :other_contacts, :archived].each do |param|
       next unless search_params[param].present?
-      facet_field_search <<  term_query_filter(FACET_FIELDS[param], search_params[param])
+      facet_field_search << term_query_filter(FACET_FIELDS[param], search_params[param])
     end
 
     custom_query = {
-      bool: { must: [ query_params(facet_field_search.empty?) ] }
+      bool: { must: [query_params(facet_field_search.empty?)] }
     }
 
     unless facet_field_search.empty?
@@ -152,20 +152,20 @@ module EntriesControllerSearchConcerns
         from: offset
       },
       page: page,
-      per_page: per_page,
+      per_page: per_page
     }
   end
 
   def order_params
     order_by = case search_params[:order]
-    when 'start_date'
-      { start_date: :asc }
-    when 'end_date'
-      { end_date: :asc }
-    when 'title'
-      { title: :asc }
-    when 'updated_at'
-      { updated_at: :desc }
+               when 'start_date'
+                 { start_date: :asc }
+               when 'end_date'
+                 { end_date: :asc }
+               when 'title'
+                 { title: :asc }
+               when 'updated_at'
+                 { updated_at: :desc }
     end
 
     [order_by, '_score'].compact

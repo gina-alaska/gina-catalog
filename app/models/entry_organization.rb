@@ -21,6 +21,6 @@ class EntryOrganization < ActiveRecord::Base
   end
 
   def activity_params
-    { organization: organization.to_global_id.to_s  }
+    { organization: organization.to_global_id.to_s }
   end
 end

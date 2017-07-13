@@ -7,7 +7,7 @@
 # server 'example.com', user: 'deploy', roles: %w{app web}, other_property: :other_value
 # server 'db.example.com', user: 'deploy', roles: %w{db}
 
-server 'glynx-web-127b.x.gina.alaska.edu', user: 'webdev', roles: %w{app web}, primary: true
+server 'glynx-web-127b.x.gina.alaska.edu', user: 'webdev', roles: %w(app web), primary: true
 
 # role-based syntax
 # ==================
@@ -21,8 +21,6 @@ server 'glynx-web-127b.x.gina.alaska.edu', user: 'webdev', roles: %w{app web}, p
 # role :web, %w{user1@primary.com user2@additional.com}, other_property: :other_value
 # role :db,  %w{deploy@example.com}
 
-
-
 # Configuration
 # =============
 # You can set any configuration variable like in config/deploy.rb
@@ -31,7 +29,6 @@ server 'glynx-web-127b.x.gina.alaska.edu', user: 'webdev', roles: %w{app web}, p
 # http://capistranorb.com/documentation/getting-started/configuration/
 # Feel free to add new variables to customise your setup.
 set :rails_env, 'production'
-
 
 # Custom SSH Options
 # ==================
@@ -47,9 +44,7 @@ set :rails_env, 'production'
 #    auth_methods: %w(password)
 #  }
 #
-set :ssh_options, {
-  forward_agent: true
-}
+set :ssh_options, forward_agent: true
 # The server-based syntax can be used to override options:
 # ------------------------------------
 # server 'example.com',

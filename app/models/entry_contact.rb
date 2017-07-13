@@ -19,6 +19,6 @@ class EntryContact < ActiveRecord::Base
   end
 
   def activity_params
-    { contact: contact.to_global_id.to_s  }
+    { contact: contact.to_global_id.to_s }
   end
 end

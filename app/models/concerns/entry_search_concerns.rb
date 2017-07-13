@@ -1,7 +1,7 @@
 module EntrySearchConcerns
   extend ActiveSupport::Concern
   STOPWORDS = /\b(?:#{ %w(that [a-zA-Z]{1,3}).join('|') })\b/i
-  SPACEWORDS = /\b(?:#{ %w[\s{2,}].join('|') })\b/i
+  SPACEWORDS = /\b(?:#{ %w(\s{2,}).join('|') })\b/i
 
   included do
     scope :search_import, -> { includes(:portals, :collections, :organizations, :archive) }
@@ -27,11 +27,11 @@ module EntrySearchConcerns
 
   def search_data_with_entries
     data = as_json(methods: [
-      :portal_ids, :tag_list, :collection_ids, :text_search_fields,
-      :data_type_ids, :region_ids, :entry_type_name, :primary_organization_ids,
-      :funding_organization_ids, :primary_contact_ids, :links_ids,
-      :contact_ids, :iso_topic_ids, :archived?, :published?, :attachment_ids
-    ])
+                     :portal_ids, :tag_list, :collection_ids, :text_search_fields,
+                     :data_type_ids, :region_ids, :entry_type_name, :primary_organization_ids,
+                     :funding_organization_ids, :primary_contact_ids, :links_ids,
+                     :contact_ids, :iso_topic_ids, :archived?, :published?, :attachment_ids
+                   ])
 
     data['title'] = elasticsearch_word_strip data['title']
     data['description'] = elasticsearch_word_strip data['description']

@@ -7,7 +7,7 @@ class Entry < ActiveRecord::Base
 
   after_commit :check_for_multi_organizations
 
-  STATUSES = %w(Complete Ongoing Unknown Funded)
+  STATUSES = %w(Complete Ongoing Unknown Funded).freeze
 
   acts_as_taggable_on :tags
 
@@ -127,14 +127,14 @@ class Entry < ActiveRecord::Base
   end
 
   def publish!
-    return true if self.published?
+    return true if published?
 
     self.published_at = Time.zone.now
     save!
   end
 
   def unpublish!
-    return true unless self.published?
+    return true unless published?
 
     self.published_at = nil
     save!
@@ -175,7 +175,7 @@ class Entry < ActiveRecord::Base
   end
 
   def to_param
-    "#{self.id}-#{self.title.try(:truncate, 50).try(:parameterize)}"
+    "#{id}-#{title.try(:truncate, 50).try(:parameterize)}"
   end
 
   def mustache_route
@@ -191,10 +191,10 @@ class Entry < ActiveRecord::Base
 
   def check_for_multi_organizations
     Entry.transaction do
-      all_orgs = self.entry_organizations.group(:organization_id).count
+      all_orgs = entry_organizations.group(:organization_id).count
       all_orgs.each do |organization_id, count|
         next unless count > 1
-        new_assoc = self.entry_organizations.build(organization_id: organization_id)
+        new_assoc = entry_organizations.build(organization_id: organization_id)
         entry_organizations.where(organization_id: organization_id).each do |org|
           new_assoc.primary ||= org.primary
           new_assoc.funding ||= org.funding
