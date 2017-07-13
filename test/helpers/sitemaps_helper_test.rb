@@ -1,9 +1,7 @@
 require "test_helper"
 
 class SitemapsHelperTest < ActionView::TestCase
-
-  #def test_sanity
+  # def test_sanity
   #  flunk "Need real tests"
-  #end
-
+  # end
 end

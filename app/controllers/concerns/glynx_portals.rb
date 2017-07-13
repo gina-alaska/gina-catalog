@@ -15,7 +15,7 @@ module GlynxPortals
   end
 
   def check_current_portal
-    return if request.path.match('/assets')
+    return if request.path =~ '/assets'
     redirect_to portal_not_found_path if current_portal.nil?
   end
 end

@@ -4,7 +4,7 @@ class Permission < ActiveRecord::Base
     data_entry: 'User can create, edit, and archive catalog records',
     data_manager: 'User can create, edit, archive and publish catalog records',
     portal_manager: 'User can update settings and invite users'
-  }
+  }.freeze
 
   belongs_to :user
   belongs_to :portal

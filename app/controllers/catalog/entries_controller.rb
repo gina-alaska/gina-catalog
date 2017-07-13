@@ -168,9 +168,9 @@ class Catalog::EntriesController < CatalogController
 
   def map
     respond_to do |format|
-      format.html {
+      format.html do
         render layout: 'map'
-      }
+      end
     end
   end
 

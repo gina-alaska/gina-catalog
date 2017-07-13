@@ -7,13 +7,9 @@ class Cms::AttachmentsController < CmsController
   def index
     @cms_attachments = current_portal.cms_attachments
 
-    if params[:sort]
-      @cms_attachments = sort_by(@cms_attachments, params[:sort])
-    end
+    @cms_attachments = sort_by(@cms_attachments, params[:sort]) if params[:sort]
 
-    if params[:images]
-      @cms_attachments = @cms_attachments.images
-    end
+    @cms_attachments = @cms_attachments.images if params[:images]
   end
 
   # GET /cms/attachments/1

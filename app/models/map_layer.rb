@@ -17,11 +17,11 @@ class MapLayer < ActiveRecord::Base
 
   def supports?(*)
     # !self.projections.match(projection).nil? # save for tiled map layers
-    fail 'MapLayer error: The STI model should implement the supports? method!'
+    raise 'MapLayer error: The STI model should implement the supports? method!'
   end
 
   def layer_type
-    fail 'MapLayer error: The layer type needs to be defined in the STI model'
+    raise 'MapLayer error: The layer type needs to be defined in the STI model'
   end
 
   def leaflet_options

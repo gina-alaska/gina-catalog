@@ -2,7 +2,7 @@ class Link < ActiveRecord::Base
   CATEGORIES = [
     'Website', 'Download', 'Report', 'Shape File', 'WMS', 'WCS', 'WFS', 'KML',
     'Layer', 'Metadata', 'PDF', 'Map Service'
-  ]
+  ].freeze
 
   belongs_to :entry, touch: true
   has_many :primary_organizations, through: :entry
@@ -22,7 +22,7 @@ class Link < ActiveRecord::Base
   end
 
   def pdf?
-    url.split('.').last.downcase == 'pdf'
+    url.split('.').last.casecmp('pdf').zero?
   end
 
   # Pre:
@@ -61,7 +61,7 @@ class Link < ActiveRecord::Base
   end
 
   def pdf_to_text
-    return '' unless self.pdf?
+    return '' unless pdf?
 
     pdf_text = ''
     begin
