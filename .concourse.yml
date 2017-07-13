@@ -1,0 +1,45 @@
+resources:
+- name: glynx-pull-request
+  type: pull-request
+  source:
+    repo: gina-alaska/gina-catalog
+    access_token: {{github-accesstoken}}
+- name: rails
+  type: git
+  source:
+    uri: https://github.alaska.edu/gina/concourse-rails.git
+    username: {{ghe-username}}
+    password: {{ghe-password}}
+
+jobs:
+- name: test-pull-request
+  public: true
+  plan:
+  - get: glynx-pull-request
+    trigger: true
+  - put: glynx-pull-request
+    params:
+      path: glynx-pull-request
+      status: pending
+  - get: rails
+  - task: verify
+    file: rails/verify-pr.yml
+    params:
+      application: glynx-pull-request
+      tests: rails
+    on_success:
+      put: glynx-pull-request
+      params:
+        path: glynx-pull-request
+        status: success
+    on_failure:
+      put: glynx-pull-request
+      params:
+        path: glynx-pull-request
+        status: failure
+
+resource_types:
+- name: pull-request
+  type: docker-image
+  source:
+    repository: jtarchie/pr
