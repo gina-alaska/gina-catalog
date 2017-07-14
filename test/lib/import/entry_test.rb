@@ -39,7 +39,7 @@ class Import::EntryTest < ActiveSupport::TestCase
                                    'id' => 5
                                  }],
                                  'data_types' => [
-                                   { 'name' => 'GIS' },
+                                   { 'name' => 'GIS' }
                                  ],
                                  'iso_topics' => [
                                    { 'iso_theme_code' => '001' },
@@ -47,15 +47,14 @@ class Import::EntryTest < ActiveSupport::TestCase
                                  ],
                                  'uploads' => [
                                    { 'name' => 'test.com', 'url' => 'http://test.com', 'downloadable' => true },
-                                   { 'name' => 'foo.com', 'url' => 'http://foo.com', 'preview' => true },
+                                   { 'name' => 'foo.com', 'url' => 'http://foo.com', 'preview' => true }
 
                                  ],
                                  'links' => [{
                                    'display_text' => 'website',
                                    'url' => 'http://test.com',
                                    'category' => 'Website'
-                                 }]
-    )
+                                 }])
     assert import.importable.valid?, import.importable.errors.full_messages
     assert_not_empty import.importable.primary_organizations
     assert_not_empty import.importable.funding_organizations

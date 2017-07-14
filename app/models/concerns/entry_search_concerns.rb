@@ -26,12 +26,12 @@ module EntrySearchConcerns
   end
 
   def search_data_with_entries
-    data = as_json(methods: [
-      :portal_ids, :tag_list, :collection_ids, :text_search_fields,
-      :data_type_ids, :region_ids, :entry_type_name, :primary_organization_ids,
-      :funding_organization_ids, :primary_contact_ids, :links_ids,
-      :contact_ids, :iso_topic_ids, :archived?, :published?, :attachment_ids
-    ])
+    data = as_json(methods: %i[
+                     portal_ids tag_list collection_ids text_search_fields
+                     data_type_ids region_ids entry_type_name primary_organization_ids
+                     funding_organization_ids primary_contact_ids links_ids
+                     contact_ids iso_topic_ids archived? published? attachment_ids
+                   ])
 
     data['title'] = elasticsearch_word_strip data['title']
     data['description'] = elasticsearch_word_strip data['description']

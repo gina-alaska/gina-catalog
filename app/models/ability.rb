@@ -31,27 +31,19 @@ class Ability
 
     user ||= User.new
 
-    can [:read, :map], Entry do |entry|
-      entry.published?
-    end
-    cannot [:read, :map], Entry, published_at: nil
+    can %i[read map], Entry, &:published?
+    cannot %i[read map], Entry, published_at: nil
 
     can :read, Attachment
     can :read, :dashboard
     cannot :read, Attachment, category: 'Private Download'
     can :exports, Entry
 
-    unless user.new_record?
-      can :accept, Invitation
-    end
+    can :accept, Invitation unless user.new_record?
 
-    if user.global_admin?
-      can :view_admin, :menu
-    end
+    can :view_admin, :menu if user.global_admin?
 
-    if user.role?(:cms_manager, current_portal)
-      can :view_cms, :menu
-    end
+    can :view_cms, :menu if user.role?(:cms_manager, current_portal)
 
     if user.role?(:data_entry, current_portal) || user.role?(:data_manager, current_portal)
       can :view_catalog, :menu
@@ -66,56 +58,52 @@ class Ability
     end
 
     if user.role?(:data_entry, current_portal)
-      can [:read, :preview], Attachment do |attachment|
+      can %i[read preview], Attachment do |attachment|
         attachment.entry.new_record? || attachment.entry.owner_portal = current_portal
       end
 
       can :manage, [Organization, Contact, MapLayer]
-      can :manage, [UseAgreement, Collection],  portal_id: current_portal.id
-      can [:read,:map,:read_unpublished], Entry do |entry|
+      can :manage, [UseAgreement, Collection], portal_id: current_portal.id
+      can %i[read map read_unpublished], Entry do |entry|
         entry.new_record? || current_portal.self_and_ancestors.include?(entry.owner_portal)
       end
-      can [:create, :update, :archive], Entry do |entry|
+      can %i[create update archive], Entry do |entry|
         entry.new_record? || entry.owner_portal == current_portal
       end
-      can [:downloads, :links], :dashboard
+      can %i[downloads links], :dashboard
     end
 
     if user.role?(:data_manager, current_portal)
-      can [:read, :preview], Attachment do |attachment|
+      can %i[read preview], Attachment do |attachment|
         attachment.entry.new_record? || attachment.entry.owner_portal = current_portal
       end
 
       can :manage, :tag
       can :manage, [Organization, Contact, MapLayer]
-      can :manage, [UseAgreement, Collection],  portal_id: current_portal.id
+      can :manage, [UseAgreement, Collection], portal_id: current_portal.id
 
-      can [:read,:map,:read_unpublished], Entry do |entry|
+      can %i[read map read_unpublished], Entry do |entry|
         entry.new_record? || current_portal.self_and_ancestors.include?(entry.owner_portal)
       end
-      can [:create, :update, :destroy, :publish, :unpublish, :archive, :unarchive], Entry do |entry|
+      can %i[create update destroy publish unpublish archive unarchive], Entry do |entry|
         entry.new_record? || entry.owner_portal == current_portal
       end
-      can [:downloads, :links], :dashboard
+      can %i[downloads links], :dashboard
     end
 
     if user.role?(:portal_manager, current_portal)
-      can :manage, [Permission, Invitation],  portal_id: current_portal.id
+      can :manage, [Permission, Invitation], portal_id: current_portal.id
     end
 
     case controller_namespace
     when 'admin'
-      if user.global_admin?
-        can :manage, Portal
-      end
+      can :manage, Portal if user.global_admin?
     else
       if user.role?(:portal_manager, current_portal)
-        can [:read, :update], Portal,  id: current_portal.id
+        can %i[read update], Portal, id: current_portal.id
       end
     end
 
-    cannot :update, UseAgreement do |use_agreement|
-      use_agreement.archived?
-    end
+    cannot :update, UseAgreement, &:archived?
   end
 end

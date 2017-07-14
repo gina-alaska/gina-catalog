@@ -1,11 +1,11 @@
 class Catalog::EntriesController < CatalogController
   before_action :set_entry
   before_action :set_cms_page
-  before_action :gather_use_agreements, only: [:new, :create, :edit, :update]
-  before_action :set_activities, only: [:show, :map]
+  before_action :gather_use_agreements, only: %i[new create edit update]
+  before_action :set_activities, only: %i[show map]
   authorize_resource
 
-  layout 'pages', only: [:show, :index]
+  layout 'pages', only: %i[show index]
 
   include EntriesControllerSearchConcerns
 
@@ -168,9 +168,9 @@ class Catalog::EntriesController < CatalogController
 
   def map
     respond_to do |format|
-      format.html {
+      format.html do
         render layout: 'map'
-      }
+      end
     end
   end
 
@@ -212,12 +212,13 @@ class Catalog::EntriesController < CatalogController
       :use_agreement_id, :request_contact_info, :require_contact_info,
       :tag_list,
       collection_ids: [], region_ids: [], iso_topic_ids: [], data_type_ids: [],
-      links_attributes: [:id, :link_id, :category, :display_text, :url, :_destroy],
-      entry_collections_attributes: [:id, :_destroy],
-      attachments_attributes: [:id, :file, :category, :description, :interaction, :_destroy],
-      entry_contacts_attributes: [:id, :contact_id, :primary, :_destroy],
-      entry_organizations_attributes: [:id, :organization_id, :primary, :funding, :_destroy],
-      entry_map_layers_attributes: [:id, :map_layer_id, :_destroy])
+      links_attributes: %i[id link_id category display_text url _destroy],
+      entry_collections_attributes: %i[id _destroy],
+      attachments_attributes: %i[id file category description interaction _destroy],
+      entry_contacts_attributes: %i[id contact_id primary _destroy],
+      entry_organizations_attributes: %i[id organization_id primary funding _destroy],
+      entry_map_layers_attributes: %i[id map_layer_id _destroy]
+    )
 
     if values[:collection_ids].present?
       values[:collection_ids] = values.delete(:collection_ids).map(&:to_i).reject { |v| v == 0 }

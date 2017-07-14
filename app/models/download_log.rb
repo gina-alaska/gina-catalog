@@ -1,5 +1,5 @@
 class DownloadLog < ActiveRecord::Base
-  searchkick word_start: [:file_name, :user]
+  searchkick word_start: %i[file_name user]
 
   belongs_to :user
   belongs_to :entry

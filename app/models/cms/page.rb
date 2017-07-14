@@ -1,5 +1,5 @@
 class Cms::Page < ActiveRecord::Base
-  SYSTEM_SLUGS = %w(home catalog page-not-found sitemap)
+  SYSTEM_SLUGS = %w[home catalog page-not-found sitemap].freeze
 
   include MustacheConcerns
   extend FriendlyId
@@ -17,7 +17,7 @@ class Cms::Page < ActiveRecord::Base
   scope :active, -> { where(draft: false) }
 
   validates :title, presence: true
-  validates :slug, uniqueness: { scope: [:parent_id, :portal_id] }
+  validates :slug, uniqueness: { scope: %i[parent_id portal_id] }
   validate :check_handlebarjs_syntax
 
   friendly_id :title, use: :scoped, scope: :portal

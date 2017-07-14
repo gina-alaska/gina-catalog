@@ -1,5 +1,5 @@
 class Cms::AttachmentsController < CmsController
-  before_action :set_cms_attachment, only: [:show, :edit, :update, :destroy, :add, :remove]
+  before_action :set_cms_attachment, only: %i[show edit update destroy add remove]
   authorize_resource
 
   # GET /cms/attachments
@@ -7,19 +7,14 @@ class Cms::AttachmentsController < CmsController
   def index
     @cms_attachments = current_portal.cms_attachments
 
-    if params[:sort]
-      @cms_attachments = sort_by(@cms_attachments, params[:sort])
-    end
+    @cms_attachments = sort_by(@cms_attachments, params[:sort]) if params[:sort]
 
-    if params[:images]
-      @cms_attachments = @cms_attachments.images
-    end
+    @cms_attachments = @cms_attachments.images if params[:images]
   end
 
   # GET /cms/attachments/1
   # GET /cms/attachments/1.json
-  def show
-  end
+  def show; end
 
   # GET /cms/attachments/new
   def new
@@ -27,8 +22,7 @@ class Cms::AttachmentsController < CmsController
   end
 
   # GET /cms/attachments/1/edit
-  def edit
-  end
+  def edit; end
 
   def remove
     @page = current_portal.pages.friendly.find(params[:page_id])

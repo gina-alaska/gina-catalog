@@ -4,7 +4,7 @@ class EntryOrganization < ActiveRecord::Base
   belongs_to :entry, touch: true
   belongs_to :organization
 
-  validates :organization_id, uniqueness: { scope: [:entry_id, :primary, :funding] }
+  validates :organization_id, uniqueness: { scope: %i[entry_id primary funding] }
 
   scope :primary, -> { where(primary: true) }
   scope :funding, -> { where(funding: true) }
@@ -21,6 +21,6 @@ class EntryOrganization < ActiveRecord::Base
   end
 
   def activity_params
-    { organization: organization.to_global_id.to_s  }
+    { organization: organization.to_global_id.to_s }
   end
 end

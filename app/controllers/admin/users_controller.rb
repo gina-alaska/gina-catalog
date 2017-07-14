@@ -5,11 +5,9 @@ class Admin::UsersController < AdminController
     @users = User.order(:name)
   end
 
-  def new
-  end
+  def new; end
 
-  def edit
-  end
+  def edit; end
 
   def update
     respond_to do |format|

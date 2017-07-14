@@ -1,5 +1,5 @@
 class AttachmentsController < ApplicationController
-  ATTACHMENTS_TO_LOG = ['Public Download', 'Private Download']
+  ATTACHMENTS_TO_LOG = ['Public Download', 'Private Download'].freeze
 
   def show
     response.headers['Access-Control-Allow-Origin'] = '*'

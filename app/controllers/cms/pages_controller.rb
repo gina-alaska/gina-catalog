@@ -1,5 +1,5 @@
 class Cms::PagesController < CmsController
-  before_action :set_cms_page, only: [:show, :edit, :update, :destroy, :top, :bottom, :up, :down]
+  before_action :set_cms_page, only: %i[show edit update destroy top bottom up down]
   authorize_resource
 
   # GET /cms/pages
@@ -10,8 +10,7 @@ class Cms::PagesController < CmsController
 
   # GET /cms/pages/1
   # GET /cms/pages/1.json
-  def show
-  end
+  def show; end
 
   # GET /cms/pages/new
   def new
@@ -23,8 +22,7 @@ class Cms::PagesController < CmsController
     @cms_page.cms_layout = @cms_page.parent.try(:cms_layout) || current_portal.default_cms_layout
   end
 
-  def reorder
-  end
+  def reorder; end
 
   def up
     @cms_page.siblings_before.last.try(:prepend_sibling, @cms_page)

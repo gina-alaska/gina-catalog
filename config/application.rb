@@ -35,7 +35,7 @@ module Glynx
         origins '*'
         resource '/catalog/entries/*',
                  headers: :any,
-                 methods: [:get, :options, :head],
+                 methods: %i[get options head],
                  max_age: 3628800
       end
     end

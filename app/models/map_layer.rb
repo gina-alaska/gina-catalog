@@ -1,7 +1,7 @@
 class MapLayer < ActiveRecord::Base
   include EntryDependentConcerns
 
-  searchkick word_start: [:name, :url, :type]
+  searchkick word_start: %i[name url type]
 
   validates :name, length: { maximum: 255 }, presence: true
   validates :map_url, length: { maximum: 255 }, presence: true
@@ -16,11 +16,11 @@ class MapLayer < ActiveRecord::Base
   scope :wms, -> { where(type: 'WmsLayer') }
 
   def supports?(*)
-    fail 'MapLayer error: The STI model should implement the supports? method!'
+    raise 'MapLayer error: The STI model should implement the supports? method!'
   end
 
   def layer_type
-    fail 'MapLayer error: The layer type needs to be defined in the STI model'
+    raise 'MapLayer error: The layer type needs to be defined in the STI model'
   end
 
   def leaflet_options

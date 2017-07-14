@@ -2,7 +2,7 @@ class Link < ActiveRecord::Base
   CATEGORIES = [
     'Website', 'Download', 'Report', 'Shape File', 'WMS', 'WCS', 'WFS', 'KML',
     'Layer', 'Metadata', 'PDF', 'Map Service'
-  ]
+  ].freeze
 
   belongs_to :entry, touch: true
   has_many :primary_organizations, through: :entry
@@ -22,7 +22,7 @@ class Link < ActiveRecord::Base
   end
 
   def pdf?
-    url.split('.').last.downcase == 'pdf'
+    url.split('.').last.casecmp('pdf').zero?
   end
 
   # Pre:
@@ -40,7 +40,7 @@ class Link < ActiveRecord::Base
       opts = {
         read_timeout: 1,
         content_length_proc: lambda do |t|
-          if t && 0 < t
+          if t && t > 0
             pbar = ProgressBar.new(t)
             # pbar.file_transfer_mode
           end
@@ -61,7 +61,7 @@ class Link < ActiveRecord::Base
   end
 
   def pdf_to_text
-    return '' unless self.pdf?
+    return '' unless pdf?
 
     pdf_text = ''
     begin

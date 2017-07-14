@@ -36,6 +36,6 @@ class Admin::UsersControllerTest < ActionController::TestCase
   test 'should only allow global_admin field to be edited' do
     patch :update, id: @useradmin.id, user: { name: 'Test Two', email: 'user@junk.com', global_admin: '0' }
 
-    assert_equal %w(global_admin updated_at), assigns(:user).previous_changes.keys
+    assert_equal %w[global_admin updated_at], assigns(:user).previous_changes.keys
   end
 end

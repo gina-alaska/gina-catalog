@@ -24,7 +24,7 @@
 //= require microplugin
 //= require selectize
 //= require holderjs
-//= require mapbox.js
+//= require mapbox.js.js
 //= require leaflet.markercluster
 //= require Control.Coordinates.js
 //= require NumberFormatter.js
