@@ -31,7 +31,7 @@ class Cms::PagesController < CmsController
 
     respond_to do |format|
       format.html { redirect_to reorder_cms_pages_path }
-      format.js { redirect_via_turbolinks_to reorder_cms_pages_path }
+      format.js { redirect_to reorder_cms_pages_path }
     end
   end
 
@@ -40,7 +40,7 @@ class Cms::PagesController < CmsController
 
     respond_to do |format|
       format.html { redirect_to reorder_cms_pages_path }
-      format.js { redirect_via_turbolinks_to reorder_cms_pages_path }
+      format.js { redirect_to reorder_cms_pages_path }
     end
   end
 
@@ -49,7 +49,7 @@ class Cms::PagesController < CmsController
 
     respond_to do |format|
       format.html { redirect_to reorder_cms_pages_path }
-      format.js { redirect_via_turbolinks_to reorder_cms_pages_path }
+      format.js { redirect_to reorder_cms_pages_path }
     end
   end
 
@@ -58,7 +58,7 @@ class Cms::PagesController < CmsController
 
     respond_to do |format|
       format.html { redirect_to reorder_cms_pages_path }
-      format.js { redirect_via_turbolinks_to reorder_cms_pages_path }
+      format.js { redirect_to reorder_cms_pages_path }
     end
   end
 

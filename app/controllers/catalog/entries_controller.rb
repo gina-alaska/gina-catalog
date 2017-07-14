@@ -50,10 +50,10 @@ class Catalog::EntriesController < CatalogController
 
         if params['commit'] == 'Save'
           format.html { redirect_to edit_catalog_entry_path(@entry) }
-          format.js { redirect_via_turbolinks_to edit_catalog_entry_path(@entry) }
+          format.js { redirect_to edit_catalog_entry_path(@entry) }
         else
           format.html { redirect_to catalog_entry_path(@entry) }
-          format.js { redirect_via_turbolinks_to catalog_entry_path(@entry) }
+          format.js { redirect_to catalog_entry_path(@entry) }
         end
       else
         format.html { render action: 'new' }
@@ -75,10 +75,10 @@ class Catalog::EntriesController < CatalogController
         case params['commit']
         when 'Save'
           format.html { redirect_to edit_catalog_entry_path(@entry) }
-          format.js { redirect_via_turbolinks_to edit_catalog_entry_path(@entry) }
+          format.js { redirect_to edit_catalog_entry_path(@entry) }
         when 'Save & Close'
           format.html { redirect_to catalog_entry_path(@entry) }
-          format.js { redirect_via_turbolinks_to catalog_entry_path(@entry) }
+          format.js { redirect_to catalog_entry_path(@entry) }
         else
           format.js
         end
@@ -190,7 +190,7 @@ class Catalog::EntriesController < CatalogController
 
     respond_to do |format|
       format.html { redirect_to catalog_entry_path(entry) }
-      format.js { redirect_via_turbolinks_to catalog_entry_path(entry) }
+      format.js { redirect_to catalog_entry_path(entry) }
     end
   end
 
