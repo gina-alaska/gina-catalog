@@ -14,7 +14,7 @@ class UserTest < ActiveSupport::TestCase
     @user = users(:one)
     @portal = portals(:one)
 
-    manager = %w[cms_manager data_manager portal_manager]
+    manager = %w(cms_manager data_manager portal_manager)
     manager.each do |role|
       assert @user.role?(role, @portal), "User was not a #{role} when they should have been"
     end
@@ -24,7 +24,7 @@ class UserTest < ActiveSupport::TestCase
     @user = users(:one)
     @portal = portals(:two)
 
-    manager = %w[cms_manager data_manager portal_manager]
+    manager = %w(cms_manager data_manager portal_manager)
 
     manager.each do |role|
       assert !@user.role?(role, @portal), "User was a #{role} when they should not have been"
