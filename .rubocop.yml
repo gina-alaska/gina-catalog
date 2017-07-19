@@ -7,12 +7,16 @@ AllCops:
     - 'test/fixtures/**/*'
     - 'db/schema.rb'
     - 'db/seeds.rb'
+    - 'db/migrate/*'
     - 'cookbook/**/*'
     - 'Gemfile'
     - 'bin/*'
     - 'Guardfile'
     - 'config/puma.rb'
+    - 'config/deploy.rb'
+    - 'habitat/**/*'
     - 'lib/import/*'
+    - 'lib/tasks/*.rake'
 
 # Offense count: 58
 # Configuration parameters: EnforcedStyle, SupportedStyles.

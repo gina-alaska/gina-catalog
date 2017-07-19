@@ -14,47 +14,23 @@ class Import::EntryTest < ActiveSupport::TestCase
 
   test 'should create valid catalog entry' do
     entry_import = Import::Entry.new(portals(:one))
-    import = entry_import.create('id' => 123, 'title' => 'test',
-                                 'description' => 'test', 'status' => 'Unknown',
-                                 'type' => 'project',
-                                 'primary_agency' => {
-                                   'name' => 'Geographic Information Network of Alaska'
-                                 },
-                                 'funding_agency' => {
-                                   'name' => 'Geographic Information Network of Alaska'
-                                 },
-                                 'primary_contact' => {
-                                   'id' => 2
-                                 },
-                                 'contacts' => [{
-                                   'id' => 2
-                                 }],
-                                 'collections' => [{
-                                   'id' => 3
-                                 }],
-                                 'use_agreement' => {
-                                   'id' => 4
-                                 },
-                                 'regions' => [{
-                                   'id' => 5
-                                 }],
-                                 'data_types' => [
-                                   { 'name' => 'GIS' }
-                                 ],
-                                 'iso_topics' => [
-                                   { 'iso_theme_code' => '001' },
-                                   { 'iso_theme_code' => '002' }
-                                 ],
-                                 'uploads' => [
-                                   { 'name' => 'test.com', 'url' => 'http://test.com', 'downloadable' => true },
-                                   { 'name' => 'foo.com', 'url' => 'http://foo.com', 'preview' => true }
-
-                                 ],
-                                 'links' => [{
-                                   'display_text' => 'website',
-                                   'url' => 'http://test.com',
-                                   'category' => 'Website'
-                                 }])
+    import = entry_import.create(
+      'id' => 123, 'title' => 'test', 'description' => 'test', 'status' => 'Unknown', 'type' => 'project',
+      'primary_agency' => { 'name' => 'Geographic Information Network of Alaska' },
+      'funding_agency' => { 'name' => 'Geographic Information Network of Alaska' },
+      'primary_contact' => { 'id' => 2 },
+      'contacts' => [{ 'id' => 2 }],
+      'collections' => [{ 'id' => 3 }],
+      'use_agreement' => { 'id' => 4 },
+      'regions' => [{ 'id' => 5 }],
+      'data_types' => [{ 'name' => 'GIS' }],
+      'iso_topics' => [{ 'iso_theme_code' => '001' }, { 'iso_theme_code' => '002' }],
+      'uploads' => [
+        { 'name' => 'test.com', 'url' => 'http://test.com', 'downloadable' => true },
+        { 'name' => 'foo.com', 'url' => 'http://foo.com', 'preview' => true }
+      ],
+      'links' => [{ 'display_text' => 'website', 'url' => 'http://test.com', 'category' => 'Website' }]
+    )
     assert import.importable.valid?, import.importable.errors.full_messages
     assert_not_empty import.importable.primary_organizations
     assert_not_empty import.importable.funding_organizations

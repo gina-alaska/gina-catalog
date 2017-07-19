@@ -83,10 +83,10 @@ module Glynx
       @handlebars.register_helper(:find_page) do |_this, block|
         pages = current_portal.pages
 
-        return unless block[:hash][:slug]
-
-        page = pages.friendly.find(block[:hash][:slug])
-        block.fn(page.mustache_context(data.page)) unless page.nil?
+        if block[:hash][:slug]
+          page = pages.friendly.find(block[:hash][:slug])
+          block.fn(page.mustache_context(data.page)) unless page.nil?
+        end
       end
 
       @handlebars.register_helper(:child_pages) do |this, context, block|
@@ -98,8 +98,8 @@ module Glynx
         end
 
         unless current_page.nil?
-          children.map do |page|
-            block.fn(page.mustache_context(page))
+          children.map do |child_page|
+            block.fn(child_page.mustache_context(child_page))
           end.join
         end
       end
@@ -183,7 +183,7 @@ module Glynx
 
       @handlebars.partial_missing do |name|
         lambda do |this, context, block|
-          page, block = from_context(this, context, block, current_page)
+          page, _block = from_context(this, context, block, current_page)
           snippet = current_portal.snippets.friendly.find(name)
           ctx = page.render_context(current_portal, page)
 
