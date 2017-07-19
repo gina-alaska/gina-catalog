@@ -13,7 +13,7 @@ class AttachmentsController < ApplicationController
         file_name: @attachment.file_name,
         portal: current_portal
       }
-      
+
       download_log = DownloadLog.new(query_params)
       download_log.save
     end
