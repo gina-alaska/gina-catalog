@@ -1,0 +1,28 @@
+elements = %w( title organizations contacts tags iso data regions description links url collections )
+columns = Array.new
+
+elements.each do |element|
+  columns.push element.to_sym if check_export_visible_params(element)
+end
+columns += [ :start_date, :end_date, :status ]
+
+csv.headers do |csv|
+  csv.columns *columns
+end
+
+csv.rows @search_results do |csv, entry|
+  csv.cell :title, entry.title
+  csv.cell :organizations, entry.organizations.map {|org| org.name} if check_export_visible_params('organizations')
+  csv.cell :contacts, entry.contacts.map {|contact| contact.name_with_email} if check_export_visible_params('contacts')
+  csv.cell :tags, entry.tags.join(' ') if check_export_visible_params('tags')
+  csv.cell :iso, entry.iso_topics.map {|iso| iso.long_name_with_code} if check_export_visible_params('iso')
+  csv.cell :data, entry.data_types.join(' ') if check_export_visible_params('data')
+  csv.cell :regions, entry.regions.join(' ') if check_export_visible_params('regions')
+  csv.cell :description, entry.description if check_export_visible_params('description')
+  csv.cell :links, entry.links.join(' ') if check_export_visible_params('links')
+  csv.cell :url, catalog_entry_url(entry) if check_export_visible_params('url')
+  csv.cell :collections, entry.collections.join(' ') if check_export_visible_params('collections')
+  csv.cell :start_date, entry.start_date
+  csv.cell :end_date, entry.end_date
+  csv.cell :status, entry.status
+end

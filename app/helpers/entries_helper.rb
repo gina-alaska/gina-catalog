@@ -12,6 +12,10 @@ module EntriesHelper
   end
 
   def limit_select
-    [["Limit: 30", 30], ["Limit:100", 100], ["Limit: 500", 500], ["Limit: 1000", 1000], ["Limit: 2000", 2000], ["Limit: 5000", 5000]]
+    [['Limit: 30', 30], ['Limit:100', 100], ['Limit: 500', 500], ['Limit: 1000', 1000], ['Limit: 2000', 2000], ['Limit: 5000', 5000]]
+  end
+
+  def format_select
+    [['HTML', 'html'], ['CSV', 'csv']]
   end
 end

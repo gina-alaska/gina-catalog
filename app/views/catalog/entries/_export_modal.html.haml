@@ -8,40 +8,42 @@
       .modal-body
         .panel
           %p Select report elements to include:
-          = bootstrap_form_tag url: exports_catalog_entries_path, method: :get do |f| 
+          = bootstrap_form_for @entry_export, method: :post do |f| 
             = f.hidden_field 'serialized_search', value: @search_params.to_json
             .row
               .col-sm-3
-                = f.check_box 'visible[organizations]', checked: true, label: 'Organizations'
+                = f.check_box 'organizations', checked: true, label: 'Organizations'
               .col-sm-3
-                = f.check_box 'visible[collections]', checked: true, label: 'Collections'
+                = f.check_box 'collections', checked: true, label: 'Collections'
               .col-sm-3
-                = f.check_box 'visible[contacts]', checked: true, label: 'Contacts'
+                = f.check_box 'contacts', checked: true, label: 'Contacts'
               .col-sm-3
-                = f.check_box 'visible[data]', checked: true, label: 'Data Type'
+                = f.check_box 'data', checked: true, label: 'Data Type'
             .row
               .col-sm-3
-                = f.check_box 'visible[description]', checked: true, label: 'Description'
+                = f.check_box 'description', checked: true, label: 'Description'
               .col-sm-3
-                = f.check_box 'visible[info]', checked: true, label: 'Dates, Status'
+                = f.check_box 'info', checked: true, label: 'Dates, Status'
               .col-sm-3
-                = f.check_box 'visible[iso]', checked: true, label: 'Iso Topics'
+                = f.check_box 'iso', checked: true, label: 'Iso Topics'
               .col-sm-3
-                = f.check_box 'visible[links]', checked: true, label: 'Links'
+                = f.check_box 'links', checked: true, label: 'Links'
             .row
               .col-sm-3
-                = f.check_box 'visible[location]', checked: true, label: 'Geokeywords, Location'
+                = f.check_box 'location', checked: true, label: 'Geokeywords, Location'
               .col-sm-3
-                = f.check_box 'visible[tags]', checked: true, label: 'Tags'
+                = f.check_box 'tags', checked: true, label: 'Tags'
               .col-sm-3
-                = f.check_box 'visible[title]', checked: true, label: 'Title'
+                = f.check_box 'title', checked: true, label: 'Title'
               .col-sm-3
-                = f.check_box 'visible[url]', checked: true, label: 'Catalog Record URL'
+                = f.check_box 'url', checked: true, label: 'Catalog Record URL'
             .row
-              .col-sm-4
+              .col-sm-3
                 = f.select :limit, options_for_select(limit_select, @limit), hide_label: true
-              .col-sm-8
-                = f.text_field :description_chars, value: 500, label: 'Characters in Description', layout: :horizontal, label_col: 'col-sm-7', control_col: 'col-sm-5'
+              .col-sm-5
+                = f.text_field :description_chars, value: 500, label: 'Chars in Description', layout: :horizontal, control_col: 'col-sm-6', label_col: 'col-sm-6'
+              .col-sm-4
+                = f.select :format_type, options_for_select(format_select, @format_type), label: 'Format Type', layout: :horizontal, control_col: 'col-sm-8', label_col: 'col-sm-4'
             .row
             .modal-footer.text-right
               = f.primary "Export"

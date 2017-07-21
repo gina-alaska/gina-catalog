@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151208222758) do
+ActiveRecord::Schema.define(version: 20170718230830) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -283,6 +283,27 @@ ActiveRecord::Schema.define(version: 20151208222758) do
     t.integer  "entry_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "entry_exports", force: :cascade do |t|
+    t.text     "serialized_search"
+    t.boolean  "organizations"
+    t.boolean  "collections"
+    t.boolean  "contacts"
+    t.boolean  "data"
+    t.boolean  "description"
+    t.boolean  "info"
+    t.boolean  "iso"
+    t.boolean  "links"
+    t.boolean  "location"
+    t.boolean  "tags"
+    t.boolean  "title"
+    t.boolean  "url"
+    t.integer  "limit"
+    t.integer  "description_chars"
+    t.text     "format_type"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
   create_table "entry_iso_topics", force: :cascade do |t|

@@ -1,0 +1,26 @@
+<%= simple_form_for(@entry_export) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :serialized_search %>
+    <%= f.input :organizations %>
+    <%= f.input :collections %>
+    <%= f.input :contacts %>
+    <%= f.input :data %>
+    <%= f.input :description %>
+    <%= f.input :info %>
+    <%= f.input :iso %>
+    <%= f.input :links %>
+    <%= f.input :location %>
+    <%= f.input :tags %>
+    <%= f.input :title %>
+    <%= f.input :url %>
+    <%= f.input :limit %>
+    <%= f.input :description_chars %>
+    <%= f.input :format_type %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

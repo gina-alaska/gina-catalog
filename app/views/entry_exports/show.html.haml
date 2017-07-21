@@ -1,0 +1,16 @@
+- url = export_html_entry_exports_path(@entry_export, @export_params) if @export_params['format_type'] == 'html'
+- url = export_csv_entry_exports_path(@entry_export, @export_params) if @export_params['format_type'] == 'csv'
+
+.container
+  .panel.panel-default
+    .panel-heading{ style: 'position: relative' }
+      .brand
+        %h3 Redirecting you to your download ...
+    .panel-body.entry-form-container
+      %p If you are not redirected, please select the link below to start the download.
+
+:javascript
+
+$(document).ready( function() {
+  setTimeout(window.location.href = '#{url}', 10000);
+});

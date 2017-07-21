@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+
+
   get 'archive_items/create'
 
   get 'archives/create'
@@ -67,6 +69,13 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :entry_exports do
+    collection do
+      post :export_html
+      post :export_csv
+    end
+  end
+
   namespace :catalog do
     resources :collections do
       member do
@@ -96,7 +105,6 @@ Rails.application.routes.draw do
       resources :attachments do
         get :preview, on: :member
       end
-      get :exports, on: :collection
     end
 
     resources :tags, constraints: { id: /[^\\]+/ } do

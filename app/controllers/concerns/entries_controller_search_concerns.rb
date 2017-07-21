@@ -19,6 +19,8 @@ module EntriesControllerSearchConcerns
       other_contacts: organize_facets(@entries.aggs['contact_ids'], Contact),
       archived: organize_facets(@entries.aggs['archived?'])
     ) if facets?
+
+    @entries
   end
 
   protected
