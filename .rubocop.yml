@@ -17,6 +17,7 @@ AllCops:
     - 'habitat/**/*'
     - 'lib/import/*'
     - 'lib/tasks/*.rake'
+  TargetRubyVersion: '2.4'
 
 # Offense count: 58
 # Configuration parameters: EnforcedStyle, SupportedStyles.
@@ -46,4 +47,7 @@ StringLiterals:
   Enabled: false
 
 NumericLiterals:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
   Enabled: false
