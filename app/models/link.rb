@@ -40,13 +40,13 @@ class Link < ActiveRecord::Base
       opts = {
         read_timeout: 1,
         content_length_proc: lambda do |t|
-          if t && t > 0
+          if t && t.positive?
             pbar = ProgressBar.new(t)
             # pbar.file_transfer_mode
           end
         end,
         progress_proc: lambda do |s|
-          pbar.increment! s if pbar
+          pbar&.increment! s
         end
       }
       # puts "Caching #{url}"
