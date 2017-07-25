@@ -221,19 +221,19 @@ class Catalog::EntriesController < CatalogController
     )
 
     if values[:collection_ids].present?
-      values[:collection_ids] = values.delete(:collection_ids).map(&:to_i).reject { |v| v == 0 }
+      values[:collection_ids] = values.delete(:collection_ids).map(&:to_i).reject(&:zero?)
     end
 
     if values[:region_ids].present?
-      values[:region_ids] = values.delete(:region_ids).map(&:to_i).reject { |v| v == 0 }
+      values[:region_ids] = values.delete(:region_ids).map(&:to_i).reject(&:zero?)
     end
 
     if values[:iso_topic_ids].present?
-      values[:iso_topic_ids] = values.delete(:iso_topic_ids).map(&:to_i).reject { |v| v == 0 }
+      values[:iso_topic_ids] = values.delete(:iso_topic_ids).map(&:to_i).reject(&:zero?)
     end
 
     if values[:data_type_ids].present?
-      values[:data_type_ids] = values.delete(:data_type_ids).map(&:to_i).reject { |v| v == 0 }
+      values[:data_type_ids] = values.delete(:data_type_ids).map(&:to_i).reject(&:zero?)
     end
     values
   end

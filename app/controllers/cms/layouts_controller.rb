@@ -66,12 +66,11 @@ class Cms::LayoutsController < CmsController
       if !@cms_layout.pages.empty?
         flash[:error] = 'Cannot delete a layout that is attached to a page'
         format.html { redirect_to cms_layouts_url }
-        format.json { head :no_content }
       else
         @cms_layout.destroy
         format.html { redirect_to cms_layouts_url, notice: 'Layout was successfully deleted.' }
-        format.json { head :no_content }
       end
+      format.json { head :no_content }
     end
   end
 

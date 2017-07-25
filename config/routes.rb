@@ -1,3 +1,5 @@
+# rubocop:disable Metrics/BlockLength, Style/RegexpLiteral, Layout/TrailingWhitespace, Lint/UnneededDisable
+
 Rails.application.routes.draw do
   get 'archive_items/create'
 

@@ -4,23 +4,23 @@ module EntriesControllerSearchConcerns
   def search(page, per_page = 20)
     # search_params
     @entries = Entry.search elasticsearch_params(page, per_page)
-    if facets?
-      @facets = OpenStruct.new(
-        tags: organize_facets(@entries.aggs['tag_list']),
-        collections: organize_facets(@entries.aggs['collection_ids'], Collection),
-        iso_topics: organize_facets(@entries.aggs['iso_topic_ids'], IsoTopic),
-        entry_types: organize_facets(@entries.aggs['entry_type_name']),
-        data_types: organize_facets(@entries.aggs['data_type_ids'], DataType),
-        regions: organize_facets(@entries.aggs['region_ids'], Region),
-        status: organize_facets(@entries.aggs['status']),
-        primary_organizations: organize_facets(@entries.aggs['primary_organization_ids'], Organization, :id, :acronym_with_name),
-        funding_organizations: organize_facets(@entries.aggs['funding_organization_ids'], Organization, :id, :acronym_with_name),
-        organization_categories: organize_facets(@entries.aggs['organization_categories']),
-        primary_contacts: organize_facets(@entries.aggs['primary_contact_ids'], Contact),
-        other_contacts: organize_facets(@entries.aggs['contact_ids'], Contact),
-        archived: organize_facets(@entries.aggs['archived?'])
-      )
-    end
+    return unless facets?
+
+    @facets = OpenStruct.new(
+      tags: organize_facets(@entries.aggs['tag_list']),
+      collections: organize_facets(@entries.aggs['collection_ids'], Collection),
+      iso_topics: organize_facets(@entries.aggs['iso_topic_ids'], IsoTopic),
+      entry_types: organize_facets(@entries.aggs['entry_type_name']),
+      data_types: organize_facets(@entries.aggs['data_type_ids'], DataType),
+      regions: organize_facets(@entries.aggs['region_ids'], Region),
+      status: organize_facets(@entries.aggs['status']),
+      primary_organizations: organize_facets(@entries.aggs['primary_organization_ids'], Organization, :id, :acronym_with_name),
+      funding_organizations: organize_facets(@entries.aggs['funding_organization_ids'], Organization, :id, :acronym_with_name),
+      organization_categories: organize_facets(@entries.aggs['organization_categories']),
+      primary_contacts: organize_facets(@entries.aggs['primary_contact_ids'], Contact),
+      other_contacts: organize_facets(@entries.aggs['contact_ids'], Contact),
+      archived: organize_facets(@entries.aggs['archived?'])
+    )
   end
 
   protected
@@ -131,7 +131,7 @@ module EntriesControllerSearchConcerns
       custom_query[:bool][:filter] << term_query_filter(:published?, true)
     end
 
-    custom_query[:bool][:filter] << term_query_filter(:archived?, !!search_params[:archived])
+    custom_query[:bool][:filter] << term_query_filter(:archived?, !search_params[:archived])
 
     page ||= 1
     offset = (page.to_i - 1) * per_page.to_i
@@ -159,16 +159,17 @@ module EntriesControllerSearchConcerns
   end
 
   def order_params
-    order_by = case search_params[:order]
-               when 'start_date'
-                 { start_date: :asc }
-               when 'end_date'
-                 { end_date: :asc }
-               when 'title'
-                 { title: :asc }
-               when 'updated_at'
-                 { updated_at: :desc }
-    end
+    order_by =
+      case search_params[:order]
+      when 'start_date'
+        { start_date: :asc }
+      when 'end_date'
+        { end_date: :asc }
+      when 'title'
+        { title: :asc }
+      when 'updated_at'
+        { updated_at: :desc }
+      end
 
     [order_by, '_score'].compact
   end

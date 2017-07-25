@@ -33,7 +33,7 @@ class Link < ActiveRecord::Base
     cache_dir = Rails.root.join('tmp/pdf_cache')
     FileUtils.mkdir_p(cache_dir)
 
-    cache_filename = cache_dir.join(url.gsub('http://', '').gsub(/[\/%]/, '_'))
+    cache_filename = cache_dir.join(url.gsub('http://', '').gsub(%r{[/%]}, '_'))
 
     if File.size?(cache_filename).nil?
       pbar = nil

@@ -67,10 +67,9 @@ class Cms::Page < ActiveRecord::Base
 
   def check_handlebarjs_syntax
     return if content.blank?
-    unless @render_errors.nil?
-      @render_errors.each do |render_error|
-        error.add(*render_error)
-      end
+    return if @render_errors.nil?
+    @render_errors.each do |render_error|
+      error.add(*render_error)
     end
   end
 
