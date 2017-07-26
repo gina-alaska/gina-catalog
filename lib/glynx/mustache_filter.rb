@@ -44,6 +44,23 @@ module Glynx
     end
 
     def register_helpers
+      %w[ register_portals register_entries register_pages register_rootpage register_images register_childpages
+          register_imageattachments register_content register_collections ].each do |register|
+        send(register)
+      end
+
+      @handlebars.partial_missing do |name|
+        lambda do |this, context, block|
+          page, _block = from_context(this, context, block, current_page)
+          snippet = current_portal.snippets.friendly.find(name)
+          ctx = page.render_context(current_portal, page)
+
+          snippet.render(ctx)
+        end
+      end
+    end
+
+    def register_portals
       @handlebars.register_helper(:parent_portal) do |this, context, block|
         model, block = from_context(this, context, block, current_portal)
         portals([model.parent], block) unless model.parent.nil?
@@ -58,7 +75,9 @@ module Glynx
         model, block = from_context(this, context, block, current_portal)
         portals(model.siblings, block)
       end
+    end
 
+    def register_entries
       @handlebars.register_helper(:entries) do |this, context, block|
         model, block = from_context(this, context, block, current_portal)
         entries(model.entries.active, block[:hash][:limit], block)
@@ -73,7 +92,9 @@ module Glynx
         model, block = from_context(this, context, block, current_portal)
         entries(model.entries.active.recently_updated, block[:hash][:limit], block)
       end
+    end
 
+    def register_pages
       @handlebars.register_helper(:pages) do |_this, block|
         current_portal.pages.roots.visible.map do |page|
           block.fn(page.mustache_context(data.page))
@@ -88,7 +109,9 @@ module Glynx
           block.fn(page.mustache_context(data.page)) unless page.nil?
         end
       end
+    end
 
+    def register_childpages
       @handlebars.register_helper(:child_pages) do |this, context, block|
         page, block = from_context(this, context, block, current_page)
         children = page.children.visible
@@ -103,7 +126,9 @@ module Glynx
           end.join
         end
       end
+    end
 
+    def register_rootpage
       @handlebars.register_helper(:root_page) do |this, context, block|
         page, block = from_context(this, context, block, current_page)
 
@@ -115,7 +140,9 @@ module Glynx
 
         block.fn(page.parent.mustache_context(page)) if !page.nil? && !page.parent.nil?
       end
+    end
 
+    def register_images
       @handlebars.register_helper(:thumbnail) do |this, image, options|
         model, options = from_context(this, image, options)
         image_thumbnail_tag(model, :limit, options)
@@ -140,7 +167,9 @@ module Glynx
 
         image_thumbnail_tag(model, :fill, options)
       end
+    end
 
+    def register_imageattachments
       @handlebars.register_helper(:image_attachments) do |this, context, block|
         page, block = from_context(this, context, block, current_page)
 
@@ -155,7 +184,9 @@ module Glynx
           end.join
         end
       end
+    end
 
+    def register_content
       @handlebars.register_helper(:content_for) do |this, context, block|
         set_content this.page, context, block.fn(current_page.mustache_context(data.page))
 
@@ -165,7 +196,9 @@ module Glynx
       @handlebars.register_helper(:show_content_for) do |this, context|
         get_content(this.page, context)
       end
+    end
 
+    def register_collections
       @handlebars.register_helper(:collections) do |_this, block|
         collections = current_portal.collections.visible.order(name: :asc)
 
@@ -179,16 +212,6 @@ module Glynx
         collections.map do |collection|
           block.fn(collection.mustache_context(data.page))
         end.join
-      end
-
-      @handlebars.partial_missing do |name|
-        lambda do |this, context, block|
-          page, _block = from_context(this, context, block, current_page)
-          snippet = current_portal.snippets.friendly.find(name)
-          ctx = page.render_context(current_portal, page)
-
-          snippet.render(ctx)
-        end
       end
     end
 
