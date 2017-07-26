@@ -89,7 +89,7 @@ module EntriesControllerSearchConcerns
     {
       query_string: {
         query: query_string,
-        default_field: '_all',
+        default_field: '_all'
       }
     }
   end
@@ -197,7 +197,6 @@ module EntriesControllerSearchConcerns
 
   def aggregates
     FACET_FIELDS.each_with_object({}) do |f, c|
-      name = f[0]
       field = f[1]
 
       c[field] = {
