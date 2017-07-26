@@ -93,7 +93,7 @@ class EntryTest < ActiveSupport::TestCase
     entry.attachments.build(category: 'Primary Thumbnail')
     entry.attachments.build(category: 'Primary Thumbnail')
     entry.save
-    assert entry.errors[:attachments].count > 0, 'Did not generate any errors about attachments'
+    assert entry.errors[:attachments].count.positive?, 'Did not generate any errors about attachments'
   end
 
   test 'is the entry archived?' do
