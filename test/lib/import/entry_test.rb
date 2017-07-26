@@ -32,16 +32,12 @@ class Import::EntryTest < ActiveSupport::TestCase
       'links' => [{ 'display_text' => 'website', 'url' => 'http://test.com', 'category' => 'Website' }]
     )
     assert import.importable.valid?, import.importable.errors.full_messages
-    assert_not_empty import.importable.primary_organizations
-    assert_not_empty import.importable.funding_organizations
-    assert_not_empty import.importable.primary_contacts
-    assert_not_empty import.importable.contacts
-    assert_not_empty import.importable.links
-    assert_not_empty import.importable.collections
-    assert_not_empty import.importable.iso_topics
-    assert_not_empty import.importable.regions
-    assert_not_empty import.importable.data_types
-    assert_not_empty import.importable.attachments
+
+    %w[ primary_organizations funding_organizations primary_contacts contacts links collections iso_topics
+        regions data_types attachments ].each do |field|
+      assert_not_empty import.importable.send(field)
+    end
+
     assert_not_nil import.importable.use_agreement
   end
 
