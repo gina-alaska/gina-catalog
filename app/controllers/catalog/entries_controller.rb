@@ -209,8 +209,7 @@ class Catalog::EntriesController < CatalogController
   def entry_params
     values = params.require(:entry).permit(
       :title, :description, :status, :entry_type_id, :start_date, :end_date,
-      :use_agreement_id, :request_contact_info, :require_contact_info,
-      :tag_list,
+      :use_agreement_id, :request_contact_info, :require_contact_info, :tag_list,
       collection_ids: [], region_ids: [], iso_topic_ids: [], data_type_ids: [],
       links_attributes: %i[id link_id category display_text url _destroy],
       entry_collections_attributes: %i[id _destroy],
@@ -220,21 +219,11 @@ class Catalog::EntriesController < CatalogController
       entry_map_layers_attributes: %i[id map_layer_id _destroy]
     )
 
-    if values[:collection_ids].present?
-      values[:collection_ids] = values.delete(:collection_ids).map(&:to_i).reject(&:zero?)
+    %w[collection_ids region_ids iso_topic_ids data_type_ids].each do |field|
+      next unless values.include?(field.to_sym)
+      values[field.to_sym] = values.delete(field.to_sym).map(&:to_i).reject(&:zero?)
     end
 
-    if values[:region_ids].present?
-      values[:region_ids] = values.delete(:region_ids).map(&:to_i).reject(&:zero?)
-    end
-
-    if values[:iso_topic_ids].present?
-      values[:iso_topic_ids] = values.delete(:iso_topic_ids).map(&:to_i).reject(&:zero?)
-    end
-
-    if values[:data_type_ids].present?
-      values[:data_type_ids] = values.delete(:data_type_ids).map(&:to_i).reject(&:zero?)
-    end
     values
   end
 

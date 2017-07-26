@@ -89,10 +89,7 @@ module EntriesControllerSearchConcerns
     {
       query_string: {
         query: query_string,
-        # analyzer: 'snowball',
         default_field: '_all',
-        # default_operator: "AND",
-        # flags: 'OR|AND|PREFIX|NOT'
       }
     }
   end
@@ -109,21 +106,15 @@ module EntriesControllerSearchConcerns
       facet_field_search << term_query_filter(FACET_FIELDS[param], search_params[param])
     end
 
-    custom_query = {
-      bool: { must: [query_params(facet_field_search.empty?)] }
-    }
+    custom_query = { bool: { must: [query_params(facet_field_search.empty?)] } }
 
-    unless facet_field_search.empty?
-      custom_query[:bool][:must] += facet_field_search
-    end
+    custom_query[:bool][:must] += facet_field_search unless facet_field_search.empty?
 
-    if start_date_filter = range_query_filter(:start_date, :starts_after, :starts_before)
-      custom_query[:bool][:must] << start_date_filter
-    end
+    start_date_filter = range_query_filter(:start_date, :starts_after, :starts_before)
+    custom_query[:bool][:must] << start_date_filter if start_date_filter
 
-    if end_date_filter = range_query_filter(:end_date, :ends_after, :ends_before)
-      custom_query[:bool][:must] << end_date_filter
-    end
+    end_date_filter = range_query_filter(:end_date, :ends_after, :ends_before)
+    custom_query[:bool][:must] << end_date_filter if end_date_filter
 
     # user filter here to keep it from affecting the result score
     custom_query[:bool][:filter] ||= []
@@ -193,11 +184,7 @@ module EntriesControllerSearchConcerns
     filter = date_search_params(after, before)
     return false if filter.nil?
 
-    {
-      range: {
-        field => date_search_params(after, before)
-      }
-    }
+    { range: { field => date_search_params(after, before) } }
   end
 
   def term_query_filter(name, value)
