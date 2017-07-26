@@ -1,0 +1,22 @@
+.modal.fade{id: dom_id }
+  .modal-dialog.modal-lg
+    .modal-content
+      .modal-header
+        %h4.modal-title Select an image to add
+      .modal-body
+        .row
+          -# = render '/shared/cms_attachment/sortby', target: "##{dom_id}", images: true
+          .loading
+            %i.fa.fa-spin.fa-refresh
+            Loading images....
+          .content
+
+        = render '/shared/cms_attachment/template', action: action
+      .modal-footer
+        %button.btn.btn-primary{ type: 'button', data: { dismiss: 'modal' } }
+          %i.fa.fa-close
+          Close
+
+:javascript
+  var chooser = new ImageChooser("##{dom_id}", "#{data_url}")
+  $(document).on('click', '[data-action="show-#{dom_id}"]', chooser.show)
