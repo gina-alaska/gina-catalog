@@ -10,15 +10,8 @@ class Ability
     @user = user
 
     setup_global_permissions
-    setup_global_admin_permissions if current_user.global_admin?
+    setup_global_admin_permissions
     setup_portal_permissions
-  end
-
-  def setup_portal_permissions
-    setup_cms_manager_permissions     if current_user.role?(:cms_manager, current_portal)
-    setup_data_entry_permissions      if current_user.role?(:data_manager, current_portal) || current_user.role?(:data_entry, current_portal)
-    setup_data_manager_permissions    if current_user.role?(:data_manager, current_portal)
-    setup_portal_manager_permissions  if current_user.role?(:portal_manager, current_portal)
   end
 
   def current_portal
@@ -39,7 +32,15 @@ class Ability
     can :accept, Invitation unless current_user.new_record?
   end
 
+  def setup_portal_permissions
+    setup_cms_manager_permissions     if current_user.role?(:cms_manager, current_portal)
+    setup_data_entry_permissions      if current_user.role?(:data_manager, current_portal) || current_user.role?(:data_entry, current_portal)
+    setup_data_manager_permissions    if current_user.role?(:data_manager, current_portal)
+    setup_portal_manager_permissions  if current_user.role?(:portal_manager, current_portal)
+  end
+
   def setup_global_admin_permissions
+    return unless current_user.global_admin?
     can :view_admin, :menu
     can :manage, [User, EntryType, Region, DataType, IsoTopic, Portal]
   end
