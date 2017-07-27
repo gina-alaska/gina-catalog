@@ -3,4 +3,4 @@
   .cms-page-content {
     #{current_portal.active_cms_theme.try(:css).try(:html_safe)}
   }
-  #{'body { @extend .cms-page-content.page !optional; }' if extend_body}
+  #{'body { @extend .cms-page-content; @extend .page !optional; }' if extend_body}
