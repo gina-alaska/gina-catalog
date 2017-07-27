@@ -1,5 +1,6 @@
 require 'test_helper'
 
+# rubocop:disable Metrics/ClassLength
 class EntryTest < ActiveSupport::TestCase
   setup do
     @entry = entries(:one)
@@ -45,6 +46,12 @@ class EntryTest < ActiveSupport::TestCase
     @entry.entry_portals.each { |es| es.update_attribute(:owner, true) }
     assert !@entry.valid?
     assert_equal ['cannot specify more than one owner'], @entry.errors['portals']
+  end
+
+  test "shouldn't save invalid record" do
+    entry = Entry.new
+
+    assert_not entry.save
   end
 
   test 'on create the first portal should become the owner portal' do
@@ -124,5 +131,36 @@ class EntryTest < ActiveSupport::TestCase
     assert_difference('ArchiveItem.count', -1) do
       entry.unarchive!
     end
+  end
+
+  test 'should return changed activity hash' do
+    entry = entries(:one)
+
+    entry.title = 'Testing change to title'
+    data = { display: entry.title }
+    assert_equal data, entry.changed_activity('title')
+    assert_nil entry.changed_activity('description')
+  end
+
+  test 'should return changed fields' do
+    entry = entries(:one)
+
+    entry.title = 'Testing change to title'
+    entry.description = 'Non id dolore quis fore, ea et esse veniam culpa. Sunt laborum e expetendis. Ne
+    o veniam illum enim, irure laboris cohaerescant an senserit sint iis ullamco
+    comprehenderit o qui qui aute consequat. Quo o ipsum nostrud ubi iudicem ut
+    arbitror te export expetendis relinqueret non appellat amet aute eu veniam non e
+    nisi admodum an est elit quem est singulis, admodum multos elit ea quis ne
+    eiusmod se expetendis.Commodo noster consequat officia, voluptate quae quae ne
+    magna eu elit ex consequat aut tempor, arbitror esse constias mandaremus. Se
+    irure probant relinqueret ex legam nam arbitror de iis fore culpa export
+    consequat, offendit tempor pariatur a iis an fore appellat, labore arbitror ubi
+    ingeniis, litteris ad nescius est te quae aliquip arbitrantur. O nulla amet iis
+    cernantur ea arbitror do mandaremus.'
+
+    assert_includes entry.activity_params, :title
+    assert_includes entry.activity_params, :description
+    assert_not_includes entry.activity_params, :start_date
+    assert_equal entry.description[0..50], entry.activity_params[:description][:display]
   end
 end
