@@ -1,5 +1,6 @@
 require 'test_helper'
 
+# rubocop:disable Metrics/ClassLength
 class Catalog::EntriesControllerTest < ActionController::TestCase
   setup do
     @entry = entries(:one)
