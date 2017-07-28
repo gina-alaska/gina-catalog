@@ -1,26 +1,58 @@
 module EntriesControllerSearchConcerns
   extend ActiveSupport::Concern
 
+  class Aggregates
+    def initialize(entries)
+      @entries = entries
+    end
+
+    def fetch
+      OpenStruct.new(
+        tags: organize(:tag_list),
+        collections: organize(:collection_ids, Collection),
+        iso_topics: organize(:iso_topic_ids, IsoTopic),
+        entry_types: organize(:entry_type_name),
+        data_types: organize(:data_type_ids, DataType),
+        regions: organize(:region_ids, Region),
+        status: organize(:status),
+        primary_organizations: organize(:primary_organization_ids, Organization, :id, :acronym_with_name),
+        funding_organizations: organize(:funding_organization_ids, Organization, :id, :acronym_with_name),
+        organization_categories: organize(:organization_categories),
+        primary_contacts: organize(:primary_contact_ids, Contact),
+        other_contacts: organize(:contact_ids, Contact),
+        archived: organize(:archived?)
+      )
+    end
+
+    def organize(facet_name, model = nil, term_field = :id, display_field = :name)
+      elastic_facets = @entries.aggs[facet_name.to_s]
+      return [] if elastic_facets.nil?
+
+      facets = elastic_facets['buckets'].each_with_object([]) do |f, memo|
+        if !model.nil?
+          facet_record = model.where(term_field => f['key']).first
+          f['display_name'] = facet_record.try(display_field)
+          f['hidden'] = facet_record.try(:hidden?)
+        else
+          f['display_name'] = f['key']
+          f['hidden'] = false
+        end
+
+        memo << f
+      end
+
+      facets.sort { |a, b| a['doc_count'] == b['doc_count'] ? a['key'] <=> b['key'] : b['doc_count'] <=> a['doc_count'] }
+    end
+  end
+
   def search(page, per_page = 20)
     # search_params
     @entries = Entry.search elasticsearch_params(page, per_page)
+
     return unless facets?
 
-    @facets = OpenStruct.new(
-      tags: organize_facets(@entries.aggs['tag_list']),
-      collections: organize_facets(@entries.aggs['collection_ids'], Collection),
-      iso_topics: organize_facets(@entries.aggs['iso_topic_ids'], IsoTopic),
-      entry_types: organize_facets(@entries.aggs['entry_type_name']),
-      data_types: organize_facets(@entries.aggs['data_type_ids'], DataType),
-      regions: organize_facets(@entries.aggs['region_ids'], Region),
-      status: organize_facets(@entries.aggs['status']),
-      primary_organizations: organize_facets(@entries.aggs['primary_organization_ids'], Organization, :id, :acronym_with_name),
-      funding_organizations: organize_facets(@entries.aggs['funding_organization_ids'], Organization, :id, :acronym_with_name),
-      organization_categories: organize_facets(@entries.aggs['organization_categories']),
-      primary_contacts: organize_facets(@entries.aggs['primary_contact_ids'], Contact),
-      other_contacts: organize_facets(@entries.aggs['contact_ids'], Contact),
-      archived: organize_facets(@entries.aggs['archived?'])
-    )
+    aggs = Aggregates.new(@entries)
+    @facets = aggs.fetch
   end
 
   protected
@@ -122,7 +154,7 @@ module EntriesControllerSearchConcerns
       custom_query[:bool][:filter] << term_query_filter(:published?, true)
     end
 
-    custom_query[:bool][:filter] << term_query_filter(:archived?, !search_params[:archived])
+    custom_query[:bool][:filter] << term_query_filter(:archived?, search_params[:archived])
 
     page ||= 1
     offset = (page.to_i - 1) * per_page.to_i
