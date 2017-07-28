@@ -71,7 +71,8 @@ class Catalog::EntriesController < CatalogController
       if @entry.update_attributes(entry_params)
 
         flash[:success] = "Catalog record #{@entry.title} was successfully updated."
-
+        MetadataExportJob.perform_later @entry.id
+        
         case params['commit']
         when 'Save'
           format.html { redirect_to edit_catalog_entry_path(@entry) }
