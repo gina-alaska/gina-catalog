@@ -80,6 +80,7 @@ gem 'rack-cors', require: 'rack/cors'
 gem 'hightop'
 gem 'version'
 gem 'request_store'
+gem 'adiwg-mdtranslator'
 
 group :development, :production do
   gem 'rails_12factor'
