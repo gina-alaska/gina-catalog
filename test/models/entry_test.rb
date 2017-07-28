@@ -1,6 +1,5 @@
 require 'test_helper'
 
-# rubocop:disable Metrics/ClassLength
 class EntryTest < ActiveSupport::TestCase
   setup do
     @entry = entries(:one)

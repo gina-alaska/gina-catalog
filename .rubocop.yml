@@ -51,3 +51,9 @@ NumericLiterals:
 
 Style/FrozenStringLiteralComment:
   Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/ModuleLength:
+  Enabled: false

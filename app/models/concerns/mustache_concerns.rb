@@ -8,13 +8,13 @@ module MustacheConcerns
 
   def basic_pipeline(context)
     HTML::Pipeline.new [
-      Glynx::MustacheFilter
+      Glynx::Mustache::Filter
     ], context
   end
 
   def markdown_pipeline(context)
     HTML::Pipeline.new [
-      Glynx::MustacheFilter,
+      Glynx::Mustache::Filter,
       HTML::Pipeline::MarkdownFilter
     ], context
   end

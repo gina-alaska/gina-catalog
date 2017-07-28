@@ -10,7 +10,7 @@ Dotenv::Railtie.load
 
 module Glynx
   class Application < Rails::Application
-    require 'glynx/mustache_filter'
+    require 'glynx/mustache'
     # Use the responders controller from the responders gem
     # config.app_generators.scaffold_controller :responders_controller
 
