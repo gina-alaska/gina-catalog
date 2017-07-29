@@ -11,6 +11,8 @@ class Link < ActiveRecord::Base
   validates :url, length: { within: 11..255, message: 'is not a valid url' }
   validates :category, inclusion: { in: CATEGORIES, message: 'is not a valid category' }
 
+  before_save :create_uuid
+
   include PublicActivity::Model
 
   tracked owner: proc { |controller, _model| controller.send(:current_user) },
@@ -81,5 +83,12 @@ class Link < ActiveRecord::Base
 
   def to_s
     display_text
+  end
+
+  def create_uuid
+    return unless uuid.nil?
+    return if url.nil?
+
+    self.uuid = UUIDTools::UUID.md5_create(UUIDTools::UUID_URL_NAMESPACE, self.url).to_s
   end
 end
