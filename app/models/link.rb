@@ -10,6 +10,7 @@ class Link < ActiveRecord::Base
   validates :display_text, length: { maximum: 255 }
   validates :url, length: { within: 11..255, message: 'is not a valid url' }
   validates :category, inclusion: { in: CATEGORIES, message: 'is not a valid category' }
+  validates :uuid, uniqueness: true
 
   before_save :create_uuid
 
@@ -89,6 +90,6 @@ class Link < ActiveRecord::Base
     return unless uuid.nil?
     return if url.nil?
 
-    self.uuid = UUIDTools::UUID.md5_create(UUIDTools::UUID_URL_NAMESPACE, self.url).to_s
+    self.uuid = UUIDTools::UUID.md5_create(UUIDTools::UUID_URL_NAMESPACE, url).to_s
   end
 end
