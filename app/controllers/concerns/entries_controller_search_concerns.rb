@@ -114,7 +114,7 @@ module EntriesControllerSearchConcerns
     @search_params
   end
 
-  def query_params(_force_all = false)
+  def query_params
     query_string = search_params[:query]
     query_string = '*' if query_string.blank?
 
@@ -130,15 +130,45 @@ module EntriesControllerSearchConcerns
     FACET_FIELDS.values.each_with_object({}) { |f, c| c[f.to_s] = { limit: 50 } }
   end
 
-  def elasticsearch_params(page, per_page = 20)
-    facet_field_search = []
-    %i[tags collections iso_topics organization_categories entry_type_name data_types regions status primary_organizations funding_organizations
-       primary_contacts other_contacts archived].each do |param|
+  def facet_field_search
+    search = []
+    FACET_FIELDS.keys.each do |param|
       next unless search_params[param].present?
-      facet_field_search << term_query_filter(FACET_FIELDS[param], search_params[param])
+      search << term_query_filter(FACET_FIELDS[param], search_params[param])
     end
 
-    custom_query = { bool: { must: [query_params(facet_field_search.empty?)] } }
+    search
+  end
+
+  # this makes use of elastic search query syntax
+  def elasticsearch_params(page, per_page = 20)
+    page ||= 1
+    offset = (page.to_i - 1) * per_page.to_i
+
+    {
+      body: {
+        sort: order_params,
+        query: elasticsearch_query,
+        aggs: aggregates,
+        post_filter: {
+          bool: {
+            filter: [{
+              in: {
+                portal_ids: current_portal.self_and_descendants.pluck(:id)
+              }
+            }]
+          }
+        },
+        size: per_page,
+        from: offset
+      },
+      page: page,
+      per_page: per_page
+    }
+  end
+
+  def elasticsearch_query
+    custom_query = { bool: { must: [query_params] } }
 
     custom_query[:bool][:must] += facet_field_search unless facet_field_search.empty?
 
@@ -156,29 +186,7 @@ module EntriesControllerSearchConcerns
 
     custom_query[:bool][:filter] << term_query_filter(:archived?, search_params[:archived])
 
-    page ||= 1
-    offset = (page.to_i - 1) * per_page.to_i
-
-    {
-      body: {
-        sort: order_params,
-        query: custom_query,
-        aggs: aggregates,
-        post_filter: {
-          bool: {
-            filter: [{
-              in: {
-                portal_ids: current_portal.self_and_descendants.pluck(:id)
-              }
-            }]
-          }
-        },
-        size: per_page,
-        from: offset
-      },
-      page: page,
-      per_page: per_page
-    }
+    custom_query
   end
 
   def order_params
