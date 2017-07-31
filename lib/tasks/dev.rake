@@ -12,7 +12,8 @@ namespace :dev do
   desc 'Run first boot tasks'
   task :firstboot do
     %w[development test].each do |env|
-      sh "rake db:setup db:seed RAILS_ENV=#{env}"
+      sh "rake db:setup RAILS_ENV=#{env}"
+      sh "rake db:seed RAILS_ENV=#{env}"
       sh "rake searchkick:reindex:all RAILS_ENV=#{env}"
     end
   end
