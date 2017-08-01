@@ -7,7 +7,7 @@ one:
   status: MyString
   entry_type: one
   slug: MyString
-  uuid: MyString
+  uuid: MyStringone
   licence_id: 1
   archived_at: 2014-09-05 16:00:04
   published_at: 2014-09-05 16:00:04
@@ -20,7 +20,7 @@ two:
   status: MyString
   entry_type: two
   slug: MyString
-  uuid: MyString
+  uuid: MyStringtwo
   licence_id: 1
   archived_at: 2014-09-05 16:00:04
   published_at: 2014-09-05 16:00:04
@@ -33,7 +33,7 @@ multi_owner:
   status: MyString
   entry_type: two
   slug: MyString
-  uuid: MyString
+  uuid: MyStringmultiowner
   licence_id: 1
   archived_at: 2014-09-05 16:00:04
   published_at: 2014-09-05 16:00:04
@@ -46,7 +46,7 @@ published:
   status: MyString
   entry_type: two
   slug: MyString
-  uuid: MyString
+  uuid: MyStringpublished
   licence_id: 1
   archived_at: 2014-09-05 16:00:04
   published_at: 2014-09-05 16:00:04
@@ -59,7 +59,7 @@ unpublished:
   status: MyString
   entry_type: two
   slug: MyString
-  uuid: MyString
+  uuid: MyStringunpublished
   licence_id: 1
   archived_at: 2014-09-05 16:00:04
   published_at: null
@@ -72,7 +72,7 @@ archived:
   status: MyString
   entry_type: two
   slug: MyString
-  uuid: MyString
+  uuid: MyStringarchived
   published_at: null
   start_date: 2014-09-05
   end_date: 2014-09-05
@@ -83,7 +83,7 @@ no_primary_org:
   status: MyString
   entry_type: one
   slug: MyString
-  uuid: MyString
+  uuid: MyStringnoprimaryorg
   licence_id: 1
   archived_at: 2014-09-05 16:00:04
   published_at: 2014-09-05 16:00:04
@@ -96,7 +96,7 @@ no_owner:
   status: MyString
   entry_type: one
   slug: MyString
-  uuid: MyString
+  uuid: MyStringnoowner
   licence_id: 1
   archived_at: 2014-09-05 16:00:04
   published_at: 2014-09-05 16:00:04

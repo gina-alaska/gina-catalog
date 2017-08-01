@@ -23,6 +23,7 @@ class EntryTest < ActiveSupport::TestCase
   should validate_presence_of(:title)
   should validate_presence_of(:status)
   should validate_presence_of(:entry_type_id)
+  should validate_uniqueness_of(:uuid)
 
   should validate_length_of(:slug).is_at_most(255)
   should validate_length_of(:title).is_at_most(255)

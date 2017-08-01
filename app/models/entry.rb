@@ -72,6 +72,7 @@ class Entry < ActiveRecord::Base
   validates :status, presence: true
   validates :entry_type_id, presence: true
   validate :single_primary_thumbnail
+  validates :uuid, uniqueness: true
 
   accepts_nested_attributes_for :entry_collections, allow_destroy: true
   accepts_nested_attributes_for :entry_contacts, allow_destroy: true
@@ -83,6 +84,7 @@ class Entry < ActiveRecord::Base
   accepts_nested_attributes_for :entry_map_layers, allow_destroy: true
 
   after_create :set_owner_portal
+  before_save :create_uuid
 
   scope :newest, -> { order(created_at: :desc).limit(10) }
   scope :recently_updated, -> { order(updated_at: :desc).limit(10) }
@@ -142,6 +144,13 @@ class Entry < ActiveRecord::Base
 
   def published?
     !published_at.nil?
+  end
+
+  def create_uuid
+    return unless uuid.nil?
+    return if slug.nil?
+ 
+    self.uuid = UUIDTools::UUID.md5_create(UUIDTools::UUID_URL_NAMESPACE, slug).to_s
   end
 
   def bbox
