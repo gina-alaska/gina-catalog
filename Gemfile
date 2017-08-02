@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gem 'dotenv-rails', require: 'dotenv/rails-now'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.0'
+gem 'rails', '4.2.9'
 
 # Use postgresql as the database for Active Record
 gem 'pg'
@@ -87,11 +87,11 @@ group :development, :production do
   gem 'dalli'
 end
 
+gem 'web-console', '~> 2.0', group: :development
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
   # Access an IRB console on exception pages or by using <%= console %> in views
-  gem 'web-console', '~> 2.0'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 
@@ -117,7 +117,7 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-jasny-bootstrap'
   gem 'rails-assets-handlebars'
   gem 'rails-assets-mapbox.js', '~> 2.1.5'
-  gem 'rails-assets-typeahead.js', '~> 0.10.5'
+  gem 'rails-assets-typeahead.js'
   gem 'rails-assets-selectize', '~> 0.11.2'
   gem 'rails-assets-holderjs', '~> 2.4.0'
   gem 'rails-assets-moment'
@@ -137,3 +137,5 @@ end
 group :production do
   gem 'tzinfo-data'
 end
+
+ruby '2.4.1'

@@ -1,6 +1,6 @@
 class TmsLayer < MapLayer
   def supports?(projection)
-    projections.blank? ? true : !projections.match(projection).nil?
+    projections.blank? || projections.match?(projection)
   end
 
   def layer_type

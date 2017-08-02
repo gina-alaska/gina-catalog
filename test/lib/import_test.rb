@@ -9,7 +9,7 @@ class ImportTest < ActiveSupport::TestCase
   end
 
   test 'should return a string' do
-    assert Import::API_URL.length > 0
+    assert !Import::API_URL.empty?
   end
 
   test 'should return a contact model' do

@@ -7,8 +7,8 @@ Rails.application.config.assets.version = '2.0'
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 # Rails.application.config.assets.precompile += %w( search.js )
 
-Rails.application.config.assets.precompile += %w(
+Rails.application.config.assets.precompile += %w[
   mapbox.js/images/icons-000000@2x.png
   mapbox.js/images/icons-ffffff@2x.png
   ie.js
-)
+]

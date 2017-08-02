@@ -6,7 +6,7 @@ class CreateCmsPageHierarchies < ActiveRecord::Migration
       t.integer :generations, null: false
     end
 
-    add_index :cms_page_hierarchies, [:ancestor_id, :descendant_id, :generations],
+    add_index :cms_page_hierarchies, %i[ancestor_id descendant_id generations],
               unique: true,
               name: 'page_anc_desc_idx'
 
