@@ -1,8 +1,7 @@
 class Manager::PortalsController < ManagerController
   load_and_authorize_resource
 
-  def show
-  end
+  def show; end
 
   def edit
     @portal = current_portal
@@ -30,7 +29,7 @@ class Manager::PortalsController < ManagerController
   def portal_params
     params.require(:portal).permit(:title, :acronym, :description, :by_line,
                                    :contact_email, :analytics_account,
-                                   social_networks_attributes: [:id, :url, :social_network_config_id],
-                                   favicon_attributes: [:id, :image, :_destroy])
+                                   social_networks_attributes: %i[id url social_network_config_id],
+                                   favicon_attributes: %i[id image _destroy])
   end
 end

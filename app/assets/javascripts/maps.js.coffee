@@ -56,7 +56,7 @@ class Layers
       else
         GeoJSONLayer
 
-$(document).on 'ready page:load init_map', ->
+$(document).on 'ready turbolinks:load init_map', ->
   mapel = $('[data-behavior="map"]')
 
   if mapel.length > 0

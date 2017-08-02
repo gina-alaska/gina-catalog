@@ -15,7 +15,7 @@ UserSuggestion = {
     display
 }
 
-$(document).on 'ready page:load',  ->
+$(document).on 'ready turbolinks:load',  ->
   userstypehead = new TypeAheadField('[data-behavior="typeahead"][data-name="users"]', {
     display_key: UserSuggestion.display_key
   })
@@ -24,7 +24,7 @@ $(document).on 'ready page:load',  ->
     target = this
     $(document).trigger('user:suggestion', [target, suggestion])
 
-  userstypehead.on 'keyup', -> 
+  userstypehead.on 'keyup', ->
     if $(this).val() == ""
       target = this
       $(target).data('suggestion', "")
@@ -38,7 +38,7 @@ $(document).on 'user:suggestion', (e, target, suggestion) ->
 $(document).on 'nested:fieldAdded:permissions', (e) ->
   suggestion = $('#user_search').data('suggestion')
   return unless suggestion?
-  
+
   e.field.find('.user_id').val(suggestion.id)
   e.field.find('.name').html(suggestion.name)
   e.field.find('.role').prop('checked', true)

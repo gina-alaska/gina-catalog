@@ -53,7 +53,7 @@ module GinaAuthentication
           name: hash['info']['name'],
           email: hash['info']['email']
         }
-        info.merge!(avatar: hash['info']['image']) unless hash['info']['image'].blank?
+        info[:avatar] = hash['info']['image'] unless hash['info']['image'].blank?
         info
       end
     end

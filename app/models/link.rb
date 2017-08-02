@@ -2,7 +2,7 @@ class Link < ActiveRecord::Base
   CATEGORIES = [
     'Website', 'Download', 'Report', 'Shape File', 'WMS', 'WCS', 'WFS', 'KML',
     'Layer', 'Metadata', 'PDF', 'Map Service'
-  ]
+  ].freeze
 
   belongs_to :entry, touch: true
   has_many :primary_organizations, through: :entry
@@ -22,7 +22,7 @@ class Link < ActiveRecord::Base
   end
 
   def pdf?
-    url.split('.').last.downcase == 'pdf'
+    url.split('.').last.casecmp('pdf').zero?
   end
 
   # Pre:
@@ -33,20 +33,20 @@ class Link < ActiveRecord::Base
     cache_dir = Rails.root.join('tmp/pdf_cache')
     FileUtils.mkdir_p(cache_dir)
 
-    cache_filename = cache_dir.join(url.gsub('http://', '').gsub(/[\/%]/, '_'))
+    cache_filename = cache_dir.join(url.gsub('http://', '').gsub(%r{[/%]}, '_'))
 
     if File.size?(cache_filename).nil?
       pbar = nil
       opts = {
         read_timeout: 1,
         content_length_proc: lambda do |t|
-          if t && 0 < t
+          if t && t.positive?
             pbar = ProgressBar.new(t)
             # pbar.file_transfer_mode
           end
         end,
         progress_proc: lambda do |s|
-          pbar.increment! s if pbar
+          pbar&.increment! s
         end
       }
       # puts "Caching #{url}"
@@ -61,7 +61,7 @@ class Link < ActiveRecord::Base
   end
 
   def pdf_to_text
-    return '' unless self.pdf?
+    return '' unless pdf?
 
     pdf_text = ''
     begin

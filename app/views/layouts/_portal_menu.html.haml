@@ -1,30 +1,31 @@
-%li.dropdown
-  = link_to '#', class: 'dropdown-toggle', data: { toggle: 'dropdown' } do
-    Portal
-    %span.caret
+- if can? :view_portal, :menu
+  %li.dropdown
+    = link_to '#', class: 'dropdown-toggle', data: { toggle: 'dropdown' } do
+      Portal
+      %span.caret
 
-  %ul.dropdown-menu
-    %li
-      = link_to manager_path do
-        %i.fa.fa-dashboard.fa-fw
-        Dashboard
-    - if can? :update, Portal
+    %ul.dropdown-menu
       %li
-        = link_to manager_portal_path do
-          %i.fa.fa-cog.fa-fw
-          Settings
-    - if can? :manage, current_user.permissions.for(current_portal)
-      %li
-        = link_to manager_permissions_path do
-          %i.fa.fa-lock.fa-fw
-          Permissions
-    - if can? :links, :dashboard
-      %li
-        = link_to downloads_manager_dashboards_path do
-          %i.fa.fa-list.fa-fw
-          Download Logs
-    - if can? :update, Entry
-      %li
-        = link_to links_manager_dashboards_path do
-          %i.fa.fa-link.fa-fw
-          Manage Links
+        = link_to manager_path do
+          %i.fa.fa-dashboard.fa-fw
+          Dashboard
+      - if can? :update, Portal
+        %li
+          = link_to manager_portal_path do
+            %i.fa.fa-cog.fa-fw
+            Settings
+      - if can? :manage, current_user.permissions.for(current_portal)
+        %li
+          = link_to manager_permissions_path do
+            %i.fa.fa-lock.fa-fw
+            Permissions
+      - if can? :links, :dashboard
+        %li
+          = link_to downloads_manager_dashboards_path do
+            %i.fa.fa-list.fa-fw
+            Download Logs
+      - if can? :update, Entry
+        %li
+          = link_to links_manager_dashboards_path do
+            %i.fa.fa-link.fa-fw
+            Manage Links
