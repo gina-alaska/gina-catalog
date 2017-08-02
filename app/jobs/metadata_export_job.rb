@@ -20,7 +20,6 @@ class MetadataExportJob < ActiveJob::Base
         #~ showAllTags: false, 
         #~ cssLink: nil
     )
-    brk
     puts metadata
   end
   
