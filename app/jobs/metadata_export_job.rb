@@ -20,7 +20,8 @@ class MetadataExportJob < ActiveJob::Base
         #~ showAllTags: false, 
         #~ cssLink: nil
     )
-    puts metadata
+    metadata = metadata[:writerOutput] 
+    file = Tempfile.new( [id.to_s + "_metadata", 'xml'])
   end
   
   protected
