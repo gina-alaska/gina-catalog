@@ -5,7 +5,8 @@ class Attachment < ActiveRecord::Base
     'Geojson',
     'Public Download',
     'Private Download',
-    'Archive'
+    'Archive',
+    'Metadata'
   ]
 
   searchkick word_start: [:file_name, :description, :category]
@@ -20,6 +21,7 @@ class Attachment < ActiveRecord::Base
   scope :private_download, -> { where(category: 'Private Download') }
   scope :public_download, -> { where(category: 'Public Download') }
   scope :archive, -> { where(category: 'Archive') }
+  scope :metadata, -> { where(category: 'Metadata') }
 
   before_save :create_uuid
   after_save :create_bbox

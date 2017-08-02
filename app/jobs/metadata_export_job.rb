@@ -9,8 +9,8 @@ class MetadataExportJob < ActiveJob::Base
   #~ require 'adiwg/mdtranslator'
     
   # gets data from adiwg api enpoint and creates ISO 19115_2 metadata
-  def perform(id)
-    uri = URI(api_adiwg_url(id: id))
+  def perform(entry)
+    uri = URI(api_adiwg_url(id: entry.id))
     response = Net::HTTP.get_response(uri)
     metadata = ADIWG::Mdtranslator.translate(
       file: response.body, 
@@ -20,8 +20,19 @@ class MetadataExportJob < ActiveJob::Base
         #~ showAllTags: false, 
         #~ cssLink: nil
     )
-    metadata = metadata[:writerOutput] 
-    file = Tempfile.new( [id.to_s + "_metadata", 'xml'])
+    if metadata[:readerValidationPass]
+      file = Tempfile.new( [entry.id.to_s + "_metadata", 'xml'] )
+      file.write( metadata[:writerOutput] )
+      attachment = entry.attachments.where( file_name: "glynx_#{entry.id}_iso19115-2_metadata.xml" ).first_or_initialize
+      attachment.file = file
+      attachment.file_name = "glynx_#{entry.id}_iso19115-2_metadata.xml"
+      attachment.description = 'glynx iso19115-2 metadata'
+      attachment.category = 'Metadata'
+      attachment.save
+    #~ else
+      
+    end
+    
   end
   
   protected
