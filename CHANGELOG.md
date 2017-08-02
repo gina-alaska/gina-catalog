@@ -6,6 +6,7 @@
 - Cleaned up many rubocop complaints
 - Upgraded to rails 4.2.9
 - Upgraded ruby to 2.4.1
+- Revamped image chooser for cms editor (fixes lots of issues with slow page loads)
 
 ## [3.9.15](https://github.com/gina-alaska/gina-catalog/tree/3.9.15) (2017-05-17)
 [Full Changelog](https://github.com/gina-alaska/gina-catalog/compare/3.7.0...3.9.15)
