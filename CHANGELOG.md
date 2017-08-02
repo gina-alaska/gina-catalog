@@ -1,5 +1,12 @@
 # Change Log
 
+## [3.10.0](https://github.com/gina-alaska/gina-catalog/tree/3.10.0) (2017-05-17)
+[Full Changelog](https://github.com/gina-alaska/gina-catalog/compare/3.9.15...3.10.0)
+
+- Cleaned up many rubocop complaints
+- Upgraded to rails 4.2.9
+- Upgraded ruby to 2.4.1
+
 ## [3.9.15](https://github.com/gina-alaska/gina-catalog/tree/3.9.15) (2017-05-17)
 [Full Changelog](https://github.com/gina-alaska/gina-catalog/compare/3.7.0...3.9.15)
 
@@ -13,7 +20,7 @@
 - Disable autozoom on the search map
 - Fixed issue with shown users permissions updating incorrect portal
 - Switched to a slightly better method for finding centroids of geojson features
-- Creating CMS page with slug of search-help will cause a button to show in the catalog search 
+- Creating CMS page with slug of search-help will cause a button to show in the catalog search
 - Search handling completely rewritten.  Now fully supports ElasticSearch [query string syntax](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html#query-string-syntax)
 
 ## [3.7.0](https://github.com/gina-alaska/gina-catalog/tree/3.7.0) (2016-08-03)
