@@ -15,12 +15,12 @@ class MetadataExportJob < ActiveJob::Base
     metadata = ADIWG::Mdtranslator.translate(
       file: response.body, 
       reader: 'mdJson', 
-        #~ writer: 'iso19115_2',
+        writer: 'iso19115_2',
         #~ validate: 'normal', 
         #~ showAllTags: false, 
         #~ cssLink: nil
     )
-    crsh
+    brk
     puts metadata
   end
   
