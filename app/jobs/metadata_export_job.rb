@@ -15,10 +15,10 @@ class MetadataExportJob < ActiveJob::Base
     metadata = ADIWG::Mdtranslator.translate(
       file: response.body, 
       reader: 'mdJson', 
-        writer: 'iso19115_2',
-        #~ validate: 'normal', 
-        #~ showAllTags: false, 
-        #~ cssLink: nil
+      writer: 'iso19115_2',
+      #~ validate: 'normal', 
+      #~ showAllTags: false, 
+      #~ cssLink: nil
     )
     if metadata[:readerValidationPass]
       file = Tempfile.new( [entry.id.to_s + "_metadata", 'xml'] )
