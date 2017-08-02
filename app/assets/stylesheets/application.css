@@ -14,7 +14,7 @@
  *= require font-awesome
  *= require jasny-bootstrap
  *= require rails_bootstrap_forms
- *= require bootstrap-submenu 
+ *= require bootstrap-submenu
  *= require selectize
  *= require selectize/selectize.bootstrap3
  *= require mapbox.js/mapbox.css

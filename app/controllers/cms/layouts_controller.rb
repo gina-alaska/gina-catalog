@@ -1,5 +1,5 @@
 class Cms::LayoutsController < CmsController
-  before_action :set_cms_layout, only: [:show, :edit, :update, :destroy, :default]
+  before_action :set_cms_layout, only: %i[show edit update destroy default]
   authorize_resource
 
   # GET /cms/layouts
@@ -27,8 +27,7 @@ class Cms::LayoutsController < CmsController
   end
 
   # GET /cms/layouts/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /cms/layouts
   # POST /cms/layouts.json
@@ -64,15 +63,14 @@ class Cms::LayoutsController < CmsController
   # DELETE /cms/layouts/1.json
   def destroy
     respond_to do |format|
-      if @cms_layout.pages.size > 0
+      if !@cms_layout.pages.empty?
         flash[:error] = 'Cannot delete a layout that is attached to a page'
         format.html { redirect_to cms_layouts_url }
-        format.json { head :no_content }
       else
         @cms_layout.destroy
         format.html { redirect_to cms_layouts_url, notice: 'Layout was successfully deleted.' }
-        format.json { head :no_content }
       end
+      format.json { head :no_content }
     end
   end
 

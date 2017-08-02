@@ -37,3 +37,10 @@ draft:
   portal: one
   cms_layout: one
   draft: true
+
+home_two:
+  title: Home
+  slug: home
+  content: MyText
+  portal: two
+  cms_layout: one

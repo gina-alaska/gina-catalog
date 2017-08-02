@@ -1,13 +1,12 @@
 class Admin::PortalsController < AdminController
-  before_action :set_portal, only: [:show, :edit, :update]
+  before_action :set_portal, only: %i[show edit update]
   load_and_authorize_resource
 
   def index
     @portals = Portal.active.roots.reorder('title ASC')
   end
 
-  def show
-  end
+  def show; end
 
   def new
     @portal = Portal.new
@@ -53,8 +52,9 @@ class Admin::PortalsController < AdminController
     params.require(:portal).permit(
       :title, :acronym, :parent_id,
       permissions_attributes: [:id, :user_id, :_destroy, Permission::AVAILABLE_ROLES.keys],
-      urls_attributes: [:id, :url, :active, :_destroy],
-      favicon: [:id, :image_name, :image_uid])
+      urls_attributes: %i[id url active _destroy],
+      favicon: %i[id image_name image_uid]
+    )
   end
 
   def set_portal

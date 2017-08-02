@@ -1,13 +1,16 @@
 class Entry < ActiveRecord::Base
+  include EntryRelationConcerns
+  include EntryPublicActivityConcerns
+  include EntryValidationConcerns
   include EntrySearchConcerns
   include LegacyConcerns
   include ArchiveConcerns
   include MustacheConcerns
-  include PublicActivity::Model
 
-  after_commit :check_for_multi_organizations
+  after_commit :consolidate_organizations
+  after_create :set_owner_portal
 
-  STATUSES = %w(Complete Ongoing Unknown Funded)
+  STATUSES = %w[Complete Ongoing Unknown Funded].freeze
 
   acts_as_taggable_on :tags
 
@@ -90,53 +93,27 @@ class Entry < ActiveRecord::Base
   scope :recently_updated, -> { order(updated_at: :desc).limit(10) }
   scope :published, -> { where('published_at <= ?', Time.zone.now) }
 
-  tracked owner: proc { |controller, _model| controller.send(:current_user) },
-          entry_id: :id,
-          parameters: :activity_params
-
-  def activity_params
-    params = {}
-
-    params[:use_agreement] = { id: use_agreement_id, display: use_agreement.try(:title) } if use_agreement_id_changed?
-    params[:title] = { display: title } if title_changed?
-    params[:description] = { display: true } if description_changed?
-    params[:status] = { display: status } if status_changed?
-    params[:type] = { display: entry_type.try(:name) } if entry_type_id_changed?
-    params[:start_date] = { display: start_date } if start_date_changed?
-    params[:end_date] = { display: end_date } if end_date_changed?
-
-    params
-  end
-
   def primary_thumbnail_count
     attachments.inject(0) { |c, v| v.category == 'Primary Thumbnail' ? c + 1 : c }
   end
 
-  def single_primary_thumbnail
-    errors.add(:attachments, 'has more than one Primary Thumbnail') if primary_thumbnail_count > 1
-  end
-
   def set_owner_portal
-    entry_portals.first.update_attribute(:owner, true) if owner_portal_count == 0
+    entry_portals.first.update_attribute(:owner, true) if owner_portal_count.zero?
   end
 
   def owner_portal_count
     entry_portals.inject(0) { |c, v| v.owner ? c + 1 : c }
   end
 
-  def check_for_single_ownership
-    errors.add(:portals, 'cannot specify more than one owner') if owner_portal_count > 1
-  end
-
   def publish!
-    return true if self.published?
+    return true if published?
 
     self.published_at = Time.zone.now
     save!
   end
 
   def unpublish!
-    return true unless self.published?
+    return true unless published?
 
     self.published_at = nil
     save!
@@ -184,7 +161,7 @@ class Entry < ActiveRecord::Base
   end
 
   def to_param
-    "#{self.id}-#{self.title.try(:truncate, 50).try(:parameterize)}"
+    "#{id}-#{title.try(:truncate, 50).try(:parameterize)}"
   end
 
   def mustache_route
@@ -198,12 +175,12 @@ class Entry < ActiveRecord::Base
     context
   end
 
-  def check_for_multi_organizations
+  def consolidate_organizations
     Entry.transaction do
-      all_orgs = self.entry_organizations.group(:organization_id).count
+      all_orgs = entry_organizations.group(:organization_id).count
       all_orgs.each do |organization_id, count|
         next unless count > 1
-        new_assoc = self.entry_organizations.build(organization_id: organization_id)
+        new_assoc = entry_organizations.build(organization_id: organization_id)
         entry_organizations.where(organization_id: organization_id).each do |org|
           new_assoc.primary ||= org.primary
           new_assoc.funding ||= org.funding

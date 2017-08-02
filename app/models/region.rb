@@ -25,7 +25,7 @@ class Region < ActiveRecord::Base
 
   def from_geojson(data)
     geojson_data = RGeo::GeoJSON.decode(data, json_parser: :json, geo_factory: Factories::GEO)
-    logger.info("#{geojson_data.first.geometry.srid}")
+    logger.info(geojson_data.first.geometry.srid.to_s)
     self.geom = geojson_data.first.geometry
   end
 end

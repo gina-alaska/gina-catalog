@@ -16,18 +16,20 @@
 //= require bootstrap-submenu
 //= require jasny-bootstrap
 //= require handlebars
-//= require typeahead.js
+// This is to handle wierd bug with assets having .js in the name and including .js file
+//= require typeahead.js.js
 //= require jquery_nested_form
 //= require moment
 //= require sifter
 //= require microplugin
 //= require selectize
 //= require holderjs
-//= require mapbox.js
+//= require mapbox.js.js
 //= require leaflet.markercluster
 //= require Control.Coordinates.js
 //= require NumberFormatter.js
-//= require uri.js
+// This is to handle wierd bug with assets having .js in the name and including .js file
+//= require uri.js.js
 //= require turbolinks
 //= require refile
 //= require wicket/wicket

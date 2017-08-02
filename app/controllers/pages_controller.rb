@@ -5,8 +5,7 @@ class PagesController < ApplicationController
   before_action :follow_redirect_url
   before_action :redirect_to_root_if_home, only: [:show]
 
-  def index
-  end
+  def index; end
 
   def show
     render status: :not_found if params[:slug] == 'page_not_found'

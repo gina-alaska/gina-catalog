@@ -21,7 +21,7 @@ ContactSuggestion = {
     display
 }
 
-$(document).on 'ready page:load',  ->
+$(document).on 'ready turbolinks:load',  ->
   contactstypehead = new TypeAheadField('[data-behavior="typeahead"][data-name="contacts"]', {
     display_key: ContactSuggestion.display_key
   })
