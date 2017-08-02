@@ -1,8 +1,6 @@
 - content_for :sidebar do
   - if content_for? :sidebar_menu
-    .panel.panel-default
-      .list-group
-        = content_for :sidebar_menu
+    = content_for :sidebar_menu
 
   - if content_for?(:sidebar_content)
     = content_for :sidebar_content

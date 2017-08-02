@@ -20,7 +20,9 @@ class Catalog::EntriesControllerTest < ActionController::TestCase
   end
 
   test 'should get exports' do
-    get :exports, serialized_search: '{"order":"title","archived":false, "visible":{"organizations":"1", "collections":"1", "contacts":"1", "data":"1", "description":"1", "info":"1", "iso":"1", "links":"1", "location":"1", "tags":"1", "title":"1", "url":"1"}}'
+    get :exports, serialized_search: '{"order":"title","archived":false, "visible":{"organizations":"1",
+      "collections":"1", "contacts":"1", "data":"1", "description":"1", "info":"1", "iso":"1", "links":"1",
+      "location":"1", "tags":"1", "title":"1", "url":"1"}}'
     assert_response :success
     assert_not_nil assigns(:entries)
     assert_not_nil assigns(:facets)

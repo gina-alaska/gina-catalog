@@ -1,8 +1,7 @@
 class Admin::RegionsController < AdminController
   load_and_authorize_resource
 
-  def index
-  end
+  def index; end
 
   def show
     respond_to do |format|
@@ -10,11 +9,9 @@ class Admin::RegionsController < AdminController
     end
   end
 
-  def new
-  end
+  def new; end
 
-  def edit
-  end
+  def edit; end
 
   def create
     respond_to do |format|

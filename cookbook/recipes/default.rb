@@ -26,11 +26,21 @@ include_recipe 'glynx_elasticsearch::default'
 #
 # env_file = gra_env_file(node['deploy']['environment'])
 env_file = node['glynx']['dot_env_path']
+dbconfig = chef_vault_item_for_environment('apps', 'glynx')['database']
+database_url = "#{dbconfig['adapter']}://#{dbconfig['username']}:#{dbconfig['password']}@#{node['glynx']['database_host']}"
+
+glynx_config env_file do
+  owner node['glynx']['user']
+  group node['glynx']['group']
+  # don't add database_url to the node attributes as it will save the password in plain text
+  variables lazy { node['glynx']['env'].to_hash.merge({ DATABASE_URL: database_url }) }
+end
+
 execute 'copy_environment' do
   cwd node['glynx']['release_path']
   user node['app']['user']
   group node['app']['group']
-  command lazy { "cp #{node['glynx']['dot_env_path']} .env" }
+  command lazy { "cp #{env_file} .env" }
   # notifies :restart, 'service[puma]', :delayed
   not_if "diff #{env_file} .env"
 end

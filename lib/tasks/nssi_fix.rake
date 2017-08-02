@@ -20,6 +20,6 @@ namespace :fixnssi do
     end
 
     entries = portal.entries.joins(:data_types).where(data_types: { name: 'Report' })
-    entries.find_each { |e| e.update_attributes( entry_type_id: entry_type.id ) }
+    entries.find_each { |e| e.update_attributes(entry_type_id: entry_type.id) }
   end
 end

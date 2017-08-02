@@ -1,22 +1,20 @@
 namespace :dev do
-  desc 'Start the development vm'
-  task :startvm do
-    Bundler.with_clean_env do
-      cd 'cookbook/.kitchen/kitchen-vagrant/kitchen-cookbook-default-bento-centos-67/' do
-        sh 'vagrant up'
+  desc 'Rebuild development vm'
+  task :rebuild do
+    cd 'cookbook' do
+      Bundler.with_clean_env do
+        sh 'chef exec kitchen destroy; chef exec kitchen converge'
       end
     end
+    sh 'rake dev:firstboot'
   end
 
-  desc 'Bundle all the things'
-  task :bundle do
-    puts 'Bundling the local env'
-    sh 'bundle'
-    puts 'Bundling the development vm'
-    Bundler.with_clean_env do
-      cd 'cookbook' do
-        sh 'kitchen converge'
-      end
+  desc 'Run first boot tasks'
+  task :firstboot do
+    %w[development test].each do |env|
+      sh "rake db:setup RAILS_ENV=#{env}"
+      sh "rake db:seed RAILS_ENV=#{env}"
+      sh "rake searchkick:reindex:all RAILS_ENV=#{env}"
     end
   end
 end

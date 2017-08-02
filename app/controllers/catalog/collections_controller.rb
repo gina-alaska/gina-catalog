@@ -68,7 +68,7 @@ class Catalog::CollectionsController < CatalogController
 
     respond_to do |format|
       format.html { redirect_to catalog_collections_path }
-      format.js { redirect_via_turbolinks_to catalog_collections_path }
+      format.js { redirect_to catalog_collections_path }
     end
   end
 
@@ -77,7 +77,7 @@ class Catalog::CollectionsController < CatalogController
 
     respond_to do |format|
       format.html { redirect_to catalog_collections_path }
-      format.js { redirect_via_turbolinks_to catalog_collections_path }
+      format.js { redirect_to catalog_collections_path }
     end
   end
 
@@ -86,7 +86,7 @@ class Catalog::CollectionsController < CatalogController
 
     respond_to do |format|
       format.html { redirect_to catalog_collections_path }
-      format.js { redirect_via_turbolinks_to catalog_collections_path }
+      format.js { redirect_to catalog_collections_path }
     end
   end
 
@@ -95,7 +95,7 @@ class Catalog::CollectionsController < CatalogController
 
     respond_to do |format|
       format.html { redirect_to catalog_collections_path }
-      format.js { redirect_via_turbolinks_to catalog_collections_path }
+      format.js { redirect_to catalog_collections_path }
     end
   end
 

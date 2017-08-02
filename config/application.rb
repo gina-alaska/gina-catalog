@@ -10,7 +10,7 @@ Dotenv::Railtie.load
 
 module Glynx
   class Application < Rails::Application
-    require 'glynx/mustache_filter'
+    require 'glynx/mustache'
     # Use the responders controller from the responders gem
     # config.app_generators.scaffold_controller :responders_controller
 
@@ -35,9 +35,11 @@ module Glynx
         origins '*'
         resource '/catalog/entries/*',
                  headers: :any,
-                 methods: [:get, :options, :head],
+                 methods: %i[get options head],
                  max_age: 3628800
       end
     end
+
+    config.action_dispatch.rack_cache = true
   end
 end

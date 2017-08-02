@@ -1,10 +1,11 @@
 .panel.panel-default
   .panel-heading
-    %h1.panel-title
-      Image Attachments
-      = link_to '#image-attachment-modal', class: 'btn btn-default btn-info', data: { toggle: 'modal' }, style: 'color: white; margin-left: 12px;' do
+    .pull-right
+      = link_to '#cms_attachments_modal', class: 'btn btn-default btn-info btn-xs', data: { action: 'show-cms_attachments_modal' }, style: 'color: white; margin-top: -13px;' do
         %i.fa.fa-fw.fa-image
         Attach image
+    %h1.panel-title
+      Image Attachments
   %table.table.table-striped
     %thead
       %tr
@@ -37,17 +38,32 @@
               = link_to remove_cms_page_attachment_path(page, pa.attachment), method: :patch, class: 'btn btn-danger btn-xs' do
                 %i.fa.fa-times
 
+:javascript
+  $(document).on('click', '[data-action="attach-cms-image"]', function(e) {
+    var image_id = $(this).data('id')
+    var url = "#{cms_page_path(page)}/attachments/" + image_id + "/add"
 
-#image-attachment-modal.modal.fade
-  .modal-dialog.modal-lg
-    .modal-content
-      .modal-header
-        %button.close{ data: { dismiss: 'modal' } }
-          %span &times;
-        %h4 Image attachments
-      .modal-body
-        - current_portal.cms_attachments.images.where.not(id: page.attachment_ids).find_each do |i|
-          = link_to add_cms_page_attachment_path(page, i), method: :patch, class: 'thumbnail', style: 'display: inline-block;' do
-            = attachment_image_tag(i, :file, :fill, 100, 100, fallback: "default.png")
-      .modal-footer
-        %button.btn.btn-primary{ data: { dismiss: 'modal' } } Close
+    $.ajax({
+      url: url,
+      type: 'PATCH',
+      success: function(json) {
+        Turbolinks.visit(json.location)
+      }
+    })
+  })
+
+= render 'shared/cms_attachment/chooser', dom_id: 'cms_attachments_modal', action: 'attach-cms-image', data_url: cms_attachments_path(sort: 'name', images: true, format: :json)
+
+-# #image-attachment-modal.modal.fade
+-#   .modal-dialog.modal-lg
+-#     .modal-content
+-#       .modal-header
+-#         %button.close{ data: { dismiss: 'modal' } }
+-#           %span &times;
+-#         %h4 Image attachments
+-#       .modal-body
+-#         - current_portal.cms_attachments.images.where.not(id: page.attachment_ids).find_each do |i|
+-#           = link_to add_cms_page_attachment_path(page, i), method: :patch, class: 'thumbnail', style: 'display: inline-block;' do
+-#             = attachment_image_tag(i, :file, :fill, 100, 100, fallback: "default.png")
+-#       .modal-footer
+-#         %button.btn.btn-primary{ data: { dismiss: 'modal' } } Close

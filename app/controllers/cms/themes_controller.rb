@@ -1,5 +1,5 @@
 class Cms::ThemesController < CmsController
-  before_action :set_cms_theme, only: [:show, :edit, :update, :destroy, :activate]
+  before_action :set_cms_theme, only: %i[show edit update destroy activate]
   authorize_resource
 
   # GET /cms/themes
@@ -14,8 +14,7 @@ class Cms::ThemesController < CmsController
   end
 
   # GET /cms/themes/1/edit
-  def edit
-  end
+  def edit; end
 
   def activate
     if current_portal.update_attributes(active_cms_theme: @cms_theme)

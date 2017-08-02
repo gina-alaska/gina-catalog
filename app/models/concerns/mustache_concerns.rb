@@ -3,23 +3,23 @@ module MustacheConcerns
 
   included do
     delegate :url_helpers, to: "Rails.application.routes"
-    alias :h :url_helpers
+    alias_method :h, :url_helpers
   end
 
   def basic_pipeline(context)
     HTML::Pipeline.new [
-      Glynx::MustacheFilter
+      Glynx::Mustache::Filter
     ], context
   end
 
   def markdown_pipeline(context)
     HTML::Pipeline.new [
-      Glynx::MustacheFilter,
+      Glynx::Mustache::Filter,
       HTML::Pipeline::MarkdownFilter
     ], context
   end
 
-  def mustache_context(page = nil)
+  def mustache_context(_page = nil)
     context = as_context
     context[mustache_route] = context.dup
 
@@ -28,14 +28,14 @@ module MustacheConcerns
 
   def as_context
     attrs = mustache_sanitize(attributes)
-    attrs['gid'] = self.to_global_id unless self.new_record?
-    attrs['url'] = mustache_url unless self.new_record?
+    attrs['gid'] = to_global_id unless new_record?
+    attrs['url'] = mustache_url unless new_record?
 
     attrs
   end
 
   def mustache_sanitize(items)
-    items.each_with_object({}) do |item,hash|
+    items.each_with_object({}) do |item, hash|
       hash[item.first] = item.last.to_s
     end
   end
@@ -45,7 +45,7 @@ module MustacheConcerns
   end
 
   def mustache_url
-    h.send(:"#{mustache_route}_path", mustache_url_params) if h.respond_to?(:"#{self.mustache_route}_path")
+    h.send(:"#{mustache_route}_path", mustache_url_params) if h.respond_to?(:"#{mustache_route}_path")
   end
 
   def mustache_url_params
@@ -53,18 +53,14 @@ module MustacheConcerns
   end
 
   def map_mustache_safe(collection, page)
-    collection.each_with_object([]) { |i,a| a << i.mustache_context(page) }
+    collection.each_with_object([]) { |i, a| a << i.mustache_context(page) }
   end
 
   def render_context(portal, page = nil)
-    data = OpenStruct.new()
-    unless portal.nil?
-      data.portal = portal
-    end
+    data = OpenStruct.new
+    data.portal = portal unless portal.nil?
 
-    if !page.nil?
-      data.page = page
-    end
+    data.page = page unless page.nil?
 
     { data: data }
   end

@@ -101,10 +101,10 @@ class AceHTMLToolbar
       scope.redo()
   }
 
-$(document).on 'ready page:load', ->
-  if $('[data-editor="ace"]').size() > 0
+$(document).on 'ready turbolinks:load', ->
+  if $('[data-editor="ace"]').length > 0
     $('[data-submenu]').submenupicker();
-    
+
     el = $('[data-editor="ace"]')
     textarea = $(el).find('.editor')
     target = $(el.data('target'))
