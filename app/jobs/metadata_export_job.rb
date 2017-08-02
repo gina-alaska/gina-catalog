@@ -20,6 +20,7 @@ class MetadataExportJob < ActiveJob::Base
       #~ showAllTags: false, 
       #~ cssLink: nil
     )
+    brk
     if metadata[:readerValidationPass]
       file = Tempfile.new( [entry.id.to_s + "_metadata", 'xml'] )
       file.write( metadata[:writerOutput] )

@@ -222,6 +222,18 @@ json.metadata do
     #~ json.topicCategory ['']
     #~ json.environmentDescription ''
     #~ json.resourceNativeFormat
+    
+    keywords = @entry.iso_topics + @entry.tags
+    
+    json.keyword(keywords) do |kw|
+	  if kw.is_a? IsoTopic
+		json.keywordType 'ISO topic'
+		json.keyword [ kw.name, kw.long_name ]
+	  else
+	    json.keywordType 'tag'
+	    json.keyword [ kw.name ]
+	  end
+    end
 	
   end #resourceInfo
 end
