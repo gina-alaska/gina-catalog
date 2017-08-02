@@ -60,7 +60,7 @@ module Import
       json['uploads'].each do |upload|
         attachment = model.attachments.where(file_name: upload['name']).first_or_initialize do |a|
           if upload['preview']
-            if model.attachments.primary_thumbnail.count == 0
+            if model.primary_thumbnail_count == 0
               a.category = 'Primary Thumbnail'
             else
               a.category = 'Thumbnail'
@@ -75,7 +75,8 @@ module Import
           a.file_name = upload['name']
           a.description = upload['description']
         end
-        model.attachments << attachment if attachment.new_record?
+
+        model.attachments << attachment unless model.attachments.include?(attachment)
         attachment.save
       end if json['uploads'].present?
     end

@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  protect_from_forgery except: [:create, :failure]
+  protect_from_forgery except: %i[create failure]
   include GinaAuthentication::Sessions
   skip_before_action :check_current_portal
 

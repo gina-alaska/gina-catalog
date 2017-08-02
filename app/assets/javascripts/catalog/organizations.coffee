@@ -14,7 +14,7 @@ OrganizationSuggestion = {
     "#{d.name} (#{d.acronym})"
   }
 
-$(document).on 'ready page:load',  ->
+$(document).on 'ready turbolinks:load',  ->
   organizationstypehead = new TypeAheadField('[data-behavior="typeahead"][data-name="organizations"]', {
     display_key: OrganizationSuggestion.display_key
   })

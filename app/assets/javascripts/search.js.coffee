@@ -32,7 +32,7 @@ sortBtnSwap = (el) ->
   $(el).data('direction', newdir)
   $(icon).removeClass("fa-sort-#{sort}-#{dir}").addClass("fa-sort-#{sort}-#{newdir}")
 
-$(document).on 'ready page:load', ->
+$(document).on 'ready turbolinks:load', ->
   for item in $('[data-behavior="float-checked"] input:checked')
     $(item).parents('.facet-item').prependTo($(item).parents('.facet-list'))
 

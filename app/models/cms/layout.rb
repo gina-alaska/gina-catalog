@@ -13,7 +13,7 @@ class Cms::Layout < ActiveRecord::Base
   def to_s
     name
   end
-  
+
   def render(context = nil)
     return content if context.nil?
     basic_pipeline(context).call(content)[:output].to_s

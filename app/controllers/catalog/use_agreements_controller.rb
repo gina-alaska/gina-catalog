@@ -12,11 +12,9 @@ class Catalog::UseAgreementsController < CatalogController
     end
   end
 
-  def show
-  end
+  def show; end
 
-  def new
-  end
+  def new; end
 
   def edit
     save_referrer_location

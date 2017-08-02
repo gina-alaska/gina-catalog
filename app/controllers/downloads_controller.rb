@@ -1,5 +1,5 @@
 class DownloadsController < ApplicationController
-  ATTACHMENTS_TO_LOG = ['Public Download', 'Private Download']
+  ATTACHMENTS_TO_LOG = ['Public Download', 'Private Download'].freeze
 
   def show
     @download = GlobalID::Locator.locate_signed params[:id], for: 'download'
