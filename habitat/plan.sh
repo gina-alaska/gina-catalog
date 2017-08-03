@@ -9,6 +9,7 @@ pkg_bin_dirs=(bin)
 pkg_deps=(
   core/gcc-libs
   core/cacerts
+  jarvus/postgresql/9.6.3/20170727201722
   uafgina/imagemagick
   uafgina/geos
   uafgina/proj
