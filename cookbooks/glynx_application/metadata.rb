@@ -24,7 +24,7 @@ depends 'yum-epel'
 depends 'chef-vault'
 depends 'glynx_database'
 depends 'systemd'
-depends 'habitat'
+depends 'habitat', '>= 0.26.1'
 depends 'gina_firewall'
 depends 'gina_habitat'
 
