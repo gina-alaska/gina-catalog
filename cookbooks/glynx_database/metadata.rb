@@ -23,4 +23,4 @@ depends 'database'
 depends 'chef-vault'
 depends 'yum-epel'
 
-gem 'toml-rb'
+# gem 'toml-rb'
