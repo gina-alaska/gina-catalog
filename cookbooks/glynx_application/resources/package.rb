@@ -23,7 +23,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
-require 'toml'
+# require 'toml'
 
 resource_name 'glynx_package'
 
@@ -33,29 +33,19 @@ property :config, Hash, required: true
 property :service_path, String, default: '/hab/svc/glynx'
 
 action :install do
-  hab_install 'install habitat'
-
-  user 'hab' do
-    comment 'habitat account'
-    home '/hab'
-    manage_home true
+  gina_hab_install 'default' do
+    version '0.26.1'
   end
 
   if new_resource.source_url
-    local_package = "#{Chef::Config[:file_cache_path]}/#{::File.basename(new_resource.source_url)}"
-    remote_file local_package do
+    gina_hab_package new_resource.name do
       source new_resource.source_url
       checksum new_resource.source_checksum
-      notifies :run, 'execute[hab-install-local]', :immediately
-    end
-
-    execute 'hab-install-local' do
-      command "hab pkg install #{local_package}"
-      action :nothing
-      notifies :restart, "hab_service[#{new_resource.name}]"
     end
   else
-    hab_package new_resource.name
+    hab_package new_resource.name do
+      channel 'unstable'
+    end
   end
 
   directory new_resource.service_path do
@@ -65,17 +55,18 @@ action :install do
     recursive true
   end
 
-  file ::File.join(new_resource.service_path, 'user.toml') do
+  template ::File.join(new_resource.service_path, 'user.toml') do
     owner 'hab'
     group 'hab'
     mode '0600'
-    content TOML.dump(new_resource.config)
-    notifies :restart, "hab_service[#{new_resource.name}]"
+    source 'habitat_user.toml.erb'
+    cookbook 'glynx_application'
+    variables new_resource.config
+    notifies :restart, "hab_service[#{new_resource.name}]", :delayed
   end
 
-  hab_sup 'default'
-
   hab_service new_resource.name do
+    strategy 'at-once'
     action [:load, :start]
   end
 end

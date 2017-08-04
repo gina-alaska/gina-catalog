@@ -4,7 +4,7 @@ maintainer_email 'support+chef@gina.alaska.edu'
 license 'mit'
 description 'Installs/Configures glynx_application'
 long_description 'Installs/Configures glynx_application'
-version '0.1.9'
+version '0.2.0'
 
 # The `issues_url` points to the location where issues for this cookbook are
 # tracked.  A `View Issues` link will be displayed on this cookbook's page when
@@ -26,5 +26,6 @@ depends 'glynx_database'
 depends 'systemd'
 depends 'habitat'
 depends 'gina_firewall'
+depends 'gina_habitat'
 
-gem 'toml-rb'
+# gem 'toml-rb'

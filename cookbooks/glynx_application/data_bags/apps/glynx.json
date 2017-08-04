@@ -2,7 +2,7 @@
   "_default": {
     "database": {
       "adapter": "postgis",
-      "name": "glynx_development",
+      "name": "glynx_production",
       "username": "glynx",
       "password": "changeme"
     },

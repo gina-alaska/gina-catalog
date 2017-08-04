@@ -49,13 +49,12 @@ when :local
     recursive true
   end
 
+  dbconfig = chef_vault_item_for_environment('apps', 'glynx')['database']
+  database_url = "#{dbconfig['adapter']}://#{dbconfig['username']}:#{dbconfig['password']}@#{node['glynx']['database_host']}"
+
   glynx_config node['glynx']['dot_env_path'] do
     owner node['glynx']['user']
     group node['glynx']['group']
-
-    dbconfig = chef_vault_item_for_environment('apps', 'glynx')['database']
-    database_url = "#{dbconfig['adapter']}://#{dbconfig['username']}:#{dbconfig['password']}@#{node['glynx']['database_host']}"
-
     # don't add database_url to the node attributes as it will save the password in plain text
     variables lazy { node['glynx']['env'].to_hash.merge({ DATABASE_URL: database_url }) }
   end
