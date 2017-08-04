@@ -1,14 +1,19 @@
-= bootstrap_form_for [:catalog, @collection], layout: :horizontal do |f|
-  = f.alert_message "Please fix the errors below.", error_summary: false
-  = f.text_field :name
-  = f.text_area :description, cols: 40, rows: 10
-  = f.form_group do
-    = f.check_box :hidden
+= simple_form_for [:catalog, @collection], wrapper: :horizontal_form do |f|
+  = f.error_notification
+  .row
+    .form-inputs
+      = f.input :name
+      = f.label 'Description', class: 'col-sm-3'
+      .col-sm-9
+        = f.text_area :description, cols: 40, rows: 10
+      = f.label 'Hidden', class: 'col-sm-3'
+      .col-sm-9
+        = f.check_box :hidden
 
-  .form-action
+  .form-action.action-space
     = link_to :back, class: 'btn btn-default' do
       %i.fa.fa-arrow-left
       Cancel
 
     .pull-right
-      = f.primary
+      = f.button :submit
