@@ -1,7 +1,7 @@
 %div{ id: "archive-modal-#{dom_id(use_agreement)}", class: "modal fade", role: 'dialog' }
   .modal-dialog
     .modal-content
-      = bootstrap_form_for [:archive, :catalog, use_agreement] do |f| 
+      = simple_form_for [:archive, :catalog, use_agreement] do |f| 
         .modal-header
           %button.close{ data: { dismiss: 'modal' }}
             %i.fa.fa-close
@@ -12,4 +12,5 @@
           .form-group
             = text_area_tag :message, params[:message], rows: 10, class: 'form-control', placeholder: 'Please enter the reason for archiving the use agreement'
         .modal-footer.text-right
-          = f.primary "Archive Use Agreement"
+          = f.button :submit, "Archive Use Agreement"
+          
