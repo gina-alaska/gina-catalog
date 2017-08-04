@@ -35,6 +35,7 @@ property :service_path, String, default: '/hab/svc/glynx'
 action :install do
   gina_hab_install 'default' do
     version '0.26.1'
+    upgrade true
   end
 
   if new_resource.source_url
