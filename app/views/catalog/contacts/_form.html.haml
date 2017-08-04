@@ -1,16 +1,17 @@
 #contact-form
   - ajax ||= false
   - modal ||= false
-  = bootstrap_form_for [:catalog, @contact], layout: :horizontal, label_col: 'col-lg-3 col-md-3', control_col: 'col-lg-9 col-md-9', remote: ajax do |f|
+  = simple_form_for [:catalog, @contact], wrapper: :horizontal_form, remote: ajax do |f|
+    = f.error_notification
+    .row
+      .form-inputs
+        = f.input :name
+        = f.input :email
+        = f.input :phone_number, placeholder: "(999)999-9999", pattern: "[0-9()-]+", title: "Please use only numerals,(), and -."
+        = f.input :job_title
 
-    = f.alert_message "Please fix the errors below.", error_summary: false
-    = f.text_field :name
-    = f.email_field :email
-    = f.phone_field :phone_number, placeholder: "(999)999-9999", pattern: "[0-9()-]+", title: "Please use only numerals,(), and -."
-    = f.text_field :job_title
-
-    .form-action.text-right
-      = f.primary
+    .form-action.text-right.action-space
+      = f.button :submit
 
       - if !modal
         = link_to :back, class: 'btn btn-default pull-left' do
