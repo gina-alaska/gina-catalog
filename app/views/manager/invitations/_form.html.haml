@@ -1,19 +1,24 @@
-= bootstrap_form_for [:manager, @invitation], layout: :horizontal do |f|
-  = f.alert_message "Please fix the errors below."
-
-  = f.text_field :name, wrapper_class: 'required'
-  = f.email_field :email, wrapper_class: 'required'
-  = f.text_area :message
+= simple_form_for [:manager, @invitation], wrapper: :horizontal_form do |f|
+  = f.error_notification
+  .row
+    = f.input :name
+    = f.input :email
+    = f.label 'Message', class: 'col-sm-3'
+    .col-sm-9
+      = f.text_area :message, cols: 40, rows: 10
+    
+    = f.fields_for :permission do |pf|
+      = pf.hidden_field :id
+      = pf.label 'Permissions', class: 'col-sm-3'
+      .col-sm-9
+        - Permission::AVAILABLE_ROLES.each do |role, description|
+          = pf.label role, class: 'col-sm-2'
+          = pf.check_box role, label: "#{role.to_s.humanize} - #{description}", class: 'col-sm-1'
   
-  = f.fields_for :permission do |pf|
-    = pf.hidden_field :id
-    = pf.form_group label: { text: 'Permissions' } do
-      - Permission::AVAILABLE_ROLES.each do |role, description|
-        = pf.check_box role, label: "#{role.to_s.humanize} - #{description}"
-  
-  = link_to :back, class: 'btn btn-default' do
-    %i.fa.fa-arrow-left
-    Cancel
-  .pull-right
-    = f.primary
-  
+  .form-action.action-space
+    = link_to :back, class: 'btn btn-default' do
+      %i.fa.fa-arrow-left
+      Cancel
+    .pull-right
+      = f.button :submit
+    
