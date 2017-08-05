@@ -1,4 +1,4 @@
-= bootstrap_form_for [:manager, @permission], layout: :horizontal do |f|
+= simple_form_for [:manager, @permission], wrapper: :horizontal_form do |f|
   = f.hidden_field :user_id
   = f.static_control label: 'Name' do
     = @permission.user.name
@@ -9,9 +9,9 @@
     - Permission::AVAILABLE_ROLES.each do |role, description|
       = f.check_box role, label: "#{role.to_s.humanize} - #{description}"
 
-  .form-actions
+  .form-actions.action-space
     = link_to :back, class: 'btn btn-default' do
       %i.fa.fa-arrow-left
       Cancel
     .pull-right
-      = f.primary
+      = f.button :submit
