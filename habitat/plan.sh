@@ -19,11 +19,16 @@ pkg_scaffolding=uafgina/scaffolding-ruby
 
 pkg_expose=(9292)
 
-if [[ ! "$(declare -p scaffolding_symlinked_files 2> /dev/null || true)" =~ "declare -a" ]]; then
-  declare -g -a scaffolding_symlinked_files
-fi
-scaffolding_symlinked_files+=(config/puma.rb)
-scaffolding_symlinked_files+=(config/secrets.yml)
+# if [[ ! "$(declare -p scaffolding_symlinked_files 2> /dev/null || true)" =~ "declare -a" ]]; then
+#   declare -g -a scaffolding_symlinked_files
+# fi
+# scaffolding_symlinked_files+=(config/puma.rb)
+# scaffolding_symlinked_files+=(config/secrets.yml)
+
+# Declare the associative array (hash) in bash
+declare -A scaffolding_env
+# Add an addition variable which is hardcoded at build time
+scaffolding_env[ELASTICSEARCH_HOST]="{{cfg.elasticsearch_host}}"
 
 do_build() {
   export SSL_CERT_FILE="$(pkg_path_for core/cacerts)/ssl/certs/cacert.pem"
