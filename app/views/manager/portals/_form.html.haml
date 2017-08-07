@@ -1,6 +1,6 @@
 - projections = [["Alaskan Albers","EPSG:3338"],["Polar", "EPSG:3572"],["Web Mercator", "EPSG:3857"]]
 - location_projections = [["Alaskan Albers","EPSG:3338"],["Polar", "EPSG:3572"]]
-= bootstrap_form_for @portal, url: manager_portal_path, layout: :horizontal, html: { multipart: true } do |f|
+= simple_form_for @portal, url: manager_portal_path, wrapper: :horizontal_form, html: { multipart: true } do |f|
   - if @portal.errors.any?
     #error_explanation.alert.alert-error
       %h4
@@ -22,14 +22,14 @@
 
   .tab-content.content
     #setup_information.tab-pane.active
-      = f.text_field :title
-      = f.text_field :acronym
-      = f.text_field :by_line
-      = f.text_field :contact_email
+      = f.input :title
+      = f.input :acronym
+      = f.input :by_line
+      = f.input :contact_email
       //    = f.text_area :default_invite, rows: 4, cols: 40
-      = f.text_field :analytics_account, label: "Google analytics"
+      = f.input :analytics_account, label: "Google analytics"
       //    = f.check_box :use_recaptcha, {}, "true", "false"
-      = f.text_field :description
+      = f.input :description
       //    = f.text_field :keywords
 
     #maps.tab-pane
@@ -72,15 +72,16 @@
                 %span.btn.btn-file.btn-success.btn-block
                   %span.fileinput-new Add Favicon
                   %span.fileinput-exists Change Favicon
-                  = attachment.file_field_without_bootstrap :image
+                  = attachment.input_field :image, as: :file
                 %a.btn.btn-danger.btn-block.fileinput-exists{href: "#", data: { dismiss: "fileinput" }} Remove
         %p Note:  It's recommended to use .png or .jpg images for the favicon.
 
-  .form-actions
+  .form-actions.action-space
     = link_to manager_portal_path, class: 'btn btn-default' do
       %i.fa.fa-arrow-left
       Cancel
-    = f.submit class: 'btn btn-primary pull-right'
+    = f.button :submit, class: 'btn btn-primary pull-right'
+
 :javascript
   $('[data-dismiss="fileinput"]').on('click', function() {
     $('#portal_favicon_attributes__destroy').val(1);
