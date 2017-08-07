@@ -33,7 +33,7 @@ GRAPH
     firewall (>= 2.6.1)
   gina_habitat (0.3.0)
     habitat (>= 0.0.0)
-  glynx_application (0.2.1)
+  glynx_application (0.2.2)
     chef-vault (>= 0.0.0)
     gina_firewall (>= 0.0.0)
     gina_habitat (>= 0.0.0)
