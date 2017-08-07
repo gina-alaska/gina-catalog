@@ -24,8 +24,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-node.default['glynx']['package'] = 'uafgina-glynx-3.10.0-20170804184504-x86_64-linux.hart'
-node.default['glynx']['package_checksum'] = '6049c283a38980976911afdf6b1b2cfe8023c5f1ab8b95767b16cefe1c1c1b1b'
+node.default['glynx']['package'] = 'uafgina-glynx-3.10.0-20170807200236-x86_64-linux.hart'
+node.default['glynx']['package_checksum'] = 'a69801d692933cdb4ec41d47743d3ff066501d46a2581fd4a38458e221486f93'
 
 unless node['glynx']['elasticsearch_host']
   es_results = search(:node, "chef_environment:#{node.chef_environment} AND tags:glynx-elasticsearch", filter_result: {'ip' => ['ipaddress']}).first
@@ -53,7 +53,7 @@ user_toml = {
 }
 
 glynx_package 'uafgina/glynx' do
-  # source_url "https://s3-us-west-2.amazonaws.com/gina-packages/#{node['glynx']['package']}"
-  # source_checksum node['glynx']['package_checksum']
+  source_url "https://s3-us-west-2.amazonaws.com/gina-packages/#{node['glynx']['package']}"
+  source_checksum node['glynx']['package_checksum']
   config user_toml
 end
