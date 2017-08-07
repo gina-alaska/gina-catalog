@@ -1,11 +1,11 @@
 = simple_form_for [:manager, @permission], wrapper: :horizontal_form do |f|
   = f.hidden_field :user_id
-  = f.static_control label: 'Name' do
+  = f.label 'Name' do
     = @permission.user.name
-  = f.static_control label: 'Email' do
+  = f.label 'Email' do
     = @permission.user.email
 
-  = f.form_group label: { text: 'Permissions' } do
+  = f.label 'Permissions' do
     - Permission::AVAILABLE_ROLES.each do |role, description|
       = f.check_box role, label: "#{role.to_s.humanize} - #{description}"
 
