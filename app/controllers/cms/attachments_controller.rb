@@ -37,9 +37,7 @@ class Cms::AttachmentsController < CmsController
 
     # redirect_to :back
     respond_to do |format|
-      format.json {
-        render json: { location: edit_cms_page_path(@page) }
-      }
+      format.json { render json: { location: edit_cms_page_path(@page) } }
     end
   end
 
