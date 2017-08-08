@@ -49,8 +49,8 @@ class Entry < ActiveRecord::Base
   end
 
   def bbox
-    srs_database = RGeo::CoordSys::SRSDatabase::ActiveRecordTable.new
-    factory = RGeo::Geos.factory(srs_database: srs_database, srid: 4326)
+    factory = ::RGeo::Cartesian.preferred_factory(srid: 4326)
+
     bounds = RGeo::Cartesian::BoundingBox.new(factory)
     centroids.each do |centroid|
       bounds.add(centroid)
