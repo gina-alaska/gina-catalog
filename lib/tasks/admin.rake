@@ -30,9 +30,7 @@ namespace :admin do
   end
 
   task fix_entry_owners: :environment do
-    Entry.find_each do |entry|
-      entry.set_owner_portal
-    end
+    Entry.find_each(&:set_owner_portal)
   end
 
   desc 'Load all items'

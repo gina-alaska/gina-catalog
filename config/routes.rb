@@ -1,3 +1,5 @@
+# rubocop:disable Metrics/BlockLength, Style/RegexpLiteral, Layout/TrailingWhitespace, Lint/UnneededDisable
+
 Rails.application.routes.draw do
 
 
@@ -163,7 +165,7 @@ Rails.application.routes.draw do
     end
   end
 
-  namespace :api, defaults: { format: :json }, only: [:index, :show] do
+  namespace :api, defaults: { format: :json }, only: %i[index show] do
     resources :organizations
     resources :contacts
     resources :regions

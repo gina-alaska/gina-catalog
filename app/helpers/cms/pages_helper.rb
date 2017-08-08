@@ -25,6 +25,6 @@ module Cms::PagesHelper
   def page_type_css(page)
     return 'muted' if page.hidden?
     return 'danger' if page.system_page?
-    return ''
+    ''
   end
 end

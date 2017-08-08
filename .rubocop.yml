@@ -7,12 +7,17 @@ AllCops:
     - 'test/fixtures/**/*'
     - 'db/schema.rb'
     - 'db/seeds.rb'
+    - 'db/migrate/*'
     - 'cookbook/**/*'
     - 'Gemfile'
     - 'bin/*'
     - 'Guardfile'
     - 'config/puma.rb'
+    - 'config/deploy.rb'
+    - 'habitat/**/*'
     - 'lib/import/*'
+    - 'lib/tasks/*.rake'
+  TargetRubyVersion: '2.4'
 
 # Offense count: 58
 # Configuration parameters: EnforcedStyle, SupportedStyles.
@@ -43,3 +48,15 @@ StringLiterals:
 
 NumericLiterals:
   Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/ModuleLength:
+  Enabled: false
+
+Metrics/AbcSize:
+  Max: 40

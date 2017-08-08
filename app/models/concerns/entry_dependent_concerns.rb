@@ -6,9 +6,11 @@ module EntryDependentConcerns
     before_destroy :check_for_entries
   end
 
-  def deletable?
-    true
-  end unless method_defined?(:deletable?)
+  unless method_defined?(:deletable?)
+    def deletable?
+      true
+    end
+  end
 
   def deletable_with_entries?
     deletable_without_entries? && entries.empty?

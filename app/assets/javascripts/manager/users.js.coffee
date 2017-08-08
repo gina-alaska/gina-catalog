@@ -2,7 +2,7 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-$(document).on 'ready page:load',  ->
+$(document).on 'ready turbolinks:load',  ->
   usertypeahead = new TypeAheadField('[data-behavior="typeahead"][data-name="user"]', {
     display_key: (d) ->
       "#{d.name} (#{d.email})"

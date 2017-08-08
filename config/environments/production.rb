@@ -56,18 +56,18 @@ Rails.application.configure do
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
-  if ENV['MEMCACHE_SERVERS']
-    servers = ENV['MEMCACHE_SERVERS'].split(",")
-  else
-    servers = 'flash.x.gina.alaska.edu'
-  end
+  servers = if ENV['MEMCACHE_SERVERS']
+              ENV['MEMCACHE_SERVERS'].split(",")
+            else
+              'flash.x.gina.alaska.edu'
+            end
   namespace = ENV['MEMCACHE_NAMESPACE'] || 'glynx'
 
   memcache_client = Dalli::Client.new(servers, value_max_bytes: 10485760)
-  config.cache_store = :dalli_store, *servers, { namespace:namespace, value_max_bytes: 10485760, compress:true }
+  config.cache_store = :dalli_store, *servers, { namespace: namespace, value_max_bytes: 10485760, compress: true }
   config.action_dispatch.rack_cache = {
-    :metastore    => memcache_client,
-    :entitystore  => memcache_client
+    metastore: memcache_client,
+    entitystore: memcache_client
   }
   config.static_cache_control = "public, max-age=2592000"
 

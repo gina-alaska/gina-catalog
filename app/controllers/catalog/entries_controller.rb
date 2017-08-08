@@ -1,11 +1,11 @@
 class Catalog::EntriesController < CatalogController
   before_action :set_entry
   before_action :set_cms_page
-  before_action :gather_use_agreements, only: [:new, :create, :edit, :update]
-  before_action :set_activities, only: [:show, :map]
+  before_action :gather_use_agreements, only: %i[new create edit update]
+  before_action :set_activities, only: %i[show map]
   authorize_resource
 
-  layout 'pages', only: [:show, :index]
+  layout 'pages', only: %i[show index]
 
   include EntriesControllerSearchConcerns
 
@@ -52,10 +52,10 @@ class Catalog::EntriesController < CatalogController
 
         if params['commit'] == 'Save'
           format.html { redirect_to edit_catalog_entry_path(@entry) }
-          format.js { redirect_via_turbolinks_to edit_catalog_entry_path(@entry) }
+          format.js { redirect_to edit_catalog_entry_path(@entry) }
         else
           format.html { redirect_to catalog_entry_path(@entry) }
-          format.js { redirect_via_turbolinks_to catalog_entry_path(@entry) }
+          format.js { redirect_to catalog_entry_path(@entry) }
         end
       else
         format.html { render action: 'new' }
@@ -77,10 +77,10 @@ class Catalog::EntriesController < CatalogController
         case params['commit']
         when 'Save'
           format.html { redirect_to edit_catalog_entry_path(@entry) }
-          format.js { redirect_via_turbolinks_to edit_catalog_entry_path(@entry) }
+          format.js { redirect_to edit_catalog_entry_path(@entry) }
         when 'Save & Close'
           format.html { redirect_to catalog_entry_path(@entry) }
-          format.js { redirect_via_turbolinks_to catalog_entry_path(@entry) }
+          format.js { redirect_to catalog_entry_path(@entry) }
         else
           format.js
         end
@@ -170,9 +170,9 @@ class Catalog::EntriesController < CatalogController
 
   def map
     respond_to do |format|
-      format.html {
+      format.html do
         render layout: 'map'
-      }
+      end
     end
   end
 
@@ -192,7 +192,7 @@ class Catalog::EntriesController < CatalogController
 
     respond_to do |format|
       format.html { redirect_to catalog_entry_path(entry) }
-      format.js { redirect_via_turbolinks_to catalog_entry_path(entry) }
+      format.js { redirect_to catalog_entry_path(entry) }
     end
   end
 
@@ -223,31 +223,21 @@ class Catalog::EntriesController < CatalogController
   def entry_params
     values = params.require(:entry).permit(
       :title, :description, :status, :entry_type_id, :start_date, :end_date,
-      :use_agreement_id, :request_contact_info, :require_contact_info,
-      :tag_list,
+      :use_agreement_id, :request_contact_info, :require_contact_info, :tag_list,
       collection_ids: [], region_ids: [], iso_topic_ids: [], data_type_ids: [],
-      links_attributes: [:id, :link_id, :category, :display_text, :url, :_destroy],
-      entry_collections_attributes: [:id, :_destroy],
-      attachments_attributes: [:id, :file, :category, :description, :interaction, :_destroy],
-      entry_contacts_attributes: [:id, :contact_id, :primary, :_destroy],
-      entry_organizations_attributes: [:id, :organization_id, :primary, :funding, :_destroy],
-      entry_map_layers_attributes: [:id, :map_layer_id, :_destroy])
+      links_attributes: %i[id link_id category display_text url _destroy],
+      entry_collections_attributes: %i[id _destroy],
+      attachments_attributes: %i[id file category description interaction _destroy],
+      entry_contacts_attributes: %i[id contact_id primary _destroy],
+      entry_organizations_attributes: %i[id organization_id primary funding _destroy],
+      entry_map_layers_attributes: %i[id map_layer_id _destroy]
+    )
 
-    if values[:collection_ids].present?
-      values[:collection_ids] = values.delete(:collection_ids).map(&:to_i).reject { |v| v == 0 }
+    %w[collection_ids region_ids iso_topic_ids data_type_ids].each do |field|
+      next unless values.include?(field.to_sym)
+      values[field.to_sym] = values.delete(field.to_sym).map(&:to_i).reject(&:zero?)
     end
 
-    if values[:region_ids].present?
-      values[:region_ids] = values.delete(:region_ids).map(&:to_i).reject { |v| v == 0 }
-    end
-
-    if values[:iso_topic_ids].present?
-      values[:iso_topic_ids] = values.delete(:iso_topic_ids).map(&:to_i).reject { |v| v == 0 }
-    end
-
-    if values[:data_type_ids].present?
-      values[:data_type_ids] = values.delete(:data_type_ids).map(&:to_i).reject { |v| v == 0 }
-    end
     values
   end
 

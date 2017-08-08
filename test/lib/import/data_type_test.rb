@@ -7,7 +7,7 @@ class Import::DataTypeTest < ActiveSupport::TestCase
     import = data_type_import.create(
       'id' => 3,
       'name' => 'Database',
-      'description' => 'Database test',
+      'description' => 'Database test'
     )
     assert import.importable.valid?, import.importable.errors.full_messages
   end
