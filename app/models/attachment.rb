@@ -63,12 +63,8 @@ class Attachment < ActiveRecord::Base
     to_sgid(for: 'download')
   end
 
-  def srs_database
-    @srs_database ||= RGeo::CoordSys::SRSDatabase::ActiveRecordTable.new
-  end
-
   def factory
-    @factory ||= RGeo::Geos.factory(srs_database: srs_database, srid: 4326)
+    @factory ||= ::RGeo::Cartesian.preferred_factory(srid: 4326)
   end
 
   def centroid

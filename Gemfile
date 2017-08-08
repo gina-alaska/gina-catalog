@@ -50,7 +50,7 @@ gem 'bootstrap_form', '~> 2.3.0' #git: 'https://github.com/bootstrap-ruby/rails-
 gem 'awesome_nested_set'
 gem 'rgeo'
 gem 'rgeo-activerecord'
-gem 'activerecord-postgis-adapter', '3.0.0'
+gem 'activerecord-postgis-adapter', '< 4.0.0'
 gem 'rgeo-geojson'
 gem 'cancancan', '~> 1.9'
 gem 'nested_form'
