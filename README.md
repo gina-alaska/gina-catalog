@@ -32,15 +32,13 @@ After checkout out the code repository use the following steps to setup the deve
 ```bash
 
 # install latest version of vagrant, virtualbox and chefdk!
-$ cd cookbook
-$ kitchen converge
-$ cd ..
 $ bundle
-$ bundle exec rake db:seed searchkick:reindex:all
-$ bundle exec rake db:seed searchkick:reindex:all RAILS_ENV=test
-$ bundle exec rake test # all test should pass!
+$ bundle exec rake dev:rebuild
 $ bundle exec rails server
-$ open http://catalog.192.168.222.225.xip.io
+$ open http://localhost:9292
+# click manager login at the bottom of the page
+$ rake "admin:set[YOUREMAIL]"
+# refresh the page
 
 ```
 
