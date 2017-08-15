@@ -23,6 +23,10 @@ testing concourse, another change
   * <code>vagrant plugins install vagrant-berkshelf</code>
   * <code>vagrant plugins install vagrant-omnibus</code>
 
+If you are trying to run this on OSX you will also need to do the following steps
+* Download and install Postgres.APP: https://postgresapp.com/
+* Follow these instructions: https://postgresapp.com/documentation/cli-tools.html
+
 ## Setting up development environment
 
 If you currently have been using GVM to run the development vm it is recommended that you shutdown and delete the currently running vm.  And then to make sure that you have the latest version of VirtualBox installed (5.0.2) as well as the ChefDK installed and configured to be in your path.
