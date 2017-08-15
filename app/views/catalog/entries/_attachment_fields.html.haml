@@ -22,6 +22,6 @@
           %i.fa.fa-image
         = link_to "http://geojson.io#data=data:text/x-url,#{catalog_entry_attachment_url(f.object.entry, f.object, :geojson)}", class: 'btn btn-primary', title: 'Send File to Geojson.io', target: :_blank do
           %i.fa.fa-send-o
-      = link_to download_path(f.object.global_id), class: 'btn btn-primary', title: 'Download File' do
+      = link_to download_path(f.object.global_id), class: 'btn btn-primary', title: 'Download File', data: { turbolinks: "false"} do
         %i.fa.fa-download
     = f.link_to_remove('<i class="fa fa-times"></i>'.html_safe, class: 'btn btn-danger', title: 'Remove')
