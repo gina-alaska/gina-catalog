@@ -1,5 +1,6 @@
-class EntryExportsController < ApplicationController
-  before_action :set_entry_export, only: [:show, :edit, :update, :destroy]
+class Catalog::EntryExportsController < CatalogController
+  before_action :set_entry_export, only: [:show, :edit, :update, :destroy, :download]
+  include EntriesControllerSearchConcerns
 
   # GET /entry_exports
   # GET /entry_exports.json
@@ -29,7 +30,7 @@ class EntryExportsController < ApplicationController
 
     respond_to do |format|
       if @entry_export.save
-        format.html { redirect_to @entry_export, notice: 'Entry export was successfully created.' }
+        format.html { redirect_to [:catalog, @entry_export], notice: 'Entry export was successfully created.' }
         format.json { render :show, status: :created, location: @entry_export }
       else
         format.html { render :new }
@@ -62,22 +63,22 @@ class EntryExportsController < ApplicationController
     end
   end
 
-  def export_html
-    @search_params = JSON.parse(params["serialized_search"]).symbolize_keys
+  def download
+    #params = @entry_export.attributes
+    #@search_params = params["serialized_search"]
+    @search_params = @entry_export.serialized_search.symbolize_keys
+    logger.info '*' * 20
+    logger.info @search_params
 
+    @search_results = search(params[:page], params[:limit] || 500)
+    logger.info '*' * 20
+    logger.info @search_results.inspect
+    
     respond_to do |format|
-      format.html { search(params[:page], params[:limit] || 20) }
-      format.geojson { search(params[:page], params[:limit] || 500) }
+      format.html
+      format.geojson
       format.json
-    end
-  end
-
-  def export_csv
-    @search_params = JSON.parse(params["serialized_search"]).symbolize_keys
-
-    respond_to do |format|
       format.csv {
-        @search_results = search(params[:page], params[:limit] || 500)
         csv_string = render_to_string
         send_data(csv_string, disposition: :attachment)
       }
@@ -92,6 +93,10 @@ class EntryExportsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def entry_export_params
-      params.require(:entry_export).permit(:serialized_search, :organizations, :collections, :contacts, :data, :description, :info, :iso, :links, :location, :tags, :title, :url, :limit, :description_chars, :format_type)
+      export_params = params.require(:entry_export).permit(:serialized_search, :organizations, :collections, :contacts, :data, :description, :info, :iso, :links, :location, :tags, :title, :url, :limit, :description_chars, :format_type)
+
+      export_params[:serialized_search] = JSON.parse(export_params[:serialized_search]).symbolize_keys
+
+      export_params
     end
 end
