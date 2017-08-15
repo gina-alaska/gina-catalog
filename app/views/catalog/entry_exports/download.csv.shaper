@@ -10,7 +10,7 @@ csv.headers do |csv|
   csv.columns *columns
 end
 
-csv.rows @search_results do |csv, entry|
+csv.rows @entries do |csv, entry|
   csv.cell :title, entry.title
   csv.cell :organizations, entry.organizations.map {|org| org.name} if check_export_visible_params('organizations')
   csv.cell :contacts, entry.contacts.map {|contact| contact.name_with_email} if check_export_visible_params('contacts')
