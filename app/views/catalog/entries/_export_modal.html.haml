@@ -8,7 +8,7 @@
       .modal-body
         .panel
           %p Select report elements to include:
-          = bootstrap_form_for @entry_export, method: :post do |f| 
+          = bootstrap_form_for [:catalog, @entry_export], method: :post do |f| 
             = f.hidden_field 'serialized_search', value: @search_params.to_json
             .row
               .col-sm-3
@@ -46,4 +46,4 @@
                 = f.select :format_type, options_for_select(format_select, @format_type), label: 'Format Type', layout: :horizontal, control_col: 'col-sm-8', label_col: 'col-sm-4'
             .row
             .modal-footer.text-right
-              = f.primary "Export"
+              = f.primary "Export", formtarget: "_blank"
