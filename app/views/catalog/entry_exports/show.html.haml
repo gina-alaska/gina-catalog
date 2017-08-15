@@ -1,0 +1,18 @@
+- url = download_catalog_entry_export_path(@entry_export, format: :html) if @export_params['format_type'] == 'html'
+- url = download_catalog_entry_export_path(@entry_export, format: :csv) if @export_params['format_type'] == 'csv'
+
+.container
+  .panel.panel-default
+    .panel-heading{ style: 'position: relative' }
+      .brand
+        %h3 Redirecting you to your download ...
+    .panel-body.entry-form-container
+      %p If you are not redirected, please select the link below to start the download.
+      %p
+        = link_to "Start Download", url, data: { turbolinks: false }
+
+:javascript
+
+  $(document).ready( function() {
+    setTimeout( function() { window.location.href = '#{url}'; }, 3000);
+  });
