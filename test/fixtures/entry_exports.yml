@@ -2,7 +2,7 @@
 # http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  serialized_search: MyText
+  serialized_search: <%= {query: "", starts_before: "", starts_after: "", ends_before: "", ends_after: "", order: "relevance", archived: false }.to_json.inspect %>
   organizations: false
   collections: false
   contacts: false
@@ -20,7 +20,7 @@ one:
   format_type: MyText
 
 two:
-  serialized_search: MyText
+  serialized_search: <%= {query: "", starts_before: "", starts_after: "", ends_before: "", ends_after: "", order: "relevance", archived: false }.to_json.inspect %>
   organizations: false
   collections: false
   contacts: false
