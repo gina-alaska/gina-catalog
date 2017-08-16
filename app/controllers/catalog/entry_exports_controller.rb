@@ -44,7 +44,7 @@ class Catalog::EntryExportsController < CatalogController
   def update
     respond_to do |format|
       if @entry_export.update(entry_export_params)
-        format.html { redirect_to @entry_export, notice: 'Entry export was successfully updated.' }
+        format.html { redirect_to [:catalog, @entry_export], notice: 'Entry export was successfully updated.' }
         format.json { render :show, status: :ok, location: @entry_export }
       else
         format.html { render :edit }
