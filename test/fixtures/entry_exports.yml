@@ -17,7 +17,7 @@ one:
   url: false
   limit: 1
   description_chars: 1
-  format_type: MyText
+  format_type: html
 
 two:
   serialized_search: <%= {query: "", starts_before: "", starts_after: "", ends_before: "", ends_after: "", order: "relevance", archived: false }.to_json.inspect %>
@@ -35,4 +35,4 @@ two:
   url: false
   limit: 1
   description_chars: 1
-  format_type: MyText
+  format_type: csv
