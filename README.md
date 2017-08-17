@@ -23,6 +23,10 @@ testing concourse, another change
   * <code>vagrant plugins install vagrant-berkshelf</code>
   * <code>vagrant plugins install vagrant-omnibus</code>
 
+If you are trying to run this on OSX you will also need to do the following steps
+* Download and install Postgres.APP: https://postgresapp.com/
+* Follow these instructions: https://postgresapp.com/documentation/cli-tools.html
+
 ## Setting up development environment
 
 If you currently have been using GVM to run the development vm it is recommended that you shutdown and delete the currently running vm.  And then to make sure that you have the latest version of VirtualBox installed (5.0.2) as well as the ChefDK installed and configured to be in your path.
@@ -32,15 +36,13 @@ After checkout out the code repository use the following steps to setup the deve
 ```bash
 
 # install latest version of vagrant, virtualbox and chefdk!
-$ cd cookbook
-$ kitchen converge
-$ cd ..
 $ bundle
-$ bundle exec rake db:migrate db:seed searchkick:reindex:all
-$ bundle exec rake db:migrate db:seed searchkick:reindex:all RAILS_ENV=test
-$ bundle exec rake test # all test should pass!
+$ bundle exec rake dev:rebuild
 $ bundle exec rails server
-$ open http://catalog.192.168.222.225.xip.io
+$ open http://localhost:9292
+# click manager login at the bottom of the page
+$ rake "admin:set[YOUREMAIL]"
+# refresh the page
 
 ```
 

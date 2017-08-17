@@ -1,6 +1,6 @@
 - if entry.attachments.any? || entry.links.any?
   %h4 Data and Resources
-  %ul.media-list.entry-resources{ "data-no-turbolink" => "" }
+  %ul.media-list.entry-resources{ "data-turbolinks" => "false" }
     - entry.attachments.public_download.each do |download|
       %li.media
         .media-left
