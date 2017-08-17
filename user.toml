@@ -1,0 +1,6 @@
+secret_key_base='8684b3c90053a8168989d89d9670321144aa2ff0370a653a32ba1529580a19ccc7d61530b2bbda25402c8a99b4dc24695c9cbd5b326128ceea4e51861c752f9c'
+
+[db]
+user='hab'
+password='hab'
+port='5433'

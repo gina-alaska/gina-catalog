@@ -2,19 +2,23 @@
 # See the docs at https://www.habitat.sh/docs/create-packages-configure/.
 # You can safely delete this file if you don't need it.
 rails_binding_ip = "0.0.0.0"
-rails_port = 9292
 rails_env = "production"
 rails_pidfile = "./tmp/pids/puma.pid"
-database_adapter = "postgis"
-database_name = "glynx_production"
-database_username = "glynx"
-database_password = ""
-database_host = "localhost"
-database_port = 5432
 secret_key_base = ""
-elasticsearch_host = ""
+elasticsearch_host = "localhost"
 glynx2_api = ""
 gina_analytics = ""
 glynx_stroage_path = ""
 web_concurrency = 1
 max_threads = 5
+
+[app]
+port = 9292
+
+[db]
+adapter = 'postgis'
+name = "glynx_production"
+user = "glynx"
+password = ""
+host = "localhost"
+port = 5432
