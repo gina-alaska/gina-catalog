@@ -9,7 +9,6 @@ end
 
 Rails.application.load_tasks
 
-
 namespace :docker do
   task :up do
     sh 'docker-compose up'

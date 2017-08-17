@@ -9,7 +9,6 @@ class Attachment < ActiveRecord::Base
     'Metadata'
   ].freeze
 
-
   searchkick word_start: %i[file_name description category]
   dragonfly_accessor :file
 
