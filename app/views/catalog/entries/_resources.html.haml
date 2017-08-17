@@ -84,6 +84,24 @@
             - unless link.display_text.empty? or link.display_text == link.url
               = " :: #{link.display_text}"
           %p.break-url= link.url
+  %ul.media-list.catalog-resources
+    - entry.attachments.metadata.each do | download |
+      %li.media
+        .media-left
+          .icon.metadata
+            %i.fa.fa-file
+        .media-body
+          = link_to download_path(download.global_id), class: 'btn btn-default tag pull-right', rel: 'nofollow' do
+            %i.fa.fa-download.media-object
+            Download
+      
+          %h4.media-heading
+            Metadata
+            = " :: #{download.description}" if download.description.present?
+          %p.break-url
+            = download.file.name
+            = "(#{number_to_human_size download.file.size})"
+    
 
   - if entry.links.where('category = ?', 'Metadata').count > 0
     %ul.media-list.catalog-resources
