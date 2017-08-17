@@ -24,6 +24,7 @@ all_contacts = @entry.primary_contacts + @entry.other_contacts +
 id_list = []
 
 ## array of contacts, to be referenced in other parts of metadata
+#  rubocop:disable Metrics/BlockLength
 json.contact(all_contacts) do |contact|
   if contact.is_a? Contact
     json.contactId 'contact_' + contact.id.to_s
