@@ -1,6 +1,6 @@
 class Organization < ActiveRecord::Base
   include EntryDependentConcerns
-  searchkick word_start: [:name, :acronym]
+  searchkick word_start: %i[name acronym]
 
   CATEGORIES = [
     'Academic',
@@ -13,7 +13,7 @@ class Organization < ActiveRecord::Base
     'Intergovernmental',
     'Non-Governmental',
     'Unknown'
-  ]
+  ].freeze
 
   dragonfly_accessor :logo
 

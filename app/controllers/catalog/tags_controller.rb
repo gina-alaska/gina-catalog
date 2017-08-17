@@ -1,6 +1,6 @@
 class Catalog::TagsController < ApplicationController
   authorize_resource class: false
-  before_action :load_tag, only: [:show, :remove]
+  before_action :load_tag, only: %i[show remove]
 
   def index
     @tags = current_portal.entries.tag_counts_on(:tags).order(:name).page(params[:page])

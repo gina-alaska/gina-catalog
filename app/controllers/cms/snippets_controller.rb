@@ -1,5 +1,5 @@
 class Cms::SnippetsController < CmsController
-  before_action :set_cms_snippet, only: [:show, :edit, :update, :destroy]
+  before_action :set_cms_snippet, only: %i[show edit update destroy]
   authorize_resource
   # GET /cms/snippets
   # GET /cms/snippets.json
@@ -9,8 +9,7 @@ class Cms::SnippetsController < CmsController
 
   # GET /cms/snippets/1
   # GET /cms/snippets/1.json
-  def show
-  end
+  def show; end
 
   # GET /cms/snippets/new
   def new
@@ -18,8 +17,7 @@ class Cms::SnippetsController < CmsController
   end
 
   # GET /cms/snippets/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /cms/snippets
   # POST /cms/snippets.json

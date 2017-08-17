@@ -54,8 +54,7 @@ class Manager::InvitationsController < ManagerController
     end
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     respond_to do |format|
@@ -100,6 +99,7 @@ class Manager::InvitationsController < ManagerController
   def invitation_params
     params.require(:invitation).permit(
       :name, :email, :message,
-      permission_attributes: Permission::AVAILABLE_ROLES.keys + [:id])
+      permission_attributes: Permission::AVAILABLE_ROLES.keys + [:id]
+    )
   end
 end

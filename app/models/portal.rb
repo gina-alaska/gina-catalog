@@ -67,6 +67,6 @@ class Portal < ActiveRecord::Base
   end
 
   def default_url
-    self.urls.active_url.first
+    urls.active_url.first
   end
 end

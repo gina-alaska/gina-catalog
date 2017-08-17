@@ -16,17 +16,9 @@ class Bound < ActiveRecord::Base
     self
   end
 
-  def srs_database
-    @srs_database ||= RGeo::CoordSys::SRSDatabase::ActiveRecordTable.new
-  end
-
   def factory
-    @factory ||= RGeo::Geos.factory(srs_database: srs_database, srid: 4326)
+    @factory ||= ::RGeo::Cartesian.preferred_factory(srid: 4326)
   end
-
-  # def bbox
-  #   @bbox ||= RGeo::Cartesian::BoundingBox.new(factory)
-  # end
 
   def centroid
     return if geom.nil?
