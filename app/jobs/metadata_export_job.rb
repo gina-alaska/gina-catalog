@@ -21,6 +21,7 @@ class MetadataExportJob < ActiveJob::Base
       #~ cssLink: nil
     )
     if metadata[:readerValidationPass]
+      puts 'in if statments'
       file = Tempfile.new( [entry.id.to_s + "_metadata", 'xml'] )
       file.write( metadata[:writerOutput] )
       attachment = entry.attachments.where( file_name: "glynx_#{entry.id}_iso19115-2_metadata.xml" ).first_or_initialize

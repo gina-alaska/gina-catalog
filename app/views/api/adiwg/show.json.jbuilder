@@ -196,8 +196,13 @@ json.metadata do
 	
 	json.resourceTimePeriod do
 	  #~ json.description ''
-	  json.beginPosition @entry.start_date
-	  json.endPosition @entry.end_date
+	  if @entry.start_date.present? 
+	    json.beginPosition @entry.start_date
+	  end
+	  if @entry.end_date.present? 
+	    json.endPosition @entry.end_date
+	  end
+
 	end #resourceTimePeriod
 	
 	json.pointOfContact(dummy) do |contact|
