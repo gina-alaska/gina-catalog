@@ -5,7 +5,8 @@ class Attachment < ActiveRecord::Base
     'Geojson',
     'Public Download',
     'Private Download',
-    'Archive'
+    'Archive',
+    'Metadata'
   ].freeze
 
   searchkick word_start: %i[file_name description category]
@@ -20,6 +21,7 @@ class Attachment < ActiveRecord::Base
   scope :private_download, -> { where(category: 'Private Download') }
   scope :public_download, -> { where(category: 'Public Download') }
   scope :archive, -> { where(category: 'Archive') }
+  scope :metadata, -> { where(category: 'Metadata') }
 
   before_save :create_uuid
   after_save :create_bbox
@@ -63,12 +65,8 @@ class Attachment < ActiveRecord::Base
     to_sgid(for: 'download')
   end
 
-  def srs_database
-    @srs_database ||= RGeo::CoordSys::SRSDatabase::ActiveRecordTable.new
-  end
-
   def factory
-    @factory ||= RGeo::Geos.factory(srs_database: srs_database, srid: 4326)
+    @factory ||= ::RGeo::Cartesian.preferred_factory(srid: 4326)
   end
 
   def centroid
