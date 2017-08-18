@@ -126,7 +126,7 @@ class Entry < ActiveRecord::Base
   def create_uuid
     return unless uuid.nil?
     return if slug.nil?
- 
+
     self.uuid = UUIDTools::UUID.md5_create(UUIDTools::UUID_URL_NAMESPACE, slug).to_s
   end
 
