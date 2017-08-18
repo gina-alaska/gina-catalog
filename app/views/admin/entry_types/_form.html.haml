@@ -1,13 +1,14 @@
-= bootstrap_form_for [:admin, @entry_type], layout: :horizontal, label_col: 'col-lg-3 col-md-3', control_col: 'col-lg-9 col-md-9' do |f|
-  = f.alert_message "Please fix the errors below.", error_summary: false
-  = f.text_field :name
-  = f.text_field :description
-  = f.text_field :color
+= simple_form_for [:admin, @entry_type], wrapper: :horizontal_form do |f|
+  = f.error_notification
+  .row
+    = f.input :name
+    = f.input :description
+    = f.input :color
 
-  .form-action
+  .form-action.action-space
     = link_to :back, class: 'btn btn-default' do
       %i.fa.fa-arrow-left
       Cancel
 
     .pull-right
-      = f.primary @entry_type.new_record? ? "Create Catalog Type" : "Update Catalog Type"
+      = f.button :submit, @entry_type.new_record? ? "Create Catalog Type" : "Update Catalog Type"

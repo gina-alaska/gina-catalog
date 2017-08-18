@@ -5,21 +5,23 @@
     %ul
       - @map_layer.errors.full_messages.each do |msg|
         %li= msg
-= bootstrap_form_for [:catalog, @map_layer.becomes(MapLayer)], layout: :horizontal, label_col: 'col-sm-2', control_col: 'col-sm-10', id: 'map-layer-form', remote: ajax do |f|
+= simple_form_for [:catalog, @map_layer.becomes(MapLayer)], wrapper: :horizontal_form, id: 'map-layer-form', remote: ajax do |f|
   -# WMS must be the first element in the list so that the map-layer-layers-field toggle will work.
-  = f.select :type, [['WMS', 'WmsLayer'], ['Tile', 'TmsLayer'],['GeoJSON', 'GeojsonLayer']], { include_blank: false }, class: 'form-control', data: { toggle: 'hidden', target: '#map-layer-layers-field', match: 'WmsLayer'}
-  = f.text_field :name, class: 'form-control', wrapper_class: 'required'
-  = f.text_field :map_url, class: 'form-control', wrapper_class: 'required'
+  = f.label 'Type', class: 'col-sm-3'
+  .col-sm-9
+    = f.select :type, [['WMS', 'WmsLayer'], ['Tile', 'TmsLayer'],['GeoJSON', 'GeojsonLayer']], { include_blank: false }, class: 'form-control', data: { toggle: 'hidden', target: '#map-layer-layers-field', match: 'WmsLayer'}
+  = f.input :name, class: 'form-control'
+  = f.input :map_url, class: 'form-control'
   #map-layer-layers-field
-    = f.text_field :layers, class: 'form-control', wrapper_class: 'required'
-  = f.text_field :projections, placeholder: 'Leave blank to support all projections', class: 'form-control'
+    = f.input :layers, class: 'form-control'
+  = f.input :projections, placeholder: 'Leave blank to support all projections', class: 'form-control'
   %span.help-block.muted{style: 'padding-left: 110px;' }
     Valid projections are EPSG:3857, EPSG: 3338, EPSG: 3572
 
-  .form-actions{ style: 'margin:0;' }
+  .form-actions.action-space{ style: 'margin:0;' }
     - unless ajax
       = link_to :back, class: 'btn btn-default' do
         %i.fa.fa-arrow-left
         Cancel
 
-    = f.submit class: 'btn btn-primary pull-right'
+    = f.button :submit, class: 'btn btn-primary pull-right'
