@@ -3,5 +3,5 @@
   %p
     - parts.each do |part|
       - if check_export_visible_params(part)
-        = render partial: "catalog/entries/exports/#{part}", locals: {item: item}
+        = render partial: "catalog/entry_exports/exports/#{part}", locals: {item: item}
         %br/
