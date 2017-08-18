@@ -49,6 +49,7 @@ class Catalog::EntriesController < CatalogController
     respond_to do |format|
       if @entry.save
         flash[:success] = "Catalog record #{@entry.title} was successfully created."
+        MetadataExportJob.perform_later @entry
 
         if params['commit'] == 'Save'
           format.html { redirect_to edit_catalog_entry_path(@entry) }
@@ -73,6 +74,7 @@ class Catalog::EntriesController < CatalogController
       if @entry.update_attributes(entry_params)
 
         flash[:success] = "Catalog record #{@entry.title} was successfully updated."
+        MetadataExportJob.perform_later @entry
 
         case params['commit']
         when 'Save'

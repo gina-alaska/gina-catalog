@@ -164,6 +164,7 @@ Rails.application.routes.draw do
   end
 
   namespace :api, defaults: { format: :json }, only: %i[index show] do
+    resources :adiwg
     resources :organizations
     resources :contacts
     resources :regions
