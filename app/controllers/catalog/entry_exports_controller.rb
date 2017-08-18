@@ -1,5 +1,5 @@
 class Catalog::EntryExportsController < CatalogController
-  before_action :set_entry_export, only: [:show, :edit, :update, :destroy, :download]
+  before_action :set_entry_export, only: %i[show edit update destroy download]
   include EntriesControllerSearchConcerns
 
   # GET /entry_exports
@@ -20,8 +20,7 @@ class Catalog::EntryExportsController < CatalogController
   end
 
   # GET /entry_exports/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /entry_exports
   # POST /entry_exports.json
@@ -64,8 +63,8 @@ class Catalog::EntryExportsController < CatalogController
   end
 
   def download
-    #params = @entry_export.attributes
-    #@search_params = params["serialized_search"]
+    # params = @entry_export.attributes
+    # @search_params = params["serialized_search"]
     @search_params = @entry_export.serialized_search.symbolize_keys
     logger.info '*' * 20
     logger.info @search_params
@@ -73,30 +72,31 @@ class Catalog::EntryExportsController < CatalogController
     @search_results = search(params[:page], params[:limit] || 500)
     logger.info '*' * 20
     logger.info @search_results.inspect
-    
+
     respond_to do |format|
       format.html
       format.geojson
       format.json
-      format.csv {
+      format.csv do
         csv_string = render_to_string
         send_data(csv_string, disposition: :attachment)
-      }
+      end
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_entry_export
-      @entry_export = EntryExport.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def entry_export_params
-      export_params = params.require(:entry_export).permit(:serialized_search, :organizations, :collections, :contacts, :data, :description, :info, :iso, :links, :location, :tags, :title, :url, :limit, :description_chars, :format_type)
+  # Use callbacks to share common setup or constraints between actions.
+  def set_entry_export
+    @entry_export = EntryExport.find(params[:id])
+  end
 
-      export_params[:serialized_search] = JSON.parse(export_params[:serialized_search]).symbolize_keys
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def entry_export_params
+    export_params = params.require(:entry_export).permit(:serialized_search, :organizations, :collections, :contacts, :data, :description, :info, :iso, :links, :location, :tags, :title, :url, :limit, :description_chars, :format_type)
 
-      export_params
-    end
+    export_params[:serialized_search] = JSON.parse(export_params[:serialized_search]).symbolize_keys
+
+    export_params
+  end
 end

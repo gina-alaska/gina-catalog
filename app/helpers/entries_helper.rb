@@ -16,6 +16,6 @@ module EntriesHelper
   end
 
   def format_select
-    [['HTML', 'html'], ['CSV', 'csv']]
+    [%w[HTML html], %w[CSV csv]]
   end
 end

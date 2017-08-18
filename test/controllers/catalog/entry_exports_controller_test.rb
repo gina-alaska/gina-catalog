@@ -1,7 +1,6 @@
 require "test_helper"
 
 class Catalog::EntryExportsControllerTest < ActionController::TestCase
-
   def entry_export
     @entry_export ||= entry_exports :one
   end
@@ -34,7 +33,7 @@ class Catalog::EntryExportsControllerTest < ActionController::TestCase
 
   test 'should get csv exports' do
     get :download, format: 'csv', id: entry_export.id
-    
+
     assert_response :success
     assert_not_nil assigns(:entries)
     assert_not_nil assigns(:facets)
