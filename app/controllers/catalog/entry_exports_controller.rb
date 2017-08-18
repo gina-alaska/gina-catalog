@@ -93,7 +93,9 @@ class Catalog::EntryExportsController < CatalogController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def entry_export_params
-    export_params = params.require(:entry_export).permit(:serialized_search, :organizations, :collections, :contacts, :data, :description, :info, :iso, :links, :location, :tags, :title, :url, :limit, :description_chars, :format_type)
+    export_params = params.require(:entry_export).permit(:serialized_search, :organizations, :collections, :contacts,
+                                                         :data, :description, :info, :iso, :links, :location, :tags,
+                                                         :title, :url, :limit, :description_chars, :format_type)
 
     export_params[:serialized_search] = JSON.parse(export_params[:serialized_search]).symbolize_keys
 
