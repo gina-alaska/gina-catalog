@@ -7,6 +7,7 @@ one:
   entry: one
   valid_link: false
   last_checked_at: 2014-12-04
+  uuid: testone
 
 two:
   category: MyString
@@ -15,6 +16,7 @@ two:
   entry: one
   valid_link: false
   last_checked_at: 2014-12-04
+  uuid: testtwo
 
 good_pdf:
   category: "PDF"
@@ -23,6 +25,7 @@ good_pdf:
   entry: one
   valid_link: true
   last_checked_at: 2014-12-04
+  uuid: testgoodpdf
 
 bad_pdf:
   category: "PDF"
@@ -31,6 +34,7 @@ bad_pdf:
   entry: one
   valid_link: true
   last_checked_at: 2014-12-04
+  uuid: testbadpdf
 
 bad_primary_org:
   category: "PDF"
@@ -39,3 +43,4 @@ bad_primary_org:
   entry: no_primary_org
   valid_link: true
   last_checked_at: 2014-12-04
+  uuid: testbadprimary
