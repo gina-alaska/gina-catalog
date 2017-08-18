@@ -79,6 +79,11 @@ Rails.application.routes.draw do
       end
     end
     resources :map_layers
+    resources :entry_exports do
+      member do
+        get :download
+      end
+    end
 
     resources :contacts do
       collection do
@@ -98,7 +103,6 @@ Rails.application.routes.draw do
       resources :attachments do
         get :preview, on: :member
       end
-      get :exports, on: :collection
     end
 
     resources :tags, constraints: { id: /[^\\]+/ } do

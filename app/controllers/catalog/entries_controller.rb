@@ -10,6 +10,8 @@ class Catalog::EntriesController < CatalogController
   include EntriesControllerSearchConcerns
 
   def index
+    @entry_export = EntryExport.new
+
     respond_to do |format|
       format.html { search(params[:page], params[:limit] || 20) }
       format.geojson { search(params[:page], params[:limit] || 500) }
@@ -193,16 +195,6 @@ class Catalog::EntriesController < CatalogController
     respond_to do |format|
       format.html { redirect_to catalog_entry_path(entry) }
       format.js { redirect_to catalog_entry_path(entry) }
-    end
-  end
-
-  def exports
-    @search_params = JSON.parse(params["serialized_search"]).symbolize_keys
-
-    respond_to do |format|
-      format.html { search(params[:page], params[:limit] || 20) }
-      format.geojson { search(params[:page], params[:limit] || 500) }
-      format.json
     end
   end
 

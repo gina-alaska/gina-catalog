@@ -80,6 +80,7 @@ gem 'rack-cors', require: 'rack/cors'
 gem 'hightop'
 gem 'version'
 gem 'request_store'
+gem 'csv_shaper'
 gem 'adiwg-mdtranslator', '=1.3.0'
 
 group :development, :production do

@@ -1,0 +1,38 @@
+# Read about fixtures at
+# http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  serialized_search: <%= {query: "", starts_before: "", starts_after: "", ends_before: "", ends_after: "", order: "relevance", archived: false }.to_json.inspect %>
+  organizations: false
+  collections: false
+  contacts: false
+  data: false
+  description: false
+  info: false
+  iso: false
+  links: false
+  location: false
+  tags: false
+  title: false
+  url: false
+  limit: 1
+  description_chars: 1
+  format_type: html
+
+two:
+  serialized_search: <%= {query: "", starts_before: "", starts_after: "", ends_before: "", ends_after: "", order: "relevance", archived: false }.to_json.inspect %>
+  organizations: false
+  collections: false
+  contacts: false
+  data: false
+  description: false
+  info: false
+  iso: false
+  links: false
+  location: false
+  tags: false
+  title: false
+  url: false
+  limit: 1
+  description_chars: 1
+  format_type: csv
