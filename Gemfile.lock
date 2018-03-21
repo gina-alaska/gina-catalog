@@ -547,7 +547,7 @@ DEPENDENCIES
   nested_form
   omniauth
   omniauth-openid
-  pg
+  pg (~> 0.21.0)
   poltergeist
   pry-rails
   public_activity
@@ -598,4 +598,4 @@ RUBY VERSION
    ruby 2.4.1p111
 
 BUNDLED WITH
-   1.15.3
+   1.16.0

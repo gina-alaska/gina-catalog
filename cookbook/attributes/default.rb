@@ -21,3 +21,6 @@ default['postgresql']['pg_hba'] << {
 
 default['iptables']['allow_from']['postgresql']['192.168.222.0/24'] = true
 default['iptables']['allow_from']['postgresql']['10.0.2.0/24'] = true
+
+default['postgresql']['pg_gem']['version'] = '0.21.0'
+

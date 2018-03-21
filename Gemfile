@@ -6,7 +6,7 @@ gem 'dotenv-rails', require: 'dotenv/rails-now'
 gem 'rails', '4.2.9'
 
 # Use postgresql as the database for Active Record
-gem 'pg'
+gem 'pg', '~> 0.21.0'
 gem 'rb-readline'
 
 # Use SCSS for stylesheets
