@@ -1,9 +1,6 @@
 - unless facets.nil? or facets.empty?
   .panel-body.panel-break
-    - items = "item"
-    - if facets.count > 1
-      - items = "items"
-    %span.panel-title= "#{title} - #{facets.count} #{items}"
+    %span.panel-title= "#{title} - #{facets.count}"
 
     .pull-right
       .sort-btns.btn-group
