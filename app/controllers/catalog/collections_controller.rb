@@ -56,13 +56,13 @@ class Catalog::CollectionsController < CatalogController
     save_referrer_location
 
     # This is a hack, should be handled with searchkick
-    records = @collection.entries.all
+    @records = @collection.load_entries  # load all entries associated with collection
 
     @collection.destroy
 
     # This is a hack, should be handled with searchkick
-    records.each do |entry|
-      entry.reindex
+    @records.each do |entry|
+      entry.reindex # reindex searchkick to remove collection from facets
     end
 
     respond_to do |format|
