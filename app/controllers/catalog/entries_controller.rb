@@ -44,8 +44,8 @@ class Catalog::EntriesController < CatalogController
 
   def create
     @entry = current_portal.entries.build(entry_params)
-
     @entry.portals << current_portal
+
     respond_to do |format|
       if @entry.save
         flash[:success] = "Catalog record #{@entry.title} was successfully created."
