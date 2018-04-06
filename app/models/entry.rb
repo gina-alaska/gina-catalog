@@ -184,11 +184,11 @@ class Entry < ActiveRecord::Base
 
   private
 
-    def create_uuid
-      return unless uuid.nil?
-      # return if slug.nil?
+  def create_uuid
+    return unless uuid.nil?
+    # return if slug.nil?
 
-      slug = title.parameterize
-      self.uuid = UUIDTools::UUID.md5_create(UUIDTools::UUID_URL_NAMESPACE, slug).to_s
-    end
+    slug = title.parameterize
+    self.uuid = UUIDTools::UUID.md5_create(UUIDTools::UUID_URL_NAMESPACE, slug).to_s
+  end
 end
