@@ -1,6 +1,6 @@
 - unless facets.nil? or facets.empty?
   .panel-body.panel-break
-    %span.panel-title= title
+    %span.panel-title= "#{title} - #{facets.count}"
 
     .pull-right
       .sort-btns.btn-group
@@ -8,12 +8,11 @@
           %i.fa.fa-sort-alpha-asc
         = link_to '#', class: 'btn btn-default btn-sm sort-by active', title: 'Sort by Counts', data: { target: "##{field}-search".dasherize, sort: 'numeric', direction: 'desc' } do
           %i.fa.fa-sort-numeric-desc
-      - if facets.count > 3
-        = link_to "##{field.to_s.dasherize}-search", class: 'btn btn-default btn-sm', title: 'Toggle show more', data: { toggle: 'expand', 'toggleicon' => 'fa fa-chevron-circle-up' } do
-          %i.fa.fa-chevron-circle-down
+      = link_to "##{field.to_s.dasherize}-search", class: 'btn btn-default btn-sm', title: 'Toggle show more', data: { toggle: 'expand', 'toggleicon' => 'fa fa-chevron-circle-up' } do
+        %i.fa.fa-chevron-circle-down
 
   - selected = Array.wrap(@search_params[field])
-  .facet-list.panel-body.expand{ id: "#{field}-search".dasherize, style: 'padding-top: 5px; padding-bottom: 0px; '}
+  .facet-list.panel-body.collapse.expand{ id: "#{field}-search".dasherize, style: 'padding-top: 5px; padding-bottom: 0px; '}
     - facets.each do |facet|
       - next if facet['hidden']
       %span.facet-item{ data: { alpha: facet['display_name'], numeric: facet['doc_count'] } }

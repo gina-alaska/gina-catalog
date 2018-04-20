@@ -17,4 +17,9 @@ class Collection < ActiveRecord::Base
   scope :visible, -> {
     where(hidden: false)
   }
+
+  # this is a hack, searchkick should handle this
+  def load_entries
+    entries.load_target unless entries.loaded?
+  end
 end

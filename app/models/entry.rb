@@ -34,8 +34,8 @@ class Entry < ActiveRecord::Base
 
   has_many :entry_aliases, dependent: :destroy
 
-  has_many :entry_collections, dependent: :destroy
-  has_many :collections, through: :entry_collections
+  has_many :entry_collections
+  has_many :collections, through: :entry_collections, dependent: :destroy
 
   has_many :entry_contacts, validate: true, dependent: :destroy
   has_many :contacts, through: :entry_contacts

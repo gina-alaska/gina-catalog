@@ -54,7 +54,15 @@ class Catalog::CollectionsController < CatalogController
 
   def destroy
     save_referrer_location
+
+    # This is a hack, should be handled with searchkick
+    @records = @collection.load_entries # load all entries associated with collection
+
     @collection.destroy
+
+    # This is a hack, should be handled with searchkick
+    # reindex searchkick to remove collection from facets
+    @records.each(&:reindex)
 
     respond_to do |format|
       flash[:success] = "Collection #{@collection.name} was successfully deleted."
