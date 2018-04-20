@@ -9,6 +9,7 @@ class Entry < ActiveRecord::Base
 
   after_commit :consolidate_organizations
   after_create :set_owner_portal
+  before_validation :create_uuid, prepend: true
 
   STATUSES = %w[Complete Ongoing Unknown Funded].freeze
 
@@ -86,9 +87,6 @@ class Entry < ActiveRecord::Base
                                         reject_if: proc { |link| link['url'].blank? }
   accepts_nested_attributes_for :entry_map_layers, allow_destroy: true
 
-  after_create :set_owner_portal
-  before_save :create_uuid
-
   scope :newest, -> { order(created_at: :desc).limit(10) }
   scope :recently_updated, -> { order(updated_at: :desc).limit(10) }
   scope :published, -> { where('published_at <= ?', Time.zone.now) }
@@ -121,13 +119,6 @@ class Entry < ActiveRecord::Base
 
   def published?
     !published_at.nil?
-  end
-
-  def create_uuid
-    return unless uuid.nil?
-    return if slug.nil?
-
-    self.uuid = UUIDTools::UUID.md5_create(UUIDTools::UUID_URL_NAMESPACE, slug).to_s
   end
 
   def bbox
@@ -189,5 +180,15 @@ class Entry < ActiveRecord::Base
         new_assoc.save!
       end
     end
+  end
+
+  private
+
+  def create_uuid
+    return unless uuid.nil?
+    # return if slug.nil?
+
+    slug = title.parameterize
+    self.uuid = UUIDTools::UUID.md5_create(UUIDTools::UUID_URL_NAMESPACE, slug).to_s
   end
 end

@@ -241,7 +241,6 @@ ActiveRecord::Schema.define(version: 20170728231620) do
     t.string   "title"
     t.text     "description"
     t.string   "status"
-    t.string   "slug"
     t.string   "uuid"
     t.integer  "licence_id"
     t.datetime "archived_at"
@@ -254,6 +253,7 @@ ActiveRecord::Schema.define(version: 20170728231620) do
     t.boolean  "require_contact_info"
     t.integer  "entry_type_id"
     t.datetime "published_at"
+    t.string   "slug"
   end
 
   create_table "entry_aliases", force: :cascade do |t|
