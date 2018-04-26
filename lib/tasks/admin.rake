@@ -33,6 +33,14 @@ namespace :admin do
     Entry.find_each(&:set_owner_portal)
   end
 
+  desc 'Build a uuid for each entry'
+  task fix_uuid: :environment do
+    Entry.find_each do |entry|
+      entry.create_uuid
+      entry.save
+    end
+  end
+
   desc 'Load all items'
   task load: ['load:regions', 'load:collections', 'load:use_agreements', 'load:organizations', 'load:contacts', 'load:entries']
 
