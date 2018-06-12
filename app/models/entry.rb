@@ -182,8 +182,6 @@ class Entry < ActiveRecord::Base
     end
   end
 
-  private
-
   def create_uuid
     return unless uuid.nil?
     # return if slug.nil?
