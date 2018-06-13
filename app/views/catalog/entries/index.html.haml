@@ -5,9 +5,6 @@
       = render 'search/form'
     .col-sm-8.search-results
       .results-heading
-        %h1.title{ style: 'margin-top: 0px;' }
-          #{pluralize @entries.total_count, 'result'} found
-          = render 'shared/page_entry_info', collection: @entries
         = render 'search/pagination', entries: @entries
       .results-body.clear-fix
         - @entries.each do |entry|
