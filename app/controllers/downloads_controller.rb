@@ -26,7 +26,7 @@ class DownloadsController < ApplicationController
 
   def log_download
     return if @download.class != Attachment && !ATTACHMENTS_TO_LOG.include?(@download.category)
-    download_log = DownloadLog.new(user_agent: request.user_agent, user: current_user, entry: @download.entry, file_name: @download.file_name, portal: current_portal)
+    download_log = DownloadLog.new(user_agent: request.user_agent, user: current_user, entry: @download.entry, file_name: @download.file_name, portal: current_portal, ipaddr: request.remote_ip)
     download_log.save
   end
 end
