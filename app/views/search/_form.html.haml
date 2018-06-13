@@ -30,18 +30,18 @@
         = render 'search/buttons', f: f
       - if can? :edit, Entry
         = render 'search/entry_actions', f: f
-      = render 'search/facet_field', title: 'Collections', facets: @facets.collections, field: :collections
+      = render 'search/facet_field', title: 'Collection', facets: @facets.collections, field: :collections
       = render 'search/facet_field', title: 'Record Type', facets: @facets.entry_types, field: :entry_type_name
-      = render 'search/facet_field', title: 'ISO Topics', facets: @facets.iso_topics, field: :iso_topics
+      = render 'search/facet_field', title: 'ISO Topic', facets: @facets.iso_topics, field: :iso_topics
       = render 'search/facet_field', title: 'Primary Organization', facets: @facets.primary_organizations, field: :primary_organizations
       = render 'search/facet_field', title: 'Funding Organization', facets: @facets.funding_organizations, field: :funding_organizations
       = render 'search/facet_field', title: 'Organization Category', facets: @facets.organization_categories, field: :organization_categories
       = render 'search/facet_field', title: 'Primary Contact', facets: @facets.primary_contacts, field: :primary_contacts
       = render 'search/facet_field', title: 'Other Contact', facets: @facets.other_contacts, field: :other_contacts
       = render 'search/facet_field', title: 'Status', facets: @facets.status, field: :status
-      = render 'search/facet_field', title: 'Data Types', facets: @facets.data_types, field: :data_types
-      = render 'search/facet_field', title: 'Regions', facets: @facets.regions, field: :regions
+      = render 'search/facet_field', title: 'Data Type', facets: @facets.data_types, field: :data_types
+      = render 'search/facet_field', title: 'Region', facets: @facets.regions, field: :regions
       = render 'search/date_fields', f: f
-      = render 'search/facet_field', title: 'Tags', facets: @facets.tags, field: :tags
+      = render 'search/facet_field', title: 'Tag', facets: @facets.tags, field: :tags
       .panel-footer
         = render 'search/buttons', f: f
