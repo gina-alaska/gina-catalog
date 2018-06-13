@@ -11,13 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170728231620) do
+ActiveRecord::Schema.define(version: 20180612184034) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "hstore"
   enable_extension "postgis"
-  enable_extension "postgis_topology"
+  enable_extension "hstore"
   enable_extension "uuid-ossp"
 
   create_table "activities", force: :cascade do |t|
@@ -231,6 +230,7 @@ ActiveRecord::Schema.define(version: 20170728231620) do
     t.integer  "portal_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "ipaddr"
   end
 
   add_index "download_logs", ["entry_id"], name: "index_download_logs_on_entry_id", using: :btree
@@ -241,6 +241,7 @@ ActiveRecord::Schema.define(version: 20170728231620) do
     t.string   "title"
     t.text     "description"
     t.string   "status"
+    t.string   "slug"
     t.string   "uuid"
     t.integer  "licence_id"
     t.datetime "archived_at"
@@ -253,7 +254,6 @@ ActiveRecord::Schema.define(version: 20170728231620) do
     t.boolean  "require_contact_info"
     t.integer  "entry_type_id"
     t.datetime "published_at"
-    t.string   "slug"
   end
 
   create_table "entry_aliases", force: :cascade do |t|

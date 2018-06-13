@@ -20,6 +20,10 @@
                   .item
                     %dt User: 
                     %dd= download.user.nil? ? 'Guest' : download.user.name
+                  - if download.ipaddr
+                    .item
+                      %dt IP Address
+                      %dd= download.ipaddr
                 .col-sm-6
                   .item
                     %dt File:
