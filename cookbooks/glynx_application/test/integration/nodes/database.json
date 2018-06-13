@@ -1,0 +1,10 @@
+{
+  "id": "database",
+  "run_list": ["recipe[glynx_database::server]"],
+  "normal": {
+    "tags": ["glynx-database"]
+  },
+  "automatic": {
+    "ipaddress": "192.168.100.101"
+  }
+}
