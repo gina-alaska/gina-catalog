@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cd <%= @options[:release_path] %>
+
+exec 2>&1 \
+  chpst -u <%= node['app']['user'] %> -e /etc/sv/puma/env \
+  <%= @options[:release_path] %>/bin/puma -C <%= @options[:release_path] %>/config/puma.rb --dir <%= @options[:release_path] %>

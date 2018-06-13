@@ -1,0 +1,11 @@
+{
+  "_default": {
+    "database": {
+      "adapter": "postgis",
+      "name": "glynx_production",
+      "username": "glynx",
+      "password": "changeme"
+    },
+    "secret_key_base": "bf11e197ac1165ba7d3fdbcf99c0274a9fb20520a88ead9066538d67c63da4199c30456c4521c9f4184b5e01f64f34e70b65559ac91ad817c6aa174c2410d18e"
+  }
+}

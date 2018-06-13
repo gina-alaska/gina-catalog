@@ -1,0 +1,10 @@
+{
+  "id": "elasticsearch",
+  "run_list": ["recipe[glynx_elasticsearch::default]"],
+  "normal": {
+    "tags": ["glynx-elasticsearch"]
+  },
+  "automatic": {
+    "ipaddress": "192.168.100.100"
+  }
+}

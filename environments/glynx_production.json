@@ -1,0 +1,67 @@
+{
+  "name": "glynx_production",
+  "description": "",
+  "cookbook_versions": {
+    "apt": "= 6.0.1",
+    "ark": "= 2.2.1",
+    "build-essential": "= 8.0.0",
+    "chef-client": "= 4.3.3",
+    "chef-sugar": "= 3.1.1",
+    "chef-vault": "= 2.1.1",
+    "chef_client_updater": "= 1.0.2",
+    "compat_resource": "= 12.16.3",
+    "cron": "= 4.1.1",
+    "database": "= 6.1.1",
+    "elasticsearch": "= 3.0.4",
+    "firewall": "= 2.5.4",
+    "gina-server": "= 1.6.0",
+    "gina-users": "= 1.2.0",
+    "gina_firewall": "= 0.1.1",
+    "glynx_application": "= 0.1.9",
+    "glynx_database": "= 0.1.2",
+    "glynx_elasticsearch": "= 0.2.3",
+    "habitat": "= 0.4.0",
+    "homebrew": "= 3.0.0",
+    "hostsfile": "= 2.4.5",
+    "iptables": "= 4.2.0",
+    "java": "= 1.47.0",
+    "limits": "= 1.0.0",
+    "logrotate": "= 2.1.0",
+    "mingw": "= 2.0.0",
+    "ntp": "= 1.8.6",
+    "ohai": "= 5.0.0",
+    "openssh": "= 2.1.0",
+    "openssl": "= 7.0.0",
+    "postgresql": "= 6.1.1",
+    "resolver": "= 1.3.0",
+    "selinux": "= 1.0.4",
+    "seven_zip": "= 2.0.2",
+    "sudo": "= 3.3.1",
+    "system": "= 0.11.1",
+    "systemd": "= 2.1.3",
+    "user": "= 0.4.2",
+    "users": "= 5.0.0",
+    "windows": "= 2.1.1",
+    "yum": "= 5.0.0",
+    "yum-epel": "= 2.1.1"
+  },
+  "json_class": "Chef::Environment",
+  "chef_type": "environment",
+  "default_attributes": {
+    "glynx": {
+      "deploy_method": "habitat",
+      "database_host": "10.19.16.66",
+      "datamount": {
+        "device": "pod3.gina.alaska.edu:/gvolnssi_silo",
+        "fstype": "glusterfs"
+      },
+      "package": "uafgina-glynx-3.9.15-20170517221516-x86_64-linux.hart",
+      "package_checksum": "1648f8d6b7ac72b4afa714eb3f97ce2c480fbe3e59298eaaeedf25cedf9a2b51"
+    },
+    "omnibus_updater": {
+      "version": "12.19.36"
+    }
+  },
+  "override_attributes": {
+  }
+}
