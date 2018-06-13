@@ -7,6 +7,9 @@
     - else
       %tr
         %td
+          = "#{downloads.count} Downloads"
+      %tr
+        %td
           = paginate downloads, remote: true
       - downloads.each do |download|
         %tr
