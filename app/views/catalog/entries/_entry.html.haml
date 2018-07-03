@@ -49,4 +49,4 @@
       = render 'activity_logs', activities: activities
     - if can? :update, entry
       #download-logs.tab-pane
-        = render 'shared/download_logs', entry: entry, downloads: @downloads
+        = render 'shared/download_logs', entry: entry, downloads: @downloads, download_count: @download_count

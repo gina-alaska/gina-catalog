@@ -21,6 +21,7 @@ class Catalog::EntriesController < CatalogController
 
   def show
     @archive_item = ArchiveItem.new
+    @download_count = DownloadLog.where(entry: @entry).count
     @downloads = DownloadLog.where(entry: @entry).page(params[:page]).per(20)
 
     respond_to do |format|
