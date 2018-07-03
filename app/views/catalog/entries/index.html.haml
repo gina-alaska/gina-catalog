@@ -7,10 +7,13 @@
       .results-heading
         = render 'search/pagination', entries: @entries
       .results-body.clear-fix
-        - @entries.each do |entry|
-          .entry{ id: dom_id(entry) }
-            = render 'search/entry', entry: entry
-            = render 'actions', entry: entry
+        - if @entries.count > 0
+          - @entries.each do |entry|
+            .entry{ id: dom_id(entry) }
+              = render 'search/entry', entry: entry
+              = render 'actions', entry: entry
+        - else
+          %h3.text-center No Records Found
       .results-footer
         = render 'search/pagination', entries: @entries
 
