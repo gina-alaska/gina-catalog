@@ -77,10 +77,10 @@ class Catalog::EntryExportsController < CatalogController
       format.html
       format.geojson
       format.json
-      format.csv do
-        csv_string = render_to_string
-        send_data(csv_string, disposition: :attachment)
-      end
+      # format.csv do
+      #   csv_string = render_to_string
+      #   send_data(csv_string, disposition: :attachment)
+      # end
     end
   end
 
