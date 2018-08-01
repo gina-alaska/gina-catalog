@@ -2,14 +2,17 @@
   - selected = Array.wrap(@search_params[field])
   - if (selected & (facets.map{|k,v| k.to_s})).size == selected.size
     - colclass = ""
-    - colicon = "fa-chevron-circle-down"
-    - togicon = "fa-chevron-circle-up"
+    - colicon = asset_path "fa-plus.png"
+    - togicon = asset_path "fa-minus.png"
   - else
     - colclass = "in"
-    - colicon = "fa-chevron-circle-up"
-    - togicon = "fa-chevron-circle-down"
+    - colicon = asset_path "fa-minus.png"
+    - togicon = asset_path "fa-plus.png"
 
   .panel-body.panel-break
+    = link_to "##{field.to_s.dasherize}-search", class: 'btn btn-default btn-sm', title: 'Toggle show more', data: { toggle: 'expand', 'toggleicon' => "#{togicon}" }, style: "margin-right: 10px;" do
+      // %i.fa{class: "#{colicon}"}
+      = image_tag "#{colicon}"
     %span.panel-title= "#{title} - #{facets.count}"
 
     .pull-right
@@ -18,8 +21,6 @@
           %i.fa.fa-sort-alpha-asc
         = link_to '#', class: 'btn btn-default btn-sm sort-by active', title: 'Sort by Counts', data: { target: "##{field}-search".dasherize, sort: 'numeric', direction: 'desc' } do
           %i.fa.fa-sort-numeric-desc
-      = link_to "##{field.to_s.dasherize}-search", class: 'btn btn-default btn-sm', title: 'Toggle show more', data: { toggle: 'expand', 'toggleicon' => "fa #{togicon}" } do
-        %i.fa{class: "#{colicon}"}
 
   .facet-list.panel-body.collapse.expand{ id: "#{field}-search".dasherize, style: 'padding-top: 5px; padding-bottom: 0px;', class: "#{colclass}"}
     - facets.each do |facet|

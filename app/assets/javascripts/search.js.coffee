@@ -8,9 +8,14 @@ $(document).on 'click', '[data-toggle="expand"]', (e) ->
     $(this).text $(this).data('toggletext')
     $(this).data('toggletext', text)
   else if $(this).data('toggleicon')
-    icon = $(this).find('i')
-    iconclass = icon.attr('class')
-    icon.removeClass(iconclass).addClass($(this).data('toggleicon'))
+    console.log($(this).data('toggleicon'))
+    # icon = $(this).find('i')
+    # iconclass = icon.attr('class')
+    # icon.removeClass(iconclass).addClass($(this).data('toggleicon'))
+    # $(this).data('toggleicon', iconclass)
+    icon = $(this).find('img')
+    iconclass = icon.attr('src')
+    icon.attr("src", $(this).data('toggleicon'))
     $(this).data('toggleicon', iconclass)
 
 $(document).on 'click', '[data-behavior="highlight"]', (e) ->
