@@ -66,21 +66,16 @@ class Catalog::EntryExportsController < CatalogController
     # params = @entry_export.attributes
     # @search_params = params["serialized_search"]
     @search_params = @entry_export.serialized_search.symbolize_keys
-    logger.info '*' * 20
-    logger.info @search_params
-
     @search_results = search(params[:page], params[:limit] || 500)
-    logger.info '*' * 20
-    logger.info @search_results.inspect
 
     respond_to do |format|
       format.html
       format.geojson
       format.json
-      # format.csv do
-      #   csv_string = render_to_string
-      #   send_data(csv_string, disposition: :attachment)
-      # end
+      format.csv do
+        csv_string = render_to_string
+        send_data(csv_string, disposition: :attachment)
+      end
     end
   end
 
