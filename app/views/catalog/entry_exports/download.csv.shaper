@@ -1,4 +1,4 @@
-elements = %w( title organizations contacts tags iso data regions description links url collections )
+elements = %w( title organizations contacts tags iso data description links url collections )
 columns = Array.new
 
 elements.each do |element|
@@ -17,11 +17,10 @@ csv.rows @entries do |csv, entry|
   csv.cell :tags, entry.tags.join(' ') if check_export_visible_params('tags')
   csv.cell :iso, entry.iso_topics.map {|iso| iso.long_name_with_code} if check_export_visible_params('iso')
   csv.cell :data, entry.data_types.join(' ') if check_export_visible_params('data')
-  csv.cell :regions, entry.regions.join(' ') if check_export_visible_params('regions')
   csv.cell :description, entry.description if check_export_visible_params('description')
   csv.cell :links, entry.links.join(' ') if check_export_visible_params('links')
   csv.cell :url, catalog_entry_url(entry) if check_export_visible_params('url')
-  csv.cell :collections, entry.collections.join(' ') if check_export_visible_params('collections')
+  csv.cell :collections, entry.collections.map {|collection| collection.name} if check_export_visible_params('collections')
   csv.cell :start_date, entry.start_date
   csv.cell :end_date, entry.end_date
   csv.cell :status, entry.status
