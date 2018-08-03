@@ -66,7 +66,7 @@ class Catalog::EntryExportsController < CatalogController
     # params = @entry_export.attributes
     # @search_params = params["serialized_search"]
     @search_params = @entry_export.serialized_search.symbolize_keys
-    @search_results = search(params[:page], params[:limit] || 500)
+    @search_results = search(params[:page], @entry_export.limit || 500)
 
     respond_to do |format|
       format.html
