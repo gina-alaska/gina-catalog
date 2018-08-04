@@ -10,7 +10,7 @@
     - togicon = asset_path "fa-plus.png"
 
   - alpha_sort_icon = asset_path "fa-sort-alpha-desc.png"
-  - numeric_sort_icon = asset_path "fa-sort-numeric-desc.png"
+  - numeric_sort_icon = asset_path "fa-sort-numeric-asc.png"
 
   .panel-body.panel-break
     = link_to "##{field.to_s.dasherize}-search", class: 'btn btn-default btn-sm', title: 'Toggle show more', data: { toggle: 'expand', 'toggleicon' => "#{togicon}" }, style: "margin-right: 10px;" do
@@ -20,9 +20,9 @@
     .pull-right
       .sort-btns.btn-group
         = link_to '#', class: 'btn btn-default btn-sm sort-by', title: 'Sort Alphabetically', data: { target: "##{field}-search".dasherize, sort: 'alpha', direction: 'asc', toggleicon: "#{alpha_sort_icon}" } do
-          = image_tag "fa-sort-alpha-asc"
+          = image_tag asset_path "fa-sort-alpha-asc"
         = link_to '#', class: 'btn btn-default btn-sm sort-by active', title: 'Sort by Counts', data: { target: "##{field}-search".dasherize, sort: 'numeric', direction: 'desc', toggleicon: "#{numeric_sort_icon}" } do
-          = image_tag "fa-sort-numeric-asc"
+          = image_tag asset_path "fa-sort-numeric-desc"
 
   .facet-list.panel-body.collapse.expand{ id: "#{field}-search".dasherize, style: 'padding-top: 5px; padding-bottom: 0px;', class: "#{colclass}"}
     - facets.each do |facet|
