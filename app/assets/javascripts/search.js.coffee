@@ -8,11 +8,6 @@ $(document).on 'click', '[data-toggle="expand"]', (e) ->
     $(this).text $(this).data('toggletext')
     $(this).data('toggletext', text)
   else if $(this).data('toggleicon')
-    console.log($(this).data('toggleicon'))
-    # icon = $(this).find('i')
-    # iconclass = icon.attr('class')
-    # icon.removeClass(iconclass).addClass($(this).data('toggleicon'))
-    # $(this).data('toggleicon', iconclass)
     icon = $(this).find('img')
     iconclass = icon.attr('src')
     icon.attr("src", $(this).data('toggleicon'))
@@ -32,10 +27,12 @@ sortBtnSwap = (el) ->
   sort = $(el).data('sort')
   dir = $(el).data('direction')
   newdir = if dir == 'asc' then 'desc' else 'asc'
-  icon = $(el).find('i.fa')
+  toggle = $(el).data('toggleicon')
+  icon = $(el).find('img')
 
   $(el).data('direction', newdir)
-  $(icon).removeClass("fa-sort-#{sort}-#{dir}").addClass("fa-sort-#{sort}-#{newdir}")
+  $(el).data('toggleicon', $(icon).attr("src"))
+  $(icon).attr("src", toggle)
 
 $(document).on 'ready turbolinks:load', ->
   for item in $('[data-behavior="float-checked"] input:checked')
