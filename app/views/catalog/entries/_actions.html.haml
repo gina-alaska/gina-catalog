@@ -1,5 +1,5 @@
 .entry-actions.text-right
-  %span{ class: "badge", style: "background: #{entry.entry_type.color}; margin-right: 5px; color: white; font-size: 18px; font-weight: normal;"}
+  %span{ class: "badge", style: "background: #{entry.entry_type.color}; margin-right: 5px; color: white; font-size: 14px; font-weight: normal;"}
     = entry.entry_type
   - unless entry.bboxes.empty?
     %button.btn.btn-default{ data: { behavior: 'highlight-markers', target: ".#{dom_id(entry, 'marker')}", zoomTo: entry.bbox.to_s } }
