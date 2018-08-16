@@ -33,7 +33,7 @@ module EntriesControllerSearchConcerns
 
       facets = elastic_facets['buckets'].each_with_object([]) do |f, memo|
         if !model.nil?
-          if model.kind_of? Collection
+          if facet_name == 'collection_ids'
             facet_record = model.where(term_field => f['key'], :portal_id => @portal.id).first
             Rails.logger.info "** Collection **"
           else
