@@ -33,7 +33,7 @@ module EntriesControllerSearchConcerns
 
       facets = elastic_facets['buckets'].each_with_object([]) do |f, memo|
         if !model.nil?
-          facet_record = model.where(term_field => f['key'], portal_id: @portal.id).first
+          facet_record = model.where(term_field => f['key'], portal_id: @portal).first
           f['display_name'] = facet_record.try(display_field)
           f['hidden'] = facet_record.try(:hidden?)
         else
