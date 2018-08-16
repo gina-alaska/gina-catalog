@@ -26,7 +26,9 @@ module EntriesControllerSearchConcerns
 
     def organize(facet_name, model = nil, term_field = :id, display_field = :name)
       elastic_facets = @entries.aggs[facet_name.to_s]
-      return [] if elastic_facets.nil?
+      Rails.logger.info "elastic_facets #{facet_name}"
+      Rails.logger.info elastic_facets
+      return [] if elastic_facets["buckets"].blank?
 
       facets = elastic_facets['buckets'].each_with_object([]) do |f, memo|
         if !model.nil?
@@ -47,6 +49,8 @@ module EntriesControllerSearchConcerns
 
   def search(page, per_page = 20)
     # search_params
+    logger.info "******"
+    logger.info elasticsearch_params(page, per_page)
     @entries = Entry.search elasticsearch_params(page, per_page)
 
     return unless facets?
