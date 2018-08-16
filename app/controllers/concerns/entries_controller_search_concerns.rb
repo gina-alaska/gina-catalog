@@ -35,8 +35,10 @@ module EntriesControllerSearchConcerns
         if !model.nil?
           if model.kind_of? Collection
             facet_record = model.where(term_field => f['key'], :portal_id => @portal.id).first
+            Rails.logger.info "** Collection **"
           else
             facet_record = model.where(term_field => f['key']).first
+            Rails.logger.info "** Other **"
           end
           f['display_name'] = facet_record.try(display_field)
           f['hidden'] = facet_record.try(:hidden?)
