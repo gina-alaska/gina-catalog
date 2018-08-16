@@ -27,22 +27,18 @@ module EntriesControllerSearchConcerns
 
     def organize(facet_name, model = nil, term_field = :id, display_field = :name)
       elastic_facets = @entries.aggs[facet_name.to_s]
-      Rails.logger.info "elastic_facets #{facet_name}"
-      Rails.logger.info elastic_facets
       return [] if elastic_facets["buckets"].blank?
 
       facets = elastic_facets['buckets'].each_with_object([]) do |f, memo|
         if !model.nil?
           if facet_name.to_s == 'collection_ids'
             facet_record = model.where(term_field => f['key'], :portal_id => @portal.id).first
-            Rails.logger.info "** Collection **"
           else
             facet_record = model.where(term_field => f['key']).first
-            Rails.logger.info "** Other **"
           end
 
           next if facet_record.try(display_field).nil?
-          
+
           f['display_name'] = facet_record.try(display_field)
           f['hidden'] = facet_record.try(:hidden?)
         else
@@ -52,8 +48,6 @@ module EntriesControllerSearchConcerns
 
         memo << f
       end
-      Rails.logger.info "** facets **"
-      Rails.logger.info facets
 
       facets.sort { |a, b| a['doc_count'] == b['doc_count'] ? a['key'] <=> b['key'] : b['doc_count'] <=> a['doc_count'] }
     end
@@ -61,8 +55,6 @@ module EntriesControllerSearchConcerns
 
   def search(page, per_page = 20)
     # search_params
-    logger.info "******"
-    logger.info elasticsearch_params(page, per_page)
     @entries = Entry.search elasticsearch_params(page, per_page)
 
     return unless facets?
