@@ -47,6 +47,9 @@ module EntriesControllerSearchConcerns
           f['hidden'] = false
         end
 
+        Rails.logger.info "** facets **"
+        Rails.logger.info facets
+
         memo << f
       end
 
