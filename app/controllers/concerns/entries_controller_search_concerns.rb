@@ -2,8 +2,9 @@ module EntriesControllerSearchConcerns
   extend ActiveSupport::Concern
 
   class Aggregates
-    def initialize(entries)
+    def initialize(entries, portal)
       @entries = entries
+      @portal = portal
     end
 
     def fetch
@@ -32,7 +33,7 @@ module EntriesControllerSearchConcerns
 
       facets = elastic_facets['buckets'].each_with_object([]) do |f, memo|
         if !model.nil?
-          facet_record = model.where(term_field => f['key']).first
+          facet_record = model.where(term_field => f['key'], portal_id: @portal.id).first
           f['display_name'] = facet_record.try(display_field)
           f['hidden'] = facet_record.try(:hidden?)
         else
@@ -55,7 +56,7 @@ module EntriesControllerSearchConcerns
 
     return unless facets?
 
-    aggs = Aggregates.new(@entries)
+    aggs = Aggregates.new(@entries, current_portal)
     @facets = aggs.fetch
   end
 
