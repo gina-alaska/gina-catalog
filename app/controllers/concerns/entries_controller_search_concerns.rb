@@ -47,11 +47,10 @@ module EntriesControllerSearchConcerns
           f['hidden'] = false
         end
 
-        Rails.logger.info "** facets **"
-        Rails.logger.info facets
-
         memo << f
       end
+      Rails.logger.info "** facets **"
+      Rails.logger.info facets
 
       facets.sort { |a, b| a['doc_count'] == b['doc_count'] ? a['key'] <=> b['key'] : b['doc_count'] <=> a['doc_count'] }
     end
