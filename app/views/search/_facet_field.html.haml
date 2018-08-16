@@ -29,7 +29,7 @@
 
   .facet-list.panel-body.collapse.expand{ id: "#{field}-search".dasherize, style: 'padding-top: 5px; padding-bottom: 0px;', class: "#{colclass}"}
     - facets.each do |facet|
-      - next if facet['hidden']
+      - next if facet['hidden'] or facet['display_name'].nil?
       %span.facet-item{ data: { alpha: facet['display_name'], numeric: facet['doc_count'] } }
         %span.pull-right.badge.badge-default
           = facet['doc_count']
