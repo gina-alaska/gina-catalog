@@ -40,6 +40,9 @@ module EntriesControllerSearchConcerns
             facet_record = model.where(term_field => f['key']).first
             Rails.logger.info "** Other **"
           end
+
+          next if facet_record.try(display_field).nil?
+          
           f['display_name'] = facet_record.try(display_field)
           f['hidden'] = facet_record.try(:hidden?)
         else
