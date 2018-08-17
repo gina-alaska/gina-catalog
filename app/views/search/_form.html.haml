@@ -1,3 +1,7 @@
+- question_icon = asset_path "fa-question.png"
+- clear_icon = asset_path "fa-times.png"
+- search_icon = asset_path "fa-search.png"
+
 #entry_search{ data: { behavior: 'float-checked' } }
   = bootstrap_form_for :search, url: catalog_entries_path, method: :get do |f|
     .panel.panel-default
@@ -9,16 +13,16 @@
           .pull-right
             .sort-btns.btn-group
               = link_to page_path('search-help'), class: 'btn btn-default btn-sm' do
-                %i.fa.fa-question
+                = image_tag question_icon
       .panel-body
         .form-group.form-inline
           .input-group
             = f.text_field_without_bootstrap :query, value: @search_params[:query], placeholder: 'Keyword search', class: 'form-control'
             .input-group-btn{ style: 'width:1%;' }
               %button.btn.btn-default{ type: 'button', data: { behavior: 'clear-field', target: '#search_query', autosubmit: 'true' } }
-                %i.fa.fa-times
+                = image_tag clear_icon
               %button.btn.btn-primary{ type: 'submit' }
-                %i.fa.fa-search
+                = image_tag search_icon
         .row
           .col-sm-6
             .form-group
