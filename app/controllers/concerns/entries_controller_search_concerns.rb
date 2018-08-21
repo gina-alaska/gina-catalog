@@ -26,7 +26,7 @@ module EntriesControllerSearchConcerns
     end
 
     def organize(facet_name, model = nil, term_field = :id, display_field = :name)
-      portal_obj = %w{ collection_ids iso_topic_ids data_type_ids region_ids primary_organization_ids funding_organization_ids primary_contact_ids contact_ids }
+      portal_obj = %w{ collection_ids primary_contact_ids contact_ids }
 
       elastic_facets = @entries.aggs[facet_name.to_s]
       return [] if elastic_facets["buckets"].blank?
