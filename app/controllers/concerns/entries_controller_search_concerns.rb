@@ -33,10 +33,11 @@ module EntriesControllerSearchConcerns
 
       facets = elastic_facets['buckets'].each_with_object([]) do |f, memo|
         if !model.nil?
+          facet_record = model.where(term_field => f['key']).first
+
           if portal_obj.include?(facet_name.to_s)
-            facet_record = model.where(term_field => f['key'], :used_by_portal => true)
-          else
-            facet_record = model.where(term_field => f['key']).first
+            Rails.logger.info "*****  #{facet_record.check_portal(@portal)}"
+            next if facet_record.check_portal(@portal) == false
           end
 
           next if facet_record.try(display_field).nil?

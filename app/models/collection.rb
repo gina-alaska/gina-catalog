@@ -22,4 +22,9 @@ class Collection < ActiveRecord::Base
   def load_entries
     entries.load_target unless entries.loaded?
   end
+
+  # check for portal
+  def check_portal(portal)
+    self.portal_id == portal.id
+  end
 end

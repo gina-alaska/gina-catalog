@@ -30,4 +30,9 @@ class Contact < ActiveRecord::Base
   def name_with_email
     "#{name} (#{email})"
   end
+
+  # check for portal
+  def check_portal(portal)
+    self.portal_id == portal.id
+  end
 end
