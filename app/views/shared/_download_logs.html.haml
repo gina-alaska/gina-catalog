@@ -9,7 +9,7 @@
         %td
           = "#{download_count} Downloads"
       %tr
-        %td
+        %td.text-center
           = paginate downloads, remote: true
       - downloads.each do |download|
         %tr
@@ -36,5 +36,5 @@
                       %dt Portal: 
                       %dd= download.portal.acronym
       %tr
-        %td
+        %td.text-center
           = paginate downloads, remote: true
