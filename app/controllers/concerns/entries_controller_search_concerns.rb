@@ -21,7 +21,8 @@ module EntriesControllerSearchConcerns
         organization_categories: organize(:organization_categories),
         primary_contacts: organize(:primary_contact_ids, Contact),
         other_contacts: organize(:contact_ids, Contact),
-        archived: organize(:archived?)
+        archived: organize(:archived?),
+        published: organize(:published?)
       )
     end
 
@@ -102,12 +103,13 @@ module EntriesControllerSearchConcerns
     organization_categories:  :organization_categories,
     primary_contacts:         :primary_contact_ids,
     other_contacts:           :contact_ids,
-    archived:                 :archived?
+    archived:                 :archived?,
+    published:                :published?
   }.freeze
 
   def search_params
     if @search_params.nil?
-      fields = %i[starts_before starts_after ends_before ends_after order limit archived]
+      fields = %i[starts_before starts_after ends_before ends_after order limit archived unpublished]
       fields << FACET_FIELDS.keys.each_with_object({}) { |f, c| c[f] = [] }
 
       @search_params = {}
@@ -117,6 +119,7 @@ module EntriesControllerSearchConcerns
         @search_params[:order] = 'title'
       end
       @search_params[:archived] ||= false
+      @search_params[:published] ||= false
     end
 
     @search_params
@@ -190,10 +193,15 @@ module EntriesControllerSearchConcerns
     custom_query[:bool][:filter] ||= []
     if cannot?(:read_unpublished, Entry)
       custom_query[:bool][:filter] << term_query_filter(:published?, true)
+      if search_params[:published] == true
+        custom_query[:bool][:filter] << term_query_filter(:published?, false)
+      end
     end
 
     custom_query[:bool][:filter] << term_query_filter(:archived?, search_params[:archived])
 
+    Rails.logger.info "*** query"
+    Rails.logger.info custom_query
     custom_query
   end
 

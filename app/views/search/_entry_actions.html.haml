@@ -2,7 +2,11 @@
   %span.panel-title Record Actions
 .panel-body.panel-form{ style: 'padding-top: 5px; padding-bottom: 0px; padding-left: 0px; padding-right: 0px;' }
   .row-fluid
-    .col-sm-12
+    .col-sm-6
       %label
         = check_box_tag "search[archived]", :archived, @search_params[:archived]
         Only show archived
+    .col-sm-6
+      %label
+        = check_box_tag "search[unpublished]", :unpublished, @search_params[:unpublished]
+        Only show unpublished
