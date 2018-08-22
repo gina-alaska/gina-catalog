@@ -53,4 +53,9 @@ class Organization < ActiveRecord::Base
   def acronym_with_name
     "(#{acronym}) #{name}"
   end
+
+  # check for portal
+  def check_portal(portal)
+    self.entry_portals.pluck(:portal_id).include?(portal.id)
+  end
 end

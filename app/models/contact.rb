@@ -33,6 +33,6 @@ class Contact < ActiveRecord::Base
 
   # check for portal
   def check_portal(portal)
-    self.entry_portals.include?(portal.id)
+    self.entry_portals.pluck(:portal_id).include?(portal.id)
   end
 end
