@@ -119,7 +119,7 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-jasny-bootstrap'
   gem 'rails-assets-handlebars'
   gem 'rails-assets-mapbox.js', '~> 2.1.5'
-  gem 'rails-assets-typeahead.js'
+  gem 'rails-assets-typeahead.js', '= 0.10.5'
   gem 'rails-assets-selectize', '~> 0.11.2'
   gem 'rails-assets-holderjs', '~> 2.4.0'
   gem 'rails-assets-moment'

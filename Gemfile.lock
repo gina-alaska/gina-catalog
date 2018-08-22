@@ -343,7 +343,7 @@ GEM
       rails-assets-microplugin (~> 0.0.0)
       rails-assets-sifter (~> 0.3.0)
     rails-assets-sifter (0.3.4)
-    rails-assets-typeahead.js (0.11.1)
+    rails-assets-typeahead.js (0.10.5)
       rails-assets-jquery (>= 1.7)
     rails-assets-uri.js (1.18.12)
     rails-deprecated_sanitizer (1.0.3)
@@ -566,7 +566,7 @@ DEPENDENCIES
   rails-assets-mapbox.js (~> 2.1.5)!
   rails-assets-moment!
   rails-assets-selectize (~> 0.11.2)!
-  rails-assets-typeahead.js!
+  rails-assets-typeahead.js (= 0.10.5)!
   rails-assets-uri.js!
   rails_12factor
   ransack
@@ -598,4 +598,4 @@ RUBY VERSION
    ruby 2.4.1p111
 
 BUNDLED WITH
-   1.16.0
+   1.16.2
