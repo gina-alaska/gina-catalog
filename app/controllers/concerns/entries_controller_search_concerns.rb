@@ -165,7 +165,7 @@ module EntriesControllerSearchConcerns
         post_filter: {
           bool: {
             filter: [{
-              in: {
+              terms: {
                 portal_ids: current_portal.self_and_descendants.pluck(:id)
               }
             }]
