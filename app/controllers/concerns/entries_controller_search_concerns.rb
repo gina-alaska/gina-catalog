@@ -165,8 +165,8 @@ module EntriesControllerSearchConcerns
         post_filter: {
           bool: {
             filter: [{
-              terms: {
-                portal_ids: current_portal.pluck(:id)
+              term: {
+                portal_ids: current_portal.id
               }
             }]
           }
