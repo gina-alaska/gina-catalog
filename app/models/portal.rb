@@ -12,7 +12,7 @@ class Portal < ActiveRecord::Base
   has_many :use_agreements
   has_many :permissions, dependent: :destroy
   has_many :invitations, dependent: :destroy
-  has_many :download_logs
+  has_many :download_logs, dependent: :destroy
   has_many :map_layers, dependent: :destroy
 
   # CMS related things
@@ -29,7 +29,7 @@ class Portal < ActiveRecord::Base
   has_many :social_networks, -> { joins(:social_network_config).order('social_network_configs.name ASC') }
 
   has_many :entry_portals, dependent: :destroy
-  has_many :entries, through: :entry_portals
+  has_many :entries, through: :entry_portals, dependent: :destroy
 
   scope :active, -> {}
 

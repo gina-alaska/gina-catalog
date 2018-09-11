@@ -46,6 +46,16 @@ class Admin::PortalsController < AdminController
     end
   end
 
+  def entries
+    @records = @portal.entries
+    Rails.logger.info("entries count - #{@records.count}")
+    @records.each do |entry|
+      entry.destroy!
+    end
+
+    redirect_to [:admin, @portal]
+  end
+
   protected
 
   def portal_params

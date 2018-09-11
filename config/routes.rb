@@ -32,7 +32,9 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :users
-    resources :portals
+    resources :portals do
+      post :entries, on: :member
+    end
     resources :entry_types
     resources :regions
     resources :data_types
