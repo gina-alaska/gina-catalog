@@ -1,8 +1,11 @@
 .panel.panel-default
   .panel-heading{ style: 'position: relative' }
     - if can?(:manage, Portal)
-      = link_to edit_admin_portal_path(@portal), class: 'btn btn-sm btn-primary panel-btn-right' do
-        Edit Portal
+      .pull-right
+        = link_to entries_admin_portal_path(@portal), method: :post, confirm: "Are you sure?", class: 'btn btn-sm btn-danger', style: 'margin-right: 10px;' do
+          Delete All Records
+        = link_to edit_admin_portal_path(@portal), class: 'btn btn-sm btn-primary' do
+          Edit Portal
     %ol.breadcrumb
       %li
         = link_to admin_portals_path do
