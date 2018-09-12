@@ -26,20 +26,12 @@ module EntriesControllerSearchConcerns
     end
 
     def organize(facet_name, model = nil, term_field = :id, display_field = :name)
-      portal_obj = %w{ collection_ids primary_contact_ids contact_ids primary_organization_ids funding_organization_ids }
-
       elastic_facets = @entries.aggs[facet_name.to_s]
       return [] if elastic_facets["buckets"].blank?
 
       facets = elastic_facets['buckets'].each_with_object([]) do |f, memo|
         if !model.nil?
           facet_record = model.where(term_field => f['key']).first
-
-          Rails.logger.info "***--  #{facet_name.to_s}"
-          if portal_obj.include?(facet_name.to_s)
-            Rails.logger.info "*****  #{facet_record.check_portal(@portal)}"
-            next if facet_record.check_portal(@portal) == false
-          end
 
           next if facet_record.try(display_field).nil?
 
