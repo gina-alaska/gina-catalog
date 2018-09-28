@@ -1,4 +1,4 @@
-= simple_form_for(@cms_attachment) do |f|
+= simple_form_for(@cms_attachment, authenticity_token: true) do |f|
   = f.error_notification
   .form-inputs
     = f.input :name
