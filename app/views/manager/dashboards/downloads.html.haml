@@ -24,16 +24,14 @@
       %thead
         %tr
           %th Date
-          %th User
+          %th User IP
           %th File Name
-          %th Downloaded From
           %th Record
       %tbody
         - @downloads.each do |download|
           %tr
             %td= download.created_at
-            %td= download.user.try(:name)
+            %td= download.user.try(:ipaddr)
             %td= download.file_name
-            %td= download.portal.try(:acronym)
             %td
               = link_to download.entry.title, catalog_entry_path(download.entry)
