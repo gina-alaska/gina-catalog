@@ -30,8 +30,11 @@
       %tbody
         - @downloads.each do |download|
           %tr
-            %td= download.created_at
-            %td= download.user.try(:ipaddr)
-            %td= download.file_name
-            %td
+            %td.col-sm-2
+              = download.created_at
+            %td.col-sm-1
+              = download.user.try(:ipaddr)
+            %td.col-sm-3
+              = download.file_name
+            %td.col-sm-5
               = link_to download.entry.title, catalog_entry_path(download.entry)
