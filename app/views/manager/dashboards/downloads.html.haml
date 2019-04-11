@@ -26,15 +26,15 @@
           %th.col-sm-2 Date
           %th.col-sm-1 User IP
           %th.col-sm-3 File Name
-          %th.col-sm-5 Record
+          %th.col-sm-6 Record
       %tbody
         - @downloads.each do |download|
           %tr
             %td.col-sm-2
               = download.created_at
             %td.col-sm-1
-              = download.user.try(:ipaddr)
+              = download.try(:ipaddr)
             %td.col-sm-3
               = download.file_name
-            %td.col-sm-5
+            %td.col-sm-6
               = link_to download.entry.title, catalog_entry_path(download.entry)
