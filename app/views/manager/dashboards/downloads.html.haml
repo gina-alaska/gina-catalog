@@ -22,11 +22,16 @@
   - else
     %table.table.table-bordered.table-striped.table-condensed.table-hover
       %thead
+        %colgroup
+          %col.col-sm-1
+          %col.col-sm-2
+          %col.col-sm-6
+          %col.col-sm-3
         %tr
-          %th{style: 'width: 66px;'} Date
-          %th{style: 'width: 109px;'} User IP
-          %th{style: 'width: 500px;'} File Name
-          %th{style: 'width: 250px;'} Record
+          %th Date
+          %th User IP
+          %th File Name
+          %th Record
       %tbody
         - @downloads.each do |download|
           %tr
