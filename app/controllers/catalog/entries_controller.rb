@@ -22,7 +22,7 @@ class Catalog::EntriesController < CatalogController
   def show
     @archive_item = ArchiveItem.new
     @download_count = DownloadLog.where(entry: @entry).count
-    @downloads = DownloadLog.where(entry: @entry).page(params[:page]).per(20)
+    @downloads = DownloadLog.where(entry: @entry).order_by(created_at: :desc).limit(100)
 
     respond_to do |format|
       format.html
