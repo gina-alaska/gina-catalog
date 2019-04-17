@@ -20,15 +20,11 @@
                   .item
                     %dt User: 
                     %dd= download.user.nil? ? 'Guest' : download.user.name
-                  - if download.ipaddr
-                    .item
-                      %dt IP Address
-                      %dd= download.ipaddr
                 .col-sm-6
                   .item
                     %dt File:
                     %dd= download.file_name
-                  - if download.portal.present?
+                  - if download.ipaddr
                     .item
-                      %dt Portal: 
-                      %dd= download.portal.acronym
+                      %dt IP Address
+                      %dd= download.ipaddr
