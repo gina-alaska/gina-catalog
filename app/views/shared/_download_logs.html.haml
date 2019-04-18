@@ -8,9 +8,6 @@
       %tr
         %td
           = "#{download_count} Downloads"
-      %tr
-        %td.text-center
-          = paginate downloads, remote: true
       - downloads.each do |download|
         %tr
           %td
@@ -31,10 +28,3 @@
                   .item
                     %dt File:
                     %dd= download.file_name
-                  - if download.portal.present?
-                    .item
-                      %dt Portal: 
-                      %dd= download.portal.acronym
-      %tr
-        %td.text-center
-          = paginate downloads, remote: true
