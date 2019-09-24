@@ -20,7 +20,7 @@ namespace :ckanexport do
     export_json = '['
     sep = ''
     portal.entries.includes(:attachments).each do |entry|
-    	if archive and entry.archived?
+    	if !archive and entry.archived?
     		continue
     	end
 
@@ -39,9 +39,47 @@ namespace :ckanexport do
       entryHash['end_date'] = entry.end_date
 
       # attachments
-      entry.attachments.each_with_index do |attachment, index|
-        entryHash["file_name#{index}"] = attachment.file_name
-        entryHash["file_size#{index}"] = attachment.file_size
+      entryHash['attachments'] = {}
+      entry.attachments.each do |attachment|
+        entryHash['attachments']["file_name"] = attachment.file_name
+        entryHash['attachments']["file_size"] = attachment.file_size
+        entryHash['attachments']["category"] = attachment.category
+        entryHash['attachments']["description"] = attachment.description
+      end
+
+      # bounds
+      entryHash['bounds'] = {}
+      entry.bboxes.each do |bound|
+        entryHash['bound']["type"] = bound.boundable_type
+        entryHash['bound']["geom"] = bound.geom
+      end
+
+      # links
+      linkArray = []
+      entry.links.each do |link|
+        linkHash = {}
+        linkHash["url"] = link.url
+        linkHash["category"] = link.category
+        linkHash["display_text"] = link.display_text
+        linkArray << linkHash
+      end
+      entryHash['links'] = linkArray
+
+      # organizations
+      entryHash['organizations'] = {}
+      entry.organizations.each do |org|
+        entryHash['organizations']["name"] = org.name
+        entryHash['organizations']["category"] = org.category
+        entryHash['organizations']["description"] = org.description
+        entryHash['organizations']["logo_name"] = org.logo_name
+      end
+
+      # collections
+      entryHash['collections'] = {}
+      entry.collections.each do |collection|
+        entryHash['collections']["name"] = collection.name
+        entryHash['collections']["description"] = collection.description
+        entryHash['collections']["logo_name"] = collection.logo_name
       end
 
       export_json += "#{sep} #{entryHash.to_json(except: ["id", "uuid", "created_at", "updated_at"])}"
