@@ -27,9 +27,9 @@ namespace :ckanexport do
     export_json = '['
     sep = ''
     portal.entries.includes(:attachments).each do |entry|
-    	if !archive and entry.archived?
-    		next
-    	end
+      if !archive and entry.archived?
+        next
+      end
 
       puts entry.title
 
@@ -116,11 +116,9 @@ namespace :ckanexport do
       # ISO-Topics
       isoArray = []
       entry.iso_topics.each do |isotopic|
-        isoHash = []
-        isoHash["code"] = isotopic.iso_theme_code
-        isoHash["name"] = isotopic.name
-        isoHash["long_name"] = isotopic.long_name
-        isoArray << isoHash
+        next if isotopic.nil?
+
+        isoArray << isotopic.iso_theme_code
       end
       entryHash['iso_topics'] = isoArray
 
@@ -134,6 +132,6 @@ namespace :ckanexport do
     end
 
     # tar export directory
-    system("tar cvf #{portal_title}.tar export" )
+    system("tar cvf #{portal_title.parameterize}.tar export" )
   end
 end
