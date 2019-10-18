@@ -48,6 +48,8 @@ namespace :ckanexport do
       # attachments
       attachArray = []
       entry.attachments.each do |attachment|
+        next if attachment.file_name == "imported_locations"
+
         attachHash = {}
         attachHash["file_name"] = attachment.file_name
         attachHash["file_size"] = attachment.file_size
