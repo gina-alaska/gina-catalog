@@ -17,11 +17,18 @@ namespace :ckanexport do
       exit 1
     end
 
+    if Dir.exist?('export')
+      system('rm -r export')
+    else
+      Dir.mkdir('export')
+      Dir.mkdir('export/files')
+    end
+
     export_json = '['
     sep = ''
     portal.entries.includes(:attachments).each do |entry|
     	if !archive and entry.archived?
-    		continue
+    		next
     	end
 
       puts entry.title
@@ -39,20 +46,36 @@ namespace :ckanexport do
       entryHash['end_date'] = entry.end_date
 
       # attachments
-      entryHash['attachments'] = {}
+      attachArray = []
       entry.attachments.each do |attachment|
-        entryHash['attachments']["file_name"] = attachment.file_name
-        entryHash['attachments']["file_size"] = attachment.file_size
-        entryHash['attachments']["category"] = attachment.category
-        entryHash['attachments']["description"] = attachment.description
+        attachHash = {}
+        attachHash["file_name"] = attachment.file_name
+        attachHash["file_size"] = attachment.file_size
+        attachHash["category"] = attachment.category
+        attachHash["description"] = attachment.description
+        attachArray << attachHash
+
+        # save file to export directory
+        missing = open("missing_files.report", "w")
+        begin
+          file = Dragonfly.app.fetch(attachment.file_uid)
+          file.to_file("export/files/#{attachment.file_name}")
+        rescue
+          missing.write "No file #{attachment.file_name} for record #{entry.title}"
+        end
+        missing.close
       end
+      entryHash['attachments'] = attachArray
 
       # bounds
-      entryHash['bounds'] = {}
+      bboxArray = []
       entry.bboxes.each do |bound|
-        entryHash['bound']["type"] = bound.boundable_type
-        entryHash['bound']["geom"] = bound.geom
+        bboxHash = {}
+        bboxHash["type"] = bound.boundable_type
+        bboxHash["geom"] = RGeo::GeoJSON.encode(bound.geom).to_json
+        bboxArray << bboxHash
       end
+      entryHash['bounds'] = bboxArray
 
       # links
       linkArray = []
@@ -66,29 +89,49 @@ namespace :ckanexport do
       entryHash['links'] = linkArray
 
       # organizations
-      entryHash['organizations'] = {}
+      orgArray = []
       entry.organizations.each do |org|
-        entryHash['organizations']["name"] = org.name
-        entryHash['organizations']["category"] = org.category
-        entryHash['organizations']["description"] = org.description
-        entryHash['organizations']["logo_name"] = org.logo_name
+        orgHash = {}
+        orgHash["name"] = org.name
+        orgHash["category"] = org.category
+        orgHash["description"] = org.description
+        orgHash["logo_name"] = org.logo_name
+        orgArray << orgHash
       end
+      entryHash['organizations'] = orgArray
 
       # collections
-      entryHash['collections'] = {}
+      collArray = []
       entry.collections.each do |collection|
-        entryHash['collections']["name"] = collection.name
-        entryHash['collections']["description"] = collection.description
-        entryHash['collections']["logo_name"] = collection.logo_name
+        collHash = {}
+        collHash["name"] = collection.name
+        collHash["description"] = collection.description
+        collHash["hidden"] = collection.hidden
+        collArray << collHash
       end
+      entryHash['collections'] = collArray
+
+      # ISO-Topics
+      isoArray = []
+      entry.iso_topics.each do |isotopic|
+        isoHash = []
+        isoHash["code"] = isotopic.iso_theme_code
+        isoHash["name"] = isotopic.name
+        isoHash["long_name"] = isotopic.long_name
+        isoArray << isoHash
+      end
+      entryHash['iso_topics'] = isoArray
 
       export_json += "#{sep} #{entryHash.to_json(except: ["id", "uuid", "created_at", "updated_at"])}"
       sep = ","
     end
 
     export_json += ']'
-    open("#{portal_title}-export.json", 'w') do |fileout|
+    open("export/#{portal_title}-export.json", 'w') do |fileout|
       fileout.write(export_json)
     end
+
+    # tar export directory
+    system("tar cvf #{portal_title}.tar export" )
   end
 end
