@@ -39,17 +39,15 @@ namespace :ckanexport do
       entryHash['title'] = entry.title
       entryHash['description'] = entry.description
       entryHash['status'] = entry.status
-      entryHash['slug'] = entry.slug
+      entryHash['slug'] = entry.title.parameterize
       entryHash['start_date'] = entry.start_date
       entryHash['end_date'] = entry.end_date
-      entryHash['end_date'] = entry.end_date
+      entryHash['tags'] = entry.tag_list
       entryHash['end_date'] = entry.end_date
 
       # attachments
       attachArray = []
       entry.attachments.each do |attachment|
-        next if attachment.file_name == "imported_locations"
-
         attachHash = {}
         attachHash["file_name"] = attachment.file_name
         attachHash["file_size"] = attachment.file_size
@@ -58,10 +56,11 @@ namespace :ckanexport do
         attachArray << attachHash
 
         # save file to export directory
+        Dir.mkdir("export/files/#{entry.title.parameterize}")
         missing = open("missing_files.report", "w")
         begin
           file = Dragonfly.app.fetch(attachment.file_uid)
-          file.to_file("export/files/#{attachment.file_name}")
+          file.to_file("export/files/#{entry.title.parameterize}/#{attachment.file_name}")
         rescue
           missing.write "No file #{attachment.file_name} for record #{entry.title}"
         end
