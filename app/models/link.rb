@@ -10,7 +10,7 @@ class Link < ActiveRecord::Base
   validates :display_text, length: { maximum: 255 }
   validates :url, length: { within: 11..255, message: 'is not a valid url' }
   validates :category, inclusion: { in: CATEGORIES, message: 'is not a valid category' }
-  validates :uuid, uniqueness: true
+  # validates :uuid, uniqueness: true
 
   before_save :create_uuid
 
