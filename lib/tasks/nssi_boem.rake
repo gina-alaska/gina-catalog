@@ -15,13 +15,16 @@ namespace :nssi do
       exit 1
     end
 
+    csv_file = CSV.new("db_boem_urls2.csv", headers: true)
+
     handle = open("nssi_report.txt", "w")
     handle.puts "title, original url, new url, id"
 
-    entries = portal.entries.includes(:data_types, :organizations, :entry_organizations).references(:data_types, :organizations, :entry_organizations).where(archived_at: nil).where(data_types: {name: 'Report'}).where(organizations: {acronym: 'BOEM'}).where(entry_organizations: {primary: true})
+    # entries = portal.entries.includes(:data_types, :organizations, :entry_organizations).references(:data_types, :organizations, :entry_organizations).where(archived_at: nil).where(data_types: {id: 7}).where(organizations: {acronym: 'BOEM'}).where(entry_organizations: {primary: true})
 
-    entries.each do |entry|
-      handle.write "#{entry.title.to_s},"
+    csv_file.each do |row|
+    # entries.each do |entry|
+      handle.write "\"#{entry.title.to_s}\","
       entry.links.each do |link|
         if link.url =~ /pdf$/
           handle.write "#{link.url},"
