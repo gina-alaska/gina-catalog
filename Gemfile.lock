@@ -233,7 +233,7 @@ GEM
     metaclass (0.0.4)
     method_source (0.8.2)
     mime-types (2.99.3)
-    mini_magick (4.8.0)
+    mini_magick (4.10.1)
     mini_mime (0.1.4)
     mini_portile2 (2.2.0)
     minitest (5.10.3)
