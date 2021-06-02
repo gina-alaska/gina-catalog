@@ -46,8 +46,8 @@ GEM
       activerecord (>= 3.2, < 5)
     acts_as_list (0.9.7)
       activerecord (>= 3.0)
-    addressable (2.5.1)
-      public_suffix (~> 2.0, >= 2.0.2)
+    addressable (2.7.0)
+      public_suffix (>= 2.0.2, < 5.0)
     adiwg-mdcodes (1.2.2)
       json (~> 1.8)
     adiwg-mdjson_schemas (1.1.3)
@@ -116,10 +116,10 @@ GEM
     dotenv-rails (2.2.1)
       dotenv (= 2.2.1)
       railties (>= 3.2, < 5.2)
-    dragonfly (1.0.12)
+    dragonfly (1.4.0)
       addressable (~> 2.3)
       multi_json (~> 1.0)
-      rack (>= 1.3.0)
+      rack (>= 1.3)
     elasticsearch (5.0.4)
       elasticsearch-api (= 5.0.4)
       elasticsearch-transport (= 5.0.4)
@@ -253,7 +253,7 @@ GEM
       minitest-rails (~> 2.1)
     mocha (1.2.1)
       metaclass (~> 0.0.1)
-    multi_json (1.12.1)
+    multi_json (1.15.0)
     multipart-post (2.0.0)
     nenv (0.3.0)
     nested_form (0.3.2)
@@ -295,11 +295,11 @@ GEM
       activerecord (>= 3.0)
       i18n (>= 0.5.0)
       railties (>= 3.0.0)
-    public_suffix (2.0.5)
+    public_suffix (4.0.6)
     puma (3.9.1)
     quiet_assets (1.1.0)
       railties (>= 3.1, < 5.0)
-    rack (1.6.8)
+    rack (1.6.13)
     rack-cache (1.7.0)
       rack (>= 0.4)
     rack-cors (1.0.1)
@@ -526,7 +526,7 @@ DEPENDENCIES
   csv_shaper
   dalli
   dotenv-rails
-  dragonfly (~> 1.0.1)
+  dragonfly (~> 1.4.0)
   font-awesome-rails
   friendly_id
   georuby
